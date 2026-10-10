@@ -160,111 +160,6 @@
 {"sha16":"192a16af8f31ae0c","file":"192a16af8f31ae0c.pdf","family":"missouri_oa_fmdc","tier":"oracle-checked","kind":"door","page":10,"key":"141B","field":"(row)","a":"read","b":null,"why":"only reader A read this row"}
 {"sha16":"192a16af8f31ae0c","file":"192a16af8f31ae0c.pdf","family":"missouri_oa_fmdc","tier":"oracle-checked","kind":"door","page":10,"key":"142A","field":"(row)","a":"read","b":null,"why":"only reader A read this row"}
 {"sha16":"192a16af8f31ae0c","file":"192a16af8f31ae0c.pdf","family":"missouri_oa_fmdc","tier":"oracle-checked","kind":"door","page":10,"key":"143A","field":"(row)","a":"read","b":null,"why":"only reader A read this row"}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"1A105","field":"width_inches","a":28,"b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"1A105","field":"height_inches","a":84,"b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"1A105","field":"door_type","a":"1","b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"1A105","field":"hardware_group","a":"2","b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"1A105","field":"location","a":"CELL A105-CELL A116","b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"1A116","field":"width_inches","a":null,"b":28}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"1A116","field":"height_inches","a":null,"b":84}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"1A116","field":"door_type","a":null,"b":"1"}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"1A116","field":"hardware_group","a":null,"b":"2"}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"1A116","field":"location","a":null,"b":"CELL A105-CELL A116"}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"1A201","field":"width_inches","a":28,"b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"1A201","field":"height_inches","a":84,"b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"1A201","field":"door_type","a":"1","b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"1A201","field":"hardware_group","a":"1","b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"1A201","field":"location","a":"CELL A201-CELL D216","b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"1D216","field":"width_inches","a":null,"b":28}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"1D216","field":"height_inches","a":null,"b":84}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"1D216","field":"door_type","a":null,"b":"1"}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"1D216","field":"hardware_group","a":null,"b":"1"}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"1D216","field":"location","a":null,"b":"CELL A201-CELL D216"}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"2A101","field":"width_inches","a":28,"b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"2A101","field":"height_inches","a":84,"b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"2A101","field":"door_type","a":"1","b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"2A101","field":"hardware_group","a":"1","b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"2A101","field":"location","a":"CELL A101-CELL D116","b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"2D116","field":"width_inches","a":null,"b":28}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"2D116","field":"height_inches","a":null,"b":84}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"2D116","field":"door_type","a":null,"b":"1"}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"2D116","field":"hardware_group","a":null,"b":"1"}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"2D116","field":"location","a":null,"b":"CELL A101-CELL D116"}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"2A109","field":"width_inches","a":28,"b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"2A109","field":"height_inches","a":84,"b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"2A109","field":"door_type","a":"1","b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"2A109","field":"hardware_group","a":"2","b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"2A109","field":"location","a":"CELL A109-CELL A112","b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"2A112","field":"width_inches","a":null,"b":28}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"2A112","field":"height_inches","a":null,"b":84}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"2A112","field":"door_type","a":null,"b":"1"}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"2A112","field":"hardware_group","a":null,"b":"2"}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"2A112","field":"location","a":null,"b":"CELL A109-CELL A112"}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"2B109","field":"location","a":"CELL B109-CELL B112","b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"2B112","field":"location","a":null,"b":"CELL B109-CELL B112"}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"3A101","field":"width_inches","a":28,"b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"3A101","field":"height_inches","a":84,"b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"3A101","field":"door_type","a":"1","b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"3A101","field":"hardware_group","a":"1","b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"3A101","field":"location","a":"CELL A101-CELL D116","b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"3D116","field":"width_inches","a":null,"b":28}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"3D116","field":"height_inches","a":null,"b":84}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"3D116","field":"door_type","a":null,"b":"1"}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"3D116","field":"hardware_group","a":null,"b":"1"}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"3D116","field":"location","a":null,"b":"CELL A101-CELL D116"}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"3A109","field":"width_inches","a":28,"b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"3A109","field":"height_inches","a":84,"b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"3A109","field":"door_type","a":"1","b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"3A109","field":"hardware_group","a":"2","b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"3A109","field":"location","a":"CELL A109-CELL A112","b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"3A","field":"width_inches","a":null,"b":28}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"3A","field":"height_inches","a":null,"b":84}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"3A","field":"door_type","a":null,"b":"1"}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"3A","field":"hardware_group","a":null,"b":"2"}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"3A","field":"location","a":null,"b":"CELL A109-CELL A112"}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"3A201","field":"width_inches","a":28,"b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"3A201","field":"height_inches","a":84,"b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"3A201","field":"door_type","a":"1","b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"3A201","field":"hardware_group","a":"1","b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"3A201","field":"location","a":"CELL A201-CELL D216","b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"3D216","field":"width_inches","a":null,"b":28}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"3D216","field":"height_inches","a":null,"b":84}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"3D216","field":"door_type","a":null,"b":"1"}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"3D216","field":"hardware_group","a":null,"b":"1"}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"3D216","field":"location","a":null,"b":"CELL A201-CELL D216"}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"4A101","field":"width_inches","a":28,"b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"4A101","field":"height_inches","a":84,"b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"4A101","field":"door_type","a":"1","b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"4A101","field":"hardware_group","a":"1","b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"4A101","field":"location","a":"CELL A101-CELL D116","b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"4D116","field":"width_inches","a":null,"b":28}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"4D116","field":"height_inches","a":null,"b":84}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"4D116","field":"door_type","a":null,"b":"1"}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"4D116","field":"hardware_group","a":null,"b":"1"}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"4D116","field":"location","a":null,"b":"CELL A101-CELL D116"}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"4B109","field":"width_inches","a":28,"b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"4B109","field":"height_inches","a":84,"b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"4B109","field":"door_type","a":"1","b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"4B109","field":"hardware_group","a":"2","b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"4B109","field":"location","a":"CELL B109-CELL B112","b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"4B112","field":"width_inches","a":null,"b":28}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"4B112","field":"height_inches","a":null,"b":84}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"4B112","field":"door_type","a":null,"b":"1"}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"4B112","field":"hardware_group","a":null,"b":"2"}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"4B112","field":"location","a":null,"b":"CELL B109-CELL B112"}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"4A201","field":"width_inches","a":28,"b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"4A201","field":"height_inches","a":84,"b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"4A201","field":"door_type","a":"1","b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"4A201","field":"hardware_group","a":"1","b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"4A201","field":"location","a":"CELL A201-CELL D216","b":null}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"4D216","field":"width_inches","a":null,"b":28}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"4D216","field":"height_inches","a":null,"b":84}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"4D216","field":"door_type","a":null,"b":"1"}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"4D216","field":"hardware_group","a":null,"b":"1"}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"4D216","field":"location","a":null,"b":"CELL A201-CELL D216"}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"151B","field":"(row)","a":"read","b":null,"why":"only reader A read this row"}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"151A","field":"(row)","a":null,"b":"read","why":"only reader B read this row"}
-{"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":45,"key":"151C","field":"(row)","a":null,"b":"read","why":"only reader B read this row"}
 {"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"item","page":38,"key":"1 / 2 3 METAL DOOR FRAME","field":"(row)","a":"read","b":null,"why":"only reader A read this row"}
 {"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"item","page":38,"key":"1 / 3 1 NEW DOOR/FRAME W/ 1\" METAL SPANDREL PANEL 1","field":"(row)","a":"read","b":null,"why":"only reader A read this row"}
 {"sha16":"194733de48af8797","file":"194733de48af8797.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"item","page":38,"key":"1 / METAL 2 3 FRAME METAL DOOR FRAME ARCHITECTURE &","field":"(row)","a":null,"b":"read","why":"only reader B read this row"}
@@ -1162,129 +1057,6 @@
 {"sha16":"2dcaf854a34b17e8","file":"2dcaf854a34b17e8.pdf","family":"missouri_oa_fmdc","tier":"oracle-checked","kind":"door","page":12,"key":"101","field":"(row)","a":"read","b":null,"why":"only reader A read this row"}
 {"sha16":"2dcaf854a34b17e8","file":"2dcaf854a34b17e8.pdf","family":"missouri_oa_fmdc","tier":"oracle-checked","kind":"door","page":12,"key":"102","field":"(row)","a":"read","b":null,"why":"only reader A read this row"}
 {"sha16":"2dcaf854a34b17e8","file":"2dcaf854a34b17e8.pdf","family":"missouri_oa_fmdc","tier":"oracle-checked","kind":"door","page":12,"key":"2X","field":"(row)","a":"read","b":null,"why":"only reader A read this row"}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"1A103","field":"width_inches","a":28,"b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"1A103","field":"height_inches","a":84,"b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"1A103","field":"door_type","a":"1","b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"1A103","field":"hardware_group","a":"1","b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"1A103","field":"location","a":"CELL A103-CELL D116","b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"1D116","field":"width_inches","a":null,"b":28}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"1D116","field":"height_inches","a":null,"b":84}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"1D116","field":"door_type","a":null,"b":"1"}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"1D116","field":"hardware_group","a":null,"b":"1"}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"1D116","field":"location","a":null,"b":"CELL A103-CELL D116"}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"1A201","field":"width_inches","a":28,"b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"1A201","field":"height_inches","a":84,"b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"1A201","field":"door_type","a":"1","b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"1A201","field":"hardware_group","a":"1","b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"1A201","field":"location","a":"CELL A201-CELL D216","b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"1D216","field":"width_inches","a":null,"b":28}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"1D216","field":"height_inches","a":null,"b":84}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"1D216","field":"door_type","a":null,"b":"1"}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"1D216","field":"hardware_group","a":null,"b":"1"}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"1D216","field":"location","a":null,"b":"CELL A201-CELL D216"}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"2A101","field":"width_inches","a":28,"b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"2A101","field":"height_inches","a":84,"b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"2A101","field":"door_type","a":"1","b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"2A101","field":"hardware_group","a":"2","b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"2A101","field":"location","a":"CELL A101-CELL D102","b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"2D102","field":"width_inches","a":null,"b":28}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"2D102","field":"height_inches","a":null,"b":84}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"2D102","field":"door_type","a":null,"b":"1"}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"2D102","field":"hardware_group","a":null,"b":"2"}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"2D102","field":"location","a":null,"b":"CELL A101-CELL D102"}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"2A103","field":"width_inches","a":28,"b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"2A103","field":"height_inches","a":84,"b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"2A103","field":"door_type","a":"1","b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"2A103","field":"hardware_group","a":"1","b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"2A103","field":"location","a":"CELL A103-CELL D116","b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"2D116","field":"width_inches","a":null,"b":28}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"2D116","field":"height_inches","a":null,"b":84}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"2D116","field":"door_type","a":null,"b":"1"}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"2D116","field":"hardware_group","a":null,"b":"1"}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"2D116","field":"location","a":null,"b":"CELL A103-CELL D116"}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"2A201","field":"width_inches","a":28,"b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"2A201","field":"height_inches","a":84,"b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"2A201","field":"door_type","a":"1","b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"2A201","field":"hardware_group","a":"1","b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"2A201","field":"location","a":"CELL A201-CELL D216","b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"2D216","field":"width_inches","a":null,"b":28}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"2D216","field":"height_inches","a":null,"b":84}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"2D216","field":"door_type","a":null,"b":"1"}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"2D216","field":"hardware_group","a":null,"b":"1"}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"2D216","field":"location","a":null,"b":"CELL A201-CELL D216"}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"3A101","field":"width_inches","a":28,"b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"3A101","field":"height_inches","a":84,"b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"3A101","field":"door_type","a":"1","b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"3A101","field":"hardware_group","a":"2","b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"3A101","field":"location","a":"CELL A101-CELL D102","b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"3D102","field":"width_inches","a":null,"b":28}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"3D102","field":"height_inches","a":null,"b":84}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"3D102","field":"door_type","a":null,"b":"1"}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"3D102","field":"hardware_group","a":null,"b":"2"}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"3D102","field":"location","a":null,"b":"CELL A101-CELL D102"}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"3A103","field":"width_inches","a":28,"b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"3A103","field":"height_inches","a":84,"b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"3A103","field":"door_type","a":"1","b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"3A103","field":"hardware_group","a":"1","b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"3A103","field":"location","a":"CELL A103-CELL D116","b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"3D116","field":"width_inches","a":null,"b":28}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"3D116","field":"height_inches","a":null,"b":84}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"3D116","field":"door_type","a":null,"b":"1"}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"3D116","field":"hardware_group","a":null,"b":"1"}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"3D116","field":"location","a":null,"b":"CELL A103-CELL D116"}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"3A201","field":"width_inches","a":28,"b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"3A201","field":"height_inches","a":84,"b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"3A201","field":"door_type","a":"1","b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"3A201","field":"hardware_group","a":"1","b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"3A201","field":"location","a":"CELL A201-CELL D216","b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"3D216","field":"width_inches","a":null,"b":28}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"3D216","field":"height_inches","a":null,"b":84}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"3D216","field":"door_type","a":null,"b":"1"}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"3D216","field":"hardware_group","a":null,"b":"1"}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"3D216","field":"location","a":null,"b":"CELL A201-CELL D216"}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"4A101","field":"width_inches","a":28,"b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"4A101","field":"height_inches","a":84,"b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"4A101","field":"door_type","a":"1","b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"4A101","field":"hardware_group","a":"2","b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"4A101","field":"location","a":"CELL A101-CELL D102","b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"4D102","field":"width_inches","a":null,"b":28}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"4D102","field":"height_inches","a":null,"b":84}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"4D102","field":"door_type","a":null,"b":"1"}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"4D102","field":"hardware_group","a":null,"b":"2"}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"4D102","field":"location","a":null,"b":"CELL A101-CELL D102"}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"4A103","field":"width_inches","a":28,"b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"4A103","field":"height_inches","a":84,"b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"4A103","field":"door_type","a":"1","b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"4A103","field":"hardware_group","a":"1","b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"4A103","field":"location","a":"CELL A103-CELL D116","b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"4D116","field":"width_inches","a":null,"b":28}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"4D116","field":"height_inches","a":null,"b":84}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"4D116","field":"door_type","a":null,"b":"1"}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"4D116","field":"hardware_group","a":null,"b":"1"}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"4D116","field":"location","a":null,"b":"CELL A103-CELL D116"}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"4A201","field":"width_inches","a":28,"b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"4A201","field":"height_inches","a":84,"b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"4A201","field":"door_type","a":"1","b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"4A201","field":"hardware_group","a":"1","b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"4A201","field":"location","a":"CELL A201-CELL D216","b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"4D216","field":"width_inches","a":null,"b":28}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"4D216","field":"height_inches","a":null,"b":84}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"4D216","field":"door_type","a":null,"b":"1"}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"4D216","field":"hardware_group","a":null,"b":"1"}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"4D216","field":"location","a":null,"b":"CELL A201-CELL D216"}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"151B","field":"(row)","a":"read","b":null,"why":"only reader A read this row"}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"258A","field":"width_inches","a":36,"b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"258A","field":"height_inches","a":84,"b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"258A","field":"door_type","a":"3","b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"258A","field":"hardware_group","a":"4","b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"258A","field":"location","a":"SALLYPORT 258","b":null}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"258B","field":"width_inches","a":null,"b":36}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"258B","field":"height_inches","a":null,"b":84}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"258B","field":"door_type","a":null,"b":"3"}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"258B","field":"hardware_group","a":null,"b":"4"}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"258B","field":"location","a":null,"b":"SALLYPORT 258"}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"151A","field":"(row)","a":null,"b":"read","why":"only reader B read this row"}
-{"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"door","page":12,"key":"151C","field":"(row)","a":null,"b":"read","why":"only reader B read this row"}
 {"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"item","page":12,"key":"(CONTINUED) / 2 3 METAL DOOR FRAME","field":"(row)","a":"read","b":null,"why":"only reader A read this row"}
 {"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"item","page":12,"key":"(CONTINUED) / 3 1 NEW DOOR/FRAME W/ 1\" METAL SPANDREL PANEL","field":"(row)","a":"read","b":null,"why":"only reader A read this row"}
 {"sha16":"3506f831094dd516","file":"3506f831094dd516.pdf","family":"missouri_oa_fmdc","tier":"agreed","kind":"item","page":12,"key":"(CONTINUED) / METAL 2 3 FRAME METAL DOOR FRAME ARCHITECTURE &","field":"(row)","a":null,"b":"read","why":"only reader B read this row"}
@@ -1367,14 +1139,9 @@
 {"sha16":"3fd2388877347d09","file":"3fd2388877347d09.pdf","family":"missouri_oa_fmdc","tier":"oracle-checked","kind":"item","page":13,"key":"2 / 3' - 4\" SPECIAL EQUIPMENT DUTCH DOOR F00HM P3AL P00HM OH SE 01","field":"(row)","a":"read","b":null,"why":"only reader A read this row"}
 {"sha16":"3fd2388877347d09","file":"3fd2388877347d09.pdf","family":"missouri_oa_fmdc","tier":"oracle-checked","kind":"group","page":null,"key":"2","field":"doors","a":"","b":"10, 6, 7, 8, 9","why":"the set's door lists differ"}
 {"sha16":"4597f173e1d67daf","file":"4597f173e1d67daf.pdf","family":"missouri_oa_fmdc","tier":"unread","kind":"door","page":33,"key":"ACT1","field":"(row)","a":"read","b":null,"why":"only reader A read this row"}
-{"sha16":"4597f173e1d67daf","file":"4597f173e1d67daf.pdf","family":"missouri_oa_fmdc","tier":"unread","kind":"door","page":33,"key":"KEH1","field":"door_type","a":"I","b":null}
-{"sha16":"4597f173e1d67daf","file":"4597f173e1d67daf.pdf","family":"missouri_oa_fmdc","tier":"unread","kind":"door","page":33,"key":"KEH1","field":"material","a":"300 SS","b":null}
-{"sha16":"4597f173e1d67daf","file":"4597f173e1d67daf.pdf","family":"missouri_oa_fmdc","tier":"unread","kind":"door","page":33,"key":"KEH1","field":"fire_rating","a":"HEAVY","b":null}
-{"sha16":"4597f173e1d67daf","file":"4597f173e1d67daf.pdf","family":"missouri_oa_fmdc","tier":"unread","kind":"door","page":33,"key":"1","field":"width_inches","a":null,"b":54}
-{"sha16":"4597f173e1d67daf","file":"4597f173e1d67daf.pdf","family":"missouri_oa_fmdc","tier":"unread","kind":"door","page":33,"key":"1","field":"door_type","a":null,"b":"I"}
-{"sha16":"4597f173e1d67daf","file":"4597f173e1d67daf.pdf","family":"missouri_oa_fmdc","tier":"unread","kind":"door","page":33,"key":"1","field":"material","a":null,"b":"300 SS"}
-{"sha16":"4597f173e1d67daf","file":"4597f173e1d67daf.pdf","family":"missouri_oa_fmdc","tier":"unread","kind":"door","page":33,"key":"1","field":"fire_rating","a":null,"b":"HEAVY"}
 {"sha16":"4597f173e1d67daf","file":"4597f173e1d67daf.pdf","family":"missouri_oa_fmdc","tier":"unread","kind":"door","page":33,"key":"KEH1","field":"(row)","a":null,"b":"read","why":"only reader B read this row"}
+{"sha16":"4597f173e1d67daf","file":"4597f173e1d67daf.pdf","family":"missouri_oa_fmdc","tier":"unread","kind":"door","page":33,"key":"KEH1","field":"(row)","a":null,"b":"read","why":"only reader B read this row"}
+{"sha16":"4597f173e1d67daf","file":"4597f173e1d67daf.pdf","family":"missouri_oa_fmdc","tier":"unread","kind":"door","page":33,"key":"1","field":"(row)","a":null,"b":"read","why":"only reader B read this row"}
 {"sha16":"4597f173e1d67daf","file":"4597f173e1d67daf.pdf","family":"missouri_oa_fmdc","tier":"unread","kind":"door","page":33,"key":"2","field":"(row)","a":null,"b":"read","why":"only reader B read this row"}
 {"sha16":"4597f173e1d67daf","file":"4597f173e1d67daf.pdf","family":"missouri_oa_fmdc","tier":"unread","kind":"door","page":33,"key":"KEH2","field":"(row)","a":null,"b":"read","why":"only reader B read this row"}
 {"sha16":"4597f173e1d67daf","file":"4597f173e1d67daf.pdf","family":"missouri_oa_fmdc","tier":"unread","kind":"door","page":33,"key":"KEH3","field":"(row)","a":null,"b":"read","why":"only reader B read this row"}
@@ -2566,8 +2333,14 @@
 {"sha16":"df2c6ec2225731d7","file":"df2c6ec2225731d7.pdf","family":"missouri_oa_fmdc","tier":"oracle-checked","kind":"door","page":10,"key":"102","field":"(row)","a":"read","b":null,"why":"only reader A read this row"}
 {"sha16":"df2c6ec2225731d7","file":"df2c6ec2225731d7.pdf","family":"missouri_oa_fmdc","tier":"oracle-checked","kind":"door","page":10,"key":"2X","field":"(row)","a":"read","b":null,"why":"only reader A read this row"}
 {"sha16":"df2c6ec2225731d7","file":"df2c6ec2225731d7.pdf","family":"missouri_oa_fmdc","tier":"oracle-checked","kind":"door","page":10,"key":"A-300","field":"(row)","a":"read","b":null,"why":"only reader A read this row"}
-{"sha16":"df76d4056a456207","file":"df76d4056a456207.pdf","family":"missouri_oa_fmdc","tier":"oracle-checked","kind":"door","page":118,"key":"1","field":"width_inches","a":null,"b":54}
-{"sha16":"df76d4056a456207","file":"df76d4056a456207.pdf","family":"missouri_oa_fmdc","tier":"oracle-checked","kind":"door","page":118,"key":"2","field":"width_inches","a":null,"b":54}
+{"sha16":"df76d4056a456207","file":"df76d4056a456207.pdf","family":"missouri_oa_fmdc","tier":"oracle-checked","kind":"door","page":118,"key":"KEH1","field":"door_type","a":"I","b":null}
+{"sha16":"df76d4056a456207","file":"df76d4056a456207.pdf","family":"missouri_oa_fmdc","tier":"oracle-checked","kind":"door","page":118,"key":"KEH1","field":"material","a":"300 SS","b":null}
+{"sha16":"df76d4056a456207","file":"df76d4056a456207.pdf","family":"missouri_oa_fmdc","tier":"oracle-checked","kind":"door","page":118,"key":"KEH1","field":"fire_rating","a":"HEAVY","b":null}
+{"sha16":"df76d4056a456207","file":"df76d4056a456207.pdf","family":"missouri_oa_fmdc","tier":"oracle-checked","kind":"door","page":118,"key":"KEH1","field":"quantity","a":3,"b":null}
+{"sha16":"df76d4056a456207","file":"df76d4056a456207.pdf","family":"missouri_oa_fmdc","tier":"oracle-checked","kind":"door","page":118,"key":"KEH1","field":"door_type","a":"I","b":null}
+{"sha16":"df76d4056a456207","file":"df76d4056a456207.pdf","family":"missouri_oa_fmdc","tier":"oracle-checked","kind":"door","page":118,"key":"KEH1","field":"material","a":"300 SS","b":null}
+{"sha16":"df76d4056a456207","file":"df76d4056a456207.pdf","family":"missouri_oa_fmdc","tier":"oracle-checked","kind":"door","page":118,"key":"KEH1","field":"fire_rating","a":"MEDIUM","b":null}
+{"sha16":"df76d4056a456207","file":"df76d4056a456207.pdf","family":"missouri_oa_fmdc","tier":"oracle-checked","kind":"door","page":118,"key":"KEH1","field":"quantity","a":3,"b":null}
 {"sha16":"df76d4056a456207","file":"df76d4056a456207.pdf","family":"missouri_oa_fmdc","tier":"oracle-checked","kind":"door","page":114,"key":"100","field":"(row)","a":null,"b":"read","why":"only reader B read this row"}
 {"sha16":"df76d4056a456207","file":"df76d4056a456207.pdf","family":"missouri_oa_fmdc","tier":"oracle-checked","kind":"door","page":114,"key":"101A","field":"(row)","a":null,"b":"read","why":"only reader B read this row"}
 {"sha16":"df76d4056a456207","file":"df76d4056a456207.pdf","family":"missouri_oa_fmdc","tier":"oracle-checked","kind":"door","page":114,"key":"101B","field":"(row)","a":null,"b":"read","why":"only reader B read this row"}
@@ -2581,8 +2354,8 @@
 {"sha16":"df76d4056a456207","file":"df76d4056a456207.pdf","family":"missouri_oa_fmdc","tier":"oracle-checked","kind":"door","page":114,"key":"113A","field":"(row)","a":null,"b":"read","why":"only reader B read this row"}
 {"sha16":"df76d4056a456207","file":"df76d4056a456207.pdf","family":"missouri_oa_fmdc","tier":"oracle-checked","kind":"door","page":114,"key":"113B","field":"(row)","a":null,"b":"read","why":"only reader B read this row"}
 {"sha16":"df76d4056a456207","file":"df76d4056a456207.pdf","family":"missouri_oa_fmdc","tier":"oracle-checked","kind":"door","page":114,"key":"114","field":"(row)","a":null,"b":"read","why":"only reader B read this row"}
-{"sha16":"df76d4056a456207","file":"df76d4056a456207.pdf","family":"missouri_oa_fmdc","tier":"oracle-checked","kind":"door","page":118,"key":"KEH1","field":"(row)","a":null,"b":"read","why":"only reader B read this row"}
-{"sha16":"df76d4056a456207","file":"df76d4056a456207.pdf","family":"missouri_oa_fmdc","tier":"oracle-checked","kind":"door","page":118,"key":"KEH1","field":"(row)","a":null,"b":"read","why":"only reader B read this row"}
+{"sha16":"df76d4056a456207","file":"df76d4056a456207.pdf","family":"missouri_oa_fmdc","tier":"oracle-checked","kind":"door","page":118,"key":"1","field":"(row)","a":null,"b":"read","why":"only reader B read this row"}
+{"sha16":"df76d4056a456207","file":"df76d4056a456207.pdf","family":"missouri_oa_fmdc","tier":"oracle-checked","kind":"door","page":118,"key":"2","field":"(row)","a":null,"b":"read","why":"only reader B read this row"}
 {"sha16":"df76d4056a456207","file":"df76d4056a456207.pdf","family":"missouri_oa_fmdc","tier":"oracle-checked","kind":"door","page":118,"key":"KEH2","field":"(row)","a":null,"b":"read","why":"only reader B read this row"}
 {"sha16":"df76d4056a456207","file":"df76d4056a456207.pdf","family":"missouri_oa_fmdc","tier":"oracle-checked","kind":"door","page":118,"key":"KEH3","field":"(row)","a":null,"b":"read","why":"only reader B read this row"}
 {"sha16":"df76d4056a456207","file":"df76d4056a456207.pdf","family":"missouri_oa_fmdc","tier":"oracle-checked","kind":"item","page":114,"key":"(CONTINUED) / \"","field":"(row)","a":"read","b":null,"why":"only reader A read this row"}

@@ -24,53 +24,57 @@
  },
  "readers": {
   "a": {
-   "doors": 30,
+   "doors": 16,
    "sets": 1,
    "items": 2,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
   },
   "b": {
-   "doors": 31,
+   "doors": 16,
    "sets": 1,
    "items": 2,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
    "tables": 5
   }
  },
- "rows_agreed": 5,
- "rows_disputed": 31,
- "rows_total": 36,
- "agreement_rate": 0.1389,
+ "rows_agreed": 16,
+ "rows_disputed": 4,
+ "rows_total": 20,
+ "agreement_rate": 0.8,
  "agreement": {
   "doors": {
-   "rows": 32,
-   "agreed": 5,
-   "disputed": 24,
-   "only_a": 1,
-   "only_b": 2,
+   "rows": 16,
+   "agreed": 16,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
    "fields": {
     "width_inches": {
-     "agree": 3,
-     "total": 27
+     "agree": 16,
+     "total": 16
     },
     "height_inches": {
-     "agree": 3,
-     "total": 27
+     "agree": 16,
+     "total": 16
     },
     "door_type": {
-     "agree": 3,
-     "total": 27
+     "agree": 16,
+     "total": 16
     },
     "hardware_group": {
-     "agree": 3,
-     "total": 27
+     "agree": 16,
+     "total": 16
     },
     "location": {
-     "agree": 3,
-     "total": 27
+     "agree": 16,
+     "total": 16
+    },
+    "quantity": {
+     "agree": 16,
+     "total": 16
     }
    },
-   "agreement_rate": 0.1563
+   "agreement_rate": 1
   },
   "items": {
    "rows": 4,
@@ -91,13 +95,11 @@
  "oracles": {
   "marks_on_plan": {
    "applicable": true,
-   "total": 30,
-   "pass": 29,
-   "fail": 1,
-   "pass_rate": 0.9667,
-   "examples": [
-    "mark 3D216 (schedule p.12) not tagged on any plan"
-   ],
+   "total": 16,
+   "pass": 16,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
    "plan_sheets": [
     "A102 p.3",
     "A103 p.4",
@@ -113,10 +115,10 @@
     "plan_sheets": 9,
     "rooms": 663,
     "corridors": 8,
-    "tags": 29,
-    "unmatched_tags": 481,
-    "schedule_marks": 30,
-    "marks_not_on_plan": 1,
+    "tags": 16,
+    "unmatched_tags": 496,
+    "schedule_marks": 16,
+    "marks_not_on_plan": 0,
     "shared_marks": 0
    }
   },
@@ -143,352 +145,55 @@
   },
   "sizes_and_marks": {
    "applicable": true,
-   "total": 30,
-   "pass": 15,
-   "fail": 15,
-   "pass_rate": 0.5,
-   "examples": [
-    "mark 1A101 p.12: size null -> null x null",
-    "mark 1D116 p.12: size null -> null x null",
-    "mark 1D216 p.12: size null -> null x null",
-    "mark 2D102 p.12: size null -> null x null",
-    "mark 2D116 p.12: size null -> null x null",
-    "mark 2D216 p.12: size null -> null x null",
-    "mark 3D102 p.12: size null -> null x null",
-    "mark 3D116 p.12: size null -> null x null",
-    "mark 3D216 p.12: size null -> null x null",
-    "mark 4D102 p.12: size null -> null x null",
-    "mark 4D116 p.12: size null -> null x null",
-    "mark 4D216 p.12: size null -> null x null"
-   ],
-   "size_fail": 14,
-   "mark_fail": 1
+   "total": 16,
+   "pass": 16,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "size_fail": 0,
+   "mark_fail": 0
   }
  },
  "tier": "agreed",
- "disagreement_count": 127,
+ "disagreement_count": 4,
  "disagreements": [
   {
-   "kind": "door",
+   "kind": "item",
    "page": 12,
-   "key": "1A103",
-   "field": "width_inches",
-   "a": 28,
-   "b": null
+   "key": "(CONTINUED) / 2 3 METAL DOOR FRAME",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
   },
   {
-   "kind": "door",
+   "kind": "item",
    "page": 12,
-   "key": "1A103",
-   "field": "height_inches",
-   "a": 84,
-   "b": null
+   "key": "(CONTINUED) / 3 1 NEW DOOR/FRAME W/ 1\" METAL SPANDREL PANEL",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
   },
   {
-   "kind": "door",
+   "kind": "item",
    "page": 12,
-   "key": "1A103",
-   "field": "door_type",
-   "a": "1",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 12,
-   "key": "1A103",
-   "field": "hardware_group",
-   "a": "1",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 12,
-   "key": "1A103",
-   "field": "location",
-   "a": "CELL A103-CELL D116",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 12,
-   "key": "1D116",
-   "field": "width_inches",
+   "key": "(CONTINUED) / METAL 2 3 FRAME METAL DOOR FRAME ARCHITECTURE &",
+   "field": "(row)",
    "a": null,
-   "b": 28
+   "b": "read",
+   "why": "only reader B read this row"
   },
   {
-   "kind": "door",
+   "kind": "item",
    "page": 12,
-   "key": "1D116",
-   "field": "height_inches",
+   "key": "(CONTINUED) / 4'-0\" x 7'-0\" 2 3 1 NEW DOOR/FRAME W/ 1\" METAL SPANDREL PANEL",
+   "field": "(row)",
    "a": null,
-   "b": 84
-  },
-  {
-   "kind": "door",
-   "page": 12,
-   "key": "1D116",
-   "field": "door_type",
-   "a": null,
-   "b": "1"
-  },
-  {
-   "kind": "door",
-   "page": 12,
-   "key": "1D116",
-   "field": "hardware_group",
-   "a": null,
-   "b": "1"
-  },
-  {
-   "kind": "door",
-   "page": 12,
-   "key": "1D116",
-   "field": "location",
-   "a": null,
-   "b": "CELL A103-CELL D116"
-  },
-  {
-   "kind": "door",
-   "page": 12,
-   "key": "1A201",
-   "field": "width_inches",
-   "a": 28,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 12,
-   "key": "1A201",
-   "field": "height_inches",
-   "a": 84,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 12,
-   "key": "1A201",
-   "field": "door_type",
-   "a": "1",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 12,
-   "key": "1A201",
-   "field": "hardware_group",
-   "a": "1",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 12,
-   "key": "1A201",
-   "field": "location",
-   "a": "CELL A201-CELL D216",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 12,
-   "key": "1D216",
-   "field": "width_inches",
-   "a": null,
-   "b": 28
-  },
-  {
-   "kind": "door",
-   "page": 12,
-   "key": "1D216",
-   "field": "height_inches",
-   "a": null,
-   "b": 84
-  },
-  {
-   "kind": "door",
-   "page": 12,
-   "key": "1D216",
-   "field": "door_type",
-   "a": null,
-   "b": "1"
-  },
-  {
-   "kind": "door",
-   "page": 12,
-   "key": "1D216",
-   "field": "hardware_group",
-   "a": null,
-   "b": "1"
-  },
-  {
-   "kind": "door",
-   "page": 12,
-   "key": "1D216",
-   "field": "location",
-   "a": null,
-   "b": "CELL A201-CELL D216"
-  },
-  {
-   "kind": "door",
-   "page": 12,
-   "key": "2A101",
-   "field": "width_inches",
-   "a": 28,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 12,
-   "key": "2A101",
-   "field": "height_inches",
-   "a": 84,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 12,
-   "key": "2A101",
-   "field": "door_type",
-   "a": "1",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 12,
-   "key": "2A101",
-   "field": "hardware_group",
-   "a": "2",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 12,
-   "key": "2A101",
-   "field": "location",
-   "a": "CELL A101-CELL D102",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 12,
-   "key": "2D102",
-   "field": "width_inches",
-   "a": null,
-   "b": 28
-  },
-  {
-   "kind": "door",
-   "page": 12,
-   "key": "2D102",
-   "field": "height_inches",
-   "a": null,
-   "b": 84
-  },
-  {
-   "kind": "door",
-   "page": 12,
-   "key": "2D102",
-   "field": "door_type",
-   "a": null,
-   "b": "1"
-  },
-  {
-   "kind": "door",
-   "page": 12,
-   "key": "2D102",
-   "field": "hardware_group",
-   "a": null,
-   "b": "2"
-  },
-  {
-   "kind": "door",
-   "page": 12,
-   "key": "2D102",
-   "field": "location",
-   "a": null,
-   "b": "CELL A101-CELL D102"
-  },
-  {
-   "kind": "door",
-   "page": 12,
-   "key": "2A103",
-   "field": "width_inches",
-   "a": 28,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 12,
-   "key": "2A103",
-   "field": "height_inches",
-   "a": 84,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 12,
-   "key": "2A103",
-   "field": "door_type",
-   "a": "1",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 12,
-   "key": "2A103",
-   "field": "hardware_group",
-   "a": "1",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 12,
-   "key": "2A103",
-   "field": "location",
-   "a": "CELL A103-CELL D116",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 12,
-   "key": "2D116",
-   "field": "width_inches",
-   "a": null,
-   "b": 28
-  },
-  {
-   "kind": "door",
-   "page": 12,
-   "key": "2D116",
-   "field": "height_inches",
-   "a": null,
-   "b": 84
-  },
-  {
-   "kind": "door",
-   "page": 12,
-   "key": "2D116",
-   "field": "door_type",
-   "a": null,
-   "b": "1"
-  },
-  {
-   "kind": "door",
-   "page": 12,
-   "key": "2D116",
-   "field": "hardware_group",
-   "a": null,
-   "b": "1"
-  },
-  {
-   "kind": "door",
-   "page": 12,
-   "key": "2D116",
-   "field": "location",
-   "a": null,
-   "b": "CELL A103-CELL D116"
+   "b": "read",
+   "why": "only reader B read this row"
   }
  ],
- "ms": 389,
- "generated_at": "2026-10-10T02:53:25.356Z"
+ "ms": 368,
+ "generated_at": "2026-10-10T03:15:21.443Z"
 }
