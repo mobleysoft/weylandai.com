@@ -1,0 +1,138 @@
+{
+  "journey": "first-customer-project",
+  "title": "First customer on credit: project",
+  "base": "https://weylandai.com",
+  "started_at": "2026-10-10T07:59:23.115Z",
+  "finished_at": "2026-10-10T07:59:31.383Z",
+  "passed": 10,
+  "failed": 1,
+  "checks": [
+    {
+      "name": "the firm's browser is still signed in to its account",
+      "ok": true,
+      "detail": "{\"auth\":\"signed-in\",\"user\":\"jmobleyworks+mobleycontracting@gmail.com\"}"
+    },
+    {
+      "name": "SubX opens in the overlay, signed in",
+      "ok": true,
+      "detail": "{\"path\":\"/subx-app\",\"search\":\"?embed=1\",\"appVisible\":true,\"loginVisible\":false,\"accountToken\":true,\"sessions\":\"Project Type Pages Found Uploaded (UTC) T2507 (second project) 192a16af8f31ae0c.pdf door schedule 30 49 doors 2026-10-10 03:23 R2502 Missouri Hope (first project) R2502-door-schedule-pages.pdf door schedule 4 211 doors 2026-10-10 03:16 The WeylandAI Building DEMO weyland_building_schedule.pdf door s\",\"clientExtraction\":true}"
+    },
+    {
+      "name": "the firm's project 'T2507 (second project)' is in its schedules",
+      "ok": true,
+      "detail": "Project Type Pages Found Uploaded (UTC) T2507 (second project) 192a16af8f31ae0c.pdf door schedule 30 49 doors 2026-10-10 03:23 R2502 Missouri Hope (first project) R2502-door-schedule-pages.pdf door schedule 4 211 doors 2026-10-10 03:16 The WeylandAI Building DEMO weyland_building_schedule.pdf door s"
+    },
+    {
+      "name": "every door row of the schedule pages is read (49 on the sheets)",
+      "ok": true,
+      "detail": "{\"rows\":49,\"extract\":\"\"}"
+    },
+    {
+      "name": "the two 132A openings are two rows, each with its own source row",
+      "ok": true,
+      "detail": "[{\"mark\":\"132A\",\"group\":\"-\",\"size\":\"5'-6\\\" x 7'-0\\\"\",\"source\":\"p.10 row 36\"},{\"mark\":\"132A [row.2]\",\"group\":\"-\",\"size\":\"6'-3\\\" x 7'-0\\\"\",\"source\":\"p.10 row 37\"}]"
+    },
+    {
+      "name": "the workspace says the two 132A rows share one tag",
+      "ok": false,
+      "detail": "[\"132A - 5'-6\\\" x 7'-0\\\" - - EXIST HM / - EXIST / HM / - 1; Room: 132; Duplicate mark 132A on page 10; verify each occurrence Duplicate mark 132A on page 10 (2 rows); verify each occurrence. p.10 row 36 EDIT\",\"132A [row.2] - 6'-3\\\" x 7'-0\\\" - - EXIST HM / - EXIST / HM / - 1; Room: 132; Duplicate mark 132A on page 10; verify each occurrence Duplicate mark 132A on page 10 (2 rows); verify each occurrence. p.10 row 37 EDIT\"]"
+    },
+    {
+      "name": "every row cites its source page and row",
+      "ok": true,
+      "detail": "{\"rows\":49,\"traced\":49,\"sample\":[{\"mark\":\"100A\",\"group\":\"-\",\"size\":\"3'-0\\\" x 7'-0\\\"\",\"source\":\"p.10 row 0\"},{\"mark\":\"101A\",\"group\":\"-\",\"size\":\"3'-0\\\" x 7'-0\\\"\",\"source\":\"p.10 row 1\"},{\"mark\":\"102A\",\"group\":\"-\",\"size\":\"3'-0\\\" x 7'-0\\\"\",\"source\":\"p.10 row 2\"}]}"
+    },
+    {
+      "name": "BUILD THE SUBMITTAL PDF builds the firm's first submittal package with its door schedule",
+      "ok": true,
+      "detail": "Built: 5 pages - cover, contents, door schedule (49 doors, 2 pages), your uploaded schedule (1 page). The doors reference hardware groups; the items in each group (and their cut sheets) come from the hardware schedule - upload it here as a hardware schedule to add them."
+    },
+    {
+      "name": "the package is shown in the page",
+      "ok": true,
+      "detail": "{\"kind\":\"pages drawn in the page\",\"pages\":5,\"drawn\":1,\"meta\":\"Submittal package for T2507 (second project) - 5 pages, shown below.\"}"
+    },
+    {
+      "name": "DOWNLOAD PDF saves the package",
+      "ok": true,
+      "detail": "{\"file\":\"T2507_second_project_submittal.pdf\"}"
+    },
+    {
+      "name": "stayed in place: same document, still on weylandai.com",
+      "ok": true,
+      "detail": "{\"sameDocument\":true,\"onSite\":true,\"url\":\"https://weylandai.com/?journey=first-customer-project-mv23shrf2512c6\"}"
+    }
+  ],
+  "notes": {
+    "browser": "software WebGL (ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)), not the Mac's GPU: timings of the 3D homepage are slower than a customer's",
+    "schedules_before": "Project Type Pages Found Uploaded (UTC) T2507 (second project) 192a16af8f31ae0c.pdf door schedule 30 49 doors 2026-10-10 03:23 R2502 Missouri Hope (first project) R2502-door-schedule-pages.pdf door schedule 4 211 doors 2026-10-10 03:16 The WeylandAI Building DEMO weyland_building_schedule.pdf door s",
+    "read": {
+      "rows": 49,
+      "extract": "",
+      "title": "T2507 (second project)",
+      "sub": "192a16af8f31ae0c.pdf · door schedule · 30 pages",
+      "note": "49 door rows, machine-read: check them against the source page before you submit. Marked values (2 rows) are ones the reader is not sure of: read by OCR, not shaped like the column, or empty where the other rows have a value. A size not read is left out of the counts. Press EDIT to correct a row.",
+      "tiles": [
+        {
+          "label": "DOOR ROWS",
+          "value": "49"
+        },
+        {
+          "label": "SIZES READ",
+          "value": "49 / 49"
+        },
+        {
+          "label": "FIRE-RATED DOORS",
+          "value": "0"
+        },
+        {
+          "label": "HARDWARE GROUPS",
+          "value": "0"
+        }
+      ],
+      "steps": {
+        "upload": "done",
+        "read": "done",
+        "review": "now",
+        "pdf": "done"
+      }
+    },
+    "shared_mark_rows": [
+      "132A - 5'-6\" x 7'-0\" - - EXIST HM / - EXIST / HM / - 1; Room: 132; Duplicate mark 132A on page 10; verify each occurrence Duplicate mark 132A on page 10 (2 rows); verify each occurrence. p.10 row 36 EDIT",
+      "132A [row.2] - 6'-3\" x 7'-0\" - - EXIST HM / - EXIST / HM / - 1; Room: 132; Duplicate mark 132A on page 10; verify each occurrence Duplicate mark 132A on page 10 (2 rows); verify each occurrence. p.10 row 37 EDIT"
+    ],
+    "package": {
+      "result": "Built: 5 pages - cover, contents, door schedule (49 doors, 2 pages), your uploaded schedule (1 page). The doors reference hardware groups; the items in each group (and their cut sheets) come from the hardware schedule - upload it here as a hardware schedule to add them.",
+      "pages": 5,
+      "seconds": 3,
+      "viewer": {
+        "kind": "pages drawn in the page",
+        "pages": 5,
+        "drawn": 1,
+        "meta": "Submittal package for T2507 (second project) - 5 pages, shown below."
+      },
+      "download": {
+        "href": "blob:",
+        "file": "T2507_second_project_submittal.pdf"
+      }
+    },
+    "package_saved": "T2507-submittal.pdf",
+    "schedules_after": "Project Type Pages Found Uploaded (UTC) T2507 (second project) 192a16af8f31ae0c.pdf door schedule 30 49 doors 2026-10-10 03:23 R2502 Missouri Hope (first project) R2502-door-schedule-pages.pdf door schedule 4 211 doors 2026-10-10 03:16 The WeylandAI Building DEMO weyland_building_schedule.pdf door s",
+    "state_kept": true
+  },
+  "browser": {
+    "launch_args": [
+      "--use-angle=metal"
+    ],
+    "webgl": {
+      "webgl": true,
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "vendor": "Google Inc. (Google)"
+    }
+  },
+  "api_errors": [],
+  "cleanup": {
+    "kept": "the customer record (account, project, package) is kept on purpose"
+  },
+  "side_effects": "no AuthFor identity created"
+}

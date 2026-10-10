@@ -2146,7 +2146,8 @@ global.SovereignPdfRender = {
         }
         var body = doors.map(function (d, i) {
           if (state.editing === d.id) return editRowHtml(d, i);
-          return '<tr data-door="' + esc(d.id) + '"><td class="nowrap mark-cell"><b>' + flag(d, "mark", esc(d.mark)) + "</b></td>" +
+          // The mark as the sheet prints it: "132A [row.2]" is the workspace's key for a second row (g063).
+          return '<tr data-door="' + esc(d.id) + '"><td class="nowrap mark-cell"><b>' + flag(d, "mark", esc(String(d.mark || "").replace(/(\s\[(row|p)\.\d+\])+$/, ""))) + "</b></td>" +
             td("Hardware group", flag(d, "hardware_group", esc(d.hardware_group || "-"))) +
             td("Size", (d.unsure || []).indexOf("size") >= 0 ? unread(d.width || "not read", "Not read with certainty: check it on the sheet. Not counted under By size.") : sizeCell(d), "nowrap") +
             td("Thick.", flag(d, "thickness", thicknessCell(d)), "nowrap") +
@@ -2154,7 +2155,8 @@ global.SovereignPdfRender = {
             td("Door type", flag(d, "door_type", esc(d.door_type || "-"))) +
             td("Door matl / fin", flag(d, "door_material", esc(d.door_material || "-")) + " / " + flag(d, "door_finish", esc(d.door_finish || "-"))) +
             td("Frame", ["frame_type", "frame_material", "frame_finish"].map(function (f) { return flag(d, f, esc(d[f] || "-")); }).join(" / ")) +
-            td("Notes", esc(d.notes || "") + (d.review_issues || []).map(function (issue) { return ' <span class="unread">' + esc(issue) + '</span>'; }).join('') + (d.corrected ? ' <span class="tag ok">CORRECTED</span>' : "")) +
+            // The review note says it once: a remark saved at read time for the same duplicate is not repeated (g063).
+            td("Notes", esc(String(d.notes || "").replace(/;?\s*Duplicate mark [^;]+ on page \d+; verify each occurrence/g, (m) => (d.review_issues || []).some(function (x) { return /^Duplicate mark /.test(x); }) ? "" : m)) + (d.review_issues || []).map(function (issue) { return ' <span class="unread">' + esc(issue) + '</span>'; }).join('') + (d.corrected ? ' <span class="tag ok">CORRECTED</span>' : "")) +
             td("Source", '<span class="src-cite">' + esc(srcText(d)) + (d.machine_read ? ' · machine-read OCR' : '') + "</span>", "nowrap muted-small src-cell") +
             '<td class="nowrap edit-cell"><button type="button" class="small" data-edit="' + esc(d.id) + '" aria-label="Edit door ' + esc(d.mark || "") + '">EDIT</button></td></tr>';
         }).join("");

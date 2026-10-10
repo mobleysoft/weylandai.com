@@ -79,7 +79,9 @@ export function reviewDoorRows(doors, opts = {}) {
     summary.duplicate_marks.push(issue);
     for (const d of group) {
       d.unsure = [...new Set([...d.unsure, "mark"])];
-      d.review_issues.push("Duplicate mark " + issue.mark + " on page " + issue.page + " (" + issue.count + " rows); verify each occurrence.");
+      // g063: two rows with one mark are often two openings sharing one tag (T2507-01 A-103's
+      // 132A, tagged twice on plan A-100), sometimes a misprint; the note says both.
+      d.review_issues.push("Duplicate mark " + issue.mark + " on page " + issue.page + " (" + issue.count + " rows): " + (issue.count === 2 ? "two openings" : issue.count + " openings") + " sharing one tag, or a misprint; verify each occurrence.");
     }
   }
   const expected = opts.expectedMarks ?? doors.flatMap(d => (d.read_audit?.expected_marks || []).map(mark => typeof mark === "object" ? mark : ({ page: pageOf(d), mark })));

@@ -128,3 +128,13 @@ test("F2: app STOP READING dispatches the AbortSignal passed to browser extracti
   assert.match(html, /maxPixels: 14e6, signal: ctl.signal/);
   assert.doesNotMatch(html, /state\.readAbort\.signal/, "no read looks the signal up through state");
 });
+
+// g063: the duplicate-mark note names both readings (T2507-01 A-103's 132A: two openings, one tag).
+test("a mark on two rows reads as two openings sharing one tag, or a misprint", async () => {
+  const { reviewDoorRows } = await import("../assets/client-ocr-src/schedule-workspace.mjs");
+  const doors = [{ mark: "132A", page_number: 10 }, { mark: "132A", page_number: 10 }, { mark: "133A", page_number: 10 }];
+  const summary = reviewDoorRows(doors);
+  assert.deepEqual(summary.duplicate_marks, [{ page: 10, mark: "132A", count: 2 }]);
+  assert.equal(doors[0].review_issues[0], "Duplicate mark 132A on page 10 (2 rows): two openings sharing one tag, or a misprint; verify each occurrence.");
+  assert.deepEqual(doors[2].review_issues, []);
+});
