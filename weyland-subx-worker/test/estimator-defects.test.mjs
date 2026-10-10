@@ -115,3 +115,23 @@ test('packet door table and hardware pages print the same full hardware-group la
     await pdf.destroy?.();
   }
 });
+
+test('g063: the packet prints a shared mark as the sheet does (132A twice), not the workspace key "132A [row.2]"', async () => {
+  const { generateDoorSchedulePages, printedMark } = await import('../src/lib/submittal-assembler.js');
+  const { openTextLayerDoc } = await import('../src/lib/text-layer-read.js');
+  assert.equal(printedMark('132A [row.2]'), '132A');
+  assert.equal(printedMark('101 [p.3] [row.2]'), '101');
+  assert.equal(printedMark('100A'), '100A');
+  const table = await generateDoorSchedulePages([
+    { mark: '132A', width_inches: 66, height_inches: 84, page_number: 10, field_confidence_json: JSON.stringify({ source: { page: 10, table_row: 36 } }) },
+    { mark: '132A [row.2]', width_inches: 75, height_inches: 84, page_number: 10, field_confidence_json: JSON.stringify({ source: { page: 10, table_row: 37 } }) },
+  ]);
+  const pdf = await openTextLayerDoc(table.bytes);
+  let text = '';
+  for (let p = 1; p <= pdf.numPages; p++) text += (await (await pdf.getPage(p)).getTextContent()).items.map(i => i.str).join(' ') + ' ';
+  assert.equal((text.match(/132A/g) || []).length, 2);
+  assert.doesNotMatch(text, /\[row/);
+  assert.match(text, /p\.10 row 36/);
+  assert.match(text, /p\.10 row 37/);
+  await pdf.destroy?.();
+});
