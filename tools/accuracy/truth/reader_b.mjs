@@ -230,7 +230,11 @@ export function readDoorsB(items, rules, size) {
   // The same table found both ways (or nested): keep the reading with more rows.
   const area = (T) => Math.max(1, (T.x1 - T.x0) * (T.y1 - T.y0));
   const overlap = (a, b) => Math.max(0, Math.min(a.x1, b.x1) - Math.max(a.x0, b.x0)) * Math.max(0, Math.min(a.y1, b.y1) - Math.max(a.y0, b.y0));
-  found.sort((a, b) => b.t.doors.length - a.t.doors.length || area(a.T) - area(b.T));
+  // A nested fragment can contain every mark but omit right-hand columns.
+  // On equal row counts prefer the explicitly mapped header with more fields,
+  // then area; the shared-top-rule recovery must not discard fire/hardware.
+  const mappedFields = t => t.fields.filter(Boolean).length;
+  found.sort((a, b) => b.t.doors.length - a.t.doors.length || mappedFields(b.t) - mappedFields(a.t) || area(a.T) - area(b.T));
   const keep = [];
   for (const f of found) if (!keep.some((k) => overlap(k.T, f.T) > 0.5 * Math.min(area(k.T), area(f.T)))) keep.push(f);
   const tables = [], doors = [];
