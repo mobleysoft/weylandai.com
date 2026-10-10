@@ -1,0 +1,2082 @@
+{
+ "task": "g042 step two: spot checks of harvest truth on rendered pages",
+ "date": "2026-10-09",
+ "truth_run": "tools/accuracy/truth_run.mjs at 8d8b895; report tools/accuracy/truth_report_2026-10-10-00-17.md",
+ "method": "whole page at 110 dpi, door schedule crops at 220 dpi, rows counted by eye; reader rows from tools/accuracy/truth reader_a.mjs readA and reader_b.mjs readDoorsB on the same pages",
+ "random_pick": {
+  "seed": 20261009,
+  "rng": "mulberry32, first draw",
+  "candidates": 8,
+  "index": 1,
+  "sha16": "18b27b8baa47f0e1"
+ },
+ "skipped": [
+  "192a16af8f31ae0c (already eye-checked, g041)",
+  "e0abc0ac15f561ef (not a harvest PDF)"
+ ],
+ "summary": {
+  "sets": 10,
+  "a_right": 3,
+  "b_right": 1,
+  "both_right": 4,
+  "both_wrong": 3,
+  "eye_rows_total": 552,
+  "a_rows_total": 569,
+  "b_rows_total": 403,
+  "agreed_total": 266
+ },
+ "fix_first": "C1 (reader B table finder): most sets (4 of 10) and most rows (222); in 3 of the 4 reader A is already right by eye, so fixing B alone moves them to agreed. Then C4 in reader A (silent row loss), then C2.",
+ "sets": [
+  {
+   "n": 1,
+   "sha16": "3506f831094dd516",
+   "family": "missouri_oa_fmdc",
+   "label": "C2410-01 Final Plans, A601",
+   "pages": [
+    12
+   ],
+   "eye": 16,
+   "eye_note": "16 printed rows; 520 doors by QUANTITY column",
+   "a": 30,
+   "b": 31,
+   "agreed": 9,
+   "disputed": 27,
+   "verdict": "both wrong",
+   "classes": [
+    "C3"
+   ],
+   "crops": [
+    "s01_3506_p12_units1-2.png",
+    "s01_3506_p12_units3-5.png"
+   ],
+   "disputed_rows": [
+    {
+     "key": "1A101 TO 1D102",
+     "right": "neither",
+     "why": "range row for 8 doors; both readers split it into marks 1A101 and 1D102 and drop QUANTITY"
+    },
+    {
+     "key": "1A103 TO 1D116",
+     "right": "neither",
+     "why": "range row for 56 doors; A keeps fields on 1A103, B on 1D116, so the halves dispute"
+    },
+    {
+     "key": "151A 151B 151C",
+     "right": "neither",
+     "why": "one row (SALLYPORT 151, qty 3) with three stacked marks; A reads one row 151B, B reads two rows 151A and 151C"
+    },
+    {
+     "key": "258A 258B",
+     "right": "neither",
+     "why": "one printed row (qty 2) with two stacked marks; both readers emit two rows"
+    },
+    {
+     "key": "259A 259B",
+     "right": "neither",
+     "why": "same as 258A/258B"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "sha16": "194733de48af8797",
+   "family": "missouri_oa_fmdc",
+   "label": "C2410-01 Add 1 Plans-Specs, A601",
+   "pages": [
+    45
+   ],
+   "eye": 16,
+   "eye_note": "16 printed rows; 520 doors by QUANTITY column; revision clouds over the tables",
+   "a": 34,
+   "b": 35,
+   "agreed": 13,
+   "disputed": 29,
+   "verdict": "both wrong",
+   "classes": [
+    "C3"
+   ],
+   "crops": [
+    "s02_1947_p45_units1-2.png",
+    "s02_1947_p45_units3-5.png"
+   ],
+   "disputed_rows": [
+    {
+     "key": "1A105 TO 1A116 / 1B109 TO 1B116",
+     "right": "neither",
+     "why": "one tall cell holding two ranges (qty 16); both readers make four rows of it, A with a location-only row for the second range"
+    },
+    {
+     "key": "2A109 TO 2A112 & 2B109 TO 2B112",
+     "right": "neither",
+     "why": "one cell with two ranges joined by &; split into four marks by both"
+    },
+    {
+     "key": "3A109 TO 3A 112",
+     "right": "neither",
+     "why": "mark printed with a space; both readers emit a bogus mark 3A"
+    },
+    {
+     "key": "151A 151B 151C",
+     "right": "neither",
+     "why": "as in set 1: A reads 151B only, B reads 151A and 151C"
+    },
+    {
+     "key": "1A101 TO 1D116",
+     "right": "neither",
+     "why": "range row for 48 doors split into two marks"
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "sha16": "eefa018e007e581f",
+   "family": "missouri_oa_fmdc",
+   "label": "X2207-01 Add 2 Plans & Specs, A-602",
+   "pages": [
+    59
+   ],
+   "eye": 84,
+   "eye_note": "13 LOWER DORM + 39 LODGE + 8 RESTROOM + 1 GAME ROOM + 2 GYMNASIUM + 14 FAMILY CABIN + 7 TWO BEDROOM; section titles are not rows",
+   "a": 84,
+   "b": 0,
+   "agreed": 0,
+   "disputed": 84,
+   "verdict": "A right",
+   "classes": [
+    "C1"
+   ],
+   "crops": [
+    "s03_eefa_p59_a.png",
+    "s03_eefa_p59_b.png",
+    "s03_eefa_p59_c.png"
+   ],
+   "disputed_rows": [
+    {
+     "key": "100-1 .. 707-01 (all 84)",
+     "right": "A",
+     "why": "B finds no rule table on the page and reads nothing; A marks match the sheet one for one"
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "sha16": "7239a04e6cc8b502",
+   "family": "missouri_oa_fmdc",
+   "label": "C2512-01 Final Bid Plans, A-501",
+   "pages": [
+    63
+   ],
+   "eye": 75,
+   "eye_note": "rows 100 to 176 including decimal marks; row 162 has a two-line room name",
+   "a": 74,
+   "b": 0,
+   "agreed": 0,
+   "disputed": 74,
+   "verdict": "both wrong",
+   "classes": [
+    "C1",
+    "C4"
+   ],
+   "crops": [
+    "s04_7239_p63_a.png",
+    "s04_7239_p63_b.png",
+    "s04_7239_p63_c.png"
+   ],
+   "disputed_rows": [
+    {
+     "key": "176",
+     "right": "neither",
+     "why": "last row (ROOF HATCH, RE:SPECS, no size) merged by A into the row above as mark 173.3176; B reads nothing"
+    },
+    {
+     "key": "173.3",
+     "right": "neither",
+     "why": "A emits it as 173.3176 (see 176)"
+    },
+    {
+     "key": "100 .. 173.2 (72 rows)",
+     "right": "A",
+     "why": "A marks match the sheet; B finds no table"
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "sha16": "21d60f1b54e0e3df",
+   "family": "ohio_ofcc",
+   "label": "ADD1-SOC-250003, A601 p.78 and E-601 p.88",
+   "pages": [
+    78,
+    88
+   ],
+   "eye": 19,
+   "eye_note": "19 rows in the OPENING SCHEDULE on p.78; p.88 is an electrical sheet with no door schedule",
+   "a": 19,
+   "b": 39,
+   "agreed": 0,
+   "disputed": 58,
+   "verdict": "A right",
+   "classes": [
+    "C1",
+    "C5"
+   ],
+   "crops": [
+    "s05_21d6_p78_opening.png"
+   ],
+   "disputed_rows": [
+    {
+     "key": "101.1A .. 125.1 (19 rows, p.78)",
+     "right": "A",
+     "why": "B finds no table on p.78"
+    },
+    {
+     "key": "3 (x39, p.88)",
+     "right": "A",
+     "why": "B reads the Switchboard MS (27 rows) and DP1 (12 rows) panel tables as a door schedule; mark 3 is the number of poles"
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "sha16": "e3d0cc1bc22fd824",
+   "family": "missouri_oa_fmdc",
+   "label": "T2504-03 Final Plans, A-601",
+   "pages": [
+    18
+   ],
+   "eye": 22,
+   "eye_note": "rows 100 to 121",
+   "a": 22,
+   "b": 22,
+   "agreed": 0,
+   "disputed": 22,
+   "verdict": "both right (rows); B right (fields)",
+   "classes": [
+    "C2"
+   ],
+   "crops": [
+    "s06_e3d0_p18.png"
+   ],
+   "disputed_rows": [
+    {
+     "key": "100",
+     "right": "B",
+     "why": "sheet: JAMB J4, RATING blank, HARDWARE SETS 09, WIDTH PR 3-0; A fire_rating J4 and no hardware group, B hardware 09 and width 36"
+    },
+    {
+     "key": "101",
+     "right": "B",
+     "why": "sheet: RATING 90 MIN., sets 04; A fire_rating \"J1 90 MIN.\" (jamb glued on), B \"90 MIN.\" and 04"
+    },
+    {
+     "key": "110",
+     "right": "B",
+     "why": "EXISTING AL, PR 3-0, sets 03A; A fire_rating \"EXISTING\", width null; B width 36, hardware 03A"
+    },
+    {
+     "key": "118",
+     "right": "B",
+     "why": "sheet: JAMB J3, rating blank, sets \"-\"; A fire_rating J3"
+    },
+    {
+     "key": "120",
+     "right": "B",
+     "why": "sheet: JAMB J2, sets 08; A fire_rating J2, no set; B set 08"
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "sha16": "89236ffa156fbaf5",
+   "family": "missouri_oa_fmdc",
+   "label": "T2147-01 Final Plans, A601 p.42 and A602 p.43",
+   "pages": [
+    42,
+    43
+   ],
+   "eye": 29,
+   "eye_note": "16 rows on p.42 (129C, 160, 161-164, 165A, 165B, 166, 167A, 167B, 168A, 168B, 169A, 169B, 169C) + 13 on p.43 (101A to 106C)",
+   "a": 15,
+   "b": 29,
+   "agreed": 0,
+   "disputed": 29,
+   "verdict": "B right",
+   "classes": [
+    "C4",
+    "C2"
+   ],
+   "crops": [
+    "s07_8923_p42.png",
+    "s07_8923_p43.png"
+   ],
+   "disputed_rows": [
+    {
+     "key": "161 .. 169C (14 rows, p.42)",
+     "right": "B",
+     "why": "A stops after the first two rows (129C, 160), the ones with two-line REMARKS; B reads all 16"
+    },
+    {
+     "key": "129C",
+     "right": "B",
+     "why": "A reads no width/height/material/hardware under the nested SIZE header; B 36 x 84, HM, group 5"
+    },
+    {
+     "key": "160",
+     "right": "B",
+     "why": "same: A sizes null, B 36 x 84, HM, group 2"
+    },
+    {
+     "key": "102A (p.43)",
+     "right": "B",
+     "why": "OH door 12-0 x 14-0; A width/height null, B 144 x 168"
+    },
+    {
+     "key": "104 (p.43)",
+     "right": "B",
+     "why": "A width/height null, B 36 x 84"
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "sha16": "44111d93bd635936",
+   "family": "missouri_oa_fmdc",
+   "label": "U2607-01 Final Plans, A600",
+   "pages": [
+    17
+   ],
+   "eye": 44,
+   "eye_note": "AREA 1C16L 6 + 1C16H 11 + 2C16L 12 + 2C16H 15",
+   "a": 44,
+   "b": 0,
+   "agreed": 0,
+   "disputed": 44,
+   "verdict": "A right",
+   "classes": [
+    "C1"
+   ],
+   "crops": [
+    "s08_4411_p17_a.png",
+    "s08_4411_p17_b.png"
+   ],
+   "disputed_rows": [
+    {
+     "key": "C105.1 .. C225 (all 44)",
+     "right": "A",
+     "why": "B finds no table on the page; A marks match the four tables one for one"
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "sha16": "7478006f7fd5b43c",
+   "family": "missouri_oa_fmdc",
+   "label": "R2502-01 Final Bid Plans, A-112 p.28, A-122 p.32, A-601 p.45, A-602 p.46",
+   "pages": [
+    28,
+    32,
+    45,
+    46
+   ],
+   "eye": 211,
+   "eye_note": "2 + 1 + (54 FLOOR 1 + 77 FLOOR 2) + 77 FLOOR 3; the STOREFRONT SCHEDULE on p.45 (GLZ-A to GLZ-D) is not a door schedule and neither reader counted it",
+   "a": 211,
+   "b": 211,
+   "agreed": 210,
+   "disputed": 1,
+   "verdict": "both right (rows); PT101 fields wrong in both",
+   "classes": [
+    "C2"
+   ],
+   "crops": [
+    "s09_7478_p28.png",
+    "s09_7478_p32.png",
+    "s09_7478_p45_floor1.png",
+    "s09_7478_p45_floor2a.png",
+    "s09_7478_p45_floor2b.png",
+    "s09_7478_p46_floor3a.png",
+    "s09_7478_p46_floor3b.png"
+   ],
+   "disputed_rows": [
+    {
+     "key": "PT101 (p.32)",
+     "right": "neither (B closer)",
+     "why": "sheet: HM-1(PR) | 8-0 | 7-4 | 1 3/4 | TYP-1 | 3/A-602 | 6/A-602 | 8/A-602 | rating blank | sets 09.08. A: door_type TYP-1 (frame type), height null, fire_rating 09.08 (the hardware set). B: door_type \"HM-1(PR) 8'\" (width token glued on), height 88 and hardware 09.08 right"
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "sha16": "18b27b8baa47f0e1",
+   "family": "missouri_oa_fmdc",
+   "label": "X2530-01 Final Plans, A-101 p.18 and A-101.A p.53 (random agreed-tier pick, seed 20261009)",
+   "pages": [
+    18,
+    53
+   ],
+   "eye": 36,
+   "eye_note": "18 on p.18 (100-1, 100-2, 101-1 to 106-1, 109-1 to 118-1) + 18 on p.53 (101-1 to 118-1)",
+   "a": 36,
+   "b": 36,
+   "agreed": 34,
+   "disputed": 2,
+   "verdict": "both right (rows); B right (fields)",
+   "classes": [
+    "C2"
+   ],
+   "crops": [
+    "s10_18b2_p18.png",
+    "s10_18b2_p53.png"
+   ],
+   "disputed_rows": [
+    {
+     "key": "100-1",
+     "right": "B",
+     "why": "sheet: RATING 45 MIN | Hardware Set 1 | COMMENTS REQUIRED: FIRE RATED LOUVER; A hardware_group \"1 REQUIRED: FIRE RATED\", B \"1\""
+    },
+    {
+     "key": "100-2",
+     "right": "B",
+     "why": "same as 100-1"
+    }
+   ]
+  }
+ ],
+ "classes": {
+  "C1": {
+   "name": "B finds no table",
+   "sets": [
+    3,
+    4,
+    5,
+    8
+   ],
+   "rows": 222,
+   "note": "reader B rule-table finder returns no table on a ruled door schedule; B reads 0 rows"
+  },
+  "C2": {
+   "name": "A column shift",
+   "sets": [
+    6,
+    7,
+    9,
+    10
+   ],
+   "note": "A puts a value in the wrong field: JAMB into fire_rating; hardware set into fire_rating; frame type into door_type; comments merged into hardware_group; sizes not read under a nested SIZE header"
+  },
+  "C3": {
+   "name": "range and stacked-mark rows",
+   "sets": [
+    1,
+    2
+   ],
+   "rows": 32,
+   "doors": 1040,
+   "note": "one printed row stands for many doors (X TO Y with QUANTITY; several marks stacked in one cell); both readers split or mangle the marks and drop QUANTITY"
+  },
+  "C4": {
+   "name": "A loses rows at a table end or after a tall row",
+   "sets": [
+    4,
+    7
+   ],
+   "rows": 15,
+   "note": "A merges the last row into the one above (173.3176) or stops after rows with two-line remarks (2 of 16 read)"
+  },
+  "C5": {
+   "name": "B reads a non-door table as doors",
+   "sets": [
+    5
+   ],
+   "rows": 39,
+   "note": "electrical panel schedules give 39 rows of mark 3; the page finder also lists the page as a door schedule page"
+  }
+ },
+ "per_page": {
+  "3506f831094dd516_p12": {
+   "a_rows": 30,
+   "b_rows": 31,
+   "a_marks": [
+    "1A101",
+    "1D102",
+    "1A103",
+    "1D116",
+    "1A201",
+    "1D216",
+    "2A101",
+    "2D102",
+    "2A103",
+    "2D116",
+    "2A201",
+    "2D216",
+    "3A101",
+    "3D102",
+    "3A103",
+    "3D116",
+    "3A201",
+    "3D216",
+    "4A101",
+    "4D102",
+    "4A103",
+    "4D116",
+    "4A201",
+    "4D216",
+    "151B",
+    "256",
+    "258A",
+    "258B",
+    "259A",
+    "259B"
+   ],
+   "b_marks": [
+    "1A101",
+    "1D102",
+    "1A103",
+    "1D116",
+    "1A201",
+    "1D216",
+    "2A101",
+    "2D102",
+    "2A103",
+    "2D116",
+    "2A201",
+    "2D216",
+    "3A101",
+    "3D102",
+    "3A103",
+    "3D116",
+    "3A201",
+    "3D216",
+    "4A101",
+    "4D102",
+    "4A103",
+    "4D116",
+    "4A201",
+    "4D216",
+    "151A",
+    "151C",
+    "256",
+    "258A",
+    "258B",
+    "259A",
+    "259B"
+   ],
+   "b_tables": [
+    {
+     "bbox": [
+      166,
+      575,
+      718,
+      673
+     ],
+     "rows": 6,
+     "header": [
+      "DOOR #",
+      "ROOM NAME",
+      "DOOR SIZE",
+      "DOOR TYPE",
+      "HARDWARE GROUP #",
+      "QUANTITY",
+      "REMARKS"
+     ]
+    },
+    {
+     "bbox": [
+      166,
+      719,
+      718,
+      817
+     ],
+     "rows": 6,
+     "header": [
+      "DOOR #",
+      "ROOM NAME",
+      "DOOR SIZE",
+      "DOOR TYPE",
+      "HARDWARE GROUP #",
+      "QUANTITY",
+      "REMARKS"
+     ]
+    },
+    {
+     "bbox": [
+      166,
+      863,
+      718,
+      961
+     ],
+     "rows": 6,
+     "header": [
+      "DOOR #",
+      "ROOM NAME",
+      "DOOR SIZE",
+      "DOOR TYPE",
+      "HARDWARE GROUP #",
+      "QUANTITY",
+      "REMARKS"
+     ]
+    },
+    {
+     "bbox": [
+      166,
+      1007,
+      718,
+      1105
+     ],
+     "rows": 6,
+     "header": [
+      "DOOR #",
+      "ROOM NAME",
+      "DOOR SIZE",
+      "DOOR TYPE",
+      "HARDWARE GROUP #",
+      "QUANTITY",
+      "REMARKS"
+     ]
+    },
+    {
+     "bbox": [
+      166,
+      1160,
+      718,
+      1294
+     ],
+     "rows": 7,
+     "header": [
+      "DOOR #",
+      "ROOM NAME",
+      "DOOR SIZE",
+      "DOOR TYPE",
+      "HARDWARE GROUP #",
+      "QUANTITY",
+      "REMARKS"
+     ]
+    }
+   ]
+  },
+  "194733de48af8797_p45": {
+   "a_rows": 34,
+   "b_rows": 35,
+   "a_marks": [
+    "1A101",
+    "1D116",
+    "1A105",
+    "1A116",
+    "1B109",
+    "1B116",
+    "1A201",
+    "1D216",
+    "2A101",
+    "2D116",
+    "2A109",
+    "2A112",
+    "2B109",
+    "2B112",
+    "2A201",
+    "2D216",
+    "3A101",
+    "3D116",
+    "3A109",
+    "3A",
+    "3A201",
+    "3D216",
+    "4A101",
+    "4D116",
+    "4B109",
+    "4B112",
+    "4A201",
+    "4D216",
+    "151B",
+    "256",
+    "258A",
+    "258B",
+    "259A",
+    "259B"
+   ],
+   "b_marks": [
+    "1A101",
+    "1D116",
+    "1A105",
+    "1A116",
+    "1B109",
+    "1B116",
+    "1A201",
+    "1D216",
+    "2A101",
+    "2D116",
+    "2A109",
+    "2A112",
+    "2B109",
+    "2B112",
+    "2A201",
+    "2D216",
+    "3A101",
+    "3D116",
+    "3A109",
+    "3A",
+    "3A201",
+    "3D216",
+    "4A101",
+    "4D116",
+    "4B109",
+    "4B112",
+    "4A201",
+    "4D216",
+    "151A",
+    "151C",
+    "256",
+    "258A",
+    "258B",
+    "259A",
+    "259B"
+   ],
+   "b_tables": [
+    {
+     "bbox": [
+      267,
+      603,
+      766,
+      707
+     ],
+     "rows": 8,
+     "header": [
+      "DOOR #",
+      "ROOM NAME",
+      "DOOR SIZE",
+      "DOOR TYPE",
+      "HARDWARE GROUP #",
+      "QUANTITY",
+      "REMARKS"
+     ]
+    },
+    {
+     "bbox": [
+      267,
+      733,
+      766,
+      837
+     ],
+     "rows": 8,
+     "header": [
+      "DOOR #",
+      "ROOM NAME",
+      "DOOR SIZE",
+      "DOOR TYPE",
+      "HARDWARE GROUP #",
+      "QUANTITY",
+      "REMARKS"
+     ]
+    },
+    {
+     "bbox": [
+      267,
+      863,
+      766,
+      951
+     ],
+     "rows": 6,
+     "header": [
+      "DOOR #",
+      "ROOM NAME",
+      "DOOR SIZE",
+      "DOOR TYPE",
+      "HARDWARE GROUP #",
+      "QUANTITY",
+      "REMARKS"
+     ]
+    },
+    {
+     "bbox": [
+      267,
+      993,
+      766,
+      1081
+     ],
+     "rows": 6,
+     "header": [
+      "DOOR #",
+      "ROOM NAME",
+      "DOOR SIZE",
+      "DOOR TYPE",
+      "HARDWARE GROUP #",
+      "QUANTITY",
+      "REMARKS"
+     ]
+    },
+    {
+     "bbox": [
+      267,
+      1131,
+      766,
+      1252
+     ],
+     "rows": 7,
+     "header": [
+      "DOOR #",
+      "ROOM NAME",
+      "DOOR SIZE",
+      "DOOR TYPE",
+      "HARDWARE GROUP #",
+      "QUANTITY",
+      "REMARKS"
+     ]
+    }
+   ]
+  },
+  "eefa018e007e581f_p59": {
+   "a_rows": 84,
+   "b_rows": 0,
+   "a_marks": [
+    "100-1",
+    "100-2",
+    "102-1",
+    "103-1",
+    "104-1",
+    "105-1",
+    "106-1",
+    "107-1",
+    "108-1",
+    "109-1",
+    "110-1",
+    "111-1",
+    "112-1",
+    "200-1",
+    "200-2",
+    "200-3",
+    "200-5",
+    "200-6",
+    "200-7",
+    "200-8",
+    "200-9",
+    "200A-1",
+    "201-1",
+    "202-1",
+    "202-2",
+    "205-1",
+    "205-2",
+    "206-1",
+    "207-1",
+    "208-1",
+    "209-1",
+    "209-2",
+    "209-3",
+    "210-1",
+    "211-1",
+    "212-1",
+    "213-1",
+    "214-1",
+    "215-1",
+    "216-1",
+    "217-1",
+    "218-1",
+    "219-1",
+    "220-1",
+    "220-2",
+    "220-3",
+    "221-1",
+    "222-1",
+    "222-2",
+    "222-3",
+    "223-1",
+    "225-1",
+    "300-1",
+    "300-2",
+    "301-1",
+    "302-1",
+    "303-1",
+    "304-1",
+    "305-1",
+    "305-2",
+    "400-1",
+    "500-1",
+    "500-2",
+    "600-1",
+    "600-2",
+    "601-1",
+    "603-1",
+    "604-1",
+    "605-1",
+    "606-1",
+    "606-2",
+    "607-1",
+    "607-2",
+    "609-1",
+    "610-1",
+    "610-2",
+    "612-1",
+    "700-01",
+    "701-01",
+    "702-01",
+    "703-01",
+    "705-01",
+    "706-01",
+    "707-01"
+   ],
+   "b_marks": [],
+   "b_tables": []
+  },
+  "7239a04e6cc8b502_p63": {
+   "a_rows": 74,
+   "b_rows": 0,
+   "a_marks": [
+    "100",
+    "101",
+    "102.1",
+    "102.2",
+    "103.1",
+    "103.2",
+    "103.3",
+    "104",
+    "105",
+    "106",
+    "107",
+    "108",
+    "109",
+    "110",
+    "111",
+    "112",
+    "113",
+    "114",
+    "115",
+    "116",
+    "117",
+    "119",
+    "120",
+    "121",
+    "122",
+    "123.1",
+    "123.2",
+    "124.1",
+    "124.2",
+    "125.1",
+    "125.2",
+    "125.3",
+    "126.1",
+    "126.2",
+    "127",
+    "128",
+    "129",
+    "130.1",
+    "130.2",
+    "130.3",
+    "131",
+    "132",
+    "134",
+    "136",
+    "139.1",
+    "139.2",
+    "140",
+    "141",
+    "142",
+    "143",
+    "146",
+    "147",
+    "148",
+    "149",
+    "150",
+    "151",
+    "152",
+    "153",
+    "154",
+    "155",
+    "156",
+    "157",
+    "161.1",
+    "161.2",
+    "162",
+    "163",
+    "164",
+    "165",
+    "166",
+    "169.1",
+    "169.2",
+    "173.1",
+    "173.2",
+    "173.3176"
+   ],
+   "b_marks": [],
+   "b_tables": []
+  },
+  "21d60f1b54e0e3df_p78": {
+   "a_rows": 19,
+   "b_rows": 0,
+   "a_marks": [
+    "101.1A",
+    "101.1B",
+    "101.2",
+    "101A",
+    "101B",
+    "102",
+    "102.1A",
+    "102.1B",
+    "102.1C",
+    "102.1D",
+    "103",
+    "103.1",
+    "103.2",
+    "103.2A",
+    "103.3",
+    "109",
+    "110",
+    "125",
+    "125.1"
+   ],
+   "b_marks": [],
+   "b_tables": []
+  },
+  "21d60f1b54e0e3df_p88": {
+   "a_rows": 0,
+   "b_rows": 39,
+   "a_marks": [],
+   "b_marks": [
+    "3",
+    "3",
+    "3",
+    "3",
+    "3",
+    "3",
+    "3",
+    "3",
+    "3",
+    "3",
+    "3",
+    "3",
+    "3",
+    "3",
+    "3",
+    "3",
+    "3",
+    "3",
+    "3",
+    "3",
+    "3",
+    "3",
+    "3",
+    "3",
+    "3",
+    "3",
+    "3",
+    "3",
+    "3",
+    "3",
+    "3",
+    "3",
+    "3",
+    "3",
+    "3",
+    "3",
+    "3",
+    "3",
+    "3"
+   ],
+   "b_tables": [
+    {
+     "bbox": [
+      159,
+      195,
+      699,
+      739
+     ],
+     "rows": 27,
+     "header": [
+      "CKT",
+      "Circuit Description",
+      "# of Poles",
+      "Frame Size",
+      "Trip Rating",
+      "Load",
+      "Remarks"
+     ]
+    },
+    {
+     "bbox": [
+      753,
+      195,
+      1293,
+      531
+     ],
+     "rows": 12,
+     "header": [
+      "CKT",
+      "Circuit Description",
+      "# of Poles",
+      "Frame Size",
+      "Trip Rating",
+      "Load",
+      "Remarks"
+     ]
+    }
+   ]
+  },
+  "e3d0cc1bc22fd824_p18": {
+   "a_rows": 22,
+   "b_rows": 22,
+   "a_marks": [
+    "100",
+    "101",
+    "102",
+    "103",
+    "104",
+    "105",
+    "106",
+    "107",
+    "108",
+    "109",
+    "110",
+    "111",
+    "112",
+    "113",
+    "114",
+    "115",
+    "116",
+    "117",
+    "118",
+    "119",
+    "120",
+    "121"
+   ],
+   "b_marks": [
+    "100",
+    "101",
+    "102",
+    "103",
+    "104",
+    "105",
+    "106",
+    "107",
+    "108",
+    "109",
+    "110",
+    "111",
+    "112",
+    "113",
+    "114",
+    "115",
+    "116",
+    "117",
+    "118",
+    "119",
+    "120",
+    "121"
+   ],
+   "b_tables": [
+    {
+     "bbox": [
+      1133,
+      91,
+      1897,
+      458
+     ],
+     "rows": 22,
+     "header": [
+      "DOOR #",
+      "DOOR NOMINAL TYPE",
+      "DOOR NOMINAL WIDTH",
+      "DOOR NOMINAL HEIGHT",
+      "FRAME DETAILS TYPE",
+      "FRAME DETAILS HEAD",
+      "FRAME DETAILS JAMB",
+      "RATING",
+      "HARDWARE SETS",
+      "REMARKS"
+     ]
+    }
+   ]
+  },
+  "89236ffa156fbaf5_p42": {
+   "a_rows": 2,
+   "b_rows": 16,
+   "a_marks": [
+    "129C",
+    "160"
+   ],
+   "b_marks": [
+    "129C",
+    "160",
+    "161",
+    "162",
+    "163",
+    "164",
+    "165A",
+    "165B",
+    "166",
+    "167A",
+    "167B",
+    "168A",
+    "168B",
+    "169A",
+    "169B",
+    "169C"
+   ],
+   "b_tables": [
+    {
+     "bbox": [
+      1289,
+      84,
+      2305,
+      395
+     ],
+     "rows": 16,
+     "header": [
+      "DOOR NUMBER",
+      "DOOR SIZE WIDTH",
+      "DOOR SIZE HEIGHT",
+      "DOOR SIZE THICKNESS",
+      "DOOR TYPE",
+      "DOOR MATERIAL",
+      "DOOR FINISH",
+      "FRAME TYPE",
+      "FRAME MATERIAL",
+      "FRAME FINISH",
+      "FRAME DETAILS HEAD",
+      "FRAME DETAILS JAMB",
+      "FIRE RATING",
+      "HARDWARE HARDWARE GROUP",
+      "HARDWARE DOOR NUMBER",
+      "REMARKS"
+     ]
+    }
+   ]
+  },
+  "89236ffa156fbaf5_p43": {
+   "a_rows": 13,
+   "b_rows": 13,
+   "a_marks": [
+    "101A",
+    "101B",
+    "102A",
+    "102B",
+    "102C",
+    "102D",
+    "103A",
+    "103B",
+    "104",
+    "105",
+    "106A",
+    "106B",
+    "106C"
+   ],
+   "b_marks": [
+    "101A",
+    "101B",
+    "102A",
+    "102B",
+    "102C",
+    "102D",
+    "103A",
+    "103B",
+    "104",
+    "105",
+    "106A",
+    "106B",
+    "106C"
+   ],
+   "b_tables": [
+    {
+     "bbox": [
+      700,
+      105,
+      1762,
+      313
+     ],
+     "rows": 13,
+     "header": [
+      "DOOR NUMBER",
+      "DOOR SIZE WIDTH",
+      "DOOR SIZE HEIGHT",
+      "DOOR SIZE THICKNESS",
+      "DOOR TYPE",
+      "DOOR MATERIAL",
+      "DOOR FINISH",
+      "FRAME TYPE",
+      "FRAME MATERIAL",
+      "FRAME FINISH",
+      "FRAME DETAILS HEAD",
+      "FRAME DETAILS JAMB",
+      "FRAME DETAILS SILL",
+      "FIRE RATING",
+      "HARDWARE HARDWARE GROUP",
+      "HARDWARE DOOR NUMBER",
+      "REMARKS"
+     ]
+    }
+   ]
+  },
+  "44111d93bd635936_p17": {
+   "a_rows": 44,
+   "b_rows": 0,
+   "a_marks": [
+    "C105.1",
+    "C107",
+    "C108.1",
+    "C109.1",
+    "C111",
+    "C112",
+    "C113",
+    "C113.1",
+    "C114",
+    "C115.1",
+    "C118.1",
+    "C119.1",
+    "C121",
+    "C122",
+    "C122.1",
+    "C124.1",
+    "C125.1",
+    "C202",
+    "C202.1",
+    "C204.1",
+    "C205",
+    "C205.1",
+    "C206",
+    "C207",
+    "C208.1",
+    "C209.1",
+    "C210",
+    "C210.1",
+    "C212",
+    "C213.1",
+    "C214.1",
+    "C215",
+    "C215.1",
+    "C216.1",
+    "C217",
+    "C218",
+    "C219.1",
+    "C220",
+    "C221",
+    "C221.1",
+    "C223",
+    "C224",
+    "C224.1",
+    "C225"
+   ],
+   "b_marks": [],
+   "b_tables": []
+  },
+  "7478006f7fd5b43c_p28": {
+   "a_rows": 2,
+   "b_rows": 2,
+   "a_marks": [
+    "AD101",
+    "AD102"
+   ],
+   "b_marks": [
+    "AD101",
+    "AD102"
+   ],
+   "b_tables": [
+    {
+     "bbox": [
+      138,
+      851,
+      902,
+      1039
+     ],
+     "rows": 2,
+     "header": [
+      "DOOR NUMBER",
+      "LOCATION",
+      "DOOR TYPE",
+      "DOOR NOMINAL WIDTH",
+      "DOOR NOMINAL HEIGHT",
+      "DOOR NOMINAL THICKNESS",
+      "FRAME TYPE",
+      "FRAME DETAILS HEAD",
+      "FRAME DETAILS JAMB",
+      "FRAME DETAILS SILL",
+      "FIRE RATING",
+      "HARDWARE SETS",
+      "NOTES"
+     ]
+    }
+   ]
+  },
+  "7478006f7fd5b43c_p32": {
+   "a_rows": 1,
+   "b_rows": 1,
+   "a_marks": [
+    "PT101"
+   ],
+   "b_marks": [
+    "PT101"
+   ],
+   "b_tables": [
+    {
+     "bbox": [
+      1375,
+      943,
+      1943,
+      1050
+     ],
+     "rows": 1,
+     "header": [
+      "DOOR NUMBER",
+      "LOCATION",
+      "DOOR TYPE",
+      "DOOR NOMINAL WIDTH",
+      "DOOR NOMINAL HEIGHT",
+      "DOOR NOMINAL THICKNESS",
+      "FRAME TYPE",
+      "FRAME DETAILS HEAD",
+      "FRAME DETAILS JAMB",
+      "FRAME DETAILS SILL",
+      "FIRE RATING",
+      "HARDWARE SETS",
+      "NOTES"
+     ]
+    }
+   ]
+  },
+  "7478006f7fd5b43c_p45": {
+   "a_rows": 131,
+   "b_rows": 131,
+   "a_marks": [
+    "101A",
+    "101B",
+    "102",
+    "103A",
+    "103B",
+    "104A",
+    "104B",
+    "104C",
+    "104D",
+    "104E",
+    "105A",
+    "105B",
+    "107A",
+    "107B",
+    "109A",
+    "109B",
+    "110",
+    "111A",
+    "111B",
+    "112A",
+    "112B",
+    "113",
+    "114",
+    "115",
+    "116",
+    "117",
+    "118",
+    "119",
+    "120A",
+    "120B",
+    "121",
+    "122A",
+    "122B",
+    "123A",
+    "123B",
+    "124",
+    "125A",
+    "125B",
+    "126A",
+    "126B",
+    "127",
+    "128A",
+    "128B",
+    "129A",
+    "129B",
+    "129C",
+    "129D",
+    "129F",
+    "130A",
+    "130B",
+    "130C",
+    "133A",
+    "133B",
+    "133C",
+    "201A",
+    "201B",
+    "202A",
+    "202B",
+    "203A",
+    "203B",
+    "204A",
+    "204B",
+    "205A",
+    "205B",
+    "206A",
+    "206B",
+    "207A",
+    "207B",
+    "208A",
+    "208B",
+    "209A",
+    "209B",
+    "210A",
+    "210B",
+    "211A",
+    "211B",
+    "212A",
+    "212B",
+    "213A",
+    "213B",
+    "214A",
+    "214B",
+    "215A",
+    "215B",
+    "216A",
+    "216B",
+    "217A",
+    "217B",
+    "218A",
+    "218B",
+    "219A",
+    "219B",
+    "220A",
+    "220B",
+    "221A",
+    "221B",
+    "222A",
+    "222B",
+    "223A",
+    "223B",
+    "224A",
+    "224B",
+    "225A",
+    "225B",
+    "226A",
+    "226B",
+    "227A",
+    "227B",
+    "228A",
+    "228B",
+    "229A",
+    "229B",
+    "230A",
+    "230B",
+    "231A",
+    "231B",
+    "232A",
+    "232B",
+    "232C",
+    "233A",
+    "233B",
+    "234",
+    "235A",
+    "235B",
+    "236",
+    "237",
+    "238",
+    "239A",
+    "239B",
+    "239C",
+    "239D"
+   ],
+   "b_marks": [
+    "101A",
+    "101B",
+    "102",
+    "103A",
+    "103B",
+    "104A",
+    "104B",
+    "104C",
+    "104D",
+    "104E",
+    "105A",
+    "105B",
+    "107A",
+    "107B",
+    "109A",
+    "109B",
+    "110",
+    "111A",
+    "111B",
+    "112A",
+    "112B",
+    "113",
+    "114",
+    "115",
+    "116",
+    "117",
+    "118",
+    "119",
+    "120A",
+    "120B",
+    "121",
+    "122A",
+    "122B",
+    "123A",
+    "123B",
+    "124",
+    "125A",
+    "125B",
+    "126A",
+    "126B",
+    "127",
+    "128A",
+    "128B",
+    "129A",
+    "129B",
+    "129C",
+    "129D",
+    "129F",
+    "130A",
+    "130B",
+    "130C",
+    "133A",
+    "133B",
+    "133C",
+    "201A",
+    "201B",
+    "202A",
+    "202B",
+    "203A",
+    "203B",
+    "204A",
+    "204B",
+    "205A",
+    "205B",
+    "206A",
+    "206B",
+    "207A",
+    "207B",
+    "208A",
+    "208B",
+    "209A",
+    "209B",
+    "210A",
+    "210B",
+    "211A",
+    "211B",
+    "212A",
+    "212B",
+    "213A",
+    "213B",
+    "214A",
+    "214B",
+    "215A",
+    "215B",
+    "216A",
+    "216B",
+    "217A",
+    "217B",
+    "218A",
+    "218B",
+    "219A",
+    "219B",
+    "220A",
+    "220B",
+    "221A",
+    "221B",
+    "222A",
+    "222B",
+    "223A",
+    "223B",
+    "224A",
+    "224B",
+    "225A",
+    "225B",
+    "226A",
+    "226B",
+    "227A",
+    "227B",
+    "228A",
+    "228B",
+    "229A",
+    "229B",
+    "230A",
+    "230B",
+    "231A",
+    "231B",
+    "232A",
+    "232B",
+    "232C",
+    "233A",
+    "233B",
+    "234",
+    "235A",
+    "235B",
+    "236",
+    "237",
+    "238",
+    "239A",
+    "239B",
+    "239C",
+    "239D"
+   ],
+   "b_tables": [
+    {
+     "bbox": [
+      174,
+      80,
+      997,
+      862
+     ],
+     "rows": 54,
+     "header": [
+      "DOOR NUMBER",
+      "LOCATION",
+      "DOOR TYPE",
+      "DOOR NOMINAL WIDTH",
+      "DOOR NOMINAL HEIGHT",
+      "DOOR NOMINAL THICKNESS",
+      "FRAME TYPE",
+      "FRAME DETAILS HEAD",
+      "FRAME DETAILS JAMB",
+      "FRAME DETAILS SILL",
+      "FIRE RATING",
+      "HARDWARE SETS",
+      "NOTES"
+     ]
+    },
+    {
+     "bbox": [
+      1251,
+      80,
+      2074,
+      1160
+     ],
+     "rows": 77,
+     "header": [
+      "DOOR NUMBER",
+      "LOCATION",
+      "DOOR TYPE",
+      "DOOR NOMINAL WIDTH",
+      "DOOR NOMINAL HEIGHT",
+      "DOOR NOMINAL THICKNESS",
+      "FRAME TYPE",
+      "FRAME DETAILS HEAD",
+      "FRAME DETAILS JAMB",
+      "FRAME DETAILS SILL",
+      "FIRE RATING",
+      "HARDWARE SETS",
+      "NOTES"
+     ]
+    }
+   ]
+  },
+  "7478006f7fd5b43c_p46": {
+   "a_rows": 77,
+   "b_rows": 77,
+   "a_marks": [
+    "301A",
+    "301B",
+    "302A",
+    "302B",
+    "303A",
+    "303B",
+    "304A",
+    "304B",
+    "305A",
+    "305B",
+    "306A",
+    "306B",
+    "307A",
+    "307B",
+    "308A",
+    "308B",
+    "309A",
+    "309B",
+    "310A",
+    "310B",
+    "311A",
+    "311B",
+    "312A",
+    "312B",
+    "313A",
+    "313B",
+    "314A",
+    "314B",
+    "315A",
+    "315B",
+    "316A",
+    "316B",
+    "317A",
+    "317B",
+    "318A",
+    "318B",
+    "319A",
+    "319B",
+    "320A",
+    "320B",
+    "321A",
+    "321B",
+    "322A",
+    "322B",
+    "323A",
+    "323B",
+    "324A",
+    "324B",
+    "325A",
+    "325B",
+    "326A",
+    "326B",
+    "327A",
+    "327B",
+    "328A",
+    "328B",
+    "329A",
+    "329B",
+    "330A",
+    "330B",
+    "331A",
+    "331B",
+    "332A",
+    "332B",
+    "332C",
+    "332D",
+    "333A",
+    "333B",
+    "334",
+    "335A",
+    "335B",
+    "336A",
+    "336B",
+    "337",
+    "338A",
+    "338B",
+    "339"
+   ],
+   "b_marks": [
+    "301A",
+    "301B",
+    "302A",
+    "302B",
+    "303A",
+    "303B",
+    "304A",
+    "304B",
+    "305A",
+    "305B",
+    "306A",
+    "306B",
+    "307A",
+    "307B",
+    "308A",
+    "308B",
+    "309A",
+    "309B",
+    "310A",
+    "310B",
+    "311A",
+    "311B",
+    "312A",
+    "312B",
+    "313A",
+    "313B",
+    "314A",
+    "314B",
+    "315A",
+    "315B",
+    "316A",
+    "316B",
+    "317A",
+    "317B",
+    "318A",
+    "318B",
+    "319A",
+    "319B",
+    "320A",
+    "320B",
+    "321A",
+    "321B",
+    "322A",
+    "322B",
+    "323A",
+    "323B",
+    "324A",
+    "324B",
+    "325A",
+    "325B",
+    "326A",
+    "326B",
+    "327A",
+    "327B",
+    "328A",
+    "328B",
+    "329A",
+    "329B",
+    "330A",
+    "330B",
+    "331A",
+    "331B",
+    "332A",
+    "332B",
+    "332C",
+    "332D",
+    "333A",
+    "333B",
+    "334",
+    "335A",
+    "335B",
+    "336A",
+    "336B",
+    "337",
+    "338A",
+    "338B",
+    "339"
+   ],
+   "b_tables": [
+    {
+     "bbox": [
+      193,
+      86,
+      1015,
+      1166
+     ],
+     "rows": 77,
+     "header": [
+      "DOOR NUMBER",
+      "LOCATION",
+      "DOOR TYPE",
+      "DOOR NOMINAL WIDTH",
+      "DOOR NOMINAL HEIGHT",
+      "DOOR NOMINAL THICKNESS",
+      "FRAME TYPE",
+      "FRAME DETAILS HEAD",
+      "FRAME DETAILS JAMB",
+      "FRAME DETAILS SILL",
+      "FIRE RATING",
+      "HARDWARE SETS",
+      "NOTES"
+     ]
+    }
+   ]
+  },
+  "18b27b8baa47f0e1_p18": {
+   "a_rows": 18,
+   "b_rows": 18,
+   "a_marks": [
+    "100-1",
+    "100-2",
+    "101-1",
+    "102-1",
+    "103-1",
+    "104-1",
+    "105-1",
+    "106-1",
+    "109-1",
+    "110-1",
+    "111-1",
+    "112-1",
+    "113-1",
+    "114-1",
+    "115-1",
+    "116-1",
+    "117-1",
+    "118-1"
+   ],
+   "b_marks": [
+    "100-1",
+    "100-2",
+    "101-1",
+    "102-1",
+    "103-1",
+    "104-1",
+    "105-1",
+    "106-1",
+    "109-1",
+    "110-1",
+    "111-1",
+    "112-1",
+    "113-1",
+    "114-1",
+    "115-1",
+    "116-1",
+    "117-1",
+    "118-1"
+   ],
+   "b_tables": [
+    {
+     "bbox": [
+      113,
+      506,
+      961,
+      797
+     ],
+     "rows": 18,
+     "header": [
+      "DOOR NO.",
+      "DOOR OPENING WIDTH",
+      "DOOR OPENING HEIGHT",
+      "DOOR PANEL CONFIG",
+      "DOOR PANEL PANEL WIDTH",
+      "DOOR PANEL THICK",
+      "DOOR PANEL TYPE",
+      "DOOR PANEL MATL",
+      "DOOR PANEL FINISH",
+      "FRAME TYPE",
+      "FRAME MATL",
+      "FRAME FINISH",
+      "RATING",
+      "Hardware Set",
+      "COMMENTS"
+     ]
+    }
+   ]
+  },
+  "18b27b8baa47f0e1_p53": {
+   "a_rows": 18,
+   "b_rows": 18,
+   "a_marks": [
+    "101-1",
+    "102-1",
+    "103-1",
+    "104-1",
+    "105-1",
+    "106-1",
+    "107-1",
+    "108-1",
+    "109-1",
+    "110-1",
+    "111-1",
+    "112-1",
+    "113-1",
+    "114-1",
+    "115-1",
+    "116-1",
+    "117-1",
+    "118-1"
+   ],
+   "b_marks": [
+    "101-1",
+    "102-1",
+    "103-1",
+    "104-1",
+    "105-1",
+    "106-1",
+    "107-1",
+    "108-1",
+    "109-1",
+    "110-1",
+    "111-1",
+    "112-1",
+    "113-1",
+    "114-1",
+    "115-1",
+    "116-1",
+    "117-1",
+    "118-1"
+   ],
+   "b_tables": [
+    {
+     "bbox": [
+      130,
+      516,
+      935,
+      807
+     ],
+     "rows": 18,
+     "header": [
+      "DOOR NO.",
+      "DOOR OPENING WIDTH",
+      "DOOR OPENING HEIGHT",
+      "DOOR PANEL CONFIG",
+      "DOOR PANEL PANEL WIDTH",
+      "DOOR PANEL THICK",
+      "DOOR PANEL TYPE",
+      "DOOR PANEL MATL",
+      "DOOR PANEL FINISH",
+      "FRAME TYPE",
+      "FRAME MATL",
+      "FRAME FINISH",
+      "Hardware Set"
+     ]
+    }
+   ]
+  }
+ }
+}
