@@ -13,52 +13,42 @@
   "pages": 105
  },
  "pages": {
-  "door_candidates": 3,
+  "door_candidates": 2,
   "hardware_candidates": 0,
   "door_schedule_pages": [
    81,
-   97,
-   102
+   97
   ],
   "hardware_pages": []
  },
  "readers": {
   "a": {
-   "doors": 7,
+   "doors": 0,
    "sets": 0,
    "items": 0,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
   },
   "b": {
-   "doors": 19,
+   "doors": 12,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 3
+   "tables": 2
   }
  },
- "rows_agreed": 7,
+ "rows_agreed": 0,
  "rows_disputed": 12,
- "rows_total": 19,
- "agreement_rate": 0.3684,
+ "rows_total": 12,
+ "agreement_rate": 0,
  "agreement": {
   "doors": {
-   "rows": 19,
-   "agreed": 7,
+   "rows": 12,
+   "agreed": 0,
    "disputed": 0,
    "only_a": 0,
    "only_b": 12,
-   "fields": {
-    "door_type": {
-     "agree": 7,
-     "total": 7
-    },
-    "quantity": {
-     "agree": 7,
-     "total": 7
-    }
-   },
-   "agreement_rate": 0.3684
+   "fields": {},
+   "agreement_rate": 0
   },
   "items": {
    "rows": 0,
@@ -78,40 +68,8 @@
  "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
-   "applicable": true,
-   "total": 7,
-   "pass": 0,
-   "fail": 7,
-   "pass_rate": 0,
-   "examples": [
-    "mark F1 (schedule p.102) not tagged on any plan",
-    "mark F1 (schedule p.102) not tagged on any plan",
-    "mark F1 (schedule p.102) not tagged on any plan",
-    "mark F1 (schedule p.102) not tagged on any plan",
-    "mark F2 (schedule p.102) not tagged on any plan",
-    "mark F3 (schedule p.102) not tagged on any plan",
-    "mark F4 (schedule p.102) not tagged on any plan"
-   ],
-   "plan_sheets": [
-    "A110 p.60",
-    "A111 p.61",
-    "A114 p.64",
-    "A115 p.65",
-    "A401 p.76",
-    "A402 p.77",
-    "A403 p.78",
-    "A501 p.79"
-   ],
-   "plan_counts": {
-    "plan_sheets": 8,
-    "rooms": 45,
-    "corridors": 0,
-    "tags": 0,
-    "unmatched_tags": 0,
-    "schedule_marks": 7,
-    "marks_not_on_plan": 7,
-    "shared_marks": 0
-   }
+   "applicable": false,
+   "reason": "no door schedule rows"
   },
   "sets_exist": {
    "applicable": false,
@@ -123,28 +81,15 @@
   },
   "types_in_legend": {
    "applicable": false,
-   "reason": "no DOOR TYPES / FRAME TYPES legend title in this PDF"
+   "reason": "no door schedule rows"
   },
   "sizes_and_marks": {
-   "applicable": true,
-   "total": 7,
-   "pass": 0,
-   "fail": 7,
-   "pass_rate": 0,
-   "examples": [
-    "mark F1 p.102: size null -> null x null",
-    "mark F1 p.102: size null -> null x null",
-    "mark F1 p.102: size null -> null x null",
-    "mark F1 p.102: size null -> null x null",
-    "mark F2 p.102: size null -> null x null",
-    "mark F3 p.102: size null -> null x null",
-    "mark F4 p.102: size null -> null x null"
-   ],
-   "size_fail": 7,
-   "mark_fail": 0
+   "applicable": false,
+   "reason": "no door schedule rows"
   }
  },
- "tier": "agreed",
+ "tier": "unread",
+ "unread_reason": "no rows agreed and no oracle applies",
  "disagreement_count": 12,
  "disagreements": [
   {
@@ -256,6 +201,6 @@
    "why": "only reader B read this row"
   }
  ],
- "ms": 2590,
- "generated_at": "2026-10-10T03:16:28.844Z"
+ "ms": 2456,
+ "generated_at": "2026-10-10T04:31:34.579Z"
 }

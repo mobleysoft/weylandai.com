@@ -13,7 +13,7 @@
   "pages": 44
  },
  "pages": {
-  "door_candidates": 1,
+  "door_candidates": 0,
   "hardware_candidates": 0,
   "door_schedule_pages": [],
   "hardware_pages": []
@@ -89,6 +89,6 @@
  "unread_reason": "no door schedule or hardware set read by either reader",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 529,
- "generated_at": "2026-10-10T03:16:29.377Z"
+ "ms": 474,
+ "generated_at": "2026-10-10T04:31:35.058Z"
 }

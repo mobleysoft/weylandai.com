@@ -13,41 +13,39 @@
   "pages": 41
  },
  "pages": {
-  "door_candidates": 1,
+  "door_candidates": 0,
   "hardware_candidates": 0,
-  "door_schedule_pages": [
-   33
-  ],
+  "door_schedule_pages": [],
   "hardware_pages": []
  },
  "readers": {
   "a": {
-   "doors": 1,
+   "doors": 0,
    "sets": 0,
    "items": 0,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
   },
   "b": {
-   "doors": 6,
+   "doors": 0,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 0
   }
  },
  "rows_agreed": 0,
- "rows_disputed": 7,
- "rows_total": 7,
- "agreement_rate": 0,
+ "rows_disputed": 0,
+ "rows_total": 0,
+ "agreement_rate": null,
  "agreement": {
   "doors": {
-   "rows": 7,
+   "rows": 0,
    "agreed": 0,
    "disputed": 0,
-   "only_a": 1,
-   "only_b": 6,
+   "only_a": 0,
+   "only_b": 0,
    "fields": {},
-   "agreement_rate": 0
+   "agreement_rate": null
   },
   "items": {
    "rows": 0,
@@ -88,73 +86,9 @@
   }
  },
  "tier": "unread",
- "unread_reason": "no rows agreed and no oracle applies",
- "disagreement_count": 7,
- "disagreements": [
-  {
-   "kind": "door",
-   "page": 33,
-   "key": "ACT1",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 33,
-   "key": "KEH1",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 33,
-   "key": "KEH1",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 33,
-   "key": "1",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 33,
-   "key": "2",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 33,
-   "key": "KEH2",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 33,
-   "key": "KEH3",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  }
- ],
- "ms": 2700,
- "generated_at": "2026-10-10T03:15:39.601Z"
+ "unread_reason": "no door schedule or hardware set read by either reader",
+ "disagreement_count": 0,
+ "disagreements": [],
+ "ms": 2174,
+ "generated_at": "2026-10-10T04:30:45.630Z"
 }

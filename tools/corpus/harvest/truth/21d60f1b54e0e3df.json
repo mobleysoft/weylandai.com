@@ -13,11 +13,10 @@
   "pages": 88
  },
  "pages": {
-  "door_candidates": 5,
+  "door_candidates": 2,
   "hardware_candidates": 0,
   "door_schedule_pages": [
-   78,
-   88
+   78
   ],
   "hardware_pages": []
  },
@@ -29,24 +28,24 @@
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
   },
   "b": {
-   "doors": 58,
+   "doors": 19,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 3
+   "tables": 1
   }
  },
  "rows_agreed": 8,
- "rows_disputed": 50,
- "rows_total": 58,
- "agreement_rate": 0.1379,
+ "rows_disputed": 11,
+ "rows_total": 19,
+ "agreement_rate": 0.4211,
  "agreement": {
   "doors": {
-   "rows": 58,
+   "rows": 19,
    "agreed": 8,
    "disputed": 11,
    "only_a": 0,
-   "only_b": 39,
+   "only_b": 0,
    "fields": {
     "width_inches": {
      "agree": 19,
@@ -69,7 +68,7 @@
      "total": 19
     }
    },
-   "agreement_rate": 0.1379
+   "agreement_rate": 0.4211
   },
   "items": {
    "rows": 0,
@@ -139,7 +138,7 @@
   }
  },
  "tier": "agreed",
- "disagreement_count": 50,
+ "disagreement_count": 11,
  "disagreements": [
   {
    "kind": "door",
@@ -228,269 +227,8 @@
    "field": "hardware_group",
    "a": "E6/A601 7.0",
    "b": "7.0"
-  },
-  {
-   "kind": "door",
-   "page": 88,
-   "key": "3",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 88,
-   "key": "3",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 88,
-   "key": "3",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 88,
-   "key": "3",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 88,
-   "key": "3",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 88,
-   "key": "3",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 88,
-   "key": "3",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 88,
-   "key": "3",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 88,
-   "key": "3",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 88,
-   "key": "3",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 88,
-   "key": "3",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 88,
-   "key": "3",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 88,
-   "key": "3",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 88,
-   "key": "3",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 88,
-   "key": "3",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 88,
-   "key": "3",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 88,
-   "key": "3",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 88,
-   "key": "3",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 88,
-   "key": "3",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 88,
-   "key": "3",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 88,
-   "key": "3",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 88,
-   "key": "3",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 88,
-   "key": "3",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 88,
-   "key": "3",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 88,
-   "key": "3",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 88,
-   "key": "3",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 88,
-   "key": "3",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 88,
-   "key": "3",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 88,
-   "key": "3",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
   }
  ],
- "ms": 1021,
- "generated_at": "2026-10-10T03:15:05.263Z"
+ "ms": 907,
+ "generated_at": "2026-10-10T04:30:11.469Z"
 }

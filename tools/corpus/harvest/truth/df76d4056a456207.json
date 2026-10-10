@@ -13,11 +13,10 @@
   "pages": 123
  },
  "pages": {
-  "door_candidates": 3,
+  "door_candidates": 2,
   "hardware_candidates": 1,
   "door_schedule_pages": [
-   114,
-   118
+   114
   ],
   "hardware_pages": [
    114
@@ -25,48 +24,31 @@
  },
  "readers": {
   "a": {
-   "doors": 2,
+   "doors": 0,
    "sets": 6,
    "items": 19,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
   },
   "b": {
-   "doors": 19,
+   "doors": 13,
    "sets": 4,
    "items": 13,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 2
+   "tables": 1
   }
  },
  "rows_agreed": 0,
- "rows_disputed": 51,
- "rows_total": 51,
+ "rows_disputed": 45,
+ "rows_total": 45,
  "agreement_rate": 0,
  "agreement": {
   "doors": {
-   "rows": 19,
+   "rows": 13,
    "agreed": 0,
-   "disputed": 2,
+   "disputed": 0,
    "only_a": 0,
-   "only_b": 17,
-   "fields": {
-    "door_type": {
-     "agree": 0,
-     "total": 2
-    },
-    "material": {
-     "agree": 0,
-     "total": 2
-    },
-    "fire_rating": {
-     "agree": 0,
-     "total": 2
-    },
-    "quantity": {
-     "agree": 0,
-     "total": 2
-    }
-   },
+   "only_b": 13,
+   "fields": {},
    "agreement_rate": 0
   },
   "items": {
@@ -92,116 +74,25 @@
   },
   "sets_exist": {
    "applicable": false,
-   "reason": "the schedule rows name no hardware set"
+   "reason": "no door schedule rows"
   },
   "set_door_lists": {
-   "applicable": true,
-   "total": 1,
-   "pass": 0,
-   "fail": 1,
-   "pass_rate": 0,
-   "examples": [
-    "set 9: list names 2, schedule carries 0; listed but not on schedule with this set: 1 2"
-   ]
+   "applicable": false,
+   "reason": "no door schedule rows"
   },
   "types_in_legend": {
-   "applicable": true,
-   "total": 2,
-   "pass": 0,
-   "fail": 2,
-   "pass_rate": 0,
-   "examples": [
-    "door type I (2 rows) not found near the door types legend",
-    "frame type A19 (2 rows) not found near the frame types legend"
-   ],
-   "legend_titles": [
-    "FRAME TYPES p.114",
-    "DOOR TYPES p.114"
-   ],
-   "skipped": [],
-   "note": "weak for numeric types: a detail number near the legend can pass a numeric frame type"
+   "applicable": false,
+   "reason": "no door schedule rows"
   },
   "sizes_and_marks": {
-   "applicable": true,
-   "total": 2,
-   "pass": 0,
-   "fail": 2,
-   "pass_rate": 0,
-   "examples": [
-    "mark KEH1 p.118: size \"9\\\" x 20\\\" / 2\" -> null x null",
-    "mark KEH1 p.118: size \"10\\\" x 10\\\" / 2\" -> null x null"
-   ],
-   "size_fail": 2,
-   "mark_fail": 0
+   "applicable": false,
+   "reason": "no door schedule rows"
   }
  },
- "tier": "oracle-checked",
- "disagreement_count": 61,
+ "tier": "unread",
+ "unread_reason": "no rows agreed and no oracle applies",
+ "disagreement_count": 49,
  "disagreements": [
-  {
-   "kind": "door",
-   "page": 118,
-   "key": "KEH1",
-   "field": "door_type",
-   "a": "I",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 118,
-   "key": "KEH1",
-   "field": "material",
-   "a": "300 SS",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 118,
-   "key": "KEH1",
-   "field": "fire_rating",
-   "a": "HEAVY",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 118,
-   "key": "KEH1",
-   "field": "quantity",
-   "a": 3,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 118,
-   "key": "KEH1",
-   "field": "door_type",
-   "a": "I",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 118,
-   "key": "KEH1",
-   "field": "material",
-   "a": "300 SS",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 118,
-   "key": "KEH1",
-   "field": "fire_rating",
-   "a": "MEDIUM",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 118,
-   "key": "KEH1",
-   "field": "quantity",
-   "a": 3,
-   "b": null
-  },
   {
    "kind": "door",
    "page": 114,
@@ -314,42 +205,6 @@
    "kind": "door",
    "page": 114,
    "key": "114",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 118,
-   "key": "1",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 118,
-   "key": "2",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 118,
-   "key": "KEH2",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 118,
-   "key": "KEH3",
    "field": "(row)",
    "a": null,
    "b": "read",
@@ -489,8 +344,116 @@
    "a": "read",
    "b": null,
    "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "6 / 1 (ANSI FUNCTION NO. F86) STOREROOM LOCK WITH LEVER HANDLES",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "6 / 1 CLOSER WITH COVER, PARALLEL ARM, CUSH, THRU-BOLT MOUNTED 1 KICK PLATE (0.050\"T X 12\"H X 2\" L.D.W.) 1 DOOR BOTTOM SWEEP ALUM. STOREFRONT DOOR SYSTEM, SHIM 1 SET PERIMETER SEAL GASKETS AND ANCHOR PER MFG'RS. 1 WALL STOP 1/2\" RECESS RECOMMENDATIONS. REFER TO DOOR SCHEDULE FOR TYPES. SET NO. 7 FIN. FLOOR (DOOR: 111) THRESHOLD, ADA AND ANSI COMPLIANT. EL. 100'-0\" 3 BALL BEARING HINGES ALUMINUM ENTRANCE AND FLUSH SOLID CORE WOOD FLUSH HOLLOW METAL SECTIONAL OVERHEAD DOOR (INSULATED) WIDTH AS REQUIRED. 1 EXTERIOR CYLINDER WITH REMOVABLE CORE STOREFRONT SYSTEM W/ DOOR (REFER SCHEDULES (INSULATED), 3/4\" MAXIMUM WITH LIFT CLEARANCE TRACK SYSTEM INSULATED SAFETY GLASS (REFER FOR FINISHES) UNDERCUT. MOUNTED AT 11'-0\" MAXIMUM A.F.F.. 1 (ANSI FUNCTION NO. F04) MORTISE ENTRY LOCK WITH LEVER HANDLES SCHEDULES FOR GLAZING TYPES). MANUAL OPERATION WITH PULL ROPE. ESCUTCHEON TRIM (REFER TO SCHEDULES FOR FINISHES) 1 CLOSER WITH COVER, PARALLEL ARM, HOLD OPEN WITH SPRING CUSH, THRU-BOLT MOUNTED SEALANT BOTH SIDES, TYPICAL. 1 KICKPLATE (0.050\"T X 12\"H X 2\" L.D.W.) A B C D 1 SET PERIMETER WEATHER SEAL GASKETS 1/2\" EXPANSION JOINT W/ FILLER AND 1 WEATHER SEAL DOOR BOTTOM SWEEP GLAZING SCHEDULE 1 SEALANT. 42\" 1 THRESHOLD (ADA / ANSI COMPLIANT) ALUMINUM STOREFRONT WINDOW AND FRAME, 1 RAIN DRIP TYPE 1: CONCRETE SIDEWALK TO SLOPE TO DRAIN REFER TO WINDOW SCHEDULES. 1\" INSULATED SAFETY (FULLY TEMPERED) GLAZING: (REFER TO PROJECT 1/4:12 MAX., REFER WALL SECTIONS. DOWEL WINDOW TYPES SET NO. 8 MANUAL SECTION 08 80 00 GLAZING FOR ADDITIONAL REQUIREMENTS). #4'S 12\" O.C. INTO FOUNDATION 6\" MIN. WITH SEALANT AND BACKER ROD ON BOTH SIDES OF (DOOR: 114) EPOXY. FRAME. SCALE: 1/4\" = 1'-0\" 4 BALL BEARING HINGES EXTERIOR PANE: 1/4\" TINTED (GRAY) - (2) SURFACE, HEAT-TREATED (FT) 1 EXTERIOR CYLINDER WITH REMOVABLE CORE AIR CAVITY: 1/2\" CONTINUOUS \"J\" MOLDING (BOTH SIDES)",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "6 / AND ESCUTCHEON TRIM HEAT-TREATED (FT) CONT. FIRE TREATED WOOD BLOCKING",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "6 / 1 CLOSER WITH COVER, PARALLEL ARM, HOLD OPEN WITH SPRING CUSH, THRU-BOLT MOUNTED PERFORMANCE REQUIREMENTS: WALL CONSTRUCTION, REFER TO FLOOR PLAN 1 KICKPLATE (0.050\"T X 12\"H X 2\" L.D.W.) VISIBLE LIGHT TRANSMITTANCE (VLT): 13 AND WALL TYPES AND INTERIOR FINISH PLAN 1 SET PERIMETER WEATHER SEAL GASKETS VISIBLE LIGHT REFLECTANCE (EXTERIOR %): 11 FOR ADDITIONAL INFORMATION. 5 5 5 1 WEATHER SEAL DOOR BOTTOM SWEEP VISIBLE LIGHT REFLECTANCE (INTERIOR %): 27 \" 38\" 8\" 8 1 THRESHOLD (ADA / ANSI COMPLIANT) (NFRC) U-VALUE (WINTER NIGHTTIME): 0.28 WALL CONSTRUCTION, REFER TO FLOOR PLAN 5 5 5 1 RAIN DRIP SOLAR HEAT GAIN COEFFICIENT (SHGC): 0.21 AND WALL TYPES AND INTERIOR FINISH PLAN A-402 A-601 A-601 FOR ADDITIONAL INFORMATION. ALUMINUM WINDOW SILL DETAIL SIM. SIM. LIGHT TO SOLAR GAIN (LSG): 0.93",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "6 / BASIC SECURITY: MAINTENANCE, MECHANICAL / ELECTRICAL, JANITOR",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "6 / KICK PLATE (0.050\"T X 12\"H X 2\" L.D.W.)",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "6 / DOOR BOTTOM SWEEP",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "6 / AIR CAVITY: 1/2\"",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "6 / SPRING CUSH, TRAINING SITE PERFORMANCE REQUIREMENTS: 461 COUNTY ROAD 517",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "6 / VISIBLE LIGHT TRANSMITTANCE (VLT): 13",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "6 / VISIBLE LIGHT REFLECTANCE (EXTERIOR %): 11 WAPPAPELLO, MO 63966",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "6 / SOLAR HEAT GAIN COEFFICIENT (SHGC): 0.21",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
   }
  ],
- "ms": 2438,
- "generated_at": "2026-10-10T03:18:32.201Z"
+ "ms": 1875,
+ "generated_at": "2026-10-10T04:33:37.753Z"
 }
