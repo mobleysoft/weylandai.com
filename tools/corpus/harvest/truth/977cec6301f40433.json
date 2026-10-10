@@ -24,7 +24,7 @@
  },
  "readers": {
   "a": {
-   "doors": 0,
+   "doors": 3,
    "sets": 1,
    "items": 12,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
@@ -38,15 +38,15 @@
   }
  },
  "rows_agreed": 0,
- "rows_disputed": 34,
- "rows_total": 34,
+ "rows_disputed": 37,
+ "rows_total": 37,
  "agreement_rate": 0,
  "agreement": {
   "doors": {
-   "rows": 3,
+   "rows": 6,
    "agreed": 0,
    "disputed": 0,
-   "only_a": 0,
+   "only_a": 3,
    "only_b": 3,
    "fields": {},
    "agreement_rate": 0
@@ -70,7 +70,17 @@
  "oracles": {
   "marks_on_plan": {
    "applicable": false,
-   "reason": "no door schedule rows"
+   "reason": "no floor plan sheet found in this PDF (title blocks)",
+   "plan_counts": {
+    "plan_sheets": 0,
+    "rooms": 0,
+    "corridors": 0,
+    "tags": 0,
+    "unmatched_tags": 0,
+    "schedule_marks": 3,
+    "marks_not_on_plan": 3,
+    "shared_marks": 0
+   }
   },
   "sets_exist": {
    "applicable": false,
@@ -81,18 +91,60 @@
    "reason": "not for class schedule-only"
   },
   "types_in_legend": {
-   "applicable": false,
-   "reason": "no door schedule rows"
+   "applicable": true,
+   "total": 2,
+   "pass": 2,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "legend_titles": [
+    "Frame Types p.10",
+    "Door Types p.10"
+   ],
+   "skipped": [],
+   "note": "weak for numeric types: a detail number near the legend can pass a numeric frame type"
   },
   "sizes_and_marks": {
-   "applicable": false,
-   "reason": "no door schedule rows"
+   "applicable": true,
+   "total": 3,
+   "pass": 3,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "size_fail": 0,
+   "mark_fail": 0
   }
  },
- "tier": "unread",
- "unread_reason": "no rows agreed and no oracle applies",
- "disagreement_count": 34,
+ "tier": "oracle-checked",
+ "disagreement_count": 37,
  "disagreements": [
+  {
+   "kind": "door",
+   "page": 10,
+   "key": "112A",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 10,
+   "key": "114B",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 10,
+   "key": "114C",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
   {
    "kind": "door",
    "page": 10,
@@ -400,6 +452,6 @@
    "why": "only reader B read this row"
   }
  ],
- "ms": 2531,
- "generated_at": "2026-10-10T00:14:00.759Z"
+ "ms": 1862,
+ "generated_at": "2026-10-10T02:36:10.714Z"
 }

@@ -22,7 +22,7 @@
  },
  "readers": {
   "a": {
-   "doors": 1,
+   "doors": 2,
    "sets": 0,
    "items": 0,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
@@ -35,40 +35,40 @@
    "tables": 1
   }
  },
- "rows_agreed": 0,
- "rows_disputed": 2,
+ "rows_agreed": 2,
+ "rows_disputed": 0,
  "rows_total": 2,
- "agreement_rate": 0,
+ "agreement_rate": 1,
  "agreement": {
   "doors": {
    "rows": 2,
-   "agreed": 0,
-   "disputed": 1,
+   "agreed": 2,
+   "disputed": 0,
    "only_a": 0,
-   "only_b": 1,
+   "only_b": 0,
    "fields": {
     "width_inches": {
-     "agree": 0,
-     "total": 1
+     "agree": 2,
+     "total": 2
     },
     "height_inches": {
-     "agree": 0,
-     "total": 1
+     "agree": 2,
+     "total": 2
     },
     "material": {
-     "agree": 0,
-     "total": 1
+     "agree": 2,
+     "total": 2
     },
     "hardware_group": {
-     "agree": 1,
-     "total": 1
+     "agree": 2,
+     "total": 2
     },
     "location": {
-     "agree": 0,
-     "total": 1
+     "agree": 2,
+     "total": 2
     }
    },
-   "agreement_rate": 0
+   "agreement_rate": 1
   },
   "items": {
    "rows": 0,
@@ -96,8 +96,9 @@
     "corridors": 0,
     "tags": 0,
     "unmatched_tags": 0,
-    "schedule_marks": 1,
-    "marks_not_on_plan": 1
+    "schedule_marks": 2,
+    "marks_not_on_plan": 2,
+    "shared_marks": 0
    }
   },
   "sets_exist": {
@@ -114,62 +115,18 @@
   },
   "sizes_and_marks": {
    "applicable": true,
-   "total": 1,
-   "pass": 0,
-   "fail": 1,
-   "pass_rate": 0,
-   "examples": [
-    "mark 102 p.10: size null -> null x null"
-   ],
-   "size_fail": 1,
+   "total": 2,
+   "pass": 2,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "size_fail": 0,
    "mark_fail": 0
   }
  },
- "tier": "oracle-checked",
- "disagreement_count": 5,
- "disagreements": [
-  {
-   "kind": "door",
-   "page": 10,
-   "key": "102",
-   "field": "width_inches",
-   "a": null,
-   "b": 72
-  },
-  {
-   "kind": "door",
-   "page": 10,
-   "key": "102",
-   "field": "height_inches",
-   "a": null,
-   "b": 84
-  },
-  {
-   "kind": "door",
-   "page": 10,
-   "key": "102",
-   "field": "material",
-   "a": null,
-   "b": "HOLLOW METAL"
-  },
-  {
-   "kind": "door",
-   "page": 10,
-   "key": "102",
-   "field": "location",
-   "a": "CORRIDOR METAL",
-   "b": "EXIT CORRIDOR"
-  },
-  {
-   "kind": "door",
-   "page": 10,
-   "key": "105",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  }
- ],
- "ms": 798,
- "generated_at": "2026-10-10T00:13:35.672Z"
+ "tier": "agreed",
+ "disagreement_count": 0,
+ "disagreements": [],
+ "ms": 534,
+ "generated_at": "2026-10-10T02:35:51.631Z"
 }

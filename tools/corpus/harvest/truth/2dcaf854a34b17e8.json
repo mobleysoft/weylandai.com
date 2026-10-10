@@ -22,7 +22,7 @@
  },
  "readers": {
   "a": {
-   "doors": 2,
+   "doors": 3,
    "sets": 0,
    "items": 0,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
@@ -36,15 +36,15 @@
   }
  },
  "rows_agreed": 0,
- "rows_disputed": 2,
- "rows_total": 2,
+ "rows_disputed": 3,
+ "rows_total": 3,
  "agreement_rate": 0,
  "agreement": {
   "doors": {
-   "rows": 2,
+   "rows": 3,
    "agreed": 0,
    "disputed": 0,
-   "only_a": 2,
+   "only_a": 3,
    "only_b": 0,
    "fields": {},
    "agreement_rate": 0
@@ -68,11 +68,13 @@
  "oracles": {
   "marks_on_plan": {
    "applicable": true,
-   "total": 2,
+   "total": 3,
    "pass": 2,
-   "fail": 0,
-   "pass_rate": 1,
-   "examples": [],
+   "fail": 1,
+   "pass_rate": 0.6667,
+   "examples": [
+    "mark 2X (schedule p.12) not tagged on any plan"
+   ],
    "plan_sheets": [
     "A-100 p.9"
    ],
@@ -82,8 +84,9 @@
     "corridors": 0,
     "tags": 2,
     "unmatched_tags": 0,
-    "schedule_marks": 2,
-    "marks_not_on_plan": 0
+    "schedule_marks": 3,
+    "marks_not_on_plan": 1,
+    "shared_marks": 0
    }
   },
   "sets_exist": {
@@ -100,20 +103,21 @@
   },
   "sizes_and_marks": {
    "applicable": true,
-   "total": 2,
+   "total": 3,
    "pass": 0,
-   "fail": 2,
+   "fail": 3,
    "pass_rate": 0,
    "examples": [
-    "mark 101 p.12: size \"7' - 0\\\" 1 3/4\\\"\" -> null x null",
-    "mark 102 p.12: size \"7' - 0\\\" 1 3/4\\\"\" -> null x null"
+    "mark 101 p.12: size null -> null x null",
+    "mark 102 p.12: size null -> null x null",
+    "mark 2X p.12: size null -> null x null"
    ],
-   "size_fail": 2,
+   "size_fail": 3,
    "mark_fail": 0
   }
  },
  "tier": "oracle-checked",
- "disagreement_count": 2,
+ "disagreement_count": 3,
  "disagreements": [
   {
    "kind": "door",
@@ -132,8 +136,17 @@
    "a": "read",
    "b": null,
    "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 12,
+   "key": "2X",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
   }
  ],
- "ms": 1431,
- "generated_at": "2026-10-10T00:11:17.267Z"
+ "ms": 1588,
+ "generated_at": "2026-10-10T02:33:46.825Z"
 }

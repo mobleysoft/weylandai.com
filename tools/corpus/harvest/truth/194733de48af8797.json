@@ -26,7 +26,7 @@
   "a": {
    "doors": 34,
    "sets": 1,
-   "items": 3,
+   "items": 2,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
   },
   "b": {
@@ -37,61 +37,48 @@
    "tables": 5
   }
  },
- "rows_agreed": 13,
- "rows_disputed": 29,
+ "rows_agreed": 11,
+ "rows_disputed": 31,
  "rows_total": 42,
- "agreement_rate": 0.3095,
+ "agreement_rate": 0.2619,
  "agreement": {
   "doors": {
    "rows": 36,
-   "agreed": 13,
-   "disputed": 20,
+   "agreed": 11,
+   "disputed": 22,
    "only_a": 1,
    "only_b": 2,
    "fields": {
     "width_inches": {
-     "agree": 6,
-     "total": 24
+     "agree": 5,
+     "total": 25
     },
     "height_inches": {
-     "agree": 6,
-     "total": 24
+     "agree": 5,
+     "total": 25
     },
     "door_type": {
-     "agree": 6,
-     "total": 24
+     "agree": 5,
+     "total": 25
     },
     "hardware_group": {
-     "agree": 6,
-     "total": 24
+     "agree": 5,
+     "total": 25
     },
     "location": {
-     "agree": 7,
-     "total": 27
+     "agree": 6,
+     "total": 28
     }
    },
-   "agreement_rate": 0.3611
+   "agreement_rate": 0.3056
   },
   "items": {
    "rows": 6,
    "agreed": 0,
-   "disputed": 1,
+   "disputed": 0,
    "only_a": 2,
-   "only_b": 3,
-   "fields": {
-    "qty": {
-     "agree": 1,
-     "total": 1
-    },
-    "description": {
-     "agree": 0,
-     "total": 1
-    },
-    "catalog": {
-     "agree": 1,
-     "total": 1
-    }
-   },
+   "only_b": 4,
+   "fields": {},
    "agreement_rate": 0
   },
   "sets": {
@@ -112,7 +99,8 @@
     "tags": 0,
     "unmatched_tags": 0,
     "schedule_marks": 34,
-    "marks_not_on_plan": 34
+    "marks_not_on_plan": 34,
+    "shared_marks": 0
    }
   },
   "sets_exist": {
@@ -152,7 +140,7 @@
     "mark 2A112 p.45: size null -> null x null",
     "mark 2B109 p.45: size null -> null x null",
     "mark 2B112 p.45: size null -> null x null",
-    "mark 2D216 p.45: size null -> null x null",
+    "mark 2A201 p.45: size null -> null x null",
     "mark 3D116 p.45: size null -> null x null",
     "mark 3A p.45: size null -> null x null"
    ],
@@ -161,7 +149,7 @@
   }
  },
  "tier": "agreed",
- "disagreement_count": 102,
+ "disagreement_count": 112,
  "disagreements": [
   {
    "kind": "door",
@@ -484,6 +472,6 @@
    "b": "CELL A109-CELL A112"
   }
  ],
- "ms": 390,
- "generated_at": "2026-10-10T00:10:45.599Z"
+ "ms": 360,
+ "generated_at": "2026-10-10T02:33:18.003Z"
 }

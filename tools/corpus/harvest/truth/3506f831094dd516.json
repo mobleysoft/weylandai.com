@@ -37,40 +37,40 @@
    "tables": 5
   }
  },
- "rows_agreed": 9,
- "rows_disputed": 27,
+ "rows_agreed": 5,
+ "rows_disputed": 31,
  "rows_total": 36,
- "agreement_rate": 0.25,
+ "agreement_rate": 0.1389,
  "agreement": {
   "doors": {
    "rows": 32,
-   "agreed": 9,
-   "disputed": 20,
+   "agreed": 5,
+   "disputed": 24,
    "only_a": 1,
    "only_b": 2,
    "fields": {
     "width_inches": {
-     "agree": 5,
-     "total": 25
+     "agree": 3,
+     "total": 27
     },
     "height_inches": {
-     "agree": 5,
-     "total": 25
+     "agree": 3,
+     "total": 27
     },
     "door_type": {
-     "agree": 5,
-     "total": 25
+     "agree": 3,
+     "total": 27
     },
     "hardware_group": {
-     "agree": 5,
-     "total": 25
+     "agree": 3,
+     "total": 27
     },
     "location": {
-     "agree": 5,
-     "total": 25
+     "agree": 3,
+     "total": 27
     }
    },
-   "agreement_rate": 0.2813
+   "agreement_rate": 0.1563
   },
   "items": {
    "rows": 4,
@@ -116,7 +116,8 @@
     "tags": 29,
     "unmatched_tags": 481,
     "schedule_marks": 30,
-    "marks_not_on_plan": 1
+    "marks_not_on_plan": 1,
+    "shared_marks": 0
    }
   },
   "sets_exist": {
@@ -155,17 +156,17 @@
     "mark 2D216 p.12: size null -> null x null",
     "mark 3D102 p.12: size null -> null x null",
     "mark 3D116 p.12: size null -> null x null",
-    "mark 3A201 p.12: size null -> null x null",
+    "mark 3D216 p.12: size null -> null x null",
     "mark 4D102 p.12: size null -> null x null",
     "mark 4D116 p.12: size null -> null x null",
-    "mark 4A201 p.12: size null -> null x null"
+    "mark 4D216 p.12: size null -> null x null"
    ],
    "size_fail": 14,
    "mark_fail": 1
   }
  },
  "tier": "agreed",
- "disagreement_count": 107,
+ "disagreement_count": 127,
  "disagreements": [
   {
    "kind": "door",
@@ -488,6 +489,6 @@
    "b": "CELL A103-CELL D116"
   }
  ],
- "ms": 392,
- "generated_at": "2026-10-10T00:11:23.885Z"
+ "ms": 382,
+ "generated_at": "2026-10-10T02:33:53.165Z"
 }

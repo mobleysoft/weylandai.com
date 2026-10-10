@@ -26,7 +26,7 @@
   "a": {
    "doors": 0,
    "sets": 3,
-   "items": 18,
+   "items": 21,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
   },
   "b": {
@@ -38,8 +38,8 @@
   }
  },
  "rows_agreed": 0,
- "rows_disputed": 49,
- "rows_total": 49,
+ "rows_disputed": 52,
+ "rows_total": 52,
  "agreement_rate": 0,
  "agreement": {
   "doors": {
@@ -52,10 +52,10 @@
    "agreement_rate": 0
   },
   "items": {
-   "rows": 35,
+   "rows": 38,
    "agreed": 0,
    "disputed": 1,
-   "only_a": 17,
+   "only_a": 20,
    "only_b": 17,
    "fields": {
     "qty": {
@@ -112,7 +112,7 @@
  },
  "tier": "unread",
  "unread_reason": "no rows agreed and no oracle applies",
- "disagreement_count": 51,
+ "disagreement_count": 54,
  "disagreements": [
   {
    "kind": "door",
@@ -366,7 +366,16 @@
   {
    "kind": "item",
    "page": 23,
-   "key": "3 / DOOR TYPES 1 FLOOR PLAN AND INTERIOR WALL",
+   "key": "3 / DOOR TYPES",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "3 / FLOOR PLAN AND INTERIOR WALL",
    "field": "(row)",
    "a": "read",
    "b": null,
@@ -393,7 +402,16 @@
   {
    "kind": "item",
    "page": 23,
-   "key": "3 / COLD FORM RESILIENT CHANNELS 1",
+   "key": "3 / ITEM",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "3 / COLD FORM RESILIENT CHANNELS",
    "field": "(row)",
    "a": "read",
    "b": null,
@@ -452,26 +470,8 @@
    "a": null,
    "b": "read",
    "why": "only reader B read this row"
-  },
-  {
-   "kind": "item",
-   "page": 23,
-   "key": "3 / SMOKE SEAL PERIMETER GASKETS",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "item",
-   "page": 23,
-   "key": "3 / SMOKE SEAL DOOR BOTTOM SWEEP",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
   }
  ],
- "ms": 6272,
- "generated_at": "2026-10-10T00:16:14.910Z"
+ "ms": 3443,
+ "generated_at": "2026-10-10T02:37:34.541Z"
 }

@@ -100,7 +100,8 @@
     "tags": 8,
     "unmatched_tags": 0,
     "schedule_marks": 8,
-    "marks_not_on_plan": 0
+    "marks_not_on_plan": 0,
+    "shared_marks": 0
    }
   },
   "sets_exist": {
@@ -113,11 +114,13 @@
   },
   "types_in_legend": {
    "applicable": true,
-   "total": 1,
+   "total": 2,
    "pass": 1,
-   "fail": 0,
-   "pass_rate": 1,
-   "examples": [],
+   "fail": 1,
+   "pass_rate": 0.5,
+   "examples": [
+    "door type OVHD (4 rows) not found near the door types legend"
+   ],
    "legend_titles": [
     "DOOR TYPES p.16"
    ],
@@ -182,6 +185,6 @@
    "why": "only reader A read this row"
   }
  ],
- "ms": 721,
- "generated_at": "2026-10-10T00:11:14.186Z"
+ "ms": 823,
+ "generated_at": "2026-10-10T02:33:43.839Z"
 }

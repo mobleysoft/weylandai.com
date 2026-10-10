@@ -36,15 +36,15 @@
    "tables": 2
   }
  },
- "rows_agreed": 34,
- "rows_disputed": 2,
+ "rows_agreed": 36,
+ "rows_disputed": 0,
  "rows_total": 36,
- "agreement_rate": 0.9444,
+ "agreement_rate": 1,
  "agreement": {
   "doors": {
    "rows": 36,
-   "agreed": 34,
-   "disputed": 2,
+   "agreed": 36,
+   "disputed": 0,
    "only_a": 0,
    "only_b": 0,
    "fields": {
@@ -69,11 +69,11 @@
      "total": 2
     },
     "hardware_group": {
-     "agree": 34,
+     "agree": 36,
      "total": 36
     }
    },
-   "agreement_rate": 0.9444
+   "agreement_rate": 1
   },
   "items": {
    "rows": 0,
@@ -122,7 +122,8 @@
     "tags": 4,
     "unmatched_tags": 0,
     "schedule_marks": 36,
-    "marks_not_on_plan": 32
+    "marks_not_on_plan": 32,
+    "shared_marks": 0
    }
   },
   "sets_exist": {
@@ -149,25 +150,8 @@
   }
  },
  "tier": "agreed",
- "disagreement_count": 2,
- "disagreements": [
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "100-1",
-   "field": "hardware_group",
-   "a": "1 REQUIRED: FIRE RATED",
-   "b": "1"
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "100-2",
-   "field": "hardware_group",
-   "a": "1 REQUIRED: FIRE RATED",
-   "b": "1"
-  }
- ],
- "ms": 3750,
- "generated_at": "2026-10-10T00:10:43.633Z"
+ "disagreement_count": 0,
+ "disagreements": [],
+ "ms": 3645,
+ "generated_at": "2026-10-10T02:33:16.093Z"
 }

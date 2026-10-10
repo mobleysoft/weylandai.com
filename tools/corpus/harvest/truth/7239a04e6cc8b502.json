@@ -22,7 +22,7 @@
  },
  "readers": {
   "a": {
-   "doors": 74,
+   "doors": 75,
    "sets": 0,
    "items": 0,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
@@ -36,15 +36,15 @@
   }
  },
  "rows_agreed": 0,
- "rows_disputed": 74,
- "rows_total": 74,
+ "rows_disputed": 75,
+ "rows_total": 75,
  "agreement_rate": 0,
  "agreement": {
   "doors": {
-   "rows": 74,
+   "rows": 75,
    "agreed": 0,
    "disputed": 0,
-   "only_a": 74,
+   "only_a": 75,
    "only_b": 0,
    "fields": {},
    "agreement_rate": 0
@@ -68,15 +68,16 @@
  "oracles": {
   "marks_on_plan": {
    "applicable": true,
-   "total": 74,
+   "total": 75,
    "pass": 70,
-   "fail": 4,
-   "pass_rate": 0.9459,
+   "fail": 5,
+   "pass_rate": 0.9333,
    "examples": [
     "mark 134 (schedule p.63) not tagged on any plan",
     "mark 173.1 (schedule p.63) not tagged on any plan",
     "mark 173.2 (schedule p.63) not tagged on any plan",
-    "mark 173.3176 (schedule p.63) not tagged on any plan"
+    "mark 173.3 (schedule p.63) not tagged on any plan",
+    "mark 176 (schedule p.63) not tagged on any plan"
    ],
    "plan_sheets": [
     "A-101 p.46",
@@ -90,8 +91,9 @@
     "corridors": 21,
     "tags": 70,
     "unmatched_tags": 13,
-    "schedule_marks": 74,
-    "marks_not_on_plan": 4
+    "schedule_marks": 75,
+    "marks_not_on_plan": 5,
+    "shared_marks": 0
    }
   },
   "sets_exist": {
@@ -109,24 +111,25 @@
   },
   "sizes_and_marks": {
    "applicable": true,
-   "total": 74,
+   "total": 75,
    "pass": 68,
-   "fail": 6,
-   "pass_rate": 0.9189,
+   "fail": 7,
+   "pass_rate": 0.9067,
    "examples": [
     "mark 100 p.63: size \"7'-0\\\" x 3'-0\\\"\" -> 84 x null",
     "mark 123.1 p.63: size null -> null x null",
     "mark 123.2 p.63: size null -> null x null",
     "mark 124.2 p.63: size \"7'-0\\\" x 3'-0\\\"\" -> 84 x null",
     "mark 130.3 p.63: size \"2'-0\\\" x 3'-0\\\"\" -> 24 x null",
-    "mark 139.2 p.63: size \"3'-0\\\" x 3'-0\\\"\" -> 36 x null"
+    "mark 139.2 p.63: size \"3'-0\\\" x 3'-0\\\"\" -> 36 x null",
+    "mark 176 p.63: size null -> null x null"
    ],
-   "size_fail": 6,
+   "size_fail": 7,
    "mark_fail": 0
   }
  },
  "tier": "oracle-checked",
- "disagreement_count": 74,
+ "disagreement_count": 75,
  "disagreements": [
   {
    "kind": "door",
@@ -489,6 +492,6 @@
    "why": "only reader A read this row"
   }
  ],
- "ms": 11152,
- "generated_at": "2026-10-10T00:12:58.824Z"
+ "ms": 10011,
+ "generated_at": "2026-10-10T02:35:23.157Z"
 }

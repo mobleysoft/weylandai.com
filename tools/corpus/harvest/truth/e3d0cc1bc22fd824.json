@@ -35,20 +35,20 @@
    "tables": 1
   }
  },
- "rows_agreed": 0,
- "rows_disputed": 22,
+ "rows_agreed": 22,
+ "rows_disputed": 0,
  "rows_total": 22,
- "agreement_rate": 0,
+ "agreement_rate": 1,
  "agreement": {
   "doors": {
    "rows": 22,
-   "agreed": 0,
-   "disputed": 22,
+   "agreed": 22,
+   "disputed": 0,
    "only_a": 0,
    "only_b": 0,
    "fields": {
     "width_inches": {
-     "agree": 13,
+     "agree": 22,
      "total": 22
     },
     "height_inches": {
@@ -59,16 +59,16 @@
      "agree": 19,
      "total": 19
     },
-    "fire_rating": {
-     "agree": 0,
-     "total": 22
-    },
     "hardware_group": {
-     "agree": 0,
+     "agree": 19,
      "total": 19
+    },
+    "fire_rating": {
+     "agree": 2,
+     "total": 2
     }
    },
-   "agreement_rate": 0
+   "agreement_rate": 1
   },
   "items": {
    "rows": 0,
@@ -105,7 +105,8 @@
     "tags": 22,
     "unmatched_tags": 0,
     "schedule_marks": 22,
-    "marks_not_on_plan": 0
+    "marks_not_on_plan": 0,
+    "shared_marks": 0
    }
   },
   "sets_exist": {
@@ -137,348 +138,17 @@
   "sizes_and_marks": {
    "applicable": true,
    "total": 22,
-   "pass": 13,
-   "fail": 9,
-   "pass_rate": 0.5909,
-   "examples": [
-    "mark 100 p.18: size \"PR 3' - 0\\\" x 7' - 0\\\"\" -> null x 84",
-    "mark 109 p.18: size \"PR 3' - 0\\\" x 7' - 0\\\"\" -> null x 84",
-    "mark 110 p.18: size \"PR 3' - 0\\\" x 7' - 0\\\"\" -> null x 84",
-    "mark 111 p.18: size \"PR 3' - 0\\\" x 7' - 0\\\"\" -> null x 84",
-    "mark 112 p.18: size \"PR 3' - 0\\\" x 7' - 0\\\"\" -> null x 84",
-    "mark 113 p.18: size \"PR 3' - 0\\\" x 7' - 0\\\"\" -> null x 84",
-    "mark 115 p.18: size \"PR 3' - 0\\\" x 7' - 0\\\"\" -> null x 84",
-    "mark 116 p.18: size \"PR 3' - 0\\\" x 7' - 0\\\"\" -> null x 84",
-    "mark 117 p.18: size \"PR 3' - 0\\\" x 7' - 0\\\"\" -> null x 84"
-   ],
-   "size_fail": 9,
+   "pass": 22,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "size_fail": 0,
    "mark_fail": 0
   }
  },
- "tier": "oracle-checked",
- "disagreement_count": 50,
- "disagreements": [
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "100",
-   "field": "width_inches",
-   "a": null,
-   "b": 36
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "100",
-   "field": "fire_rating",
-   "a": "J4",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "100",
-   "field": "hardware_group",
-   "a": null,
-   "b": "09"
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "101",
-   "field": "fire_rating",
-   "a": "J1 90 MIN.",
-   "b": "90 MIN."
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "101",
-   "field": "hardware_group",
-   "a": null,
-   "b": "04"
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "102",
-   "field": "fire_rating",
-   "a": "J2",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "102",
-   "field": "hardware_group",
-   "a": null,
-   "b": "05"
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "103",
-   "field": "fire_rating",
-   "a": "J2",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "103",
-   "field": "hardware_group",
-   "a": null,
-   "b": "05"
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "104",
-   "field": "fire_rating",
-   "a": "J2",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "104",
-   "field": "hardware_group",
-   "a": null,
-   "b": "06"
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "105",
-   "field": "fire_rating",
-   "a": "J2",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "105",
-   "field": "hardware_group",
-   "a": null,
-   "b": "06"
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "106",
-   "field": "fire_rating",
-   "a": "J2",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "106",
-   "field": "hardware_group",
-   "a": null,
-   "b": "07"
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "107",
-   "field": "fire_rating",
-   "a": "J2",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "107",
-   "field": "hardware_group",
-   "a": null,
-   "b": "05"
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "108",
-   "field": "fire_rating",
-   "a": "J1 90 MIN.",
-   "b": "90 MIN."
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "108",
-   "field": "hardware_group",
-   "a": null,
-   "b": "04"
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "109",
-   "field": "width_inches",
-   "a": null,
-   "b": 36
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "109",
-   "field": "fire_rating",
-   "a": "J2",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "109",
-   "field": "hardware_group",
-   "a": null,
-   "b": "10"
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "110",
-   "field": "width_inches",
-   "a": null,
-   "b": 36
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "110",
-   "field": "fire_rating",
-   "a": "EXISTING",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "110",
-   "field": "hardware_group",
-   "a": null,
-   "b": "03A"
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "111",
-   "field": "width_inches",
-   "a": null,
-   "b": 36
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "111",
-   "field": "fire_rating",
-   "a": "EXISTING",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "111",
-   "field": "hardware_group",
-   "a": null,
-   "b": "03"
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "112",
-   "field": "width_inches",
-   "a": null,
-   "b": 36
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "112",
-   "field": "fire_rating",
-   "a": "EXISTING",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "112",
-   "field": "hardware_group",
-   "a": null,
-   "b": "03B"
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "113",
-   "field": "width_inches",
-   "a": null,
-   "b": 36
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "113",
-   "field": "fire_rating",
-   "a": "EXISTING",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "113",
-   "field": "hardware_group",
-   "a": null,
-   "b": "03B"
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "114",
-   "field": "fire_rating",
-   "a": "EXISTING",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "114",
-   "field": "hardware_group",
-   "a": null,
-   "b": "02"
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "115",
-   "field": "width_inches",
-   "a": null,
-   "b": 36
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "115",
-   "field": "fire_rating",
-   "a": "EXISTING",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "115",
-   "field": "hardware_group",
-   "a": null,
-   "b": "11"
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "116",
-   "field": "width_inches",
-   "a": null,
-   "b": 36
-  }
- ],
- "ms": 5596,
- "generated_at": "2026-10-10T00:16:05.109Z"
+ "tier": "agreed",
+ "disagreement_count": 0,
+ "disagreements": [],
+ "ms": 3197,
+ "generated_at": "2026-10-10T02:37:30.034Z"
 }

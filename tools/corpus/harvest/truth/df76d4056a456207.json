@@ -26,8 +26,8 @@
  "readers": {
   "a": {
    "doors": 2,
-   "sets": 5,
-   "items": 17,
+   "sets": 6,
+   "items": 19,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
   },
   "b": {
@@ -39,8 +39,8 @@
   }
  },
  "rows_agreed": 0,
- "rows_disputed": 49,
- "rows_total": 49,
+ "rows_disputed": 51,
+ "rows_total": 51,
  "agreement_rate": 0,
  "agreement": {
   "doors": {
@@ -55,25 +55,25 @@
      "total": 2
     },
     "door_type": {
-     "agree": 0,
+     "agree": 2,
      "total": 2
     },
     "material": {
-     "agree": 0,
+     "agree": 2,
      "total": 2
     },
     "fire_rating": {
-     "agree": 0,
+     "agree": 2,
      "total": 2
     }
    },
    "agreement_rate": 0
   },
   "items": {
-   "rows": 30,
+   "rows": 32,
    "agreed": 0,
    "disputed": 0,
-   "only_a": 17,
+   "only_a": 19,
    "only_b": 13,
    "fields": {},
    "agreement_rate": 0
@@ -95,13 +95,31 @@
    "reason": "the schedule rows name no hardware set"
   },
   "set_door_lists": {
-   "applicable": false,
-   "reason": "no hardware set prints its own door list"
+   "applicable": true,
+   "total": 1,
+   "pass": 0,
+   "fail": 1,
+   "pass_rate": 0,
+   "examples": [
+    "set 9: list names 2, schedule carries 0; listed but not on schedule with this set: 1 2"
+   ]
   },
   "types_in_legend": {
-   "applicable": false,
-   "reason": "schedule types present, but no legend title for them",
-   "skipped": []
+   "applicable": true,
+   "total": 2,
+   "pass": 0,
+   "fail": 2,
+   "pass_rate": 0,
+   "examples": [
+    "door type I (2 rows) not found near the door types legend",
+    "frame type A19 (2 rows) not found near the frame types legend"
+   ],
+   "legend_titles": [
+    "FRAME TYPES p.114",
+    "DOOR TYPES p.114"
+   ],
+   "skipped": [],
+   "note": "weak for numeric types: a detail number near the legend can pass a numeric frame type"
   },
   "sizes_and_marks": {
    "applicable": true,
@@ -110,15 +128,15 @@
    "fail": 2,
    "pass_rate": 0,
    "examples": [
-    "mark 1 p.118: size null -> null x null",
-    "mark 2 p.118: size null -> null x null"
+    "mark 1 p.118: size \"9\\\" x 20\\\" / 2\" -> null x null",
+    "mark 2 p.118: size \"10\\\" x 10\\\" / 2\" -> null x null"
    ],
    "size_fail": 2,
    "mark_fail": 0
   }
  },
  "tier": "oracle-checked",
- "disagreement_count": 59,
+ "disagreement_count": 55,
  "disagreements": [
   {
    "kind": "door",
@@ -131,58 +149,10 @@
   {
    "kind": "door",
    "page": 118,
-   "key": "1",
-   "field": "door_type",
-   "a": null,
-   "b": "I"
-  },
-  {
-   "kind": "door",
-   "page": 118,
-   "key": "1",
-   "field": "material",
-   "a": null,
-   "b": "300 SS"
-  },
-  {
-   "kind": "door",
-   "page": 118,
-   "key": "1",
-   "field": "fire_rating",
-   "a": null,
-   "b": "HEAVY"
-  },
-  {
-   "kind": "door",
-   "page": 118,
    "key": "2",
    "field": "width_inches",
    "a": null,
    "b": 54
-  },
-  {
-   "kind": "door",
-   "page": 118,
-   "key": "2",
-   "field": "door_type",
-   "a": null,
-   "b": "I"
-  },
-  {
-   "kind": "door",
-   "page": 118,
-   "key": "2",
-   "field": "material",
-   "a": null,
-   "b": "300 SS"
-  },
-  {
-   "kind": "door",
-   "page": 118,
-   "key": "2",
-   "field": "fire_rating",
-   "a": null,
-   "b": "MEDIUM"
   },
   {
    "kind": "door",
@@ -376,7 +346,7 @@
   {
    "kind": "item",
    "page": 114,
-   "key": "2 / REFER TO DOOR SCHEDULE. SHIM AND ANCHOR PER 110 3'-0\" X 7'-0\" X 1 3/4\" B RH SOLID WOOD --- 5 LEVEL 3 3 HOL. METAL -- 7/A-601 8/A-601 --- --- 1 MANUFACTURER'S RECOMMENDATIONS. 2 3/A-601 111 3'-0\" X 7'-0\" X 1 3/4\" C RHR HOL. METAL --- 7 LEVEL 1 3 HOL. METAL -- 9/A-601 10/A-601 --- 1 & 2 2 SIM. DOOR HEAD DETAIL 113A 4'-0\" X 7'-0\" X 1 3/4\" C RH HOL. METAL --- 6 LEVEL 2 4 HOL. METAL -- 7/A-501 8/A-501 --- --- 1",
+   "key": "2 / REFER TO DOOR SCHEDULE. SHIM AND ANCHOR PER 110 3'-0\" X 7'-0\" X 1 3/4\" B RH SOLID WOOD --- 5 LEVEL 3 3 HOL. METAL -- 7/A-601 8/A-601 --- --- 1 MANUFACTURER'S RECOMMENDATIONS. 3/A-601 111 3'-0\" X 7'-0\" X 1 3/4\" C RHR HOL. METAL --- 7 LEVEL 1 3 HOL. METAL -- 9/A-601 10/A-601 --- 1 & 2 SIM. 113A 4'-0\" X 7'-0\" X 1 3/4\" C RH HOL. METAL --- 6 LEVEL 2 4 HOL. METAL -- 7/A-501 8/A-501 --- --- 1",
    "field": "(row)",
    "a": "read",
    "b": null,
@@ -385,7 +355,16 @@
   {
    "kind": "item",
    "page": 114,
-   "key": "2 / 113B 8'-0\" X 8'-0\" D SEC. O.H. HOL. METAL --- 9 --- MFGR'S STANDARDS -- 4/A-403 5/A-403 --- --- 1 11 3/A-601 114 4'-0\" X 7'-0\" X 1 3/4\" C RHR HOL. METAL --- 8 LEVEL 3 3 HOL. METAL -- 6/A-403 7/A-403 --- 1 & 2 2 PRE-ENGINEERED METAL BUILDING WALL SYSTEM, REFER TO SIM. WALL SECTIONS.",
+   "key": "2 / ITEM",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "2 / 113B 8'-0\" X 8'-0\" D SEC. O.H. HOL. METAL --- 9 --- MFGR'S STANDARDS -- 4/A-403 5/A-403 --- --- 1 3/A-601 114 4'-0\" X 7'-0\" X 1 3/4\" C RHR HOL. METAL --- 8 LEVEL 3 3 HOL. METAL -- 6/A-403 7/A-403 --- 1 & 2 SIM. PRE-ENGINEERED METAL BUILDING WALL SYSTEM, REFER TO WALL SECTIONS.",
    "field": "(row)",
    "a": "read",
    "b": null,
@@ -466,13 +445,58 @@
   {
    "kind": "item",
    "page": 114,
-   "key": "6 / 11 (ANSICLOSERFUNCTIONWITH COVER,NO. F86)PARALLELSTOREROOMARM, CUSH,LOCK WITHTHRU-BOLTLEVER HANDLESMOUNTED",
+   "key": "6 / 1 (ANSI FUNCTION NO. F86) STOREROOM LOCK WITH LEVER HANDLES",
    "field": "(row)",
    "a": "read",
    "b": null,
    "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "6 / 1 CLOSER WITH COVER, PARALLEL ARM, CUSH, THRU-BOLT MOUNTED 1 KICK PLATE (0.050\"T X 12\"H X 2\" L.D.W.) 1 DOOR BOTTOM SWEEP ALUM. STOREFRONT DOOR SYSTEM, SHIM 1 SET PERIMETER SEAL GASKETS AND ANCHOR PER MFG'RS. 1 WALL STOP 1/2\" RECESS RECOMMENDATIONS. REFER TO DOOR SCHEDULE FOR TYPES. SET NO. 7 FIN. FLOOR (DOOR: 111) THRESHOLD, ADA AND ANSI COMPLIANT. EL. 100'-0\" 3 BALL BEARING HINGES ALUMINUM ENTRANCE AND FLUSH SOLID CORE WOOD FLUSH HOLLOW METAL SECTIONAL OVERHEAD DOOR (INSULATED) WIDTH AS REQUIRED. 1 EXTERIOR CYLINDER WITH REMOVABLE CORE STOREFRONT SYSTEM W/ DOOR (REFER SCHEDULES (INSULATED), 3/4\" MAXIMUM WITH LIFT CLEARANCE TRACK SYSTEM INSULATED SAFETY GLASS (REFER FOR FINISHES) UNDERCUT. MOUNTED AT 11'-0\" MAXIMUM A.F.F.. 1 (ANSI FUNCTION NO. F04) MORTISE ENTRY LOCK WITH LEVER HANDLES SCHEDULES FOR GLAZING TYPES). MANUAL OPERATION WITH PULL ROPE. ESCUTCHEON TRIM (REFER TO SCHEDULES FOR FINISHES) 1 CLOSER WITH COVER, PARALLEL ARM, HOLD OPEN WITH SPRING CUSH, THRU-BOLT MOUNTED SEALANT BOTH SIDES, TYPICAL. 1 KICKPLATE (0.050\"T X 12\"H X 2\" L.D.W.) A B C D 1 SET PERIMETER WEATHER SEAL GASKETS 1/2\" EXPANSION JOINT W/ FILLER AND 1 WEATHER SEAL DOOR BOTTOM SWEEP GLAZING SCHEDULE 1 SEALANT. 42\" 1 THRESHOLD (ADA / ANSI COMPLIANT) ALUMINUM STOREFRONT WINDOW AND FRAME, 1 RAIN DRIP TYPE 1: CONCRETE SIDEWALK TO SLOPE TO DRAIN REFER TO WINDOW SCHEDULES. 1\" INSULATED SAFETY (FULLY TEMPERED) GLAZING: (REFER TO PROJECT 1/4:12 MAX., REFER WALL SECTIONS. DOWEL WINDOW TYPES SET NO. 8 MANUAL SECTION 08 80 00 GLAZING FOR ADDITIONAL REQUIREMENTS). #4'S 12\" O.C. INTO FOUNDATION 6\" MIN. WITH SEALANT AND BACKER ROD ON BOTH SIDES OF (DOOR: 114) EPOXY. FRAME. SCALE: 1/4\" = 1'-0\" 4 BALL BEARING HINGES EXTERIOR PANE: 1/4\" TINTED (GRAY) - (2) SURFACE, HEAT-TREATED (FT) 1 EXTERIOR CYLINDER WITH REMOVABLE CORE AIR CAVITY: 1/2\" CONTINUOUS \"J\" MOLDING (BOTH SIDES)",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "6 / AND ESCUTCHEON TRIM HEAT-TREATED (FT) CONT. FIRE TREATED WOOD BLOCKING",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "6 / 1 CLOSER WITH COVER, PARALLEL ARM, HOLD OPEN WITH SPRING CUSH, THRU-BOLT MOUNTED PERFORMANCE REQUIREMENTS: WALL CONSTRUCTION, REFER TO FLOOR PLAN 1 KICKPLATE (0.050\"T X 12\"H X 2\" L.D.W.) VISIBLE LIGHT TRANSMITTANCE (VLT): 13 AND WALL TYPES AND INTERIOR FINISH PLAN 1 SET PERIMETER WEATHER SEAL GASKETS VISIBLE LIGHT REFLECTANCE (EXTERIOR %): 11 FOR ADDITIONAL INFORMATION. 5 5 5 1 WEATHER SEAL DOOR BOTTOM SWEEP VISIBLE LIGHT REFLECTANCE (INTERIOR %): 27 \" 38\" 8\" 8 1 THRESHOLD (ADA / ANSI COMPLIANT) (NFRC) U-VALUE (WINTER NIGHTTIME): 0.28 WALL CONSTRUCTION, REFER TO FLOOR PLAN 5 5 5 1 RAIN DRIP SOLAR HEAT GAIN COEFFICIENT (SHGC): 0.21 AND WALL TYPES AND INTERIOR FINISH PLAN A-402 A-601 A-601 FOR ADDITIONAL INFORMATION. ALUMINUM WINDOW SILL DETAIL SIM. SIM. LIGHT TO SOLAR GAIN (LSG): 0.93",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "6 / BASIC SECURITY: MAINTENANCE, MECHANICAL / ELECTRICAL, JANITOR",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "6 / KICK PLATE (0.050\"T X 12\"H X 2\" L.D.W.)",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
   }
  ],
- "ms": 4071,
- "generated_at": "2026-10-10T00:15:42.474Z"
+ "ms": 2451,
+ "generated_at": "2026-10-10T02:37:18.011Z"
 }

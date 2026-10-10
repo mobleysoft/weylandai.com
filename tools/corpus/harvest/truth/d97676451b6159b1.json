@@ -89,7 +89,8 @@
     "tags": 0,
     "unmatched_tags": 0,
     "schedule_marks": 4,
-    "marks_not_on_plan": 4
+    "marks_not_on_plan": 4,
+    "shared_marks": 0
    }
   },
   "sets_exist": {
@@ -107,11 +108,13 @@
   "sizes_and_marks": {
    "applicable": true,
    "total": 4,
-   "pass": 4,
-   "fail": 0,
-   "pass_rate": 1,
-   "examples": [],
-   "size_fail": 0,
+   "pass": 3,
+   "fail": 1,
+   "pass_rate": 0.75,
+   "examples": [
+    "mark 104 p.22: size \"2' - 6\\\" COMMENTS: x 6' - 8\\\"\" -> null x 80"
+   ],
+   "size_fail": 1,
    "mark_fail": 0
   }
  },
@@ -155,6 +158,6 @@
    "why": "only reader A read this row"
   }
  ],
- "ms": 4367,
- "generated_at": "2026-10-10T00:15:30.173Z"
+ "ms": 2586,
+ "generated_at": "2026-10-10T02:37:10.901Z"
 }

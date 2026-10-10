@@ -22,7 +22,7 @@
  },
  "readers": {
   "a": {
-   "doors": 46,
+   "doors": 49,
    "sets": 0,
    "items": 0,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
@@ -36,15 +36,15 @@
   }
  },
  "rows_agreed": 0,
- "rows_disputed": 46,
- "rows_total": 46,
+ "rows_disputed": 49,
+ "rows_total": 49,
  "agreement_rate": 0,
  "agreement": {
   "doors": {
-   "rows": 46,
+   "rows": 49,
    "agreed": 0,
    "disputed": 0,
-   "only_a": 46,
+   "only_a": 49,
    "only_b": 0,
    "fields": {},
    "agreement_rate": 0
@@ -68,8 +68,8 @@
  "oracles": {
   "marks_on_plan": {
    "applicable": true,
-   "total": 46,
-   "pass": 46,
+   "total": 49,
+   "pass": 49,
    "fail": 0,
    "pass_rate": 1,
    "examples": [],
@@ -82,10 +82,11 @@
     "plan_sheets": 3,
     "rooms": 151,
     "corridors": 7,
-    "tags": 45,
+    "tags": 49,
     "unmatched_tags": 0,
-    "schedule_marks": 46,
-    "marks_not_on_plan": 0
+    "schedule_marks": 49,
+    "marks_not_on_plan": 0,
+    "shared_marks": 1
    }
   },
   "sets_exist": {
@@ -102,30 +103,17 @@
   },
   "sizes_and_marks": {
    "applicable": true,
-   "total": 46,
-   "pass": 0,
-   "fail": 46,
-   "pass_rate": 0,
-   "examples": [
-    "mark 100A p.10: size null -> null x null",
-    "mark 101A p.10: size null -> null x null",
-    "mark 102A p.10: size null -> null x null",
-    "mark 103A p.10: size null -> null x null",
-    "mark 104A p.10: size null -> null x null",
-    "mark 105A p.10: size null -> null x null",
-    "mark 106A p.10: size null -> null x null",
-    "mark 107A p.10: size null -> null x null",
-    "mark 108A p.10: size null -> null x null",
-    "mark 109A p.10: size null -> null x null",
-    "mark 110A p.10: size null -> null x null",
-    "mark 113A p.10: size null -> null x null"
-   ],
-   "size_fail": 46,
+   "total": 49,
+   "pass": 49,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "size_fail": 0,
    "mark_fail": 0
   }
  },
  "tier": "oracle-checked",
- "disagreement_count": 46,
+ "disagreement_count": 49,
  "disagreements": [
   {
    "kind": "door",
@@ -488,6 +476,6 @@
    "why": "only reader A read this row"
   }
  ],
- "ms": 1546,
- "generated_at": "2026-10-10T00:10:45.204Z"
+ "ms": 1518,
+ "generated_at": "2026-10-10T02:33:17.636Z"
 }

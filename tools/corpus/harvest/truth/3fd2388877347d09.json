@@ -24,7 +24,7 @@
  },
  "readers": {
   "a": {
-   "doors": 0,
+   "doors": 9,
    "sets": 2,
    "items": 25,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
@@ -45,10 +45,27 @@
   "doors": {
    "rows": 9,
    "agreed": 0,
-   "disputed": 0,
+   "disputed": 9,
    "only_a": 0,
-   "only_b": 9,
-   "fields": {},
+   "only_b": 0,
+   "fields": {
+    "height_inches": {
+     "agree": 6,
+     "total": 9
+    },
+    "door_type": {
+     "agree": 0,
+     "total": 9
+    },
+    "hardware_group": {
+     "agree": 5,
+     "total": 9
+    },
+    "width_inches": {
+     "agree": 8,
+     "total": 8
+    }
+   },
    "agreement_rate": 0
   },
   "items": {
@@ -69,110 +86,197 @@
  "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
-   "applicable": false,
-   "reason": "no door schedule rows"
+   "applicable": true,
+   "total": 9,
+   "pass": 5,
+   "fail": 4,
+   "pass_rate": 0.5556,
+   "examples": [
+    "mark OH01 (schedule p.13) not tagged on any plan",
+    "mark OH02 (schedule p.13) not tagged on any plan",
+    "mark OH03 (schedule p.13) not tagged on any plan",
+    "mark OH04 (schedule p.13) not tagged on any plan"
+   ],
+   "plan_sheets": [
+    "A-101 p.7",
+    "A-500 p.10"
+   ],
+   "plan_counts": {
+    "plan_sheets": 2,
+    "rooms": 23,
+    "corridors": 2,
+    "tags": 5,
+    "unmatched_tags": 1,
+    "schedule_marks": 9,
+    "marks_not_on_plan": 4,
+    "shared_marks": 0
+   }
   },
   "sets_exist": {
-   "applicable": false,
-   "reason": "no door schedule rows"
+   "applicable": true,
+   "total": 4,
+   "pass": 2,
+   "fail": 2,
+   "pass_rate": 0.5,
+   "examples": [
+    "schedule set 3 not in 08 71 00 (sets read: 1, 2)",
+    "schedule set MANUF. not in 08 71 00 (sets read: 1, 2)"
+   ]
   },
   "set_door_lists": {
    "applicable": false,
-   "reason": "no door schedule rows"
+   "reason": "no hardware set prints its own door list"
   },
   "types_in_legend": {
    "applicable": false,
-   "reason": "no door schedule rows"
+   "reason": "no DOOR TYPES / FRAME TYPES legend title in this PDF"
   },
   "sizes_and_marks": {
-   "applicable": false,
-   "reason": "no door schedule rows"
+   "applicable": true,
+   "total": 9,
+   "pass": 5,
+   "fail": 4,
+   "pass_rate": 0.5556,
+   "examples": [
+    "mark 001 p.13: size \"3'-0\\\"/2'-6\\\" x 7'-0\\\"\" -> null x 84",
+    "mark 003 p.13: size \"3'-0\\\" x 7'-0\\\" HOLLOW\" -> 36 x null",
+    "mark 004 p.13: size \"3'-0\\\" x 7'-0\\\" HOLLOW\" -> 36 x null",
+    "mark SE01 p.13: size \"3'-0\\\" x 7'-0\\\" WELDED\" -> 36 x null"
+   ],
+   "size_fail": 4,
+   "mark_fail": 0
   }
  },
- "tier": "unread",
- "unread_reason": "no rows agreed and no oracle applies",
- "disagreement_count": 36,
+ "tier": "oracle-checked",
+ "disagreement_count": 43,
  "disagreements": [
   {
    "kind": "door",
    "page": 13,
    "key": "001",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "field": "door_type",
+   "a": "STOREFRONT",
+   "b": "REPLACE"
   },
   {
    "kind": "door",
    "page": 13,
    "key": "002",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "field": "door_type",
+   "a": "STOREFRONT",
+   "b": "REPLACE"
   },
   {
    "kind": "door",
    "page": 13,
    "key": "003",
-   "field": "(row)",
+   "field": "height_inches",
    "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "b": 84
+  },
+  {
+   "kind": "door",
+   "page": 13,
+   "key": "003",
+   "field": "door_type",
+   "a": "METAL/FRP",
+   "b": "REPLACE"
   },
   {
    "kind": "door",
    "page": 13,
    "key": "004",
-   "field": "(row)",
+   "field": "height_inches",
    "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "b": 84
+  },
+  {
+   "kind": "door",
+   "page": 13,
+   "key": "004",
+   "field": "door_type",
+   "a": "METAL/FPR",
+   "b": "REPLACE"
   },
   {
    "kind": "door",
    "page": 13,
    "key": "OH01",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "field": "door_type",
+   "a": "OVERHEAD",
+   "b": "REPLACE"
+  },
+  {
+   "kind": "door",
+   "page": 13,
+   "key": "OH01",
+   "field": "hardware_group",
+   "a": "MANUF.",
+   "b": "FROM DOOR MANUF."
   },
   {
    "kind": "door",
    "page": 13,
    "key": "OH02",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "field": "door_type",
+   "a": "OVERHEAD",
+   "b": "REPLACE"
+  },
+  {
+   "kind": "door",
+   "page": 13,
+   "key": "OH02",
+   "field": "hardware_group",
+   "a": "MANUF.",
+   "b": "FROM DOOR MANUF."
   },
   {
    "kind": "door",
    "page": 13,
    "key": "OH03",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "field": "door_type",
+   "a": "OVERHEAD",
+   "b": "REPLACE"
+  },
+  {
+   "kind": "door",
+   "page": 13,
+   "key": "OH03",
+   "field": "hardware_group",
+   "a": "MANUF.",
+   "b": "FROM DOOR MANUF."
   },
   {
    "kind": "door",
    "page": 13,
    "key": "OH04",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "field": "door_type",
+   "a": "OVERHEAD",
+   "b": "REPLACE"
+  },
+  {
+   "kind": "door",
+   "page": 13,
+   "key": "OH04",
+   "field": "hardware_group",
+   "a": "MANUF.",
+   "b": "FROM DOOR MANUF."
   },
   {
    "kind": "door",
    "page": 13,
    "key": "SE01",
-   "field": "(row)",
+   "field": "height_inches",
    "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "b": 84
+  },
+  {
+   "kind": "door",
+   "page": 13,
+   "key": "SE01",
+   "field": "door_type",
+   "a": "WOVEN WIRE",
+   "b": "REPLACE"
   },
   {
    "kind": "item",
@@ -389,35 +493,8 @@
    "a": "read",
    "b": null,
    "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 13,
-   "key": "2 / 3' - 4\"",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 13,
-   "key": "2 / 3' - 4\" SPECIAL EQUIPMENT DUTCH DOOR F00HM P3AL P00HM OH SE 01",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "group",
-   "page": null,
-   "key": "2",
-   "field": "doors",
-   "a": "",
-   "b": "10, 6, 7, 8, 9",
-   "why": "the set's door lists differ"
   }
  ],
- "ms": 1326,
- "generated_at": "2026-10-10T00:11:32.385Z"
+ "ms": 1301,
+ "generated_at": "2026-10-10T02:34:01.444Z"
 }
