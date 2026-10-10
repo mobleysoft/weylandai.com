@@ -61,34 +61,34 @@
    "agreed": 0
   }
  },
- "triage_class": "plan-only",
+ "triage_class": "schedule-only",
  "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
    "applicable": false,
-   "reason": "not for class plan-only"
+   "reason": "no door schedule rows"
   },
   "sets_exist": {
    "applicable": false,
-   "reason": "not for class plan-only"
+   "reason": "not for class schedule-only"
   },
   "set_door_lists": {
    "applicable": false,
-   "reason": "not for class plan-only"
+   "reason": "not for class schedule-only"
   },
   "types_in_legend": {
    "applicable": false,
-   "reason": "not for class plan-only"
+   "reason": "no door schedule rows"
   },
   "sizes_and_marks": {
    "applicable": false,
-   "reason": "not for class plan-only"
+   "reason": "no door schedule rows"
   }
  },
  "tier": "unread",
  "unread_reason": "no door schedule or hardware set read by either reader",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 1332,
- "generated_at": "2026-10-09T10:44:42.012Z"
+ "ms": 1301,
+ "generated_at": "2026-10-10T00:10:16.780Z"
 }

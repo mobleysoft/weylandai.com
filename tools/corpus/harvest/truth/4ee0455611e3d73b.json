@@ -40,9 +40,9 @@
   }
  },
  "rows_agreed": 1,
- "rows_disputed": 50,
- "rows_total": 51,
- "agreement_rate": 0.0196,
+ "rows_disputed": 53,
+ "rows_total": 54,
+ "agreement_rate": 0.0185,
  "agreement": {
   "doors": {
    "rows": 0,
@@ -54,34 +54,34 @@
    "agreement_rate": null
   },
   "items": {
-   "rows": 51,
+   "rows": 54,
    "agreed": 1,
-   "disputed": 22,
-   "only_a": 18,
-   "only_b": 10,
+   "disputed": 19,
+   "only_a": 21,
+   "only_b": 13,
    "fields": {
     "qty": {
-     "agree": 23,
-     "total": 23
+     "agree": 20,
+     "total": 20
     },
     "description": {
-     "agree": 22,
-     "total": 23
+     "agree": 18,
+     "total": 20
     },
     "catalog": {
      "agree": 0,
-     "total": 22
+     "total": 19
     },
     "manufacturer": {
      "agree": 0,
-     "total": 22
+     "total": 19
     },
     "finish": {
      "agree": 0,
      "total": 11
     }
    },
-   "agreement_rate": 0.0196
+   "agreement_rate": 0.0185
   },
   "sets": {
    "sets": 1,
@@ -113,12 +113,12 @@
   }
  },
  "tier": "agreed",
- "disagreement_count": 84,
+ "disagreement_count": 85,
  "disagreements": [
   {
    "kind": "item",
    "page": 355,
-   "key": "(CONTINUED) / Best LCN LCN",
+   "key": "(CONTINUED) / Best LCN",
    "field": "(row)",
    "a": "read",
    "b": null,
@@ -127,7 +127,7 @@
   {
    "kind": "item",
    "page": 355,
-   "key": "(CONTINUED) / SCUSH Bolted) Pemko",
+   "key": "(CONTINUED) / LCN SCUSH Bolted) Pemko",
    "field": "(row)",
    "a": "read",
    "b": null,
@@ -137,17 +137,42 @@
    "kind": "item",
    "page": 355,
    "key": "(CONTINUED) / (with seal)",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Pemko",
+   "field": "description",
+   "a": "Door Perimeter Gasketing (Silicone Seal)",
+   "b": "Door Perimeter Gasketing"
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Pemko",
    "field": "catalog",
-   "a": "(with seal)",
-   "b": "(with integrated TPE seal) Aluminum Clear Anodized"
+   "a": "Pemko",
+   "b": "Pemko - 29310_V Aluminum Pemko - 315_N Clear Anodized"
   },
   {
    "kind": "item",
    "page": 355,
-   "key": "(CONTINUED) / (with seal)",
+   "key": "(CONTINUED) / Pemko",
    "field": "manufacturer",
-   "a": "INTEGRATED TPE ALUMINUM CLEAR ANODIZED",
+   "a": "CLEAR ANODIZED - 29310_S ALUMINUM",
    "b": null
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Pemko",
+   "field": "description",
+   "a": "Heavy Duty Concealed Door Shoe (Bottom Seal) Kick Plate - Heavy Duty 8",
+   "b": "(Silicone Seal) Heavy Duty Concealed Door"
   },
   {
    "kind": "item",
@@ -162,176 +187,54 @@
    "page": 355,
    "key": "(CONTINUED) / Pemko",
    "field": "manufacturer",
-   "a": "- 29310_S ALUMINUM CLEAR ANODIZED",
+   "a": "CLEAR ANODIZED - 369_AP ALUMINUM",
    "b": null
   },
   {
    "kind": "item",
    "page": 355,
-   "key": "(CONTINUED) / Pemko Rockwood",
+   "key": "(CONTINUED) / Rockwood Install",
    "field": "catalog",
-   "a": "Pemko Rockwood",
-   "b": "Pemko - 369_AP Rockwood K-1062 Aluminum"
+   "a": "Rockwood Install",
+   "b": "US32D Install on Push Side"
   },
   {
    "kind": "item",
    "page": 355,
-   "key": "(CONTINUED) / Pemko Rockwood",
+   "key": "(CONTINUED) / Rockwood Install",
    "field": "manufacturer",
-   "a": "- 369_AP ALUMINUM K-1062",
-   "b": null
-  },
-  {
-   "kind": "item",
-   "page": 355,
-   "key": "(CONTINUED) / Install",
-   "field": "catalog",
-   "a": "Install",
-   "b": "Install on Push Side"
-  },
-  {
-   "kind": "item",
-   "page": 355,
-   "key": "(CONTINUED) / Install",
-   "field": "finish",
-   "a": null,
-   "b": "US32D"
-  },
-  {
-   "kind": "item",
-   "page": 355,
-   "key": "(CONTINUED) / Install",
-   "field": "manufacturer",
-   "a": "US32D ON PUSH SIDE",
+   "a": "K-1062 US32D ON PUSH SIDE",
    "b": null
   },
   {
    "kind": "item",
    "page": 355,
    "key": "(CONTINUED) / Pemko Von",
-   "field": "catalog",
-   "a": "Pemko Von",
-   "b": "Pemko - FM_HD Von Duprin - WS99 Aluminum"
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
   },
   {
    "kind": "item",
    "page": 355,
-   "key": "(CONTINUED) / Pemko Von",
-   "field": "manufacturer",
-   "a": "- FM_HD ALUMINUM DUPRIN - WS99",
-   "b": null
-  },
-  {
-   "kind": "item",
-   "page": 355,
-   "key": "(CONTINUED) / Series Standard HES",
+   "key": "(CONTINUED) / Series Standard",
    "field": "catalog",
-   "a": "Series Standard HES",
+   "a": "Series Standard",
    "b": "Series Trim - 996L Aluminum Standard Lever - 06 HES 9600 630 Satin Stanless"
   },
   {
    "kind": "item",
    "page": 355,
-   "key": "(CONTINUED) / Series Standard HES",
+   "key": "(CONTINUED) / Series Standard",
    "field": "manufacturer",
-   "a": "TRIM - 996L ALUMINUM LEVER - 06 9600 630 SATIN STANLESS",
+   "a": "TRIM - 996L ALUMINUM LEVER - 06",
    "b": null
   },
   {
    "kind": "item",
    "page": 355,
-   "key": "(CONTINUED) / Genesis",
-   "field": "catalog",
-   "a": "Genesis",
-   "b": "Genesis Series Steel"
-  },
-  {
-   "kind": "item",
-   "page": 355,
-   "key": "(CONTINUED) / Genesis",
-   "field": "manufacturer",
-   "a": "SERIES STEEL",
-   "b": null
-  },
-  {
-   "kind": "item",
-   "page": 355,
-   "key": "(CONTINUED) / Best LCN LCN",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 355,
-   "key": "(CONTINUED) / SCUSH Bolted) Rockwood",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 355,
-   "key": "(CONTINUED) / Install",
-   "field": "description",
-   "a": "Inches Tall Beveled 4 Edges with Countersunk Holes ADA Compliant Latching",
-   "b": "Inches Tall Beveled 4 Edges with Countersunk Holes"
-  },
-  {
-   "kind": "item",
-   "page": 355,
-   "key": "(CONTINUED) / Install",
-   "field": "catalog",
-   "a": "Install",
-   "b": "Install on Push Side"
-  },
-  {
-   "kind": "item",
-   "page": 355,
-   "key": "(CONTINUED) / Install",
-   "field": "finish",
-   "a": null,
-   "b": "US32D"
-  },
-  {
-   "kind": "item",
-   "page": 355,
-   "key": "(CONTINUED) / Install",
-   "field": "manufacturer",
-   "a": "US32D ON PUSH SIDE MILL FINISH",
-   "b": null
-  },
-  {
-   "kind": "item",
-   "page": 355,
-   "key": "(CONTINUED) / PEMKO",
-   "field": "catalog",
-   "a": "PEMKO",
-   "b": "PEMKO 2005_AV Aluminum"
-  },
-  {
-   "kind": "item",
-   "page": 355,
-   "key": "(CONTINUED) / PEMKO",
-   "field": "manufacturer",
-   "a": "2005_AV ALUMINUM",
-   "b": null
-  },
-  {
-   "kind": "item",
-   "page": 355,
-   "key": "(CONTINUED) / Gauge)Ives 4-1/2\" Best",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 355,
-   "key": "(CONTINUED) / Standard",
+   "key": "(CONTINUED) / HES Genesis",
    "field": "(row)",
    "a": "read",
    "b": null,
@@ -349,7 +252,7 @@
   {
    "kind": "item",
    "page": 355,
-   "key": "(CONTINUED) / (or Rockwood",
+   "key": "(CONTINUED) / LCN SCUSH Bolted)",
    "field": "(row)",
    "a": "read",
    "b": null,
@@ -358,7 +261,39 @@
   {
    "kind": "item",
    "page": 355,
-   "key": "(CONTINUED) / Install Pemko",
+   "key": "(CONTINUED) / Rockwood Install",
+   "field": "catalog",
+   "a": "Rockwood Install",
+   "b": "US32D Install on Push Side Mill Finish"
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Rockwood Install",
+   "field": "manufacturer",
+   "a": "K-1062 US32D ON PUSH SIDE",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / PEMKO",
+   "field": "catalog",
+   "a": "PEMKO",
+   "b": "PEMKO 2005_AV Aluminum"
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / PEMKO",
+   "field": "manufacturer",
+   "a": "MILL FINISH 2005_AV ALUMINUM",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / 1/2 pr Mortise Heavy Weight (.190 Gauge) Storeroom Function Mortise",
    "field": "(row)",
    "a": "read",
    "b": null,
@@ -367,7 +302,43 @@
   {
    "kind": "item",
    "page": 355,
-   "key": "(CONTINUED) / 10C Compliant)",
+   "key": "(CONTINUED) / Lockset (Grade 1) Outside Rigid / Key Entry Only",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Cylinder - Small Format Interchangeable Core (7-Pin)",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Closer - Heavy Duty Regular or Parallel Arm (No Hold-Open) Kick Plate - Heavy Duty 8 Inches",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Tall Beveled 4 Edges with Countersunk Holes",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Fire & Smoke Rated Perimeter Gasketing (Continuous Silicone)",
    "field": "(row)",
    "a": "read",
    "b": null,
@@ -386,53 +357,46 @@
    "page": 355,
    "key": "(CONTINUED) / Pemko",
    "field": "manufacturer",
-   "a": "- 170_A ALUMINUM CLEAR ANODIZED",
+   "a": "- 170_A ALUMINUM",
    "b": null
   },
   {
    "kind": "item",
    "page": 355,
    "key": "(CONTINUED) / Pemko Pemko",
-   "field": "catalog",
-   "a": "Pemko Pemko",
-   "b": "Pemko - 29310_V Aluminum Pemko - 315_N Clear Anodized"
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
   },
   {
    "kind": "item",
    "page": 355,
-   "key": "(CONTINUED) / Pemko Pemko",
-   "field": "manufacturer",
-   "a": "- 29310_V ALUMINUM - 315_N CLEAR ANODIZED",
-   "b": null
-  },
-  {
-   "kind": "item",
-   "page": 355,
-   "key": "(CONTINUED) / Install Door Rockwood",
+   "key": "(CONTINUED) / Install Door",
    "field": "catalog",
-   "a": "Install Door Rockwood",
+   "a": "Install Door",
    "b": "Install on Exterior of Aluminum Door Rockwood K-1062"
   },
   {
    "kind": "item",
    "page": 355,
-   "key": "(CONTINUED) / Install Door Rockwood",
+   "key": "(CONTINUED) / Install Door",
    "field": "manufacturer",
-   "a": "ON EXTERIOR OF ALUMINUM K-1062",
+   "a": "CLEAR ANODIZED ON EXTERIOR OF ALUMINUM",
    "b": null
   },
   {
    "kind": "item",
    "page": 355,
-   "key": "(CONTINUED) / Install",
+   "key": "(CONTINUED) / Rockwood Install",
    "field": "catalog",
-   "a": "Install",
+   "a": "Rockwood Install",
    "b": "Install on Push Side"
   },
   {
    "kind": "item",
    "page": 355,
-   "key": "(CONTINUED) / Install",
+   "key": "(CONTINUED) / Rockwood Install",
    "field": "finish",
    "a": null,
    "b": "US32D"
@@ -440,12 +404,54 @@
   {
    "kind": "item",
    "page": 355,
-   "key": "(CONTINUED) / Install",
+   "key": "(CONTINUED) / Rockwood Install",
    "field": "manufacturer",
-   "a": "US32D ON PUSH SIDE",
+   "a": "K-1062 US32D ON PUSH SIDE",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / 5000 and Cylinder",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / LCN LCN",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Zero",
+   "field": "catalog",
+   "a": "Zero",
+   "b": "Zero - 488FS Rockwood K-1062"
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Zero",
+   "field": "finish",
+   "a": null,
+   "b": "Black"
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Zero",
+   "field": "manufacturer",
+   "a": "- 488FS BLACK",
    "b": null
   }
  ],
- "ms": 2070,
- "generated_at": "2026-10-09T10:46:13.167Z"
+ "ms": 2171,
+ "generated_at": "2026-10-10T00:11:56.120Z"
 }

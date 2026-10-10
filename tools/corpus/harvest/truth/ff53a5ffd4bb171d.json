@@ -70,11 +70,7 @@
     },
     "finish": {
      "agree": 0,
-     "total": 32
-    },
-    "manufacturer": {
-     "agree": 0,
-     "total": 3
+     "total": 35
     }
    },
    "agreement_rate": 0.027
@@ -171,7 +167,7 @@
    "kind": "item",
    "page": 4,
    "key": "1 / 628",
-   "field": "manufacturer",
+   "field": "finish",
    "a": "ABH",
    "b": null
   },
@@ -299,7 +295,7 @@
    "kind": "item",
    "page": 4,
    "key": "1 / DOOR CONTACT MC-7 x SPDT x 1\" DIA",
-   "field": "manufacturer",
+   "field": "finish",
    "a": "SDC",
    "b": null
   },
@@ -432,6 +428,6 @@
    "b": null
   }
  ],
- "ms": 162,
- "generated_at": "2026-10-09T10:49:56.920Z"
+ "ms": 201,
+ "generated_at": "2026-10-10T00:17:04.486Z"
 }

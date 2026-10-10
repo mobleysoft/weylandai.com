@@ -25,9 +25,9 @@
  },
  "readers": {
   "a": {
-   "doors": 0,
+   "doors": 2,
    "sets": 5,
-   "items": 15,
+   "items": 17,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
   },
   "b": {
@@ -39,24 +39,41 @@
   }
  },
  "rows_agreed": 0,
- "rows_disputed": 47,
- "rows_total": 47,
+ "rows_disputed": 49,
+ "rows_total": 49,
  "agreement_rate": 0,
  "agreement": {
   "doors": {
    "rows": 19,
    "agreed": 0,
-   "disputed": 0,
+   "disputed": 2,
    "only_a": 0,
-   "only_b": 19,
-   "fields": {},
+   "only_b": 17,
+   "fields": {
+    "width_inches": {
+     "agree": 0,
+     "total": 2
+    },
+    "door_type": {
+     "agree": 0,
+     "total": 2
+    },
+    "material": {
+     "agree": 0,
+     "total": 2
+    },
+    "fire_rating": {
+     "agree": 0,
+     "total": 2
+    }
+   },
    "agreement_rate": 0
   },
   "items": {
-   "rows": 28,
+   "rows": 30,
    "agreed": 0,
    "disputed": 0,
-   "only_a": 15,
+   "only_a": 17,
    "only_b": 13,
    "fields": {},
    "agreement_rate": 0
@@ -75,25 +92,98 @@
   },
   "sets_exist": {
    "applicable": false,
-   "reason": "no door schedule rows"
+   "reason": "the schedule rows name no hardware set"
   },
   "set_door_lists": {
    "applicable": false,
-   "reason": "no door schedule rows"
+   "reason": "no hardware set prints its own door list"
   },
   "types_in_legend": {
    "applicable": false,
-   "reason": "no door schedule rows"
+   "reason": "schedule types present, but no legend title for them",
+   "skipped": []
   },
   "sizes_and_marks": {
-   "applicable": false,
-   "reason": "no door schedule rows"
+   "applicable": true,
+   "total": 2,
+   "pass": 0,
+   "fail": 2,
+   "pass_rate": 0,
+   "examples": [
+    "mark 1 p.118: size null -> null x null",
+    "mark 2 p.118: size null -> null x null"
+   ],
+   "size_fail": 2,
+   "mark_fail": 0
   }
  },
- "tier": "unread",
- "unread_reason": "no rows agreed and no oracle applies",
- "disagreement_count": 51,
+ "tier": "oracle-checked",
+ "disagreement_count": 59,
  "disagreements": [
+  {
+   "kind": "door",
+   "page": 118,
+   "key": "1",
+   "field": "width_inches",
+   "a": null,
+   "b": 54
+  },
+  {
+   "kind": "door",
+   "page": 118,
+   "key": "1",
+   "field": "door_type",
+   "a": null,
+   "b": "I"
+  },
+  {
+   "kind": "door",
+   "page": 118,
+   "key": "1",
+   "field": "material",
+   "a": null,
+   "b": "300 SS"
+  },
+  {
+   "kind": "door",
+   "page": 118,
+   "key": "1",
+   "field": "fire_rating",
+   "a": null,
+   "b": "HEAVY"
+  },
+  {
+   "kind": "door",
+   "page": 118,
+   "key": "2",
+   "field": "width_inches",
+   "a": null,
+   "b": 54
+  },
+  {
+   "kind": "door",
+   "page": 118,
+   "key": "2",
+   "field": "door_type",
+   "a": null,
+   "b": "I"
+  },
+  {
+   "kind": "door",
+   "page": 118,
+   "key": "2",
+   "field": "material",
+   "a": null,
+   "b": "300 SS"
+  },
+  {
+   "kind": "door",
+   "page": 118,
+   "key": "2",
+   "field": "fire_rating",
+   "a": null,
+   "b": "MEDIUM"
+  },
   {
    "kind": "door",
    "page": 114,
@@ -232,24 +322,6 @@
   {
    "kind": "door",
    "page": 118,
-   "key": "1",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 118,
-   "key": "2",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 118,
    "key": "KEH2",
    "field": "(row)",
    "a": null,
@@ -268,7 +340,7 @@
   {
    "kind": "item",
    "page": 114,
-   "key": "(CONTINUED) / PRE-ENGINEERED METAL BUILDING WALL SYSTEM, REFER",
+   "key": "(CONTINUED) / \"",
    "field": "(row)",
    "a": "read",
    "b": null,
@@ -277,7 +349,7 @@
   {
    "kind": "item",
    "page": 114,
-   "key": "(CONTINUED) / TO WALL SECTIONS. DOOR SCHEDULE 2 INTERIOR WALL FRAMING, REFER TO FLOOR PLAN AND INTERIOR WALL TYPES. DOOR HARDWARE FRAME DETAILS REMARKS DOUBLE 600S162-33 (6\"-20GA.) COLD FORM METAL FIRE FRAMING BOX HEADER. MARK GLAZ. SET HEAD RATING (REFER SIZE (W x H x D) TYPE SWING MATERIAL KEYED TYPE MATERIAL HEAD JAMB SILL NOTES) TYPE # WIDTH BATT INSULATION (UNCOMPRESSED) (R-25) WITH FOIL FACE VAPOR BARRIER. 100 (PAIR) 3'-0\" X 7'-0\" X 1 3/4\" AA RHR/LHR ALUMINUM 1 1 LEVEL 1 1 ALUMINUM -- 1/A-601 2/A-601 3/A-601 --- 1 & 2 101A (PAIR) 3'-0\" X 7'-0\" X 1 3/4\" AA RHR/LHR ALUMINUM 2 2 --- 2 ALUMINUM -- 4/A-601 5/A-601 --- --- 1 5/8\" TYPE \"X\" GYPSUM BOARD. 101B (PAIR) 3'-0\" X 7'-0\" X 1 3/4\" AA RHR/LHR ALUMINUM 1 1 LEVEL 1 1 ALUMINUM -- 1/A-601 2/A-601 3/A-601 --- 1 & 2 SEALANT AROUND BOTH SIDES OF OPENING PERIMETER 101C (PAIR) 3'-0\" X 7'-0\" X 1 3/4\" AA RHR/LHR ALUMINUM 1 1 LEVEL 1 1 ALUMINUM -- 1/A-601 2/A-601 3/A-601 --- 1 & 2 (TYPICAL). 102 3'-0\" X 7'-0\" X 1 3/4\" B RH SOLID WOOD --- 3 --- 4 HOL. METAL -- 7/A-501 8/A-501 --- --- 1 PRE-ENGINEERED METAL BUILDING SHEET METAL (24 GA.) 103 3'-0\" X 7'-0\" X 1 3/4\" B LH SOLID WOOD --- 3 --- 4 HOL. METAL -- 7/A-501 8/A-501 --- --- 1 CLOSURE, OPENING TRIM, AND FLASHING AT BOTH SIDES OF OPENING PERIMETER. 108 3'-0\" X 7'-0\" X 1 3/4\" B RH SOLID WOOD --- 4 LEVEL 2 3 HOL. METAL -- 7/A-601 8/A-601 --- --- 1 ALUMINUM STOREFRONT DOOR AND FRAME SYSTEM, 109 3'-0\" X 7'-0\" X 1 3/4\" B LH SOLID WOOD --- 5 LEVEL 2 3 HOL. METAL -- 7/A-601 8/A-601 --- --- 1",
+   "key": "(CONTINUED) / 8 PRE-ENGINEERED METAL BUILDING WALL SYSTEM, REFER",
    "field": "(row)",
    "a": "read",
    "b": null,
@@ -286,7 +358,7 @@
   {
    "kind": "item",
    "page": 114,
-   "key": "(CONTINUED) / PRE-ENGINEERED METAL BUILDING WALL SYSTEM, REFER TO 113B114 4'-0\"8'-0\"X 7'-0\"X 8'-0\"X 1 3/4\" DC SEC.RHRO.H. HOL.HOL. METALMETAL ------ 98 LEVEL--- 3 MFGR'S3 HOL.STANDARDSMETAL ---- 6/A-4034/A-403 7/A-4035/A-403 3/A-601SIM.--- ------ 1 &1 2",
+   "key": "(CONTINUED) / HARDWARE SCHEDULE TO WALL SECTIONS. DOOR SCHEDULE 2 INTERIOR WALL FRAMING, REFER TO FLOOR PLAN AND SET NO. 1 INTERIOR WALL TYPES. (DOORS 100, 101B, 101C) 2 CONTINUOUS GEARED HINGES DOOR HARDWARE FRAME DETAILS REMARKS DOUBLE 600S162-33 (6\"-20GA.) COLD FORM METAL FIRE 2 EXTERIOR CYLINDERS WITH REMOVABLE CORES FRAMING BOX HEADER. MARK RATING (REFER 2 (ANSI FUNCTION NO. 08) ENTRY LOCK AND EXIT PANIC WITH TWO POINT GLAZ. SET HEAD SIZE (W x H x D) TYPE SWING MATERIAL KEYED TYPE MATERIAL HEAD JAMB SILL NOTES) LOCKING SURFACE VERTICAL RODS, COVER GUARDS, DUST PROOF TYPE # WIDTH BATT INSULATION (UNCOMPRESSED) (R-25) WITH FOIL BOTTOM STRIKES, EXTERIOR LEVER HANDLES WITH ESCUTCHEON 100 (PAIR) 3'-0\" X 7'-0\" X 1 3/4\" AA RHR/LHR ALUMINUM 1 1 LEVEL 1 1 ALUMINUM -- 1/A-601 2/A-601 3/A-601 --- 1 & 2 TRIM, THRU-BOLT MOUNTED FACE VAPOR BARRIER. 2 CLOSERS WITH COVER, PARALLEL ARM, HOLD OPEN WITH SPRING 101A (PAIR) 3'-0\" X 7'-0\" X 1 3/4\" AA RHR/LHR ALUMINUM 2 2 --- 2 ALUMINUM -- 4/A-601 5/A-601 --- --- 1 5/8\" TYPE \"X\" GYPSUM BOARD. CUSH, ACCESSORY PLATES AND SPACERS (AS REQUIRED), THRU-BOLT 101B (PAIR) 3'-0\" X 7'-0\" X 1 3/4\" AA RHR/LHR ALUMINUM 1 1 LEVEL 1 1 ALUMINUM -- 1/A-601 2/A-601 3/A-601 --- 1 & 2 MOUNTED SEALANT AROUND BOTH SIDES OF OPENING PERIMETER 1 SET PERIMETER WEATHER SEAL GASKETS 101C (PAIR) 3'-0\" X 7'-0\" X 1 3/4\" AA RHR/LHR ALUMINUM 1 1 LEVEL 1 1 ALUMINUM -- 1/A-601 2/A-601 3/A-601 --- 1 & 2 (TYPICAL). 1 SET WEATHER SEAL MEETING STILE GASKETS 102 3'-0\" X 7'-0\" X 1 3/4\" B RH SOLID WOOD --- 3 --- 4 HOL. METAL -- 7/A-501 8/A-501 --- --- 1 2 WEATHER SEAL DOOR BOTTOM SWEEPS PRE-ENGINEERED METAL BUILDING SHEET METAL (24 GA.) 1 THRESHOLD (ADA / ANSI COMPLIANT) 103 3'-0\" X 7'-0\" X 1 3/4\" B LH SOLID WOOD --- 3 --- 4 HOL. METAL -- 7/A-501 8/A-501 --- --- 1 1 RAIN DRIP CLOSURE, OPENING TRIM, AND FLASHING AT BOTH SIDES OF OPENING PERIMETER. 108 3'-0\" X 7'-0\" X 1 3/4\" B RH SOLID WOOD --- 4 LEVEL 2 3 HOL. METAL -- 7/A-601 8/A-601 --- --- 1",
    "field": "(row)",
    "a": "read",
    "b": null,
@@ -304,7 +376,7 @@
   {
    "kind": "item",
    "page": 114,
-   "key": "3 / 1. 1. ALL ALL DOORS DOORS SHALL SHALL BE BE SHOP SHOP PREPARED PREPARED FOR FOR HARDWARE. HARDWARE. 1 SET PUSH / PULL (1\" DIAMETER STRAIGHT BENT BAR 10\" C.T.C. WITH 4\"",
+   "key": "2 / REFER TO DOOR SCHEDULE. SHIM AND ANCHOR PER 110 3'-0\" X 7'-0\" X 1 3/4\" B RH SOLID WOOD --- 5 LEVEL 3 3 HOL. METAL -- 7/A-601 8/A-601 --- --- 1 MANUFACTURER'S RECOMMENDATIONS. 2 3/A-601 111 3'-0\" X 7'-0\" X 1 3/4\" C RHR HOL. METAL --- 7 LEVEL 1 3 HOL. METAL -- 9/A-601 10/A-601 --- 1 & 2 2 SIM. DOOR HEAD DETAIL 113A 4'-0\" X 7'-0\" X 1 3/4\" C RH HOL. METAL --- 6 LEVEL 2 4 HOL. METAL -- 7/A-501 8/A-501 --- --- 1",
    "field": "(row)",
    "a": "read",
    "b": null,
@@ -313,7 +385,25 @@
   {
    "kind": "item",
    "page": 114,
-   "key": "3 / 2\" OPENING PERIMETER. 2. REFER TO HARDWARE NOTES FOR ADDITIONAL REQUIREMENTS. X 16\" PLATES) 2. VERIFY COMPATIBILITY OF HARDWARE SPECIFIED. NOTIFY ARCHITECT 1 CLOSER WITH COVER, PARALLEL ARM, CUSH, THRU-BOLT MOUNTED FOAM INSULATION OF INCOMPATIBILITY ISSUES PRIOR TO ORDERING AND INSTALLATION. 1 KICK PLATE (0.050\"T X 12\"H X 2\" L.D.W.) 1 WALL 3. ALL HARDWARE TO BE GRADE 1 (HEAVY DUTY COMMERCIAL). SYSTEM, REFER",
+   "key": "2 / 113B 8'-0\" X 8'-0\" D SEC. O.H. HOL. METAL --- 9 --- MFGR'S STANDARDS -- 4/A-403 5/A-403 --- --- 1 11 3/A-601 114 4'-0\" X 7'-0\" X 1 3/4\" C RHR HOL. METAL --- 8 LEVEL 3 3 HOL. METAL -- 6/A-403 7/A-403 --- 1 & 2 2 PRE-ENGINEERED METAL BUILDING WALL SYSTEM, REFER TO SIM. WALL SECTIONS.",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "3 / 1.1. ALLALL DOORSDOORS SHALLSHALL BEBE SHOPSHOP PREPAREDPREPARED FORFOR HARDWARE.HARDWARE.",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "3 / 2. REFER TO HARDWARE NOTES FOR ADDITIONAL REQUIREMENTS.",
    "field": "(row)",
    "a": "read",
    "b": null,
@@ -349,7 +439,7 @@
   {
    "kind": "item",
    "page": 114,
-   "key": "4 / BALL BEARING HINGES",
+   "key": "4 / ORDERING AND DELIVERY REQUIREMENTS WITH OWNER. SUBMIT CORE",
    "field": "(row)",
    "a": "read",
    "b": null,
@@ -358,7 +448,7 @@
   {
    "kind": "item",
    "page": 114,
-   "key": "4 / F82A) OFFICE LOCK WITH LEVER HANDLES",
+   "key": "4 / LEVEL 1:",
    "field": "(row)",
    "a": "read",
    "b": null,
@@ -367,7 +457,7 @@
   {
    "kind": "item",
    "page": 114,
-   "key": "4 / (0.050\"T X 12\"H X 2\" L.D.W.)",
+   "key": "4 / KICK PLATE (0.050\"T X 12\"H X 2\" L.D.W.)",
    "field": "(row)",
    "a": "read",
    "b": null,
@@ -376,85 +466,13 @@
   {
    "kind": "item",
    "page": 114,
-   "key": "4 / WALL STOP",
+   "key": "6 / 11 (ANSICLOSERFUNCTIONWITH COVER,NO. F86)PARALLELSTOREROOMARM, CUSH,LOCK WITHTHRU-BOLTLEVER HANDLESMOUNTED",
    "field": "(row)",
    "a": "read",
    "b": null,
    "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 114,
-   "key": "5 / 1:",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 114,
-   "key": "5 / (0.050\"T X 12\"H X 2\" L.D.W.)",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 114,
-   "key": "6 / 111 KICK(ANSICLOSERPLATEFUNCTIONWITH(0.050\"TCOVER,NO.X 12\"HF86)PARALLELX 2\"STOREROOML.D.W.)ARM, CUSH,LOCK WITHTHRU-BOLTLEVER HANDLESMOUNTED",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 114,
-   "key": "6 / CONT.WALL CONSTRUCTION,FIRE TREATED WOODREFERBLOCKINGTO FLOOR PLAN 11 KICKPLATECLOSERTHRU-BOLTWITH(0.050\"TMOUNTEDCOVER,X 12\"HPARALLELX 2\" L.D.W.)ARM, HOLD OPEN WITH SPRING CUSH, PERFORMANCEVISIBLE LIGHT TRANSMITTANCEREQUIREMENTS:(VLT): 13",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 114,
-   "key": "6 / INTERIOR HM DOOR HEAD DETAIL DOUBLEMETAL FRAMING600S162-33BOX(6\"-20HEADER.GA.)COLD FORM 41\" 2\" FLASHINGPERIMETER.AT BOTH SIDES OF OPENING ALUMINUM STOREFRONT",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 114,
-   "key": "6 / 1 1/2\" = 1'-0\" 9 1 1/2\" = 1'-0\" 10 1 1/2\" = 1'-0\" HARDWAREADDITIONALLOCATIONS.ANCHORS AT",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 114,
-   "key": "6 / BASIC SECURITY: MAINTENANCE, MECHANICAL / ELECTRICAL, JANITOR",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "item",
-   "page": 114,
-   "key": "6 / KICK PLATE (0.050\"T X 12\"H X 2\" L.D.W.)",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
   }
  ],
- "ms": 2495,
- "generated_at": "2026-10-09T10:48:59.684Z"
+ "ms": 4071,
+ "generated_at": "2026-10-10T00:15:42.474Z"
 }

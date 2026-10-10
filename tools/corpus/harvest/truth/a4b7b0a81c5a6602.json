@@ -39,8 +39,8 @@
   }
  },
  "rows_agreed": 0,
- "rows_disputed": 30,
- "rows_total": 30,
+ "rows_disputed": 31,
+ "rows_total": 31,
  "agreement_rate": 0,
  "agreement": {
   "doors": {
@@ -53,31 +53,27 @@
    "agreement_rate": 0
   },
   "items": {
-   "rows": 16,
+   "rows": 17,
    "agreed": 0,
-   "disputed": 14,
-   "only_a": 2,
-   "only_b": 0,
+   "disputed": 13,
+   "only_a": 3,
+   "only_b": 1,
    "fields": {
     "qty": {
-     "agree": 14,
-     "total": 14
+     "agree": 13,
+     "total": 13
     },
     "description": {
-     "agree": 14,
-     "total": 14
+     "agree": 13,
+     "total": 13
     },
     "catalog": {
      "agree": 0,
-     "total": 14
+     "total": 13
     },
     "manufacturer": {
      "agree": 0,
-     "total": 14
-    },
-    "finish": {
-     "agree": 0,
-     "total": 1
+     "total": 13
     }
    },
    "agreement_rate": 0
@@ -134,7 +130,7 @@
   }
  },
  "tier": "oracle-checked",
- "disagreement_count": 45,
+ "disagreement_count": 44,
  "disagreements": [
   {
    "kind": "door",
@@ -473,6 +469,6 @@
    "b": null
   }
  ],
- "ms": 2686,
- "generated_at": "2026-10-09T10:47:58.607Z"
+ "ms": 3908,
+ "generated_at": "2026-10-10T00:14:12.740Z"
 }

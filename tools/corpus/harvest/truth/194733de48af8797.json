@@ -24,8 +24,8 @@
  },
  "readers": {
   "a": {
-   "doors": 0,
-   "sets": 2,
+   "doors": 34,
+   "sets": 1,
    "items": 3,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
   },
@@ -37,423 +37,453 @@
    "tables": 5
   }
  },
- "rows_agreed": 0,
- "rows_disputed": 42,
+ "rows_agreed": 13,
+ "rows_disputed": 29,
  "rows_total": 42,
- "agreement_rate": 0,
+ "agreement_rate": 0.3095,
  "agreement": {
   "doors": {
-   "rows": 35,
-   "agreed": 0,
-   "disputed": 0,
-   "only_a": 0,
-   "only_b": 35,
-   "fields": {},
-   "agreement_rate": 0
+   "rows": 36,
+   "agreed": 13,
+   "disputed": 20,
+   "only_a": 1,
+   "only_b": 2,
+   "fields": {
+    "width_inches": {
+     "agree": 6,
+     "total": 24
+    },
+    "height_inches": {
+     "agree": 6,
+     "total": 24
+    },
+    "door_type": {
+     "agree": 6,
+     "total": 24
+    },
+    "hardware_group": {
+     "agree": 6,
+     "total": 24
+    },
+    "location": {
+     "agree": 7,
+     "total": 27
+    }
+   },
+   "agreement_rate": 0.3611
   },
   "items": {
-   "rows": 7,
+   "rows": 6,
    "agreed": 0,
-   "disputed": 0,
-   "only_a": 3,
-   "only_b": 4,
-   "fields": {},
+   "disputed": 1,
+   "only_a": 2,
+   "only_b": 3,
+   "fields": {
+    "qty": {
+     "agree": 1,
+     "total": 1
+    },
+    "description": {
+     "agree": 0,
+     "total": 1
+    },
+    "catalog": {
+     "agree": 1,
+     "total": 1
+    }
+   },
    "agreement_rate": 0
   },
   "sets": {
-   "sets": 2,
+   "sets": 1,
    "agreed": 0
   }
  },
- "triage_class": "pair",
- "triage_from": "inferred (S=true H=true plan sheets=0)",
+ "triage_class": "schedule-only",
+ "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
    "applicable": false,
-   "reason": "not for class pair"
+   "reason": "no floor plan sheet found in this PDF (title blocks)",
+   "plan_counts": {
+    "plan_sheets": 0,
+    "rooms": 0,
+    "corridors": 0,
+    "tags": 0,
+    "unmatched_tags": 0,
+    "schedule_marks": 34,
+    "marks_not_on_plan": 34
+   }
   },
   "sets_exist": {
    "applicable": false,
-   "reason": "no door schedule rows"
+   "reason": "not for class schedule-only"
   },
   "set_door_lists": {
    "applicable": false,
-   "reason": "no door schedule rows"
+   "reason": "not for class schedule-only"
   },
   "types_in_legend": {
-   "applicable": false,
-   "reason": "no door schedule rows"
+   "applicable": true,
+   "total": 3,
+   "pass": 3,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "legend_titles": [
+    "DOOR TYPES p.45"
+   ],
+   "skipped": [],
+   "note": "weak for numeric types: a detail number near the legend can pass a numeric frame type"
   },
   "sizes_and_marks": {
-   "applicable": false,
-   "reason": "no door schedule rows"
+   "applicable": true,
+   "total": 34,
+   "pass": 15,
+   "fail": 19,
+   "pass_rate": 0.4412,
+   "examples": [
+    "mark 1A101 p.45: size null -> null x null",
+    "mark 1A116 p.45: size null -> null x null",
+    "mark 1B109 p.45: size null -> null x null",
+    "mark 1B116 p.45: size null -> null x null",
+    "mark 1D216 p.45: size null -> null x null",
+    "mark 2D116 p.45: size null -> null x null",
+    "mark 2A112 p.45: size null -> null x null",
+    "mark 2B109 p.45: size null -> null x null",
+    "mark 2B112 p.45: size null -> null x null",
+    "mark 2D216 p.45: size null -> null x null",
+    "mark 3D116 p.45: size null -> null x null",
+    "mark 3A p.45: size null -> null x null"
+   ],
+   "size_fail": 18,
+   "mark_fail": 1
   }
  },
- "tier": "unread",
- "unread_reason": "no rows agreed and no oracle applies",
- "disagreement_count": 44,
+ "tier": "agreed",
+ "disagreement_count": 102,
  "disagreements": [
   {
    "kind": "door",
    "page": 45,
-   "key": "1A101",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "1D116",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "key": "1A105",
+   "field": "width_inches",
+   "a": 28,
+   "b": null
   },
   {
    "kind": "door",
    "page": 45,
    "key": "1A105",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "field": "height_inches",
+   "a": 84,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "1A105",
+   "field": "door_type",
+   "a": "1",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "1A105",
+   "field": "hardware_group",
+   "a": "2",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "1A105",
+   "field": "location",
+   "a": "CELL A105-CELL A116",
+   "b": null
   },
   {
    "kind": "door",
    "page": 45,
    "key": "1A116",
-   "field": "(row)",
+   "field": "width_inches",
    "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "b": 28
   },
   {
    "kind": "door",
    "page": 45,
-   "key": "1B109",
-   "field": "(row)",
+   "key": "1A116",
+   "field": "height_inches",
    "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "b": 84
   },
   {
    "kind": "door",
    "page": 45,
-   "key": "1B116",
-   "field": "(row)",
+   "key": "1A116",
+   "field": "door_type",
    "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "b": "1"
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "1A116",
+   "field": "hardware_group",
+   "a": null,
+   "b": "2"
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "1A116",
+   "field": "location",
+   "a": null,
+   "b": "CELL A105-CELL A116"
   },
   {
    "kind": "door",
    "page": 45,
    "key": "1A201",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "field": "width_inches",
+   "a": 28,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "1A201",
+   "field": "height_inches",
+   "a": 84,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "1A201",
+   "field": "door_type",
+   "a": "1",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "1A201",
+   "field": "hardware_group",
+   "a": "1",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "1A201",
+   "field": "location",
+   "a": "CELL A201-CELL D216",
+   "b": null
   },
   {
    "kind": "door",
    "page": 45,
    "key": "1D216",
-   "field": "(row)",
+   "field": "width_inches",
    "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "b": 28
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "1D216",
+   "field": "height_inches",
+   "a": null,
+   "b": 84
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "1D216",
+   "field": "door_type",
+   "a": null,
+   "b": "1"
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "1D216",
+   "field": "hardware_group",
+   "a": null,
+   "b": "1"
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "1D216",
+   "field": "location",
+   "a": null,
+   "b": "CELL A201-CELL D216"
   },
   {
    "kind": "door",
    "page": 45,
    "key": "2A101",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "field": "width_inches",
+   "a": 28,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "2A101",
+   "field": "height_inches",
+   "a": 84,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "2A101",
+   "field": "door_type",
+   "a": "1",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "2A101",
+   "field": "hardware_group",
+   "a": "1",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "2A101",
+   "field": "location",
+   "a": "CELL A101-CELL D116",
+   "b": null
   },
   {
    "kind": "door",
    "page": 45,
    "key": "2D116",
-   "field": "(row)",
+   "field": "width_inches",
    "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "b": 28
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "2D116",
+   "field": "height_inches",
+   "a": null,
+   "b": 84
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "2D116",
+   "field": "door_type",
+   "a": null,
+   "b": "1"
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "2D116",
+   "field": "hardware_group",
+   "a": null,
+   "b": "1"
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "2D116",
+   "field": "location",
+   "a": null,
+   "b": "CELL A101-CELL D116"
   },
   {
    "kind": "door",
    "page": 45,
    "key": "2A109",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "field": "width_inches",
+   "a": 28,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "2A109",
+   "field": "height_inches",
+   "a": 84,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "2A109",
+   "field": "door_type",
+   "a": "1",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "2A109",
+   "field": "hardware_group",
+   "a": "2",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "2A109",
+   "field": "location",
+   "a": "CELL A109-CELL A112",
+   "b": null
   },
   {
    "kind": "door",
    "page": 45,
    "key": "2A112",
-   "field": "(row)",
+   "field": "width_inches",
    "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "b": 28
   },
   {
    "kind": "door",
    "page": 45,
-   "key": "2B109",
-   "field": "(row)",
+   "key": "2A112",
+   "field": "height_inches",
    "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "b": 84
   },
   {
    "kind": "door",
    "page": 45,
-   "key": "2B112",
-   "field": "(row)",
+   "key": "2A112",
+   "field": "door_type",
    "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "b": "1"
   },
   {
    "kind": "door",
    "page": 45,
-   "key": "2A201",
-   "field": "(row)",
+   "key": "2A112",
+   "field": "hardware_group",
    "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "b": "2"
   },
   {
    "kind": "door",
    "page": 45,
-   "key": "2D216",
-   "field": "(row)",
+   "key": "2A112",
+   "field": "location",
    "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "3A101",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "3D116",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "3A109",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "3A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "3A201",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "3D216",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "4A101",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "4D116",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "4B109",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "4B112",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "4A201",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "4D216",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "151A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "151C",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "256",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "258A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "258B",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "259A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "259B",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "item",
-   "page": 45,
-   "key": "S. / 2 3 &",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 45,
-   "key": "1 / PERIMETER OF THE METAL PLATE",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 45,
-   "key": "1 / 258 4'-0\" x 7'-0\" 2 3 1 NEW DOOR/FRAME W/ 1\" METAL SPANDREL PANEL 1",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 45,
-   "key": "1 / METAL 2 3 FRAME METAL DOOR FRAME ARCHITECTURE &",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "item",
-   "page": 45,
-   "key": "1 / DEAD BOLT W/",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "b": "CELL A109-CELL A112"
   }
  ],
- "ms": 358,
- "generated_at": "2026-10-09T10:45:09.324Z"
+ "ms": 390,
+ "generated_at": "2026-10-10T00:10:45.599Z"
 }

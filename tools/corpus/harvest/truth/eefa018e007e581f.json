@@ -22,7 +22,7 @@
  },
  "readers": {
   "a": {
-   "doors": 76,
+   "doors": 84,
    "sets": 0,
    "items": 0,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
@@ -36,15 +36,15 @@
   }
  },
  "rows_agreed": 0,
- "rows_disputed": 76,
- "rows_total": 76,
+ "rows_disputed": 84,
+ "rows_total": 84,
  "agreement_rate": 0,
  "agreement": {
   "doors": {
-   "rows": 76,
+   "rows": 84,
    "agreed": 0,
    "disputed": 0,
-   "only_a": 76,
+   "only_a": 84,
    "only_b": 0,
    "fields": {},
    "agreement_rate": 0
@@ -68,10 +68,10 @@
  "oracles": {
   "marks_on_plan": {
    "applicable": true,
-   "total": 76,
-   "pass": 38,
-   "fail": 38,
-   "pass_rate": 0.5,
+   "total": 84,
+   "pass": 39,
+   "fail": 45,
+   "pass_rate": 0.4643,
    "examples": [
     "mark 100-1 (schedule p.59) not tagged on any plan",
     "mark 100-2 (schedule p.59) not tagged on any plan",
@@ -94,10 +94,10 @@
     "plan_sheets": 2,
     "rooms": 39,
     "corridors": 1,
-    "tags": 38,
+    "tags": 39,
     "unmatched_tags": 0,
-    "schedule_marks": 76,
-    "marks_not_on_plan": 38
+    "schedule_marks": 84,
+    "marks_not_on_plan": 45
    }
   },
   "sets_exist": {
@@ -115,23 +115,25 @@
   },
   "sizes_and_marks": {
    "applicable": true,
-   "total": 76,
-   "pass": 71,
-   "fail": 5,
-   "pass_rate": 0.9342,
+   "total": 84,
+   "pass": 77,
+   "fail": 7,
+   "pass_rate": 0.9167,
    "examples": [
     "mark 200-6 p.59: size \"2' - 0\\\" x 2' - 0\\\"\" -> 24 x null",
     "mark 200-7 p.59: size \"2' - 5\\\" x 2' - 5\\\"\" -> 29 x null",
     "mark 200-8 p.59: size \"2' - 5\\\" x 2' - 5\\\"\" -> 29 x null",
-    "mark 200-9 p.59: size \"2' - 5\\\" 3' - 0\\\" x 2' - 5\\\" 7' - 0\\\"\" -> null x null",
-    "mark 600-2 p.59: size \"2' - 8\\\" x 3' - 0\\\"\" -> 32 x null"
+    "mark 200-9 p.59: size \"2' - 5\\\" x 2' - 5\\\"\" -> 29 x null",
+    "mark 200A-1 p.59: shape 9A-9 is used by 1 of 84 marks on the sheet",
+    "mark 600-2 p.59: size \"2' - 8\\\" x 3' - 0\\\"\" -> 32 x null",
+    "mark 700-01 p.59: size \"2' - 0\\\" x 2' - 0\\\"\" -> 24 x null"
    ],
-   "size_fail": 5,
-   "mark_fail": 0
+   "size_fail": 6,
+   "mark_fail": 1
   }
  },
  "tier": "oracle-checked",
- "disagreement_count": 76,
+ "disagreement_count": 84,
  "disagreements": [
   {
    "kind": "door",
@@ -325,6 +327,15 @@
   {
    "kind": "door",
    "page": 59,
+   "key": "200A-1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 59,
    "key": "201-1",
    "field": "(row)",
    "a": "read",
@@ -483,17 +494,8 @@
    "a": "read",
    "b": null,
    "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 59,
-   "key": "217-1",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
   }
  ],
- "ms": 2400,
- "generated_at": "2026-10-09T10:49:34.644Z"
+ "ms": 2532,
+ "generated_at": "2026-10-10T00:16:37.990Z"
 }

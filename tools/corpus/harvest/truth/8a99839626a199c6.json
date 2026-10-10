@@ -38,9 +38,9 @@
   }
  },
  "rows_agreed": 1,
- "rows_disputed": 15,
- "rows_total": 16,
- "agreement_rate": 0.0625,
+ "rows_disputed": 11,
+ "rows_total": 12,
+ "agreement_rate": 0.0833,
  "agreement": {
   "doors": {
    "rows": 2,
@@ -77,66 +77,99 @@
    "agreement_rate": 0
   },
   "items": {
-   "rows": 14,
+   "rows": 10,
    "agreed": 1,
-   "disputed": 1,
-   "only_a": 7,
-   "only_b": 5,
+   "disputed": 5,
+   "only_a": 3,
+   "only_b": 1,
    "fields": {
     "qty": {
-     "agree": 2,
-     "total": 2
+     "agree": 6,
+     "total": 6
     },
     "description": {
-     "agree": 2,
-     "total": 2
+     "agree": 6,
+     "total": 6
     },
     "catalog": {
      "agree": 0,
-     "total": 1
-    },
-    "finish": {
-     "agree": 0,
-     "total": 1
+     "total": 5
     },
     "manufacturer": {
      "agree": 0,
-     "total": 1
+     "total": 4
+    },
+    "finish": {
+     "agree": 0,
+     "total": 3
     }
    },
-   "agreement_rate": 0.0714
+   "agreement_rate": 0.1
   },
   "sets": {
-   "sets": 3,
-   "agreed": 1
+   "sets": 2,
+   "agreed": 2
   }
  },
- "triage_class": "spec-only",
+ "triage_class": "complete",
  "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
-   "applicable": false,
-   "reason": "not for class spec-only"
+   "applicable": true,
+   "total": 2,
+   "pass": 2,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "plan_sheets": [
+    "A-101 p.3",
+    "A-102 p.4",
+    "A-103 p.5",
+    "A-401 p.12",
+    "A-402 p.13",
+    "A-403 p.14",
+    "A-404 p.15",
+    "A-405 p.16",
+    "A-406 p.17"
+   ],
+   "plan_counts": {
+    "plan_sheets": 9,
+    "rooms": 0,
+    "corridors": 0,
+    "tags": 2,
+    "unmatched_tags": 0,
+    "schedule_marks": 2,
+    "marks_not_on_plan": 0
+   }
   },
   "sets_exist": {
    "applicable": false,
-   "reason": "not for class spec-only"
+   "reason": "the schedule rows name no hardware set"
   },
   "set_door_lists": {
    "applicable": false,
-   "reason": "not for class spec-only"
+   "reason": "no hardware set prints its own door list"
   },
   "types_in_legend": {
    "applicable": false,
-   "reason": "not for class spec-only"
+   "reason": "no DOOR TYPES / FRAME TYPES legend title in this PDF"
   },
   "sizes_and_marks": {
-   "applicable": false,
-   "reason": "not for class spec-only"
+   "applicable": true,
+   "total": 2,
+   "pass": 0,
+   "fail": 2,
+   "pass_rate": 0,
+   "examples": [
+    "mark D1 p.19: size \"6'-10\\\" x 2'-8\\\"\" -> 82 x null",
+    "mark D2 p.19: size \"6'-10\\\" x 2'-6\\\"\" -> 82 x null"
+   ],
+   "size_fail": 2,
+   "mark_fail": 0
   }
  },
  "tier": "agreed",
- "disagreement_count": 22,
+ "disagreement_count": 21,
  "disagreements": [
   {
    "kind": "door",
@@ -181,7 +214,7 @@
   {
    "kind": "item",
    "page": 19,
-   "key": "(CONTINUED) / TA-6 TOILET PAPER HOLDER; SURFACE MOUNTED ___ ___ REUSE EXISTING B r a dM. S c h a e f e r - A r c h i t e c t",
+   "key": "1 / TA-6 TOILET PAPER HOLDER; SURFACE MOUNTED",
    "field": "(row)",
    "a": "read",
    "b": null,
@@ -190,38 +223,74 @@
   {
    "kind": "item",
    "page": 19,
-   "key": "(CONTINUED) / - 2 0 0 9 0 2 7 2 9 4",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1 / PULL HANDLE",
+   "field": "catalog",
+   "a": null,
+   "b": "MO # A - 2 0 0 9 0 2 7 2 9 4"
   },
   {
    "kind": "item",
    "page": 19,
-   "key": "(CONTINUED) / TA-7 SANITARY NAPKIN DISPOSAL; SURFACE MOUNTED BOBRICK B-254",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1 / PULL HANDLE",
+   "field": "manufacturer",
+   "a": "MO#A-2009027294",
+   "b": null
   },
   {
    "kind": "item",
    "page": 19,
-   "key": "(CONTINUED) / DOOR CLOSER",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1 / PUSH PLATE",
+   "field": "catalog",
+   "a": null,
+   "b": "TA-7 SANITARY NAPKIN DISPOSAL; SURFACE MOUNTED BOBRICK B-254"
   },
   {
    "kind": "item",
    "page": 19,
-   "key": "(CONTINUED) / TA-8 SANITARY NAPKIN DISPOSAL; PARTITION MOUNTED; DUAL-ACCESS BOBRICK B-354",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1 / TA-7 SANITARY NAPKIN DISPOSAL; SURFACE MOUNTED",
+   "field": "catalog",
+   "a": "TA-7 SANITARY NAPKIN DISPOSAL; SURFACE MOUNTED",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 19,
+   "key": "1 / TA-7 SANITARY NAPKIN DISPOSAL; SURFACE MOUNTED",
+   "field": "finish",
+   "a": "BOBRICK",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 19,
+   "key": "1 / TA-7 SANITARY NAPKIN DISPOSAL; SURFACE MOUNTED",
+   "field": "manufacturer",
+   "a": "B-254",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 19,
+   "key": "1 / TA-8 SANITARY NAPKIN DISPOSAL; PARTITION MOUNTED; DUAL-ACCESS",
+   "field": "catalog",
+   "a": "TA-8 SANITARY NAPKIN DISPOSAL; PARTITION MOUNTED; DUAL-ACCESS",
+   "b": "TA-8 SANITARY NAPKIN DISPOSAL; PARTITION MOUNTED; DUAL-ACCESS BOBRICK B-354"
+  },
+  {
+   "kind": "item",
+   "page": 19,
+   "key": "1 / TA-8 SANITARY NAPKIN DISPOSAL; PARTITION MOUNTED; DUAL-ACCESS",
+   "field": "finish",
+   "a": "BOBRICK",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 19,
+   "key": "1 / TA-8 SANITARY NAPKIN DISPOSAL; PARTITION MOUNTED; DUAL-ACCESS",
+   "field": "manufacturer",
+   "a": "B-354",
+   "b": null
   },
   {
    "kind": "item",
@@ -273,62 +342,8 @@
    "a": null,
    "b": "read",
    "why": "only reader B read this row"
-  },
-  {
-   "kind": "item",
-   "page": 19,
-   "key": "1 / MO # A - 2 0 0 9 0 2 7 2 9 4",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "item",
-   "page": 19,
-   "key": "1 / TA-7 SANITARY NAPKIN DISPOSAL; SURFACE MOUNTED BOBRICK B-254",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "item",
-   "page": 19,
-   "key": "1 / DOOR CLOSER",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "item",
-   "page": 19,
-   "key": "1 / TA-8 SANITARY NAPKIN DISPOSAL; PARTITION MOUNTED; DUAL-ACCESS BOBRICK B-354",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "group",
-   "page": null,
-   "key": "(CONTINUED)",
-   "field": "(set)",
-   "a": "",
-   "b": null,
-   "why": "only reader A read this set"
-  },
-  {
-   "kind": "group",
-   "page": null,
-   "key": "1",
-   "field": "(set)",
-   "a": null,
-   "b": "",
-   "why": "only reader B read this set"
   }
  ],
- "ms": 1266,
- "generated_at": "2026-10-09T10:47:34.012Z"
+ "ms": 1536,
+ "generated_at": "2026-10-10T00:13:37.219Z"
 }

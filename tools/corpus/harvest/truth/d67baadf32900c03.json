@@ -62,7 +62,7 @@
   }
  },
  "triage_class": "plan-only",
- "triage_from": "inferred (S=false H=false plan sheets=2)",
+ "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
    "applicable": false,
@@ -89,6 +89,6 @@
  "unread_reason": "no door schedule or hardware set read by either reader",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 1174,
- "generated_at": "2026-10-09T10:48:46.427Z"
+ "ms": 2125,
+ "generated_at": "2026-10-10T00:15:20.914Z"
 }

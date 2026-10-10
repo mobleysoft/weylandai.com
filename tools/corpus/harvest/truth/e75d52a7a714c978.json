@@ -25,8 +25,8 @@
  "readers": {
   "a": {
    "doors": 0,
-   "sets": 1,
-   "items": 9,
+   "sets": 3,
+   "items": 18,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
   },
   "b": {
@@ -38,8 +38,8 @@
   }
  },
  "rows_agreed": 0,
- "rows_disputed": 41,
- "rows_total": 41,
+ "rows_disputed": 49,
+ "rows_total": 49,
  "agreement_rate": 0,
  "agreement": {
   "doors": {
@@ -52,17 +52,38 @@
    "agreement_rate": 0
   },
   "items": {
-   "rows": 27,
+   "rows": 35,
    "agreed": 0,
-   "disputed": 0,
-   "only_a": 9,
-   "only_b": 18,
-   "fields": {},
+   "disputed": 1,
+   "only_a": 17,
+   "only_b": 17,
+   "fields": {
+    "qty": {
+     "agree": 1,
+     "total": 1
+    },
+    "description": {
+     "agree": 1,
+     "total": 1
+    },
+    "catalog": {
+     "agree": 0,
+     "total": 1
+    },
+    "finish": {
+     "agree": 0,
+     "total": 1
+    },
+    "manufacturer": {
+     "agree": 0,
+     "total": 1
+    }
+   },
    "agreement_rate": 0
   },
   "sets": {
    "sets": 3,
-   "agreed": 1
+   "agreed": 3
   }
  },
  "triage_class": "schedule-only",
@@ -91,7 +112,7 @@
  },
  "tier": "unread",
  "unread_reason": "no rows agreed and no oracle applies",
- "disagreement_count": 43,
+ "disagreement_count": 51,
  "disagreements": [
   {
    "kind": "door",
@@ -222,7 +243,7 @@
   {
    "kind": "item",
    "page": 23,
-   "key": "(CONTINUED) / 6\" 5\" DOOR SCHEDULE 8 REFER TO FLOOR PLAN AND INTERIOR WALL TYPES FOR CONSTRUCTION. DOOR HARDWARE FRAME DETAILS FIRE REMARKS COLD FORM METAL FRAMING BOX HEADER. MARK (REFER GLAZ. SET HEAD RATING REFER TO STRUCTURAL DRAWINGS. SIZE (W x H x D) TYPE SWING MATERIAL KEYED TYPE MATERIAL HEAD JAMB SILL NOTES) TYPE # WIDTH 8/A-401 SEALANT BOTH SIDES AROUND PERIMETER, 101 (PAIR) 3'-0\" X 7'-0\" X 1 3/4\" CC RHR/LHR ALUMINUM 1 1 LEVEL 1 4 ALUMINUM --- 8/A-401 9/A-402 --- 1, 2 SIMILAR (TYPICAL) 102 3'-0\" X 7'-0\" X 1 3/4\" B RH HOL. METAL --- 4 LEVEL 3 3 HOL. METAL --- 1/A-601 2/A-601 - 20 MIN. 1, 2 HOLLOW METAL FRAME, REFER DOOR 103A 3'-0\" X 7'-0\" X 1 3/4\" B LHR HOL. METAL --- 5 ---- 2 HOL. METAL --- 3/A-601 4/A-601 - 20 MIN. 1, 2 SCHEDULE FOR TYPES. SHIM AND ANCHOR PER MANUFACTURER'S RECOMMENDATIONS. 103B 3'-0\" X 7'-0\" X 1 3/4\" A LHR HOL. METAL --- 2 LEVEL 1 1 HOL. METAL --- 6/A-401 7/A-401 8/A-401 --- 1, 2 103C 3'-0\" X 7'-0\" X 1 3/4\" B RHR HOL. METAL --- 5 ---- 2 HOL. METAL --- 3/A-601 4/A-601 - 20 MIN. 1, 2",
+   "key": "(CONTINUED) / 6\" 5 DOOR SCHEDULE HARDWARE SCHEDULE 8\" REFER TO FLOOR PLAN AND INTERIOR WALL TYPES FOR CONSTRUCTION. DOOR HARDWARE FRAME DETAILS REMARKS FIRE SET NO. 1 (DOOR: 101) COLD FORM METAL FRAMING BOX HEADER. MARK (REFER 2 CONTINUOUS GEARED HINGES GLAZ. SET HEAD RATING REFER TO STRUCTURAL DRAWINGS. SIZE (W x H x D) TYPE SWING MATERIAL KEYED TYPE MATERIAL HEAD JAMB SILL NOTES) 2 EXTERIOR CYLINDERS WITH REMOVABLE CORES TYPE # WIDTH 2 (ANSI FUNCTION NO. 08) ENTRY LOCK AND EXIT PANIC WITH TWO POINT 8/A-401 SEALANT BOTH SIDES AROUND PERIMETER, 101 (PAIR) 3'-0\" X 7'-0\" X 1 3/4\" CC RHR/LHR ALUMINUM 1 1 LEVEL 1 4 ALUMINUM --- 8/A-401 9/A-402 --- 1, 2 SIMILAR LOCKING SURFACE VERTICAL RODS, COVER GUARDS, DUST PROOF (TYPICAL) 102 3'-0\" X 7'-0\" X 1 3/4\" B RH HOL. METAL --- 4 LEVEL 3 3 HOL. METAL --- 1/A-601 2/A-601 - 20 MIN. 1, 2 BOTTOM STRIKES, EXTERIOR LEVER HANDLES WITH ESCUTCHEON TRIM, THRU-BOLT MOUNTED HOLLOW METAL FRAME, REFER DOOR 103A 3'-0\" X 7'-0\" X 1 3/4\" B LHR HOL. METAL --- 5 ---- 2 HOL. METAL --- 3/A-601 4/A-601 - 20 MIN. 1, 2 2 CLOSERS WITH COVER, PARALLEL ARM, HOLD OPEN WITH SPRING CUSH, SCHEDULE FOR TYPES. SHIM AND ANCHOR ACCESSORY PLATES AND SPACERS (AS REQUIRED), THRU-BOLT PER MANUFACTURER'S RECOMMENDATIONS. 103B 3'-0\" X 7'-0\" X 1 3/4\" A LHR HOL. METAL --- 2 LEVEL 1 1 HOL. METAL --- 6/A-401 7/A-401 8/A-401 --- 1, 2 MOUNTED",
    "field": "(row)",
    "a": "read",
    "b": null,
@@ -231,7 +252,7 @@
   {
    "kind": "item",
    "page": 23,
-   "key": "(CONTINUED) / 1\" DOOR, REFER TO DOOR SCHEDULE FOR",
+   "key": "(CONTINUED) / 103C 3'-0\" X 7'-0\" X 1 3/4\" B RHR HOL. METAL --- 5 ---- 2 HOL. METAL --- 3/A-601 4/A-601 - 20 MIN. 1, 2 1 SET WEATHER SEAL PERIMETER GASKETS DOOR, REFER TO DOOR SCHEDULE FOR",
    "field": "(row)",
    "a": "read",
    "b": null,
@@ -240,7 +261,7 @@
   {
    "kind": "item",
    "page": 23,
-   "key": "(CONTINUED) / 6/A-401 7/A-401 TYPES. 104 3'-0\" X 7'-0\" X 1 3/4\" A LHR HOL. METAL --- 3 LEVEL 3 1 HOL. METAL --- 8/A-401 --- 1, 2 SIMILAR SIMILAR 105A 3'-0\" X 7'-0\" X 1 3/4\" B LHR HOL. METAL --- 5 ---- 2 HOL. METAL --- 3/A-601 4/A-601 - 20 MIN. 1, 2",
+   "key": "(CONTINUED) / 4\" 6/A-401 7/A-401 1 SET WEATHER SEAL MEETING STILE GASKETS TYPES. 104 3'-0\" X 7'-0\" X 1 3/4\" A LHR HOL. METAL --- 3 LEVEL 3 1 HOL. METAL --- 8/A-401 --- 1, 2 SIMILAR SIMILAR 2 WEATHER SEAL DOOR BOTTOM SWEEPS 1 THRESHOLD (ADA / ANSI COMPLIANT) 105A 3'-0\" X 7'-0\" X 1 3/4\" B LHR HOL. METAL --- 5 ---- 2 HOL. METAL --- 3/A-601 4/A-601 - 20 MIN. 1, 2 1 RAIN DRIP",
    "field": "(row)",
    "a": "read",
    "b": null,
@@ -249,52 +270,7 @@
   {
    "kind": "item",
    "page": 23,
-   "key": "(CONTINUED) / DETAIL 105B 3'-0\" X 7'-0\" X 1 3/4\" A RHR HOL. METAL --- 2 LEVEL 1 1 HOL. METAL --- 6/A-401 7/A-401 8/A-401 --- 1, 2",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 23,
-   "key": "(CONTINUED) / = 1'-0\" 106A 3'-0\" X 7'-0\" X 1 3/4\" B LHR HOL. METAL --- 6 ---- 2 HOL. METAL --- 3/A-601 4/A-601 - 20 MIN. 1, 2 106B 3'-0\" X 7'-0\" X 1 3/4\" B LHR HOL. METAL --- 5 ---- 2 HOL. METAL --- 3/A-601 4/A-601 - 20 MIN. 1, 2 WALL (WHERE OCCURS). 107A 3'-0\" X 7'-0\" X 1 3/4\" B RHR HOL. METAL --- 5 ---- 2 HOL. METAL --- 3/A-601 4/A-601 - 20 MIN. 1, 2, 3 REFER TO FLOOR PLAN AND INTERIOR WALL 4\" 107B 3'-0\" X 7'-0\" X 1 3/4\" A RHR HOL. METAL --- 2 LEVEL 1 1 HOL. METAL --- 6/A-401 7/A-401 8/A-401 --- 1, 2 TYPES FOR CONSTRUCTION. 107C 3'-0\" X 7'-0\" X 1 3/4\" B LHR HOL. METAL --- 5 ---- 2 HOL. METAL --- 3/A-601 4/A-601 - 20 MIN. 1, 2 HOLLOW METAL FRAME, REFER DOOR SCHEDULE FOR TYPES. SHIM AND ANCHOR PER MANUFACTURER'S RECOMMENDATIONS. PROVIDE (3) ANCHORS PER JAMB MIN. WITH REINFORCEMENT AT HARDWARE LOCATIONS. DOOR, REFER TO DOOR SCHEDULE FOR TYPES. 6\" COLD FORM METAL FRAMING DOUBLE STUDS AT JAMBS. REFER TO STRUCTURAL DRAWINGS. NOTES: 1. ALL DOORS SHALL BE SHOP PREPARED FOR HARDWARE. SEALANT BOTH SIDES AROUND PERIMETER, 2. REFER TO HARDWARE NOTES FOR ADDITIONAL REQUIREMENTS. (TYPICAL). 3. ALTERNATE NO. 1: BARRACKS 107 AND SHOWER 107A INTERIOR INFILL. REFER TO PROJECT MANUAL - SECTION 01 23 00 FOR DESCRIPTION OF WORK.",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 23,
-   "key": "(CONTINUED) / DETAIL",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 23,
-   "key": "(CONTINUED) / 3\" PER MANUFACTURER'S RECOMMENDATIONS. 4 DOOR, REFER TO DOOR SCHEDULE FOR FLUSH HOLLOW METAL (INSULATED) FLUSH HOLLOW METAL ALUMINUM ENTRANCE AND STOREFRONT TYPES. (WITHOUT INSULATION). SYSTEM W/ INSULATED SAFETY GLASS (REFER SCHEDULES FOR GLAZING TYPES).",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 23,
-   "key": "(CONTINUED) / DETAIL NOTE:",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 23,
-   "key": "(CONTINUED) / DETAIL WELDED HOLLOW METAL FRAME WELDED HOLLOW METAL FRAME",
+   "key": "(CONTINUED) / DETAIL 105B 3'-0\" X 7'-0\" X 1 3/4\" A RHR HOL. METAL --- 2 LEVEL 1 1 HOL. METAL --- 6/A-401 7/A-401 8/A-401 --- 1, 2 105C 3'-0\" X 7'-0\" X 1 3/4\" B RHR HOL. METAL --- 5 ---- 2 HOL. METAL --- 3/A-601 4/A-601 - 20 MIN. 1, 2 SET NO. 2 (DOORS: 103B, 105B, 107B)",
    "field": "(row)",
    "a": "read",
    "b": null,
@@ -330,6 +306,129 @@
   {
    "kind": "item",
    "page": 23,
+   "key": "3 / 6\" COLD FORM METAL FRAMING DOUBLE STUDS AT JAMBS. REFER TO STRUCTURAL 1 DRAWINGS. NOTES:",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "3 / 1. ALL DOORS SHALL BE SHOP PREPARED FOR HARDWARE. SEALANT BOTH SIDES AROUND PERIMETER, 2. REFER TO HARDWARE NOTES FOR ADDITIONAL REQUIREMENTS. 1 (TYPICAL). 3. ALTERNATE NO. 1: BARRACKS 107 AND SHOWER 107A INTERIOR INFILL. REFER TO PROJECT MANUAL - SECTION 01 23 00 FOR DESCRIPTION OF WORK. 1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "3 / ITEM",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "3 / SET",
+   "field": "catalog",
+   "a": "SET",
+   "b": "SET NO. 4 (DOOR: 102) MISSOURI NATIONAL GUARD 1 (ANSI FUNCTION NO. F86) STOREROOM LOCK WITH LEVER HANDLES ATTN: JEREMY NEWTON, ENGINEERING ARCHITECTURAL PROJECT MANAGER (P): (573) 638-9500, EXT. 37484"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "3 / SET",
+   "field": "finish",
+   "a": "NO. 4",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "3 / SET",
+   "field": "manufacturer",
+   "a": "MISSOURI NATIONAL GUARD ATTN: JEREMY NEWTON,",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "3 / ITEM",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "3 / DOOR TYPES 1 FLOOR PLAN AND INTERIOR WALL",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "3 / ITEM",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "3 / CONSTRUCTION.",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "3 / COLD FORM RESILIENT CHANNELS 1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "3 / AT 24\" O.C. ON ONE SIDE WITH UP.",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "3 / ITEM",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "3 / BOTH SIDES AROUND PERIMETER, 1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
    "key": "3 / WEATHER SEAL PERIMETER GASKETS",
    "field": "(row)",
    "a": null,
@@ -340,15 +439,6 @@
    "kind": "item",
    "page": 23,
    "key": "3 / RAIN DRIP",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "item",
-   "page": 23,
-   "key": "3 / SET NO. 4 (DOOR: 102) MISSOURI NATIONAL GUARD 1 (ANSI FUNCTION NO. F86) STOREROOM LOCK WITH LEVER HANDLES ATTN: JEREMY NEWTON, ENGINEERING ARCHITECTURAL PROJECT MANAGER (P): (573) 638-9500, EXT. 37484",
    "field": "(row)",
    "a": null,
    "b": "read",
@@ -380,80 +470,8 @@
    "a": null,
    "b": "read",
    "why": "only reader B read this row"
-  },
-  {
-   "kind": "item",
-   "page": 23,
-   "key": "3 / BALL BEARING HINGES KEYING LEGEND",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "item",
-   "page": 23,
-   "key": "3 / CLOSER WITH COVER, PARALLEL ARM, SPRING CUSH STOP, THRU-BOLT MOUNTED",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "item",
-   "page": 23,
-   "key": "3 / KICK PLATE (0.062T X 12\"H X 2\" L.D.W.) DIVISION OF FACILITIES",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "item",
-   "page": 23,
-   "key": "3 / SMOKE SEAL PERIMETER GASKETS UPGRADED SECURITY: PERIMETER ENTRANCE",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "item",
-   "page": 23,
-   "key": "6 / KICK PLATE (0.062T X 12\"H X 2\" L.D.W.) PUBLIC SAFETY",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "item",
-   "page": 23,
-   "key": "6 / SMOKE SEAL PERIMETER GASKETS MISSOURI ARMY",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "item",
-   "page": 23,
-   "key": "6 / SMOKE SEAL DOOR BOTTOM SWEEP",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "item",
-   "page": 23,
-   "key": "6 / TYPE 1:",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
   }
  ],
- "ms": 3419,
- "generated_at": "2026-10-09T10:49:16.267Z"
+ "ms": 6272,
+ "generated_at": "2026-10-10T00:16:14.910Z"
 }

@@ -35,15 +35,15 @@
    "tables": 1
   }
  },
- "rows_agreed": 0,
- "rows_disputed": 18,
+ "rows_agreed": 10,
+ "rows_disputed": 8,
  "rows_total": 18,
- "agreement_rate": 0,
+ "agreement_rate": 0.5556,
  "agreement": {
   "doors": {
    "rows": 18,
-   "agreed": 0,
-   "disputed": 18,
+   "agreed": 10,
+   "disputed": 8,
    "only_a": 0,
    "only_b": 0,
    "fields": {
@@ -64,15 +64,15 @@
      "total": 18
     },
     "fire_rating": {
-     "agree": 0,
-     "total": 18
+     "agree": 2,
+     "total": 2
     },
     "hardware_group": {
-     "agree": 16,
+     "agree": 10,
      "total": 18
     }
    },
-   "agreement_rate": 0
+   "agreement_rate": 0.5556
   },
   "items": {
    "rows": 0,
@@ -89,7 +89,7 @@
   }
  },
  "triage_class": "schedule-only",
- "triage_from": "inferred (S=true H=false plan sheets=1)",
+ "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
    "applicable": true,
@@ -147,170 +147,74 @@
    "mark_fail": 0
   }
  },
- "tier": "oracle-checked",
- "disagreement_count": 20,
+ "tier": "agreed",
+ "disagreement_count": 8,
  "disagreements": [
   {
    "kind": "door",
    "page": 20,
    "key": "100-1",
-   "field": "fire_rating",
-   "a": "PNT 45 MIN.",
-   "b": "45 MIN"
-  },
-  {
-   "kind": "door",
-   "page": 20,
-   "key": "100-1",
    "field": "hardware_group",
-   "a": "1 REQUIRED: FIRE RATED",
+   "a": "1 REQUIRED: FIRE RATED LOUVER",
    "b": "1"
   },
   {
    "kind": "door",
    "page": 20,
    "key": "100-2",
-   "field": "fire_rating",
-   "a": "PNT 45 MIN.",
-   "b": "45 MIN"
-  },
-  {
-   "kind": "door",
-   "page": 20,
-   "key": "100-2",
    "field": "hardware_group",
-   "a": "1 REQUIRED: FIRE RATED",
+   "a": "1 REQUIRED: FIRE RATED LOUVER",
    "b": "1"
-  },
-  {
-   "kind": "door",
-   "page": 20,
-   "key": "101-1",
-   "field": "fire_rating",
-   "a": "PNT",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 20,
-   "key": "102-1",
-   "field": "fire_rating",
-   "a": "PNT",
-   "b": null
   },
   {
    "kind": "door",
    "page": 20,
    "key": "103-1",
-   "field": "fire_rating",
-   "a": "PNT",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 20,
-   "key": "104-1",
-   "field": "fire_rating",
-   "a": "PNT",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 20,
-   "key": "105-1",
-   "field": "fire_rating",
-   "a": "PNT",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 20,
-   "key": "106-1",
-   "field": "fire_rating",
-   "a": "PNT",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 20,
-   "key": "109-1",
-   "field": "fire_rating",
-   "a": "PNT",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 20,
-   "key": "110-1",
-   "field": "fire_rating",
-   "a": "PNT",
-   "b": null
+   "field": "hardware_group",
+   "a": "1 1' - 0\"",
+   "b": "1"
   },
   {
    "kind": "door",
    "page": 20,
    "key": "111-1",
-   "field": "fire_rating",
-   "a": "PNT",
-   "b": null
+   "field": "hardware_group",
+   "a": "1 L",
+   "b": "1"
   },
   {
    "kind": "door",
    "page": 20,
    "key": "112-1",
-   "field": "fire_rating",
-   "a": "PNT",
-   "b": null
+   "field": "hardware_group",
+   "a": "1 LOUVER",
+   "b": "1"
   },
   {
    "kind": "door",
    "page": 20,
    "key": "113-1",
-   "field": "fire_rating",
-   "a": "PNT",
-   "b": null
+   "field": "hardware_group",
+   "a": "1 12' X 12' LOUVER - 50% FREE",
+   "b": "1"
   },
   {
    "kind": "door",
    "page": 20,
    "key": "114-1",
-   "field": "fire_rating",
-   "a": "PNT",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 20,
-   "key": "115-1",
-   "field": "fire_rating",
-   "a": "PNT",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 20,
-   "key": "116-1",
-   "field": "fire_rating",
-   "a": "PNT",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 20,
-   "key": "117-1",
-   "field": "fire_rating",
-   "a": "PNT",
-   "b": null
+   "field": "hardware_group",
+   "a": "1 WITH BUG SCREEN",
+   "b": "1"
   },
   {
    "kind": "door",
    "page": 20,
    "key": "118-1",
-   "field": "fire_rating",
-   "a": "PNT",
-   "b": null
+   "field": "hardware_group",
+   "a": "1 DOOR",
+   "b": "1"
   }
  ],
- "ms": 4013,
- "generated_at": "2026-10-09T10:49:08.553Z"
+ "ms": 7992,
+ "generated_at": "2026-10-10T00:15:59.492Z"
 }

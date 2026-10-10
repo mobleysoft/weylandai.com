@@ -22,7 +22,7 @@
  },
  "readers": {
   "a": {
-   "doors": 0,
+   "doors": 8,
    "sets": 0,
    "items": 0,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
@@ -35,19 +35,36 @@
    "tables": 1
   }
  },
- "rows_agreed": 0,
+ "rows_agreed": 4,
  "rows_disputed": 4,
- "rows_total": 4,
- "agreement_rate": 0,
+ "rows_total": 8,
+ "agreement_rate": 0.5,
  "agreement": {
   "doors": {
-   "rows": 4,
-   "agreed": 0,
+   "rows": 8,
+   "agreed": 4,
    "disputed": 0,
-   "only_a": 0,
-   "only_b": 4,
-   "fields": {},
-   "agreement_rate": 0
+   "only_a": 4,
+   "only_b": 0,
+   "fields": {
+    "width_inches": {
+     "agree": 4,
+     "total": 4
+    },
+    "height_inches": {
+     "agree": 4,
+     "total": 4
+    },
+    "door_type": {
+     "agree": 4,
+     "total": 4
+    },
+    "fire_rating": {
+     "agree": 4,
+     "total": 4
+    }
+   },
+   "agreement_rate": 0.5
   },
   "items": {
    "rows": 0,
@@ -67,8 +84,24 @@
  "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
-   "applicable": false,
-   "reason": "no door schedule rows"
+   "applicable": true,
+   "total": 8,
+   "pass": 8,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "plan_sheets": [
+    "A-101 p.9"
+   ],
+   "plan_counts": {
+    "plan_sheets": 1,
+    "rooms": 6,
+    "corridors": 1,
+    "tags": 8,
+    "unmatched_tags": 0,
+    "schedule_marks": 8,
+    "marks_not_on_plan": 0
+   }
   },
   "sets_exist": {
    "applicable": false,
@@ -79,55 +112,76 @@
    "reason": "not for class schedule-only"
   },
   "types_in_legend": {
-   "applicable": false,
-   "reason": "no door schedule rows"
+   "applicable": true,
+   "total": 1,
+   "pass": 1,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "legend_titles": [
+    "DOOR TYPES p.16"
+   ],
+   "skipped": [
+    "no FRAME TYPES legend title"
+   ],
+   "note": "weak for numeric types: a detail number near the legend can pass a numeric frame type"
   },
   "sizes_and_marks": {
-   "applicable": false,
-   "reason": "no door schedule rows"
+   "applicable": true,
+   "total": 8,
+   "pass": 4,
+   "fail": 4,
+   "pass_rate": 0.5,
+   "examples": [
+    "mark OVHD-1 p.16: size null -> null x null",
+    "mark OVHD-2 p.16: size null -> null x null",
+    "mark OVHD-3 p.16: size null -> null x null",
+    "mark OVHD-4 p.16: size null -> null x null"
+   ],
+   "size_fail": 4,
+   "mark_fail": 0
   }
  },
- "tier": "unread",
- "unread_reason": "no rows agreed and no oracle applies",
+ "tier": "agreed",
  "disagreement_count": 4,
  "disagreements": [
   {
    "kind": "door",
    "page": 16,
-   "key": "101",
+   "key": "OVHD-1",
    "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
   },
   {
    "kind": "door",
    "page": 16,
-   "key": "102",
+   "key": "OVHD-2",
    "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
   },
   {
    "kind": "door",
    "page": 16,
-   "key": "103",
+   "key": "OVHD-3",
    "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
   },
   {
    "kind": "door",
    "page": 16,
-   "key": "104",
+   "key": "OVHD-4",
    "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
   }
  ],
- "ms": 731,
- "generated_at": "2026-10-09T10:45:33.633Z"
+ "ms": 721,
+ "generated_at": "2026-10-10T00:11:14.186Z"
 }

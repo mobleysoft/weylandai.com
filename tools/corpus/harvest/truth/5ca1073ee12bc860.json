@@ -16,15 +16,13 @@
   "door_candidates": 4,
   "hardware_candidates": 1,
   "door_schedule_pages": [],
-  "hardware_pages": [
-   113
-  ]
+  "hardware_pages": []
  },
  "readers": {
   "a": {
    "doors": 0,
-   "sets": 1,
-   "items": 1,
+   "sets": 0,
+   "items": 0,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
   },
   "b": {
@@ -36,9 +34,9 @@
   }
  },
  "rows_agreed": 0,
- "rows_disputed": 1,
- "rows_total": 1,
- "agreement_rate": 0,
+ "rows_disputed": 0,
+ "rows_total": 0,
+ "agreement_rate": null,
  "agreement": {
   "doors": {
    "rows": 0,
@@ -50,16 +48,16 @@
    "agreement_rate": null
   },
   "items": {
-   "rows": 1,
+   "rows": 0,
    "agreed": 0,
    "disputed": 0,
-   "only_a": 1,
+   "only_a": 0,
    "only_b": 0,
    "fields": {},
-   "agreement_rate": 0
+   "agreement_rate": null
   },
   "sets": {
-   "sets": 1,
+   "sets": 0,
    "agreed": 0
   }
  },
@@ -88,28 +86,9 @@
   }
  },
  "tier": "unread",
- "unread_reason": "no rows agreed and no oracle applies",
- "disagreement_count": 2,
- "disagreements": [
-  {
-   "kind": "item",
-   "page": 113,
-   "key": "(CONTINUED) / 11/14/2025 BIDS & PERMITS",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "group",
-   "page": null,
-   "key": "(CONTINUED)",
-   "field": "(set)",
-   "a": "",
-   "b": null,
-   "why": "only reader A read this set"
-  }
- ],
- "ms": 1857,
- "generated_at": "2026-10-09T10:46:21.402Z"
+ "unread_reason": "no door schedule or hardware set read by either reader",
+ "disagreement_count": 0,
+ "disagreements": [],
+ "ms": 1910,
+ "generated_at": "2026-10-10T00:12:04.581Z"
 }

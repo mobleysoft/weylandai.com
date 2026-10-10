@@ -63,32 +63,46 @@
    "agreed": 0
   }
  },
- "triage_class": "plan-only",
+ "triage_class": "schedule-only",
  "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
    "applicable": false,
-   "reason": "not for class plan-only"
+   "reason": "no floor plan sheet found in this PDF (title blocks)",
+   "plan_counts": {
+    "plan_sheets": 0,
+    "rooms": 0,
+    "corridors": 0,
+    "tags": 0,
+    "unmatched_tags": 0,
+    "schedule_marks": 44,
+    "marks_not_on_plan": 44
+   }
   },
   "sets_exist": {
    "applicable": false,
-   "reason": "not for class plan-only"
+   "reason": "not for class schedule-only"
   },
   "set_door_lists": {
    "applicable": false,
-   "reason": "not for class plan-only"
+   "reason": "not for class schedule-only"
   },
   "types_in_legend": {
    "applicable": false,
-   "reason": "not for class plan-only"
+   "reason": "no DOOR TYPES / FRAME TYPES legend title in this PDF"
   },
   "sizes_and_marks": {
-   "applicable": false,
-   "reason": "not for class plan-only"
+   "applicable": true,
+   "total": 44,
+   "pass": 44,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "size_fail": 0,
+   "mark_fail": 0
   }
  },
- "tier": "unread",
- "unread_reason": "no rows agreed and no oracle applies",
+ "tier": "oracle-checked",
  "disagreement_count": 44,
  "disagreements": [
   {
@@ -452,6 +466,6 @@
    "why": "only reader A read this row"
   }
  ],
- "ms": 900,
- "generated_at": "2026-10-09T10:45:58.485Z"
+ "ms": 929,
+ "generated_at": "2026-10-10T00:11:40.554Z"
 }

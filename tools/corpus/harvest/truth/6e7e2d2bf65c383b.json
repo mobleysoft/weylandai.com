@@ -24,7 +24,7 @@
  },
  "readers": {
   "a": {
-   "doors": 16,
+   "doors": 7,
    "sets": 0,
    "items": 0,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
@@ -38,39 +38,23 @@
   }
  },
  "rows_agreed": 7,
- "rows_disputed": 13,
- "rows_total": 20,
- "agreement_rate": 0.35,
+ "rows_disputed": 12,
+ "rows_total": 19,
+ "agreement_rate": 0.3684,
  "agreement": {
   "doors": {
-   "rows": 20,
+   "rows": 19,
    "agreed": 7,
-   "disputed": 8,
-   "only_a": 1,
-   "only_b": 4,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 12,
    "fields": {
-    "width_inches": {
-     "agree": 0,
-     "total": 8
-    },
-    "height_inches": {
-     "agree": 0,
-     "total": 8
-    },
     "door_type": {
-     "agree": 15,
-     "total": 15
-    },
-    "material": {
-     "agree": 8,
-     "total": 8
-    },
-    "hardware_group": {
-     "agree": 0,
-     "total": 8
+     "agree": 7,
+     "total": 7
     }
    },
-   "agreement_rate": 0.35
+   "agreement_rate": 0.3684
   },
   "items": {
    "rows": 0,
@@ -86,233 +70,149 @@
    "agreed": 0
   }
  },
- "triage_class": "plan-only",
+ "triage_class": "schedule-only",
  "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
-   "applicable": false,
-   "reason": "not for class plan-only"
+   "applicable": true,
+   "total": 7,
+   "pass": 0,
+   "fail": 7,
+   "pass_rate": 0,
+   "examples": [
+    "mark F1 (schedule p.102) not tagged on any plan",
+    "mark F1 (schedule p.102) not tagged on any plan",
+    "mark F1 (schedule p.102) not tagged on any plan",
+    "mark F1 (schedule p.102) not tagged on any plan",
+    "mark F2 (schedule p.102) not tagged on any plan",
+    "mark F3 (schedule p.102) not tagged on any plan",
+    "mark F4 (schedule p.102) not tagged on any plan"
+   ],
+   "plan_sheets": [
+    "A110 p.60",
+    "A111 p.61",
+    "A114 p.64",
+    "A115 p.65",
+    "A401 p.76",
+    "A402 p.77",
+    "A403 p.78",
+    "A501 p.79"
+   ],
+   "plan_counts": {
+    "plan_sheets": 8,
+    "rooms": 45,
+    "corridors": 0,
+    "tags": 0,
+    "unmatched_tags": 0,
+    "schedule_marks": 7,
+    "marks_not_on_plan": 7
+   }
   },
   "sets_exist": {
    "applicable": false,
-   "reason": "not for class plan-only"
+   "reason": "not for class schedule-only"
   },
   "set_door_lists": {
    "applicable": false,
-   "reason": "not for class plan-only"
+   "reason": "not for class schedule-only"
   },
   "types_in_legend": {
    "applicable": false,
-   "reason": "not for class plan-only"
+   "reason": "no DOOR TYPES / FRAME TYPES legend title in this PDF"
   },
   "sizes_and_marks": {
-   "applicable": false,
-   "reason": "not for class plan-only"
+   "applicable": true,
+   "total": 7,
+   "pass": 0,
+   "fail": 7,
+   "pass_rate": 0,
+   "examples": [
+    "mark F1 p.102: size null -> null x null",
+    "mark F1 p.102: size null -> null x null",
+    "mark F1 p.102: size null -> null x null",
+    "mark F1 p.102: size null -> null x null",
+    "mark F2 p.102: size null -> null x null",
+    "mark F3 p.102: size null -> null x null",
+    "mark F4 p.102: size null -> null x null"
+   ],
+   "size_fail": 7,
+   "mark_fail": 0
   }
  },
  "tier": "agreed",
- "disagreement_count": 29,
+ "disagreement_count": 12,
  "disagreements": [
   {
    "kind": "door",
    "page": 81,
    "key": "100A",
-   "field": "width_inches",
-   "a": null,
-   "b": 36
-  },
-  {
-   "kind": "door",
-   "page": 81,
-   "key": "100A",
-   "field": "height_inches",
-   "a": null,
-   "b": 80
-  },
-  {
-   "kind": "door",
-   "page": 81,
-   "key": "100A",
-   "field": "hardware_group",
-   "a": null,
-   "b": "SECURE ENTRY FUNCTION"
-  },
-  {
-   "kind": "door",
-   "page": 81,
-   "key": "101A",
-   "field": "width_inches",
-   "a": null,
-   "b": 36
-  },
-  {
-   "kind": "door",
-   "page": 81,
-   "key": "101A",
-   "field": "height_inches",
-   "a": null,
-   "b": 80
-  },
-  {
-   "kind": "door",
-   "page": 81,
-   "key": "101A",
-   "field": "hardware_group",
-   "a": null,
-   "b": "PRIVACY LOCK FUNCTION"
-  },
-  {
-   "kind": "door",
-   "page": 81,
-   "key": "102A",
-   "field": "width_inches",
-   "a": null,
-   "b": 36
-  },
-  {
-   "kind": "door",
-   "page": 81,
-   "key": "102A",
-   "field": "height_inches",
-   "a": null,
-   "b": 80
-  },
-  {
-   "kind": "door",
-   "page": 81,
-   "key": "102A",
-   "field": "hardware_group",
-   "a": null,
-   "b": "PRIVACY LOCK FUNCTION"
-  },
-  {
-   "kind": "door",
-   "page": 81,
-   "key": "103A",
-   "field": "width_inches",
-   "a": null,
-   "b": 36
-  },
-  {
-   "kind": "door",
-   "page": 81,
-   "key": "103A",
-   "field": "height_inches",
-   "a": null,
-   "b": 80
-  },
-  {
-   "kind": "door",
-   "page": 81,
-   "key": "103A",
-   "field": "hardware_group",
-   "a": null,
-   "b": "SECURE STOREROOM FUNCTION"
-  },
-  {
-   "kind": "door",
-   "page": 81,
-   "key": "104A",
-   "field": "width_inches",
-   "a": null,
-   "b": 36
-  },
-  {
-   "kind": "door",
-   "page": 81,
-   "key": "104A",
-   "field": "height_inches",
-   "a": null,
-   "b": 80
-  },
-  {
-   "kind": "door",
-   "page": 81,
-   "key": "104A",
-   "field": "hardware_group",
-   "a": null,
-   "b": "SECURE ENTRY FUNCTION"
-  },
-  {
-   "kind": "door",
-   "page": 81,
-   "key": "105A",
-   "field": "width_inches",
-   "a": null,
-   "b": 36
-  },
-  {
-   "kind": "door",
-   "page": 81,
-   "key": "105A",
-   "field": "height_inches",
-   "a": null,
-   "b": 80
-  },
-  {
-   "kind": "door",
-   "page": 81,
-   "key": "105A",
-   "field": "hardware_group",
-   "a": null,
-   "b": "PRIVACY LOCK FUNCTION"
-  },
-  {
-   "kind": "door",
-   "page": 81,
-   "key": "106A",
-   "field": "width_inches",
-   "a": null,
-   "b": 36
-  },
-  {
-   "kind": "door",
-   "page": 81,
-   "key": "106A",
-   "field": "height_inches",
-   "a": null,
-   "b": 80
-  },
-  {
-   "kind": "door",
-   "page": 81,
-   "key": "106A",
-   "field": "hardware_group",
-   "a": null,
-   "b": "PRIVACY LOCK FUNCTION"
-  },
-  {
-   "kind": "door",
-   "page": 81,
-   "key": "107A",
-   "field": "width_inches",
-   "a": null,
-   "b": 36
-  },
-  {
-   "kind": "door",
-   "page": 81,
-   "key": "107A",
-   "field": "height_inches",
-   "a": null,
-   "b": 80
-  },
-  {
-   "kind": "door",
-   "page": 81,
-   "key": "107A",
-   "field": "hardware_group",
-   "a": null,
-   "b": "SECURE STOREROOM FUNCTION"
-  },
-  {
-   "kind": "door",
-   "page": 81,
-   "key": "2X6",
    "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 81,
+   "key": "101A",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 81,
+   "key": "102A",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 81,
+   "key": "103A",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 81,
+   "key": "104A",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 81,
+   "key": "105A",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 81,
+   "key": "106A",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 81,
+   "key": "107A",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
   },
   {
    "kind": "door",
@@ -351,6 +251,6 @@
    "why": "only reader B read this row"
   }
  ],
- "ms": 2677,
- "generated_at": "2026-10-09T10:46:50.905Z"
+ "ms": 3788,
+ "generated_at": "2026-10-10T00:12:37.715Z"
 }

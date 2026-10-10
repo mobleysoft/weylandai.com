@@ -26,7 +26,7 @@
   "a": {
    "doors": 26,
    "sets": 2,
-   "items": 5,
+   "items": 7,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
   },
   "b": {
@@ -37,10 +37,10 @@
    "tables": 0
   }
  },
- "rows_agreed": 1,
- "rows_disputed": 33,
- "rows_total": 34,
- "agreement_rate": 0.0294,
+ "rows_agreed": 0,
+ "rows_disputed": 38,
+ "rows_total": 38,
+ "agreement_rate": 0,
  "agreement": {
   "doors": {
    "rows": 26,
@@ -52,30 +52,13 @@
    "agreement_rate": 0
   },
   "items": {
-   "rows": 8,
-   "agreed": 1,
-   "disputed": 1,
-   "only_a": 3,
-   "only_b": 3,
-   "fields": {
-    "qty": {
-     "agree": 2,
-     "total": 2
-    },
-    "description": {
-     "agree": 2,
-     "total": 2
-    },
-    "catalog": {
-     "agree": 1,
-     "total": 2
-    },
-    "finish": {
-     "agree": 0,
-     "total": 1
-    }
-   },
-   "agreement_rate": 0.125
+   "rows": 12,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 7,
+   "only_b": 5,
+   "fields": {},
+   "agreement_rate": 0
   },
   "sets": {
    "sets": 2,
@@ -144,8 +127,8 @@
    "mark_fail": 0
   }
  },
- "tier": "agreed",
- "disagreement_count": 34,
+ "tier": "oracle-checked",
+ "disagreement_count": 38,
  "disagreements": [
   {
    "kind": "door",
@@ -402,7 +385,7 @@
   {
    "kind": "item",
    "page": 27,
-   "key": "9 / 5/8\" MTL STUD CONT SEALANT @ EA SIDE CONT SEALANT EA SIDE HOLLOW METAL FRAME IPS-5A DOOR - REFER TO DOOR HOLLOW METAL FRAME",
+   "key": "9 / LINTEL - REF STRUCTURAL 5/8\" MTL STUD OFFICE CONT SEALANT @ EA SIDE CONT SEALANT EA SIDE ADMINISTRATION HOLLOW METAL FRAME IPS-5A DOOR - REFER TO DOOR HOLLOW METAL FRAME NEW DOOR AND FRAME SCHEDULE DIVISION SCHEDULE MANAGEMENT, 11 5/8\" DOOR - REFER TO DOOR DOOR FRAME SCHEDULE FIRE DOOR SIZE DETAIL RATING HARDWARE DESIGN NO W H THK MATL ELEV MATL ELEV HEAD JAMB SILL LABEL SET NO NOTES CONSTRUCTION",
    "field": "(row)",
    "a": "read",
    "b": null,
@@ -411,27 +394,65 @@
   {
    "kind": "item",
    "page": 27,
-   "key": "9 / CMU - DOOR JAMB DETAIL, TYP 03 EXT CMU - DOOR HEAD 206A 3'-0\" 7'-0\"",
-   "field": "catalog",
-   "a": "CMU - DOOR JAMB DETAIL, TYP 03 EXT CMU - DOOR HEAD 206A 3'-0\" 7'-0\"",
-   "b": "CMU - DOOR JAMB DETAIL, TYP 03 EXT CMU - DOOR HEAD 206A 3'-0\" 7'-0\" 1 3/4\" HM A1 HM 1 06/A701 06/A701. 1"
-  },
-  {
-   "kind": "item",
-   "page": 27,
-   "key": "9 / CMU - DOOR JAMB DETAIL, TYP 03 EXT CMU - DOOR HEAD 206A 3'-0\" 7'-0\"",
-   "field": "finish",
-   "a": "1 3/4\" HM A1 HM 1 06/A701 06/A701. 1",
-   "b": null
-  },
-  {
-   "kind": "item",
-   "page": 27,
-   "key": "9 / CMU - DOOR JAMB DETAIL, TYP 01A701 INT1 1/2\" = 1'-0\"CMU - DOOR HEAD FRAME1/4\" = 1'-0\" TYPES",
+   "key": "9 / INT STUD - DOOR HEAD/JAMB DETAIL, TYP 05 INT CMU - DOOR HEAD @ NEW OPENING LEVEL 01 1 1/2\" = 1'-0\" A701 1 1/2\" = 1'-0\" 102 2'-8\" 7'-0\" 1 3/4\" HM A1 (EXIST HM) 2 01/A701 02/A702 20 MIN 1 103B 2'-8\" 7'-0\" 1 3/4\" HM A1 (EXIST HM) 2 01/A701 02/A702 20 MIN 1 DEPARTMENT 103C 3'-0\" 7'-0\" 1 3/4\" HM A1 (EXIST HM) 2 01/A701 02/A702 20 MIN 1 NATIONAL 104 3'-0\" 7'-0\" 1 3/4\" HM B1 (EXIST HM) 2 01/A701 02/A702 20 MIN 3A 105 3'-0\" 7'-0\" 1 3/4\" HM B1 (EXIST HM) 2 01/A701 02/A702 20 MIN 3A 106 3'-0\" 7'-0\" 1 3/4\" HM A1 HM 2 01/A701 02/A702 3 JEFFERSON 107A 3'-0\" 7'-0\" 1 3/4\" HM B1 (EXIST HM) 2 01/A701 02/A702 20 MIN 1 READINESS 108 3'-0\" 7'-0\" 1 3/4\" HM B1 (EXIST HM) 2 01/A701 02/A702 20 MIN 1 110A 3'-0\" 7'-0\" 1 3/4\" HM B1 (EXIST HM) 2 01/A701 02/A702 20 MIN 3A BUILDING CMU WALL 111 6'-0\" 7'-0\" 1 3/4\" ICHM A2 HM 2 05/A701 02/A702 5 CONT SEALANT INTERIOR @ PERIMETER - 112 6'-0\" 7'-0\" 1 3/4\" HM B2 (EXIST HM) 2 01/A701 02/A702 5 EA SIDE ANCHOR - REF BOND BEAM 113A 6'-0\" 7'-0\" 1 3/4\" HM A2 HM 1 06/A701 06/A701. 6 DOOR CMU WALL MANUFACTURER 114 3'-0\" 7'-0\" 1 3/4\" HM A1 HM 2 05/A701 02/A702 20 MIN 7 801 ARMORY 115 3'-0\" 7'-0\" 1 3/4\" HM B1 (EXIST HM) 2 01/A701 02/A702 20 MIN 3A 118 3'-0\" 7'-0\" 1 3/4\" HM A1 HM 2 05/A701 02/A702 20 MIN 7 JEFFERSON STL LOOSE LINTEL HOLLOW METAL 119 3'-0\" 7'-0\" 1 3/4\" HM B1 (EXIST HM) 2 01/A701 02/A702 20 MIN 3A MISSOURI FRAME EPS-5A 125A 3'-0\" 7'-0\" 1 3/4\" HM B1 (EXIST HM) 2 01/A701 02/A702 20 MIN 3A CONT SEALANT 126 3'-0\" 7'-0\" 1 3/4\" HM B1 (EXIST HM) 2 01/A701 02/A702 20 MIN 3A DOOR - REFER TO EA SIDE 128B 3'-0\" 6'-8\" 1 3/4\" HM A1 HM 1 06/A701 06/A701. 20 MIN 4 PROJECT DOOR SCHEDULE 144B 3'-0\" 7'-0\" 1 3/4\" ICHM A1 HM 2 03/A701 04/A701 8 SITE # HOLLOW METAL FRAME EPS-5A 149A 3'-0\" 7'-0\" 2\" HM A3 (EXIST HM) 2 01/A701 02/A702 20 MIN 4 11 5/8\" DOOR - REFER TO 150 3'-0\" 7'-0\" 1 3/4\" HM A1 (EXIST HM) 2 01/A701 02/A702 20 MIN 1 ASSET DOOR SCHEDULE C103 3'-0\" 7'-0\" 1 3/4\" ICHM A1 HM 2 03/A701 04/A701 8 2\" C140 6'-0\" 7'-0\" 1 3/4\" ICHM A2 HM 2 03/A701 04/A701 2 LEVEL 02 REVISION 203 3'-0\" 7'-0\" 1 3/4\" HM A1 HM 1 06/A701 06/A701. 3",
    "field": "(row)",
    "a": "read",
    "b": null,
    "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 27,
+   "key": "9 / EXT CMU - DOOR JAMB DETAIL, TYP 03 EXT CMU - DOOR HEAD 206A 3'-0\" 7'-0\" 1 3/4\" HM A1 HM 1 06/A701 06/A701. 1 1 1/2\" = 1'-0\" A701 1 1/2\" = 1'-0\"",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 27,
+   "key": "9 / 5/8\" PER SQ.IN. DESIGNED MAX PLAN NOTES RATE SHEET TITLE: GLASS IN RATED DOOR DOORS CMU WALL CMU WALL SCHEDULES CONT SEALANT EA SIDE BOND BEAM",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 27,
+   "key": "9 / 5/8\" OPENING WOOD DOOR WOOD DOUBLE DOOR WOOD DOOR W/ LOUVER (3\" X 30\" IN RATED DOORS) DOOR W/ LITES (3\" X 30\" IN RATED SCHEDULE DOOR - REFER TO DOOR SCHEDULE DOORS)",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 27,
+   "key": "9 / INT1 1/2\" = 1'-0\"CMU - DOOR JAMB DETAIL, TYP 01A701 INT1 1/2\" = 1'-0\"CMU - DOOR HEAD FRAME1/4\" = 1'-0\" TYPES DOOR1/4\" = 1'-0\" TYPES A701",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 27,
+   "key": "9 / STUD - DOOR HEAD/JAMB DETAIL, TYP 05 INT CMU - DOOR HEAD @ NEW OPENING LEVEL 01",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 27,
+   "key": "9 / CMU - DOOR JAMB DETAIL, TYP 03 EXT CMU - DOOR HEAD 206A 3'-0\" 7'-0\" 1 3/4\" HM A1 HM 1 06/A701 06/A701. 1",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
   },
   {
    "kind": "item",
@@ -452,6 +473,6 @@
    "why": "only reader B read this row"
   }
  ],
- "ms": 4902,
- "generated_at": "2026-10-09T10:46:44.285Z"
+ "ms": 5308,
+ "generated_at": "2026-10-10T00:12:28.914Z"
 }

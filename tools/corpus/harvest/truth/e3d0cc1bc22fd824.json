@@ -22,7 +22,7 @@
  },
  "readers": {
   "a": {
-   "doors": 0,
+   "doors": 22,
    "sets": 0,
    "items": 0,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
@@ -43,10 +43,31 @@
   "doors": {
    "rows": 22,
    "agreed": 0,
-   "disputed": 0,
+   "disputed": 22,
    "only_a": 0,
-   "only_b": 22,
-   "fields": {},
+   "only_b": 0,
+   "fields": {
+    "width_inches": {
+     "agree": 13,
+     "total": 22
+    },
+    "height_inches": {
+     "agree": 22,
+     "total": 22
+    },
+    "door_type": {
+     "agree": 19,
+     "total": 19
+    },
+    "fire_rating": {
+     "agree": 0,
+     "total": 22
+    },
+    "hardware_group": {
+     "agree": 0,
+     "total": 19
+    }
+   },
    "agreement_rate": 0
   },
   "items": {
@@ -67,8 +88,25 @@
  "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
-   "applicable": false,
-   "reason": "no door schedule rows"
+   "applicable": true,
+   "total": 22,
+   "pass": 22,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "plan_sheets": [
+    "A-102 p.9",
+    "A-401 p.13"
+   ],
+   "plan_counts": {
+    "plan_sheets": 2,
+    "rooms": 54,
+    "corridors": 5,
+    "tags": 22,
+    "unmatched_tags": 0,
+    "schedule_marks": 22,
+    "marks_not_on_plan": 0
+   }
   },
   "sets_exist": {
    "applicable": false,
@@ -79,217 +117,368 @@
    "reason": "not for class schedule-only"
   },
   "types_in_legend": {
-   "applicable": false,
-   "reason": "no door schedule rows"
+   "applicable": true,
+   "total": 6,
+   "pass": 3,
+   "fail": 3,
+   "pass_rate": 0.5,
+   "examples": [
+    "frame type F3 (1 rows) not found near the frame types legend",
+    "frame type F1 (2 rows) not found near the frame types legend",
+    "frame type F2 (11 rows) not found near the frame types legend"
+   ],
+   "legend_titles": [
+    "DOOR TYPES p.18",
+    "FRAME TYPES p.18"
+   ],
+   "skipped": [],
+   "note": "weak for numeric types: a detail number near the legend can pass a numeric frame type"
   },
   "sizes_and_marks": {
-   "applicable": false,
-   "reason": "no door schedule rows"
+   "applicable": true,
+   "total": 22,
+   "pass": 13,
+   "fail": 9,
+   "pass_rate": 0.5909,
+   "examples": [
+    "mark 100 p.18: size \"PR 3' - 0\\\" x 7' - 0\\\"\" -> null x 84",
+    "mark 109 p.18: size \"PR 3' - 0\\\" x 7' - 0\\\"\" -> null x 84",
+    "mark 110 p.18: size \"PR 3' - 0\\\" x 7' - 0\\\"\" -> null x 84",
+    "mark 111 p.18: size \"PR 3' - 0\\\" x 7' - 0\\\"\" -> null x 84",
+    "mark 112 p.18: size \"PR 3' - 0\\\" x 7' - 0\\\"\" -> null x 84",
+    "mark 113 p.18: size \"PR 3' - 0\\\" x 7' - 0\\\"\" -> null x 84",
+    "mark 115 p.18: size \"PR 3' - 0\\\" x 7' - 0\\\"\" -> null x 84",
+    "mark 116 p.18: size \"PR 3' - 0\\\" x 7' - 0\\\"\" -> null x 84",
+    "mark 117 p.18: size \"PR 3' - 0\\\" x 7' - 0\\\"\" -> null x 84"
+   ],
+   "size_fail": 9,
+   "mark_fail": 0
   }
  },
- "tier": "unread",
- "unread_reason": "no rows agreed and no oracle applies",
- "disagreement_count": 22,
+ "tier": "oracle-checked",
+ "disagreement_count": 50,
  "disagreements": [
   {
    "kind": "door",
    "page": 18,
    "key": "100",
-   "field": "(row)",
+   "field": "width_inches",
    "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "b": 36
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "100",
+   "field": "fire_rating",
+   "a": "J4",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "100",
+   "field": "hardware_group",
+   "a": null,
+   "b": "09"
   },
   {
    "kind": "door",
    "page": 18,
    "key": "101",
-   "field": "(row)",
+   "field": "fire_rating",
+   "a": "J1 90 MIN.",
+   "b": "90 MIN."
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "101",
+   "field": "hardware_group",
    "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "b": "04"
   },
   {
    "kind": "door",
    "page": 18,
    "key": "102",
-   "field": "(row)",
+   "field": "fire_rating",
+   "a": "J2",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "102",
+   "field": "hardware_group",
    "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "b": "05"
   },
   {
    "kind": "door",
    "page": 18,
    "key": "103",
-   "field": "(row)",
+   "field": "fire_rating",
+   "a": "J2",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "103",
+   "field": "hardware_group",
    "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "b": "05"
   },
   {
    "kind": "door",
    "page": 18,
    "key": "104",
-   "field": "(row)",
+   "field": "fire_rating",
+   "a": "J2",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "104",
+   "field": "hardware_group",
    "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "b": "06"
   },
   {
    "kind": "door",
    "page": 18,
    "key": "105",
-   "field": "(row)",
+   "field": "fire_rating",
+   "a": "J2",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "105",
+   "field": "hardware_group",
    "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "b": "06"
   },
   {
    "kind": "door",
    "page": 18,
    "key": "106",
-   "field": "(row)",
+   "field": "fire_rating",
+   "a": "J2",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "106",
+   "field": "hardware_group",
    "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "b": "07"
   },
   {
    "kind": "door",
    "page": 18,
    "key": "107",
-   "field": "(row)",
+   "field": "fire_rating",
+   "a": "J2",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "107",
+   "field": "hardware_group",
    "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "b": "05"
   },
   {
    "kind": "door",
    "page": 18,
    "key": "108",
-   "field": "(row)",
+   "field": "fire_rating",
+   "a": "J1 90 MIN.",
+   "b": "90 MIN."
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "108",
+   "field": "hardware_group",
    "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "b": "04"
   },
   {
    "kind": "door",
    "page": 18,
    "key": "109",
-   "field": "(row)",
+   "field": "width_inches",
    "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "b": 36
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "109",
+   "field": "fire_rating",
+   "a": "J2",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "109",
+   "field": "hardware_group",
+   "a": null,
+   "b": "10"
   },
   {
    "kind": "door",
    "page": 18,
    "key": "110",
-   "field": "(row)",
+   "field": "width_inches",
    "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "b": 36
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "110",
+   "field": "fire_rating",
+   "a": "EXISTING",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "110",
+   "field": "hardware_group",
+   "a": null,
+   "b": "03A"
   },
   {
    "kind": "door",
    "page": 18,
    "key": "111",
-   "field": "(row)",
+   "field": "width_inches",
    "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "b": 36
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "111",
+   "field": "fire_rating",
+   "a": "EXISTING",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "111",
+   "field": "hardware_group",
+   "a": null,
+   "b": "03"
   },
   {
    "kind": "door",
    "page": 18,
    "key": "112",
-   "field": "(row)",
+   "field": "width_inches",
    "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "b": 36
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "112",
+   "field": "fire_rating",
+   "a": "EXISTING",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "112",
+   "field": "hardware_group",
+   "a": null,
+   "b": "03B"
   },
   {
    "kind": "door",
    "page": 18,
    "key": "113",
-   "field": "(row)",
+   "field": "width_inches",
    "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "b": 36
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "113",
+   "field": "fire_rating",
+   "a": "EXISTING",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "113",
+   "field": "hardware_group",
+   "a": null,
+   "b": "03B"
   },
   {
    "kind": "door",
    "page": 18,
    "key": "114",
-   "field": "(row)",
+   "field": "fire_rating",
+   "a": "EXISTING",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "114",
+   "field": "hardware_group",
    "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "b": "02"
   },
   {
    "kind": "door",
    "page": 18,
    "key": "115",
-   "field": "(row)",
+   "field": "width_inches",
    "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "b": 36
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "115",
+   "field": "fire_rating",
+   "a": "EXISTING",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "115",
+   "field": "hardware_group",
+   "a": null,
+   "b": "11"
   },
   {
    "kind": "door",
    "page": 18,
    "key": "116",
-   "field": "(row)",
+   "field": "width_inches",
    "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "117",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "118",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "119",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "120",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "121",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "b": 36
   }
  ],
- "ms": 3233,
- "generated_at": "2026-10-09T10:49:11.800Z"
+ "ms": 5596,
+ "generated_at": "2026-10-10T00:16:05.109Z"
 }

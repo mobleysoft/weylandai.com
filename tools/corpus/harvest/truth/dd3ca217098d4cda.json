@@ -23,7 +23,7 @@
  "readers": {
   "a": {
    "doors": 0,
-   "sets": 1,
+   "sets": 3,
    "items": 21,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
   },
@@ -36,8 +36,8 @@
   }
  },
  "rows_agreed": 0,
- "rows_disputed": 40,
- "rows_total": 40,
+ "rows_disputed": 23,
+ "rows_total": 23,
  "agreement_rate": 0,
  "agreement": {
   "doors": {
@@ -50,17 +50,34 @@
    "agreement_rate": null
   },
   "items": {
-   "rows": 40,
+   "rows": 23,
    "agreed": 0,
-   "disputed": 0,
-   "only_a": 21,
-   "only_b": 19,
-   "fields": {},
+   "disputed": 17,
+   "only_a": 4,
+   "only_b": 2,
+   "fields": {
+    "qty": {
+     "agree": 17,
+     "total": 17
+    },
+    "description": {
+     "agree": 17,
+     "total": 17
+    },
+    "catalog": {
+     "agree": 0,
+     "total": 17
+    },
+    "finish": {
+     "agree": 0,
+     "total": 17
+    }
+   },
    "agreement_rate": 0
   },
   "sets": {
-   "sets": 4,
-   "agreed": 0
+   "sets": 3,
+   "agreed": 2
   }
  },
  "triage_class": "spec-only",
@@ -89,349 +106,315 @@
  },
  "tier": "unread",
  "unread_reason": "no rows agreed and no oracle applies",
- "disagreement_count": 44,
+ "disagreement_count": 41,
  "disagreements": [
   {
    "kind": "item",
    "page": 198,
-   "key": "S / T4A3386 NRP 4-1/2\" x 4-1/2\" US32D",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / T4A3386 NRP 4-1/2\" x 4-1/2\" US32D",
+   "field": "catalog",
+   "a": "T4A3386 NRP 4-1/2\" x 4-1/2\" US32D",
+   "b": "T4A3386 NRP 4-1/2\" x 4-1/2\" US32D MK 087100"
   },
   {
    "kind": "item",
    "page": 198,
-   "key": "S / 3 V20 8266 LNP US32D",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / T4A3386 NRP 4-1/2\" x 4-1/2\" US32D",
+   "field": "finish",
+   "a": "MK",
+   "b": null
   },
   {
    "kind": "item",
    "page": 198,
-   "key": "S / SW200i AL",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / 3 V20 8266 LNP US32D",
+   "field": "catalog",
+   "a": "3 V20 8266 LNP US32D",
+   "b": "3 V20 8266 LNP US32D SA 087100"
   },
   {
    "kind": "item",
    "page": 198,
-   "key": "S / 75-02-108 US32d",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / 3 V20 8266 LNP US32D",
+   "field": "finish",
+   "a": "SA",
+   "b": null
   },
   {
    "kind": "item",
    "page": 198,
-   "key": "S / K1050 10\" x 2\" LDW 4BE CSK US32D",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / SW200i AL",
+   "field": "catalog",
+   "a": "SW200i AL",
+   "b": "SW200i AL PE 087100"
   },
   {
    "kind": "item",
    "page": 198,
-   "key": "S / S88D",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / SW200i AL",
+   "field": "finish",
+   "a": "PE",
+   "b": null
   },
   {
    "kind": "item",
    "page": 198,
-   "key": "S / 346C",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / 75-02-108 US32d",
+   "field": "catalog",
+   "a": "75-02-108 US32d",
+   "b": "75-02-108 US32d AA 087100"
   },
   {
    "kind": "item",
    "page": 198,
-   "key": "S / 3452AV",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / 75-02-108 US32d",
+   "field": "finish",
+   "a": "AA",
+   "b": null
   },
   {
    "kind": "item",
    "page": 198,
-   "key": "S / 171A",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / K1050 10\" x 2\" LDW 4BE CSK US32D",
+   "field": "catalog",
+   "a": "K1050 10\" x 2\" LDW 4BE CSK US32D",
+   "b": "K1050 10\" x 2\" LDW 4BE CSK US32D RO 087100"
   },
   {
    "kind": "item",
    "page": 198,
-   "key": "S / T4A3386 NRP 4-1/2\" x 4-1/2\" US32D",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / K1050 10\" x 2\" LDW 4BE CSK US32D",
+   "field": "finish",
+   "a": "RO",
+   "b": null
   },
   {
    "kind": "item",
    "page": 198,
-   "key": "S / 3 8204 LNP US32D",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / S88D",
+   "field": "catalog",
+   "a": "S88D",
+   "b": "S88D PE 087100"
   },
   {
    "kind": "item",
    "page": 198,
-   "key": "S / CPS7500 600 x 689",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / S88D",
+   "field": "finish",
+   "a": "PE",
+   "b": null
   },
   {
    "kind": "item",
    "page": 198,
-   "key": "S / K1050 10\" x 2\" LDW 4BE CSK US32D",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / 346C",
+   "field": "catalog",
+   "a": "346C",
+   "b": "346C PE 087100"
   },
   {
    "kind": "item",
    "page": 198,
-   "key": "S / 2891AS",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / 346C",
+   "field": "finish",
+   "a": "PE",
+   "b": null
   },
   {
    "kind": "item",
    "page": 198,
-   "key": "S / 346C",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / 3452AV",
+   "field": "catalog",
+   "a": "3452AV",
+   "b": "3452AV PE 087100"
   },
   {
    "kind": "item",
    "page": 198,
-   "key": "S / 3452AV",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / 3452AV",
+   "field": "finish",
+   "a": "PE",
+   "b": null
   },
   {
    "kind": "item",
    "page": 198,
-   "key": "S / 171A",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / 171A",
+   "field": "catalog",
+   "a": "171A",
+   "b": "171A PE 087100"
   },
   {
    "kind": "item",
    "page": 198,
-   "key": "S / x 4-1/2\" US32D",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 198,
-   "key": "S / US32D",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 198,
-   "key": "S / 689",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 198,
-   "key": "S / Silencer 608-RKW",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 198,
-   "key": "1.0 / T4A3386 NRP 4-1/2\" x 4-1/2\" US32D MK 087100",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "item",
-   "page": 198,
-   "key": "1.0 / 3 V20 8266 LNP US32D SA 087100",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "item",
-   "page": 198,
-   "key": "1.0 / SW200i AL PE 087100",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "item",
-   "page": 198,
-   "key": "1.0 / 75-02-108 US32d AA 087100",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "item",
-   "page": 198,
-   "key": "1.0 / K1050 10\" x 2\" LDW 4BE CSK US32D RO 087100",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "item",
-   "page": 198,
-   "key": "1.0 / S88D PE 087100",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "item",
-   "page": 198,
-   "key": "1.0 / 346C PE 087100",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "item",
-   "page": 198,
-   "key": "1.0 / 3452AV PE 087100",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "item",
-   "page": 198,
-   "key": "1.0 / 171A PE 087100",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "key": "1.0 / 171A",
+   "field": "finish",
+   "a": "PE",
+   "b": null
   },
   {
    "kind": "item",
    "page": 199,
-   "key": "2.0 / T4A3386 NRP 4-1/2\" x 4-1/2\" US32D MK 087100",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "key": "2.0 / T4A3386 NRP 4-1/2\" x 4-1/2\" US32D",
+   "field": "catalog",
+   "a": "T4A3386 NRP 4-1/2\" x 4-1/2\" US32D",
+   "b": "T4A3386 NRP 4-1/2\" x 4-1/2\" US32D MK 087100"
   },
   {
    "kind": "item",
    "page": 199,
-   "key": "2.0 / 3 8204 LNP US32D SA 087100",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "key": "2.0 / T4A3386 NRP 4-1/2\" x 4-1/2\" US32D",
+   "field": "finish",
+   "a": "MK",
+   "b": null
   },
   {
    "kind": "item",
    "page": 199,
-   "key": "2.0 / CPS7500 600 x 689 NO 087100",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "key": "2.0 / 3 8204 LNP US32D",
+   "field": "catalog",
+   "a": "3 8204 LNP US32D",
+   "b": "3 8204 LNP US32D SA 087100"
   },
   {
    "kind": "item",
    "page": 199,
-   "key": "2.0 / K1050 10\" x 2\" LDW 4BE CSK US32D RO 087100",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "key": "2.0 / 3 8204 LNP US32D",
+   "field": "finish",
+   "a": "SA",
+   "b": null
   },
   {
    "kind": "item",
    "page": 199,
-   "key": "2.0 / 2891AS PE 087100",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "key": "2.0 / CPS7500 600 x 689",
+   "field": "catalog",
+   "a": "CPS7500 600 x 689",
+   "b": "CPS7500 600 x 689 NO 087100"
   },
   {
    "kind": "item",
    "page": 199,
-   "key": "2.0 / 346C PE 087100",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "key": "2.0 / CPS7500 600 x 689",
+   "field": "finish",
+   "a": "NO",
+   "b": null
   },
   {
    "kind": "item",
    "page": 199,
-   "key": "2.0 / 3452AV PE 087100",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "key": "2.0 / K1050 10\" x 2\" LDW 4BE CSK US32D",
+   "field": "catalog",
+   "a": "K1050 10\" x 2\" LDW 4BE CSK US32D",
+   "b": "K1050 10\" x 2\" LDW 4BE CSK US32D RO 087100"
   },
   {
    "kind": "item",
    "page": 199,
-   "key": "2.0 / 171A PE 087100",
+   "key": "2.0 / K1050 10\" x 2\" LDW 4BE CSK US32D",
+   "field": "finish",
+   "a": "RO",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 199,
+   "key": "2.0 / 2891AS",
+   "field": "catalog",
+   "a": "2891AS",
+   "b": "2891AS PE 087100"
+  },
+  {
+   "kind": "item",
+   "page": 199,
+   "key": "2.0 / 2891AS",
+   "field": "finish",
+   "a": "PE",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 199,
+   "key": "2.0 / 346C",
+   "field": "catalog",
+   "a": "346C",
+   "b": "346C PE 087100"
+  },
+  {
+   "kind": "item",
+   "page": 199,
+   "key": "2.0 / 346C",
+   "field": "finish",
+   "a": "PE",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 199,
+   "key": "2.0 / 3452AV",
+   "field": "catalog",
+   "a": "3452AV",
+   "b": "3452AV PE 087100"
+  },
+  {
+   "kind": "item",
+   "page": 199,
+   "key": "2.0 / 3452AV",
+   "field": "finish",
+   "a": "PE",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 199,
+   "key": "2.0 / 171A",
+   "field": "catalog",
+   "a": "171A",
+   "b": "171A PE 087100"
+  },
+  {
+   "kind": "item",
+   "page": 199,
+   "key": "2.0 / 171A",
+   "field": "finish",
+   "a": "PE",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 199,
+   "key": "3.0 / T4A3386 NRP 4-1/2\" x 4-1/2\" US32D",
    "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 199,
+   "key": "3.0 / 3 8204 LNP US32D",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 199,
+   "key": "3.0 / PR7500 689",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 199,
+   "key": "3.0 / 608-RKW",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
   },
   {
    "kind": "item",
@@ -452,6 +435,6 @@
    "why": "only reader B read this row"
   }
  ],
- "ms": 2059,
- "generated_at": "2026-10-09T10:48:55.272Z"
+ "ms": 3426,
+ "generated_at": "2026-10-10T00:15:34.735Z"
 }
