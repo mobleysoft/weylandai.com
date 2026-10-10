@@ -125,3 +125,17 @@ test("readMarkList: ranges, stacks, & lists and a split end mark", () => {
   assert.equal(readMarkList("101"), null);
   assert.equal(readMarkList("101 SEE NOTE"), null);
 });
+
+// g051 (class C5): electrical and mechanical equipment schedules are not door schedules. On main these
+// read as door rows: X2410 E-sheet FEEDER SCHEDULE (feeders F1-F4, "PVC" as a door type, 7 rows) and
+// T2232 KITCHEN HOOD SCHEDULE (KEH1, 2 rows); both readers agreed on the feeders.
+import { classifyLines } from "../assets/client-ocr-src/schedule-text-layer.mjs";
+for (const [name, fx] of [["X2410 FEEDER SCHEDULE", "g051-x2410-feeder-lines.json"], ["T2232 KITCHEN HOOD SCHEDULE", "g051-t2232-hood-lines.json"]]) {
+  test(name + " is not a door schedule: no door rows, and the page finder passes it by", async () => {
+    const f = fixture(fx);
+    const r = await readDoorScheduleFromLines(f.lines, { width: f.width, height: f.height }, {});
+    assert.equal(r ? r.doors.length : 0, 0);
+    const c = await classifyLines(f.lines, { width: f.width, height: f.height });
+    assert.equal(c.door_schedule, null);
+  });
+}

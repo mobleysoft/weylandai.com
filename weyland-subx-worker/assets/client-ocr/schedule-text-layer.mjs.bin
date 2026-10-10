@@ -647,7 +647,9 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
   const F = new Set(fields.filter(Boolean));
   const titleUp = normLabel(title || "");
   const titleSaysDoor = /\b(DOOR|OPENING)\b/.test(titleUp) && !/\b(HARDWARE|STOREFRONT|WINDOW|FINISH)\b/.test(titleUp);
-  const titleSaysOther = !!title && !titleSaysDoor && /\b(STOREFRONT|WINDOW|FINISH|ROOM|HARDWARE|FRAME|LOUVER|SIGNAGE)\b/.test(titleUp);
+  // g051 (C5): electrical and mechanical equipment schedules (FEEDER SCHEDULE, PANEL SCHEDULE, KITCHEN
+  // HOOD SCHEDULE, MOTOR SCHEDULE ...) carry marks, sizes and types too.
+  const titleSaysOther = !!title && !titleSaysDoor && /\b(STOREFRONT|WINDOW|FINISH|ROOM|HARDWARE|FRAME|LOUVER|SIGNAGE|FEEDERS?|PANELS?|PANELBOARDS?|HOODS?|MOTORS?|EQUIPMENT|FIXTURES?|LIGHTING|LUMINAIRES?|PLUMBING|FANS?|DIFFUSERS?|GRILLES?|BREAKERS?|TRANSFORMERS?|CONDUITS?)\b/.test(titleUp);
   const headerSaysDoor = F.has("mark") && (F.has("size") || F.has("width") || F.has("height")) && (F.has("hardware_group") || F.has("fire_rating") || F.has("door_type"));
   const is_door_schedule = headerSaysDoor ? !titleSaysOther || titleSaysDoor : titleSaysDoor && F.has("mark");
 
