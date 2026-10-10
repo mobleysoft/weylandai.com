@@ -430,6 +430,8 @@ export function describeAccess(row, { purchases = [], subscriptions = [], heldCo
       currency: offer.currency || null,
       // g052: bought on account (an invoice, POST /api/billing/on-account) rather than paid by card.
       on_account: /^in_/.test(String(offer.checkout_session_id || "")),
+      // g056: when an on-account invoice was paid (the payment webhook's invoice.paid).
+      paid_at: offer.paid_at || null,
       credit: {
         total: Number(offer.credits_total) || 0,
         used: Number(offer.credits_used) || 0,

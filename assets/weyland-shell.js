@@ -1112,7 +1112,9 @@
     if (first && typeof first === "object") {
       var credit = first.credit || {};
       // Bought on account (g052): invoiced, not paid; the invoice below says whether it is due or paid.
-      rows.push(["First submittal", [(first.on_account ? "On account " : "Paid ") + shortDate(first.purchased_at || first.granted_at), money(first.amount_total, first.currency) + (first.on_account ? " invoiced" : ""),
+      // Bought on account and not paid yet: invoiced; once the invoice is paid (g056): Paid, on that day.
+      var owing = first.on_account && !first.paid_at;
+      rows.push(["First submittal", [(owing ? "On account " : "Paid ") + shortDate(owing ? (first.purchased_at || first.granted_at) : (first.paid_at || first.purchased_at || first.granted_at)), money(first.amount_total, first.currency) + (owing ? " invoiced" : ""),
         typeof credit.remaining === "number" ? credit.remaining + " of " + (credit.total || 1) + " packet" + ((credit.total || 1) === 1 ? "" : "s") + " left to build" : ""].filter(Boolean).join(" · ")]);
     }
     var live = billingLive();

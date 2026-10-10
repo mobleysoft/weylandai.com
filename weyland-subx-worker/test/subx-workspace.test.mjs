@@ -264,3 +264,32 @@ test("g052: a package built on the first submittal uses its one packet credit, a
   assert.equal(await useOfferCredit(env, "user-b"), false, "no offer, nothing used");
   assert.equal(await useOfferCredit({ DB: { prepare() { throw new Error("down"); } } }, "user-a"), false, "never throws");
 });
+
+// g056 (docs/review-2026-10-10-on-account.md, the credit finding): the $100 first submittal is every
+// product for 30 days; the packet credit is the card's count, not a gate (the Mac's reading (a)).
+import { outputAccess } from "../../weyland-shared/output-access.js";
+
+test("rebuilding the same package does not consume a second credit", async () => {
+  const db = new DatabaseSync(":memory:");
+  db.exec("CREATE TABLE weyland_purchases (checkout_session_id TEXT PRIMARY KEY, kind TEXT, status TEXT, user_id TEXT, granted_at TEXT, credits_total INTEGER, credits_used INTEGER, updated_at TEXT)");
+  db.prepare("INSERT INTO weyland_purchases VALUES ('in_1','offer','granted','user-a','2026-10-10T03:44:51Z',1,0,NULL)").run();
+  const env = { DB: d1(db) };
+  assert.equal(await useOfferCredit(env, "user-a"), true, "the first build uses the credit");
+  for (let i = 0; i < 3; i++) assert.equal(await useOfferCredit(env, "user-a"), false, "a rebuild uses none");
+  assert.equal(db.prepare("SELECT credits_used AS n FROM weyland_purchases").get().n, 1);
+});
+
+test("building a package past the credit inside the 30 days is still the offer (every product until day 30), not a denial", async () => {
+  const db = new DatabaseSync(":memory:");
+  db.exec(`
+    CREATE TABLE users (id TEXT PRIMARY KEY, subscription_tier TEXT, subscription_status TEXT, trial_ends_at TEXT);
+    CREATE TABLE weyland_purchases (checkout_session_id TEXT PRIMARY KEY, kind TEXT, product_id TEXT, status TEXT, user_id TEXT, credits_total INTEGER, credits_used INTEGER);
+    CREATE TABLE weyland_subscriptions (id TEXT, user_id TEXT, status TEXT, tiers TEXT, suite INTEGER);
+  `);
+  db.prepare("INSERT INTO users VALUES ('user-a','starter','trial',?)").run(new Date(Date.now() + 20 * 864e5).toISOString());
+  db.prepare("INSERT INTO weyland_purchases VALUES ('in_1','offer','weyland-first-submittal','granted','user-a',1,1)").run();
+  const inside = await outputAccess({ DB: d1(db) }, "user-a", "subx");
+  assert.deepEqual([inside.paid, inside.via], [true, "offer"], "credit used up, window open: still paid output");
+  db.prepare("UPDATE users SET trial_ends_at = ?").run(new Date(Date.now() - 864e5).toISOString());
+  assert.equal((await outputAccess({ DB: d1(db) }, "user-a", "subx")).paid, false, "day 30 ends it, as sold");
+});

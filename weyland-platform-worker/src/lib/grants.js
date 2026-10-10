@@ -107,6 +107,9 @@ export async function grantPurchase(env, purchase, userId, { nowMs = Date.now(),
 
 // ── claims ──
 
+/** A first submittal bought on account: keyed by its Stripe invoice id (routes/on-account.js). */
+export const isOnAccountPurchase = (p) => /^in_/.test(String((p && p.checkout_session_id) || ""));
+
 export const CLAIM_COOKIE = "weyland_claim";
 const CLAIM_ID = /^cs_(live|test)_[A-Za-z0-9]{10,200}$/;
 const MAX_CLAIM_IDS = 4;
@@ -139,9 +142,13 @@ export async function claimHeldPurchases(env, account, { sessionIds = [], emailV
     const held = await heldPurchasesForEmail(env.DB, account.email);
     const ids = new Set(sessionIds || []);
     for (const p of held) {
-      if (!(emailVerified || ids.has(p.checkout_session_id))) continue;
+      // g056: a purchase the operator made on account (an invoice, routes/on-account.js) names its
+      // customer by address: the account with exactly that address takes it at any sign-in. A card
+      // purchase made signed out may carry someone else's address, so it still needs the proof.
+      const onAccount = isOnAccountPurchase(p);
+      if (!(emailVerified || onAccount || ids.has(p.checkout_session_id))) continue;
       try {
-        const g = await grantPurchase(env, p, account.id, { nowMs, claimMethod: emailVerified ? "email_verified" : "same_browser" });
+        const g = await grantPurchase(env, p, account.id, { nowMs, claimMethod: emailVerified ? "email_verified" : onAccount ? "on_account_address" : "same_browser" });
         out.claimed.push({ session_id: p.checkout_session_id, product_id: p.product_id, kind: p.kind, access_ends_at: g.accessEndsAt || null });
         if (env.CACHE) {
           await env.CACHE.put(`checkout_status:${p.checkout_session_id}`, JSON.stringify({
