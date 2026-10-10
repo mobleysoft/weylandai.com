@@ -228,3 +228,27 @@ test("F3: saved OCR rows expose measured confidence, partial status and qualifie
   assert.match(data.takeoff.qualifier, /Partial read/);
   assert.deepEqual(data.takeoff.missing_expected_marks, [{ page: 1, mark: "999" }]);
 });
+
+test("g052: a size corrected to a pair (PR ...) is saved as a pair, and back to one door without it", async () => {
+  const { call, db } = setup();
+  // The columns a correction writes (production's table has them).
+  for (const c of ["validated INTEGER", "validated_by TEXT", "validated_at TEXT", "updated_at TEXT"]) db.exec("ALTER TABLE door_schedule_entries ADD COLUMN " + c);
+  db.exec("UPDATE door_schedule_entries SET id = 'door-' || mark WHERE session_id = 'sess-a'");
+  const r = await call("PATCH", "/api/hardware-schedule/session/sess-a/doors/door-144B", "a", { size: "PR 3' - 0\" x 7' - 0\"" });
+  assert.equal(r.status, 200);
+  assert.equal(r.data.changed.pair, true);
+  const row = db.prepare("SELECT width_inches, field_confidence_json, corrections_json FROM door_schedule_entries WHERE id = 'door-144B'").get();
+  assert.equal(row.width_inches, 36);
+  assert.equal(JSON.parse(row.field_confidence_json).pair, true);
+  assert.deepEqual(JSON.parse(row.field_confidence_json).source, { page: 1, table_row: 11, rotation: 90 }, "the source citation is kept");
+  assert.equal(JSON.parse(row.corrections_json).before.pair, null);
+  const doors = await call("GET", "/api/hardware-schedule/session/sess-a/doors", "a");
+  const d = doors.data.doors.find((x) => x.mark === "144B");
+  assert.equal(d.pair, true);
+  assert.equal(d.corrected, true);
+  const back = await call("PATCH", "/api/hardware-schedule/session/sess-a/doors/door-144B", "a", { size: "3' - 0\" x 7' - 0\"" });
+  assert.equal(back.data.changed.pair, false);
+  assert.equal(JSON.parse(db.prepare("SELECT field_confidence_json FROM door_schedule_entries WHERE id = 'door-144B'").get().field_confidence_json).pair, false);
+  const other = await call("PATCH", "/api/hardware-schedule/session/sess-a/doors/door-131", "a", { notes: "checked" });
+  assert.equal(other.data.changed.pair, undefined, "a correction without a size leaves the pair alone");
+});

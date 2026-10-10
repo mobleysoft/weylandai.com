@@ -103,6 +103,8 @@ test("on account: a send_invoice invoice for the offer's price, no card; the pur
   assert.ok(!net.stripe.some((c) => /checkout|payment_intents|charges/.test(c.path)), "no checkout, payment intent or charge");
 
   assert.equal(await gate(env, userId, "meetingx"), 402, "held: nothing granted before the email is proven");
+  const named = await env.DB.prepare("SELECT name, company FROM users WHERE id = ?").bind(userId).first();
+  assert.deepEqual({ ...named }, { name: "User Sim", company: "Mobley Contracting" }, "a name of its own is kept; the company is set");
   // A second order for the same email answers with the one waiting (no second invoice).
   const again = await ask(env, order(email));
   assert.equal(again.status, 200);
@@ -136,6 +138,9 @@ test("ordered before the account exists: the held offer waits; the account's fir
   assert.equal(await userByEmail(env, email), null);
   assert.equal(net.stripe.find((c) => c.path === "/invoices").form.get("metadata[user_id]"), "");
   const userId = await insertFreeAccount(env, email);
+  await env.DB.prepare("UPDATE users SET name = ? WHERE id = ?").bind(email.split("@")[0], userId).run();
+  assert.equal((await ask(env, order(email))).status, 200, "the waiting order is answered again");
+  assert.deepEqual({ ...(await env.DB.prepare("SELECT name, company FROM users WHERE id = ?").bind(userId).first()) }, { name: "Mobley Contracting", company: "Mobley Contracting" }, "an account named after its address takes the customer's name");
   net.verify.set("tok_new_oa", { id: "af_new_oa", email, name: "Mobley Contracting", email_verified: true, email_verified_at: Date.now() });
   const signin = await (await post(env, "/api/auth/session", { token: "tok_new_oa" })).json();
   assert.deepEqual(signin.claimed.map((c) => c.session_id), ["in_onacct_1"]);

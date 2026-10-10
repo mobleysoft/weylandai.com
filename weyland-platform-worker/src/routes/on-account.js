@@ -14,7 +14,8 @@
 //      email. It is the same held purchase a card checkout leaves for an existing account's email:
 //      the account takes it when it signs in with that email proven (an emailed code; lib/grants.js
 //      claimHeldPurchases), which opens the 30 days and the first-submittal credit as a paid offer
-//      does. Paying the invoice later changes nothing here (the payment webhook ignores invoices
+//      does. An existing account without a name of its own is named customer_name (and its company
+//      set) - the heading of its account card. Paying the invoice later changes nothing here (the payment webhook ignores invoices
 //      without a subscription); the account view lists it with its PDF (GET /api/billing/invoices).
 //   201 { purchase, invoice: { id, number, status, amount_due, currency, due_date, hosted_invoice_url } }
 //   200 { purchase, existing: true } when the email already has an on-account offer waiting
@@ -56,6 +57,14 @@ const publicPurchase = (p) => p && {
   terms_accepted_at: p.terms_accepted_at, claim_method: p.claim_method
 };
 
+// The account carries the customer's name (its card's heading) when it has none of its own yet - an
+// account made from a sign-in code is named after its address - and the company when unset.
+async function labelAccount(env, account, email, name) {
+  if (!account) return;
+  await env.DB.prepare("UPDATE users SET name = CASE WHEN COALESCE(name, '') IN ('', ?) THEN ? ELSE name END, company = COALESCE(NULLIF(company, ''), ?), updated_at = ? WHERE id = ?")
+    .bind(email.split("@")[0], name, name, new Date().toISOString(), account.id).run();
+}
+
 export function registerOnAccountRoutes(router, { WEYLAND_PRODUCTS }) {
   router.post("/api/billing/on-account", async (request, env, ctx) => {
     const auth = await operatorAuthorized(env, request);
@@ -73,13 +82,13 @@ export function registerOnAccountRoutes(router, { WEYLAND_PRODUCTS }) {
     if (!(days >= 1 && days <= 60)) return jsonResponse3({ detail: { code: "bad_days_until_due" } }, 400);
     if (!env.STRIPE_SECRET_KEY) return jsonResponse3({ detail: { code: "not_configured" } }, 503);
 
-    const account = await env.DB.prepare("SELECT id, email, stripe_customer_id FROM users WHERE lower(email) = ? ORDER BY updated_at DESC LIMIT 1").bind(email).first();
+    const account = await env.DB.prepare("SELECT id, email, name, company, stripe_customer_id FROM users WHERE lower(email) = ? ORDER BY updated_at DESC LIMIT 1").bind(email).first();
     if (account) {
       const bought = (await purchasesForUser(env.DB, account.id)).some((p) => p.kind === PURCHASE_KINDS.OFFER && p.status === "granted");
       if (bought) return jsonResponse3({ detail: { code: "offer_used", message: "This account already has its first submittal." } }, 409);
     }
     const waiting = (await heldPurchasesForEmail(env.DB, email)).find((p) => p.kind === PURCHASE_KINDS.OFFER && /^in_/.test(p.checkout_session_id));
-    if (waiting) return jsonResponse3({ purchase: publicPurchase(waiting), existing: true }, 200);
+    if (waiting) { await labelAccount(env, account, email, name); return jsonResponse3({ purchase: publicPurchase(waiting), existing: true }, 200); }
 
     try {
       const catalog = await getCatalog(env, ctx);
@@ -102,6 +111,7 @@ export function registerOnAccountRoutes(router, { WEYLAND_PRODUCTS }) {
         user_id: null, email, customer_id: customer, amount_total: final.amount_due ?? price.unit_amount, currency: final.currency || price.currency,
         quantity: 1, terms_url: legal.terms_url, terms_accepted_at: new Date(acceptedAt).toISOString(), purchased_at: new Date().toISOString()
       });
+      await labelAccount(env, account, email, name);
       console.log(`[on-account] ${draft.id} ${body.product_id} held for ${email} (${name}), due in ${days} days`);
       return jsonResponse3({
         purchase: publicPurchase(row),

@@ -152,7 +152,7 @@
     <div id="app" class="hide">
       <div class="card" id="upload-card">
         <h2>Upload a schedule</h2>
-        <p class="sub">PDF up to 30 MB: the whole bid set is fine. No account needed for the first read. The door schedule and the hardware groups are found by their text and read when you choose UPLOAD AND READ; a page with no text (a scan) is read as an image. Pick other pages afterwards.</p>
+        <p class="sub">PDF up to 30 MB: a whole bid set of that size is fine; a larger one, upload just its schedule pages. No account needed for the first read. The door schedule and the hardware groups are found by their text and read when you choose UPLOAD AND READ; a page with no text (a scan) is read as an image. Pick other pages afterwards.</p>
         <form id="upload-form">
           <div class="grid2">
             <div>
@@ -2116,7 +2116,7 @@ global.SovereignPdfRender = {
       }
       function unread(text, why) { return '<span class="unread" title="' + esc(why) + '">' + esc(text) + "</span>"; }
       function sizeCell(d) {
-        if (d.width_inches != null && d.height_inches != null) return esc(ftInText(d.width_inches) + " x " + ftInText(d.height_inches));
+        if (d.width_inches != null && d.height_inches != null) return esc((d.pair ? "PR " : "") + ftInText(d.width_inches) + " x " + ftInText(d.height_inches));
         return unread(d.width || "not read", "Not read with certainty: check it on the sheet. Not counted under By size.");
       }
       function thicknessCell(d) {

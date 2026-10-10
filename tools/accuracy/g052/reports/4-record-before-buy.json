@@ -1,0 +1,52 @@
+{
+  "journey": "first-customer-record",
+  "title": "First customer on credit: record",
+  "base": "https://weylandai.com",
+  "started_at": "2026-10-10T03:25:09.507Z",
+  "finished_at": "2026-10-10T03:25:15.071Z",
+  "passed": 4,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "the firm's browser is signed in",
+      "ok": true,
+      "detail": "{\"auth\":\"signed-in\",\"user\":\"jmobleyworks+mobleycontracting@gmail.com\",\"chip\":\"jmobleyworks+mobleycontracting\",\"view\":null,\"overlayOpen\":false,\"overlayTitle\":\"\",\"overlayText\":\"\",\"error\":\"\",\"path\":\"/?journey=first-customer-record-mv1tzu2rb828b0\"}"
+    },
+    {
+      "name": "the account card is the customer record: the firm's address",
+      "ok": true,
+      "detail": "jmobleyworks+mobleycontracting Signed in as jmobleyworks+mobleycontracting@gmail.com Plan Free trial: every product Trial ends Saturday, October 24, 2026 (14 days left) Your free trial includes every product until Saturday, October 24, 2026. Nothing is charged; choose a plan when you are ready. CHOOSE A PLAN YOUR PLAN No monthly plan. Nothing renews, and nothing is charged unless you choose a plan"
+    },
+    {
+      "name": "the firm's projects are listed in SubX",
+      "ok": true,
+      "detail": "Project Type Pages Found Uploaded (UTC) T2507 (second project) 192a16af8f31ae0c.pdf door schedule 30 49 doors 2026-10-10 03:23 R2502 Missouri Hope (first project) R2502-door-schedule-pages.pdf door schedule 4 211 doors 2026-10-10 03:16 The WeylandAI Building DEMO weyland_building_schedule.pdf door s"
+    },
+    {
+      "name": "stayed in place: same document, still on weylandai.com",
+      "ok": true,
+      "detail": "{\"sameDocument\":true,\"onSite\":true,\"url\":\"https://weylandai.com/?journey=first-customer-record-mv1tzu2rb828b0\"}"
+    }
+  ],
+  "notes": {
+    "browser": "software WebGL (ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)), not the Mac's GPU: timings of the 3D homepage are slower than a customer's",
+    "dossier": "DOOR AND HARDWARE SUBMITTALS Door schedule in. Submittal packet out. $100. Upload your door schedule and hardware section (08 71 00): every door read and traced to its row, free; the packet is $100 for your first submittal, no automatic charge. UPLOAD YOUR SCHEDULE PDF SEE A SAMPLE PACKET SUBX YOUR SCHEDULE, READ AND TRACED · A SAMPLE BELOW SubX Every door read and traced to its row. Then the packet. Reads ruled schedule tables on the page you name; a size it cannot read with certainty is flagged, not guessed. Door rows read from your schedule, each traced to its page and row, matched to the catalogue where it covers them, and built into the submittal PDF. On a real bid set (Rockford, sheet A2.2) it read 65 of 65 doors and traced each to its row. Upload the hardware section (08 71 00) as well: the packet needs it for the hardware groups. A scanned full-size schedule sheet does not read yet. See what the packet contains. The Rockford sample has a cover, contents, all 65 door rows and the uploaded sheet. It is a schedule-only sample: hardware groups and cut sheets need Section 08 71 00. SEE A SAMPLE PACKET PASTE HARDWARE LINES · NO ACCOUNT OR PASTE HARDWARE LINES, NO ACCOUNT NEEDED M",
+    "account_card": "jmobleyworks+mobleycontracting Signed in as jmobleyworks+mobleycontracting@gmail.com Plan Free trial: every product Trial ends Saturday, October 24, 2026 (14 days left) Your free trial includes every product until Saturday, October 24, 2026. Nothing is charged; choose a plan when you are ready. CHOOSE A PLAN YOUR PLAN No monthly plan. Nothing renews, and nothing is charged unless you choose a plan",
+    "schedules": "Project Type Pages Found Uploaded (UTC) T2507 (second project) 192a16af8f31ae0c.pdf door schedule 30 49 doors 2026-10-10 03:23 R2502 Missouri Hope (first project) R2502-door-schedule-pages.pdf door schedule 4 211 doors 2026-10-10 03:16 The WeylandAI Building DEMO weyland_building_schedule.pdf door s"
+  },
+  "browser": {
+    "launch_args": [
+      "--use-angle=metal"
+    ],
+    "webgl": {
+      "webgl": true,
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "vendor": "Google Inc. (Google)"
+    }
+  },
+  "api_errors": [],
+  "cleanup": {
+    "kept": "the customer record (account, project, package) is kept on purpose"
+  },
+  "side_effects": "no AuthFor identity created"
+}

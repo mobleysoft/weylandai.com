@@ -374,6 +374,7 @@ export function registerSubxWorkspaceRoutes(router, { authenticate, requireActiv
     const body = await request2.json().catch(() => ({}));
     const clean = (v, max) => (v == null ? null : String(v).replace(/\s+/g, " ").trim().slice(0, max) || null);
     const upd = {};
+    let pairFix = null;
     if ("mark" in body) { const m = clean(body.mark, 24); if (!m) return jsonResponse3({ success: false, error: "A door needs a mark." }, 400); upd.mark = m; }
     if ("hardware_group" in body) upd.hardware_group = clean(body.hardware_group, 24);
     if ("fire_rating" in body) upd.fire_rating = clean(body.fire_rating, 24);
@@ -393,17 +394,28 @@ export function registerSubxWorkspaceRoutes(router, { authenticate, requireActiv
       upd.width_inches = s.width_inches ?? null;
       upd.height_inches = s.height_inches ?? null;
       if ((sizeText || s.width || s.height) && (upd.width_inches == null || upd.height_inches == null)) return jsonResponse3({ success: false, error: "The size did not read as a door size. Write it as 3'-0\" x 7'-0\" (or PR 6'-0\" x 7'-0\" for a pair)." }, 400);
+      // A pair written in the size ("PR 3'-4\" x 6'-8\"", the way the form shows one) is a pair; a size
+      // without it is a single door (g052: the pair the reader missed on a "WD-2 (PR)" row stays corrected).
+      if (sizeText) pairFix = !!s.pair;
     }
     if ("thickness" in body) {
       upd.thickness = clean(body.thickness, 16);
       const t = upd.thickness ? readDimension(upd.thickness) : null;
       upd.thickness_inches = t && t.inches >= 0.75 && t.inches <= 3 ? t.inches : null;
     }
+    let fcPair = null;
+    if (pairFix !== null) {
+      let fc = {};
+      try { fc = row.field_confidence_json ? JSON.parse(row.field_confidence_json) || {} : {}; } catch (_) { fc = {}; }
+      fcPair = fc.pair ?? null;
+      if (fcPair !== pairFix) upd.field_confidence_json = JSON.stringify({ ...fc, pair: pairFix });
+    }
     const keys = Object.keys(upd);
     if (!keys.length) return jsonResponse3({ success: false, error: "Nothing to change." }, 400);
     let before = {};
     try { before = row.corrections_json ? JSON.parse(row.corrections_json).before || {} : {}; } catch (_) { before = {}; }
-    for (const k of keys) if (!(k in before)) before[k] = row[k] ?? null;
+    for (const k of keys) if (k !== "field_confidence_json" && !(k in before)) before[k] = row[k] ?? null;
+    if ("field_confidence_json" in upd && !("pair" in before)) before.pair = fcPair;
     const corrections = JSON.stringify({ before, by: o.user.email || o.user.userId, at: new Date().toISOString() });
     try {
       await env2.DB.prepare("UPDATE door_schedule_entries SET " + keys.map((k) => k + " = ?").join(", ") + ", corrections_json = ?, validation_status = 'corrected', validated = 1, validated_by = ?, validated_at = datetime('now'), updated_at = datetime('now') WHERE id = ?")
@@ -412,7 +424,9 @@ export function registerSubxWorkspaceRoutes(router, { authenticate, requireActiv
       if (/UNIQUE/i.test(e.message)) return jsonResponse3({ success: false, error: "Another row of this schedule already has that mark." }, 409);
       return jsonResponse3({ success: false, error: "The row could not be saved: " + e.message }, 500);
     }
-    return jsonResponse3({ success: true, id: row.id, changed: upd });
+    const changed = { ...upd };
+    if ("field_confidence_json" in changed) { delete changed.field_confidence_json; changed.pair = pairFix; }
+    return jsonResponse3({ success: true, id: row.id, changed });
   });
 
   // A reviewer's correction to one hardware item.
