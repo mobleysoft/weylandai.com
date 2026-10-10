@@ -1,6 +1,6 @@
 {
-  "reviewed_at": "2026-10-09T23:56:14.870925+00:00",
-  "release_state": "reviewed_local_gates_passed_pending_production",
+  "reviewed_at": "2026-10-10T00:01:22.438531+00:00",
+  "release_state": "merged_deployed_production_acceptance_passed",
   "problem": {
     "production_jobs_table_absent": true,
     "legacy_insert_error_previously_swallowed": true,
@@ -47,9 +47,61 @@
     "independent_read_only_review": "passed14 focused route tests; metadata recommendation incorporated"
   },
   "production": {
-    "migration_applied": false,
-    "deployed": false,
-    "acceptance_completed": false
+    "migration_applied": true,
+    "deployed": true,
+    "acceptance_completed": true,
+    "migration": {
+      "applied_at": "2026-10-09T23:58:31.482627+00:00",
+      "database_id": "5729f77e-d7e3-4577-ab43-3c064fa90ca5",
+      "migration_applied_twice": true,
+      "columns_verified": true,
+      "index_verified": true,
+      "existing_hardware_counts_unchanged_during_final_replay": false,
+      "existing_counts_changed_since_original_preflight": true,
+      "migration_has_no_existing_table_data_writes": true
+    },
+    "deployment": {
+      "main": "7f1c17598e063533bab334d99895c961a82a98dd",
+      "pull_request": "https://github.com/mobleysoft/weylandai.com/pull/109",
+      "workers": {
+        "weyland-subx-worker": {
+          "actions_run": "38006949233",
+          "conclusion": "success",
+          "version_id": "d0dc5b75-25f7-4840-8a80-860d8dd1ed5b"
+        },
+        "weylandai-com-worker": {
+          "actions_run": "38006951122",
+          "conclusion": "success",
+          "version_id": "bcf0fd00-3693-46ec-9294-68d506edabe2"
+        }
+      }
+    },
+    "public_assets": [
+      {
+        "asset": "schedule-grid-extraction-client.mjs",
+        "status": 200,
+        "sha256": "8359a8d7b0fe2f5283bc4a10855e30ebb611837f037fc18c497f79c85805a937",
+        "matches_reviewed": true
+      },
+      {
+        "asset": "schedule-text-layer.mjs",
+        "status": 200,
+        "sha256": "a9577c335a0fc07d7452ca8b20ad1ed2ed11f0fd5facc3d39cb8b79f6cc4a351",
+        "matches_reviewed": true
+      }
+    ],
+    "acceptance_receipt": "docs/legacy-hardware-production-2026-10-09.json",
+    "acceptance": {
+      "positive_http": 201,
+      "exact_groups": 1,
+      "exact_components": 7,
+      "source_page": 17,
+      "job_status": "pending_review",
+      "actual_r2_and_kv_bytes_match": true,
+      "notes_http": 422,
+      "notes_no_new_storage": true,
+      "owned_cleanup_verified_zero": true
+    }
   },
   "limits": [
     "D1, KV and R2 writes are not atomic. Failed partial legacy jobs can retain rows and objects; automatic retries are disabled.",
