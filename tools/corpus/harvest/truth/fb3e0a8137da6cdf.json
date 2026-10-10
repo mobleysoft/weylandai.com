@@ -1,11 +1,11 @@
 {
  "sha16": "fb3e0a8137da6cdf",
  "sha256": "fb3e0a8137da6cdf789eb29c85ffdd8343ab6d07f7d6d47a960359111529be82",
- "file": "occ-a-801-pg4.pdf",
+ "file": "OCCDoorSchedulePg4.pdf",
  "bytes": 1148367,
- "family": "unknown",
- "source": "files",
- "label": null,
+ "family": "Glendale CCD (OCC)",
+ "source": "fixture",
+ "label": "OCC A-801 door schedule (private fixture)",
  "source_url": null,
  "page_count": 1,
  "text_layer": {
@@ -13,18 +13,20 @@
   "pages": 1
  },
  "ocr": {
-  "dpi": 600,
+  "requested_dpi": 600,
+  "pipeline": "production ocrRasterPageLines; Poppler renderer; shipped Tesseract",
   "pages": [
    {
     "page": 1,
-    "words": 2325,
+    "dpi": 600,
+    "words": 2225,
     "rotation": 90,
     "skew_deg": 0,
     "rules": {
      "h": 162,
      "v": 430
     },
-    "ms": 69247
+    "ms": 13498
    }
   ]
  },
@@ -39,7 +41,7 @@
    "doors": 0,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production OCR + schedule line reader (Poppler renderer)"
   },
   "b": {
    "doors": 0,
@@ -679,9 +681,9 @@
   }
  ],
  "tier": "audited",
- "note": "no text layer: read by OCR at 600 dpi (truth/ocr.mjs), the same words given to both readers",
+ "note": "no text layer: production OCR preprocessing, cell recognition and line reader; Poppler rendering (browser rendering is a separate check). Actual DPI is recorded per page; the same words are given to both readers",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 69923,
- "generated_at": "2026-10-09T09:39:03.713Z"
+ "ms": 13717,
+ "generated_at": "2026-10-10T04:28:10.580Z"
 }

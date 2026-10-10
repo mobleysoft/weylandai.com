@@ -1,0 +1,505 @@
+{
+ "stamp": "2026-10-10-04-29",
+ "head": "e293d1a",
+ "records": 616,
+ "queue": 3569,
+ "tiers": {
+  "exact": {
+   "pdfs": 2,
+   "rows_agreed": 161,
+   "rows_total": 200,
+   "queue": 54,
+   "families": {
+    "bidset (synthetic)": {
+     "pdfs": 1,
+     "agreed": 102,
+     "total": 102,
+     "fa": 570,
+     "ft": 570,
+     "orc": {
+      "marks_on_plan": {
+       "pass": 48,
+       "total": 48
+      },
+      "sets_exist": {
+       "pass": 10,
+       "total": 10
+      },
+      "set_door_lists": {
+       "pass": 10,
+       "total": 10
+      },
+      "types_in_legend": {
+       "pass": 3,
+       "total": 3
+      },
+      "sizes_and_marks": {
+       "pass": 48,
+       "total": 48
+      }
+     },
+     "queue": 0
+    },
+    "unknown": {
+     "pdfs": 1,
+     "agreed": 59,
+     "total": 98,
+     "fa": 491,
+     "ft": 545,
+     "orc": {
+      "sets_exist": {
+       "pass": 10,
+       "total": 11
+      },
+      "set_door_lists": {
+       "pass": 8,
+       "total": 10
+      },
+      "sizes_and_marks": {
+       "pass": 43,
+       "total": 48
+      }
+     },
+     "queue": 54
+    }
+   }
+  },
+  "audited": {
+   "pdfs": 4,
+   "rows_agreed": 312,
+   "rows_total": 320,
+   "queue": 10,
+   "families": {
+    "Berryessa": {
+     "pdfs": 1,
+     "agreed": 40,
+     "total": 41,
+     "fa": 246,
+     "ft": 246,
+     "orc": {
+      "marks_on_plan": {
+       "pass": 24,
+       "total": 24
+      },
+      "sets_exist": {
+       "pass": 2,
+       "total": 2
+      },
+      "sizes_and_marks": {
+       "pass": 24,
+       "total": 24
+      }
+     },
+     "queue": 1
+    },
+    "Christina": {
+     "pdfs": 1,
+     "agreed": 99,
+     "total": 104,
+     "fa": 459,
+     "ft": 462,
+     "orc": {},
+     "queue": 6
+    },
+    "Glendale CCD (OCC)": {
+     "pdfs": 1,
+     "agreed": 0,
+     "total": 0,
+     "fa": 0,
+     "ft": 0,
+     "orc": {},
+     "queue": 0
+    },
+    "Rockford": {
+     "pdfs": 1,
+     "agreed": 173,
+     "total": 175,
+     "fa": 860,
+     "ft": 863,
+     "orc": {
+      "marks_on_plan": {
+       "pass": 64,
+       "total": 65
+      },
+      "sets_exist": {
+       "pass": 14,
+       "total": 14
+      },
+      "set_door_lists": {
+       "pass": 14,
+       "total": 14
+      },
+      "types_in_legend": {
+       "pass": 3,
+       "total": 4
+      },
+      "sizes_and_marks": {
+       "pass": 64,
+       "total": 65
+      }
+     },
+     "queue": 3
+    }
+   }
+  },
+  "agreed": {
+   "pdfs": 52,
+   "rows_agreed": 2452,
+   "rows_total": 3599,
+   "queue": 2349,
+   "families": {
+    "california_dgs_obas": {
+     "pdfs": 1,
+     "agreed": 81,
+     "total": 97,
+     "fa": 248,
+     "ft": 255,
+     "orc": {},
+     "queue": 19
+    },
+    "delaware_bidcondocs": {
+     "pdfs": 6,
+     "agreed": 236,
+     "total": 766,
+     "fa": 1919,
+     "ft": 3131,
+     "orc": {},
+     "queue": 1328
+    },
+    "Fayette County (GA)": {
+     "pdfs": 1,
+     "agreed": 31,
+     "total": 54,
+     "fa": 91,
+     "ft": 95,
+     "orc": {
+      "marks_on_plan": {
+       "pass": 25,
+       "total": 35
+      },
+      "sizes_and_marks": {
+       "pass": 33,
+       "total": 35
+      }
+     },
+     "queue": 24
+    },
+    "missouri_oa_fmdc": {
+     "pdfs": 36,
+     "agreed": 1690,
+     "total": 2118,
+     "fa": 8631,
+     "ft": 9240,
+     "orc": {
+      "sizes_and_marks": {
+       "pass": 786,
+       "total": 846
+      },
+      "marks_on_plan": {
+       "pass": 412,
+       "total": 541
+      },
+      "types_in_legend": {
+       "pass": 23,
+       "total": 41
+      },
+      "sets_exist": {
+       "pass": 1,
+       "total": 4
+      }
+     },
+     "queue": 740
+    },
+    "Noble County Highway Department": {
+     "pdfs": 1,
+     "agreed": 33,
+     "total": 37,
+     "fa": 161,
+     "ft": 161,
+     "orc": {},
+     "queue": 6
+    },
+    "ohio_ofcc": {
+     "pdfs": 2,
+     "agreed": 9,
+     "total": 133,
+     "fa": 181,
+     "ft": 320,
+     "orc": {
+      "types_in_legend": {
+       "pass": 5,
+       "total": 6
+      },
+      "sizes_and_marks": {
+       "pass": 19,
+       "total": 19
+      }
+     },
+     "queue": 204
+    },
+    "Orchard View Public Schools": {
+     "pdfs": 1,
+     "agreed": 71,
+     "total": 72,
+     "fa": 332,
+     "ft": 334,
+     "orc": {},
+     "queue": 3
+    },
+    "Rockford": {
+     "pdfs": 1,
+     "agreed": 169,
+     "total": 172,
+     "fa": 840,
+     "ft": 844,
+     "orc": {},
+     "queue": 6
+    },
+    "school_district_sites": {
+     "pdfs": 1,
+     "agreed": 7,
+     "total": 9,
+     "fa": 33,
+     "ft": 33,
+     "orc": {},
+     "queue": 3
+    },
+    "university_bid_pages": {
+     "pdfs": 2,
+     "agreed": 125,
+     "total": 141,
+     "fa": 597,
+     "ft": 598,
+     "orc": {},
+     "queue": 16
+    }
+   }
+  },
+  "oracle-checked": {
+   "pdfs": 16,
+   "rows_agreed": 0,
+   "rows_total": 310,
+   "queue": 333,
+   "families": {
+    "Connor Consolidated School / Maine BGS": {
+     "pdfs": 1,
+     "agreed": 0,
+     "total": 6,
+     "fa": 34,
+     "ft": 42,
+     "orc": {
+      "types_in_legend": {
+       "pass": 2,
+       "total": 2
+      },
+      "sizes_and_marks": {
+       "pass": 6,
+       "total": 6
+      }
+     },
+     "queue": 8
+    },
+    "missouri_oa_fmdc": {
+     "pdfs": 14,
+     "agreed": 0,
+     "total": 303,
+     "fa": 26,
+     "ft": 55,
+     "orc": {
+      "marks_on_plan": {
+       "pass": 135,
+       "total": 146
+      },
+      "sizes_and_marks": {
+       "pass": 129,
+       "total": 194
+      },
+      "sets_exist": {
+       "pass": 2,
+       "total": 4
+      },
+      "types_in_legend": {
+       "pass": 2,
+       "total": 4
+      },
+      "set_door_lists": {
+       "pass": 0,
+       "total": 1
+      }
+     },
+     "queue": 322
+    },
+    "ohio_ofcc": {
+     "pdfs": 1,
+     "agreed": 0,
+     "total": 1,
+     "fa": 2,
+     "ft": 5,
+     "orc": {
+      "sizes_and_marks": {
+       "pass": 1,
+       "total": 1
+      }
+     },
+     "queue": 3
+    }
+   }
+  },
+  "unread": {
+   "pdfs": 542,
+   "rows_agreed": 0,
+   "rows_total": 421,
+   "queue": 823,
+   "families": {
+    "california_dgs_obas": {
+     "pdfs": 5,
+     "agreed": 0,
+     "total": 0,
+     "fa": 0,
+     "ft": 0,
+     "orc": {},
+     "queue": 0
+    },
+    "Christina": {
+     "pdfs": 2,
+     "agreed": 0,
+     "total": 0,
+     "fa": 0,
+     "ft": 0,
+     "orc": {},
+     "queue": 0
+    },
+    "City of Worcester / Worcester Public Schools": {
+     "pdfs": 1,
+     "agreed": 0,
+     "total": 0,
+     "fa": 0,
+     "ft": 0,
+     "orc": {},
+     "queue": 0
+    },
+    "civicplus_documentcenter": {
+     "pdfs": 1,
+     "agreed": 0,
+     "total": 0,
+     "fa": 0,
+     "ft": 0,
+     "orc": {},
+     "queue": 0
+    },
+    "delaware_bidcondocs": {
+     "pdfs": 4,
+     "agreed": 0,
+     "total": 0,
+     "fa": 0,
+     "ft": 0,
+     "orc": {},
+     "queue": 0
+    },
+    "missouri_oa_fmdc": {
+     "pdfs": 512,
+     "agreed": 0,
+     "total": 421,
+     "fa": 457,
+     "ft": 1086,
+     "orc": {},
+     "queue": 823
+    },
+    "Montgomery County": {
+     "pdfs": 1,
+     "agreed": 0,
+     "total": 0,
+     "fa": 0,
+     "ft": 0,
+     "orc": {},
+     "queue": 0
+    },
+    "municipal_wordpress_uploads": {
+     "pdfs": 3,
+     "agreed": 0,
+     "total": 0,
+     "fa": 0,
+     "ft": 0,
+     "orc": {},
+     "queue": 0
+    },
+    "Oakton College District 535": {
+     "pdfs": 1,
+     "agreed": 0,
+     "total": 0,
+     "fa": 0,
+     "ft": 0,
+     "orc": {},
+     "queue": 0
+    },
+    "ohio_ofcc": {
+     "pdfs": 5,
+     "agreed": 0,
+     "total": 0,
+     "fa": 0,
+     "ft": 0,
+     "orc": {},
+     "queue": 0
+    },
+    "Rockford": {
+     "pdfs": 1,
+     "agreed": 0,
+     "total": 0,
+     "fa": 0,
+     "ft": 0,
+     "orc": {},
+     "queue": 0
+    },
+    "Schenectady County": {
+     "pdfs": 1,
+     "agreed": 0,
+     "total": 0,
+     "fa": 0,
+     "ft": 0,
+     "orc": {},
+     "queue": 0
+    },
+    "school_district_sites": {
+     "pdfs": 4,
+     "agreed": 0,
+     "total": 0,
+     "fa": 0,
+     "ft": 0,
+     "orc": {},
+     "queue": 0
+    },
+    "utah_pmn": {
+     "pdfs": 1,
+     "agreed": 0,
+     "total": 0,
+     "fa": 0,
+     "ft": 0,
+     "orc": {},
+     "queue": 0
+    }
+   }
+  }
+ },
+ "calibration": {
+  "exact": {
+   "ar": 1059,
+   "at": 1066,
+   "rowsAgreedFound": 161,
+   "rowsAgreedRight": 158,
+   "dis": 54,
+   "disA": 54,
+   "disB": 0,
+   "disN": 0
+  },
+  "audited": {
+   "ar": 1158,
+   "at": 1161,
+   "rowsAgreedFound": 232,
+   "rowsAgreedRight": 231,
+   "dis": 4,
+   "disA": 1,
+   "disB": 3,
+   "disN": 0
+  }
+ }
+}
