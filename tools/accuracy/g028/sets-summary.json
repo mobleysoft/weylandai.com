@@ -19,10 +19,10 @@
  {
   "sha16": "192a16af8f31ae0c",
   "project": "_T2507-01 Final Bid Plans",
-  "rows": 41,
-  "door_rows": 40,
-  "not_door_rows": 1,
-  "doors_drawn_on_plan": 40,
+  "rows": 49,
+  "door_rows": 49,
+  "not_door_rows": 0,
+  "doors_drawn_on_plan": 49,
   "not_on_plan": [],
   "plan": [
    "A-100 p.7"
