@@ -1,0 +1,330 @@
+{
+  "rooms": [
+    {
+      "name": "SHOWER",
+      "number": "116",
+      "page": 24,
+      "points_per_foot": 36,
+      "sheet": "A-401",
+      "x": 1484,
+      "y": 394
+    },
+    {
+      "name": "ADA SHOWER",
+      "number": "118",
+      "page": 24,
+      "points_per_foot": 36,
+      "sheet": "A-401",
+      "x": 1766,
+      "y": 458
+    },
+    {
+      "name": "RESTROOM",
+      "number": "104",
+      "page": 24,
+      "points_per_foot": 36,
+      "sheet": "A-401",
+      "x": 1400,
+      "y": 1171
+    },
+    {
+      "name": "ADA RESTROOM",
+      "number": "102",
+      "page": 24,
+      "points_per_foot": 36,
+      "sheet": "A-401",
+      "x": 1668,
+      "y": 1171
+    }
+  ],
+  "set": {
+    "label": "missouri_oa_fmdc - _X2531-01%20-%20Final%20Plans.pdf",
+    "page_count": 38,
+    "rows_total": 18,
+    "sha16": "e3b0c815e132d7ab",
+    "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2531-01%20-%20Final%20Plans.pdf",
+    "tier": "agreed"
+  },
+  "sheets": [
+    {
+      "height": 1728,
+      "page": 24,
+      "points_per_foot": [
+        18,
+        36,
+        54
+      ],
+      "scales": [
+        "SCALE 3/4\" = 1'-0\"",
+        "SCALE 1/4\" = 1'-0\"",
+        "SCALE 1/2\" = 1'-0\"",
+        "SCALE 1/2\" = 1'-0\"",
+        "SCALE 1/2\" = 1'-0\"",
+        "SCALE 1/2\" = 1'-0\"",
+        "SCALE 1/2\" = 1'-0\"",
+        "SCALE 1/2\" = 1'-0\""
+      ],
+      "sheet": "A-401",
+      "title": "FLOOR PLANS & INT ELEVATIONS",
+      "width": 2592
+    }
+  ],
+  "summary": {
+    "marks_placed": 4,
+    "marks_total": 18,
+    "placed_rate": 0.2222222222222222,
+    "rooms_total": 4,
+    "sheets_total": 1,
+    "sheets_with_scale": 1,
+    "unplaced": [
+      {
+        "mark": "100-1",
+        "page": 20,
+        "reason": "mark 100-1 (schedule p.20) not tagged on any plan"
+      },
+      {
+        "mark": "100-2",
+        "page": 20,
+        "reason": "mark 100-2 (schedule p.20) not tagged on any plan"
+      },
+      {
+        "mark": "101-1",
+        "page": 20,
+        "reason": "mark 101-1 (schedule p.20) not tagged on any plan"
+      },
+      {
+        "mark": "103-1",
+        "page": 20,
+        "reason": "mark 103-1 (schedule p.20) not tagged on any plan"
+      },
+      {
+        "mark": "105-1",
+        "page": 20,
+        "reason": "mark 105-1 (schedule p.20) not tagged on any plan"
+      },
+      {
+        "mark": "106-1",
+        "page": 20,
+        "reason": "mark 106-1 (schedule p.20) not tagged on any plan"
+      },
+      {
+        "mark": "109-1",
+        "page": 20,
+        "reason": "mark 109-1 (schedule p.20) not tagged on any plan"
+      },
+      {
+        "mark": "110-1",
+        "page": 20,
+        "reason": "mark 110-1 (schedule p.20) not tagged on any plan"
+      },
+      {
+        "mark": "111-1",
+        "page": 20,
+        "reason": "mark 111-1 (schedule p.20) not tagged on any plan"
+      },
+      {
+        "mark": "112-1",
+        "page": 20,
+        "reason": "mark 112-1 (schedule p.20) not tagged on any plan"
+      },
+      {
+        "mark": "113-1",
+        "page": 20,
+        "reason": "mark 113-1 (schedule p.20) not tagged on any plan"
+      },
+      {
+        "mark": "114-1",
+        "page": 20,
+        "reason": "mark 114-1 (schedule p.20) not tagged on any plan"
+      },
+      {
+        "mark": "115-1",
+        "page": 20,
+        "reason": "mark 115-1 (schedule p.20) not tagged on any plan"
+      },
+      {
+        "mark": "117-1",
+        "page": 20,
+        "reason": "mark 117-1 (schedule p.20) not tagged on any plan"
+      }
+    ]
+  },
+  "tags": [
+    {
+      "also_on": [],
+      "door_pages": [
+        20
+      ],
+      "door_type": "L",
+      "fire_rating": null,
+      "frame_type": "F2",
+      "h": 8.00789,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "116-1",
+      "matched_by": "exact",
+      "material": "HM",
+      "page": 24,
+      "pair": false,
+      "points_per_foot": 36,
+      "room": "116",
+      "room_by": "tag_number",
+      "room_name": "SHOWER",
+      "schedule_rows": [
+        {
+          "door_type": "L",
+          "fire_rating": null,
+          "frame_type": "F2",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "116-1",
+          "material": "HM",
+          "page": 20,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 743
+        }
+      ],
+      "sheet": "A-401",
+      "size": "3' - 0\" x 7' - 0\"",
+      "width_inches": 36,
+      "x": 1586,
+      "y": 553
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        20
+      ],
+      "door_type": "L",
+      "fire_rating": null,
+      "frame_type": "F2",
+      "h": 8.00789,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "118-1",
+      "matched_by": "exact",
+      "material": "HM",
+      "page": 24,
+      "pair": false,
+      "points_per_foot": 36,
+      "room": "118",
+      "room_by": "tag_number",
+      "room_name": "ADA SHOWER",
+      "schedule_rows": [
+        {
+          "door_type": "L",
+          "fire_rating": null,
+          "frame_type": "F2",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "118-1",
+          "material": "HM",
+          "page": 20,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 764
+        }
+      ],
+      "sheet": "A-401",
+      "size": "3' - 0\" x 7' - 0\"",
+      "width_inches": 36,
+      "x": 1811,
+      "y": 679
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        20
+      ],
+      "door_type": "L",
+      "fire_rating": null,
+      "frame_type": "F2",
+      "h": 8.00789,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "104-1",
+      "matched_by": "exact",
+      "material": "HM",
+      "page": 24,
+      "pair": false,
+      "points_per_foot": 36,
+      "room": "104",
+      "room_by": "tag_number",
+      "room_name": "RESTROOM",
+      "schedule_rows": [
+        {
+          "door_type": "L",
+          "fire_rating": null,
+          "frame_type": "F2",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "104-1",
+          "material": "HM",
+          "page": 20,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 635
+        }
+      ],
+      "sheet": "A-401",
+      "size": "3' - 0\" x 7' - 0\"",
+      "width_inches": 36,
+      "x": 1337,
+      "y": 1296
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        20
+      ],
+      "door_type": "L",
+      "fire_rating": null,
+      "frame_type": "F2",
+      "h": 8.00789,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "102-1",
+      "matched_by": "exact",
+      "material": "HM",
+      "page": 24,
+      "pair": false,
+      "points_per_foot": 36,
+      "room": "102",
+      "room_by": "tag_number",
+      "room_name": "ADA RESTROOM",
+      "schedule_rows": [
+        {
+          "door_type": "L",
+          "fire_rating": null,
+          "frame_type": "F2",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "102-1",
+          "material": "HM",
+          "page": 20,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 614
+        }
+      ],
+      "sheet": "A-401",
+      "size": "3' - 0\" x 7' - 0\"",
+      "width_inches": 36,
+      "x": 1577,
+      "y": 1427
+    }
+  ]
+}

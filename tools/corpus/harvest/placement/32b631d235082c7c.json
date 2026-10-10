@@ -1,0 +1,589 @@
+{
+  "rooms": [
+    {
+      "name": "BATHROOM",
+      "number": "103",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 1816,
+      "y": 377
+    },
+    {
+      "name": "BEDROOM",
+      "number": "102",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 804,
+      "y": 398
+    },
+    {
+      "name": "BATHROOM",
+      "number": "103",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 1200,
+      "y": 398
+    },
+    {
+      "name": "BEDROOM",
+      "number": "102",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 1515,
+      "y": 501
+    },
+    {
+      "name": "KITCHEN",
+      "number": "104",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 1200,
+      "y": 504
+    },
+    {
+      "name": "KITCHEN",
+      "number": "104",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 1816,
+      "y": 524
+    },
+    {
+      "name": "LIVING / DINING ROOM",
+      "number": "101",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 1005,
+      "y": 661
+    },
+    {
+      "name": "LIVING / DINING ROOM",
+      "number": "101",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 1548,
+      "y": 732
+    },
+    {
+      "name": "BEDROOM",
+      "number": "102",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 859,
+      "y": 1080
+    },
+    {
+      "name": "BATHROOM",
+      "number": "103",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 1195,
+      "y": 1080
+    },
+    {
+      "name": "BATHROOM",
+      "number": "103",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 1804,
+      "y": 1080
+    },
+    {
+      "name": "BEDROOM",
+      "number": "102",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 1473,
+      "y": 1134
+    },
+    {
+      "name": "KITCHEN",
+      "number": "104",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 1195,
+      "y": 1214
+    },
+    {
+      "name": "KITCHEN",
+      "number": "104",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 1804,
+      "y": 1235
+    },
+    {
+      "name": "LIVING / DINING ROOM",
+      "number": "101",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 939,
+      "y": 1336
+    },
+    {
+      "name": "LIVING / DINING ROOM",
+      "number": "101",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 1547,
+      "y": 1380
+    },
+    {
+      "name": "BATHROOM",
+      "number": "103",
+      "page": 17,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 1195,
+      "y": 377
+    },
+    {
+      "name": "BEDROOM",
+      "number": "102",
+      "page": 17,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 802,
+      "y": 408
+    },
+    {
+      "name": "KITCHEN",
+      "number": "104",
+      "page": 17,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 1195,
+      "y": 498
+    },
+    {
+      "name": "LIVING / DINING ROOM",
+      "number": "101",
+      "page": 17,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 1006,
+      "y": 664
+    },
+    {
+      "name": "BATHROOM",
+      "number": "103",
+      "page": 17,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 1195,
+      "y": 1080
+    },
+    {
+      "name": "BATHROOM",
+      "number": "103",
+      "page": 17,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 1804,
+      "y": 1080
+    },
+    {
+      "name": "BEDROOM",
+      "number": "102",
+      "page": 17,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 859,
+      "y": 1117
+    },
+    {
+      "name": "BEDROOM",
+      "number": "102",
+      "page": 17,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 1473,
+      "y": 1134
+    },
+    {
+      "name": "KITCHEN",
+      "number": "104",
+      "page": 17,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 1195,
+      "y": 1214
+    },
+    {
+      "name": "KITCHEN",
+      "number": "104",
+      "page": 17,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 1804,
+      "y": 1235
+    },
+    {
+      "name": "LIVING / DINING ROOM",
+      "number": "101",
+      "page": 17,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 940,
+      "y": 1336
+    },
+    {
+      "name": "LIVING / DINING ROOM",
+      "number": "101",
+      "page": 17,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 1549,
+      "y": 1380
+    },
+    {
+      "name": "BATHROOM",
+      "number": "103",
+      "page": 18,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1199,
+      "y": 385
+    },
+    {
+      "name": "BEDROOM",
+      "number": "102",
+      "page": 18,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 799,
+      "y": 400
+    },
+    {
+      "name": "KITCHEN",
+      "number": "104",
+      "page": 18,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1200,
+      "y": 482
+    },
+    {
+      "name": "LIVING / DINING ROOM",
+      "number": "101",
+      "page": 18,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1007,
+      "y": 671
+    },
+    {
+      "name": "BEDROOM",
+      "number": "102",
+      "page": 18,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 859,
+      "y": 1080
+    },
+    {
+      "name": "BATHROOM",
+      "number": "103",
+      "page": 18,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1195,
+      "y": 1080
+    },
+    {
+      "name": "BATHROOM",
+      "number": "103",
+      "page": 18,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1804,
+      "y": 1080
+    },
+    {
+      "name": "BEDROOM",
+      "number": "102",
+      "page": 18,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1473,
+      "y": 1134
+    },
+    {
+      "name": "KITCHEN",
+      "number": "104",
+      "page": 18,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1195,
+      "y": 1214
+    },
+    {
+      "name": "KITCHEN",
+      "number": "104",
+      "page": 18,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1804,
+      "y": 1235
+    },
+    {
+      "name": "LIVING / DINING ROOM",
+      "number": "101",
+      "page": 18,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 940,
+      "y": 1335
+    },
+    {
+      "name": "LIVING / DINING ROOM",
+      "number": "101",
+      "page": 18,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1549,
+      "y": 1380
+    },
+    {
+      "name": "BEDROOM",
+      "number": "102",
+      "page": 19,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 805,
+      "y": 391
+    },
+    {
+      "name": "BATHROOM",
+      "number": "103",
+      "page": 19,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 1199,
+      "y": 391
+    },
+    {
+      "name": "KITCHEN",
+      "number": "104",
+      "page": 19,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 1199,
+      "y": 488
+    },
+    {
+      "name": "LIVING / DINING ROOM",
+      "number": "101",
+      "page": 19,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 1003,
+      "y": 676
+    },
+    {
+      "name": "BATHROOM",
+      "number": "103",
+      "page": 19,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 1195,
+      "y": 1080
+    },
+    {
+      "name": "BATHROOM",
+      "number": "103",
+      "page": 19,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 1804,
+      "y": 1080
+    },
+    {
+      "name": "BEDROOM",
+      "number": "102",
+      "page": 19,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 859,
+      "y": 1117
+    },
+    {
+      "name": "BEDROOM",
+      "number": "102",
+      "page": 19,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 1473,
+      "y": 1134
+    },
+    {
+      "name": "KITCHEN",
+      "number": "104",
+      "page": 19,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 1195,
+      "y": 1214
+    },
+    {
+      "name": "KITCHEN",
+      "number": "104",
+      "page": 19,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 1804,
+      "y": 1235
+    },
+    {
+      "name": "LIVING / DINING ROOM",
+      "number": "101",
+      "page": 19,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 940,
+      "y": 1336
+    },
+    {
+      "name": "LIVING / DINING ROOM",
+      "number": "101",
+      "page": 19,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 1549,
+      "y": 1380
+    }
+  ],
+  "set": {
+    "label": "missouri_oa_fmdc - _X2319-01%20Final%20Bid%20Plans_0.pdf",
+    "page_count": 41,
+    "rows_total": 8,
+    "sha16": "32b631d235082c7c",
+    "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2319-01%20Final%20Bid%20Plans_0.pdf",
+    "tier": "oracle-checked"
+  },
+  "sheets": [
+    {
+      "height": 1728,
+      "page": 16,
+      "points_per_foot": [
+        18
+      ],
+      "scales": [
+        "1/4\" = 1'-0\"",
+        "1/4\" = 1'-0\""
+      ],
+      "sheet": "A-101",
+      "title": "CABIN #1 - FLOOR PLANS",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 17,
+      "points_per_foot": [
+        18
+      ],
+      "scales": [
+        "1/4\" = 1'-0\"",
+        "1/4\" = 1'-0\""
+      ],
+      "sheet": "A-102",
+      "title": "CABIN #2 - FLOOR PLANS",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 18,
+      "points_per_foot": [
+        18
+      ],
+      "scales": [
+        "1/4\" = 1'-0\"",
+        "1/4\" = 1'-0\""
+      ],
+      "sheet": "A-103",
+      "title": "CABIN #3 - FLOOR PLANS",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 19,
+      "points_per_foot": [
+        18
+      ],
+      "scales": [
+        "1/4\" = 1'-0\"",
+        "1/4\" = 1'-0\""
+      ],
+      "sheet": "A-104",
+      "title": "CABIN #4 - FLOOR PLANS - ALT #1",
+      "width": 2592
+    }
+  ],
+  "summary": {
+    "marks_placed": 0,
+    "marks_total": 8,
+    "placed_rate": 0,
+    "rooms_total": 52,
+    "sheets_total": 4,
+    "sheets_with_scale": 4,
+    "unplaced": [
+      {
+        "mark": "A",
+        "page": 31,
+        "reason": "mark A (schedule p.31) not tagged on any plan"
+      },
+      {
+        "mark": "A",
+        "page": 31,
+        "reason": "mark A (schedule p.31) not tagged on any plan"
+      },
+      {
+        "mark": "A",
+        "page": 31,
+        "reason": "mark A (schedule p.31) not tagged on any plan"
+      },
+      {
+        "mark": "A",
+        "page": 31,
+        "reason": "mark A (schedule p.31) not tagged on any plan"
+      },
+      {
+        "mark": "B",
+        "page": 31,
+        "reason": "mark B (schedule p.31) not tagged on any plan"
+      },
+      {
+        "mark": "B",
+        "page": 31,
+        "reason": "mark B (schedule p.31) not tagged on any plan"
+      },
+      {
+        "mark": "B",
+        "page": 31,
+        "reason": "mark B (schedule p.31) not tagged on any plan"
+      },
+      {
+        "mark": "B",
+        "page": 31,
+        "reason": "mark B (schedule p.31) not tagged on any plan"
+      }
+    ]
+  },
+  "tags": []
+}

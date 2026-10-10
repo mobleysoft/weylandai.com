@@ -1,0 +1,357 @@
+{
+  "rooms": [
+    {
+      "name": "SOUTH MEZZANINE",
+      "number": "1",
+      "page": 6,
+      "points_per_foot": 9,
+      "sheet": "A111",
+      "x": 599,
+      "y": 777
+    }
+  ],
+  "set": {
+    "label": "missouri_oa_fmdc - _O2604-01%20Final%20Bid%20Plans.pdf",
+    "page_count": 25,
+    "rows_total": 7,
+    "sha16": "43a1f0db3f7ff345",
+    "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_O2604-01%20Final%20Bid%20Plans.pdf",
+    "tier": "agreed"
+  },
+  "sheets": [
+    {
+      "height": 1728,
+      "page": 6,
+      "points_per_foot": [
+        9
+      ],
+      "scales": [
+        "1/8\" = 1'-0\"",
+        "1/8\" = 1'-0\"",
+        "1/8\" = 1'-0\""
+      ],
+      "sheet": "A111",
+      "title": "FLOOR PLANS",
+      "width": 2592
+    }
+  ],
+  "summary": {
+    "marks_placed": 7,
+    "marks_total": 7,
+    "placed_rate": 1,
+    "rooms_total": 1,
+    "sheets_total": 1,
+    "sheets_with_scale": 1,
+    "unplaced": []
+  },
+  "tags": [
+    {
+      "also_on": [],
+      "door_pages": [
+        14
+      ],
+      "door_type": "A",
+      "fire_rating": null,
+      "frame_type": "2",
+      "h": 9.599516160192,
+      "hardware_group": null,
+      "height_inches": 90,
+      "location": null,
+      "mark": "301",
+      "matched_by": "exact",
+      "material": "WD.",
+      "page": 6,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "A",
+          "fire_rating": null,
+          "frame_type": "2",
+          "hardware_group": null,
+          "height_inches": 90,
+          "location": null,
+          "mark": "301",
+          "material": "WD.",
+          "page": 14,
+          "pair": false,
+          "size": "3' - 6\" x 7' - 6\"",
+          "width_inches": 42,
+          "y": 260
+        }
+      ],
+      "sheet": "A111",
+      "size": "3' - 6\" x 7' - 6\"",
+      "width_inches": 42,
+      "x": 459,
+      "y": 104
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        14
+      ],
+      "door_type": "A",
+      "fire_rating": null,
+      "frame_type": "2",
+      "h": 9.599516160192,
+      "hardware_group": null,
+      "height_inches": 90,
+      "location": null,
+      "mark": "302",
+      "matched_by": "exact",
+      "material": "WD.",
+      "page": 6,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "A",
+          "fire_rating": null,
+          "frame_type": "2",
+          "hardware_group": null,
+          "height_inches": 90,
+          "location": null,
+          "mark": "302",
+          "material": "WD.",
+          "page": 14,
+          "pair": false,
+          "size": "3' - 6\" x 7' - 6\"",
+          "width_inches": 42,
+          "y": 273
+        }
+      ],
+      "sheet": "A111",
+      "size": "3' - 6\" x 7' - 6\"",
+      "width_inches": 42,
+      "x": 738,
+      "y": 104
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        14
+      ],
+      "door_type": "A",
+      "fire_rating": null,
+      "frame_type": "1",
+      "h": 9.599516160192,
+      "hardware_group": null,
+      "height_inches": 90,
+      "location": null,
+      "mark": "201",
+      "matched_by": "exact",
+      "material": "WD.",
+      "page": 6,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "A",
+          "fire_rating": null,
+          "frame_type": "1",
+          "hardware_group": null,
+          "height_inches": 90,
+          "location": null,
+          "mark": "201",
+          "material": "WD.",
+          "page": 14,
+          "pair": false,
+          "size": "3' - 6\" x 7' - 6\"",
+          "width_inches": 42,
+          "y": 196
+        }
+      ],
+      "sheet": "A111",
+      "size": "3' - 6\" x 7' - 6\"",
+      "width_inches": 42,
+      "x": 459,
+      "y": 1163
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        14
+      ],
+      "door_type": "A",
+      "fire_rating": null,
+      "frame_type": "1",
+      "h": 9.599516160192,
+      "hardware_group": null,
+      "height_inches": 90,
+      "location": null,
+      "mark": "202",
+      "matched_by": "exact",
+      "material": "WD.",
+      "page": 6,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "A",
+          "fire_rating": null,
+          "frame_type": "1",
+          "hardware_group": null,
+          "height_inches": 90,
+          "location": null,
+          "mark": "202",
+          "material": "WD.",
+          "page": 14,
+          "pair": false,
+          "size": "3' - 6\" x 7' - 6\"",
+          "width_inches": 42,
+          "y": 208
+        }
+      ],
+      "sheet": "A111",
+      "size": "3' - 6\" x 7' - 6\"",
+      "width_inches": 42,
+      "x": 598,
+      "y": 1163
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        14
+      ],
+      "door_type": "A",
+      "fire_rating": null,
+      "frame_type": "1",
+      "h": 9.599516160192,
+      "hardware_group": null,
+      "height_inches": 90,
+      "location": null,
+      "mark": "203",
+      "matched_by": "exact",
+      "material": "WD.",
+      "page": 6,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "A",
+          "fire_rating": null,
+          "frame_type": "1",
+          "hardware_group": null,
+          "height_inches": 90,
+          "location": null,
+          "mark": "203",
+          "material": "WD.",
+          "page": 14,
+          "pair": false,
+          "size": "3' - 6\" x 7' - 6\"",
+          "width_inches": 42,
+          "y": 221
+        }
+      ],
+      "sheet": "A111",
+      "size": "3' - 6\" x 7' - 6\"",
+      "width_inches": 42,
+      "x": 738,
+      "y": 1163
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        14
+      ],
+      "door_type": "B",
+      "fire_rating": null,
+      "frame_type": "3",
+      "h": 9.599516160192,
+      "hardware_group": null,
+      "height_inches": 84,
+      "location": null,
+      "mark": "204",
+      "matched_by": "exact",
+      "material": "WD.",
+      "page": 6,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": null,
+          "frame_type": "3",
+          "hardware_group": null,
+          "height_inches": 84,
+          "location": null,
+          "mark": "204",
+          "material": "WD.",
+          "page": 14,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 236
+        }
+      ],
+      "sheet": "A111",
+      "size": "3' - 0\" x 7' - 0\"",
+      "width_inches": 36,
+      "x": 266,
+      "y": 1188
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        14
+      ],
+      "door_type": "B",
+      "fire_rating": null,
+      "frame_type": "3",
+      "h": 9.599516160192,
+      "hardware_group": null,
+      "height_inches": 84,
+      "location": null,
+      "mark": "205",
+      "matched_by": "exact",
+      "material": "WD.",
+      "page": 6,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": null,
+          "frame_type": "3",
+          "hardware_group": null,
+          "height_inches": 84,
+          "location": null,
+          "mark": "205",
+          "material": "WD.",
+          "page": 14,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 249
+        }
+      ],
+      "sheet": "A111",
+      "size": "3' - 0\" x 7' - 0\"",
+      "width_inches": 36,
+      "x": 931,
+      "y": 1188
+    }
+  ]
+}

@@ -1,0 +1,3592 @@
+{
+  "rooms": [
+    {
+      "name": "CLASSROOM",
+      "number": "E15",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1205,
+      "y": 218
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "F16",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1458,
+      "y": 219
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "F17",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1716,
+      "y": 219
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "E14",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 953,
+      "y": 222
+    },
+    {
+      "name": "E-POD ACTIVITY",
+      "number": "146A",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1173,
+      "y": 465
+    },
+    {
+      "name": "F-POD ACTIVITY",
+      "number": "149A",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1471,
+      "y": 467
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "E13",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 956,
+      "y": 473
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "F18",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1708,
+      "y": 477
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "D11",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 320,
+      "y": 545
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "D12",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 588,
+      "y": 548
+    },
+    {
+      "name": "ENTRY",
+      "number": "138",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 812,
+      "y": 577
+    },
+    {
+      "name": "GIRLS",
+      "number": "144",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1141,
+      "y": 675
+    },
+    {
+      "name": "UNISEX",
+      "number": "150",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1523,
+      "y": 684
+    },
+    {
+      "name": "OPEN COURT",
+      "number": "149B",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1393,
+      "y": 696
+    },
+    {
+      "name": "OPEN COURT",
+      "number": "146B",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1270,
+      "y": 698
+    },
+    {
+      "name": "BOYS",
+      "number": "145",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1125,
+      "y": 708
+    },
+    {
+      "name": "D-POD OFFICE",
+      "number": "23",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 845,
+      "y": 712
+    },
+    {
+      "name": "GIRLS",
+      "number": "136",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 788,
+      "y": 728
+    },
+    {
+      "name": "F-POD OFFICE",
+      "number": "156",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1559,
+      "y": 752
+    },
+    {
+      "name": "ROOM",
+      "number": "165",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 2010,
+      "y": 752
+    },
+    {
+      "name": "BOYS",
+      "number": "135",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 759,
+      "y": 755
+    },
+    {
+      "name": "RECREATION OFFICE",
+      "number": "164",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 2088,
+      "y": 771
+    },
+    {
+      "name": "OFFICE",
+      "number": "139",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 914,
+      "y": 781
+    },
+    {
+      "name": "GIRLS",
+      "number": "167",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 2397,
+      "y": 788
+    },
+    {
+      "name": "BOYS",
+      "number": "168",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 2502,
+      "y": 788
+    },
+    {
+      "name": "D-POD ACTIVITY",
+      "number": "134A",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 553,
+      "y": 795
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "D10",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 318,
+      "y": 807
+    },
+    {
+      "name": "RSP",
+      "number": "87",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 2242,
+      "y": 818
+    },
+    {
+      "name": "KITCHEN",
+      "number": "K1",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1939,
+      "y": 824
+    },
+    {
+      "name": "ELEC",
+      "number": "141",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 973,
+      "y": 832
+    },
+    {
+      "name": "OFFICE",
+      "number": "153",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1345,
+      "y": 833
+    },
+    {
+      "name": "BOOK STORAGE",
+      "number": "155",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1461,
+      "y": 846
+    },
+    {
+      "name": "OPEN COURT",
+      "number": "119B",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 805,
+      "y": 855
+    },
+    {
+      "name": "STORAGE",
+      "number": "163",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 2098,
+      "y": 861
+    },
+    {
+      "name": "MEN",
+      "number": "160",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1750,
+      "y": 881
+    },
+    {
+      "name": "CORRIDOR",
+      "number": "157",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1569,
+      "y": 885
+    },
+    {
+      "name": "HALL",
+      "number": "161",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1873,
+      "y": 903
+    },
+    {
+      "name": "OFFICE",
+      "number": "142",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 973,
+      "y": 918
+    },
+    {
+      "name": "MDF",
+      "number": "154",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1378,
+      "y": 921
+    },
+    {
+      "name": "MUSIC",
+      "number": "169",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 2460,
+      "y": 940
+    },
+    {
+      "name": "WOMEN",
+      "number": "159",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1867,
+      "y": 1005
+    },
+    {
+      "name": "OPEN COURT",
+      "number": "131B",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 809,
+      "y": 1006
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "C9",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 315,
+      "y": 1053
+    },
+    {
+      "name": "C-POD ACTIVITY",
+      "number": "131A",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 581,
+      "y": 1063
+    },
+    {
+      "name": "FACULTY ROOM",
+      "number": "158",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1717,
+      "y": 1068
+    },
+    {
+      "name": "INSTRUCTIONAL MATERIAL CENTER",
+      "number": "101",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1182,
+      "y": 1074
+    },
+    {
+      "name": "HALL",
+      "number": "169",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 2563,
+      "y": 1097
+    },
+    {
+      "name": "GIRLS",
+      "number": "129",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 767,
+      "y": 1120
+    },
+    {
+      "name": "BOYS",
+      "number": "130",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 785,
+      "y": 1153
+    },
+    {
+      "name": "PRODUCTION ROOM",
+      "number": "102",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1461,
+      "y": 1222
+    },
+    {
+      "name": "SUPPLY",
+      "number": "106",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1652,
+      "y": 1222
+    },
+    {
+      "name": "PLATFORM",
+      "number": "172",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 2448,
+      "y": 1225
+    },
+    {
+      "name": "STORE ROOM",
+      "number": "180",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1781,
+      "y": 1232
+    },
+    {
+      "name": "TOILET",
+      "number": "105",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1541,
+      "y": 1277
+    },
+    {
+      "name": "LEARNING DISABILITY",
+      "number": "125",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 930,
+      "y": 1292
+    },
+    {
+      "name": "SUPPLY",
+      "number": "107",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1730,
+      "y": 1292
+    },
+    {
+      "name": "LSH OFFICE",
+      "number": "126",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1026,
+      "y": 1312
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "C7",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 581,
+      "y": 1314
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "C8",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 322,
+      "y": 1315
+    },
+    {
+      "name": "NURSE",
+      "number": "104",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1527,
+      "y": 1350
+    },
+    {
+      "name": "PRINCIPAL",
+      "number": "108",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1803,
+      "y": 1358
+    },
+    {
+      "name": "OFFICE",
+      "number": "124",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 861,
+      "y": 1369
+    },
+    {
+      "name": "A-POD OFFICE",
+      "number": "103",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1444,
+      "y": 1403
+    },
+    {
+      "name": "LOBBY",
+      "number": "112",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1313,
+      "y": 1418
+    },
+    {
+      "name": "B-POD OFFICE",
+      "number": "123",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 811,
+      "y": 1425
+    },
+    {
+      "name": "OPEN COURT",
+      "number": "116B",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1103,
+      "y": 1451
+    },
+    {
+      "name": "OPEN COURT",
+      "number": "119B",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 956,
+      "y": 1453
+    },
+    {
+      "name": "GIRLS",
+      "number": "122",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 815,
+      "y": 1468
+    },
+    {
+      "name": "CUSTODIAN",
+      "number": "109",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1835,
+      "y": 1483
+    },
+    {
+      "name": "UNISEX",
+      "number": "114",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1234,
+      "y": 1484
+    },
+    {
+      "name": "RECEPTION/ CLERICAL",
+      "number": "111",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1614,
+      "y": 1485
+    },
+    {
+      "name": "BOYS",
+      "number": "121",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 848,
+      "y": 1497
+    },
+    {
+      "name": "HALL",
+      "number": "179B",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1911,
+      "y": 1514
+    },
+    {
+      "name": "CONFERENCE",
+      "number": "110",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1748,
+      "y": 1569
+    },
+    {
+      "name": "MULTI-USE",
+      "number": "174",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 2205,
+      "y": 1594
+    },
+    {
+      "name": "LEARNING AREA",
+      "number": "173",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 2453,
+      "y": 1606
+    },
+    {
+      "name": "BOILER RM",
+      "number": "177",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1926,
+      "y": 1654
+    },
+    {
+      "name": "CHAIR STOR",
+      "number": "176",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1996,
+      "y": 1654
+    },
+    {
+      "name": "ELECT.",
+      "number": "175",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 2051,
+      "y": 1654
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "A1",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1417,
+      "y": 1686
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "B6",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 659,
+      "y": 1690
+    },
+    {
+      "name": "TRAFFIC STORAGE",
+      "number": "178",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1842,
+      "y": 1698
+    },
+    {
+      "name": "B-POD ACTIVITY",
+      "number": "119A",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 898,
+      "y": 1720
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "A2",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1428,
+      "y": 1920
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "A3",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1164,
+      "y": 1934
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "B4",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 892,
+      "y": 1935
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "B5",
+      "page": 283,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 645,
+      "y": 1937
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "F16",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1420,
+      "y": 180
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "F17",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1675,
+      "y": 180
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "E14",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 908,
+      "y": 187
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "E15",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1159,
+      "y": 187
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "F18",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1676,
+      "y": 431
+    },
+    {
+      "name": "EXPLORATORY CENTER",
+      "number": "42",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1177,
+      "y": 438
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "E13",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 906,
+      "y": 439
+    },
+    {
+      "name": "EXPLORATORY CENTER",
+      "number": "43",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1428,
+      "y": 442
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "D12",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 509,
+      "y": 520
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "D11",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 255,
+      "y": 522
+    },
+    {
+      "name": "ENTRY",
+      "number": "34",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 794,
+      "y": 585
+    },
+    {
+      "name": "UNISEX",
+      "number": "44",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1488,
+      "y": 673
+    },
+    {
+      "name": "TEACHER'S PREP",
+      "number": "35",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 788,
+      "y": 681
+    },
+    {
+      "name": "UNISEX",
+      "number": "40",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1092,
+      "y": 687
+    },
+    {
+      "name": "TOOLS",
+      "number": "46",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1455,
+      "y": 723
+    },
+    {
+      "name": "GIRLS",
+      "number": "33",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 748,
+      "y": 724
+    },
+    {
+      "name": "TEACHER'S PREP",
+      "number": "50",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1534,
+      "y": 728
+    },
+    {
+      "name": "TOOLS",
+      "number": "39",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1107,
+      "y": 730
+    },
+    {
+      "name": "BOYS",
+      "number": "32",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 719,
+      "y": 748
+    },
+    {
+      "name": "TOOLS",
+      "number": "31",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 777,
+      "y": 752
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "D10",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 255,
+      "y": 759
+    },
+    {
+      "name": "STORAGE",
+      "number": "58",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1974,
+      "y": 762
+    },
+    {
+      "name": "INSTRUCTIONAL MATERIAL CENTER",
+      "number": "51",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1645,
+      "y": 775
+    },
+    {
+      "name": "OFFICE",
+      "number": "59",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 2032,
+      "y": 775
+    },
+    {
+      "name": "TEACHER'S PREP",
+      "number": "36",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 882,
+      "y": 776
+    },
+    {
+      "name": "BOYS",
+      "number": "61",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 2352,
+      "y": 796
+    },
+    {
+      "name": "GIRLS",
+      "number": "62",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 2457,
+      "y": 796
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "G19",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 2207,
+      "y": 825
+    },
+    {
+      "name": "ELEC",
+      "number": "37",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 936,
+      "y": 829
+    },
+    {
+      "name": "BOOK STORAGE",
+      "number": "18",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1444,
+      "y": 830
+    },
+    {
+      "name": "KITCHEN",
+      "number": "57",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1906,
+      "y": 830
+    },
+    {
+      "name": "ESL",
+      "number": "20",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1288,
+      "y": 836
+    },
+    {
+      "name": "ELEC",
+      "number": "63",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 2587,
+      "y": 838
+    },
+    {
+      "name": "EXPLORATORY CENTER",
+      "number": "30",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 525,
+      "y": 855
+    },
+    {
+      "name": "STORAGE",
+      "number": "60",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 2057,
+      "y": 879
+    },
+    {
+      "name": "MEN",
+      "number": "53",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1723,
+      "y": 898
+    },
+    {
+      "name": "ELECT",
+      "number": "48",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1381,
+      "y": 907
+    },
+    {
+      "name": "HALL",
+      "number": "52",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1855,
+      "y": 914
+    },
+    {
+      "name": "WORK ROOM",
+      "number": "38",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 909,
+      "y": 932
+    },
+    {
+      "name": "MUSIC",
+      "number": "G20",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 2445,
+      "y": 951
+    },
+    {
+      "name": "INSTRUCTIONAL MATERIAL CENTER",
+      "number": "12",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1138,
+      "y": 980
+    },
+    {
+      "name": "WOMEN",
+      "number": "54",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1823,
+      "y": 1007
+    },
+    {
+      "name": "FACULTY ROOM",
+      "number": "55",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1660,
+      "y": 1018
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "C9",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 261,
+      "y": 1030
+    },
+    {
+      "name": "EXPLORATORY CENTER",
+      "number": "29",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 534,
+      "y": 1066
+    },
+    {
+      "name": "TOOLS",
+      "number": "26",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 783,
+      "y": 1106
+    },
+    {
+      "name": "UNISEX",
+      "number": "27",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 736,
+      "y": 1127
+    },
+    {
+      "name": "STAGE",
+      "number": "64",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 2444,
+      "y": 1152
+    },
+    {
+      "name": "MULTI-PURPOSE",
+      "number": "65",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 2074,
+      "y": 1174
+    },
+    {
+      "name": "PRODUCTION ROOM",
+      "number": "10",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1421,
+      "y": 1218
+    },
+    {
+      "name": "SUPPLY",
+      "number": "7",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1625,
+      "y": 1224
+    },
+    {
+      "name": "CLOSET",
+      "number": "56",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1744,
+      "y": 1238
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "C7",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 513,
+      "y": 1272
+    },
+    {
+      "name": "LEARNING DISABILITY",
+      "number": "24",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 903,
+      "y": 1272
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "C8",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 262,
+      "y": 1273
+    },
+    {
+      "name": "TOILET",
+      "number": "9",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1493,
+      "y": 1284
+    },
+    {
+      "name": "SUPPLY",
+      "number": "6",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1688,
+      "y": 1293
+    },
+    {
+      "name": "NURSE",
+      "number": "8",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1542,
+      "y": 1324
+    },
+    {
+      "name": "READING",
+      "number": "25",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1034,
+      "y": 1336
+    },
+    {
+      "name": "TEACHER'S PREP",
+      "number": "23",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 831,
+      "y": 1350
+    },
+    {
+      "name": "PRINCIPAL",
+      "number": "5",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1761,
+      "y": 1359
+    },
+    {
+      "name": "PREP",
+      "number": "11",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1398,
+      "y": 1403
+    },
+    {
+      "name": "RECEPTION",
+      "number": "2",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1580,
+      "y": 1418
+    },
+    {
+      "name": "TEACHER'S PREP",
+      "number": "22",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 748,
+      "y": 1425
+    },
+    {
+      "name": "ENTRY",
+      "number": "21",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 634,
+      "y": 1432
+    },
+    {
+      "name": "TOOLS",
+      "number": "18",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 809,
+      "y": 1436
+    },
+    {
+      "name": "TOOLS",
+      "number": "13",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1157,
+      "y": 1437
+    },
+    {
+      "name": "GIRLS",
+      "number": "20",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 768,
+      "y": 1472
+    },
+    {
+      "name": "UNISEX",
+      "number": "14",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1176,
+      "y": 1482
+    },
+    {
+      "name": "JANITOR",
+      "number": "4",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1794,
+      "y": 1484
+    },
+    {
+      "name": "BOYS",
+      "number": "19",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 796,
+      "y": 1500
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "G21",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 2411,
+      "y": 1525
+    },
+    {
+      "name": "CONFERENCE",
+      "number": "3",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1695,
+      "y": 1560
+    },
+    {
+      "name": "ENTRY",
+      "number": "69",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1829,
+      "y": 1560
+    },
+    {
+      "name": "LOBBY",
+      "number": "1",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1484,
+      "y": 1573
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "G22",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 2180,
+      "y": 1635
+    },
+    {
+      "name": "BOILER",
+      "number": "68",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1884,
+      "y": 1662
+    },
+    {
+      "name": "STOR",
+      "number": "67",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1954,
+      "y": 1662
+    },
+    {
+      "name": "STORAGE",
+      "number": "66",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 2008,
+      "y": 1662
+    },
+    {
+      "name": "EXPLORATORY CENTER",
+      "number": "16",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1150,
+      "y": 1691
+    },
+    {
+      "name": "EXPLORATORY CENTER",
+      "number": "17",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 845,
+      "y": 1693
+    },
+    {
+      "name": "STORAGE",
+      "number": "101",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1796,
+      "y": 1695
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "B6",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 599,
+      "y": 1706
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "A1",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1367,
+      "y": 1706
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "B5",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 600,
+      "y": 1869
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "B4",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 852,
+      "y": 1869
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "A3",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1115,
+      "y": 1869
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "A2",
+      "page": 285,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1361,
+      "y": 1869
+    },
+    {
+      "name": "KINDERGARTEN",
+      "number": "E2",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 910,
+      "y": 220
+    },
+    {
+      "name": "KINDERGARTEN",
+      "number": "E3",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1164,
+      "y": 220
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "70",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1417,
+      "y": 220
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "71",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1679,
+      "y": 220
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "E1",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 903,
+      "y": 468
+    },
+    {
+      "name": "E-POD ACTIVITY",
+      "number": "61",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1147,
+      "y": 468
+    },
+    {
+      "name": "ACTIVITY",
+      "number": "69",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1439,
+      "y": 468
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "72",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1679,
+      "y": 468
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "D3",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 536,
+      "y": 537
+    },
+    {
+      "name": "FIS",
+      "number": "D2",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 289,
+      "y": 540
+    },
+    {
+      "name": "ENTRY",
+      "number": "15",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 792,
+      "y": 575
+    },
+    {
+      "name": "BOYS",
+      "number": "68",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1104,
+      "y": 654
+    },
+    {
+      "name": "UNISEX",
+      "number": "75",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1487,
+      "y": 670
+    },
+    {
+      "name": "D STAFF",
+      "number": "24",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 777,
+      "y": 671
+    },
+    {
+      "name": "GIRLS",
+      "number": "67",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1077,
+      "y": 681
+    },
+    {
+      "name": "ATRIUM",
+      "number": "65",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1218,
+      "y": 684
+    },
+    {
+      "name": "ATRIUM",
+      "number": "73",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1346,
+      "y": 685
+    },
+    {
+      "name": "STOR",
+      "number": "74",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1466,
+      "y": 706
+    },
+    {
+      "name": "STOR",
+      "number": "66",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1108,
+      "y": 710
+    },
+    {
+      "name": "UNISEX",
+      "number": "59",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 734,
+      "y": 722
+    },
+    {
+      "name": "F STAFF",
+      "number": "17",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1522,
+      "y": 740
+    },
+    {
+      "name": "STOR",
+      "number": "58",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 780,
+      "y": 741
+    },
+    {
+      "name": "STORAGE",
+      "number": "S2",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1966,
+      "y": 741
+    },
+    {
+      "name": "OFFICE E",
+      "number": "23",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 877,
+      "y": 762
+    },
+    {
+      "name": "RSP OFFICE",
+      "number": "86",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 2050,
+      "y": 768
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "D1",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 289,
+      "y": 772
+    },
+    {
+      "name": "LEARNING CENTER D-POD",
+      "number": "53",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 534,
+      "y": 772
+    },
+    {
+      "name": "GIRLS",
+      "number": "88",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 2359,
+      "y": 786
+    },
+    {
+      "name": "BOYS",
+      "number": "89",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 2465,
+      "y": 786
+    },
+    {
+      "name": "ENTRY",
+      "number": "16",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1615,
+      "y": 792
+    },
+    {
+      "name": "RSP",
+      "number": "87",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 2205,
+      "y": 815
+    },
+    {
+      "name": "ELEC",
+      "number": "22",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 934,
+      "y": 819
+    },
+    {
+      "name": "BOOK STORAGE",
+      "number": "18",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1442,
+      "y": 820
+    },
+    {
+      "name": "KITCHEN",
+      "number": "K1",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1903,
+      "y": 820
+    },
+    {
+      "name": "LIBRARY OFFICE",
+      "number": "20",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1285,
+      "y": 826
+    },
+    {
+      "name": "MECHANICAL ROOM",
+      "number": "90",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 2584,
+      "y": 828
+    },
+    {
+      "name": "ATRIUM",
+      "number": "57",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 782,
+      "y": 834
+    },
+    {
+      "name": "MEN",
+      "number": "78",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1694,
+      "y": 849
+    },
+    {
+      "name": "STORAGE",
+      "number": "84",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 2061,
+      "y": 858
+    },
+    {
+      "name": "MDF",
+      "number": "19",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1349,
+      "y": 890
+    },
+    {
+      "name": "SPEECH ROOM",
+      "number": "21",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 962,
+      "y": 891
+    },
+    {
+      "name": "HALL",
+      "number": "77",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1829,
+      "y": 894
+    },
+    {
+      "name": "MUSIC",
+      "number": "91",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 2411,
+      "y": 926
+    },
+    {
+      "name": "ATRIUM",
+      "number": "49",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 783,
+      "y": 975
+    },
+    {
+      "name": "STAFF ROOM",
+      "number": "80",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1647,
+      "y": 1001
+    },
+    {
+      "name": "WOMEN",
+      "number": "79",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1853,
+      "y": 1010
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "C3",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 289,
+      "y": 1044
+    },
+    {
+      "name": "C-POD ACTIVITY",
+      "number": "45",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 536,
+      "y": 1044
+    },
+    {
+      "name": "LIBRARY",
+      "number": "13",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1149,
+      "y": 1068
+    },
+    {
+      "name": "HALL",
+      "number": "92",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 2425,
+      "y": 1073
+    },
+    {
+      "name": "STOR",
+      "number": "50",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 780,
+      "y": 1096
+    },
+    {
+      "name": "GIRLS",
+      "number": "52",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 717,
+      "y": 1106
+    },
+    {
+      "name": "BOYS",
+      "number": "51",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 746,
+      "y": 1133
+    },
+    {
+      "name": "MULTI-PURPOSE",
+      "number": "81",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 2049,
+      "y": 1191
+    },
+    {
+      "name": "WORK ROOM",
+      "number": "11",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1395,
+      "y": 1205
+    },
+    {
+      "name": "BOOK STORAGE",
+      "number": "7",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1607,
+      "y": 1213
+    },
+    {
+      "name": "PLATFORM",
+      "number": "93",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 2391,
+      "y": 1216
+    },
+    {
+      "name": "CLOSET",
+      "number": "81A",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1742,
+      "y": 1228
+    },
+    {
+      "name": "DISTRICT NURSE",
+      "number": "27",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 896,
+      "y": 1264
+    },
+    {
+      "name": "TOILET",
+      "number": "10",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1497,
+      "y": 1268
+    },
+    {
+      "name": "HALL",
+      "number": "8",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1587,
+      "y": 1274
+    },
+    {
+      "name": "STORAGE",
+      "number": "6",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1686,
+      "y": 1283
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "C2",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 289,
+      "y": 1294
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "C1",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 536,
+      "y": 1294
+    },
+    {
+      "name": "DISTRICT NURSE",
+      "number": "28",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 980,
+      "y": 1299
+    },
+    {
+      "name": "NURSE",
+      "number": "9",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1483,
+      "y": 1341
+    },
+    {
+      "name": "PRINCIPAL",
+      "number": "5",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1759,
+      "y": 1349
+    },
+    {
+      "name": "OFFICE C",
+      "number": "26",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 816,
+      "y": 1350
+    },
+    {
+      "name": "OFFICE A",
+      "number": "12",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1395,
+      "y": 1365
+    },
+    {
+      "name": "HALL",
+      "number": "94",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 2425,
+      "y": 1374
+    },
+    {
+      "name": "OFFICE B",
+      "number": "25",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 734,
+      "y": 1415
+    },
+    {
+      "name": "STOR",
+      "number": "34",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1162,
+      "y": 1424
+    },
+    {
+      "name": "STOR",
+      "number": "42",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 803,
+      "y": 1428
+    },
+    {
+      "name": "OFFICE",
+      "number": "2",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1562,
+      "y": 1429
+    },
+    {
+      "name": "ENTRY",
+      "number": "14",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 599,
+      "y": 1449
+    },
+    {
+      "name": "ATRIUM",
+      "number": "41",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 916,
+      "y": 1451
+    },
+    {
+      "name": "GIRLS",
+      "number": "43",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 776,
+      "y": 1454
+    },
+    {
+      "name": "ATRIUM",
+      "number": "33",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1039,
+      "y": 1454
+    },
+    {
+      "name": "CUSTODIAN",
+      "number": "4",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1791,
+      "y": 1474
+    },
+    {
+      "name": "UNISEX",
+      "number": "35",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1176,
+      "y": 1476
+    },
+    {
+      "name": "BOYS",
+      "number": "44",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 793,
+      "y": 1490
+    },
+    {
+      "name": "LOBBY",
+      "number": "1",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1511,
+      "y": 1542
+    },
+    {
+      "name": "CONFERENCE ROOM",
+      "number": "3",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1693,
+      "y": 1550
+    },
+    {
+      "name": "ENTRY",
+      "number": "82",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1810,
+      "y": 1564
+    },
+    {
+      "name": "MUSIC",
+      "number": "96",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 2397,
+      "y": 1568
+    },
+    {
+      "name": "READING",
+      "number": "97",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 2160,
+      "y": 1592
+    },
+    {
+      "name": "MECHANICAL YARD",
+      "number": "95",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 2592,
+      "y": 1628
+    },
+    {
+      "name": "BOILER/ELEC",
+      "number": "100",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1881,
+      "y": 1657
+    },
+    {
+      "name": "CHAIR STOR",
+      "number": "99",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1951,
+      "y": 1668
+    },
+    {
+      "name": "ELEC",
+      "number": "98",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 2006,
+      "y": 1668
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "B3",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 595,
+      "y": 1674
+    },
+    {
+      "name": "A-POD ACTIVITY",
+      "number": "29",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1112,
+      "y": 1674
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "A1",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1363,
+      "y": 1674
+    },
+    {
+      "name": "B-POD ACTIVITY",
+      "number": "37",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 844,
+      "y": 1675
+    },
+    {
+      "name": "SAFETY PATROL STOR",
+      "number": "101",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1793,
+      "y": 1684
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "B2",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 595,
+      "y": 1904
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "B1",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 856,
+      "y": 1904
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "A3",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1112,
+      "y": 1904
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "A2",
+      "page": 287,
+      "points_per_foot": 9,
+      "sheet": "A2.1",
+      "x": 1363,
+      "y": 1904
+    }
+  ],
+  "set": {
+    "label": "Berryessa Union School District — Bid B-09-2023-24 Interior Door Replacement (3 elementary schools)",
+    "page_count": 288,
+    "rows_total": 41,
+    "sha16": "dd339f57b51538ed",
+    "source_url": "https://www.berryessa.k12.ca.us/documents/MEASURE%20U%20BOND%20PROJECTS%202023-24/BID%20B-09-2023-24%20INTERIOR%20DOOR%20REPLACE%203%20SCHOOLS/PROJECT-MANUAL-DRAWINGS-BID-B-09-2023-24-INTERIOR-DOOR-REPLACEMENT-THREE-ELEMENTARY-SCHOOLS.pdf",
+    "tier": "audited"
+  },
+  "sheets": [
+    {
+      "height": 2160,
+      "page": 283,
+      "points_per_foot": [
+        9
+      ],
+      "scales": [
+        "FLOOR PLAN - MAIN BLDG 1/8\" = 1'-0\""
+      ],
+      "sheet": "A2.1",
+      "title": "FLOOR PLAN - MAIN BUILDING",
+      "width": 3024
+    },
+    {
+      "height": 2160,
+      "page": 285,
+      "points_per_foot": [
+        9
+      ],
+      "scales": [
+        "1/8\" = 1'-0\""
+      ],
+      "sheet": "A2.1",
+      "title": "FLOOR PLAN - MAIN BUILDING",
+      "width": 3024
+    },
+    {
+      "height": 2160,
+      "page": 287,
+      "points_per_foot": [
+        9
+      ],
+      "scales": [
+        "FLOOR PLAN - MAIN BUILDING 1/8\" = 1'-0\""
+      ],
+      "sheet": "A2.1",
+      "title": "FLOOR PLAN - MAIN BUILDING",
+      "width": 3024
+    }
+  ],
+  "summary": {
+    "marks_placed": 24,
+    "marks_total": 24,
+    "placed_rate": 1,
+    "rooms_total": 274,
+    "sheets_total": 3,
+    "sheets_with_scale": 3,
+    "unplaced": []
+  },
+  "tags": [
+    {
+      "also_on": [],
+      "door_pages": [
+        284
+      ],
+      "door_type": "B",
+      "fire_rating": "120",
+      "frame_type": null,
+      "h": 9.42972,
+      "hardware_group": "2",
+      "height_inches": 94,
+      "location": "D-POD / CORRIDOR",
+      "mark": "006",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 283,
+      "pair": true,
+      "points_per_foot": 9,
+      "room": null,
+      "room_by": "schedule_location",
+      "room_name": "D-POD",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "120",
+          "frame_type": null,
+          "hardware_group": "2",
+          "height_inches": 94,
+          "location": "D-POD / CORRIDOR",
+          "mark": "006",
+          "material": "WD",
+          "page": 284,
+          "pair": true,
+          "size": "3'-6\" x 7'-10\"",
+          "width_inches": 42,
+          "y": 1785
+        }
+      ],
+      "sheet": "A2.1",
+      "size": "3'-6\" x 7'-10\"",
+      "width_inches": 42,
+      "x": 761,
+      "y": 626
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        284
+      ],
+      "door_type": "B",
+      "fire_rating": "120",
+      "frame_type": null,
+      "h": 9.42972,
+      "hardware_group": "2",
+      "height_inches": 94,
+      "location": "F-POD / CORRIDOR",
+      "mark": "008",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 283,
+      "pair": true,
+      "points_per_foot": 9,
+      "room": null,
+      "room_by": "schedule_location",
+      "room_name": "F-POD",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "120",
+          "frame_type": null,
+          "hardware_group": "2",
+          "height_inches": 94,
+          "location": "F-POD / CORRIDOR",
+          "mark": "008",
+          "material": "WD",
+          "page": 284,
+          "pair": true,
+          "size": "3'-6\" x 7'-10\"",
+          "width_inches": 42,
+          "y": 1824
+        }
+      ],
+      "sheet": "A2.1",
+      "size": "3'-6\" x 7'-10\"",
+      "width_inches": 42,
+      "x": 1630,
+      "y": 666
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        284
+      ],
+      "door_type": "B",
+      "fire_rating": "120",
+      "frame_type": null,
+      "h": 9.42972,
+      "hardware_group": "2",
+      "height_inches": 94,
+      "location": "E-POD / CORRIDOR",
+      "mark": "007",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 283,
+      "pair": true,
+      "points_per_foot": 9,
+      "room": null,
+      "room_by": "schedule_location",
+      "room_name": "E-POD",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "120",
+          "frame_type": null,
+          "hardware_group": "2",
+          "height_inches": 94,
+          "location": "E-POD / CORRIDOR",
+          "mark": "007",
+          "material": "WD",
+          "page": 284,
+          "pair": true,
+          "size": "3'-6\" x 7'-10\"",
+          "width_inches": 42,
+          "y": 1803
+        }
+      ],
+      "sheet": "A2.1",
+      "size": "3'-6\" x 7'-10\"",
+      "width_inches": 42,
+      "x": 1028,
+      "y": 675
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        284
+      ],
+      "door_type": "B",
+      "fire_rating": "120",
+      "frame_type": null,
+      "h": 9.42972,
+      "hardware_group": "2",
+      "height_inches": 94,
+      "location": "KITCHEN / CORRIDOR",
+      "mark": "009",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 283,
+      "pair": true,
+      "points_per_foot": 9,
+      "room": "K1",
+      "room_by": "schedule_location",
+      "room_name": "KITCHEN",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "120",
+          "frame_type": null,
+          "hardware_group": "2",
+          "height_inches": 94,
+          "location": "KITCHEN / CORRIDOR",
+          "mark": "009",
+          "material": "WD",
+          "page": 284,
+          "pair": true,
+          "size": "3'-6\" x 7'-10\"",
+          "width_inches": 42,
+          "y": 1844
+        }
+      ],
+      "sheet": "A2.1",
+      "size": "3'-6\" x 7'-10\"",
+      "width_inches": 42,
+      "x": 1798,
+      "y": 829
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        284
+      ],
+      "door_type": "B",
+      "fire_rating": "120",
+      "frame_type": null,
+      "h": 9.42972,
+      "hardware_group": "2",
+      "height_inches": 94,
+      "location": "C-POD / CORRIDOR",
+      "mark": "005",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 283,
+      "pair": true,
+      "points_per_foot": 9,
+      "room": null,
+      "room_by": "schedule_location",
+      "room_name": "C-POD",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "120",
+          "frame_type": null,
+          "hardware_group": "2",
+          "height_inches": 94,
+          "location": "C-POD / CORRIDOR",
+          "mark": "005",
+          "material": "WD",
+          "page": 284,
+          "pair": true,
+          "size": "3'-6\" x 7'-10\"",
+          "width_inches": 42,
+          "y": 1763
+        }
+      ],
+      "sheet": "A2.1",
+      "size": "3'-6\" x 7'-10\"",
+      "width_inches": 42,
+      "x": 760,
+      "y": 1241
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        284
+      ],
+      "door_type": "A",
+      "fire_rating": "120",
+      "frame_type": null,
+      "h": 9.42972,
+      "hardware_group": "1",
+      "height_inches": 94,
+      "location": "A-POD / LOBBY",
+      "mark": "003",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 283,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "112",
+      "room_by": "schedule_location",
+      "room_name": "LOBBY",
+      "schedule_rows": [
+        {
+          "door_type": "A",
+          "fire_rating": "120",
+          "frame_type": null,
+          "hardware_group": "1",
+          "height_inches": 94,
+          "location": "A-POD / LOBBY",
+          "mark": "003",
+          "material": "WD",
+          "page": 284,
+          "pair": false,
+          "size": "3'-6\" x 7'-10",
+          "width_inches": 42,
+          "y": 1723
+        }
+      ],
+      "sheet": "A2.1",
+      "size": "3'-6\" x 7'-10",
+      "width_inches": 42,
+      "x": 1331,
+      "y": 1481
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        284
+      ],
+      "door_type": "B",
+      "fire_rating": "120",
+      "frame_type": null,
+      "h": 9.42972,
+      "hardware_group": "2",
+      "height_inches": 94,
+      "location": "B-POD / HCORRIDOR",
+      "mark": "004",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 283,
+      "pair": true,
+      "points_per_foot": 9,
+      "room": null,
+      "room_by": "schedule_location",
+      "room_name": "B-POD",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "120",
+          "frame_type": null,
+          "hardware_group": "2",
+          "height_inches": 94,
+          "location": "B-POD / HCORRIDOR",
+          "mark": "004",
+          "material": "WD",
+          "page": 284,
+          "pair": true,
+          "size": "3'-6\" x 7'-10\"",
+          "width_inches": 42,
+          "y": 1743
+        }
+      ],
+      "sheet": "A2.1",
+      "size": "3'-6\" x 7'-10\"",
+      "width_inches": 42,
+      "x": 728,
+      "y": 1491
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        284
+      ],
+      "door_type": "B",
+      "fire_rating": "120",
+      "frame_type": null,
+      "h": 9.42972,
+      "hardware_group": "2",
+      "height_inches": 94,
+      "location": "ADMIN LOBBY HALL",
+      "mark": "001",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 283,
+      "pair": true,
+      "points_per_foot": 9,
+      "room": "112",
+      "room_by": "schedule_location",
+      "room_name": "LOBBY",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "120",
+          "frame_type": null,
+          "hardware_group": "2",
+          "height_inches": 94,
+          "location": "ADMIN LOBBY HALL",
+          "mark": "001",
+          "material": "WD",
+          "page": 284,
+          "pair": true,
+          "size": "3'-6\" x 7'-10\"",
+          "width_inches": 42,
+          "y": 1682
+        }
+      ],
+      "sheet": "A2.1",
+      "size": "3'-6\" x 7'-10\"",
+      "width_inches": 42,
+      "x": 1457,
+      "y": 1502
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        284
+      ],
+      "door_type": "A",
+      "fire_rating": "120",
+      "frame_type": null,
+      "h": 9.42972,
+      "hardware_group": "1",
+      "height_inches": 94,
+      "location": "A-POD CLASSROOM A1",
+      "mark": "002",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 283,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "A1",
+      "room_by": "schedule_location",
+      "room_name": "CLASSROOM",
+      "schedule_rows": [
+        {
+          "door_type": "A",
+          "fire_rating": "120",
+          "frame_type": null,
+          "hardware_group": "1",
+          "height_inches": 94,
+          "location": "A-POD CLASSROOM A1",
+          "mark": "002",
+          "material": "WD",
+          "page": 284,
+          "pair": false,
+          "size": "3'-6\" x 7'-10",
+          "width_inches": 42,
+          "y": 1702
+        }
+      ],
+      "sheet": "A2.1",
+      "size": "3'-6\" x 7'-10",
+      "width_inches": 42,
+      "x": 1373,
+      "y": 1504
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        286
+      ],
+      "door_type": "B",
+      "fire_rating": "120",
+      "frame_type": null,
+      "h": 9.43008,
+      "hardware_group": "2",
+      "height_inches": 94,
+      "location": "D-POD / CORRIDOR",
+      "mark": "005",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 285,
+      "pair": true,
+      "points_per_foot": 9,
+      "room": "34",
+      "room_by": "nearest_label",
+      "room_name": "ENTRY",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "120",
+          "frame_type": null,
+          "hardware_group": "2",
+          "height_inches": 94,
+          "location": "D-POD / CORRIDOR",
+          "mark": "005",
+          "material": "WD",
+          "page": 286,
+          "pair": true,
+          "size": "3'-6\" x 7'-10\"",
+          "width_inches": 42,
+          "y": 1771
+        }
+      ],
+      "sheet": "A2.1",
+      "size": "3'-6\" x 7'-10\"",
+      "unsure": true,
+      "width_inches": 42,
+      "x": 728,
+      "y": 624
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        286
+      ],
+      "door_type": "B",
+      "fire_rating": "120",
+      "frame_type": null,
+      "h": 9.43008,
+      "hardware_group": "2",
+      "height_inches": 94,
+      "location": "E-POD / CORRIDOR",
+      "mark": "006",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 285,
+      "pair": true,
+      "points_per_foot": 9,
+      "room": "40",
+      "room_by": "nearest_label",
+      "room_name": "UNISEX",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "120",
+          "frame_type": null,
+          "hardware_group": "2",
+          "height_inches": 94,
+          "location": "E-POD / CORRIDOR",
+          "mark": "006",
+          "material": "WD",
+          "page": 286,
+          "pair": true,
+          "size": "3'-6\" x 7'-10\"",
+          "width_inches": 42,
+          "y": 1791
+        }
+      ],
+      "sheet": "A2.1",
+      "size": "3'-6\" x 7'-10\"",
+      "unsure": true,
+      "width_inches": 42,
+      "x": 991,
+      "y": 669
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        286
+      ],
+      "door_type": "B",
+      "fire_rating": "120",
+      "frame_type": null,
+      "h": 9.43008,
+      "hardware_group": "2",
+      "height_inches": 94,
+      "location": "KITCHEN / CORRIDOR",
+      "mark": "008",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 285,
+      "pair": true,
+      "points_per_foot": 9,
+      "room": "57",
+      "room_by": "schedule_location",
+      "room_name": "KITCHEN",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "120",
+          "frame_type": null,
+          "hardware_group": "2",
+          "height_inches": 94,
+          "location": "KITCHEN / CORRIDOR",
+          "mark": "008",
+          "material": "WD",
+          "page": 286,
+          "pair": true,
+          "size": "3'-6\" x 7'-10\"",
+          "width_inches": 42,
+          "y": 1832
+        }
+      ],
+      "sheet": "A2.1",
+      "size": "3'-6\" x 7'-10\"",
+      "width_inches": 42,
+      "x": 1754,
+      "y": 832
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        286
+      ],
+      "door_type": "B",
+      "fire_rating": "120",
+      "frame_type": null,
+      "h": 9.43008,
+      "hardware_group": "2",
+      "height_inches": 94,
+      "location": "C-POD / CORRIDOR",
+      "mark": "004",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 285,
+      "pair": true,
+      "points_per_foot": 9,
+      "room": "27",
+      "room_by": "nearest_label",
+      "room_name": "UNISEX",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "120",
+          "frame_type": null,
+          "hardware_group": "2",
+          "height_inches": 94,
+          "location": "C-POD / CORRIDOR",
+          "mark": "004",
+          "material": "WD",
+          "page": 286,
+          "pair": true,
+          "size": "3'-6\" x 7'-10\"",
+          "width_inches": 42,
+          "y": 1751
+        }
+      ],
+      "sheet": "A2.1",
+      "size": "3'-6\" x 7'-10\"",
+      "unsure": true,
+      "width_inches": 42,
+      "x": 725,
+      "y": 1230
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        286
+      ],
+      "door_type": "B",
+      "fire_rating": "120",
+      "frame_type": null,
+      "h": 9.43008,
+      "hardware_group": "2",
+      "height_inches": 94,
+      "location": "B-POD / CORRIDOR",
+      "mark": "003",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 285,
+      "pair": true,
+      "points_per_foot": 9,
+      "room": "21",
+      "room_by": "nearest_label",
+      "room_name": "ENTRY",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "120",
+          "frame_type": null,
+          "hardware_group": "2",
+          "height_inches": 94,
+          "location": "B-POD / CORRIDOR",
+          "mark": "003",
+          "material": "WD",
+          "page": 286,
+          "pair": true,
+          "size": "3'-6\" x 7'-10\"",
+          "width_inches": 42,
+          "y": 1730
+        }
+      ],
+      "sheet": "A2.1",
+      "size": "3'-6\" x 7'-10\"",
+      "unsure": true,
+      "width_inches": 42,
+      "x": 686,
+      "y": 1486
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        286
+      ],
+      "door_type": "B",
+      "fire_rating": "120",
+      "frame_type": null,
+      "h": 9.43008,
+      "hardware_group": "2",
+      "height_inches": 94,
+      "location": "A-POD / CORRIDOR",
+      "mark": "002",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 285,
+      "pair": true,
+      "points_per_foot": 9,
+      "room": "14",
+      "room_by": "nearest_label",
+      "room_name": "UNISEX",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "120",
+          "frame_type": null,
+          "hardware_group": "2",
+          "height_inches": 94,
+          "location": "A-POD / CORRIDOR",
+          "mark": "002",
+          "material": "WD",
+          "page": 286,
+          "pair": true,
+          "size": "3'-6\" x 7'-10\"",
+          "width_inches": 42,
+          "y": 1711
+        }
+      ],
+      "sheet": "A2.1",
+      "size": "3'-6\" x 7'-10\"",
+      "unsure": true,
+      "width_inches": 42,
+      "x": 1288,
+      "y": 1489
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        286
+      ],
+      "door_type": "B",
+      "fire_rating": "120",
+      "frame_type": null,
+      "h": 9.43008,
+      "hardware_group": "2",
+      "height_inches": 94,
+      "location": "ADMIN LOBBY HALL",
+      "mark": "001",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 285,
+      "pair": true,
+      "points_per_foot": 9,
+      "room": "1",
+      "room_by": "schedule_location",
+      "room_name": "LOBBY",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "120",
+          "frame_type": null,
+          "hardware_group": "2",
+          "height_inches": 94,
+          "location": "ADMIN LOBBY HALL",
+          "mark": "001",
+          "material": "WD",
+          "page": 286,
+          "pair": true,
+          "size": "3'-6\" x 7'-10\"",
+          "width_inches": 42,
+          "y": 1690
+        }
+      ],
+      "sheet": "A2.1",
+      "size": "3'-6\" x 7'-10\"",
+      "width_inches": 42,
+      "x": 1416,
+      "y": 1503
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        288
+      ],
+      "door_type": "B",
+      "fire_rating": "120",
+      "frame_type": null,
+      "h": 9.42972,
+      "hardware_group": "2",
+      "height_inches": 94,
+      "location": "D-POD / CORRIDOR",
+      "mark": "005",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 287,
+      "pair": true,
+      "points_per_foot": 9,
+      "room": "53",
+      "room_by": "schedule_location",
+      "room_name": "LEARNING CENTER D-POD",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "120",
+          "frame_type": null,
+          "hardware_group": "2",
+          "height_inches": 94,
+          "location": "D-POD / CORRIDOR",
+          "mark": "005",
+          "material": "WD",
+          "page": 288,
+          "pair": true,
+          "size": "3'-6\" x 7'-10\"",
+          "width_inches": 42,
+          "y": 1765
+        }
+      ],
+      "sheet": "A2.1",
+      "size": "3'-6\" x 7'-10\"",
+      "width_inches": 42,
+      "x": 726,
+      "y": 614
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        288
+      ],
+      "door_type": "B",
+      "fire_rating": "120",
+      "frame_type": null,
+      "h": 9.42972,
+      "hardware_group": "2",
+      "height_inches": 94,
+      "location": "F-POD / CORRIDOR",
+      "mark": "007",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 287,
+      "pair": true,
+      "points_per_foot": 9,
+      "room": "75",
+      "room_by": "nearest_label",
+      "room_name": "UNISEX",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "120",
+          "frame_type": null,
+          "hardware_group": "2",
+          "height_inches": 94,
+          "location": "F-POD / CORRIDOR",
+          "mark": "007",
+          "material": "WD",
+          "page": 288,
+          "pair": true,
+          "size": "3'-6\" x 7'-10\"",
+          "width_inches": 42,
+          "y": 1806
+        }
+      ],
+      "sheet": "A2.1",
+      "size": "3'-6\" x 7'-10\"",
+      "unsure": true,
+      "width_inches": 42,
+      "x": 1589,
+      "y": 648
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        288
+      ],
+      "door_type": "B",
+      "fire_rating": "120",
+      "frame_type": null,
+      "h": 9.42972,
+      "hardware_group": "2",
+      "height_inches": 94,
+      "location": "E-POD / CORRIDOR",
+      "mark": "006",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 287,
+      "pair": true,
+      "points_per_foot": 9,
+      "room": null,
+      "room_by": "schedule_location",
+      "room_name": "E-POD",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "120",
+          "frame_type": null,
+          "hardware_group": "2",
+          "height_inches": 94,
+          "location": "E-POD / CORRIDOR",
+          "mark": "006",
+          "material": "WD",
+          "page": 288,
+          "pair": true,
+          "size": "3'-6\" x 7'-10\"",
+          "width_inches": 42,
+          "y": 1786
+        }
+      ],
+      "sheet": "A2.1",
+      "size": "3'-6\" x 7'-10\"",
+      "width_inches": 42,
+      "x": 988,
+      "y": 659
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        288
+      ],
+      "door_type": "B",
+      "fire_rating": "120",
+      "frame_type": null,
+      "h": 9.42972,
+      "hardware_group": "2",
+      "height_inches": 94,
+      "location": "KITCHEN / CORRIDOR",
+      "mark": "008",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 287,
+      "pair": true,
+      "points_per_foot": 9,
+      "room": "K1",
+      "room_by": "schedule_location",
+      "room_name": "KITCHEN",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "120",
+          "frame_type": null,
+          "hardware_group": "2",
+          "height_inches": 94,
+          "location": "KITCHEN / CORRIDOR",
+          "mark": "008",
+          "material": "WD",
+          "page": 288,
+          "pair": true,
+          "size": "3'-6\" x 7'-10\"",
+          "width_inches": 42,
+          "y": 1826
+        }
+      ],
+      "sheet": "A2.1",
+      "size": "3'-6\" x 7'-10\"",
+      "width_inches": 42,
+      "x": 1751,
+      "y": 822
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        288
+      ],
+      "door_type": "B",
+      "fire_rating": "120",
+      "frame_type": null,
+      "h": 9.42972,
+      "hardware_group": "2",
+      "height_inches": 94,
+      "location": "C-POD / CORRIDOR",
+      "mark": "004",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 287,
+      "pair": true,
+      "points_per_foot": 9,
+      "room": null,
+      "room_by": "schedule_location",
+      "room_name": "C-POD",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "120",
+          "frame_type": null,
+          "hardware_group": "2",
+          "height_inches": 94,
+          "location": "C-POD / CORRIDOR",
+          "mark": "004",
+          "material": "WD",
+          "page": 288,
+          "pair": true,
+          "size": "3'-6\" x 7'-10\"",
+          "width_inches": 42,
+          "y": 1745
+        }
+      ],
+      "sheet": "A2.1",
+      "size": "3'-6\" x 7'-10\"",
+      "width_inches": 42,
+      "x": 723,
+      "y": 1220
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        288
+      ],
+      "door_type": "B",
+      "fire_rating": "120",
+      "frame_type": null,
+      "h": 9.42972,
+      "hardware_group": "2",
+      "height_inches": 94,
+      "location": "B-POD / CORRIDOR",
+      "mark": "003",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 287,
+      "pair": true,
+      "points_per_foot": 9,
+      "room": null,
+      "room_by": "schedule_location",
+      "room_name": "B-POD",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "120",
+          "frame_type": null,
+          "hardware_group": "2",
+          "height_inches": 94,
+          "location": "B-POD / CORRIDOR",
+          "mark": "003",
+          "material": "WD",
+          "page": 288,
+          "pair": true,
+          "size": "3'-6\" x 7'-10\"",
+          "width_inches": 42,
+          "y": 1725
+        }
+      ],
+      "sheet": "A2.1",
+      "size": "3'-6\" x 7'-10\"",
+      "width_inches": 42,
+      "x": 683,
+      "y": 1476
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        288
+      ],
+      "door_type": "B",
+      "fire_rating": "120",
+      "frame_type": null,
+      "h": 9.42972,
+      "hardware_group": "2",
+      "height_inches": 94,
+      "location": "A-POD / CORRIDOR",
+      "mark": "002",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 287,
+      "pair": true,
+      "points_per_foot": 9,
+      "room": null,
+      "room_by": "schedule_location",
+      "room_name": "A-POD",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "120",
+          "frame_type": null,
+          "hardware_group": "2",
+          "height_inches": 94,
+          "location": "A-POD / CORRIDOR",
+          "mark": "002",
+          "material": "WD",
+          "page": 288,
+          "pair": true,
+          "size": "3'-6\" x 7'-10\"",
+          "width_inches": 42,
+          "y": 1706
+        }
+      ],
+      "sheet": "A2.1",
+      "size": "3'-6\" x 7'-10\"",
+      "width_inches": 42,
+      "x": 1285,
+      "y": 1479
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        288
+      ],
+      "door_type": "B",
+      "fire_rating": "120",
+      "frame_type": null,
+      "h": 9.42972,
+      "hardware_group": "2",
+      "height_inches": 94,
+      "location": "ADMIN LOBBY HALL",
+      "mark": "001",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 287,
+      "pair": true,
+      "points_per_foot": 9,
+      "room": "1",
+      "room_by": "schedule_location",
+      "room_name": "LOBBY",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "120",
+          "frame_type": null,
+          "hardware_group": "2",
+          "height_inches": 94,
+          "location": "ADMIN LOBBY HALL",
+          "mark": "001",
+          "material": "WD",
+          "page": 288,
+          "pair": true,
+          "size": "3'-6\" x 7'-10\"",
+          "width_inches": 42,
+          "y": 1684
+        }
+      ],
+      "sheet": "A2.1",
+      "size": "3'-6\" x 7'-10\"",
+      "width_inches": 42,
+      "x": 1414,
+      "y": 1492
+    }
+  ]
+}

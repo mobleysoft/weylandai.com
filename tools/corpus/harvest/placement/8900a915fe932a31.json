@@ -1,0 +1,463 @@
+{
+  "rooms": [
+    {
+      "name": "CLOSET",
+      "number": "102",
+      "page": 11,
+      "points_per_foot": 54,
+      "sheet": "A-101",
+      "x": 961,
+      "y": 349
+    },
+    {
+      "name": "BEDROOM",
+      "number": "101",
+      "page": 11,
+      "points_per_foot": 54,
+      "sheet": "A-101",
+      "x": 1099,
+      "y": 385
+    },
+    {
+      "name": "GARAGE",
+      "number": "105",
+      "page": 11,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 352,
+      "y": 406
+    },
+    {
+      "name": "LIVING / KITCHEN",
+      "number": "100",
+      "page": 11,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 848,
+      "y": 501
+    },
+    {
+      "name": "BATHROOM",
+      "number": "103",
+      "page": 11,
+      "points_per_foot": 54,
+      "sheet": "A-101",
+      "x": 1161,
+      "y": 525
+    },
+    {
+      "name": "UTILITY",
+      "number": "104",
+      "page": 11,
+      "points_per_foot": 54,
+      "sheet": "A-101",
+      "x": 1021,
+      "y": 568
+    },
+    {
+      "name": "GARAGE",
+      "number": "106",
+      "page": 11,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 492,
+      "y": 654
+    }
+  ],
+  "set": {
+    "label": "missouri_oa_fmdc - _F2402-01%20Final%20Bid%20Plans_0.pdf",
+    "page_count": 26,
+    "rows_total": 8,
+    "sha16": "8900a915fe932a31",
+    "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_F2402-01%20Final%20Bid%20Plans_0.pdf",
+    "tier": "agreed"
+  },
+  "sheets": [
+    {
+      "height": 1728,
+      "page": 11,
+      "points_per_foot": [
+        18,
+        54
+      ],
+      "scales": [
+        "1/4\" = 1'-0\"",
+        "3/4\" = 1'-0\"",
+        "1/4\" = 1'-0\""
+      ],
+      "sheet": "A-101",
+      "title": "FLOOR PLANS",
+      "width": 2592
+    }
+  ],
+  "summary": {
+    "marks_placed": 8,
+    "marks_total": 8,
+    "placed_rate": 1,
+    "rooms_total": 7,
+    "sheets_total": 1,
+    "sheets_with_scale": 1,
+    "unplaced": []
+  },
+  "tags": [
+    {
+      "also_on": [],
+      "door_pages": [
+        16
+      ],
+      "door_type": "D",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 9.5093,
+      "hardware_group": null,
+      "height_inches": 96,
+      "location": null,
+      "mark": "OH",
+      "matched_by": "exact",
+      "material": "HMI",
+      "page": 11,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "D",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 96,
+          "location": null,
+          "mark": "OH",
+          "material": "HMI",
+          "page": 16,
+          "pair": false,
+          "size": "10' - 0\" x 8' - 0\"",
+          "width_inches": 120,
+          "y": 1386
+        }
+      ],
+      "sheet": "A-101",
+      "size": "10' - 0\" x 8' - 0\"",
+      "width_inches": 120,
+      "x": 357,
+      "y": 147
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        16
+      ],
+      "door_type": "C",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 9.5093,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "102",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 11,
+      "pair": false,
+      "points_per_foot": 54,
+      "room": "102",
+      "room_by": "nearest_label",
+      "room_name": "CLOSET",
+      "schedule_rows": [
+        {
+          "door_type": "C",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "102",
+          "material": "SCW",
+          "page": 16,
+          "pair": false,
+          "size": "5' - 0\" x 6' - 8\"",
+          "width_inches": 60,
+          "y": 1330
+        }
+      ],
+      "sheet": "A-101",
+      "size": "5' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 60,
+      "x": 1010,
+      "y": 338
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        16
+      ],
+      "door_type": "B",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 9.5093,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "101",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 11,
+      "pair": false,
+      "points_per_foot": 54,
+      "room": "102",
+      "room_by": "nearest_label",
+      "room_name": "CLOSET",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "101",
+          "material": "SCW",
+          "page": 16,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 1319
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 983,
+      "y": 441
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        16
+      ],
+      "door_type": "B",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 9.5093,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "103",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 11,
+      "pair": false,
+      "points_per_foot": 54,
+      "room": "103",
+      "room_by": "nearest_label",
+      "room_name": "BATHROOM",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "103",
+          "material": "SCW",
+          "page": 16,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 1342
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1169,
+      "y": 477
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        16
+      ],
+      "door_type": "A",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 9.5093,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "105",
+      "matched_by": "exact",
+      "material": "ALU CLAD WOOD",
+      "page": 11,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "106",
+      "room_by": "nearest_label",
+      "room_name": "GARAGE",
+      "schedule_rows": [
+        {
+          "door_type": "A",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "105",
+          "material": "ALU CLAD WOOD",
+          "page": 16,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 1363
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 525,
+      "y": 504
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        16
+      ],
+      "door_type": "A",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 9.5093,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "100",
+      "matched_by": "exact",
+      "material": "ALU CLAD WOOD",
+      "page": 11,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "100",
+      "room_by": "nearest_label",
+      "room_name": "LIVING / KITCHEN",
+      "schedule_rows": [
+        {
+          "door_type": "A",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "100",
+          "material": "ALU CLAD WOOD",
+          "page": 16,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 1309
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 731,
+      "y": 504
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        16
+      ],
+      "door_type": "B",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 9.5093,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "104",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 11,
+      "pair": false,
+      "points_per_foot": 54,
+      "room": "104",
+      "room_by": "nearest_label",
+      "room_name": "UTILITY",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "104",
+          "material": "SCW",
+          "page": 16,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 1352
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 983,
+      "y": 514
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        16
+      ],
+      "door_type": "B",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 9.5093,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "106",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 11,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "106",
+      "room_by": "nearest_label",
+      "room_name": "GARAGE",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "106",
+          "material": "SCW",
+          "page": 16,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 1373
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 484,
+      "y": 590
+    }
+  ]
+}

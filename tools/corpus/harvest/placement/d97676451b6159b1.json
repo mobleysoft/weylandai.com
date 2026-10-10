@@ -1,0 +1,97 @@
+{
+  "rooms": [
+    {
+      "name": "CROWDER STATE PARK 76 NORTHWEST HWY 128",
+      "number": "5107",
+      "page": 16,
+      "points_per_foot": 13.5,
+      "sheet": "A-2",
+      "x": 2417,
+      "y": 1106
+    },
+    {
+      "name": "CROWDER STATE PARK 76 NORTHWEST HWY 128",
+      "number": "5107",
+      "page": 17,
+      "points_per_foot": 13.5,
+      "sheet": "A-3",
+      "x": 2417,
+      "y": 1106
+    }
+  ],
+  "set": {
+    "label": "missouri_oa_fmdc - _X2534-01%20Final%20Bid%20Plans.pdf",
+    "page_count": 39,
+    "rows_total": 4,
+    "sha16": "d97676451b6159b1",
+    "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2534-01%20Final%20Bid%20Plans.pdf",
+    "tier": "oracle-checked"
+  },
+  "sheets": [
+    {
+      "height": 1728,
+      "page": 16,
+      "points_per_foot": [
+        13.5,
+        36
+      ],
+      "scales": [
+        "1/2\" = 1'-0\"",
+        "1/2\" = 1'-0\"",
+        "3/16\" = 1'-0\"",
+        "3/16\" = 1'-0\""
+      ],
+      "sheet": "A-2",
+      "title": "CABIN FLOOR PLAN (1)",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 17,
+      "points_per_foot": [
+        13.5,
+        36
+      ],
+      "scales": [
+        "1/2\" = 1'-0\"",
+        "1/2\" = 1'-0\"",
+        "3/16\" = 1'-0\"",
+        "3/16\" = 1'-0\""
+      ],
+      "sheet": "A-3",
+      "title": "CABIN FLOOR PLAN (2)",
+      "width": 2592
+    }
+  ],
+  "summary": {
+    "marks_placed": 0,
+    "marks_total": 4,
+    "placed_rate": 0,
+    "rooms_total": 2,
+    "sheets_total": 2,
+    "sheets_with_scale": 2,
+    "unplaced": [
+      {
+        "mark": "101",
+        "page": 22,
+        "reason": "mark 101 (schedule p.22) not tagged on any plan"
+      },
+      {
+        "mark": "102",
+        "page": 22,
+        "reason": "mark 102 (schedule p.22) not tagged on any plan"
+      },
+      {
+        "mark": "103",
+        "page": 22,
+        "reason": "mark 103 (schedule p.22) not tagged on any plan"
+      },
+      {
+        "mark": "104",
+        "page": 22,
+        "reason": "mark 104 (schedule p.22) not tagged on any plan"
+      }
+    ]
+  },
+  "tags": []
+}

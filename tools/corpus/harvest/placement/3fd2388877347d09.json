@@ -1,0 +1,504 @@
+{
+  "rooms": [
+    {
+      "name": "VAULT",
+      "number": "10",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 1583,
+      "y": 347
+    },
+    {
+      "name": "ARMS",
+      "number": "11",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 1710,
+      "y": 347
+    },
+    {
+      "name": "STOR",
+      "number": "09",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 1172,
+      "y": 350
+    },
+    {
+      "name": "STOR",
+      "number": "12",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 1790,
+      "y": 350
+    },
+    {
+      "name": "CLASS ROOM",
+      "number": "08",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 560,
+      "y": 369
+    },
+    {
+      "name": "STOR",
+      "number": "13",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 1940,
+      "y": 369
+    },
+    {
+      "name": "OFFICE",
+      "number": "07",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 479,
+      "y": 516
+    },
+    {
+      "name": "OFFICE",
+      "number": "06",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 479,
+      "y": 634
+    },
+    {
+      "name": "DRILL HALL",
+      "number": "02",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 1076,
+      "y": 736
+    },
+    {
+      "name": "VESTIBULE",
+      "number": "01",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 479,
+      "y": 742
+    },
+    {
+      "name": "OFFICE",
+      "number": "05",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 479,
+      "y": 850
+    },
+    {
+      "name": "OFFICE",
+      "number": "04",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 479,
+      "y": 964
+    },
+    {
+      "name": "WOMAN'S ROOM",
+      "number": "16",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 1282,
+      "y": 1048
+    },
+    {
+      "name": "MEN'S ROOM",
+      "number": "15",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 1475,
+      "y": 1048
+    },
+    {
+      "name": "KITCHEN",
+      "number": "17",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 1104,
+      "y": 1074
+    },
+    {
+      "name": "BUNK ROOM",
+      "number": "14",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 1772,
+      "y": 1104
+    },
+    {
+      "name": "UTILITY",
+      "number": "18",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 882,
+      "y": 1111
+    },
+    {
+      "name": "MEETING ROOM",
+      "number": "04",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 401,
+      "y": 1119
+    },
+    {
+      "name": "OFFICES",
+      "number": "03",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 652,
+      "y": 1119
+    },
+    {
+      "name": "LEVEL 1",
+      "number": "1",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 1413,
+      "y": 1426
+    },
+    {
+      "name": "NEW CONSTRUCTION KEYNOTES",
+      "number": "1",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 1896,
+      "y": 1445
+    },
+    {
+      "name": "NEW CONSTRUCTION KEYNOTES",
+      "number": "2",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 1896,
+      "y": 1451
+    },
+    {
+      "name": "PROJECT # T2502-01",
+      "number": "6261",
+      "page": 10,
+      "points_per_foot": 27,
+      "sheet": "A-500",
+      "x": 2443,
+      "y": 1107
+    }
+  ],
+  "set": {
+    "label": "missouri_oa_fmdc - _T2502-01%20-%20Final%20Plans.pdf",
+    "page_count": 37,
+    "rows_total": 35,
+    "sha16": "3fd2388877347d09",
+    "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2502-01%20-%20Final%20Plans.pdf",
+    "tier": "oracle-checked"
+  },
+  "sheets": [
+    {
+      "height": 1728,
+      "page": 7,
+      "points_per_foot": [
+        9
+      ],
+      "scales": [
+        "1/8\" = 1'-0\""
+      ],
+      "sheet": "A-101",
+      "title": "FLOOR PLAN",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 10,
+      "points_per_foot": [
+        27
+      ],
+      "scales": [
+        "3/8\" = 1'-0\"",
+        "3/8\" = 1'-0\""
+      ],
+      "sheet": "A-500",
+      "title": "PLAN DETAILS",
+      "width": 2592
+    }
+  ],
+  "summary": {
+    "marks_placed": 5,
+    "marks_total": 9,
+    "placed_rate": 0.5555555555555556,
+    "rooms_total": 23,
+    "sheets_total": 2,
+    "sheets_with_scale": 2,
+    "unplaced": [
+      {
+        "mark": "OH01",
+        "page": 13,
+        "reason": "mark OH01 (schedule p.13) not tagged on any plan"
+      },
+      {
+        "mark": "OH02",
+        "page": 13,
+        "reason": "mark OH02 (schedule p.13) not tagged on any plan"
+      },
+      {
+        "mark": "OH03",
+        "page": 13,
+        "reason": "mark OH03 (schedule p.13) not tagged on any plan"
+      },
+      {
+        "mark": "OH04",
+        "page": 13,
+        "reason": "mark OH04 (schedule p.13) not tagged on any plan"
+      }
+    ]
+  },
+  "tags": [
+    {
+      "also_on": [],
+      "door_pages": [
+        13
+      ],
+      "door_type": "WOVEN WIRE",
+      "fire_rating": null,
+      "frame_type": "GALVANIZED STEEL",
+      "h": 9.574676170128,
+      "hardware_group": "2",
+      "height_inches": null,
+      "location": null,
+      "mark": "SE01",
+      "matched_by": "exact",
+      "material": null,
+      "page": 7,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "12",
+      "room_by": "nearest_label",
+      "room_name": "STOR",
+      "schedule_rows": [
+        {
+          "door_type": "WOVEN WIRE",
+          "fire_rating": null,
+          "frame_type": "GALVANIZED STEEL",
+          "hardware_group": "2",
+          "height_inches": null,
+          "location": null,
+          "mark": "SE01",
+          "material": null,
+          "page": 13,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\" WELDED",
+          "width_inches": 36,
+          "y": 239
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3'-0\" x 7'-0\" WELDED",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1811,
+      "y": 424
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        13
+      ],
+      "door_type": "STOREFRONT",
+      "fire_rating": null,
+      "frame_type": "ALUMINUM",
+      "h": 9.574676170128,
+      "hardware_group": "3",
+      "height_inches": 84,
+      "location": null,
+      "mark": "001",
+      "matched_by": "exact",
+      "material": null,
+      "page": 7,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "01",
+      "room_by": "nearest_label",
+      "room_name": "VESTIBULE",
+      "schedule_rows": [
+        {
+          "door_type": "STOREFRONT",
+          "fire_rating": null,
+          "frame_type": "ALUMINUM",
+          "hardware_group": "3",
+          "height_inches": 84,
+          "location": null,
+          "mark": "001",
+          "material": null,
+          "page": 13,
+          "pair": false,
+          "size": "3'-0\"/2'-6\" x 7'-0\"",
+          "width_inches": null,
+          "y": 152
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3'-0\"/2'-6\" x 7'-0\"",
+      "unsure": true,
+      "width_inches": null,
+      "x": 400,
+      "y": 748
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        13
+      ],
+      "door_type": "METAL/FPR",
+      "fire_rating": null,
+      "frame_type": "HM/FRP",
+      "h": 9.574676170128,
+      "hardware_group": "1",
+      "height_inches": null,
+      "location": null,
+      "mark": "004",
+      "matched_by": "exact",
+      "material": null,
+      "page": 7,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "METAL/FPR",
+          "fire_rating": null,
+          "frame_type": "HM/FRP",
+          "hardware_group": "1",
+          "height_inches": null,
+          "location": null,
+          "mark": "004",
+          "material": null,
+          "page": 13,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\" HOLLOW",
+          "width_inches": 36,
+          "y": 182
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3'-0\" x 7'-0\" HOLLOW",
+      "width_inches": 36,
+      "x": 1601,
+      "y": 773
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        13
+      ],
+      "door_type": "STOREFRONT",
+      "fire_rating": null,
+      "frame_type": "ALUMINUM",
+      "h": 9.574676170128,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "002",
+      "matched_by": "exact",
+      "material": null,
+      "page": 7,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "04",
+      "room_by": "nearest_label",
+      "room_name": "MEETING ROOM",
+      "schedule_rows": [
+        {
+          "door_type": "STOREFRONT",
+          "fire_rating": null,
+          "frame_type": "ALUMINUM",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "002",
+          "material": null,
+          "page": 13,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 163
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3'-0\" x 7'-0\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 363,
+      "y": 1015
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        13
+      ],
+      "door_type": "METAL/FRP",
+      "fire_rating": null,
+      "frame_type": "HM/FRP",
+      "h": 9.574676170128,
+      "hardware_group": "1",
+      "height_inches": null,
+      "location": null,
+      "mark": "003",
+      "matched_by": "exact",
+      "material": null,
+      "page": 7,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "17",
+      "room_by": "nearest_label",
+      "room_name": "KITCHEN",
+      "schedule_rows": [
+        {
+          "door_type": "METAL/FRP",
+          "fire_rating": null,
+          "frame_type": "HM/FRP",
+          "hardware_group": "1",
+          "height_inches": null,
+          "location": null,
+          "mark": "003",
+          "material": null,
+          "page": 13,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\" HOLLOW",
+          "width_inches": 36,
+          "y": 173
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3'-0\" x 7'-0\" HOLLOW",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1019,
+      "y": 1208
+    }
+  ]
+}

@@ -1,0 +1,1232 @@
+{
+  "rooms": [
+    {
+      "name": "OFFICE",
+      "number": "207",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A101",
+      "x": 329,
+      "y": 279
+    },
+    {
+      "name": "NEW OFFICE",
+      "number": "206",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A101",
+      "x": 455,
+      "y": 279
+    },
+    {
+      "name": "OFFICE",
+      "number": "205",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A101",
+      "x": 580,
+      "y": 279
+    },
+    {
+      "name": "NEW OFFICE",
+      "number": "204",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A101",
+      "x": 688,
+      "y": 279
+    },
+    {
+      "name": "NEW OFFICE",
+      "number": "203",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A101",
+      "x": 785,
+      "y": 279
+    },
+    {
+      "name": "CORRIDOR",
+      "number": "202",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A101",
+      "x": 596,
+      "y": 370
+    },
+    {
+      "name": "CLOSET",
+      "number": "3",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A101",
+      "x": 470,
+      "y": 447
+    },
+    {
+      "name": "CLOSET",
+      "number": "4",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A101",
+      "x": 807,
+      "y": 447
+    },
+    {
+      "name": "CLOSET",
+      "number": "208",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A101",
+      "x": 445,
+      "y": 449
+    },
+    {
+      "name": "CLOSET",
+      "number": "211",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A101",
+      "x": 782,
+      "y": 449
+    },
+    {
+      "name": "CORRIDOR",
+      "number": "201",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A101",
+      "x": 904,
+      "y": 489
+    },
+    {
+      "name": "CORRIDOR",
+      "number": "202",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A101",
+      "x": 322,
+      "y": 563
+    },
+    {
+      "name": "CONFERENCE ROOM",
+      "number": "210",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A101",
+      "x": 606,
+      "y": 563
+    },
+    {
+      "name": "OPEN OFFICES",
+      "number": "209",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A101",
+      "x": 479,
+      "y": 824
+    },
+    {
+      "name": "DATA",
+      "number": "108",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A101",
+      "x": 773,
+      "y": 1143
+    },
+    {
+      "name": "PROJECT # W2501-01",
+      "number": "5001",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A101",
+      "x": 2460,
+      "y": 1149
+    },
+    {
+      "name": "CONFERENCE",
+      "number": "107",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A101",
+      "x": 662,
+      "y": 1178
+    },
+    {
+      "name": "OPEN OFFICES",
+      "number": "105",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A101",
+      "x": 531,
+      "y": 1193
+    },
+    {
+      "name": "STORAGE",
+      "number": "109",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A101",
+      "x": 791,
+      "y": 1251
+    },
+    {
+      "name": "OFFICE",
+      "number": "106",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A101",
+      "x": 326,
+      "y": 1286
+    },
+    {
+      "name": "BREAK",
+      "number": "100",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A101",
+      "x": 677,
+      "y": 1362
+    },
+    {
+      "name": "101RESTROOM",
+      "number": "101",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A101",
+      "x": 775,
+      "y": 1376
+    },
+    {
+      "name": "VAULT",
+      "number": "103",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A101",
+      "x": 612,
+      "y": 1403
+    },
+    {
+      "name": "VAULT",
+      "number": "104",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A101",
+      "x": 438,
+      "y": 1429
+    },
+    {
+      "name": "EQUIPMENT",
+      "number": "102",
+      "page": 7,
+      "points_per_foot": 9,
+      "sheet": "A101",
+      "x": 642,
+      "y": 1524
+    },
+    {
+      "name": "AssetTagID",
+      "number": "GB1",
+      "page": 10,
+      "points_per_foot": 18,
+      "sheet": "A602",
+      "x": 178,
+      "y": 598
+    },
+    {
+      "name": "AssetTagID GB1",
+      "number": "GB2",
+      "page": 10,
+      "points_per_foot": 18,
+      "sheet": "A602",
+      "x": 178,
+      "y": 611
+    },
+    {
+      "name": "GB1 GB2",
+      "number": "GB3",
+      "page": 10,
+      "points_per_foot": 18,
+      "sheet": "A602",
+      "x": 178,
+      "y": 624
+    },
+    {
+      "name": "GB2 GB3",
+      "number": "MH5",
+      "page": 10,
+      "points_per_foot": 18,
+      "sheet": "A602",
+      "x": 178,
+      "y": 637
+    },
+    {
+      "name": "GB3 MH5",
+      "number": "MI1",
+      "page": 10,
+      "points_per_foot": 18,
+      "sheet": "A602",
+      "x": 176,
+      "y": 651
+    },
+    {
+      "name": "MH5 MI1",
+      "number": "ND1",
+      "page": 10,
+      "points_per_foot": 18,
+      "sheet": "A602",
+      "x": 178,
+      "y": 664
+    },
+    {
+      "name": "SD1",
+      "number": "TP1",
+      "page": 10,
+      "points_per_foot": 18,
+      "sheet": "A602",
+      "x": 177,
+      "y": 725
+    },
+    {
+      "name": "STORAGE",
+      "number": "109",
+      "page": 10,
+      "points_per_foot": 18,
+      "sheet": "A602",
+      "x": 359,
+      "y": 979
+    },
+    {
+      "name": "RESTROOM",
+      "number": "101",
+      "page": 10,
+      "points_per_foot": 18,
+      "sheet": "A602",
+      "x": 292,
+      "y": 1064
+    },
+    {
+      "name": "RESTROOM",
+      "number": "101",
+      "page": 10,
+      "points_per_foot": 18,
+      "sheet": "A602",
+      "x": 264,
+      "y": 1065
+    },
+    {
+      "name": "SD1",
+      "number": "H6",
+      "page": 10,
+      "points_per_foot": 18,
+      "sheet": "A602",
+      "x": 346,
+      "y": 1097
+    },
+    {
+      "name": "SD1",
+      "number": "GB1",
+      "page": 10,
+      "points_per_foot": 18,
+      "sheet": "A602",
+      "x": 363,
+      "y": 1103
+    },
+    {
+      "name": "GB3",
+      "number": "GB2",
+      "page": 10,
+      "points_per_foot": 18,
+      "sheet": "A602",
+      "x": 318,
+      "y": 1151
+    },
+    {
+      "name": "OFFICE",
+      "number": "207",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A901",
+      "x": 307,
+      "y": 155
+    },
+    {
+      "name": "NEW OFFICE",
+      "number": "206",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A901",
+      "x": 435,
+      "y": 155
+    },
+    {
+      "name": "OFFICE",
+      "number": "205",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A901",
+      "x": 555,
+      "y": 155
+    },
+    {
+      "name": "NEW OFFICE",
+      "number": "204",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A901",
+      "x": 663,
+      "y": 155
+    },
+    {
+      "name": "NEW OFFICE",
+      "number": "203",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A901",
+      "x": 759,
+      "y": 155
+    },
+    {
+      "name": "CORRIDOR",
+      "number": "202",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A901",
+      "x": 577,
+      "y": 237
+    },
+    {
+      "name": "CLOSET",
+      "number": "2",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A901",
+      "x": 780,
+      "y": 327
+    },
+    {
+      "name": "CLOSET",
+      "number": "1",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A901",
+      "x": 396,
+      "y": 330
+    },
+    {
+      "name": "CLOSET",
+      "number": "208",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A901",
+      "x": 421,
+      "y": 331
+    },
+    {
+      "name": "CLOSET",
+      "number": "211",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A901",
+      "x": 754,
+      "y": 331
+    },
+    {
+      "name": "CORRIDOR",
+      "number": "201",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A901",
+      "x": 879,
+      "y": 344
+    },
+    {
+      "name": "CORRIDOR",
+      "number": "202",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A901",
+      "x": 304,
+      "y": 428
+    },
+    {
+      "name": "CONFERENCE ROOM",
+      "number": "210",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A901",
+      "x": 580,
+      "y": 443
+    },
+    {
+      "name": "OPEN OFFICES",
+      "number": "209",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A901",
+      "x": 449,
+      "y": 703
+    },
+    {
+      "name": "ROOM NO.",
+      "number": "100",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A901",
+      "x": 1006,
+      "y": 900
+    },
+    {
+      "name": "BASE",
+      "number": "TB2",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A901",
+      "x": 1270,
+      "y": 900
+    },
+    {
+      "name": "BASE TB2",
+      "number": "TB1",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A901",
+      "x": 1270,
+      "y": 913
+    },
+    {
+      "name": "TB2 TB1",
+      "number": "B1",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A901",
+      "x": 1268,
+      "y": 926
+    },
+    {
+      "name": "DATA",
+      "number": "108",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A901",
+      "x": 783,
+      "y": 1093
+    },
+    {
+      "name": "CONFERENCE",
+      "number": "107",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A901",
+      "x": 662,
+      "y": 1098
+    },
+    {
+      "name": "OPEN OFFICES",
+      "number": "105",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A901",
+      "x": 495,
+      "y": 1148
+    },
+    {
+      "name": "PROJECT # W2501-01",
+      "number": "5001",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A901",
+      "x": 2460,
+      "y": 1149
+    },
+    {
+      "name": "STORAGE",
+      "number": "109",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A901",
+      "x": 792,
+      "y": 1200
+    },
+    {
+      "name": "OFFICE",
+      "number": "106",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A901",
+      "x": 329,
+      "y": 1225
+    },
+    {
+      "name": "MARK CASEWORK",
+      "number": "PL1",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A901",
+      "x": 1007,
+      "y": 1240
+    },
+    {
+      "name": "CASEWORK PL1",
+      "number": "SS1",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A901",
+      "x": 1008,
+      "y": 1253
+    },
+    {
+      "name": "SS1 CEILINGS",
+      "number": "C1",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A901",
+      "x": 1006,
+      "y": 1279
+    },
+    {
+      "name": "RESTROOM",
+      "number": "101",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A901",
+      "x": 779,
+      "y": 1325
+    },
+    {
+      "name": "BREAK",
+      "number": "100",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A901",
+      "x": 694,
+      "y": 1332
+    },
+    {
+      "name": "PAINT",
+      "number": "P1",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A901",
+      "x": 1005,
+      "y": 1371
+    },
+    {
+      "name": "EQUIPMENT",
+      "number": "102",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A901",
+      "x": 641,
+      "y": 1473
+    },
+    {
+      "name": "TILE AND FLOORING",
+      "number": "B1",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A901",
+      "x": 1005,
+      "y": 1515
+    },
+    {
+      "name": "SC",
+      "number": "T1",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A901",
+      "x": 1005,
+      "y": 1568
+    },
+    {
+      "name": "TB1",
+      "number": "TB2",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A901",
+      "x": 1008,
+      "y": 1633
+    }
+  ],
+  "set": {
+    "label": "missouri_oa_fmdc - W2501-01_5001_7815001008_Bid%20Documents_01-07-2026.pdf",
+    "page_count": 28,
+    "rows_total": 11,
+    "sha16": "6742faed77cfde33",
+    "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/W2501-01_5001_7815001008_Bid%20Documents_01-07-2026.pdf",
+    "tier": "agreed"
+  },
+  "sheets": [
+    {
+      "height": 1728,
+      "page": 7,
+      "points_per_foot": [
+        9
+      ],
+      "scales": [
+        "SCALE: 1/8\" = 1'-0\"",
+        "SCALE: 1/8\" = 1'-0\""
+      ],
+      "sheet": "A101",
+      "title": "FLOOR PLANS",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 10,
+      "points_per_foot": [
+        18,
+        27,
+        36
+      ],
+      "scales": [
+        "SCALE: 1/2\" = 1'-0\"",
+        "SCALE: 1/4\" = 1'-0\"",
+        "SCALE: 3/8\" = 1'-0\"",
+        "SCALE: 3/8\" = 1'-0\"",
+        "SCALE: 3/8\" = 1'-0\""
+      ],
+      "sheet": "A602",
+      "title": "PLANS AND ELEVATIONS",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 12,
+      "points_per_foot": [
+        9
+      ],
+      "scales": [
+        "SCALE: 1/8\" = 1'-0\"",
+        "SCALE: 1/8\" = 1'-0\""
+      ],
+      "sheet": "A901",
+      "title": "PLANS & SCHEDULE",
+      "width": 2592
+    }
+  ],
+  "summary": {
+    "marks_placed": 11,
+    "marks_total": 11,
+    "placed_rate": 1,
+    "rooms_total": 72,
+    "sheets_total": 3,
+    "sheets_with_scale": 3,
+    "unplaced": []
+  },
+  "tags": [
+    {
+      "also_on": [
+        "A901"
+      ],
+      "door_pages": [
+        8
+      ],
+      "door_type": "P00WD",
+      "fire_rating": null,
+      "frame_type": "F00HM",
+      "h": 9.5093,
+      "hardware_group": "6",
+      "height_inches": 84,
+      "location": null,
+      "mark": "201",
+      "matched_by": "exact",
+      "material": null,
+      "page": 7,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "206",
+      "room_by": "nearest_label",
+      "room_name": "NEW OFFICE",
+      "schedule_rows": [
+        {
+          "door_type": "P00WD",
+          "fire_rating": null,
+          "frame_type": "F00HM",
+          "hardware_group": "6",
+          "height_inches": 84,
+          "location": null,
+          "mark": "201",
+          "material": null,
+          "page": 8,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 974
+        }
+      ],
+      "sheet": "A101",
+      "size": "3'-0\" x 7'-0\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 507,
+      "y": 329
+    },
+    {
+      "also_on": [
+        "A901"
+      ],
+      "door_pages": [
+        8
+      ],
+      "door_type": "P00WD",
+      "fire_rating": null,
+      "frame_type": "F00HM",
+      "h": 9.5093,
+      "hardware_group": "6",
+      "height_inches": 84,
+      "location": null,
+      "mark": "202",
+      "matched_by": "exact",
+      "material": null,
+      "page": 7,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "204",
+      "room_by": "nearest_label",
+      "room_name": "NEW OFFICE",
+      "schedule_rows": [
+        {
+          "door_type": "P00WD",
+          "fire_rating": null,
+          "frame_type": "F00HM",
+          "hardware_group": "6",
+          "height_inches": 84,
+          "location": null,
+          "mark": "202",
+          "material": null,
+          "page": 8,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 984
+        }
+      ],
+      "sheet": "A101",
+      "size": "3'-0\" x 7'-0\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 728,
+      "y": 329
+    },
+    {
+      "also_on": [
+        "A901"
+      ],
+      "door_pages": [
+        8
+      ],
+      "door_type": "P00WD",
+      "fire_rating": null,
+      "frame_type": "F00HM",
+      "h": 9.5093,
+      "hardware_group": "6 PANEL",
+      "height_inches": 84,
+      "location": null,
+      "mark": "203",
+      "matched_by": "exact",
+      "material": null,
+      "page": 7,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "203",
+      "room_by": "nearest_label",
+      "room_name": "NEW OFFICE",
+      "schedule_rows": [
+        {
+          "door_type": "P00WD",
+          "fire_rating": null,
+          "frame_type": "F00HM",
+          "hardware_group": "6 PANEL",
+          "height_inches": 84,
+          "location": null,
+          "mark": "203",
+          "material": null,
+          "page": 8,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 995
+        }
+      ],
+      "sheet": "A101",
+      "size": "3'-0\" x 7'-0\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 766,
+      "y": 329
+    },
+    {
+      "also_on": [
+        "A901"
+      ],
+      "door_pages": [
+        8
+      ],
+      "door_type": "P30AL",
+      "fire_rating": null,
+      "frame_type": "FCW00AL",
+      "h": 9.5093,
+      "hardware_group": "4",
+      "height_inches": 84,
+      "location": null,
+      "mark": "107",
+      "matched_by": "exact",
+      "material": null,
+      "page": 7,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "107",
+      "room_by": "nearest_label",
+      "room_name": "CONFERENCE",
+      "schedule_rows": [
+        {
+          "door_type": "P30AL",
+          "fire_rating": null,
+          "frame_type": "FCW00AL",
+          "hardware_group": "4",
+          "height_inches": 84,
+          "location": null,
+          "mark": "107",
+          "material": null,
+          "page": 8,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 944
+        }
+      ],
+      "sheet": "A101",
+      "size": "3'-0\" x 7'-0\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 633,
+      "y": 1268
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        8
+      ],
+      "door_type": "P21WD",
+      "fire_rating": null,
+      "frame_type": "F00HM",
+      "h": 9.5093,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "100A",
+      "matched_by": "exact",
+      "material": null,
+      "page": 7,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "100",
+      "room_by": "tag_number",
+      "room_name": "BREAK",
+      "schedule_rows": [
+        {
+          "door_type": "P21WD",
+          "fire_rating": null,
+          "frame_type": "F00HM",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "100A",
+          "material": null,
+          "page": 8,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 855
+        }
+      ],
+      "sheet": "A101",
+      "size": "3'-0\" x 7'-0\"",
+      "width_inches": 36,
+      "x": 756,
+      "y": 1302
+    },
+    {
+      "also_on": [
+        "A901"
+      ],
+      "door_pages": [
+        8
+      ],
+      "door_type": "P30AL",
+      "fire_rating": null,
+      "frame_type": "FCW00AL",
+      "h": 9.5093,
+      "hardware_group": "4",
+      "height_inches": 84,
+      "location": null,
+      "mark": "106",
+      "matched_by": "exact",
+      "material": null,
+      "page": 7,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "106",
+      "room_by": "nearest_label",
+      "room_name": "OFFICE",
+      "schedule_rows": [
+        {
+          "door_type": "P30AL",
+          "fire_rating": null,
+          "frame_type": "FCW00AL",
+          "hardware_group": "4",
+          "height_inches": 84,
+          "location": null,
+          "mark": "106",
+          "material": null,
+          "page": 8,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 932
+        }
+      ],
+      "sheet": "A101",
+      "size": "3'-0\" x 7'-0\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 372,
+      "y": 1314
+    },
+    {
+      "also_on": [
+        "A901"
+      ],
+      "door_pages": [
+        8
+      ],
+      "door_type": "P30AL",
+      "fire_rating": null,
+      "frame_type": "FCW00AL",
+      "h": 9.5093,
+      "hardware_group": "4",
+      "height_inches": 84,
+      "location": null,
+      "mark": "105",
+      "matched_by": "exact",
+      "material": null,
+      "page": 7,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "100",
+      "room_by": "nearest_label",
+      "room_name": "BREAK",
+      "schedule_rows": [
+        {
+          "door_type": "P30AL",
+          "fire_rating": null,
+          "frame_type": "FCW00AL",
+          "hardware_group": "4",
+          "height_inches": 84,
+          "location": null,
+          "mark": "105",
+          "material": null,
+          "page": 8,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 918
+        }
+      ],
+      "sheet": "A101",
+      "size": "3'-0\" x 7'-0\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 605,
+      "y": 1314
+    },
+    {
+      "also_on": [
+        "A602",
+        "A901"
+      ],
+      "door_pages": [
+        8
+      ],
+      "door_type": "P00WD",
+      "fire_rating": null,
+      "frame_type": "F00HM",
+      "h": 9.5093,
+      "hardware_group": "5",
+      "height_inches": 84,
+      "location": null,
+      "mark": "109",
+      "matched_by": "exact",
+      "material": null,
+      "page": 7,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "101",
+      "room_by": "nearest_label",
+      "room_name": "101RESTROOM",
+      "schedule_rows": [
+        {
+          "door_type": "P00WD",
+          "fire_rating": null,
+          "frame_type": "F00HM",
+          "hardware_group": "5",
+          "height_inches": 84,
+          "location": null,
+          "mark": "109",
+          "material": null,
+          "page": 8,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 959
+        }
+      ],
+      "sheet": "A101",
+      "size": "3'-0\" x 7'-0\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 763,
+      "y": 1327
+    },
+    {
+      "also_on": [
+        "A901"
+      ],
+      "door_pages": [
+        8
+      ],
+      "door_type": "P00WD",
+      "fire_rating": null,
+      "frame_type": "F00HM",
+      "h": 9.5093,
+      "hardware_group": "3",
+      "height_inches": 84,
+      "location": null,
+      "mark": "101",
+      "matched_by": "exact",
+      "material": null,
+      "page": 7,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "101",
+      "room_by": "nearest_label",
+      "room_name": "101RESTROOM",
+      "schedule_rows": [
+        {
+          "door_type": "P00WD",
+          "fire_rating": null,
+          "frame_type": "F00HM",
+          "hardware_group": "3",
+          "height_inches": 84,
+          "location": null,
+          "mark": "101",
+          "material": null,
+          "page": 8,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 893
+        }
+      ],
+      "sheet": "A101",
+      "size": "3'-0\" x 7'-0\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 746,
+      "y": 1364
+    },
+    {
+      "also_on": [
+        "A901"
+      ],
+      "door_pages": [
+        8
+      ],
+      "door_type": "P00HM",
+      "fire_rating": null,
+      "frame_type": "F00HM",
+      "h": 9.5093,
+      "hardware_group": "7",
+      "height_inches": 84,
+      "location": null,
+      "mark": "102",
+      "matched_by": "exact",
+      "material": null,
+      "page": 7,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "102",
+      "room_by": "nearest_label",
+      "room_name": "EQUIPMENT",
+      "schedule_rows": [
+        {
+          "door_type": "P00HM",
+          "fire_rating": null,
+          "frame_type": "F00HM",
+          "hardware_group": "7",
+          "height_inches": 84,
+          "location": null,
+          "mark": "102",
+          "material": null,
+          "page": 8,
+          "pair": false,
+          "size": "2'-6\" x 7'-0\"",
+          "width_inches": 30,
+          "y": 906
+        }
+      ],
+      "sheet": "A101",
+      "size": "2'-6\" x 7'-0\"",
+      "unsure": true,
+      "width_inches": 30,
+      "x": 676,
+      "y": 1473
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        8
+      ],
+      "door_type": "P30AL",
+      "fire_rating": null,
+      "frame_type": "F00AL",
+      "h": 9.5093,
+      "hardware_group": "2",
+      "height_inches": 96,
+      "location": null,
+      "mark": "100B",
+      "matched_by": "exact",
+      "material": null,
+      "page": 7,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "100",
+      "room_by": "tag_number",
+      "room_name": "BREAK",
+      "schedule_rows": [
+        {
+          "door_type": "P30AL",
+          "fire_rating": null,
+          "frame_type": "F00AL",
+          "hardware_group": "2",
+          "height_inches": 96,
+          "location": null,
+          "mark": "100B",
+          "material": null,
+          "page": 8,
+          "pair": false,
+          "size": "3'-0\" x 8'-0\"",
+          "width_inches": 36,
+          "y": 869
+        }
+      ],
+      "sheet": "A101",
+      "size": "3'-0\" x 8'-0\"",
+      "width_inches": 36,
+      "x": 821,
+      "y": 1529
+    }
+  ]
+}

@@ -1,0 +1,193 @@
+{
+  "rooms": [],
+  "set": {
+    "label": "missouri_oa_fmdc - _R2410-01%20Final%20Bid%20Plans.pdf",
+    "page_count": 39,
+    "rows_total": 12,
+    "sha16": "8a99839626a199c6",
+    "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_R2410-01%20Final%20Bid%20Plans.pdf",
+    "tier": "agreed"
+  },
+  "sheets": [
+    {
+      "height": 1728,
+      "page": 3,
+      "points_per_foot": null,
+      "scales": [],
+      "sheet": "A-101",
+      "title": "GHQ BASEMENT FLOOR PLAN",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 4,
+      "points_per_foot": null,
+      "scales": [],
+      "sheet": "A-102",
+      "title": "GHQ FIRST FLOOR PLAN",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 5,
+      "points_per_foot": null,
+      "scales": [],
+      "sheet": "A-103",
+      "title": "GHQ SECOND FLOOR PLAN",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 12,
+      "points_per_foot": null,
+      "scales": [],
+      "sheet": "A-401",
+      "title": "RESTROOM ENLARGED PLANS",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 13,
+      "points_per_foot": null,
+      "scales": [],
+      "sheet": "A-402",
+      "title": "RESTROOM ENLARGED PLANS",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 14,
+      "points_per_foot": null,
+      "scales": [],
+      "sheet": "A-403",
+      "title": "RESTROOM ENLARGED PLANS",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 15,
+      "points_per_foot": null,
+      "scales": [],
+      "sheet": "A-404",
+      "title": "RESTROOM ENLARGED PLANS",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 16,
+      "points_per_foot": null,
+      "scales": [],
+      "sheet": "A-405",
+      "title": "RESTROOM ENLARGED PLANS",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 17,
+      "points_per_foot": null,
+      "scales": [],
+      "sheet": "A-406",
+      "title": "RESTROOM ENLARGED PLANS",
+      "width": 2592
+    }
+  ],
+  "summary": {
+    "marks_placed": 2,
+    "marks_total": 2,
+    "placed_rate": 1,
+    "rooms_total": 0,
+    "sheets_total": 9,
+    "sheets_with_scale": 0,
+    "unplaced": []
+  },
+  "tags": [
+    {
+      "also_on": [],
+      "door_pages": [
+        19
+      ],
+      "door_type": "A",
+      "fire_rating": null,
+      "frame_type": "A",
+      "h": 9.42971996228112,
+      "hardware_group": "MATCH EXIST.",
+      "height_inches": null,
+      "location": "MENS RESTROOM",
+      "mark": "D1",
+      "matched_by": "exact",
+      "material": "WOOD",
+      "page": 16,
+      "pair": false,
+      "points_per_foot": null,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "A",
+          "fire_rating": null,
+          "frame_type": "A",
+          "hardware_group": "MATCH EXIST.",
+          "height_inches": null,
+          "location": "MENS RESTROOM",
+          "mark": "D1",
+          "material": "WOOD",
+          "page": 19,
+          "pair": false,
+          "size": "6'-10\" x 2'-8\"",
+          "width_inches": 82,
+          "y": 159
+        }
+      ],
+      "sheet": "A-405",
+      "size": "6'-10\" x 2'-8\"",
+      "width_inches": 82,
+      "x": 1021,
+      "y": 1218
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        19
+      ],
+      "door_type": "B",
+      "fire_rating": null,
+      "frame_type": "B",
+      "h": 9.42971996228112,
+      "hardware_group": "MATCH EXIST.",
+      "height_inches": null,
+      "location": "JAN. CLOSET",
+      "mark": "D2",
+      "matched_by": "exact",
+      "material": "WOOD",
+      "page": 16,
+      "pair": false,
+      "points_per_foot": null,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": null,
+          "frame_type": "B",
+          "hardware_group": "MATCH EXIST.",
+          "height_inches": null,
+          "location": "JAN. CLOSET",
+          "mark": "D2",
+          "material": "WOOD",
+          "page": 19,
+          "pair": false,
+          "size": "6'-10\" x 2'-6\"",
+          "width_inches": 82,
+          "y": 184
+        }
+      ],
+      "sheet": "A-405",
+      "size": "6'-10\" x 2'-6\"",
+      "width_inches": 82,
+      "x": 747,
+      "y": 1463
+    }
+  ]
+}
