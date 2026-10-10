@@ -15,12 +15,14 @@
  "pages": {
   "door_candidates": 2,
   "hardware_candidates": 0,
-  "door_schedule_pages": [],
+  "door_schedule_pages": [
+   33
+  ],
   "hardware_pages": []
  },
  "readers": {
   "a": {
-   "doors": 0,
+   "doors": 7,
    "sets": 0,
    "items": 0,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
@@ -34,18 +36,18 @@
   }
  },
  "rows_agreed": 0,
- "rows_disputed": 0,
- "rows_total": 0,
- "agreement_rate": null,
+ "rows_disputed": 7,
+ "rows_total": 7,
+ "agreement_rate": 0,
  "agreement": {
   "doors": {
-   "rows": 0,
+   "rows": 7,
    "agreed": 0,
    "disputed": 0,
-   "only_a": 0,
+   "only_a": 7,
    "only_b": 0,
    "fields": {},
-   "agreement_rate": null
+   "agreement_rate": 0
   },
   "items": {
    "rows": 0,
@@ -65,8 +67,34 @@
  "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
-   "applicable": false,
-   "reason": "no door schedule rows"
+   "applicable": true,
+   "total": 7,
+   "pass": 2,
+   "fail": 5,
+   "pass_rate": 0.2857,
+   "examples": [
+    "mark 300 (schedule p.33) not tagged on any plan",
+    "mark 301 (schedule p.33) not tagged on any plan",
+    "mark 302 (schedule p.33) not tagged on any plan",
+    "mark 302A (schedule p.33) not tagged on any plan",
+    "mark 400 (schedule p.33) not tagged on any plan"
+   ],
+   "plan_sheets": [
+    "A-101 p.20",
+    "A-102 p.21",
+    "A-105 p.24",
+    "A-600 p.32"
+   ],
+   "plan_counts": {
+    "plan_sheets": 4,
+    "rooms": 25,
+    "corridors": 1,
+    "tags": 2,
+    "unmatched_tags": 0,
+    "schedule_marks": 7,
+    "marks_not_on_plan": 5,
+    "shared_marks": 0
+   }
   },
   "sets_exist": {
    "applicable": false,
@@ -78,17 +106,88 @@
   },
   "types_in_legend": {
    "applicable": false,
-   "reason": "no door schedule rows"
+   "reason": "no DOOR TYPES / FRAME TYPES legend title in this PDF"
   },
   "sizes_and_marks": {
-   "applicable": false,
-   "reason": "no door schedule rows"
+   "applicable": true,
+   "total": 7,
+   "pass": 6,
+   "fail": 1,
+   "pass_rate": 0.8571,
+   "examples": [
+    "mark 302A p.33: size \"- x -\" -> null x null"
+   ],
+   "size_fail": 1,
+   "mark_fail": 0
   }
  },
- "tier": "unread",
- "unread_reason": "no door schedule or hardware set read by either reader",
- "disagreement_count": 0,
- "disagreements": [],
- "ms": 4540,
- "generated_at": "2026-10-10T08:04:05.137Z"
+ "tier": "oracle-checked",
+ "disagreement_count": 7,
+ "disagreements": [
+  {
+   "kind": "door",
+   "page": 33,
+   "key": "200",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 33,
+   "key": "201",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 33,
+   "key": "300",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 33,
+   "key": "301",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 33,
+   "key": "302",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 33,
+   "key": "302A",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 33,
+   "key": "400",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  }
+ ],
+ "ms": 3773,
+ "generated_at": "2026-10-10T08:39:57.568Z"
 }

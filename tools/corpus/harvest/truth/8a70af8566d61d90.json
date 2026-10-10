@@ -13,7 +13,7 @@
   "pages": 20
  },
  "pages": {
-  "door_candidates": 1,
+  "door_candidates": 3,
   "hardware_candidates": 0,
   "door_schedule_pages": [
    10
@@ -127,6 +127,6 @@
  "tier": "agreed",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 551,
- "generated_at": "2026-10-10T08:02:14.386Z"
+ "ms": 1020,
+ "generated_at": "2026-10-10T08:38:02.246Z"
 }

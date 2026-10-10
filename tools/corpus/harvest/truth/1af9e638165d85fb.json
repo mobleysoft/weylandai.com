@@ -13,7 +13,7 @@
   "pages": 70
  },
  "pages": {
-  "door_candidates": 15,
+  "door_candidates": 16,
   "hardware_candidates": 8,
   "door_schedule_pages": [],
   "hardware_pages": [
@@ -441,6 +441,6 @@
    "b": null
   }
  ],
- "ms": 331,
- "generated_at": "2026-10-10T07:59:42.563Z"
+ "ms": 348,
+ "generated_at": "2026-10-10T08:35:06.621Z"
 }

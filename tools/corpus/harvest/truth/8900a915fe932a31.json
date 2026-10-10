@@ -13,39 +13,58 @@
   "pages": 26
  },
  "pages": {
-  "door_candidates": 0,
+  "door_candidates": 1,
   "hardware_candidates": 0,
-  "door_schedule_pages": [],
+  "door_schedule_pages": [
+   16
+  ],
   "hardware_pages": []
  },
  "readers": {
   "a": {
-   "doors": 0,
+   "doors": 8,
    "sets": 0,
    "items": 0,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
   },
   "b": {
-   "doors": 0,
+   "doors": 7,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 0
+   "tables": 1
   }
  },
- "rows_agreed": 0,
- "rows_disputed": 0,
- "rows_total": 0,
- "agreement_rate": null,
+ "rows_agreed": 7,
+ "rows_disputed": 1,
+ "rows_total": 8,
+ "agreement_rate": 0.875,
  "agreement": {
   "doors": {
-   "rows": 0,
-   "agreed": 0,
+   "rows": 8,
+   "agreed": 7,
    "disputed": 0,
-   "only_a": 0,
+   "only_a": 1,
    "only_b": 0,
-   "fields": {},
-   "agreement_rate": null
+   "fields": {
+    "width_inches": {
+     "agree": 7,
+     "total": 7
+    },
+    "height_inches": {
+     "agree": 7,
+     "total": 7
+    },
+    "door_type": {
+     "agree": 7,
+     "total": 7
+    },
+    "material": {
+     "agree": 7,
+     "total": 7
+    }
+   },
+   "agreement_rate": 0.875
   },
   "items": {
    "rows": 0,
@@ -65,8 +84,25 @@
  "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
-   "applicable": false,
-   "reason": "no door schedule rows"
+   "applicable": true,
+   "total": 8,
+   "pass": 8,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "plan_sheets": [
+    "A-101 p.11"
+   ],
+   "plan_counts": {
+    "plan_sheets": 1,
+    "rooms": 7,
+    "corridors": 0,
+    "tags": 8,
+    "unmatched_tags": 0,
+    "schedule_marks": 8,
+    "marks_not_on_plan": 0,
+    "shared_marks": 0
+   }
   },
   "sets_exist": {
    "applicable": false,
@@ -77,18 +113,44 @@
    "reason": "not for class schedule-only"
   },
   "types_in_legend": {
-   "applicable": false,
-   "reason": "no door schedule rows"
+   "applicable": true,
+   "total": 4,
+   "pass": 4,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "legend_titles": [
+    "DOOR TYPES p.16"
+   ],
+   "skipped": [
+    "no FRAME TYPES legend title"
+   ],
+   "note": "weak for numeric types: a detail number near the legend can pass a numeric frame type"
   },
   "sizes_and_marks": {
-   "applicable": false,
-   "reason": "no door schedule rows"
+   "applicable": true,
+   "total": 8,
+   "pass": 8,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "size_fail": 0,
+   "mark_fail": 0
   }
  },
- "tier": "unread",
- "unread_reason": "no door schedule or hardware set read by either reader",
- "disagreement_count": 0,
- "disagreements": [],
- "ms": 1294,
- "generated_at": "2026-10-10T08:02:10.208Z"
+ "tier": "agreed",
+ "disagreement_count": 1,
+ "disagreements": [
+  {
+   "kind": "door",
+   "page": 16,
+   "key": "OH",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  }
+ ],
+ "ms": 1437,
+ "generated_at": "2026-10-10T08:37:57.436Z"
 }

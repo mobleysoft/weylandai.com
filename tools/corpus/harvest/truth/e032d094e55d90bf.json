@@ -13,7 +13,7 @@
   "pages": 1025
  },
  "pages": {
-  "door_candidates": 3,
+  "door_candidates": 4,
   "hardware_candidates": 4,
   "door_schedule_pages": [],
   "hardware_pages": [
@@ -271,6 +271,6 @@
    "b": "SCHLAGE L9080-06A HARDWARE"
   }
  ],
- "ms": 2378,
- "generated_at": "2026-10-10T08:03:42.211Z"
+ "ms": 2602,
+ "generated_at": "2026-10-10T08:39:39.354Z"
 }

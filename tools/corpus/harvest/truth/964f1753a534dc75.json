@@ -13,7 +13,7 @@
   "pages": 147
  },
  "pages": {
-  "door_candidates": 2,
+  "door_candidates": 3,
   "hardware_candidates": 1,
   "door_schedule_pages": [],
   "hardware_pages": []
@@ -99,6 +99,6 @@
    "why": "the set's door lists differ"
   }
  ],
- "ms": 441,
- "generated_at": "2026-10-10T08:02:31.598Z"
+ "ms": 504,
+ "generated_at": "2026-10-10T08:38:19.686Z"
 }
