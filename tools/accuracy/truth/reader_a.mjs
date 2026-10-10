@@ -39,6 +39,8 @@ export function mapResult(r, type) {
       width_inches: d.width_inches ?? null, height_inches: d.height_inches ?? null, pair: !!d.pair,
       door_type: d.door_type || null, frame_type: d.frame_type || null, material: d.material_code || null,
       fire_rating: d.fire_rating || null, hardware_group: d.hardware_group || null, y: d.source_y ?? null,
+      ...(d.quantity !== undefined ? { quantity: d.quantity } : {}),
+      ...(d.marks ? { marks: d.marks, mark_ranges: d.mark_ranges || [] } : {}),
     }));
     return { doors };
   }

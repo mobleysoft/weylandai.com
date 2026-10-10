@@ -341,6 +341,9 @@ export function fieldForHeader(text, used) {
   if (has(/\b(PAIR|PR)\b/) && !has(/\bPRICE\b/)) return pick("pair");
   if (has(/\bDETAILS?\b/) && !has(/\b(TYPE|MATERIAL|MATL|MAT|FINISH|FIN|SIZE|WIDTH|HEIGHT)\b/)) return pick("details");
   if (has(/\b(ROOM|LOCATION)\b/) || (has(/\bFROM\b/) && has(/\bTO\b/))) return pick("location");
+  // How many openings the row stands for (C2410 A-601: "1A101 TO 1D102" ... QUANTITY 8); a count
+  // of leaves or hinges is not that.
+  if (has(/\b(QTY|QUANTITY|QUAN)\b/) && !has(/\b(LEAF|LEAVES|HINGES?|PANELS?)\b/)) return pick("quantity");
   if (has(/\b(UNDERCUT|LOUVER|SWING|HAND|HANDING|ELEV|ELEVATION|LEAVES|QTY)\b/)) return null;
   const ctxPick = (doorF, frameF) => {
     if (frameCtx && !doorCtx) return pick(frameF) || pick(doorF);
@@ -670,7 +673,15 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
   // with no mark goes to the row whose mark line is nearer, held for the next row when that is it.
   const startsRow = dataLines.map((L) => { if (markCol < 0) return false; const t = joinWords(cellsOf(L)[markCol], h).trim(); return !!t && looksLikeMark(t.split(" ")[0]); });
   let pending = [];
-  for (const [li, L] of dataLines.entries()) {
+  // A table with a QUANTITY column (C2410 A-601) prints one row per opening type, its mark cell a
+  // range or a stack over two to four lines ("1A101 TO" / "1D102", "151A 151B" / "151C",
+  // "1A105 TO" / "1A116" / "1B109 TO" / "1B116") around the one line that carries the row's data.
+  // There a row is its data line and every mark line joins one: see quantityRows.
+  const qtyRows = fields.includes("quantity") && markCol >= 0 && dataLines.every((L) => L.grid_row == null)
+    ? quantityRows(dataLines.map((L) => { const words = cellsOf(L); return { y: L.y, words, cells: words.map((g) => joinWords(g, h)) }; }), fields, h, rowPitch)
+    : null;
+  if (qtyRows) for (const r of qtyRows) { if (r.section !== undefined) { section = r.section; continue; } const row = { cells: r.cells, words: r.words, section, y: r.y, lines: r.lines }; rows.push(row); }
+  for (const [li, L] of (qtyRows ? [] : dataLines).entries()) {
     const words = cellsOf(L);
     const cells = words.map(g => joinWords(g, h));
     let markText = markCol >= 0 ? cells[markCol].trim() : "";
@@ -724,6 +735,109 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
   const unresolved_rows = rows.flatMap((r, i) => r.grid_row != null && !cleanMark(markCol >= 0 ? r.cells[markCol] : "")
     ? [{ grid_row: r.grid_row, source_row: i, source_y: Math.round(r.y), mark_text: markCol >= 0 ? r.cells[markCol] : "", reason: "unread_mark" }] : []);
   return { title, header: names, fields, bounds, anchors, x0, x1, header_y: headerLines.map((L) => Math.round(L.y)), y0: lines[headerIdx[0]].y, y1: dataLines[dataLines.length - 1].y, row_pitch: rowPitch, data_lines: dataLines.length, rows: rows.length, doors, unresolved_rows, is_door_schedule, lineIndexes: [...headerIdx, ...dataIdx], rules_used: !!rules };
+}
+
+/**
+ * Rows of a table with a QUANTITY column. A line with a value outside the mark, location and notes
+ * columns is a row's data line. The other lines join one: a mark line ending in TO or & runs on
+ * into the next mark line (one range or list); a mark group that holds a data line belongs to it;
+ * one that holds none joins the nearest data line, or the one above when it carries its own location
+ * (a row's second range and room, "1B109 TO CELL B109-CELL B116" under "1A105 TO ... 16"); any other
+ * line (a wrapped remark) joins the nearest data line within 1.6 row pitches. Returns null when no
+ * line is a data line, and the rows (or { section }) in order otherwise.
+ */
+function quantityRows(lines, fields, h, rowPitch) {
+  const markCol = fields.indexOf("mark"), locCol = fields.indexOf("location");
+  const isData = (l) => l.cells.some((c, k) => c && c.trim() && fields[k] && !["mark", "location", "notes"].includes(fields[k]));
+  // Centred marks of different widths can start two columns (C2410 A-601 alternates: "151A" left of
+  // "151B"): marks in the unnamed column just left of the mark column are the mark column's.
+  if (markCol > 0 && fields[markCol - 1] == null) {
+    for (const l of lines) {
+      const left = l.cells[markCol - 1].trim();
+      if (!left || !left.split(/\s+/).every(looksLikeMark)) continue;
+      l.cells[markCol] = (left + " " + l.cells[markCol]).trim();
+      l.words[markCol] = [...l.words[markCol - 1], ...l.words[markCol]];
+      l.cells[markCol - 1] = ""; l.words[markCol - 1] = [];
+    }
+  }
+  const markOf = (l) => l.cells[markCol].trim();
+  const anchors = [];
+  lines.forEach((l, i) => { if (isData(l)) anchors.push(i); });
+  if (!anchors.length) return null;
+  const owner = new Array(lines.length).fill(-1);
+  for (const i of anchors) owner[i] = i;
+  // Nearest data line; on a near tie the one below (a stack prints its first marks above its data).
+  const nearest = (y, above) => { let best = -1; for (const i of anchors) { if (above && lines[i].y > y) continue; if (best < 0 || Math.abs(lines[i].y - y) < Math.abs(lines[best].y - y) + (lines[i].y > y ? 0.2 * h : -0.2 * h)) best = i; } return best; };
+  // Mark groups: runs of mark lines chained by a trailing TO / & / THRU.
+  const groups = [];
+  let g = null;
+  const out = [];
+  lines.forEach((l, i) => {
+    const m = markOf(l);
+    if (!m) return; // a line with no mark text (a data line between a range's two lines) keeps the run open
+    const first = m.split(/\s+/)[0];
+    if (!looksLikeMark(first) && !(g && /^(TO|THRU|&)$/i.test(first))) {
+      // Text in the mark column that is no mark: a section label when it is all the line holds.
+      if (!isData(l) && l.cells.filter((c) => c && c.trim()).length === 1) { out.push({ y: l.y, section: m }); g = null; }
+      return;
+    }
+    if (g && /\b(TO|THRU|&)$/i.test(lines[g.at[g.at.length - 1]].cells[markCol].trim())) g.at.push(i);
+    else { g = { at: [i] }; groups.push(g); }
+  });
+  for (const gr of groups) {
+    const y0 = lines[gr.at[0]].y, y1 = lines[gr.at[gr.at.length - 1]].y;
+    const inside = anchors.filter((i) => lines[i].y >= y0 - 0.2 * h && lines[i].y <= y1 + 0.2 * h);
+    let to = inside.length ? inside[0] : -1;
+    if (to < 0) {
+      const ownLoc = locCol >= 0 && gr.at.some((i) => lines[i].cells[locCol].trim());
+      to = ownLoc ? nearest(y0, true) : -1;
+      if (to < 0) to = nearest((y0 + y1) / 2, false);
+    }
+    for (const i of gr.at) if (owner[i] < 0) owner[i] = to;
+  }
+  lines.forEach((l, i) => {
+    if (owner[i] >= 0 || !l.cells.some((c) => c && c.trim())) return;
+    if (markOf(l) && out.some((o) => o.y === l.y)) return;
+    const a = nearest(l.y, false);
+    if (a >= 0 && Math.abs(lines[a].y - l.y) <= 1.6 * rowPitch) owner[i] = a;
+  });
+  for (const a of anchors) {
+    const members = lines.map((l, i) => i).filter((i) => owner[i] === a);
+    const ncol = lines[a].cells.length;
+    const row = { y: lines[a].y, cells: new Array(ncol).fill(""), words: Array.from({ length: ncol }, () => []), lines: members.length };
+    for (const i of members) for (let k = 0; k < ncol; k++) {
+      const c = lines[i].cells[k];
+      if (c && c.trim()) row.cells[k] = row.cells[k] ? row.cells[k] + " " + c : c;
+      row.words[k].push(...lines[i].words[k]);
+    }
+    out.push(row);
+  }
+  return out.sort((a, b) => a.y - b.y);
+}
+
+/**
+ * A mark cell that names several openings: "1A101 TO 1D102", "151A 151B 151C", "1A105 TO 1A116
+ * 1B109 TO 1B116", "2A109 TO 2A112 & 2B109 TO 2B112", "3A109 TO 3A 112" (a space inside the end
+ * mark). Returns { marks, ranges } (marks: every mark printed, range ends included), or null for a
+ * cell with one mark.
+ */
+export function readMarkList(text) {
+  const raw = String(text || "").toUpperCase().replace(/[,;]/g, " ").replace(/\s+/g, " ").trim().split(" ").filter(Boolean);
+  const toks = [];
+  for (let i = 0; i < raw.length; i++) {
+    // "3A 112": a short prefix and the number printed apart.
+    if (/^\d[A-Z]$/.test(raw[i]) && /^\d{2,4}$/.test(raw[i + 1] || "")) { toks.push(raw[i] + raw[i + 1]); i++; continue; }
+    toks.push(raw[i]);
+  }
+  const marks = [], ranges = [];
+  for (let i = 0; i < toks.length; i++) {
+    const t = toks[i];
+    if (t === "&" || t === "AND") continue;
+    if (!looksLikeMark(t)) return null;
+    if (/^(TO|THRU)$/.test(toks[i + 1] || "") && looksLikeMark(toks[i + 2] || "")) { ranges.push({ from: t, to: toks[i + 2] }); marks.push(t, toks[i + 2]); i += 2; continue; }
+    marks.push(t);
+  }
+  return marks.length > 1 ? { marks, ranges } : null;
 }
 
 // ---- cell readers (the same meanings as the OCR path's cleaners)
@@ -821,6 +935,9 @@ function doorFromRow(row, fields, index, pageSize) {
     if (m) { head = "H" + m[1]; jamb = "J" + m[2]; } else head = details;
   }
   const notes = [get("notes"), get("location") ? "Room: " + get("location") : null].filter(Boolean).join("; ") || null;
+  const markList = readMarkList(rawMark);
+  const qtyText = get("quantity");
+  const quantity = qtyText && /^\d{1,4}$/.test(qtyText) ? parseInt(qtyText, 10) : null;
   const panic = get("panic_hardware");
   const confidence = {};
   const rawConfidence = {};
@@ -867,6 +984,8 @@ function doorFromRow(row, fields, index, pageSize) {
     alternate_pricing: get("alternate"),
     remarks: notes,
     pair,
+    ...(fields.includes("quantity") ? { quantity } : {}),
+    ...(markList ? { mark_text: UP(cleanText(rawMark)), marks: markList.marks, mark_ranges: markList.ranges } : {}),
     section: row.section,
     source_row: index,
     source_y: Math.round(row.y),
