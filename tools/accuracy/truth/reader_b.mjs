@@ -245,8 +245,10 @@ function tableFrom(T, allWords) {
   const colOf = (x) => { for (let k = 0; k < colCount; k++) if (x >= fences[k] && x < fences[k + 1]) return k; return -1; };
   const bandWords = bands.map((b) => ws.filter((w) => w.cy > b.y0 && w.cy < b.y1));
   const cellsOf = (bi) => { const c = Array.from({ length: colCount }, () => []); for (const w of bandWords[bi]) { const k = colOf(w.cx); if (k >= 0) c[k].push(w); } return c; };
-  // A band crossed by fewer than two inner fences is a title band.
-  const crossed = (b) => fences.filter((x) => longV.some((s) => Math.abs(s.x - x) <= 1 && s.y0 <= b.y0 + 1 && s.y1 >= b.y1 - 1)).length;
+  // A band crossed by fewer than two inner fences is a title band. Any vertical rule at a fence counts,
+  // not only the long ones: a header's dividers are often separate short rules (or thin filled bars a
+  // point off the body's stroked lines), and the long body rules start below the header.
+  const crossed = (b) => fences.filter((x) => T.v.some((s) => Math.abs(s.x - x) <= 1.5 && s.y0 <= b.y0 + 1 && s.y1 >= b.y1 - 1)).length;
   // Header text per column for the first k bands. A header word's own cell runs between the nearest
   // rules (long or short) crossing it on either side; a spanning label (DOOR over TYPE / MATL) has no
   // rule between its sub-columns at its height, so it names every column whose middle its cell covers.
