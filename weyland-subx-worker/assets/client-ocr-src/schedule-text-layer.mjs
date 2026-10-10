@@ -645,6 +645,16 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
     else break;
   }
   let dataIdx = [];
+  // The upward header search can include type drawings beside the table.
+  // Their NOTE/NOTES captions do not end the schedule when they sit wholly
+  // left of its explicit mark header. Keep real notes below the table as a
+  // boundary, including the singular NOTE used on mixed schedule sheets.
+  const headerWords = headerLines.flatMap(L => L.words);
+  const markLabels = headerWords.filter(w => {
+    const own = headerWords.filter(v => v.item === w.item);
+    return fieldForHeader(own.map(v => v.str).join(" "), new Set()) === "mark";
+  });
+  const markLeft = markLabels.length ? Math.min(...markLabels.map(w => w.x0)) : x0;
   let lastY = lines[firstData - 1].y, rowStartY = lastY;
   const pitches = [];
   for (let k = firstData; k < lines.length; k++) {
@@ -658,7 +668,7 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
     if (gap > limit) break;
     if (!inside.length) { if (gap > 1.2 * h && L.x0 > x1) continue; else continue; }
     const Li = { ...L, words: inside, text: inside.map((w) => w.str).join(" ") };
-    if (/^(?:GENERAL\s+NOTES?|NOTES?)\s*:/i.test(Li.text)) break;
+    if (/^(?:GENERAL\s+NOTES?|NOTES?)\s*:/i.test(Li.text) && inside.some(w => w.x1 >= markLeft - inset)) break;
     if (opts.rotatedHeader && /^(?:\*\s*)?SEE\s+(?:HARDWARE\s+)?SPECIFICATIONS?\b/i.test(Li.text)) break;
     if (isFieldLine(Li, h) || isTitleLine(Li, h)) break;
     dataIdx.push(k);
