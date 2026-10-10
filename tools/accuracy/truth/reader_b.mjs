@@ -222,6 +222,19 @@ export function readDoorsB(items, rules, size) {
   return { tables, doors };
 }
 
+// g051 (class C5): an electrical panel schedule is ruled like a door schedule and its headers map to
+// door fields ("# of Poles" a mark, "Frame Size" a size, "Trip Rating" a rating). Its own words:
+const PANEL_WORDS = ["CKT", "CIRCUIT", "POLES?", "BREAKERS?", "TRIP", "KVA", "AMPS?", "MCB", "MLO", "PANELBOARDS?", "MAINS", "FEEDERS?", "VOLTS?", "VOLTAGE", "PHASE", "NEMA", "LOAD"];
+const panelWordCount = (text) => { const t = " " + UP(text).replace(/[^A-Z0-9#]+/g, " ") + " "; return PANEL_WORDS.filter((w) => new RegExp(" " + w + " ").test(t)).length; };
+/** A table header that is an electrical panel's (two or more of its words), not a door schedule's. */
+export function panelHeader(labels) { return panelWordCount((labels || []).join(" ")) >= 2; }
+/** A page that is an electrical panel schedule sheet: four or more panel words and no door or opening
+ *  schedule title on it (the page finder skips it). */
+export function electricalPanelPage(text) {
+  const t = UP(text).replace(/\s+/g, " ");
+  return panelWordCount(t) >= 4 && !/\b(DOOR|OPENING|DOOR AND FRAME|DOOR & FRAME)\s+(HARDWARE\s+)?SCHEDULE\b/.test(t);
+}
+
 function tableFrom(T, allWords) {
   const width = T.x1 - T.x0, height = T.y1 - T.y0;
   const ws = allWords.filter((w) => w.cx >= T.x0 - 1 && w.cx <= T.x1 + 1 && w.cy >= T.y0 - 1 && w.cy <= T.y1 + 1);
@@ -285,6 +298,7 @@ function tableFrom(T, allWords) {
   }
   if (process.env.TRUTH_DEBUG) console.error("table", Math.round(T.x0), Math.round(T.y0), "bands", bands.length, "fences", fences.map(Math.round).join(","), "hdr", JSON.stringify(headerFor(Math.min(3, bands.length - 1))));
   if (!pick) return null;
+  if (panelHeader(pick.header)) return null;
   const { k, header, fields } = pick;
   const mk = fields.indexOf("mark");
   const get = (cells, f) => { const i = fields.indexOf(f); return i >= 0 ? clean(joinWords(cells[i])) : null; };

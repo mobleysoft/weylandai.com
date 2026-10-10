@@ -36,7 +36,7 @@ import { fileURLToPath } from "node:url";
 import { openPdf, pageItems, pageRules } from "./truth/pdf.mjs";
 import { readA, readAFromLines } from "./truth/reader_a.mjs";
 import { ocrPage } from "./truth/ocr.mjs";
-import { readDoorsB, readHardwareB } from "./truth/reader_b.mjs";
+import { readDoorsB, readHardwareB, electricalPanelPage } from "./truth/reader_b.mjs";
 import { alignDoors, alignGroups, mergeGroups, summarize, disagreements, scoreDoorsVs, scoreGroupsVs, calibrateFields, N } from "./truth/agree.mjs";
 import { oracleMarksOnPlan, oracleSetsExist, oracleSetDoorLists, oracleTypesInLegend, oracleSizesAndMarks, ORACLES_FOR } from "./truth/oracles.mjs";
 
@@ -125,7 +125,9 @@ if (existsSync(triageFile)) {
 }
 
 // ---------------------------------------------------------------- page finding
-const DOOR_PAGE = (t) => /\bDOOR\b/i.test(t) && /\bSCHEDULE\b/i.test(t) && /\b(HARDWARE|HDWR?|HW|H\/W|HDW\.?\s*SET|SET|GROUP)\b/i.test(t) && /\b(MARK|TAG|NO\.?|NUMBER|#)\b/i.test(t);
+// g051: an electrical panel schedule sheet (a motor schedule, panels by circuit) names a door now and then
+// ("OH DOOR OPERATOR") and is not a door schedule page.
+const DOOR_PAGE = (t) => /\bDOOR\b/i.test(t) && /\bSCHEDULE\b/i.test(t) && /\b(HARDWARE|HDWR?|HW|H\/W|HDW\.?\s*SET|SET|GROUP)\b/i.test(t) && /\b(MARK|TAG|NO\.?|NUMBER|#)\b/i.test(t) && !electricalPanelPage(t);
 const HW_PAGE = (t) => /\b(HARDWARE\s+(GROUP|SET|HEADING)|HDWE?\.?\s*(GROUP|SET)|HW\s*SET|HEADING)\s*(NO\.?|NUMBER|#)?\s*[:.#]?\s*[A-Z]{0,2}\d/i.test(t) || /^\s*SET\s*(NO\.?|#|:)\s*[A-Z]{0,2}\d/im.test(t);
 
 async function analyze(file) {
