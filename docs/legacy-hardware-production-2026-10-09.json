@@ -1,0 +1,101 @@
+{
+  "at": "2026-10-10T00:00:03.866Z",
+  "scope": "Live selected-page legacy hardware upload with owned throwaway account; aggregate receipt only",
+  "base": "https://weylandai.com",
+  "deployment": {
+    "main": "7f1c17598e063533bab334d99895c961a82a98dd",
+    "subx_actions_run": "38006949233"
+  },
+  "accepted": true,
+  "reader_assets": [
+    {
+      "scope": "public-reader-asset",
+      "name": "schedule-grid-extraction-client.mjs",
+      "status": 200,
+      "sha256": "8359a8d7b0fe2f5283bc4a10855e30ebb611837f037fc18c497f79c85805a937"
+    },
+    {
+      "scope": "public-reader-asset",
+      "name": "schedule-text-layer.mjs",
+      "status": 200,
+      "sha256": "a9577c335a0fc07d7452ca8b20ad1ed2ed11f0fd5facc3d39cb8b79f6cc4a351"
+    }
+  ],
+  "fixture": {
+    "source": "Rockford hardware specification",
+    "page": 17,
+    "pdf_sha256": "f0e863d88ea688fffdb625132383d48130afb8a50ae4546fd4627281e2648c59",
+    "truth_sha256": "35e0600df47fe27f9752e8b48715910ca5364737d0ed4bf5e7b475ad46513cf0",
+    "expected_groups": 1,
+    "expected_components": 7
+  },
+  "positive": {
+    "status": 201,
+    "groups": 1,
+    "components": 7,
+    "db_reported_sets": 1,
+    "db_reported_components": 7,
+    "usage": {
+      "input_tokens": 0,
+      "output_tokens": 0
+    },
+    "actual_jobs": 1,
+    "job_owner_matches": true,
+    "returned_job_matches": true,
+    "job_statuses": [
+      "pending_review"
+    ],
+    "job_total_sets": [
+      1
+    ],
+    "actual_sets": 1,
+    "actual_components": 7,
+    "approved_source_pages": [
+      17
+    ],
+    "owned_key_count": 1,
+    "exact_response_and_stored_groups": true
+  },
+  "objects": {
+    "r2_status": 200,
+    "kv_status": 200,
+    "r2_bytes": 6803216,
+    "kv_bytes": 6803216,
+    "r2_sha256": "f0e863d88ea688fffdb625132383d48130afb8a50ae4546fd4627281e2648c59",
+    "kv_sha256": "f0e863d88ea688fffdb625132383d48130afb8a50ae4546fd4627281e2648c59",
+    "r2_hash_matches": true,
+    "kv_hash_matches": true
+  },
+  "negative": {
+    "status": 422,
+    "code": "NO_HARDWARE_SCHEDULE",
+    "retryable": false,
+    "job_returned": false,
+    "actual_jobs": 1,
+    "actual_sets": 1,
+    "actual_components": 7,
+    "owned_key_count": 1,
+    "storage_unchanged": true,
+    "captured_object_hashes_unchanged": true
+  },
+  "cleanup": {
+    "ok": true,
+    "captured_objects_removed": 1,
+    "remaining": {
+      "jobs": 0,
+      "sets": 0,
+      "users": 0,
+      "sessions": 0,
+      "components": 0,
+      "captured_sets": 0,
+      "kv_keys": 0
+    },
+    "error_count": 0
+  },
+  "usage_evidence": "Public response reports zero input/output tokens; reviewed deployed text-layer reader and local forbidden-service regressions provide route evidence. Production transport does not expose internal model-call telemetry.",
+  "errors": [],
+  "limits": [
+    "Development fixture acceptance; no held-out OCR calibration claim.",
+    "D1/KV/R2 writes are not atomic; this run removes only its captured objects and owned rows."
+  ]
+}
