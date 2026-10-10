@@ -88,7 +88,7 @@ This run is built on main, so reader B there does not yet have g047's fix (PR 11
 
 ## Tests
 
-- `cd weyland-subx-worker && node --test`: 188 of 189. The one failure is the renderer-bound generated-mark-scan test, which passes on the Mac.
+- `cd weyland-subx-worker && node --test`: 191 of 192. The one failure is the renderer-bound generated-mark-scan test, which passes on the Mac.
   - test/real-set-schedules.test.mjs adds three tests. Both sheets check marks, ranges and quantity row by row, plus the 520 sum. readMarkList is tested on its own.
   - The fixtures are test/fixtures/g050-c2410-a601-lines.json and g050-c2410add-a601-lines.json.
 - `node --test tools/accuracy/g050/reader-b.test.mjs`: 2 of 2. Its fixtures are the five schedules' items and rules, from tools/accuracy/g050/extract-page.mjs.
