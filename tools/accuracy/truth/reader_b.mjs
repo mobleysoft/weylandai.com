@@ -301,6 +301,17 @@ function tableFrom(T, allWords) {
     }
     return names.map((n) => joinWords(n));
   };
+  // g060: a MARK column that holds only the letter beside a ROOM column with the number (T2507-01
+  // A-103: ROOM 100 | NAME | MARK A) prints the mark in two cells; the opening's mark is "100A".
+  const withRoomMark = (cells, fields) => {
+    const mk = fields.indexOf("mark"), loc = fields.indexOf("location");
+    if (mk < 0 || loc < 0) return cells;
+    const letter = clean(joinWords(cells[mk])), room = clean(joinWords(cells[loc])).split(" ")[0];
+    if (!/^[A-Z]{1,2}$/.test(UP(letter)) || !/^\d{1,4}$/.test(room)) return cells;
+    const out = cells.slice();
+    out[mk] = [{ ...cells[mk][0], str: room + UP(letter) }];
+    return out;
+  };
   let pick = null;
   for (let k = 1; k <= Math.min(5, bands.length - 1); k++) {
     const header = headerFor(k);
@@ -312,7 +323,7 @@ function tableFrom(T, allWords) {
     if (!enough) continue;
     // The first body band must hold a mark (a section label band may sit between: look at the next three).
     let ok = false;
-    for (let b = k; b < Math.min(bands.length, k + 3); b++) { const c = cellsOf(b)[mk]; const txt = joinWords(c); if (txt && markLike(txt.split(" ")[0])) { ok = true; break; } }
+    for (let b = k; b < Math.min(bands.length, k + 3); b++) { const c = withRoomMark(cellsOf(b), fields)[mk]; const txt = joinWords(c); if (txt && markLike(txt.split(" ")[0])) { ok = true; break; } }
     if (ok) { pick = { k, header, fields }; break; }
   }
   if (process.env.TRUTH_DEBUG) console.error("table", Math.round(T.x0), Math.round(T.y0), "bands", bands.length, "fences", fences.map(Math.round).join(","), "hdr", JSON.stringify(headerFor(Math.min(3, bands.length - 1))));
@@ -323,7 +334,7 @@ function tableFrom(T, allWords) {
   const get = (cells, f) => { const i = fields.indexOf(f); return i >= 0 ? clean(joinWords(cells[i])) : null; };
   const rows = [];
   for (let bi = k; bi < bands.length; bi++) {
-    const cells = cellsOf(bi);
+    const cells = withRoomMark(cellsOf(bi), fields);
     const markWords = cells[mk];
     // Rows inside one band (a body ruled in columns only): each mark-like word in the mark column starts a row.
     // A row that stands for several openings (a QUANTITY column) prints a range or a stack of marks
