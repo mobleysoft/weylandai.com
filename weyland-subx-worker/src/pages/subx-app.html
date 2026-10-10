@@ -2274,9 +2274,13 @@ global.SovereignPdfRender = {
       }
 
       // ---------- read a page ----------
+      // Each read flow keeps the controller it started with: setBusy(false) clears the shared field, and a
+      // read still in flight must not reach for ctl.signal through null (seen in production
+      // 2026-10-09: "Cannot read properties of null (reading 'signal')", a scan read ended with 0 marks).
       function beginBrowserRead() {
         state.readAbort = new AbortController();
         $("stop-read-btn").classList.remove("hide");
+        return state.readAbort;
       }
       $("stop-read-btn").addEventListener("click", function () { if (state.readAbort) state.readAbort.abort(); });
       function partialRead(ex) { return !!(ex.partial || (ex.metadata && ex.metadata.partial)); }
@@ -2311,14 +2315,14 @@ global.SovereignPdfRender = {
           (okPages ? '<p class="muted-small">Each row below shows the page and row it came from. Check the marked values against the sheet; any row can be corrected before the package is built.</p>' : "");
       }
       function readPlanInTab(id, plan, out, lines) {
-        beginBrowserRead();
+        var ctl = beginBrowserRead();
         var bytesP = state.lastUpload.file.arrayBuffer();
         var small = (navigator.maxTouchPoints || 0) > 0 && Math.min(screen.width, screen.height) < 900;
         return Promise.all([bytesP, import(MODULE_URL)]).then(function (arr) {
           var bytes = arr[0], mod = arr[1];
           var step = function (i) {
             if (i >= plan.length) return Promise.resolve();
-            if (state.readAbort.signal.aborted) {
+            if (ctl.signal.aborted) {
               lines.push({ ok: false, text: "Partial machine read: reading stopped; " + (plan.length - i) + " selected page(s) were not read." });
               return Promise.resolve();
             }
@@ -2329,7 +2333,7 @@ global.SovereignPdfRender = {
             progress("starting...");
             var runType = function (type) {
               var run = type === "door_schedule" ? mod.extractDoorScheduleFromPdf : mod.extractHardwareScheduleFromPdf;
-              return run(bytes, p.page, progress, { maxPixels: small ? 14e6 : 36e6, signal: state.readAbort.signal }).then(function (extraction) {
+              return run(bytes, p.page, progress, { maxPixels: small ? 14e6 : 36e6, signal: ctl.signal }).then(function (extraction) {
                 var n = type === "door_schedule" ? (extraction.doors || []).length : (extraction.hardware_groups || []).length;
                 return { type: type, n: n, extraction: extraction };
               });
@@ -2431,7 +2435,7 @@ global.SovereignPdfRender = {
         var type = $("sd-type").value === "hardware_schedule" ? "hardware_schedule" : "door_schedule";
         var out = $("extract-result");
         setBusy(true);
-        beginBrowserRead();
+        var ctl = beginBrowserRead();
         out.innerHTML = '<span class="spin"></span>Loading the reader into this browser...';
         var bytesP = state.lastUpload && state.lastUpload.sessionId === id
           ? state.lastUpload.file.arrayBuffer()
@@ -2444,7 +2448,7 @@ global.SovereignPdfRender = {
           var bytes = arr[0], mod = arr[1];
           var progress = function (msg) { out.innerHTML = '<span class="spin"></span>' + esc(msg); };
           var run = type === "door_schedule" ? mod.extractDoorScheduleFromPdf : mod.extractHardwareScheduleFromPdf;
-          return run(bytes, pageNum, progress, { maxPixels: small ? 14e6 : 36e6, signal: state.readAbort.signal }).then(function (extraction) {
+          return run(bytes, pageNum, progress, { maxPixels: small ? 14e6 : 36e6, signal: ctl.signal }).then(function (extraction) {
             var n = type === "door_schedule" ? (extraction.doors || []).length : (extraction.hardware_groups || []).length;
             if (!n && partialRead(extraction)) throw new Error(partialNote(extraction));
             if (!n) throw new Error("No " + typeLabel(type) + " was found on page " + pageNum + ((extraction.metadata || {}).text_words ? " in its text" : " (read as shown and turned 90, 180 and 270 degrees)") + ". Pick the page that holds it, or read it as the other kind.");
@@ -2470,7 +2474,7 @@ global.SovereignPdfRender = {
         $("upload-result").innerHTML = '<div class="' + (failed ? "error-box" : "ok-box") + '">' + esc(file.name + (failed ? ": read finished with page errors. Check the page results below." : ": read complete. Check the rows and source citations below.")) + '</div>';
       }
       async function readGuest(file, project, found, plan) {
-        beginBrowserRead();
+        var ctl = beginBrowserRead();
         state.current = "guest";
         state.lastUpload = { sessionId: "guest", file: file };
         state.guestReadings = [];
@@ -2480,14 +2484,14 @@ global.SovereignPdfRender = {
         state.detail = m.guestDetail(file, project, (found && found.pages) || 1, state.guestReadings);
         for (var i = 0; i < plan.length; i++) {
           var p = plan[i];
-          if (state.readAbort.signal.aborted) {
+          if (ctl.signal.aborted) {
             lines.push({ ok: false, text: "Partial machine read: reading stopped; " + (plan.length - i) + " selected page(s) were not read." });
             break;
           }
           var progress = function (msg) { $("extract-result").textContent = "Reading page " + p.page + ": " + msg; };
           try {
             var run = p.type === "hardware_schedule" ? reader.extractHardwareScheduleFromPdf : reader.extractDoorScheduleFromPdf;
-            var extraction = await run(bytes, p.page, progress, { maxPixels: 14e6, signal: state.readAbort.signal });
+            var extraction = await run(bytes, p.page, progress, { maxPixels: 14e6, signal: ctl.signal });
             var n = (extraction.doors || extraction.hardware_groups || []).length;
             state.guestReadings.push({ page: p.page, extraction: extraction });
             lines.push({ ok: !!n && !partialRead(extraction), text: partialNote(extraction) + " Page " + p.page + ": " + n + (p.type === "door_schedule" ? " doors" : " hardware groups") + " read in this browser." });
@@ -2498,13 +2502,13 @@ global.SovereignPdfRender = {
         }
         $("signin-card").classList.add("hide");
         $("session-card").scrollIntoView({ behavior: "smooth", block: "start" });
-        if (state.readAbort.signal.aborted) {
+        if (ctl.signal.aborted) {
           state.detail.takeoff.partial = true;
           state.detail.takeoff.qualifier += " Partial read: reading stopped before all selected pages completed.";
           renderDetail();
           renderLines($("extract-result"), lines, state.detail.doors.length + state.detail.hardware_sets.length);
         }
-        return state.readAbort.signal.aborted || lines.some(function (l) { return !l.ok; });
+        return ctl.signal.aborted || lines.some(function (l) { return !l.ok; });
       }
       async function uploadAndRead(file, project, type) {
         if (state.busy) return;
