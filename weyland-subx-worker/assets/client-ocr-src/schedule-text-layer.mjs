@@ -226,6 +226,24 @@ export async function pageTextLines(pdfjsLib, page, opts = {}) {
     if (!best || score > best.score * 1.5) best = { rotation, viewport, words, score };
     if (rotation === 0 && score > 0 && items.length && score >= 0.6 * items.reduce((n, it) => n + (it.str ? it.str.length : 0), 0)) break;
   }
+  // Rotated column labels still name horizontal rows. Keep only a coherent
+  // band with a mark, dimensions and several labels; isolated vertical detail
+  // captions and sheet labels must not become table headers.
+  const vertical = [];
+  for (const [item, it] of items.entries()) {
+    if (!it.str?.trim()) continue;
+    const m = pdfjsLib.Util.transform(best.viewport.transform, it.transform);
+    if (Math.abs(m[1]) < 5 * Math.abs(m[0]) || !m[1]) continue;
+    const str = it.str.trim(), h = Math.hypot(m[2], m[3]);
+    if (!HEADER_LABEL_WORDS.test(normLabel(str)) || str.split(/\s+/).length > 4) continue;
+    const yb = Math.max(m[5], m[5] + Math.sign(m[1]) * it.width);
+    const x0 = m[4] - h / 2;
+    vertical.push({ str, x0, x1: x0 + h, yb, h, item, itemX0: x0, itemX1: x0 + h, rotated_header: true });
+  }
+  for (const L of clusterLines(vertical)) for (const g of gapGroups(L, L.h)) {
+    const fs = new Set(g.words.map(w => fieldForHeader(w.str, new Set())));
+    if (g.words.length >= 4 && fs.has("mark") && fs.has("width") && fs.has("height")) best.words.push(...g.words);
+  }
   const lines = clusterLines(best.words);
   const textWords = items.reduce((n, it) => n + (typeof it.str === "string" ? (it.str.match(/\S+/g) || []).length : 0), 0);
   return { lines, width: best.viewport.width, height: best.viewport.height, rotation: best.rotation,
@@ -369,14 +387,34 @@ export async function readDoorScheduleFromLines(lines, pageSize, opts = {}) {
   const tables = [];
   const used = new Map();
   const h0 = em(lines);
-  for (let i = 0; i < lines.length; i++) {
+  for (const compactHeader of [false, true]) for (let i = 0; i < lines.length; i++) {
     // A baseline can hold two independent schedules. Consuming the left
     // table must not consume the right table's header on that same baseline.
-    for (const group of gapGroups(lines[i], h0)) {
-      const fg = fieldGroup({ ...lines[i], words: group.words }, h0);
+    const headerH = compactHeader ? bandHeight(lines[i].words.map(w => w.h)) : h0;
+    for (const group of gapGroups(lines[i], headerH)) {
+      const fg = fieldGroup({ ...lines[i], words: group.words }, headerH);
       if (!fg || (used.get(i) || []).some((r) => fg.x0 >= r.x0 - h0 && fg.x1 <= r.x1 + h0)) continue;
-      const t = await buildTable(lines, i, pageSize, opts, fg);
-      if (!t) continue;
+      let t = compactHeader ? null : await buildTable(lines, i, pageSize, opts, fg);
+      // On mixed sheets a finish legend can share the header's baseline and
+      // gap group. Retry an unread table from its explicit mark label, keeping
+      // the nearby multiline header inside that span instead of widening it.
+      if (compactHeader) {
+        const mark = fg.words.find(w => /^(NO\.?|NUMBER|MARK|TAG|#)$/i.test(w.str) &&
+          !fg.words.some(v => v.item === w.item && /^(ROOM|WINDOW)$/i.test(v.str)));
+        if (mark) {
+          const words = fg.words.filter(w => w.x0 >= mark.x0);
+          if (labelHits({ words }).hits >= 4) {
+            const focused = await buildTable(lines, i, pageSize, { ...opts, compactHeader: true }, { ...fg, x0: mark.x0, words });
+            if (focused?.is_door_schedule && focused.doors.length) t = focused;
+          }
+        }
+      }
+      if (!t || !t.is_door_schedule || !t.doors.length) continue;
+      // Two header baselines can describe the same physical rows even when
+      // their label spans differ. A rejected finish table, however, consumes
+      // no door region (its rotated-header neighbour may still be unread).
+      if (tables.some(p => p.x0 < t.x1 && t.x0 < p.x1 && t.doors.every(d =>
+        p.doors.some(v => v.door_number === d.door_number && v.source_y === d.source_y)))) continue;
       for (const k of t.lineIndexes) { if (!used.has(k)) used.set(k, []); used.get(k).push(t); }
       if (t.is_door_schedule) tables.push(t);
     }
@@ -410,7 +448,7 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
     if (outer.length) x0 = Math.min(x0, ...outer.map((w) => w.x0));
     // Detected header bands must not expand into unruled page titles or side
     // legends. Unruled text still needs the broader staggered-header search.
-    for (const g of gapGroups(lines[k], h)) {
+    for (const g of opts.compactHeader ? [] : gapGroups(lines[k], h)) {
       if (field.grid_row != null && lines[k].grid_row == null) continue;
       if (Math.max(x0, g.x0) <= Math.min(x1, g.x1) || Math.min(Math.abs(x0 - g.x1), Math.abs(x1 - g.x0)) <= 20 * h) {
         const { hits } = labelHits({ words: g.words });
@@ -423,6 +461,8 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
     const L = within(lines[k], x0, x1, 1.5 * h);
     if (!L.words.length) { if (prevY - lines[k].y > 2.8 * h) break; else continue; }
     if (prevY - L.y > 2.8 * h) break;
+    // A small instruction beside a large schedule title is not header text.
+    if (opts.compactHeader && L.words.some(w => /^SCHEDULE$/i.test(w.str) && w.h >= 1.25 * h)) break;
     if (isTitleLine(L, h)) break;
     const { hits, total } = labelHits(L);
     const shortWords = L.words.every((w) => w.str.length <= 14);
@@ -468,9 +508,11 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
     const L = within(lines[k], x0, x1, 1.5 * h);
     if (!L.words.length) continue;
     if (L.y - prevY > 2.8 * h) break;
-    if (isFieldLine(L, h)) break; // a full field line builds its own table
+    if (!opts.compactHeader && isFieldLine(L, h)) break; // a full field line builds its own table
     const { hits, total } = labelHits(L);
-    if (hits >= 1 && hits === total && !L.words.some((w) => looksLikeMark(w.str) && /\d/.test(w.str))) { headerIdx.push(k); headerLines.push(L); prevY = L.y; firstData = k + 1; }
+    const compactLabels = opts.compactHeader && L.words.every(w => w.str.length <= 14) &&
+      (hits >= 0.4 * total || /^(CARD|READER|CLEARANCE|X|Y|Z)(\s+(CARD|READER|CLEARANCE|X|Y|Z))*$/i.test(L.text));
+    if ((hits >= 1 && hits === total || compactLabels) && !L.words.some((w) => looksLikeMark(w.str) && /\d/.test(w.str))) { headerIdx.push(k); headerLines.push(L); prevY = L.y; firstData = k + 1; }
     else break;
   }
   const dataIdx = [];
@@ -601,7 +643,8 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
   anchors = [...new Set(anchors.map((a) => Math.round(a * 10) / 10))].sort((a, b) => a - b);
   // Two starts closer than a column can be are one column (a centred cell's
   // longer and shorter values start a few points apart).
-  anchors = anchors.filter((a, i) => i === 0 || a - anchors[i - 1] >= 1.5 * h);
+  const colH = opts.compactHeader ? Math.min(h, median(dataLines.flatMap(L => L.words.map(w => w.h)))) : h;
+  anchors = anchors.filter((a, i) => i === 0 || a - anchors[i - 1] >= 1.5 * colH);
   let bounds = anchors.slice(1).map((a) => a - 0.3 * h);
   let rules = null;
   if (typeof opts.rules === "function") {

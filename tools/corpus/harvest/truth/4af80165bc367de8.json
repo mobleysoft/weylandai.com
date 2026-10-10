@@ -15,12 +15,14 @@
  "pages": {
   "door_candidates": 2,
   "hardware_candidates": 0,
-  "door_schedule_pages": [],
+  "door_schedule_pages": [
+   7
+  ],
   "hardware_pages": []
  },
  "readers": {
   "a": {
-   "doors": 0,
+   "doors": 4,
    "sets": 0,
    "items": 0,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
@@ -34,18 +36,18 @@
   }
  },
  "rows_agreed": 0,
- "rows_disputed": 0,
- "rows_total": 0,
- "agreement_rate": null,
+ "rows_disputed": 4,
+ "rows_total": 4,
+ "agreement_rate": 0,
  "agreement": {
   "doors": {
-   "rows": 0,
+   "rows": 4,
    "agreed": 0,
    "disputed": 0,
-   "only_a": 0,
+   "only_a": 4,
    "only_b": 0,
    "fields": {},
-   "agreement_rate": null
+   "agreement_rate": 0
   },
   "items": {
    "rows": 0,
@@ -65,8 +67,30 @@
  "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
-   "applicable": false,
-   "reason": "no door schedule rows"
+   "applicable": true,
+   "total": 4,
+   "pass": 2,
+   "fail": 2,
+   "pass_rate": 0.5,
+   "examples": [
+    "mark 116B (schedule p.7) not tagged on any plan",
+    "mark 123A (schedule p.7) not tagged on any plan"
+   ],
+   "plan_sheets": [
+    "A101 p.5",
+    "A102 p.6",
+    "A602 p.8"
+   ],
+   "plan_counts": {
+    "plan_sheets": 3,
+    "rooms": 90,
+    "corridors": 12,
+    "tags": 2,
+    "unmatched_tags": 0,
+    "schedule_marks": 4,
+    "marks_not_on_plan": 2,
+    "shared_marks": 0
+   }
   },
   "sets_exist": {
    "applicable": false,
@@ -78,17 +102,59 @@
   },
   "types_in_legend": {
    "applicable": false,
-   "reason": "no door schedule rows"
+   "reason": "no DOOR TYPES / FRAME TYPES legend title in this PDF"
   },
   "sizes_and_marks": {
-   "applicable": false,
-   "reason": "no door schedule rows"
+   "applicable": true,
+   "total": 4,
+   "pass": 4,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "size_fail": 0,
+   "mark_fail": 0
   }
  },
- "tier": "unread",
- "unread_reason": "no door schedule or hardware set read by either reader",
- "disagreement_count": 0,
- "disagreements": [],
- "ms": 1123,
- "generated_at": "2026-10-10T04:30:54.206Z"
+ "tier": "oracle-checked",
+ "disagreement_count": 4,
+ "disagreements": [
+  {
+   "kind": "door",
+   "page": 7,
+   "key": "104A",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 7,
+   "key": "104B",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 7,
+   "key": "116B",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 7,
+   "key": "123A",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  }
+ ],
+ "ms": 1085,
+ "generated_at": "2026-10-10T04:43:27.817Z"
 }
