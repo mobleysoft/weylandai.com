@@ -178,15 +178,30 @@ test("on account: a send_invoice invoice for the offer's price, no card; the D1 
   assert.deepEqual(net.unexpected, []);
 });
 
-test("a password sign-in can claim a held on-account purchase without needing an emailed code, whatever the address's case or spaces", async () => {
+test("a password sign-in by an identity whose inbox was proven earlier claims a held on-account purchase, whatever the address's case or spaces", async () => {
   const env = envWith();
   const email = throwawayEmail("oa-pw");
   const userId = await insertFreeAccount(env, email);
   assert.equal((await ask(env, order("  " + email.toUpperCase() + " "))).status, 201, "the order's address is taken trimmed and in lower case");
-  const signin = await signIn(env, "tok_pw_oa", { id: "af_pw", email: email.replace(/^u/, "U"), name: "Owner", email_verified: false });
+  // AuthFor's GET /api/v1/verify answers the identity's persisted email_verified (a code at
+  // registration, a reset link, an earlier code sign-in), for a password sign-in as for any other.
+  const signin = await signIn(env, "tok_pw_oa", { id: "af_pw", email: email.replace(/^u/, "U"), name: "Owner", email_verified: true, email_verified_at: Date.now() - 86400e3 });
   assert.deepEqual(signin.claimed.map((c) => c.session_id), ["in_onacct_1"]);
-  assert.deepEqual((await rows(env, email)).map((r) => [r.status, r.user_id, r.claim_method]), [["granted", userId, "on_account_address"]]);
+  assert.deepEqual((await rows(env, email)).map((r) => [r.status, r.user_id, r.claim_method]), [["granted", userId, "email_verified"]]);
   assert.equal(await gate(env, userId, "meetingx"), "allowed");
+});
+
+test("an identity that never proved the inbox (a password without a code, an ephemeral upgrade) claims nothing at the same address", async () => {
+  const env = envWith();
+  const email = throwawayEmail("oa-unproven");
+  const userId = await insertFreeAccount(env, email);
+  assert.equal((await ask(env, order(email))).status, 201);
+  const pw = await signIn(env, "tok_unproven", { id: "af_unproven", email, name: "Someone", email_verified: false });
+  assert.equal((pw.claimed || []).length, 0, "no claim without a proven inbox");
+  assert.deepEqual((await rows(env, email)).map((r) => [r.status, r.user_id]), [["held", null]]);
+  assert.equal(await gate(env, userId, "meetingx"), 402);
+  const proven = await signIn(env, "tok_proven", { id: "af_unproven", email, name: "Owner", email_verified: true, email_verified_at: Date.now() });
+  assert.deepEqual(proven.claimed.map((c) => c.session_id), ["in_onacct_1"], "the same identity takes it once it proves the inbox");
 });
 
 test("a plus-addressed order is claimed only by the exact plus address: not by the base address, even with a code", async () => {
@@ -199,7 +214,7 @@ test("a plus-addressed order is claimed only by the exact plus address: not by t
   assert.equal((other.claimed || []).length, 0, "the base address does not take the plus address's purchase");
   assert.equal(await gate(env, baseId, "meetingx"), 402);
   const plusId = await insertFreeAccount(env, plus);
-  const mine = await signIn(env, "tok_plus", { id: "af_plus", email: plus.toUpperCase(), name: "Firm", email_verified: false });
+  const mine = await signIn(env, "tok_plus", { id: "af_plus", email: plus.toUpperCase(), name: "Firm", email_verified: true });
   assert.deepEqual(mine.claimed.map((c) => c.session_id), ["in_onacct_1"]);
   assert.equal(await gate(env, plusId, "meetingx"), "allowed");
 });
@@ -220,7 +235,7 @@ test("when the invoice is paid, one invoice.paid webhook turns the card from On 
   const email = throwawayEmail("oa-paid");
   await insertFreeAccount(env, email);
   await ask(env, order(email));
-  const signin = await signIn(env, "tok_paid", { id: "af_paid", email, name: "Owner", email_verified: false });
+  const signin = await signIn(env, "tok_paid", { id: "af_paid", email, name: "Owner", email_verified: true });
   assert.equal((await me(env, signin.session_id)).entitlements.access.first_submittal.paid_at, null);
   const paidAt = nowSec() - 60;
   const invoice = { id: "in_onacct_1", object: "invoice", status: "paid", customer: "cus_onacct_1", subscription: null, billing_reason: "manual", amount_paid: 10000, status_transitions: { paid_at: paidAt }, metadata: { venture_id: "weylandai", on_account: "true" }, lines: { data: [] } };
@@ -303,4 +318,16 @@ test("a reservation left by a writer that died is cleared after five minutes; a 
   await env.DB.prepare("UPDATE weyland_purchases SET updated_at = ?, created_at = ?, purchased_at = ? WHERE email = ?").bind(old, old, old, email).run();
   assert.equal((await ask(env, order(email))).status, 201);
   assert.deepEqual((await rows(env, email)).map((x) => [x.id, x.status]), [["in_onacct_1", "held"]]);
+});
+
+test("claimHeldPurchases itself: an on-account purchase needs the proven inbox, not just the address", async () => {
+  const { claimHeldPurchases } = await import("../lib/grants.js");
+  const env = envWith();
+  const email = throwawayEmail("oa-grants");
+  const userId = await insertFreeAccount(env, email);
+  await ask(env, order(email));
+  const none = await claimHeldPurchases(env, { id: userId, email }, { emailVerified: false });
+  assert.deepEqual([none.claimed.length, none.held], [0, 1]);
+  const got = await claimHeldPurchases(env, { id: userId, email }, { emailVerified: true });
+  assert.deepEqual(got.claimed.map((c) => c.session_id), ["in_onacct_1"]);
 });

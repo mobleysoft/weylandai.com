@@ -58,8 +58,10 @@ import { claimHeldPurchases, claimIdsFromRequest, claimCookie, claimFromCookie }
 // weyland_claim cookie). Returns { claimed, cookie } (cookie: Set-Cookie or null).
 async function claimOnSignIn(env2, request2, account, emailVerified) {
   const ids = claimIdsFromRequest(request2);
-  // g056: every sign-in looks, by any method: a purchase made on account for exactly this address
-  // is the account's (lib/grants.js), a card purchase still needs the proof or the paying browser.
+  // g056: emailVerified is AuthFor's persisted flag for the identity (GET /api/v1/verify reads it from
+  // the user record: an emailed code, a reset link or a code at registration, at any time), so a
+  // password sign-in of an identity proven earlier carries it; this sign-in's method does not matter.
+  if (!ids.length && !emailVerified) return { claimed: [], cookie: null };
   const r = await claimHeldPurchases(env2, account, { sessionIds: ids, emailVerified: emailVerified === true });
   return { claimed: r.claimed, cookie: ids.length ? claimCookie(r.keepIds) : null };
 }
