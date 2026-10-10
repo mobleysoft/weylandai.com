@@ -50,3 +50,45 @@ test("T2504 A-601: a note sharing the title's band does not rename DOOR AND FRAM
   assert.equal(r.tables[0].title, "DOOR AND FRAME SCHEDULE");
   assert.equal(r.doors.length, 22);
 });
+
+// g049: column shifts (g042 class C2). Values as printed on the rendered pages.
+const doorOf = (r, mark, i = 0) => r.doors.filter((d) => d.door_number === mark)[i];
+
+test("T2504 A-601: JAMB, RATING and HARDWARE SETS each read in their own column; PR widths read", async () => {
+  const r = await read("g048-t2504-a601-lines.json");
+  const d100 = doorOf(r, "100"), d101 = doorOf(r, "101");
+  assert.deepEqual([d100.jamb_detail, d100.fire_rating ?? null, d100.hardware_group, d100.width_inches, d100.pair], ["J4", null, "09", 36, true]);
+  assert.deepEqual([d101.jamb_detail, d101.fire_rating, d101.hardware_group], ["J1", "90 MIN.", "04"]);
+  assert.equal(r.doors.filter((d) => d.width_inches && d.height_inches).length, 22);
+  assert.equal(r.doors.filter((d) => d.hardware_group).length, 22);
+});
+
+test("T2147 A601/A602: sizes under a nested SIZE header, and offset lines with their own row", async () => {
+  const p42 = await read("g048-t2147-a601-lines.json"), p43 = await read("g049-t2147-a602-lines.json");
+  const c = doorOf(p42, "129C"), d = doorOf(p42, "160");
+  assert.deepEqual([c.width_inches, c.height_inches, c.head_detail, c.jamb_detail, c.hardware_group], [36, 84, "10/A601", "1/A501", "5"]);
+  assert.deepEqual([d.head_detail, d.jamb_detail, d.hardware_group], ["1/A601", "5/A601", "2"]);
+  assert.deepEqual([doorOf(p43, "102A").width_inches, doorOf(p43, "102A").height_inches], [144, 168]);
+  assert.equal(p42.doors.filter((x) => x.width_inches && x.height_inches).length + p43.doors.filter((x) => x.width_inches && x.height_inches).length, 29);
+});
+
+test("R2502 A-122: PT101, a one-row table, reads each field in its own column", async () => {
+  const d = doorOf(await read("g049-r2502-a122-lines.json"), "PT101");
+  assert.deepEqual([d.door_type, d.width_inches, d.height_inches, d.frame_type, d.head_detail, d.jamb_detail, d.sill_detail, d.fire_rating ?? null, d.hardware_group],
+    ["HM-1(PR)", 96, 88, "TYP-1", "3/A-602", "6/A-602", "8/A-602", null, "09.08"]);
+});
+
+test("X2530 A-101: comments stay out of the hardware set and keep their last word", async () => {
+  const d = doorOf(await read("g049-x2530-a101-lines.json"), "100-1");
+  assert.equal(d.hardware_group, "1");
+  assert.match(d.remarks, /^REQUIRED: FIRE RATED LOUVER/);
+});
+
+test("T2507 A-103: WD | HGT under SIZE read as width and height; the empty SET NO. stays empty", async () => {
+  const r = await read("g049-t2507-a103-lines.json");
+  assert.equal(r.doors.length, 49);
+  assert.equal(r.doors.filter((d) => d.width_inches && d.height_inches).length, 49);
+  assert.deepEqual(r.doors.filter((d) => d.door_number === "132A").map((d) => [d.width_inches, d.height_inches]), [[66, 84], [75, 84]]);
+  const d = doorOf(r, "100A");
+  assert.deepEqual([d.door_type, d.frame_type, d.hardware_group ?? null], ["EXIST", "EXIST", null]);
+});
