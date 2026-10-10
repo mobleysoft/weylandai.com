@@ -2,7 +2,9 @@
 
 `building.mjs` is the source model for the sample bid set. `make.mjs` creates the vector and scanned PDFs plus the expected door and hardware data. The project is explicitly marked **SAMPLE PROJECT - NOT A REAL BUILDING**.
 
-`grade.mjs` uploads each variant to production SubX, discovers and reads the schedule pages, builds a packet, compares extracted doors and hardware with the source model, verifies exact maker/model/page citations for every held catalog item, checks disclosure of unheld items, reads the packet back, and deletes the test session. It exits nonzero if any check fails or cleanup does not complete.
+`grade.mjs` uploads each variant to production SubX, discovers and reads the schedule pages, builds a packet, compares extracted doors and hardware with the source model, verifies exact maker/model/page citations for every held catalog item, checks disclosure of unheld items, confirms the packet has a transmittal that says compliance is not verified, reads the packet back, and deletes the test session. It exits nonzero if any check fails or cleanup does not complete.
+
+Submittal packets include a transmittal summarizing their contents and unresolved items. It explicitly says the packet has not been checked against project specifications, approved manufacturers, building codes, accessibility, or fire-rating requirements. This is a review handoff, not a compliance certification or architect approval.
 
 Run the pure grading checks with:
 

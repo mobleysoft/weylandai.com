@@ -23,12 +23,12 @@
 //
 // Usage: node tools/bidset/grade.mjs --token-file <path> [--variant vector|scanned|both] [--base https://weylandai.com]
 // Run tools/bidset/make.mjs first. Writes grade_report_<stamp>.{json,md} next to this file.
-import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import { readFileSync, writeFileSync, existsSync, unlinkSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { execFileSync } from "node:child_process";
 import { PROJECT, GROUPS, OPENINGS } from "./building.mjs";
-import { auditHeldCitations, variantPasses } from "./coverage.mjs";
+import { auditHeldCitations, auditPacketFrontMatter, variantPasses } from "./coverage.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const args = Object.fromEntries(process.argv.slice(2).map((a, i, all) => a.startsWith("--") ? [a.slice(2), all[i + 1] && !all[i + 1].startsWith("--") ? all[i + 1] : true] : []).filter((x) => x.length));
@@ -142,10 +142,11 @@ async function gradeVariant(variant) {
       const f = join(OUT, ".grade-" + variant + ".pdf");
       writeFileSync(f, Buffer.from(await pdf.arrayBuffer()));
       try { t = execFileSync("pdftotext", ["-layout", f, "-"], { maxBuffer: 64 << 20 }).toString(); } catch (_) { t = ""; }
-      execFileSync("rm", ["-f", f]);
+      unlinkSync(f);
     }
-    const head = t.split("\f").slice(0, 3).join("\n").toUpperCase();
-    e.checks.push(line(8, "the packet names the project and opens with a table of contents", head.includes(up(PROJECT.name)) && /CONTENTS/.test(head), "project named on its first pages: " + head.includes(up(PROJECT.name)) + "; contents: " + /CONTENTS/.test(head) + "; " + (t.split("\f").length - 1) + " pages read back"));
+    const frontMatter = auditPacketFrontMatter(t, PROJECT.name);
+    e.checks.push(line(8, "the packet names the project and includes a table of contents", frontMatter.projectNamed && frontMatter.contentsPresent, "project named: " + frontMatter.projectNamed + "; contents: " + frontMatter.contentsPresent + "; " + (t.split("\f").length - 1) + " pages read back"));
+    e.checks.push(line(9, "the packet includes a transmittal and states that compliance review is not verified", frontMatter.transmittalPresent && frontMatter.complianceDisclosurePresent, "transmittal: " + frontMatter.transmittalPresent + "; compliance disclosure: " + frontMatter.complianceDisclosurePresent));
   } finally {
     const del = await api("/api/hardware-schedule/session/" + sid, { method: "DELETE" });
     e.cleanup = del.ok ? "deleted" : "HTTP " + del.status;

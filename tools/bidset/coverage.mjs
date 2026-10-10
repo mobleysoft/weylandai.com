@@ -52,3 +52,15 @@ export function variantPasses(variant) {
     variant.cleanup === "deleted"
   );
 }
+
+/** Check the assembled packet's front matter without implying design approval. */
+export function auditPacketFrontMatter(text, projectName) {
+  const head = String(text || "").split("\f").slice(0, 3).join("\n").toUpperCase();
+  const compactHead = normalize(head);
+  return {
+    projectNamed: compactHead.includes(normalize(projectName)),
+    contentsPresent: head.includes("CONTENTS"),
+    transmittalPresent: head.includes("SUBMITTAL TRANSMITTAL"),
+    complianceDisclosurePresent: head.includes("COMPLIANCE REVIEW: NOT VERIFIED"),
+  };
+}

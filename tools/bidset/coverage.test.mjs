@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { auditHeldCitations, variantPasses } from "./coverage.mjs";
+import { auditHeldCitations, auditPacketFrontMatter, variantPasses } from "./coverage.mjs";
 
 const held = { catalog: "99-EO-F", mfr: "VON", held: true };
 const section = { type: "cut_sheet", manufacturer: "Von Duprin", model: "99-EO-F", page: 17, pages: 1 };
@@ -39,4 +39,14 @@ test("the grade gate requires all checks, no errors, and successful cleanup", ()
   assert.equal(variantPasses({ ...passing, errors: ["upload failed"] }), false);
   assert.equal(variantPasses({ ...passing, cleanup: "HTTP 500" }), false);
   assert.equal(variantPasses({ ...passing, checks: [] }), false);
+});
+
+test("packet front matter requires honest transmittal and compliance disclosure", () => {
+  const good = "WEYLANDAI BUILDING\nSUBMITTAL TRANSMITTAL\nCOMPLIANCE REVIEW: NOT VERIFIED\nTABLE OF CONTENTS\fDoor schedule";
+  assert.deepEqual(auditPacketFrontMatter(good, "WeylandAI Building"), {
+    projectNamed: true, contentsPresent: true, transmittalPresent: true, complianceDisclosurePresent: true,
+  });
+  const missing = auditPacketFrontMatter("WeylandAI Building\nTable of Contents\fDoor schedule", "WeylandAI Building");
+  assert.equal(missing.transmittalPresent, false);
+  assert.equal(missing.complianceDisclosurePresent, false);
 });
