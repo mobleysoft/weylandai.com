@@ -19,3 +19,14 @@ test("every client-ocr-src module equals its served .bin twin", () => {
     assert.ok(readFileSync(src).equals(readFileSync(bin)), "drift: " + src.split("/").pop() + " differs from its .bin; cp the source over the .bin");
   }
 });
+
+// A file under assets/client-ocr that is neither a twin of a source module nor one of the named runtime
+// assets is a mistake (2026-10-09: an agent wrote schedule-text-layer.bin, no .mjs, and the real twin went
+// stale while the suite stayed green). The runtime assets are the ones the worker serves by name.
+const RUNTIME_ASSETS = new Set(["eng-traineddata.bin", "grid-runner.html", "pdf-worker.mjs.bin", "pdf.mjs.bin", "pdfjs-compat.js.bin", "tesseract-core-fallback.bin", "tesseract-core.bin", "tesseract-wasm-lib.mjs.bin"]);
+
+test("nothing stray sits under assets/client-ocr", () => {
+  const twins = new Set(readdirSync(SRC).filter((f) => f.endsWith(".mjs")).map((f) => f + ".bin"));
+  const stray = readdirSync(BIN).filter((f) => !f.startsWith(".") && !twins.has(f) && !RUNTIME_ASSETS.has(f));
+  assert.deepEqual(stray, [], "stray file(s) under assets/client-ocr: " + stray.join(", ") + " (a twin must be named <module>.mjs.bin; a new runtime asset must be added to RUNTIME_ASSETS and to the asset map)");
+});
