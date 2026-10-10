@@ -26,3 +26,27 @@ test("T2423 A-601: a Door Number header over two sub-columns (112 | A) reads as 
   assert.deepEqual(r.doors.map((d) => d.door_number), ["112A", "114B", "114C"]);
   assert.deepEqual(r.doors.map((d) => [d.width_inches, d.height_inches]), [[168, 168], [72, 84], [36, 84]]);
 });
+
+// g048: rows lost at a table's end or after a two-line remark (g042 class C4). Eye counts from the
+// rendered pages, tools/accuracy/g042/spot-checks.md.
+import { clusterLines } from "../assets/client-ocr-src/schedule-text-layer.mjs";
+
+test("T2147 A601: rows after two-line remarks are kept (16 of 16, not 2)", async () => {
+  const r = await read("g048-t2147-a601-lines.json");
+  assert.deepEqual(r.doors.map((d) => d.door_number), ["129C", "160", "161", "162", "163", "164", "165A", "165B", "166", "167A", "167B", "168A", "168B", "169A", "169B", "169C"]);
+});
+
+test("C2512 A-501: a tall sheet number beside the last row does not merge rows 173.3 and 176 (75 of 75)", async () => {
+  const f = fixture("g048-c2512-a501-words.json");
+  const lines = clusterLines(f.words);
+  assert.ok(!lines.some((L) => /173\.3 176\b/.test(L.text)), "173.3 and 176 stay on their own lines");
+  const r = await readDoorScheduleFromLines(lines, { width: f.width, height: f.height }, {});
+  assert.equal(r.doors.length, 75);
+  assert.deepEqual(r.doors.slice(-3).map((d) => d.door_number), ["173.2", "173.3", "176"]);
+});
+
+test("T2504 A-601: a note sharing the title's band does not rename DOOR AND FRAME SCHEDULE (22 of 22)", async () => {
+  const r = await read("g048-t2504-a601-lines.json");
+  assert.equal(r.tables[0].title, "DOOR AND FRAME SCHEDULE");
+  assert.equal(r.doors.length, 22);
+});
