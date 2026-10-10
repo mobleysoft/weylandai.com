@@ -4,7 +4,7 @@ Goal (Mobley, 2026-10-10 03:52 EDT): reader B reads X2404-01 at the 8 rows of sh
 
 ## Cause
 
-Page 81 was never the problem: reader B reads exactly 8 rows there (100A to 107A). The other 4 rows came from **page 97**, the mechanical sheet's air-device schedule ([render](x2404-p97-air-devices-97.png)).
+Page 81 was never the problem: reader B reads exactly 8 rows there (100A to 107A). The other 4 rows came from **page 97**, the mechanical sheet's air-device schedule ([render](x2404-p97-air-devices-097.png)).
 - Its header is TAG | TYPE | DESCRIPTION | FACE SIZE WIDTH / HEIGHT | CONNECTION SIZE | MAX. AIRFLOW | THROW 150/100/50 FPM | MAX. NC | MATERIAL | FINISH | FRAME/BORDER | DAMPER | BASIS OF DESIGN | REMARKS.
 - TAG maps to the mark and FACE SIZE WIDTH/HEIGHT to a door size, so the diffusers C3, I1, R1 and R2 counted as doors.
 - The page is a door-schedule candidate because the mechanical sheet names a door somewhere.
