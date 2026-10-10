@@ -22,7 +22,7 @@
  },
  "readers": {
   "a": {
-   "doors": 0,
+   "doors": 6,
    "sets": 0,
    "items": 0,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
@@ -43,10 +43,35 @@
   "doors": {
    "rows": 6,
    "agreed": 0,
-   "disputed": 0,
+   "disputed": 6,
    "only_a": 0,
-   "only_b": 6,
-   "fields": {},
+   "only_b": 0,
+   "fields": {
+    "width_inches": {
+     "agree": 6,
+     "total": 6
+    },
+    "height_inches": {
+     "agree": 6,
+     "total": 6
+    },
+    "door_type": {
+     "agree": 6,
+     "total": 6
+    },
+    "material": {
+     "agree": 6,
+     "total": 6
+    },
+    "hardware_group": {
+     "agree": 0,
+     "total": 6
+    },
+    "fire_rating": {
+     "agree": 4,
+     "total": 4
+    }
+   },
    "agreement_rate": 0
   },
   "items": {
@@ -95,57 +120,51 @@
    "kind": "door",
    "page": 118,
    "key": "001A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "field": "hardware_group",
+   "a": "#02",
+   "b": null
   },
   {
    "kind": "door",
    "page": 118,
    "key": "001B",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "field": "hardware_group",
+   "a": "#01",
+   "b": null
   },
   {
    "kind": "door",
    "page": 118,
    "key": "206",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "field": "hardware_group",
+   "a": "#03",
+   "b": null
   },
   {
    "kind": "door",
    "page": 118,
    "key": "207",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "field": "hardware_group",
+   "a": "#03",
+   "b": null
   },
   {
    "kind": "door",
    "page": 118,
    "key": "208",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "field": "hardware_group",
+   "a": "#03",
+   "b": null
   },
   {
    "kind": "door",
    "page": 118,
    "key": "209",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "field": "hardware_group",
+   "a": "#03",
+   "b": null
   }
  ],
- "ms": 1947,
- "generated_at": "2026-10-10T07:33:11.862Z"
+ "ms": 1974,
+ "generated_at": "2026-10-10T08:00:55.559Z"
 }

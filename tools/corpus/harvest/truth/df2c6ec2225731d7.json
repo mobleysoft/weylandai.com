@@ -22,7 +22,7 @@
  },
  "readers": {
   "a": {
-   "doors": 4,
+   "doors": 3,
    "sets": 0,
    "items": 0,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
@@ -36,15 +36,15 @@
   }
  },
  "rows_agreed": 0,
- "rows_disputed": 4,
- "rows_total": 4,
+ "rows_disputed": 3,
+ "rows_total": 3,
  "agreement_rate": 0,
  "agreement": {
   "doors": {
-   "rows": 4,
+   "rows": 3,
    "agreed": 0,
    "disputed": 0,
-   "only_a": 4,
+   "only_a": 3,
    "only_b": 0,
    "fields": {},
    "agreement_rate": 0
@@ -75,8 +75,8 @@
     "corridors": 0,
     "tags": 0,
     "unmatched_tags": 0,
-    "schedule_marks": 4,
-    "marks_not_on_plan": 4,
+    "schedule_marks": 3,
+    "marks_not_on_plan": 3,
     "shared_marks": 0
    }
   },
@@ -94,22 +94,21 @@
   },
   "sizes_and_marks": {
    "applicable": true,
-   "total": 4,
+   "total": 3,
    "pass": 0,
-   "fail": 4,
+   "fail": 3,
    "pass_rate": 0,
    "examples": [
     "mark 101 p.10: size null -> null x null",
     "mark 102 p.10: size null -> null x null",
-    "mark 2X p.10: size null -> null x null",
-    "mark A-300 p.10: size null -> null x null"
+    "mark 2X p.10: size null -> null x null"
    ],
-   "size_fail": 4,
+   "size_fail": 3,
    "mark_fail": 0
   }
  },
  "tier": "oracle-checked",
- "disagreement_count": 4,
+ "disagreement_count": 3,
  "disagreements": [
   {
    "kind": "door",
@@ -137,17 +136,8 @@
    "a": "read",
    "b": null,
    "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 10,
-   "key": "A-300",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
   }
  ],
- "ms": 339,
- "generated_at": "2026-10-10T07:35:56.237Z"
+ "ms": 328,
+ "generated_at": "2026-10-10T08:03:37.570Z"
 }
