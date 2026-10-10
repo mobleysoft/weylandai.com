@@ -28,6 +28,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { execFileSync } from "node:child_process";
 import { PROJECT, GROUPS, OPENINGS } from "./building.mjs";
+import { auditHeldCitations, variantPasses } from "./coverage.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const args = Object.fromEntries(process.argv.slice(2).map((a, i, all) => a.startsWith("--") ? [a.slice(2), all[i + 1] && !all[i + 1].startsWith("--") ? all[i + 1] : true] : []).filter((x) => x.length));
@@ -64,7 +65,7 @@ async function gradeVariant(variant) {
   fd.append("projectName", PROJECT.name + " grade " + variant + " " + new Date().toISOString().slice(0, 16));
   fd.append("document_type", "door_schedule");
   const upr = await api("/api/hardware-schedule/start", { method: "POST", body: fd });
-  if (!upr.ok) { e.errors.push("upload HTTP " + upr.status); return e; }
+  if (!upr.ok) { e.errors.push("upload HTTP " + upr.status + (upr.data ? " " + JSON.stringify(upr.data).slice(0, 240) : "")); return e; }
   const sid = upr.data.sessionId;
   try {
     // Does SubX find the pages itself?
@@ -72,9 +73,12 @@ async function gradeVariant(variant) {
     const fd2 = fp.data || {};
     e.find_pages = { status: fp.status, ms: fp.ms, door: fd2.door_schedule_pages || [], hardware: fd2.hardware_pages || [], expected_door: truthDoors.source.pages, expected_hardware: truthGroups.source.pages };
     e.find_pages.right = truthDoors.source.pages.every((p) => e.find_pages.door.includes(p)) && truthGroups.source.pages.every((p) => e.find_pages.hardware.includes(p));
+    e.checks.push(line(1, "SubX finds every door-schedule and hardware-spec page itself", fp.ok && e.find_pages.right, "HTTP " + fp.status + "; door " + JSON.stringify(e.find_pages.door) + " (expected " + JSON.stringify(e.find_pages.expected_door) + "); hardware " + JSON.stringify(e.find_pages.hardware) + " (expected " + JSON.stringify(e.find_pages.expected_hardware) + ")"));
     const pages = [...truthDoors.source.pages.map((page) => ({ page, type: "door_schedule" })), ...truthGroups.source.pages.map((page) => ({ page, type: "hardware_schedule" }))];
     const rd = await api("/api/hardware-schedule/session/" + sid + "/read-pages", json({ pages }));
-    e.read = { status: rd.status, ms: rd.ms, failed: ((rd.data && rd.data.results) || []).filter((r) => !r.ok).map((r) => "p" + r.page + ": " + r.error) };
+    const readResults = (rd.data && rd.data.results) || [];
+    e.read = { status: rd.status, ms: rd.ms, expected: pages.length, completed: readResults.length, failed: readResults.filter((r) => !r.ok).map((r) => "p" + r.page + ": " + r.error) };
+    e.checks.push(line(2, "SubX reads every scheduled source page without a partial result", rd.ok && readResults.length === pages.length && e.read.failed.length === 0, e.read.completed + " of " + e.read.expected + " pages completed" + (e.read.failed.length ? "; " + e.read.failed.join("; ") : "")));
     const shown = (await api("/api/hardware-schedule/session/" + sid + "/doors")).data || {};
     const doors = shown.doors || [], sets = shown.hardware_sets || [], comps = shown.components || [];
 
@@ -89,8 +93,8 @@ async function gradeVariant(variant) {
       if (up(d.door_type) !== up(t.door_type)) wrong.push(t.mark + " type " + d.door_type + " (spec " + t.door_type + ")");
       if (fire(d.fire_rating) !== fire(t.fire_rating)) wrong.push(t.mark + " fire " + (d.fire_rating || "none") + " (spec " + (t.fire_rating || "none") + ")");
     }
-    e.checks.push(line(1, "every opening is in the submittal, with its mark", found.length === truthDoors.doors.length, found.length + " of " + truthDoors.doors.length + " openings; " + Math.max(0, doors.length - found.length) + " extra rows"));
-    e.checks.push(line(2, "each opening's hardware group, size, door type and fire rating are right", found.length > 0 && wrong.length === 0, (found.length * 4 - wrong.length) + " of " + found.length * 4 + " fields right" + (wrong.length ? "; " + wrong.slice(0, 8).join("; ") : "")));
+    e.checks.push(line(3, "every opening is in the submittal, with its mark", found.length === truthDoors.doors.length, found.length + " of " + truthDoors.doors.length + " openings; " + Math.max(0, doors.length - found.length) + " extra rows"));
+    e.checks.push(line(4, "each opening's hardware group, size, door type and fire rating are right", found.length > 0 && wrong.length === 0, (found.length * 4 - wrong.length) + " of " + found.length * 4 + " fields right" + (wrong.length ? "; " + wrong.slice(0, 8).join("; ") : "")));
 
     // 3: groups and items as specified
     let itemsRight = 0, itemsTotal = 0;
@@ -106,7 +110,7 @@ async function gradeVariant(variant) {
         if (ok) itemsRight++; else itemWrong.push(g.group + " " + it.catalog + ": read " + [c.quantity, c.model || c.catalog_number, c.finish, c.manufacturer].join(" / "));
       }
     }
-    e.checks.push(line(3, "every group is there with every item as specified (qty, catalog number, finish, maker)", itemsRight === itemsTotal, itemsRight + " of " + itemsTotal + " items exact in " + sets.length + " sets read (spec " + truthGroups.groups.length + ")" + (itemWrong.length ? "; " + itemWrong.slice(0, 8).join("; ") : "")));
+    e.checks.push(line(5, "every group is there with every item as specified (qty, catalog number, finish, maker)", itemsRight === itemsTotal, itemsRight + " of " + itemsTotal + " items exact in " + sets.length + " sets read (spec " + truthGroups.groups.length + ")" + (itemWrong.length ? "; " + itemWrong.slice(0, 8).join("; ") : "")));
 
     // The packet
     const pk = await api("/api/hardware-schedule/session/" + sid + "/submittal-pdf", json({ preparedBy: "WeylandAI grade (sample project)", projectName: PROJECT.name }));
@@ -118,19 +122,18 @@ async function gradeVariant(variant) {
     const distinct = new Map();
     for (const g of GROUPS) for (const it of g.items) distinct.set(it.mfr + "|" + norm(it.catalog), it);
     const items = [...distinct.values()];
-    // The packet accounts for every distinct item (components = matched + unmatched): an item is
-    // cited unless it is listed as missing or as by others. Several items can share one cited page
-    // (ALX53 and ALX80 on the ALX sell sheet's functions page), so the pages are not matched by name.
+    // A held item passes only if the assembled packet reports its exact maker/model
+    // cut-sheet section and embedded page. Aggregate matched/unmatched totals are not proof.
     const missFor = (it) => missing.find((m) => norm(m.model) === norm(it.catalog) && (!m.manufacturer || mfrOk(m.manufacturer, it.mfr) || it.mfr === "B/O"));
     const isOthers = (it) => byOthers.some((b) => norm(b.text) === norm(it.catalog));
-    const isCited = (it) => !missFor(it) && !isOthers(it) && cs.matched + cs.unmatched === cs.components;
     const isListed = (it) => (missFor(it) && missFor(it).need) || isOthers(it);
     const held = items.filter((i) => i.held), notHeld = items.filter((i) => !i.held);
-    const heldMissed = held.filter((i) => !isCited(i));
+    const citationAudit = auditHeldCitations(items, cited);
+    const heldMissed = citationAudit.missing;
     const notListed = notHeld.filter((i) => !isListed(i));
-    e.packet = { pages: pk.data.totalPages, ms: pk.ms, components: cs.components, matched: cs.matched, unmatched: cs.unmatched, missing: missing.map((m) => m.model + " - " + m.reason + " / needed: " + m.need), by_others: byOthers.map((b) => b.text) };
-    e.checks.push(line(4, "every item the catalogue holds has its cut-sheet page in the packet", heldMissed.length === 0, (held.length - heldMissed.length) + " of " + held.length + " held items cited" + (heldMissed.length ? "; not cited: " + heldMissed.map((i) => i.mfr + " " + i.catalog).join(", ") : "")));
-    e.checks.push(line(5, "every item it does not hold is listed as missing with what is needed, or as furnished by others", notListed.length === 0, (notHeld.length - notListed.length) + " of " + notHeld.length + " listed" + (notListed.length ? "; not listed: " + notListed.map((i) => i.mfr + " " + i.catalog).join(", ") : "")));
+    e.packet = { pages: pk.data.totalPages, ms: pk.ms, components: cs.components, matched: cs.matched, unmatched: cs.unmatched, missing: missing.map((m) => m.model + " - " + m.reason + " / needed: " + m.need), by_others: byOthers.map((b) => b.text), cited_sections: cited.map(({ manufacturer, model, page, title }) => ({ manufacturer, model, page, title })) };
+    e.checks.push(line(6, "every held item has its exact maker/model cut-sheet page embedded in the packet", citationAudit.citedCount === citationAudit.heldTotal, citationAudit.citedCount + " of " + citationAudit.heldTotal + " held items have an exact packet citation" + (heldMissed.length ? "; not cited: " + heldMissed.map((i) => i.mfr + " " + i.catalog).join(", ") : "")));
+    e.checks.push(line(7, "every item it does not hold is listed as missing with what is needed, or as furnished by others", notListed.length === 0, (notHeld.length - notListed.length) + " of " + notHeld.length + " listed" + (notListed.length ? "; not listed: " + notListed.map((i) => i.mfr + " " + i.catalog).join(", ") : "")));
 
     // 6: the PDF itself
     const pdf = await fetch(BASE + "/api/hardware-schedule/session/" + sid + "/submittal-pdf", { headers: H });
@@ -142,7 +145,7 @@ async function gradeVariant(variant) {
       execFileSync("rm", ["-f", f]);
     }
     const head = t.split("\f").slice(0, 3).join("\n").toUpperCase();
-    e.checks.push(line(6, "the packet names the project and opens with a table of contents", head.includes(up(PROJECT.name)) && /CONTENTS/.test(head), "project named on its first pages: " + head.includes(up(PROJECT.name)) + "; contents: " + /CONTENTS/.test(head) + "; " + (t.split("\f").length - 1) + " pages read back"));
+    e.checks.push(line(8, "the packet names the project and opens with a table of contents", head.includes(up(PROJECT.name)) && /CONTENTS/.test(head), "project named on its first pages: " + head.includes(up(PROJECT.name)) + "; contents: " + /CONTENTS/.test(head) + "; " + (t.split("\f").length - 1) + " pages read back"));
   } finally {
     const del = await api("/api/hardware-schedule/session/" + sid, { method: "DELETE" });
     e.cleanup = del.ok ? "deleted" : "HTTP " + del.status;
@@ -156,6 +159,7 @@ const stamp = report.at.slice(0, 16).replace(/[:T]/g, "-");
 const md = ["# The WeylandAI Building, graded as a GC would, " + stamp, "", PROJECT.stamp + ". The bid set drawn by tools/bidset/make.mjs from tools/bidset/building.mjs (" + OPENINGS.length + " openings, " + GROUPS.length + " hardware groups), sent through SubX by the workspace's own requests on " + BASE + ", and the submittal it builds checked against the model.", ""];
 for (const e of report.variants) {
   md.push("## " + e.variant + " (" + e.file + ")", "");
+  md.push("Automated result: **" + (variantPasses(e) ? "PASS" : "REVISE AND RESUBMIT") + "**", "");
   if (e.errors.length) md.push("Errors: " + e.errors.join("; "), "");
   if (e.find_pages) md.push("- SubX found the pages itself: " + e.find_pages.right + " (door " + JSON.stringify(e.find_pages.door) + ", hardware " + JSON.stringify(e.find_pages.hardware) + "; the set has them on " + JSON.stringify(e.find_pages.expected_door) + " and " + JSON.stringify(e.find_pages.expected_hardware) + ")");
   if (e.read) md.push("- Pages read: " + (e.read.failed.length ? "failed " + e.read.failed.join("; ") : "all") + ", " + Math.round(e.read.ms / 1000) + " s");
@@ -165,3 +169,4 @@ for (const e of report.variants) {
 writeFileSync(join(here, "grade_report_" + stamp + ".json"), JSON.stringify(report, null, 2));
 writeFileSync(join(here, "grade_report_" + stamp + ".md"), md.join("\n"));
 console.log(md.join("\n"));
+if (!report.variants.length || !report.variants.every(variantPasses)) process.exitCode = 1;
