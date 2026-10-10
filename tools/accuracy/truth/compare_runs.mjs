@@ -2,9 +2,13 @@ import fs from 'fs';
 import path from 'path';
 import { execSync } from 'child_process';
 
-const args = process.argv.slice(2);
+const rawArgs = process.argv.slice(2);
+const allowIdx = rawArgs.indexOf('--allow');
+// Sets whose loss of agreed rows is accepted for this run; the reason lives in plan/decisions.md, never here.
+const ALLOW = new Set(allowIdx >= 0 ? (rawArgs[allowIdx + 1] || '').split(',').filter(Boolean) : []);
+const args = allowIdx >= 0 ? rawArgs.filter((a, i) => i !== allowIdx && i !== allowIdx + 1) : rawArgs;
 if (args.length !== 2) {
-  console.error("Usage: compare_runs.mjs <dir1_or_ref:dir> <dir2>");
+  console.error("Usage: compare_runs.mjs <dir1_or_ref:dir> <dir2> [--allow <sha,...>]");
   process.exit(1);
 }
 
@@ -57,8 +61,6 @@ function tierRank(tier) {
   return TIER_RANKS[tier] ?? -1;
 }
 
-const allowArg = process.argv.indexOf('--allow');
-const ALLOW = new Set(allowArg > 0 ? (process.argv[allowArg + 1] || '').split(',').filter(Boolean) : []);
 let failed = false;
 
 console.log(`| Set | Rows A | Rows B | Agreed Before | Agreed After | Tier Before | Tier After |`);
