@@ -47,6 +47,7 @@
 //                                                  first-submittal offer and every plan)
 //   GET       /api/billing/checkout/status/:id  -> routes/billing.js (pending / active / held)
 //   POST      /api/billing/claims               -> routes/billing.js (held purchases)
+//   POST      /api/billing/on-account           -> routes/on-account.js (operator: the offer on account, invoiced, held for the email)
 //   POST      /api/billing/checkout/create      -> 410 since 2026-10-07 (hosted Checkout removed)
 //   GET       /api/billing/plan, POST /api/billing/subscription/cancel|resume,
 //   POST      /api/billing/payment-method/setup|default,
@@ -87,6 +88,7 @@ import { SovereignPlatformRoutes } from "./lib/marketing-pages.js";
 import { registerLoginPageRoutes } from "./routes/login-page.js";
 import { registerAuthSessionRoutes } from "./routes/auth-session.js";
 import { registerBillingRoutes } from "./routes/billing.js";
+import { registerOnAccountRoutes } from "./routes/on-account.js";
 import { registerSubscriptionRoutes } from "./routes/subscription.js";
 import { registerWebhooksSubscriptionRoutes, sweepRecentCheckouts } from "./routes/webhooks-subscription.js";
 import { registerDemoRoutes } from "./routes/demo.js";
@@ -120,6 +122,7 @@ router.get("/health", () => jsonResponse3({
 registerLoginPageRoutes(router);
 registerAuthSessionRoutes(router, { authenticate, errorResponse });
 registerBillingRoutes(router, { WEYLAND_PRODUCTS, CHECKOUT_READY_PRODUCTS, stripeRequest });
+registerOnAccountRoutes(router, { WEYLAND_PRODUCTS });
 registerSubscriptionRoutes(router, { authenticate, errorResponse });
 registerPlanRoutes(router);
 registerWebhooksSubscriptionRoutes(router, {
