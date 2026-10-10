@@ -29,26 +29,47 @@
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
   },
   "b": {
-   "doors": 39,
+   "doors": 58,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 2
+   "tables": 3
   }
  },
- "rows_agreed": 0,
- "rows_disputed": 58,
+ "rows_agreed": 8,
+ "rows_disputed": 50,
  "rows_total": 58,
- "agreement_rate": 0,
+ "agreement_rate": 0.1379,
  "agreement": {
   "doors": {
    "rows": 58,
-   "agreed": 0,
-   "disputed": 0,
-   "only_a": 19,
+   "agreed": 8,
+   "disputed": 11,
+   "only_a": 0,
    "only_b": 39,
-   "fields": {},
-   "agreement_rate": 0
+   "fields": {
+    "width_inches": {
+     "agree": 19,
+     "total": 19
+    },
+    "height_inches": {
+     "agree": 19,
+     "total": 19
+    },
+    "door_type": {
+     "agree": 19,
+     "total": 19
+    },
+    "material": {
+     "agree": 19,
+     "total": 19
+    },
+    "hardware_group": {
+     "agree": 8,
+     "total": 19
+    }
+   },
+   "agreement_rate": 0.1379
   },
   "items": {
    "rows": 0,
@@ -92,10 +113,12 @@
   "types_in_legend": {
    "applicable": true,
    "total": 6,
-   "pass": 6,
-   "fail": 0,
-   "pass_rate": 1,
-   "examples": [],
+   "pass": 5,
+   "fail": 1,
+   "pass_rate": 0.8333,
+   "examples": [
+    "frame type SF (16 rows) not found near the frame types legend"
+   ],
    "legend_titles": [
     "DOOR TYPES p.78",
     "FRAME TYPES p.78",
@@ -115,179 +138,168 @@
    "mark_fail": 0
   }
  },
- "tier": "oracle-checked",
- "disagreement_count": 58,
+ "tier": "agreed",
+ "disagreement_count": 50,
  "disagreements": [
   {
    "kind": "door",
    "page": 78,
    "key": "101.1A",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "field": "hardware_group",
+   "a": "E6/A601 8.0",
+   "b": "8.0"
   },
   {
    "kind": "door",
    "page": 78,
    "key": "101.1B",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 78,
-   "key": "101.2",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "field": "hardware_group",
+   "a": "E6/A601 8.0",
+   "b": "8.0"
   },
   {
    "kind": "door",
    "page": 78,
    "key": "101A",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "field": "hardware_group",
+   "a": "E6/A601 4.0",
+   "b": "4.0"
   },
   {
    "kind": "door",
    "page": 78,
    "key": "101B",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "field": "hardware_group",
+   "a": "E6/A601 4.0",
+   "b": "4.0"
   },
   {
    "kind": "door",
    "page": 78,
    "key": "102",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "field": "hardware_group",
+   "a": "E6/A601 5.0",
+   "b": "5.0"
   },
   {
    "kind": "door",
    "page": 78,
    "key": "102.1A",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "field": "hardware_group",
+   "a": "E6/A601 8.0",
+   "b": "8.0"
   },
   {
    "kind": "door",
    "page": 78,
    "key": "102.1B",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "field": "hardware_group",
+   "a": "E6/A601 8.0",
+   "b": "8.0"
   },
   {
    "kind": "door",
    "page": 78,
    "key": "102.1C",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "field": "hardware_group",
+   "a": "E6/A601 8.0",
+   "b": "8.0"
   },
   {
    "kind": "door",
    "page": 78,
    "key": "102.1D",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "field": "hardware_group",
+   "a": "E6/A601 8.0",
+   "b": "8.0"
   },
   {
    "kind": "door",
    "page": 78,
    "key": "103",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 78,
-   "key": "103.1",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 78,
-   "key": "103.2",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 78,
-   "key": "103.2A",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 78,
-   "key": "103.3",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 78,
-   "key": "109",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "field": "hardware_group",
+   "a": "E6/A601 8.0",
+   "b": "8.0"
   },
   {
    "kind": "door",
    "page": 78,
    "key": "110",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "field": "hardware_group",
+   "a": "E6/A601 7.0",
+   "b": "7.0"
   },
   {
    "kind": "door",
-   "page": 78,
-   "key": "125",
+   "page": 88,
+   "key": "3",
    "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
   },
   {
    "kind": "door",
-   "page": 78,
-   "key": "125.1",
+   "page": 88,
+   "key": "3",
    "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 88,
+   "key": "3",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 88,
+   "key": "3",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 88,
+   "key": "3",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 88,
+   "key": "3",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 88,
+   "key": "3",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 88,
+   "key": "3",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
   },
   {
    "kind": "door",
@@ -479,6 +491,6 @@
    "why": "only reader B read this row"
   }
  ],
- "ms": 1123,
- "generated_at": "2026-10-10T02:33:35.091Z"
+ "ms": 1119,
+ "generated_at": "2026-10-10T02:53:07.997Z"
 }
