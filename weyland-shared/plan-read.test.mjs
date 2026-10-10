@@ -129,3 +129,52 @@ test("g041: one letter item serves one tag, and plain marks are unaffected", () 
   assert.equal(r.tags.find((g) => g.mark === "150").matched_by, undefined);
   assert.equal(r.tags.find((g) => g.mark === "1A"), undefined, "no item reads 1");
 });
+
+// g044: T2507's schedule prints two 132A rows (two openings, 5'-6" and 6'-3") and plan A-100 tags
+// 132A twice and 132B once. k rows sharing a mark on one schedule page get k tags of their own when
+// the sheet shows k tags, flagged; any other count places none of them (no shared or invented spot).
+test("g044: k rows sharing a mark and k tags on the sheet each get their own tag, flagged", () => {
+  const sheet = page(7, [
+    ...titleBlock("A-100", "FIRST FLOOR PLAN"),
+    it("132", 1400, 1000, 7.8), it("A", 1404, 1012, 7.8),   // first 132A (upper)
+    it("132", 1400, 1300, 7.8), it("A", 1404, 1312, 7.8),   // second 132A (lower)
+    it("132", 1700, 1000, 7.8), it("B", 1704, 1012, 7.8),   // 132B
+  ]);
+  const sch = page(10, [...titleBlock("A-103", "DOOR SCHEDULE")]);
+  const ds = [{ mark: "132A", width: "5'-6\"", page: 10 }, { mark: "132A", width: "6'-3\"", page: 10 }, { mark: "132B", page: 10 }];
+  const r = readPlan([sheet, sch], ds);
+  const a = r.tags.filter((g) => g.mark === "132A");
+  assert.equal(a.length, 2, "two tags for two 132A rows");
+  assert.notDeepEqual([a[0].x, a[0].y], [a[1].x, a[1].y], "never one shared position");
+  assert.ok(a.every((g) => g.note === "shared mark, order assumed" && g.shared_mark.rows === 2 && g.shared_mark.tags === 2));
+  assert.ok(a[0].y < a[1].y, "rows in schedule order to tags in reading order");
+  assert.equal(r.tags.find((g) => g.mark === "132B").note, undefined, "a mark one row has is not flagged");
+  assert.deepEqual(r.marks_not_on_plan, []);
+  assert.deepEqual(r.shared_marks.map((x) => [x.mark, x.rows, x.tags, x.placed]), [["132A", 2, 2, true]]);
+  assert.equal(r.counts.shared_marks, 1);
+});
+
+test("g044: k rows sharing a mark but another count of tags: none placed on that sheet, reported", () => {
+  const sheet = page(7, [
+    ...titleBlock("A-100", "FIRST FLOOR PLAN"),
+    it("132A", 1400, 1000, 7.8),                             // one exact tag for two rows
+    it("150", 1600, 1000, 7.8),
+  ]);
+  const sch = page(10, [...titleBlock("A-103", "DOOR SCHEDULE")]);
+  const ds = [{ mark: "132A", page: 10 }, { mark: "132A", page: 10 }, { mark: "150", page: 10 }];
+  const r = readPlan([sheet, sch], ds);
+  assert.equal(r.tags.filter((g) => g.mark === "132A").length, 0, "no shared position");
+  assert.deepEqual(r.marks_not_on_plan.map((m) => m.mark), ["132A", "132A"]);
+  assert.deepEqual(r.shared_marks.map((x) => [x.mark, x.rows, x.tags, x.placed]), [["132A", 2, 1, false]]);
+  assert.equal(r.tags.find((g) => g.mark === "150").note, undefined);
+});
+
+test("g044: the same door on two schedule pages is one door, not a shared mark", () => {
+  const sheet = page(7, [...titleBlock("A-100", "FIRST FLOOR PLAN"), it("001", 1400, 1000, 7.8)]);
+  const s1 = page(10, [...titleBlock("A-103", "DOOR SCHEDULE")]), s2 = page(11, [...titleBlock("A-104", "DOOR SCHEDULE")]);
+  const r = readPlan([sheet, s1, s2], [{ mark: "001", page: 10 }, { mark: "001 [p.11]", page: 11 }]);
+  assert.equal(r.tags.length, 1);
+  assert.equal(r.tags[0].note, undefined);
+  assert.deepEqual(r.marks_not_on_plan, []);
+  assert.deepEqual(r.shared_marks, []);
+});
