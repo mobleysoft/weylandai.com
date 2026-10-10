@@ -258,7 +258,7 @@ function tableFrom(T, allWords) {
   const headerFor = (k) => {
     const names = Array.from({ length: colCount }, () => []);
     for (let bi = 0; bi < k; bi++) {
-      if (crossed(bands[bi]) < 3) continue;
+      // if (crossed(bands[bi]) < 3) continue;
       for (const w of bandWords[bi]) {
         const [l, r] = cellSpan(w);
         for (let c = 0; c < colCount; c++) { const mid = (fences[c] + fences[c + 1]) / 2; if (mid >= l && mid <= r) names[c].push(w); }
