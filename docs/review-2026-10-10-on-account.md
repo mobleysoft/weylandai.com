@@ -53,3 +53,81 @@ the failure-path tests named at the end.
     **Smallest fix:** Add these concrete test names: `concurrent on-account POSTs for the same email do not create duplicate invoices or held purchases`, `a D1 failure after sending the invoice returns 502 and does not leave a stranded invoice in Stripe`, `building a package out of credits denies access instead of merely stopping the count`, `rebuilding the same package does not consume a second credit`, and `a password sign-in can claim a held on-account purchase without needing an emailed code`.
 
 review finished 2026-10-10T00:23:05-04:00
+
+## Measured against the code (g056, cloud session, 2026-10-10)
+
+Each finding was checked on main e293d1a/62c397f, then fixed with a test or answered here. The tests are in:
+- `weyland-platform-worker/src/routes/on-account.test.mjs` (15 tests);
+- `weyland-subx-worker/test/subx-workspace.test.mjs` (2 more).
+
+Totals: the platform worker passes 127 of 127. SubX passes 196 of 197; the one failure is the renderer-bound generated-mark-scan test, which passes on the Mac.
+
+1. **Route existence and rate limit (Note): fixed.**
+   - A missing, short or wrong secret all answer 404, so the response no longer tells whether the secret is configured.
+   - Requests are rate-limited to 10 a minute per IP (`checkRateLimit`). The eleventh is 404, even with the right secret.
+   - Tests:
+     - "no operator secret, a short one, a wrong one or none sent: 404 alike …"
+     - "ten tries a minute from one address: the eleventh is 404 even with the right secret"
+   - `tools/billing/on-account-order.mjs` reads a 404 as "the route is not there or the secret is wrong".
+2. **Idempotency (Medium): fixed.**
+   - The first write is a D1 reservation row keyed `onacct:<email>:<product>`. Its primary key makes it the one writer for that email. A concurrent POST gets 409 `in_progress`, and a later one gets the held order back (200, `existing`).
+   - A reservation whose writer died is cleared after 5 minutes.
+   - Stripe creates carry idempotency keys derived from the email and product: customer, invoice, item, finalize, send.
+   - Tests:
+     - "concurrent on-account POSTs for the same email do not create duplicate invoices or held purchases" (4 at once: one 201, one invoice, one row);
+     - "a reservation left by a writer that died is cleared after five minutes; a fresh one answers in_progress".
+3. **Claims by password sign-in and by plus address (High).** Amended after the Mac's hold on PR 121 (2026-10-10).
+   - **Password sign-in: fixed, with the proof kept.**
+     - A held on-account purchase is taken only by an identity that has proven the inbox.
+     - That proof is AuthFor's persisted `email_verified`. `GET /api/v1/verify` reads it from the user record (`scopedIdentity` in authfor/worker.js). It was set by an emailed code, a reset link, or a code at registration, at any time.
+     - So a password sign-in of an identity proven earlier carries the flag through the bridge, and takes the purchase. No AuthFor change was needed: the flag was already persisted, not per sign-in.
+     - An identity carrying an unproven address takes nothing. Examples: a password set without a code, or `/api/auth/ephemeral/upgrade`, whose code is optional.
+     - The first version of PR 121 let any sign-in with the address claim. That gave the purchase to an unproven identity, and it is withdrawn.
+     - The sign-in route and `claimHeldPurchases` each require the proof:
+       - `claimOnSignIn` returns early without it;
+       - `grants.js` checks it again;
+       - each layer has a test that fails when it is removed.
+   - **Case and spaces:** sign-in finds the account whatever the address's case or stray spaces (`auth-session.js`; an exact match first). The order's address is taken trimmed and lower-cased.
+   - **Plus addresses: exact only.** `john+1@…` and `john@…` are different addresses, and a purchase for one is not taken by the other, even with a code. The review's suggested "normalisation" would hand a purchase to a different inbox.
+   - Tests:
+     - "a password sign-in by an identity whose inbox was proven earlier claims a held on-account purchase, whatever the address's case or spaces";
+     - "an identity that never proved the inbox (a password without a code, an ephemeral upgrade) claims nothing at the same address";
+     - "a plus-addressed order is claimed only by the exact plus address: not by the base address, even with a code";
+     - "a card purchase held for an address still needs the emailed code or the paying browser (unchanged)";
+     - "claimHeldPurchases itself: an on-account purchase needs the proven inbox, not just the address".
+   - **The 30 days start at the claim: as designed.** The window is the offer's 30 days of use. The card shows "On account <date>" for the invoice date and "Access until" for the window.
+4. **The card after the invoice is paid (Medium): fixed.**
+   - `weyland_purchases.paid_at` is added; old tables get it via `ALTER … ADD COLUMN`.
+   - The payment webhook's `invoice.paid` for an on-account invoice (an `in_` id with no subscription) stamps it with Stripe's `status_transitions.paid_at`. A redelivery changes nothing.
+   - The access summary carries `first_submittal.paid_at`. The card reads "On account <date> · $100 invoiced" while unpaid, and "Paid <paid date> · $100" once paid.
+   - Test: "when the invoice is paid, one invoice.paid webhook turns the card from On account to Paid; a redelivery changes nothing".
+5. **Credits (High): not a defect for access; one part checked by a test.**
+   - **Unlimited builds inside the 30 days:** this is the offer as sold ($100 first submittal plus 30 days of every product, no automatic charge, cut off at day 30). Returning 402 when the count is used up would sell less than was bought. The credit is the card's count (the Mac's reading (a)).
+     - Test: "building a package past the credit inside the 30 days is still the offer (every product until day 30), not a denial". The credit is used up, output access is still paid via the offer, and it ends at day 30.
+   - **A rebuild consuming a second credit:** the count is capped at the credits bought (1), so it cannot.
+     - Test: "rebuilding the same package does not consume a second credit".
+   - **Older valid offers ignored by the subquery:** an account has at most one granted offer. The card checkout and the on-account route both refuse a second one with 409 `offer_used`, so there is no older one to find.
+6. **A D1 failure strands a sent invoice; livemode (High): fixed.**
+   - The order of operations is now:
+     1. the reservation;
+     2. the Stripe customer, the draft invoice and its item;
+     3. the D1 row becomes the invoice's row (status `pending`);
+     4. only then is the invoice finalized and sent (status `held`).
+   - A D1 failure before sending deletes the draft and the reservation, and answers 502 with `sent: false`.
+   - A send failure after the record leaves the `pending` row: nobody can claim an unsent invoice. The next POST for the email finishes it without a second invoice.
+   - Only `sk_live_` / `rk_live_` keys are accepted (otherwise 503 `not_live`, before Stripe). A draft that comes back with `livemode !== true` is deleted unsent.
+   - Tests:
+     - "a D1 failure after the invoice is drafted returns 502 and leaves no stranded invoice in Stripe: nothing is sent";
+     - "sending fails after the record: 502 names the recorded invoice; the next POST for the email finishes it (no second invoice)";
+     - "only live Stripe: a test key is refused before Stripe; a test-mode invoice is deleted unsent and leaves no row";
+     - and in the main order test, "the purchase is recorded before Stripe finalizes the invoice", checked inside the finalize call.
+7. **Failure-path tests (Medium): present.** Each named test, and where it is:
+   - **concurrent POSTs:** as named.
+   - **the D1 failure:** "after the invoice is drafted": the order changed, so no invoice is ever sent before the record exists.
+   - **out of credits:** answered under 5, with the opposite assertion, because that is the offer.
+   - **rebuilding:** as named.
+   - **the password sign-in claim:** "a password sign-in by an identity whose inbox was proven earlier …", plus the test that an unproven identity claims nothing.
+
+The 30-day everything rule of the offer is unchanged. `outputAccess` and the offer window are untouched.
+
+The production record of Mobley Contracting (`in_1UOrBTLWTxUJi5AVJiJScQVc`, granted by an emailed code) is unaffected. Its card turns to Paid when that invoice is paid.

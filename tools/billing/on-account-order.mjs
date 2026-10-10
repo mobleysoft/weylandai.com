@@ -20,5 +20,8 @@ const body = {
 };
 const res = await fetch(base + "/api/billing/on-account", { method: "POST", headers: { "Content-Type": "application/json", "X-WeylandAI-Operator-Secret": secret }, body: JSON.stringify(body) });
 const out = await res.json().catch(() => ({}));
+// g056: the route answers 404 alike for no route and a wrong secret (and past 10 tries a minute).
+if (res.status === 404) out.hint = "404: the route is not deployed, the secret is wrong, or too many tries this minute";
+// 502 with detail.recorded: the invoice is recorded but not sent; running this again finishes it.
 console.log(JSON.stringify({ status: res.status, ...out }, null, 2));
 process.exit(res.status === 201 || res.status === 200 ? 0 : 1);

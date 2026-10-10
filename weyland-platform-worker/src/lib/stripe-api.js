@@ -33,7 +33,7 @@ export function toStripeForm(obj, prefix = "") {
   return parts.filter(Boolean).join("&");
 }
 
-export async function stripeApi(env, method, path, params, { version = STRIPE_EMBEDDED_API_VERSION } = {}) {
+export async function stripeApi(env, method, path, params, { version = STRIPE_EMBEDDED_API_VERSION, idempotencyKey = null } = {}) {
   if (!env.STRIPE_SECRET_KEY) {
     const err = new Error("payments are not configured on this worker");
     err.code = "STRIPE_NOT_CONFIGURED";
@@ -44,6 +44,8 @@ export async function stripeApi(env, method, path, params, { version = STRIPE_EM
     "Content-Type": "application/x-www-form-urlencoded"
   };
   if (version) headers["Stripe-Version"] = version;
+  // A retried create with the same key returns the first answer instead of a second object (g056).
+  if (idempotencyKey && method === "POST") headers["Idempotency-Key"] = String(idempotencyKey).slice(0, 255);
   const body = method === "GET" || !params ? undefined : toStripeForm(params);
   const resp = await fetch(`https://api.stripe.com/v1${path}`, { method, headers, body });
   const data = await resp.json().catch(() => ({}));

@@ -139,6 +139,10 @@ export async function claimHeldPurchases(env, account, { sessionIds = [], emailV
     const held = await heldPurchasesForEmail(env.DB, account.email);
     const ids = new Set(sessionIds || []);
     for (const p of held) {
+      // g056: a purchase made on account (an invoice, routes/on-account.js) is held like a card one:
+      // only an identity that proved the inbox takes it (AuthFor's persisted email_verified, whatever
+      // the sign-in method); an identity carrying an unproven address (a password set without a code,
+      // /api/auth/ephemeral/upgrade) takes nothing. Its invoice id is in no claim cookie.
       if (!(emailVerified || ids.has(p.checkout_session_id))) continue;
       try {
         const g = await grantPurchase(env, p, account.id, { nowMs, claimMethod: emailVerified ? "email_verified" : "same_browser" });

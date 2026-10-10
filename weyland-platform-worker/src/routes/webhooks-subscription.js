@@ -53,7 +53,7 @@ import {
   ensureSubscriptionsTable, factsFromSubscription, factsFromInvoice,
   isWeylandSubscription, getSubscription, upsertSubscription
 } from "../lib/subscriptions-store.js";
-import { recordPurchase, getPurchase, markGranted, maskEmail, HELD_USER_PREFIX, PURCHASE_KINDS } from "../lib/purchases-store.js";
+import { recordPurchase, getPurchase, markGranted, markInvoicePaid, maskEmail, HELD_USER_PREFIX, PURCHASE_KINDS } from "../lib/purchases-store.js";
 import { grantPurchase } from "../lib/grants.js";
 import { stripeApi } from "../lib/stripe-api.js";
 
@@ -389,6 +389,16 @@ async function provisionCheckout(env2, event, obj, WEYLAND_PRODUCTS) {
 
 async function applyLifecycle(env2, event, obj) {
   const eventType = event.type;
+  // g056: an on-account first submittal's invoice (routes/on-account.js) is paid: stamp the purchase,
+  // so the account card says Paid instead of On account. Its access was granted at the claim.
+  const subOf = (v) => (typeof v === "string" ? v : v?.id || null);
+  if (eventType === "invoice.paid" && /^in_/.test(String(obj?.id || "")) && !subOf(obj?.subscription) && !obj?.parent?.subscription_details) {
+    const paidSec = Number(obj?.status_transitions?.paid_at) || eventTime(event);
+    const row = await markInvoicePaid(env2.DB, obj.id, new Date(paidSec * 1000).toISOString());
+    if (row) { console.log(`[Webhook] invoice.paid: on-account purchase ${obj.id} paid`); return { applied: true, on_account_paid: obj.id }; }
+    const known = await getPurchase(env2.DB, obj.id);
+    if (known) return { ignored: "already_paid" };
+  }
   const facts = eventType.startsWith("invoice.") ? factsFromInvoice(obj, eventType) : factsFromSubscription(obj, eventType);
   if (!facts.subscription_id) return { ignored: "no_subscription" };
   await ensureSubscriptionsTable(env2.DB);

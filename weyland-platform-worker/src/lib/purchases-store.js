@@ -40,6 +40,7 @@ export const PURCHASES_DDL = [
     credits_total INTEGER NOT NULL DEFAULT 0,
     credits_used INTEGER NOT NULL DEFAULT 0,
     claim_method TEXT,
+    paid_at TEXT,
     created_at TEXT NOT NULL DEFAULT (datetime('now')),
     updated_at TEXT NOT NULL DEFAULT (datetime('now'))
   )`,
@@ -54,7 +55,19 @@ const ensured = new WeakSet();
 export async function ensurePurchasesTable(db) {
   if (!db || ensured.has(db)) return;
   for (const sql of PURCHASES_DDL) await db.prepare(sql).run();
+  // g056: paid_at (an on-account invoice paid later) on a table made before the column existed.
+  try { await db.prepare("ALTER TABLE weyland_purchases ADD COLUMN paid_at TEXT").run(); } catch (_) { /* already there */ }
   ensured.add(db);
+}
+
+/** g056: an on-account purchase's invoice was paid (the payment webhook's invoice.paid). Returns the
+ *  row when this call stamped it, null when there is no such purchase or it was already stamped. */
+export async function markInvoicePaid(db, invoiceId, paidAtIso) {
+  if (!/^in_/.test(String(invoiceId || ""))) return null;
+  await ensurePurchasesTable(db);
+  const res = await db.prepare("UPDATE weyland_purchases SET paid_at = ?, updated_at = ? WHERE checkout_session_id = ? AND paid_at IS NULL")
+    .bind(paidAtIso, new Date().toISOString(), invoiceId).run();
+  return res?.meta?.changes ? getPurchase(db, invoiceId) : null;
 }
 
 export async function getPurchase(db, sessionId) {

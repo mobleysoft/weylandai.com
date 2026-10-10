@@ -58,6 +58,9 @@ import { claimHeldPurchases, claimIdsFromRequest, claimCookie, claimFromCookie }
 // weyland_claim cookie). Returns { claimed, cookie } (cookie: Set-Cookie or null).
 async function claimOnSignIn(env2, request2, account, emailVerified) {
   const ids = claimIdsFromRequest(request2);
+  // g056: emailVerified is AuthFor's persisted flag for the identity (GET /api/v1/verify reads it from
+  // the user record: an emailed code, a reset link or a code at registration, at any time), so a
+  // password sign-in of an identity proven earlier carries it; this sign-in's method does not matter.
   if (!ids.length && !emailVerified) return { claimed: [], cookie: null };
   const r = await claimHeldPurchases(env2, account, { sessionIds: ids, emailVerified: emailVerified === true });
   return { claimed: r.claimed, cookie: ids.length ? claimCookie(r.keepIds) : null };
@@ -117,7 +120,8 @@ export function registerAuthSessionRoutes(router, { authenticate, errorResponse 
       // real weylandai.com account - same rule the AuthFor bridge in
       // authenticate() already applies - instead of auto-provisioning a free
       // trial for any conglomerate-wide AuthFor identity.
-      const existingUser = await env2.DB.prepare("SELECT id FROM users WHERE email = ?").bind(node.email).first();
+      // g056: the address in any case or with stray spaces is the same account (the exact match first).
+      const existingUser = await env2.DB.prepare("SELECT id FROM users WHERE email = ? OR lower(trim(email)) = lower(trim(?)) ORDER BY (email = ?) DESC LIMIT 1").bind(node.email, node.email, node.email).first();
       if (!existingUser) {
         return jsonResponse3({ error: "no_weyland_account", message: "No WeylandAI account for this identity yet — subscribe at /pricing" }, 404);
       }
