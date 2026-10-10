@@ -28,12 +28,12 @@ The g030 hand count is also 46, so either:
 
 That needs the PDF page and its rendering, checked by eye. It goes first in g042's spot checks once R2 read access is in this session.
 
-## Eye check on the Mac (2026-10-09 20:45 EDT, rendered page, not the text layer)
+## Eye check on the Mac (2026-10-09 19:58 EDT, rendered page, not the text layer)
 
 Sheet A-103 (PDF page 10) was rendered at 110 dpi whole and at 220 dpi over the door schedule, and read by eye. The DOOR SCHEDULE prints **49 door rows**: 100 to 110 (mark A each, 11 rows), 113A, 113B, 114A, 115A, 115B, 116A, 116B, 117A, 118A, 119A, 120A, 121A, 122A, 123A, 124A, 125A, 126A, 127A, 128A, 128B, 129A, 129B, 130A, 131A, 131B, 132A (5'-6"), 132A (6'-3"), 132B (5'-6"), 133A, 136A, 137A, 138A, 139A, 140A, 141A, 141B, 142A (LEGAL), 143A (TROOP CMDR).
 
 - **141B, 142A and 143A are ordinary door schedule rows**, the last three in the table, not another table and not struck. Reader A (46) and the earlier "hand count" (46) both stop three rows short; that hand count was a count of text-layer lines, not of the rendered page, which is why both agree and both are wrong. Goal g043 (Gemini pool, branch t2507-last-rows) finds the cause in the shared reader and fixes it; the bar is 49 of 49 with every other set unchanged.
-- **The two 132A rows are two openings that share a tag.** Floor plan A-100 (page 7) tags two doors 132A, one at the top right of the drill floor beside 133A and one at the bottom right beside 128B and 130A, plus 132B at the bottom left beside 105A. So the schedule is not a typo and the plan has no third tag: the drafter reused the mark for two openings of different widths. The rule that follows (goal g045, cloud): when a mark appears k times in the schedule and k tags carry it on the plan, each row gets its own tag, flagged "shared mark, order assumed"; never one shared position, never an invented one.
+- **The two 132A rows are two openings that share a tag.** Floor plan A-100 (page 7) tags two doors 132A, one at the top right of the drill floor beside 133A and one at the bottom right beside 128B and 130A, plus 132B at the bottom left beside 105A. So the schedule is not a typo and the plan has no third tag: the drafter reused the mark for two openings of different widths. The rule that follows (goal g044, cloud): when a mark appears k times in the schedule and k tags carry it on the plan, each row gets its own tag, flagged "shared mark, order assumed"; never one shared position, never an invented one.
 - **141A, 141B, 142A and 143A all have tags on A-100**, so once the reader reads 49 rows the stacked rule should place 48 distinct marks plus the second 132A.
 
 Truth for this set, until g043 lands: 49 rows, 48 distinct marks, tier "eye-checked on the rendered page".
