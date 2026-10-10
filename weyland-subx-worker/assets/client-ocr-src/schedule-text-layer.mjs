@@ -235,7 +235,7 @@ export async function pageTextLines(pdfjsLib, page, opts = {}) {
     const m = pdfjsLib.Util.transform(best.viewport.transform, it.transform);
     if (Math.abs(m[1]) < 5 * Math.abs(m[0]) || !m[1]) continue;
     const str = it.str.trim(), h = Math.hypot(m[2], m[3]);
-    if (!HEADER_LABEL_WORDS.test(normLabel(str)) || str.split(/\s+/).length > 4) continue;
+    if ((!HEADER_LABEL_WORDS.test(normLabel(str)) && !/^(WOOD|HOLLOW METAL)$/i.test(str)) || str.split(/\s+/).length > 4) continue;
     const yb = Math.max(m[5], m[5] + Math.sign(m[1]) * it.width);
     const x0 = m[4] - h / 2;
     vertical.push({ str, x0, x1: x0 + h, yb, h, item, itemX0: x0, itemX1: x0 + h, rotated_header: true, header_top: yb - it.width });
@@ -259,6 +259,19 @@ export async function pageTextLines(pdfjsLib, page, opts = {}) {
     }
   }
   best.words.push(...keptVertical);
+  // Mixed headers have horizontal DOOR NO. / LEAF SIZE above a tall band
+  // of vertical labels. Preserve that band for the title-gated recovery pass.
+  const horizontal = clusterLines(best.words);
+  const retained = new Set(best.words.filter(w => w.rotated_header).map(w => w.item));
+  for (const L of horizontal) {
+    if (!/\bDOOR\s+NO\.?\b/i.test(L.text)) continue;
+    const mark = L.words.find(w => /^NO\.?$/i.test(w.str));
+    if (!mark || !best.words.some(w => /SIZE/i.test(w.str) && Math.abs(w.yb - L.y) < 2 * mark.h && w.x0 > mark.x0 && w.x0 < mark.x0 + 25 * mark.h)) continue;
+    const nearby = vertical.filter(w => w.yb > L.y + 3 * mark.h && w.yb < L.y + 18 * mark.h &&
+      w.x0 > mark.x0 && w.x0 < mark.x0 + 100 * mark.h);
+    if (!nearby.some(w => /DOOR ELEVATION/i.test(w.str)) || !nearby.some(w => /FRAME ELEVATION/i.test(w.str))) continue;
+    for (const w of nearby) if (!retained.has(w.item)) { best.words.push(w); retained.add(w.item); }
+  }
   const lines = clusterLines(best.words);
   const textWords = items.reduce((n, it) => n + (typeof it.str === "string" ? (it.str.match(/\S+/g) || []).length : 0), 0);
   return { lines, width: best.viewport.width, height: best.viewport.height, rotation: best.rotation,
@@ -287,7 +300,7 @@ export function looksLikeMark(text) {
 }
 
 // Door-schedule header vocabulary, tested on a column's header text.
-const HEADER_LABEL_WORDS = /\b(MARK|TAG|NUMBER|NUM|NO|ID|OPENING|WIDTH|WDTH|WD|HEIGHT|HGT|HT|SIZE|THICKNESS|THICK|THK|TYPE|MATERIAL|MATL|MAT|FINISH|FIN|FIRE|RATING|RATED|LABEL|HARDWARE|HDW|HDWR|HW|SET|GROUP|GRP|GLAZING|GLASS|GLZ|HEAD|JAMB|SILL|THRESHOLD|THRES|THRESH|STC|PANIC|SECURITY|CLASS|NOTES?|REMARKS?|COMMENTS?|PAIR|DETAILS?|FRAME|DOOR|PANEL|LEAF|ROOM|NAME|LOCATION|ALTERNATE|ALT|PRICING|QTY|LEAVES|UNDERCUT|LOUVER|CLOSER|LOCKSET|KEYSIDE|SWING|HAND|HANDING|ELEV|ELEVATION|W|H|T)\b/;
+const HEADER_LABEL_WORDS = /\b(MARK|TAG|NUMBER|NUM|NO|ID|IDENTIFICATION|SYM|SYMBOL|COUNT|OPENING|WIDTH|WDTH|WD|HEIGHT|HGT|HT|SIZE|THICKNESS|THICK|THK|TYPE|MATERIAL|MATL|MAT|FINISH|FIN|FIRE|RATING|RATED|LABEL|HARDWARE|HDW|HDWR|HW|SET|GROUP|GRP|GLAZING|GLASS|GLZ|HEAD|JAMB|SILL|THRESHOLD|THRES|THRESH|STC|PANIC|SECURITY|CLASS|NOTES?|REMARKS?|COMMENTS?|PAIR|DETAILS?|FRAME|DOOR|PANEL|LEAF|ROOM|NAME|LOCATION|ALTERNATE|ALT|PRICING|QTY|LEAVES|UNDERCUT|LOUVER|CLOSER|LOCKSET|KEYSIDE|SWING|HAND|HANDING|ELEV|ELEVATION|W|H|T)\b/;
 const GROUP_LABEL_WORDS = /^(DOOR|FRAME|PANEL|SIZE|DETAILS?|FIRE|HARDWARE|ALTERNATE|OPENING|LEAF|GLAZING|RATING)$/;
 
 function labelHits(line) {
@@ -362,7 +375,7 @@ export function fieldForHeader(text, used) {
   if (has(/\bSTC\b/)) return pick("stc_rating");
   if (has(/\bPANIC\b/)) return pick("panic_hardware");
   if (has(/\b(ALTERNATE|ALT|PRICING|PRICE)\b/)) return pick("alternate");
-  if (!has(/\b(WINDOW|CATALOG|MODEL|PRODUCT|ROOM|SET|GROUP|HARDWARE|SHEET|KEY)\b/) && (has(/\b(MARK|TAG)\b/) || has(/\b(DOOR|OPENING|DR)\s*(NO|NUMBER|NUM|#|ID)(?:\b|$)/) || /^(NO|NUMBER|NUM|ID|OPENING|OPENING NO|#)$/.test(t))) return pick("mark");
+  if (!has(/\b(WINDOW|CATALOG|MODEL|PRODUCT|ROOM|SET|GROUP|HARDWARE|SHEET|KEY)\b/) && (has(/\b(MARK|TAG)\b/) || has(/\b(DOOR|OPENING|DR)\s*(NO|NUMBER|NUM|#|ID)(?:\b|$)/) || /^(NO|NUMBER|NUM|ID|IDENTIFICATION NUMBER|SYM|SYMBOL|OPENING|OPENING NO|#)$/.test(t))) return pick("mark");
   if (has(/\bSIZE\b/) && !has(/\b(WIDTH|WDTH|WD|HEIGHT|HGT|HT)\b/)) return pick("size");
   if (has(/\b(HEAD|JAMB)\s+(WIDTH|HEIGHT)\b/)) return null;
   if (has(/\b(WIDTH|WDTH|WD)\b/) || /^W$/.test(t)) return pick("width");
@@ -380,7 +393,7 @@ export function fieldForHeader(text, used) {
   if (has(/\b(ROOM|LOCATION)\b/) || (has(/\bFROM\b/) && has(/\bTO\b/))) return pick("location");
   // How many openings the row stands for (C2410 A-601: "1A101 TO 1D102" ... QUANTITY 8); a count
   // of leaves or hinges is not that.
-  if (has(/\b(QTY|QUANTITY|QUAN)\b/) && !has(/\b(LEAF|LEAVES|HINGES?|PANELS?)\b/)) return pick("quantity");
+  if (has(/\b(QTY|QUANTITY|QUAN|COUNT)\b/) && !has(/\b(LEAF|LEAVES|HINGES?|PANELS?)\b/)) return pick("quantity");
   if (has(/\b(UNDERCUT|LOUVER|SWING|HAND|HANDING|ELEV|ELEVATION|LEAVES|QTY)\b/)) return null;
   const ctxPick = (doorF, frameF) => {
     if (frameCtx && !doorCtx) return pick(frameF) || pick(doorF);
@@ -462,12 +475,56 @@ export async function readDoorScheduleFromLines(lines, pageSize, opts = {}) {
     tables.push(t);
     for (const k of t.lineIndexes) { if (!used.has(k)) used.set(k, []); used.get(k).push(t); }
   }
+  for (const band of mixedHeaderBands(lines)) {
+    const t = await buildTable(band.lines, band.index, pageSize,
+      { ...opts, compactHeader: true, mixedHeader: true, forcedTitle: band.title }, band.candidate);
+    if (!t?.is_door_schedule || !t.doors.length || tables.some(p => p.x0 < t.x1 && t.x0 < p.x1 && p.y0 <= t.y1 && t.y0 <= p.y1)) continue;
+    for (const d of t.doors) d.unread_fields = ["door_material", "frame_material"];
+    tables.push(t);
+  }
   if (!tables.length) return null;
   const doors = [];
   for (const t of tables) for (const d of t.doors) doors.push(d);
   const sections = hardwareSpecSections(lines.map(l => l.text || (l.words || []).map(w => w.text).join(" ")).join("\n"));
   for (const d of doors) d.hardware_spec_sections = sections;
   return { tables, doors, unresolved_rows: tables.flatMap(t => t.unresolved_rows) };
+}
+
+// Recover only explicitly titled tables with a mixed horizontal/vertical
+// header. Project their labels onto the bottom of the header, retaining x
+// positions; ordinary row/column parsing then handles even one or two rows.
+function mixedHeaderBands(lines) {
+  const out = [];
+  const all = lines.flatMap(L => L.words);
+  const byItem = new Map();
+  for (const w of all) { if (!byItem.has(w.item)) byItem.set(w.item, []); byItem.get(w.item).push(w); }
+  const items = [...byItem.values()].map(ws => ({ ...ws[0], str: ws.map(w => w.str).join(" "), x1: Math.max(...ws.map(w => w.x1)) }));
+  for (const mark of items.filter(w => /^DOOR NO\.?$/i.test(w.str))) {
+    const h = mark.h;
+    const size = items.find(w => /DOOR LEAF SIZE/i.test(w.str) && Math.abs(w.yb - mark.yb) < 2 * h && w.x0 > mark.x0 && w.x0 < mark.x0 + 25 * h);
+    if (!size) continue;
+    const title = items.find(w => /^DOOR SCHEDULE$/i.test(w.str) && w.yb < mark.yb && mark.yb - w.yb < 6 * h && Math.abs(w.x0 - mark.x0) < 3 * h);
+    if (!title) continue;
+    const vertical = items.filter(w => w.rotated_header && w.x0 > mark.x0 && w.x0 < mark.x0 + 100 * h && w.yb > mark.yb + 3 * h && w.yb < mark.yb + 18 * h);
+    if (!vertical.some(w => /DOOR ELEVATION/i.test(w.str)) || !vertical.some(w => /FRAME ELEVATION/i.test(w.str))) continue;
+    const bottom = Math.max(...vertical.map(w => w.yb));
+    const right = Math.max(...vertical.map(w => w.x1));
+    const horizontal = items.filter(w => !w.rotated_header && w.x0 >= mark.x0 - h && w.x0 < right + 30 * h && w.yb >= title.yb - 2 * h && w.yb <= mark.yb + 2 * h);
+    let labels = [...horizontal, ...vertical].filter(w =>
+      w === mark || /(?:SIZE|ELEVATION|ROOM|HARDWARE|HDWR|GROUP|FIRE|RATING|REMARKS|HEAD|JAMB|SILL|WOOD|HOLLOW METAL)/i.test(w.str));
+    labels = labels.filter(w => !/SCHEDULE|^DETAILS$/i.test(w.str) &&
+      !(/^HDWR$/i.test(w.str) && labels.some(v => /HARDWARE/i.test(v.str))) &&
+      !(/^GROUP$/i.test(w.str) && labels.some(v => /HARDWARE/i.test(v.str) && Math.abs(v.x0 - w.x0) < 2 * h)) &&
+      !(/^RATING$/i.test(w.str) && labels.some(v => /^FIRE$/i.test(v.str) && Math.abs(v.x0 - w.x0) < 2 * h)));
+    const projected = labels.map(w => ({ ...w, yb: bottom, h,
+      str: /^DOOR ELEVATION$/i.test(w.str) ? "DOOR TYPE" : /^FRAME ELEVATION$/i.test(w.str) ? "FRAME TYPE" : w.str,
+      mixed_header: true }));
+    const x0 = mark.x0, x1 = Math.max(...labels.map(w => w.x1));
+    const local = clusterLines([...all.filter(w => !(w.x0 >= x0 - h && w.x0 <= x1 + h && w.yb >= title.yb - 2 * h && w.yb <= bottom)), ...projected]);
+    const index = local.findIndex(L => L.words.includes(projected[0]));
+    out.push({ lines: local, index, title: title.str, candidate: { x0, x1, words: projected.sort((a, b) => a.x0 - b.x0) } });
+  }
+  return out;
 }
 
 function markHeaderBands(lines) {
@@ -512,7 +569,7 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
   // Header block: the field line and up to three label lines just above it.
   const headerIdx = [fieldIdx];
   const headerLines = [field];
-  for (let k = fieldIdx - 1, prevY = field.y; k >= 0 && headerIdx.length < 4; k--) {
+  for (let k = fieldIdx - 1, prevY = field.y; k >= 0 && !opts.mixedHeader && headerIdx.length < 4; k--) {
     // A staggered ROOM/LOCATION header may be one line above the other
     // fields and just outside their x-range (Berryessa A9.2).
     const outer = lines[k].words.filter((w) => /^(ROOM|LOCATION)$/i.test(w.str) && w.x1 < x0 && x0 - w.x1 < 12 * h && prevY - lines[k].y <= 2.8 * h);
@@ -567,7 +624,7 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
   const labelWords = fg.words.filter((w) => HEADER_LABEL_WORDS.test(normLabel(w.str)));
   const lx0 = labelWords.length ? Math.min(...labelWords.map((w) => w.x0)) : fg.x0;
   const lx1 = labelWords.length ? Math.max(...labelWords.map((w) => w.x1)) : fg.x1;
-  let title = findTitle(lx0, lx1) || findTitle(x0, x1);
+  let title = opts.forcedTitle || findTitle(lx0, lx1) || findTitle(x0, x1);
   // Data lines below, inside the header's x-extent, until the pitch breaks or
   // another table starts.
   // Headers are often centered over left-aligned marks. Include the small
@@ -576,7 +633,7 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
   // Labels printed just below the field line (T2507 A-103: WD | HGT under SIZE) are header, not data:
   // a following line, close below, whose words are all column labels and none a mark.
   let firstData = fieldIdx + 1;
-  for (let k = fieldIdx + 1, prevY = field.y; k < lines.length && headerIdx.length < (opts.markHeaderBand ? 8 : 5); k++) {
+  for (let k = fieldIdx + 1, prevY = field.y; k < lines.length && !opts.mixedHeader && headerIdx.length < (opts.markHeaderBand ? 8 : 5); k++) {
     const L = within(lines[k], x0, x1, 1.5 * h);
     if (!L.words.length) continue;
     if (L.y - prevY > 2.8 * h) break;
@@ -642,10 +699,17 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
     const ws = L.words.slice().sort((a, b) => a.x0 - b.x0);
     const kept = ws.filter((w) => (w.x0 >= x0 - inset || (w.itemX0 < x0 && w.itemX1 >= x0 && w.itemX1 <= x1)) && w.x1 <= x1 + inset);
     if (!kept.length) return kept;
+    if (trailingNotes) {
+      const ownItems = new Set(kept.map(w => w.item));
+      return ws.filter(w => ownItems.has(w.item));
+    }
     let last = kept[kept.length - 1];
     for (const w of ws) if (w.x0 > last.x1 - 0.1 && w.x1 > x1 + inset && w.x0 - last.x1 <= h) { kept.push(w); last = w; }
     return kept;
   };
+  const trailingNotes = /\b(IDENTIFICATION|SYM|SYMBOL)\b/i.test(headerLines.map(L => L.text).join(" ")) &&
+    headerLines.some(L => L.words.some(w => /^(REMARKS|COMMENTS)$/i.test(w.str) && w.x0 > x0 + (x1 - x0) * 0.7));
+  if (trailingNotes) x1 += 14 * h;
   const dataLines = dataIdx.map((k) => ({ ...lines[k], words: rowWords(lines[k]) }));
   x0 = Math.min(x0, ...dataLines.flatMap((L) => L.words.map((w) => w.x0)));
   const rowPitch = pitches.length ? median(pitches) : 1.3 * h;
@@ -669,6 +733,16 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
   if (!anchors.length || anchors[0] > x0 + 2 * h) anchors.unshift(x0);
   // Header cells: words overlapping in x (across the header lines) form a cell.
   let hwords = headerLines.flatMap((L) => L.words).sort((a, b) => a.x0 - b.x0);
+  // Newly recognized mark/count shapes have centred, sparse cells; data-start
+  // clusters would split a long material/finish into multiple columns. Use the
+  // explicit leaf labels, preserving complete text items in their cells.
+  const leafColumns = opts.mixedHeader || headerLines.some(L => /\b(IDENTIFICATION|SYM|SYMBOL)\b/i.test(L.text)) ||
+    (headerLines.length === 1 && dataLines.length <= 10 && /\bDOOR\s+SCHEDULE\b/i.test(title || "") &&
+      !/\b(HARDWARE|HDW|HW|SET|GROUP)\b/i.test(headerLines[0].text));
+  if (leafColumns) {
+    const bottom = Math.max(...hwords.map(w => w.yb));
+    hwords = hwords.filter(w => !(w.yb < bottom - 1.5 * h && /^(IDENTIFICATION|DOOR|FRAME|FRAMES|SIZE|HARDWARE|REMARKS)$/i.test(w.str)));
+  }
   if (opts.markHeaderBand) {
     // Group captions above explicit subcolumns must not become a spurious
     // SIZE column or merge FIRE RATING with the neighbouring HARDWARE group.
@@ -769,7 +843,10 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
     for (const w of fl) { const l = labels[labels.length - 1]; if (l && w.x0 - l.x1 <= 0.3 * h) { l.x1 = Math.max(l.x1, w.x1); } else labels.push({ x0: w.x0, x1: w.x1 }); }
     if (labels.length >= 6) bounds = labels.slice(1).map((l, i) => (labels[i].x1 + l.x0) / 2);
   }
-  const colOf = (w) => { const c = (w.x0 + w.x1) / 2; let k = 0; while (k < bounds.length && c >= bounds[k]) k++; return k; };
+  if (leafColumns && cells.length >= 4) {
+    bounds = cells.slice(1).map((c, i) => (cells[i].x0 + cells[i].x1 + c.x0 + c.x1) / 4);
+  }
+  const colOf = (w) => { const c = leafColumns && !opts.mixedHeader && !w.header_word ? (w.itemX0 + w.itemX1) / 2 : (w.x0 + w.x1) / 2; let k = 0; while (k < bounds.length && c >= bounds[k]) k++; return k; };
   const ncol = bounds.length + 1;
   // Header text per column; a header word over several columns is a group
   // label and names each of them.
@@ -787,7 +864,7 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
     if (bestK >= 0 && bestOv >= 0.7 * (c.x1 - c.x0)) {
       names[bestK] = (names[bestK] ? names[bestK] + " " : "") + words.map((w) => w.str).join(" ");
     } else {
-      for (const w of words) { const k = colOf(w); names[k] = (names[k] ? names[k] + " " : "") + w.str; }
+      for (const w of words) { const k = colOf({ ...w, header_word: true }); names[k] = (names[k] ? names[k] + " " : "") + w.str; }
     }
   }
   const usedF = new Set();
@@ -854,14 +931,26 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
   // A row's cells can print on offset lines above and below its mark's baseline (T2147 A601: frame,
   // details and hardware 6 pt above the mark, the remark's second line 5 pt below). An unruled line
   // with no mark goes to the row whose mark line is nearer, held for the next row when that is it.
-  const startsRow = dataLines.map((L) => { if (markCol < 0) return false; const t = joinWords(cellsOf(L)[markCol], h).trim(); return !!t && looksLikeMark(t.split(" ")[0]); });
+  // Letter-only marks need a titled door table and real dimensions in that row.
+  // This admits OH / A / B without turning floor headings or finish codes into doors.
+  const validRowMark = (cells) => {
+    const text = markCol < 0 ? "" : cells[markCol].trim();
+    if (looksLikeMark(text.split(" ")[0]) || readMarkList(text)) return true;
+    if (!titleSaysDoor || !/^[A-Z]{1,3}$/i.test(text)) return false;
+    const get = f => cells[fields.indexOf(f)];
+    const size = readSizeCell(get("size"));
+    return !!((size.width_inches && size.height_inches) || (readDimension(get("width")) && readDimension(get("height"))));
+  };
+  const startsRow = dataLines.map(L => validRowMark(cellsOf(L).map(g => joinWords(g, h))));
+  const symbolLists = names.some(n => /^(SYM\.?|SYMBOL)$/i.test(n.trim()));
+  const countTypes = names.some(n => /^COUNT$/i.test(n.trim()));
   let pending = [];
   // A table with a QUANTITY column (C2410 A-601) prints one row per opening type, its mark cell a
   // range or a stack over two to four lines ("1A101 TO" / "1D102", "151A 151B" / "151C",
   // "1A105 TO" / "1A116" / "1B109 TO" / "1B116") around the one line that carries the row's data.
   // There a row is its data line and every mark line joins one: see quantityRows.
-  const qtyRows = fields.includes("quantity") && markCol >= 0 && dataLines.every((L) => L.grid_row == null)
-    ? quantityRows(dataLines.map((L) => { const words = cellsOf(L); return { y: L.y, words, cells: words.map((g) => joinWords(g, h)) }; }), fields, h, rowPitch)
+  const qtyRows = (fields.includes("quantity") || symbolLists) && markCol >= 0 && dataLines.every((L) => L.grid_row == null)
+    ? quantityRows(dataLines.map((L) => { const words = cellsOf(L); return { y: L.y, words, cells: words.map((g) => joinWords(g, h)) }; }), fields, h, rowPitch, symbolLists, countTypes)
     : null;
   if (qtyRows) for (const r of qtyRows) { if (r.section !== undefined) { section = r.section; continue; } const row = { cells: r.cells, words: r.words, section, y: r.y, lines: r.lines }; rows.push(row); }
   for (const [li, L] of (qtyRows ? [] : dataLines).entries()) {
@@ -890,7 +979,7 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
       if (/^\d{1,4}$/.test(left) && looksLikeMark(left + markText.toUpperCase())) { markText = left + markText.toUpperCase(); cells[markCol] = markText; }
     }
     const prev = continuationRow;
-    const validMark = markText && looksLikeMark(markText.split(" ")[0]);
+    const validMark = looksLikeMark(markText.split(" ")[0]) || validRowMark(cells);
     const ruled = L.grid_row != null;
     if (ruled && prev && prev.grid_row === L.grid_row) {
       const previousMark = markCol >= 0 ? prev.cells[markCol].trim() : "";
@@ -914,7 +1003,21 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
       appendRow(prev, cells, words);
     }
   }
-  const doors = rows.map((r, i) => doorFromRow(r, fields, i, pageSize)).filter(Boolean);
+  const doors = rows.flatMap((r, i) => {
+    const d = doorFromRow(r, fields, i, pageSize, { allowLetterMark: titleSaysDoor, largeOpenings: symbolLists });
+    if (!d) return [];
+    const marks = symbolLists && d.marks && !d.mark_ranges.length ? d.marks : null;
+    const count = countTypes && d.quantity > 0 && d.quantity <= 1000 ? d.quantity : 0;
+    if (!marks && !count) return [d];
+    // Keep the printed mark (a type's repetitions have no invented door numbers),
+    // the original cell/list and the source row on every individual opening.
+    return Array.from({ length: marks ? marks.length : count }, (_, j) => ({
+      ...d, door_number: marks ? marks[j] : d.door_number, quantity: 1,
+      mark_text: d.mark_text || d.door_number, marks: marks || [d.door_number],
+      mark_ranges: d.mark_ranges || [], shared_row: true,
+      source_quantity: marks ? marks.length : count, opening_index: j + 1,
+    }));
+  });
   const unresolved_rows = rows.flatMap((r, i) => r.grid_row != null && !cleanMark(markCol >= 0 ? r.cells[markCol] : "")
     ? [{ grid_row: r.grid_row, source_row: i, source_y: Math.round(r.y), mark_text: markCol >= 0 ? r.cells[markCol] : "", reason: "unread_mark" }] : []);
   return { title, header: names, fields, bounds, anchors, x0, x1, header_y: headerLines.map((L) => Math.round(L.y)), y0: lines[headerIdx[0]].y, y1: dataLines[dataLines.length - 1].y, row_pitch: rowPitch, data_lines: dataLines.length, rows: rows.length, doors, unresolved_rows, is_door_schedule, lineIndexes: [...headerIdx, ...dataIdx], rules_used: !!rules };
@@ -929,9 +1032,9 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
  * line (a wrapped remark) joins the nearest data line within 1.6 row pitches. Returns null when no
  * line is a data line, and the rows (or { section }) in order otherwise.
  */
-function quantityRows(lines, fields, h, rowPitch) {
+function quantityRows(lines, fields, h, rowPitch, symbolLists = false, countTypes = false) {
   const markCol = fields.indexOf("mark"), locCol = fields.indexOf("location");
-  const isData = (l) => l.cells.some((c, k) => c && c.trim() && fields[k] && !["mark", "location", "notes"].includes(fields[k]));
+  const isData = (l) => countTypes ? /^\d{1,4}$/.test(l.cells[fields.indexOf("quantity")]?.trim() || "") : l.cells.some((c, k) => c && c.trim() && fields[k] && (symbolLists ? ["width", "height", "size"].includes(fields[k]) : !["mark", "location", "notes"].includes(fields[k])));
   // Centred marks of different widths can start two columns (C2410 A-601 alternates: "151A" left of
   // "151B"): marks in the unnamed column just left of the mark column are the mark column's.
   if (markCol > 0 && fields[markCol - 1] == null) {
@@ -958,7 +1061,7 @@ function quantityRows(lines, fields, h, rowPitch) {
   lines.forEach((l, i) => {
     const m = markOf(l);
     if (!m) return; // a line with no mark text (a data line between a range's two lines) keeps the run open
-    const first = m.split(/\s+/)[0];
+    const first = m.split(/[\s,;]+/)[0];
     if (!looksLikeMark(first) && !(g && /^(TO|THRU|&)$/i.test(first))) {
       // Text in the mark column that is no mark: a section label when it is all the line holds.
       if (!isData(l) && l.cells.filter((c) => c && c.trim()).length === 1) { out.push({ y: l.y, section: m }); g = null; }
@@ -1086,14 +1189,14 @@ function cleanFire(s) {
 }
 function yesNo(s) { const t = UP(cleanText(s)); if (!t) return null; if (/^(Y|YES|X|PR|PAIR|TRUE|1)$/.test(t)) return true; if (/^(N|NO|-|FALSE|0)$/.test(t)) return false; return null; }
 
-function doorFromRow(row, fields, index, pageSize) {
+function doorFromRow(row, fields, index, pageSize, { allowLetterMark = false, largeOpenings = false } = {}) {
   const get = (f) => { const k = fields.indexOf(f); return k >= 0 ? cleanText(row.cells[k]) : null; };
   let rawMark = get("mark");
   const loc = get("location");
   if (rawMark && !/\d/.test(rawMark) && loc && /\d/.test(loc)) {
     rawMark = loc.split(/\s+/)[0] + rawMark.trim();
   }
-  const mark = cleanMark(rawMark);
+  const mark = cleanMark(rawMark) || readMarkList(rawMark)?.marks[0] || (allowLetterMark && /^[A-Z]{1,3}$/i.test(rawMark || "") ? rawMark.toUpperCase() : null);
   if (!mark) return null;
   let size = { pair: false, width: get("width"), height: get("height"), thickness: get("thickness"), width_inches: null, height_inches: null, thickness_inches: null };
   if (fields.includes("size")) {
@@ -1110,6 +1213,15 @@ function doorFromRow(row, fields, index, pageSize) {
     const th = readDimension(size.thickness);
     size.thickness_inches = th && th.inches >= 0.75 && th.inches <= 3 ? th.inches : null;
   }
+  if (largeOpenings) {
+    // Explicit SYM lists also describe industrial overhead doors larger than
+    // the pedestrian-door sanity limits. Require paired feet dimensions.
+    const w = readDimension(get("width")), h = readDimension(get("height"));
+    if (w?.format === "ft-in" && h?.format === "ft-in" && w.inches >= 12 && w.inches <= 1200 && h.inches >= 60 && h.inches <= 1200) {
+      size.width_inches = w.inches; size.height_inches = h.inches;
+    }
+  }
+  if (!looksLikeMark(mark) && !(size.width_inches && size.height_inches)) return null;
   const pairCol = fields.includes("pair") ? yesNo(get("pair")) : null;
   const pair = pairCol != null ? pairCol : size.pair;
   let head = get("head_detail"), jamb = get("jamb_detail"), sill = get("sill_detail");
