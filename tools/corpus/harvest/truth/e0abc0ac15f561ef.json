@@ -26,7 +26,7 @@
      "h": 155,
      "v": 996
     },
-    "ms": 6392
+    "ms": 6277
    },
    {
     "page": 2,
@@ -38,7 +38,7 @@
      "h": 144,
      "v": 423
     },
-    "ms": 6754
+    "ms": 6501
    },
    {
     "page": 3,
@@ -50,7 +50,7 @@
      "h": 904,
      "v": 395
     },
-    "ms": 17460
+    "ms": 16994
    },
    {
     "page": 4,
@@ -62,7 +62,7 @@
      "h": 0,
      "v": 3
     },
-    "ms": 5039
+    "ms": 4890
    },
    {
     "page": 5,
@@ -74,7 +74,7 @@
      "h": 0,
      "v": 0
     },
-    "ms": 5223
+    "ms": 5254
    },
    {
     "page": 6,
@@ -86,7 +86,7 @@
      "h": 0,
      "v": 0
     },
-    "ms": 4125
+    "ms": 4129
    }
   ]
  },
@@ -619,6 +619,6 @@
  "note": "no text layer: production OCR preprocessing, cell recognition and line reader; Poppler rendering (browser rendering is a separate check). Actual DPI is recorded per page; the same words are given to both readers",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 45019,
- "generated_at": "2026-10-11T11:25:06.827Z"
+ "ms": 44067,
+ "generated_at": "2026-10-11T11:48:28.327Z"
 }
