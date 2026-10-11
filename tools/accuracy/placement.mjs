@@ -1,5 +1,6 @@
 // Pure placement records and reporting. Coordinates are PDF viewport points, y down.
 import { readPlan } from "../../weyland-shared/plan-read.js";
+import { resolveScheduleOpenings } from "./truth/openings.mjs";
 
 export const DEFAULT_TIERS = ["agreed", "exact", "audited", "oracle-checked"];
 export const compareText = (a, b) => a < b ? -1 : a > b ? 1 : 0;
@@ -13,6 +14,7 @@ export function stableJSON(value) {
 }
 
 export function buildPlacement(truth, pages, doors) {
+  doors = resolveScheduleOpenings(doors, [], pages).doorsA;
   const plan = readPlan(pages, doors);
   const pageOf = new Map(pages.map((p) => [p.page, p]));
   const sheets = plan.plan_sheets.map((s) => ({
@@ -27,8 +29,8 @@ export function buildPlacement(truth, pages, doors) {
   const tags = plan.tags.map((tag) => {
     // readPlan retains the actual row identities in _rows. A mark-only lookup would give
     // two shared-mark openings the same card, or cross buildings with repeated marks.
-    const schedule_rows = tag._rows.map((row) => ({ ...row }));
-    const { page: schedulePage, y: scheduleY, ...card } = schedule_rows[0];
+    const schedule_rows = tag._rows.flatMap(row => row.schedule_rows || [row]).map(row => ({ ...row }));
+    const { page: schedulePage, y: scheduleY, schedule_rows: sources, ...card } = tag._rows[0];
     return {
       ...card, ...tag, schedule_rows,
       room: tag.room ?? null, room_name: tag.room_name ?? null,
@@ -40,8 +42,8 @@ export function buildPlacement(truth, pages, doors) {
   const unplaced = plan.marks_not_on_plan.map((m) => ({
     ...m, reason: "mark " + m.mark + " (schedule p." + m.page + ") not tagged on any plan",
   })).sort((a, b) => a.page - b.page || compareText(a.mark, b.mark));
-  // Count covered schedule rows, just as the oracle does: one tag may cover repeated
-  // schedule pages, whereas shared marks on one page require separate positions.
+  // Count openings. Repeated schedule evidence lives on the tag's schedule_rows;
+  // shared marks on one page still require separate positions (g044).
   const marks_total = doors.length, marks_placed = marks_total - unplaced.length;
   return {
     set: { sha16: truth.sha16, label: truth.label ?? null, source_url: truth.source_url ?? null,
