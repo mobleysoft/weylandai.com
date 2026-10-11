@@ -103,7 +103,10 @@ async function walk(page, sessionId, mark) {
   if (!opened || !s) return;
   const hud = (await f.textContent("#hud-count").catch(() => "")).trim();
   J.check("door tags are placed on those plans: at least " + MIN_PLACED + " openings (HUD placed-of-total)", s.placed >= MIN_PLACED && hud === s.placed + " OF " + s.total + " PLACED", { hud, placed: s.placed, total: s.total });
-  J.check("the sheet draws one ring per placed opening", s.tags_drawn === s.placed, { drawn: s.tags_drawn, placed: s.placed });
+  // A set's openings spread over several sheets: the open sheet draws the rings its note says are placed there.
+  const note = (await f.textContent("#sheet-note").catch(() => "")) || "";
+  const here = +((/(\d+) door tags? placed here/.exec(note) || [])[1] || -1);
+  J.check("the open sheet draws one ring per opening placed on it", here > 0 && s.tags_drawn === here, { drawn: s.tags_drawn, placed_here: here, sheet: s.sheet, note: note.slice(0, 160) });
   if (process.env.SHOTS_DIR) await page.screenshot({ path: process.env.SHOTS_DIR + "/whole-bidset-walk.png" }).catch(() => {});
   await page.locator("#walk-close").click(); await sleep(400);
   const place = await placeState(page, mark);

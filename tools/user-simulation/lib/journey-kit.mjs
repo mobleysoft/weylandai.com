@@ -668,14 +668,15 @@ export async function workspaceUploadAndExtract(target, { project, pdf = SAMPLE_
   await target.fill("#f-project", project);
   await target.selectOption("#f-doctype", docType).catch(() => {});
   await target.setInputFiles("#f-file", pdf);
-  out.preview = ((await waitText(target, "#rasterize-status", /preview|failed|error/i, 60000, /^Drawing/i)) || "").slice(0, 160);
+  // A whole bid set shows what the finder found instead of a page preview (g084).
+  out.preview = ((await waitText(target, "#rasterize-status", /preview|failed|error|^Found by text/i, 60000, /^Drawing/i)) || "").slice(0, 160);
   const t0 = Date.now();
   await pressIn(target, "#upload-btn");
   out.upload = ((await waitText(target, "#upload-result", /^Uploaded|failed|error|choose|sign in/i, uploadMs, /^(Uploading|Finding|Keeping|The selected pages)/i)) || "").slice(0, 300);
   if (!/^Uploaded/i.test(out.upload)) return out;
   out.listed = !!(await until(() => target.evaluate((p) => Array.from(document.querySelectorAll("#sessions-list tr[data-id]")).some((tr) => tr.innerText.includes(p)), project), 30000, 500));
   // The workspace opens the new schedule and reads page 1 by itself.
-  const r1 = (await waitText(target, "#extract-result", /^Page \d+:|could not be read|error|failed/i, 300000, /^Reading page/i)) || "";
+  const r1 = (await waitText(target, "#extract-result", /^Page \d+(?: \([^)]*\))?:|could not be read|error|failed/i, 300000, /^Reading page/i)) || "";
   out.tries.push({ route: "server (read on upload)", seconds: Math.round((Date.now() - t0) / 1000), result: r1.slice(0, 240) });
   // A cut of a whole bid set names each page with its sheet: "Page 28 (A-112): 2 doors read..." (g084).
   if (!/^Page \d+(?: \([^)]*\))?: [1-9]\d* (door|hardware set)/i.test(r1) && (await target.locator("#client-extract-btn").count())) {
