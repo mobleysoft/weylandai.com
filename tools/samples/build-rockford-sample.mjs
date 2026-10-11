@@ -93,8 +93,8 @@ export async function buildRockfordSample() {
     assert.equal(result.doorCount, 65);
     assert.equal(result.hardwareSetCount, 0);
     assert.equal(result.cutSheetCount, 0);
-    assert.equal(result.totalPages, 5);
-    assert.deepEqual(result.sections.map(s => [s.type, s.pages]), [["cover", 1], ["toc", 1], ["door_schedule", 2], ["schedule", 1]]);
+    assert.equal(result.totalPages, 6);
+    assert.deepEqual(result.sections.map(s => [s.type, s.pages]), [["cover", 1], ["transmittal", 1], ["toc", 1], ["door_schedule", 2], ["schedule", 1]]);
     const doc = await PDFLib.PDFDocument.load(result.pdfBytes, { updateMetadata: false });
     return {
       bytes: result.pdfBytes,

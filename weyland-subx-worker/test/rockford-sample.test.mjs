@@ -4,13 +4,13 @@ import { PDFDocument } from "pdf-lib";
 import { buildRockfordSample } from "../../tools/samples/build-rockford-sample.mjs";
 import { openTextLayerDoc } from "../src/lib/text-layer-read.js";
 
-test("the real Rockford sample labels all five pages and traces all 65 door rows", async () => {
+test("the real Rockford sample labels all six pages and traces all 65 door rows", async () => {
   const { bytes, evidence } = await buildRockfordSample();
   const metadata = await PDFDocument.load(bytes, { updateMetadata: false });
   assert.equal(metadata.getProducer(), "WeylandAI SubX (sovereign-pdf + pdf-lib)");
   const doc = await openTextLayerDoc(bytes);
   try {
-    assert.equal(doc.numPages, 5);
+    assert.equal(doc.numPages, 6);
     const texts = [];
     for (let p = 1; p <= doc.numPages; p++) {
       const page = await doc.getPage(p);
@@ -24,8 +24,11 @@ test("the real Rockford sample labels all five pages and traces all 65 door rows
       texts.push(text);
     }
     assert.match(texts[0], /Rockford A2.2 \(schedule only\)/);
-    assert.match(texts[1], /Door Schedule \(extracted\) - 65 doors/);
-    const schedule = texts.slice(2, 4).join(" ");
+    assert.match(texts[1], /SUBMITTAL TRANSMITTAL/);
+    assert.match(texts[1], /COMPLIANCE REVIEW: NOT VERIFIED/);
+    assert.match(texts[2], /TABLE OF CONTENTS/);
+    assert.match(texts[3], /Door Schedule \(extracted\).*65 doors/);
+    const schedule = texts.slice(3, 5).join(" ");
     for (const door of evidence.doors) {
       // Split into the actual table rows so a mark cannot pass because it
       // appears in another row's notes or in the original source appendix.
@@ -35,7 +38,7 @@ test("the real Rockford sample labels all five pages and traces all 65 door rows
       assert.ok(rows[traceAt - 1].split(/\s+/).includes(door.mark), door.mark + " next to its source trace");
     }
     assert.equal((schedule.match(/p\.1 row \d+/g) || []).length, 65);
-    assert.match(texts[4], /DOOR SCHEDULE/);
+    assert.match(texts[5], /DOOR SCHEDULE/);
   } finally {
     await doc.destroy?.();
   }
