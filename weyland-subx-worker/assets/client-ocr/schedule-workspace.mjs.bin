@@ -106,8 +106,8 @@ export function reviewDoorRows(doors, opts = {}) {
 }
 
 export function doorListCsv(doors, review = reviewDoorRows(doors)) {
-  const rows = [["Mark", "Hardware group", "Size (as read)", "Width (in)", "Height (in)", "Thickness", "Fire rating", "Door type", "Door material", "Door finish", "Frame type", "Frame material", "Frame finish", "Head", "Jamb", "Sill", "DOOR PAIR", "GLAZING", "ALTERNATE PRICING", "Notes", "Source page", "Source row"]];
-  for (const d of doors) rows.push([d.mark, d.hardware_group, d.width, d.width_inches, d.height_inches, d.thickness ?? d.thickness_inches, d.fire_rating, d.door_type, d.door_material, d.door_finish, d.frame_type, d.frame_material, d.frame_finish, d.head_detail, d.jamb_detail, d.sill_detail, yesNo(d.pair), d.glazing, d.alternate_pricing, d.notes, d.source?.page ?? d.page_number, d.source?.table_row]);
+  const rows = [["Mark", "Hardware group", "Size (as read)", "Width (in)", "Height (in)", "Thickness", "Fire rating", "Door type", "Door material", "Door finish", "Frame type", "Frame material", "Frame finish", "Head", "Jamb", "Sill", "DOOR PAIR", "GLAZING", "ALTERNATE PRICING", "Notes", "Source page", "Source row", "Source sheet"]];
+  for (const d of doors) rows.push([d.mark, d.hardware_group, d.width, d.width_inches, d.height_inches, d.thickness ?? d.thickness_inches, d.fire_rating, d.door_type, d.door_material, d.door_finish, d.frame_type, d.frame_material, d.frame_finish, d.head_detail, d.jamb_detail, d.sill_detail, yesNo(d.pair), d.glazing, d.alternate_pricing, d.notes, d.source?.page ?? d.page_number, d.source?.table_row, d.source?.sheet]);
   rows[0].push("Read method", "Field confidence", "Fields below 80%", "Fields without confidence", "Review issues", "OCR rows", "OCR fields", "Rows below 80%", "Fields below 80% total", "Read qualification");
   doors.forEach((d, i) => rows[i + 1].push(d.machine_read || isOcrRow(d) ? "Machine-read OCR" : d.read_from || "unknown",
     JSON.stringify(d.field_confidence || {}), (d.below_threshold_fields || []).join("; "), (d.confidence_unknown_fields || []).join("; "),

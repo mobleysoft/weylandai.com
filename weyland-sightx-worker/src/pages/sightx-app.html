@@ -473,7 +473,7 @@ HW-2: lever lockset, 3 hinges, wall stop"></textarea>
         ["FRAME", esc(d.frame || "-")],
         ["SET", esc(d.set || "-")],
       ];
-      if (d.source_page != null) kv.push(["SOURCE", "schedule page " + esc(d.source_page)]);
+      if (d.source_page != null) kv.push(["SOURCE", "schedule page " + esc(d.source_page) + (d.source_sheet ? " (" + esc(d.source_sheet) + ")" : "")]);
       // g028: the schedule row this door was built from, as printed.
       if (d.row && d.row.text) kv.push(["ROW", '<span class="door-row">' + esc(d.row.text) + '</span> <span style="color:var(--muted)">(schedule p.' + esc(d.row.page) + ")</span>"]);
       var sharers = sharersOf(i);

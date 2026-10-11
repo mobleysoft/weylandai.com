@@ -33,6 +33,7 @@
 // is kept on these 3 functions' signatures for call-site compatibility
 // even though they no longer read it internally.
 
+import { pageSource, pageLabel as sourcePageLabel, sourcePdf, sourceNotes } from "../../assets/client-ocr-src/source-pages.mjs";
 import { getCataloguePagePdf, getDocumentPagePdf } from "../../../weyland-shared/cut-sheet-pages.js";
 import { PDFDocument as SovereignPDFDocument, StandardFonts as SovereignStandardFonts, rgb as sovereignRgb } from "./sovereign-pdf.js";
 
@@ -93,36 +94,35 @@ export function drawTable(page, opts) {
   curY -= headerRowHeight;
   let rowsDrawn = 0;
   for (const row of rows) {
-    if (curY - rowHeight < minY)
+    const height = Math.max(rowHeight, ...row.map(cell => Array.isArray(cell) ? cell.length * (fontSize + 2) + 6 : 0));
+    if (curY - height < minY)
       break;
     if (rowsDrawn % 2 === 1) {
       page.drawRectangle({
         x,
-        y: curY - rowHeight,
+        y: curY - height,
         width: tableWidth,
-        height: rowHeight,
+        height: height,
         color: rgb2(0.95, 0.96, 0.98)
       });
     }
     colX = x;
     for (let c = 0; c < row.length; c++) {
-      const cellText = truncateText(String(row[c] ?? "\u2014"), colWidths[c] - 6, font, fontSize);
-      page.drawText(cellText, {
+      const cellLines = Array.isArray(row[c]) ? row[c] : [String(row[c] ?? "\u2014")];
+      cellLines.forEach((line, i) => page.drawText(truncateText(line, colWidths[c] - 6, font, fontSize), {
         x: colX + 3,
-        y: curY - rowHeight + 5,
-        size: fontSize,
-        font,
-        color: rgb2(0.1, 0.1, 0.1)
-      });
+        y: Array.isArray(row[c]) ? curY - fontSize - 3 - i * (fontSize + 2) : curY - height + 5,
+        size: fontSize, font, color: rgb2(0.1, 0.1, 0.1)
+      }));
       colX += colWidths[c];
     }
     page.drawLine({
-      start: { x, y: curY - rowHeight },
-      end: { x: x + tableWidth, y: curY - rowHeight },
+      start: { x, y: curY - height },
+      end: { x: x + tableWidth, y: curY - height },
       thickness: 0.5,
       color: rgb2(0.85, 0.85, 0.85)
     });
-    curY -= rowHeight;
+    curY -= height;
     rowsDrawn++;
   }
   return { endY: curY, rowsDrawn };
@@ -774,11 +774,17 @@ export async function generateDoorSchedulePages(doorRows, info = {}) {
   const colWidths = [45, 65, 85, 34, 48, 80, 92, 121, 50];
   const join = (...v) => v.map((x) => (x == null || x === "" ? "-" : String(x))).join(" / ");
   const rows = doorRows.map((d) => {
-    let src = d.page_number ? "p." + d.page_number : "-";
+    const origin = pageSource(info.session, d.page_number);
+    let src = d.page_number ? "p." + origin.page : "-";
+    const sourceLines = [src];
+    if (origin.sheet) sourceLines.push(origin.sheet);
     let pair = false;
     try {
       const fc = d.field_confidence_json ? JSON.parse(d.field_confidence_json) : null;
-      if (fc && fc.source && fc.source.table_row != null) src += " row " + fc.source.table_row;
+      if (fc && fc.source && fc.source.table_row != null) {
+        src += " row " + fc.source.table_row;
+        sourceLines.push("row " + fc.source.table_row);
+      }
       pair = !!(fc && fc.pair);
     } catch (_) { /* not a source trace */ }
     // Sizes as read into numbers; a value the reader could not read with
@@ -797,7 +803,15 @@ export async function generateDoorSchedulePages(doorRows, info = {}) {
       join(d.door_type, d.door_material, d.door_finish),
       join(d.frame_type, d.frame_material, d.frame_finish),
       d.notes || "",
-      src,
+      sourcePdf(info.session) ? sourceLines.flatMap(line => {
+        const lines = []; let rest = String(line);
+        while (rest.length) {
+          let n = rest.length;
+          while (n > 1 && helvetica.widthOfTextAtSize(rest.slice(0, n), 7.5) > 44) n--;
+          lines.push(rest.slice(0, n)); rest = rest.slice(n);
+        }
+        return lines;
+      }) : src,
     ];
   });
   const title = "Door Schedule (extracted)";
@@ -883,7 +897,7 @@ export async function assembleSubmittalPackage(sessionId, options, env2, PDFLib)
     const doorRows = doorRowsResult.results || [];
     let doorSection = null;
     if (doorRows.length > 0) {
-      doorSection = await generateDoorSchedulePages(doorRows, { projectName, filename: session.filename });
+      doorSection = await generateDoorSchedulePages(doorRows.map(d => ({ ...d, notes: sourceNotes(session, d.notes) })), { projectName, filename: session.filename, session });
     }
 
     const cutSheets = Array.isArray(options.citedPages) ? { results: [] } : await env2.DB.prepare(`
@@ -1094,6 +1108,7 @@ export async function assembleSubmittalPackage(sessionId, options, env2, PDFLib)
           `).bind(sessionId, sessionId).all();
           const wanted = [...new Set((readPages.results || []).map((r) => parseInt(r.page_number, 10)).filter((n) => n >= 1))].sort((a, b) => a - b);
           let pageLabel = `${session.total_pages} page${session.total_pages === 1 ? "" : "s"}`;
+          if (sourcePdf(session)) pageLabel = sourcePdf(session).pages.map(p => "p." + p.original_page + (p.sheet ? " (" + p.sheet + ")" : "")).join(", ") + " of " + sourcePdf(session).original_pages;
           let pageCount = session.total_pages || 1;
           if (wanted.length && wanted.length < (session.total_pages || 0)) {
             const src = await PDFLib.PDFDocument.load(scheduleBytes, { ignoreEncryption: true });
@@ -1104,7 +1119,7 @@ export async function assembleSubmittalPackage(sessionId, options, env2, PDFLib)
               copied.forEach((p) => sub.addPage(p));
               scheduleBytes = await sub.save();
               pageCount = indices.length;
-              pageLabel = `page${indices.length === 1 ? "" : "s"} ${indices.map((i) => i + 1).join(", ")} of ${session.total_pages}`;
+              pageLabel = `page${indices.length === 1 ? "" : "s"} ${indices.map((i) => sourcePageLabel(session, i + 1)).join(", ")} of ${sourcePdf(session)?.original_pages || session.total_pages}`;
             }
           }
           tocSections.push({ title: `Source: ${session.filename || "uploaded schedule"} (${pageLabel})`, pageNumber: currentPage, type: "schedule" });

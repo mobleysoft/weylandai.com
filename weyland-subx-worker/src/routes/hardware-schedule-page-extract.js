@@ -22,6 +22,7 @@
 // each with real call sites in routes still inline elsewhere in the
 // cluster.
 
+import { pageSource, sourcePdf } from "../../assets/client-ocr-src/source-pages.mjs";
 import { jsonResponse3 } from "../lib/json-response.js";
 import { classifyError, jsonErrorResponse, ErrorMetrics } from "../error-utilities.js";
 import { findPagesInBrowser, runGridPagesInBrowser } from "../lib/browser-grid-extraction.js";
@@ -52,7 +53,7 @@ async function sessionPdf(session, env2) {
     const r2Object = await env2.UPLOADS.get(session.file_buffer_key);
     if (r2Object) {
       fileBuffer = await r2Object.arrayBuffer();
-      try { await env2.CACHE.put(session.file_buffer_key, fileBuffer, { expirationTtl: 86400 * 7 }); } catch (_) { /* too large for KV */ }
+      try { if (fileBuffer.byteLength <= 25 * 1024 * 1024) await env2.CACHE.put(session.file_buffer_key, fileBuffer, { expirationTtl: 86400 * 7 }); } catch (_) { /* too large for KV */ }
     }
   }
   return fileBuffer;
@@ -140,7 +141,7 @@ router.get("/api/hardware-schedule/session/:sessionId/page/:pageNum", async (req
       if (r2Object) {
         fileBuffer = await r2Object.arrayBuffer();
         console.log(`[Hardware Page] PDF retrieved from R2 (${fileBuffer.byteLength} bytes)`);
-        await env2.CACHE.put(session.file_buffer_key, fileBuffer, {
+        if (fileBuffer.byteLength <= 25 * 1024 * 1024) await env2.CACHE.put(session.file_buffer_key, fileBuffer, {
           expirationTtl: 86400 * 7
           // 7 days
         });
@@ -294,7 +295,7 @@ router.post("/api/hardware-schedule/session/:sessionId/find-pages", async (reque
 // label, and every door tag tied to a schedule mark (weyland-shared/plan-read.js). Read from the
 // PDF's own text in this Worker; kept in the cache against the session's door rows, so a re-read
 // schedule is tagged again. Drawing-size pages only (a spec page has no plan).
-const PLAN_VERSION = "plan:v1:";
+const PLAN_VERSION = "plan:v2-source-pages:";
 function fnv(s) { let h = 0x811c9dc5; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; } return h.toString(36); }
 router.get("/api/hardware-schedule/session/:sessionId/plan", async (request2, env2) => {
   const { error: error4, user } = await authenticate(request2, env2);
@@ -307,7 +308,7 @@ router.get("/api/hardware-schedule/session/:sessionId/plan", async (request2, en
     return jsonResponse3({ success: true, sessionId, found: false, reason: "The demo building has no uploaded plans; SightX lays it out from the schedule." });
   }
   const rows = (await env2.DB.prepare("SELECT mark, notes, page_number FROM door_schedule_entries WHERE session_id = ? ORDER BY page_number, rowid").bind(sessionId).all()).results || [];
-  const doors = rows.filter((r) => r.mark).map((r) => ({ mark: String(r.mark), location: ((String(r.notes || "").match(/Room:\s*([^;]+)/i) || [])[1] || "").trim() || null, page: r.page_number ?? null }));
+  const doors = rows.filter((r) => r.mark).map((r) => ({ mark: String(r.mark), location: ((String(r.notes || "").match(/Room:\s*([^;]+)/i) || [])[1] || "").trim() || null, page: pageSource(session, r.page_number).page ?? null }));
   const key = PLAN_VERSION + sessionId + ":" + fnv(JSON.stringify(doors));
   const refresh = new URL(request2.url).searchParams.get("refresh") === "1";
   if (!refresh) {
@@ -326,13 +327,14 @@ router.get("/api/hardware-schedule/session/:sessionId/plan", async (request2, en
       const pg = await doc.getPage(n);
       const vp = pg.getViewport({ scale: 1 });
       // Letter, Legal and Tabloid portrait pages are specs and forms; plans are drawing sheets.
-      if (!(vp.width > vp.height * 1.15 || vp.width > 1500)) { pages.push({ page: n, width: vp.width, height: vp.height, items: [] }); skipped++; continue; }
-      pages.push(await pageTextItems(doc, n));
+      if (!(vp.width > vp.height * 1.15 || vp.width > 1500)) { pages.push({ page: pageSource(session, n).page, width: vp.width, height: vp.height, items: [] }); skipped++; continue; }
+      pages.push({ ...await pageTextItems(doc, n), page: pageSource(session, n).page });
     }
   } finally { try { await doc.destroy(); } catch (_) { /* gone */ } }
   const plan = readPlan(pages, doors);
   const out = {
     found: plan.plan_sheets.length > 0,
+    source_pdf: sourcePdf(session),
     ...plan,
     sheets: plan.sheets.filter((x) => x.sheet),
     read: { pages: pages.length, drawing_pages: pages.length - skipped, ms: Date.now() - t0, stopped_at_page: stopped },

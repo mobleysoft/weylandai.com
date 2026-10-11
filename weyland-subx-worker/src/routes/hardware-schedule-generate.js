@@ -29,6 +29,7 @@
 // top-level import from lib/region-conflicts.js (extracted earlier
 // this session).
 
+import { pageSource } from "../../assets/client-ocr-src/source-pages.mjs";
 import { jsonResponse3 } from "../lib/json-response.js";
 import { detectAndPersistRegionConflicts } from "../lib/region-conflicts.js";
 import { arrayBufferToBase64 } from "../auth-module.js";
@@ -99,7 +100,7 @@ router.post("/api/hardware-schedule/session/:sessionId/generate-submittal", asyn
           if (groupAffirm?.affirmed) {
             affirmedItems++;
           } else {
-            unaffirmedSummary.push(`Group #${group3.group_number} on page ${page.page_number}`);
+            unaffirmedSummary.push(`Group #${group3.group_number} on page ${pageSource(session, page.page_number).page}`);
           }
           const components = group3.components || [];
           for (let i = 0; i < components.length; i++) {
@@ -169,7 +170,8 @@ router.post("/api/hardware-schedule/session/:sessionId/generate-submittal", asyn
           keying_system: row.keying_system,
           function_type: row.function_type,
           notes: row.set_notes,
-          page_number: row.page_number,
+          page_number: pageSource(session, row.page_number).page,
+          source_sheet: pageSource(session, row.page_number).sheet,
           components: []
         };
       }

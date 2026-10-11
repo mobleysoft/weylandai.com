@@ -1,3 +1,5 @@
+import { UPLOAD_LIMIT, validateSourcePdf } from "../../assets/client-ocr-src/source-pages.mjs";
+import { openTextLayerDoc } from "../lib/text-layer-read.js";
 import { persistHardwareExtractionJob } from "../lib/hardware-extraction-job.js";
 import { resolveHardwareScheduleTenant } from "../lib/hardware-schedule-tenant.js";
 // src/routes/hardware-schedule-extract.js
@@ -242,6 +244,15 @@ router.post("/api/hardware-schedule/start", async (request2, env2) => {
     if (!file) {
       return jsonResponse3({ error: "No file provided" }, 400);
     }
+    if (file.size > UPLOAD_LIMIT) return jsonResponse3({ error: "The upload is over 30 MB. Select the whole bid set in SubX again so the browser can keep only its schedule and plan pages." }, 413);
+    let sourcePdf = null;
+    const sourceField = formData.get("source_pdf");
+    if (sourceField) {
+      try {
+        if (typeof sourceField !== "string" || sourceField.length > 500000) throw new Error("The original-page map is too large.");
+        sourcePdf = validateSourcePdf(JSON.parse(sourceField), totalPages);
+      } catch (e) { return jsonResponse3({ error: e.message || "Invalid original-page map. Select the PDF again." }, 400); }
+    }
     const validDocumentTypes = ["door_schedule", "hardware_schedule", "finish_schedule", "frame_schedule"];
     if (!validDocumentTypes.includes(documentType)) {
       return jsonResponse3({
@@ -283,6 +294,17 @@ router.post("/api/hardware-schedule/start", async (request2, env2) => {
       }
       console.log(`[Hardware Session] PDF upload detected (${pageCount} pages) for user ${userId}`);
     }
+    if (sourcePdf) {
+      // Never trust a client-supplied total when attaching provenance.
+      let doc;
+      try {
+        doc = await openTextLayerDoc(fileBuffer);
+        sourcePdf = validateSourcePdf(sourcePdf, doc.numPages);
+        pageCount = doc.numPages;
+      } catch (e) { return jsonResponse3({ error: "The cut PDF and its original-page map could not be checked: " + e.message }, 400); }
+      finally { if (doc) await doc.destroy?.(); }
+      documentOutline = { bookmarks: documentOutline || [], source_pdf: sourcePdf };
+    }
     const fileBufferKey = `hardware-sessions/${userId}/${crypto.randomUUID()}`;
     if (fileBuffer.byteLength <= 25 * 1024 * 1024) {
       await env2.CACHE.put(fileBufferKey, fileBuffer, {
@@ -298,7 +320,7 @@ router.post("/api/hardware-schedule/start", async (request2, env2) => {
     }
     let detectedSchedulePages = null;
     if (documentOutline) {
-      detectedSchedulePages = detectSchedulePages(documentOutline, documentType);
+      detectedSchedulePages = detectSchedulePages(sourcePdf ? documentOutline.bookmarks : documentOutline, documentType);
     }
     const sessionId = await createExtractionSession({
       userId,
@@ -344,6 +366,7 @@ router.post("/api/hardware-schedule/start", async (request2, env2) => {
       projectName,
       filename: file.name,
       totalPages: pageCount,
+      source_pdf: sourcePdf,
       sourceType,
       // Include in response for client awareness
       documentType,

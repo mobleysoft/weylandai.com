@@ -1032,22 +1032,49 @@ async function rulesInRegion(pdfDoc, pageNumber, rotation, region, opts = {}) {
 export async function findSchedulePages(pdfBytes, onProgress, options = {}) {
   const t0 = performance.now();
   const progress = (msg) => { if (onProgress) onProgress(msg); };
-  const pdfjsLib = await loadPdfJs();
-  const pdfDoc = await pdfjsLib.getDocument({ data: pdfBytes.slice(0) }).promise;
-  const n = pdfDoc.numPages;
-  const out = { pages: n, door_schedule_pages: [], hardware_pages: [], pages_without_text: [], details: [], ms: 0 };
-  const limit = Math.min(n, options.maxPages || 1500);
-  for (let p = 1; p <= limit; p++) {
-    if (p % 25 === 0) progress("Looking for the schedules: page " + p + " of " + n + "...");
-    let tl;
-    try { tl = await TL.pageTextLines(pdfjsLib, await pdfDoc.getPage(p)); } catch (e) { out.details.push({ page: p, error: String((e && e.message) || e).slice(0, 120) }); continue; }
-    if (tl.word_count < 15) { out.pages_without_text.push(p); continue; }
-    const c = await TL.classifyLines(tl.lines, { width: tl.width, height: tl.height });
-    if (c.door_schedule) { out.door_schedule_pages.push(p); out.details.push({ page: p, door_schedule: c.door_schedule }); }
-    if (c.hardware) { out.hardware_pages.push(p); out.details.push({ page: p, hardware: c.hardware }); }
+  const pdfjsLib = options.pdfjsLib || await loadPdfJs();
+  const { titleBlocks } = await import('./plan-read.js?v=g084');
+  const loadingTask = pdfjsLib.getDocument({ data: pdfBytes.slice(0) });
+  let pdfDoc;
+  try {
+    pdfDoc = await loadingTask.promise;
+    const n = pdfDoc.numPages;
+    const out = { pages: n, door_schedule_pages: [], hardware_pages: [], pages_without_text: [], details: [], ms: 0 };
+    const limit = Math.min(n, options.maxPages || n);
+    const planPages = [];
+    // Same viewport coordinates as the Worker's pageTextItems and SightX.
+    for (let p = 1; p <= limit; p++) {
+      if (p % 25 === 0) progress("Looking for schedules and floor plans: page " + p + " of " + n + "...");
+      let page;
+      try {
+        page = await pdfDoc.getPage(p);
+        const vp = page.getViewport({ scale: 1 });
+        const items = [];
+        if (vp.width > vp.height * 1.15 || vp.width > 1500) {
+          const tc = await page.getTextContent();
+          for (const it of tc.items) {
+            if (!it.str || !it.str.trim()) continue;
+            const m = pdfjsLib.Util.transform(vp.transform, it.transform);
+            items.push({ str: it.str, x: m[4], y: m[5], h: Math.hypot(m[2], m[3]), w: it.width || 0, rot: Math.round(Math.atan2(m[1], m[0]) * 180 / Math.PI) });
+          }
+        }
+        planPages.push({ page: p, width: vp.width, height: vp.height, items });
+        const tl = await TL.pageTextLines(pdfjsLib, page);
+        if (tl.word_count < 15) { out.pages_without_text.push(p); continue; }
+        const c = await TL.classifyLines(tl.lines, { width: tl.width, height: tl.height });
+        if (c.door_schedule) { out.door_schedule_pages.push(p); out.details.push({ page: p, door_schedule: c.door_schedule }); }
+        if (c.hardware) { out.hardware_pages.push(p); out.details.push({ page: p, hardware: c.hardware }); }
+      } catch (e) { out.details.push({ page: p, error: String((e && e.message) || e).slice(0, 120) }); }
+      finally { if (page) page.cleanup(); }
+    }
+    out.sheets = titleBlocks(planPages);
+    out.complete = limit === n && !out.details.some(d => d.error);
+    out.ms = Math.round(performance.now() - t0);
+    return out;
+  } finally {
+    if (typeof loadingTask.destroy === 'function') await loadingTask.destroy();
+    else await pdfDoc?.destroy?.();
   }
-  out.ms = Math.round(performance.now() - t0);
-  return out;
 }
 
 // extractHardwareScheduleFromPdf: the real client-side entry point. Takes a
@@ -1060,8 +1087,11 @@ export async function extractHardwareScheduleFromPdf(pdfBytes, pageNumber, onPro
   const t0 = performance.now();
   const progress = (msg) => { if (onProgress) onProgress(msg); };
   progress("Loading PDF renderer...");
-  const pdfjsLib = await loadPdfJs();
-  const pdfDoc = await pdfjsLib.getDocument({ data: pdfBytes.slice(0) }).promise;
+  const pdfjsLib = options.pdfjsLib || await loadPdfJs();
+  const loadingTask = pdfjsLib.getDocument({ data: pdfBytes.slice(0) });
+  let pdfDoc;
+  try {
+  pdfDoc = await loadingTask.promise;
 
   // The text layer first (see the note at the top of this file).
   {
@@ -1250,6 +1280,12 @@ export async function extractHardwareScheduleFromPdf(pdfBytes, pageNumber, onPro
       total_time_ms: Math.round(performance.now() - t0),
     },
   };
+  } finally {
+    // A guest can read several hardware pages from the same large bid set.
+    // Release this task's PDF and worker before opening the next page.
+    if (typeof loadingTask.destroy === 'function') await loadingTask.destroy();
+    else await pdfDoc?.destroy?.();
+  }
 }
 
 // ===== door_schedule (2026-10-07: orientation, ruling-only columns, text-sized render) =====

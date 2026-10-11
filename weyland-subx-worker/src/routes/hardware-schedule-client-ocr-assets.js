@@ -43,6 +43,12 @@ import gridRunnerHtml from "../../assets/client-ocr/grid-runner.html";
 // assets/client-ocr-src/pdfjs-compat.js.
 import pdfjsCompatBin from "../../assets/client-ocr/pdfjs-compat.js.bin";
 
+import bidsetCutBin from "../../assets/client-ocr/bidset-cut.mjs.bin";
+import sourcePagesBin from "../../assets/client-ocr/source-pages.mjs.bin";
+import pdfWriterBin from "../../assets/client-ocr/pdf-lib.mjs.bin";
+import planReaderBin from "../../assets/client-ocr/plan-read.js.bin";
+import buildingScopeBin from "../../assets/client-ocr/building-scope.js.bin";
+
 function withCompat(bin) {
   const a = new Uint8Array(pdfjsCompatBin), b = new Uint8Array(bin);
   const out = new Uint8Array(a.length + 1 + b.length);
@@ -53,6 +59,11 @@ function withCompat(bin) {
 }
 
 const ASSETS = {
+  "bidset-cut.mjs": { data: bidsetCutBin, contentType: "text/javascript; charset=utf-8" },
+  "source-pages.mjs": { data: sourcePagesBin, contentType: "text/javascript; charset=utf-8" },
+  "pdf-lib.mjs": { data: pdfWriterBin, contentType: "text/javascript; charset=utf-8" },
+  "plan-read.js": { data: planReaderBin, contentType: "text/javascript; charset=utf-8", cacheControl: "no-cache" },
+  "building-scope.js": { data: buildingScopeBin, contentType: "text/javascript; charset=utf-8", cacheControl: "no-cache" },
   "pdf.mjs": { data: withCompat(pdfLibBin), contentType: "text/javascript; charset=utf-8" },
   "pdf-worker.mjs": { data: withCompat(pdfWorkerBin), contentType: "text/javascript; charset=utf-8" },
   "tesseract-wasm-lib.mjs": { data: tesseractLibBin, contentType: "text/javascript; charset=utf-8" },

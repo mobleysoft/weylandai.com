@@ -663,7 +663,7 @@ export async function workspaceDetail(target) {
  * and reads page 1 on the server), fall back to READ IT IN THIS BROWSER when the server read found
  * nothing, then read the door rows. Returns what each step showed.
  */
-export async function workspaceUploadAndExtract(target, { project, pdf = SAMPLE_PDF, docType = "door_schedule" }) {
+export async function workspaceUploadAndExtract(target, { project, pdf = SAMPLE_PDF, docType = "door_schedule", uploadMs = 120000 }) {
   const out = { upload: null, tries: [], doors: 0, rows: [], listed: false };
   await target.fill("#f-project", project);
   await target.selectOption("#f-doctype", docType).catch(() => {});
@@ -671,7 +671,7 @@ export async function workspaceUploadAndExtract(target, { project, pdf = SAMPLE_
   out.preview = ((await waitText(target, "#rasterize-status", /preview|failed|error/i, 60000, /^Drawing/i)) || "").slice(0, 160);
   const t0 = Date.now();
   await pressIn(target, "#upload-btn");
-  out.upload = ((await waitText(target, "#upload-result", /^Uploaded|failed|error|choose|sign in/i, 120000, /^Uploading/i)) || "").slice(0, 300);
+  out.upload = ((await waitText(target, "#upload-result", /^Uploaded|failed|error|choose|sign in/i, uploadMs, /^(Uploading|Finding|Keeping|The selected pages)/i)) || "").slice(0, 300);
   if (!/^Uploaded/i.test(out.upload)) return out;
   out.listed = !!(await until(() => target.evaluate((p) => Array.from(document.querySelectorAll("#sessions-list tr[data-id]")).some((tr) => tr.innerText.includes(p)), project), 30000, 500));
   // The workspace opens the new schedule and reads page 1 by itself.

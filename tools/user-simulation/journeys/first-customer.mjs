@@ -131,15 +131,8 @@ await J.run(async () => {
     const expect = Number(process.env.EXPECT_ROWS || 0);
     // REUSE_PROJECT=1: the firm comes back to the project it uploaded (no second upload).
     const reuse = process.env.REUSE_PROJECT === "1";
-    // The whole bid set as the firm has it: the page's own limit, in words.
-    if (process.env.BIDSET_PDF && !reuse) {
-      await frame.setInputFiles("#f-file", process.env.BIDSET_PDF);
-      await sleep(1500);
-      await pressIn(frame, "#upload-btn");
-      await sleep(1500);
-      const said = ((await frame.evaluate(() => (document.getElementById("upload-result") || {}).innerText || "")) || "").trim();
-      J.check("the whole bid set (" + Math.round(Number(process.env.BIDSET_MB || 0)) + " MB) is refused in words: upload the schedule pages", /up to 30 MB/i.test(said) && /schedule pages/i.test(said), said);
-    }
+    // Since g084 a whole bid set over 30 MB is cut in the tab and uploaded, not refused; journeys/subx-whole-bidset.mjs
+    // checks that path (BIDSET_PDF there). This journey uploads the firm's project file (PROJECT_PDF).
 
     if (reuse) {
       const listed = frame.locator("#sessions-list tr[data-id]").filter({ hasText: project }).first();
