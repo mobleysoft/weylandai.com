@@ -175,10 +175,11 @@ export function readPlan(pages, doors = [], opts = {}) {
     sheetsOut.push({ page: t.page, sheet: t.sheet, title: t.title, rooms: rs.length, scales: scales.map((s) => s.text), points_per_foot: [...new Set(scales.map((s) => s.points_per_foot))] });
     for (const r of rs) { r.points_per_foot = scaleAt(scales, r.x, r.y); rooms.push(r); }
     // The schedule pages whose title block matches this sheet's best (one building of several in a set).
-    const candPages = [...new Set(doors.map((d) => d.page).filter((x) => x != null))];
+    const sourceRows = d => d.schedule_rows || [d];
+    const candPages = [...new Set(doors.flatMap(sourceRows).map((d) => d.page).filter((x) => x != null))];
     let bestSim = -1, keep = null;
     for (const sp of candPages) { const sb = scheduleBlock(sp); const s = sb ? similarity(t.block, sb.block) : 0; if (s > bestSim + 1e-9) { bestSim = s; keep = new Set([sp]); } else if (Math.abs(s - bestSim) < 1e-9) keep.add(sp); }
-    const doorFits = (d) => !keep || d.page == null || keep.has(d.page);
+    const doorFits = (d) => !keep || d.page == null || sourceRows(d).some(r => keep.has(r.page));
     // Door tags: each single item, and each joined line, equal to a schedule mark.
     const cands = [];
     for (const it of p.items) cands.push({ str: it.str.trim(), x: it.x, y: it.y, h: it.h, w: it.w || 0, it });
@@ -186,7 +187,7 @@ export function readPlan(pages, doors = [], opts = {}) {
     // Each tag covers the schedule rows it stands for (tag._rows), so a row is "on the plan" only when
     // a tag of its own covers it (g044).
     const place = (key, rowsHere, c, extra = null) => {
-      const tag = { mark: rowsHere[0].mark, page: t.page, sheet: t.sheet, x: Math.round(cx(c)), y: Math.round(c.y - c.h / 2), h: c.h, shape: shape(c.str), door_pages: [...new Set(rowsHere.map((d) => d.page))], ...(extra || {}) };
+      const tag = { mark: rowsHere[0].mark, page: t.page, sheet: t.sheet, x: Math.round(cx(c)), y: Math.round(c.y - c.h / 2), h: c.h, shape: shape(c.str), door_pages: [...new Set(rowsHere.flatMap(sourceRows).map((d) => d.page))], ...(extra || {}) };
       Object.defineProperty(tag, "_rows", { value: rowsHere, enumerable: false });
       roomFor(tag, rs, rowsHere[0], ls, p);
       tag.points_per_foot = scaleAt(scales, tag.x, tag.y);
@@ -260,7 +261,8 @@ export function readPlan(pages, doors = [], opts = {}) {
       if (!ds.length) continue;
       const perPage = new Map();
       for (const d of ds) perPage.set(d.page, (perPage.get(d.page) || 0) + 1);
-      if (Math.max(...perPage.values()) < 2) { place(k + "|" + [...new Set(ds.map((d) => d.page))].join(","), ds, list[0].c, list[0].extra); continue; }
+      if (Math.max(...perPage.values()) < 2 && !ds.some(d => d.opening_id)) { place(k + "|" + [...new Set(ds.map((d) => d.page))].join(","), ds, list[0].c, list[0].extra); continue; }
+      if (ds.length === 1) { place(ds[0].opening_id || k, ds, list[0].c, list[0].extra); continue; }
       const rows = [...ds].sort((a, b) => doors.indexOf(a) - doors.indexOf(b));
       if (list.length !== rows.length) {
         shared.push({ mark: rows[0].mark, sheet: t.sheet, page: t.page, rows: rows.length, tags: list.length, placed: false,

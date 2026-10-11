@@ -153,19 +153,23 @@ async function analyze(file) {
   rec.page_count = pdf.numPages;
   if (pdf.numPages > MAX_PAGES) { return { ...rec, tier: "unread", error: "more than " + MAX_PAGES + " pages; rerun with --max-pages" }; }
   const pages = await loadPages(pdf);
-  const { textPages, doorPages, hwPages, doorsA, doorsB, tableBoxes, hwA, hwB, readerNotes, ocr } =
+  const { textPages, doorPages, hwPages, doorsA, doorsB, doorRowsA, doorRowsB, doorResolution, tableBoxes, hwA, hwB, readerNotes, ocr } =
     await readSchedules(pdf, pages, { file, ocrMax: OCR_MAX, ocrDpi: OCR_DPI });
   rec.text_layer = { pages_with_text: textPages, pages: pdf.numPages };
   if (ocr) rec.ocr = ocr;
   const groupsA = mergeGroups(hwA.filter((x) => x.groups.length)), groupsB = mergeGroups(hwB.filter((x) => x.groups.length));
   // A schedule page or a hardware page is one where either reader read rows.
-  const schedPages = [...new Set([...doorsA, ...doorsB].map((d) => d.page))].sort((a, b) => a - b);
+  const schedPages = [...new Set([...doorRowsA, ...doorRowsB].map((d) => d.page))].sort((a, b) => a - b);
   const hwRead = [...new Set([...hwA, ...hwB].filter((x) => x.groups.some((g) => g.items.length)).map((x) => x.page))].sort((a, b) => a - b);
   rec.pages = { door_candidates: doorPages.length, hardware_candidates: hwPages.length, door_schedule_pages: schedPages, hardware_pages: hwRead };
   rec.readers = {
     a: { doors: doorsA.length, sets: groupsA.length, items: groupsA.reduce((n, g) => n + g.items.length, 0), name: rec.ocr ? "production OCR + schedule line reader (Poppler renderer)" : "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)" },
     b: { doors: doorsB.length, sets: groupsB.length, items: groupsB.reduce((n, g) => n + g.items.length, 0), name: "geometry first (tools/accuracy/truth/reader_b.mjs)", tables: Object.values(tableBoxes).flat().length },
   };
+  // doors/agreement/oracles count openings; door_rows preserves the extracted evidence count.
+  rec.readers.a.door_rows = doorRowsA.length;
+  rec.readers.b.door_rows = doorRowsB.length;
+  rec.door_resolution = doorResolution;
   if (readerNotes.length) rec.reader_notes = readerNotes.slice(0, 20);
 
   // Agreement.
