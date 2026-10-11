@@ -29,3 +29,16 @@ test("a title band (no fence crossing it) still never names a column", () => {
   const b = read("eefa018e007e581f-p59");
   for (const t of b.tables) assert.ok(!t.header.some((h) => /SCHEDULE/.test(h)), JSON.stringify(t.header));
 });
+
+// g075: a scanned cell can lose the foot mark and keep the inch mark (7-0" for 7'-0"); g072 found reader B
+// rejecting it on the scanned WeylandAI Building, doors 212 and 312, which A-601 prints as 3'-0" x 7'-0".
+import { inchesOf as inchesOfB, sizeOf as sizeOfB } from "./reader_b.mjs";
+test("reader B reads a hyphenated dimension that kept its inch mark but lost its foot mark", () => {
+  assert.equal(inchesOfB('7-0"'), 84);
+  assert.equal(inchesOfB('3-0"'), 36);
+  assert.equal(inchesOfB("3-0"), 36);
+  assert.equal(inchesOfB("7'-0\""), 84);
+  assert.equal(inchesOfB('1-3/4"'), 1.75);
+  assert.equal(inchesOfB('7-14"'), null);
+  assert.deepEqual(sizeOfB('3-0" X 7-0"'), { pair: false, width_inches: 36, height_inches: 84 });
+});
