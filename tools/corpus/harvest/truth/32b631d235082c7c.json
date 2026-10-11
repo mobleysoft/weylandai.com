@@ -142,17 +142,36 @@
  "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
-   "applicable": false,
-   "reason": "no floor plan sheet found in this PDF (title blocks)",
+   "applicable": true,
+   "total": 8,
+   "pass": 0,
+   "fail": 8,
+   "pass_rate": 0,
+   "examples": [
+    "mark A (schedule p.31) not tagged on any plan",
+    "mark A (schedule p.31) not tagged on any plan",
+    "mark A (schedule p.31) not tagged on any plan",
+    "mark A (schedule p.31) not tagged on any plan",
+    "mark B (schedule p.31) not tagged on any plan",
+    "mark B (schedule p.31) not tagged on any plan",
+    "mark B (schedule p.31) not tagged on any plan",
+    "mark B (schedule p.31) not tagged on any plan"
+   ],
+   "plan_sheets": [
+    "A-101 p.16",
+    "A-102 p.17",
+    "A-103 p.18",
+    "A-104 p.19"
+   ],
    "plan_counts": {
-    "plan_sheets": 0,
-    "rooms": 0,
+    "plan_sheets": 4,
+    "rooms": 52,
     "corridors": 0,
     "tags": 0,
     "unmatched_tags": 0,
     "schedule_marks": 8,
     "marks_not_on_plan": 8,
-    "shared_marks": 0
+    "shared_marks": 8
    }
   },
   "sets_exist": {
@@ -264,6 +283,6 @@
    "why": "only reader A read this row"
   }
  ],
- "ms": 2248,
- "generated_at": "2026-10-11T08:55:12.386Z"
+ "ms": 2386,
+ "generated_at": "2026-10-11T10:03:40.433Z"
 }

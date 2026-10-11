@@ -146,12 +146,13 @@
    "examples": [],
    "plan_sheets": [
     "A-100 p.7",
+    "A-101 p.8",
     "A-104 p.11"
    ],
    "plan_counts": {
-    "plan_sheets": 2,
-    "rooms": 107,
-    "corridors": 4,
+    "plan_sheets": 3,
+    "rooms": 151,
+    "corridors": 7,
     "tags": 49,
     "unmatched_tags": 0,
     "schedule_marks": 49,
@@ -202,6 +203,6 @@
    "b": "113"
   }
  ],
- "ms": 1682,
- "generated_at": "2026-10-11T08:54:57.314Z"
+ "ms": 1636,
+ "generated_at": "2026-10-11T10:03:24.669Z"
 }

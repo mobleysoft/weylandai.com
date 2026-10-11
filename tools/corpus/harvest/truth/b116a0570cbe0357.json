@@ -186,14 +186,10 @@
   "marks_on_plan": {
    "applicable": true,
    "total": 3,
-   "pass": 0,
-   "fail": 3,
-   "pass_rate": 0,
-   "examples": [
-    "mark 110 (schedule p.18) not tagged on any plan",
-    "mark 111 (schedule p.18) not tagged on any plan",
-    "mark 112 (schedule p.18) not tagged on any plan"
-   ],
+   "pass": 3,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
    "plan_sheets": [
     "A-101 p.13"
    ],
@@ -201,10 +197,10 @@
     "plan_sheets": 1,
     "rooms": 12,
     "corridors": 0,
-    "tags": 0,
+    "tags": 3,
     "unmatched_tags": 0,
     "schedule_marks": 3,
-    "marks_not_on_plan": 3,
+    "marks_not_on_plan": 0,
     "shared_marks": 0
    }
   },
@@ -234,6 +230,6 @@
  "tier": "agreed",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 1668,
- "generated_at": "2026-10-11T08:58:50.072Z"
+ "ms": 1674,
+ "generated_at": "2026-10-11T10:07:19.575Z"
 }

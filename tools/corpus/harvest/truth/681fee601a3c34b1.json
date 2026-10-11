@@ -160,23 +160,10 @@
   "marks_on_plan": {
    "applicable": true,
    "total": 26,
-   "pass": 0,
-   "fail": 26,
-   "pass_rate": 0,
-   "examples": [
-    "mark 102 (schedule p.27) not tagged on any plan",
-    "mark 103B (schedule p.27) not tagged on any plan",
-    "mark 103C (schedule p.27) not tagged on any plan",
-    "mark 104 (schedule p.27) not tagged on any plan",
-    "mark 105 (schedule p.27) not tagged on any plan",
-    "mark 106 (schedule p.27) not tagged on any plan",
-    "mark 107A (schedule p.27) not tagged on any plan",
-    "mark 108 (schedule p.27) not tagged on any plan",
-    "mark 110A (schedule p.27) not tagged on any plan",
-    "mark 111 (schedule p.27) not tagged on any plan",
-    "mark 112 (schedule p.27) not tagged on any plan",
-    "mark 113A (schedule p.27) not tagged on any plan"
-   ],
+   "pass": 26,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
    "plan_sheets": [
     "A201 p.18",
     "A203 p.20",
@@ -186,10 +173,10 @@
     "plan_sheets": 3,
     "rooms": 127,
     "corridors": 12,
-    "tags": 0,
-    "unmatched_tags": 0,
+    "tags": 26,
+    "unmatched_tags": 55,
     "schedule_marks": 26,
-    "marks_not_on_plan": 26,
+    "marks_not_on_plan": 0,
     "shared_marks": 0
    }
   },
@@ -342,6 +329,6 @@
    "why": "only reader B read this row"
   }
  ],
- "ms": 6421,
- "generated_at": "2026-10-11T08:56:05.188Z"
+ "ms": 5991,
+ "generated_at": "2026-10-11T10:04:32.960Z"
 }

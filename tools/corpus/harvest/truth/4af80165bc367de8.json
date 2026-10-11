@@ -140,12 +140,14 @@
     "mark 123A (schedule p.7) not tagged on any plan"
    ],
    "plan_sheets": [
-    "A102 p.6"
+    "A101 p.5",
+    "A102 p.6",
+    "A602 p.8"
    ],
    "plan_counts": {
-    "plan_sheets": 1,
-    "rooms": 44,
-    "corridors": 7,
+    "plan_sheets": 3,
+    "rooms": 90,
+    "corridors": 12,
     "tags": 2,
     "unmatched_tags": 0,
     "schedule_marks": 4,
@@ -179,6 +181,6 @@
  "tier": "agreed",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 1389,
- "generated_at": "2026-10-11T08:55:36.877Z"
+ "ms": 1422,
+ "generated_at": "2026-10-11T10:04:05.587Z"
 }

@@ -141,34 +141,22 @@
   "marks_on_plan": {
    "applicable": true,
    "total": 33,
-   "pass": 0,
-   "fail": 33,
-   "pass_rate": 0,
-   "examples": [
-    "mark 101 (schedule p.15) not tagged on any plan",
-    "mark 101A (schedule p.15) not tagged on any plan",
-    "mark 102 (schedule p.15) not tagged on any plan",
-    "mark 102A (schedule p.15) not tagged on any plan",
-    "mark 103 (schedule p.15) not tagged on any plan",
-    "mark 103A (schedule p.15) not tagged on any plan",
-    "mark 104 (schedule p.15) not tagged on any plan",
-    "mark 105 (schedule p.15) not tagged on any plan",
-    "mark 106 (schedule p.15) not tagged on any plan",
-    "mark 107 (schedule p.15) not tagged on any plan",
-    "mark 107A (schedule p.15) not tagged on any plan",
-    "mark 108 (schedule p.15) not tagged on any plan"
-   ],
+   "pass": 33,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
    "plan_sheets": [
-    "A-100 p.12"
+    "A-100 p.12",
+    "A-110 p.13"
    ],
    "plan_counts": {
-    "plan_sheets": 1,
-    "rooms": 26,
-    "corridors": 3,
-    "tags": 0,
+    "plan_sheets": 2,
+    "rooms": 38,
+    "corridors": 5,
+    "tags": 33,
     "unmatched_tags": 0,
     "schedule_marks": 33,
-    "marks_not_on_plan": 33,
+    "marks_not_on_plan": 0,
     "shared_marks": 0
    }
   },
@@ -212,6 +200,6 @@
  "tier": "agreed",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 3802,
- "generated_at": "2026-10-11T08:55:14.990Z"
+ "ms": 3849,
+ "generated_at": "2026-10-11T10:03:42.649Z"
 }

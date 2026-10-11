@@ -246,11 +246,14 @@
    "examples": [],
    "plan_sheets": [
     "A-101 p.14",
+    "A-401 p.18",
+    "A-402 p.19",
+    "A-403 p.20",
     "A-404 p.21"
    ],
    "plan_counts": {
-    "plan_sheets": 2,
-    "rooms": 33,
+    "plan_sheets": 5,
+    "rooms": 57,
     "corridors": 3,
     "tags": 14,
     "unmatched_tags": 0,
@@ -654,6 +657,6 @@
    "why": "only reader A read this row"
   }
  ],
- "ms": 4153,
- "generated_at": "2026-10-11T08:56:28.241Z"
+ "ms": 4469,
+ "generated_at": "2026-10-11T10:04:58.283Z"
 }
