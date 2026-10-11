@@ -205,20 +205,25 @@ export function readPlan(pages, doors = [], opts = {}) {
     const sheetOut = { page: t.page, sheet: t.sheet, title: t.title, plan_rule: t.plan_rule, rooms: rs.length, scales: scales.map((s) => s.text), points_per_foot: [...new Set(scales.map((s) => s.points_per_foot))] };
     sheetsOut.push(sheetOut);
     for (const r of rs) { r.points_per_foot = scaleAt(scales, r.x, r.y); rooms.push(r); }
-    // Prefer affirmative building evidence, then the previous title-block similarity.
+    // Prefer affirmative building evidence, the strongest first (most matched title-block fields), then the previous
+    // title-block similarity. g082: R2502-01's rebid kept its admin restroom schedule (facility name only) for the dorm
+    // plans while the dorm door schedule also matched site and facility numbers, and placed 5 of 211 tags. A sheet's
+    // own page matches every field it prints, so the strongest pool never drops a plan's own schedule.
     // If every page conflicts, fall back across ALL schedule pages. There must
     // never be an empty keep set (or a second scope veto) that rejects every door.
     const candidates = [...new Set(doors.flatMap(sourceRows).map(d => d.page).filter(x => x != null))]
       .map(page => ({ page, ...comparePlacementScopes(scopes.get(t.page), scopes.get(page)) }));
     const compatible = candidates.filter(c => !c.conflicts.length);
     const affirmative = compatible.filter(c => c.matched.length);
-    const pool = affirmative.length ? affirmative : compatible.length ? compatible : candidates;
+    const strongest = Math.max(0, ...affirmative.map(c => c.matched.length));
+    const strongPool = affirmative.filter(c => c.matched.length === strongest);
+    const pool = affirmative.length ? strongPool : compatible.length ? compatible : candidates;
     const candPages = pool.map(c => c.page);
     let bestSim = -1, keep = null;
     for (const sp of candPages) { const sb = scheduleBlock(sp); const s = sb ? similarity(t.block, sb.block) : 0; if (s > bestSim + 1e-9) { bestSim = s; keep = new Set([sp]); } else if (Math.abs(s - bestSim) < 1e-9) keep.add(sp); }
     sheetOut.schedule_selection = {
       rule: !compatible.length && candidates.length ? 'similarity-fallback-no-compatible-schedule'
-        : affirmative.length ? 'building-scope-then-similarity'
+        : affirmative.length ? (strongPool.length < affirmative.length ? 'strongest-building-scope-then-similarity' : 'building-scope-then-similarity')
           : compatible.length < candidates.length ? 'scope-compatible-then-similarity' : 'similarity',
       candidates, kept_pages: keep ? [...keep] : null,
     };
