@@ -677,7 +677,8 @@ export async function workspaceUploadAndExtract(target, { project, pdf = SAMPLE_
   // The workspace opens the new schedule and reads page 1 by itself.
   const r1 = (await waitText(target, "#extract-result", /^Page \d+:|could not be read|error|failed/i, 300000, /^Reading page/i)) || "";
   out.tries.push({ route: "server (read on upload)", seconds: Math.round((Date.now() - t0) / 1000), result: r1.slice(0, 240) });
-  if (!/^Page \d+: [1-9]\d* (door|hardware set)/i.test(r1) && (await target.locator("#client-extract-btn").count())) {
+  // A cut of a whole bid set names each page with its sheet: "Page 28 (A-112): 2 doors read..." (g084).
+  if (!/^Page \d+(?: \([^)]*\))?: [1-9]\d* (door|hardware set)/i.test(r1) && (await target.locator("#client-extract-btn").count())) {
     const t1 = Date.now();
     await pressIn(target, "#client-extract-btn");
     const r2 = (await waitText(target, "#extract-result", /read in this browser and saved|No .* table was found|failed|error|could not/i, 300000)) || "";
@@ -685,7 +686,7 @@ export async function workspaceUploadAndExtract(target, { project, pdf = SAMPLE_
   }
   // After a read the page reloads the schedule; the table fills once that answers ("No rows read
   // yet" is already there before the read, so it is not an answer).
-  const readSome = out.tries.some((t) => /^Page \d+: [1-9]\d* (door|hardware set)|[1-9]\d* (doors|hardware sets) read in this browser/i.test(t.result));
+  const readSome = out.tries.some((t) => /^Page \d+(?: \([^)]*\))?: [1-9]\d* (door|hardware set)|[1-9]\d* (doors|hardware sets) read in this browser/i.test(t.result));
   await until(() => target.evaluate(() => document.querySelectorAll("#doors-wrap tbody tr, #sets-wrap tbody tr").length > 0), readSome ? 45000 : 3000, 500);
   const d = await workspaceDetail(target);
   out.detail = { title: d.title, sub: d.sub, doorNote: d.doorNote, tiles: d.tiles, steps: d.steps, actions: d.actions, counts: d.counts };

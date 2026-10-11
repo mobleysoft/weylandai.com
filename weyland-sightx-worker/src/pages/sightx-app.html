@@ -627,7 +627,10 @@ HW-2: lever lockset, 3 hinges, wall stop"></textarea>
     // Two sources: the WeylandAI Building (?set=4847b09e633103f7, a set we authored, with its placement record)
     // and the visitor's own SubX upload (?walk=<session>, SubX's WALK IT): its PDF, its door rows and readPlan's
     // tags, all from the visitor's own session. 2D sheet truth: nothing is drawn that the data does not hold.
-    var sv = { d: null, k: 0, vb: null, sel: -1, down: null, loaded: {}, pdf: null, urls: {}, session: null };
+    var sv = { d: null, k: 0, vb: null, sel: -1, down: null, loaded: {}, pdf: null, urls: {}, session: null, pdfPage: null };
+    // g084b: a whole bid set is uploaded as a cut of its schedule and plan pages; sheets keep the bid set's own page
+    // numbers, and pdfPage maps each to its page in the stored cut (SubX's plan answer carries the map).
+    function storedPage(p) { return sv.pdfPage && sv.pdfPage[p] ? sv.pdfPage[p] : p; }
     var SVGNS = "http://www.w3.org/2000/svg", PDFJS = "/api/hardware-schedule/client-ocr-assets/";
     var pdfjsLib = null;
     function pdfjs() {
@@ -662,7 +665,7 @@ HW-2: lever lockset, 3 hinges, wall stop"></textarea>
     // One sheet drawn by pdf.js into a canvas, kept as an image for the SVG under the tags.
     function drawSheet(s) {
       if (sv.urls[s.page]) return Promise.resolve(sv.urls[s.page]);
-      return sv.pdf.getPage(s.page).then(function (pg) {
+      return sv.pdf.getPage(storedPage(s.page)).then(function (pg) {
         var vp1 = pg.getViewport({ scale: 1 });
         s.width = vp1.width; s.height = vp1.height;
         var max = matchMedia("(max-width:700px)").matches ? 2600 : 4200;
@@ -808,6 +811,9 @@ HW-2: lever lockset, 3 hinges, wall stop"></textarea>
         var doors = r.data.doors || [], s = r.data.session || {};
         return getJSON(base + "/plan", { credentials: "same-origin", headers: headers() }).then(function (p) {
           var plan = p.ok && p.data && p.data.success ? p.data : null;
+          sv.pdfPage = null;
+          var map = plan && plan.source_pdf && plan.source_pdf.pages;
+          if (map && map.length) { sv.pdfPage = {}; map.forEach(function (e) { sv.pdfPage[e.original_page] = e.pdf_page; }); }
           return getJSON("/api/sightx/openings", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ doors: doors, plan: plan }) }).then(function (o) {
             if (!o.ok || !o.data.success) { setStatus((o.data && o.data.message) || "The openings could not be built.", true); return; }
             var d = o.data;

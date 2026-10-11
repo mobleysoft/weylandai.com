@@ -50,17 +50,19 @@ await J.run(async () => {
   await page.waitForSelector("#app:not(.hide)", { timeout: 30000 }).catch(() => {});
   const mark = await setMark(page);
   // The upload line while it works is the user's evidence: how many pages the tab kept, how much it sends.
-  const seen = [];
+  // Each line is kept with the seconds since UPLOAD AND READ was pressed, so a slow phase shows where it is.
+  const seen = [], t0 = Date.now();
   const watch = setInterval(() => {
-    page.textContent("#upload-result").then((t) => { t = (t || "").replace(/\s+/g, " ").trim(); if (t && seen[seen.length - 1] !== t) seen.push(t); }).catch(() => {});
+    page.evaluate(() => [document.getElementById("upload-result"), document.getElementById("rasterize-status")].map((e) => (e && e.innerText || "").replace(/\s+/g, " ").trim()))
+      .then(([u, r]) => { for (const t of [u, r]) if (t && !seen.some((x) => x.text === t)) seen.push({ s: Math.round((Date.now() - t0) / 1000), text: t.slice(0, 200) }); }).catch(() => {});
   }, 200);
   const project = "Whole bid set (" + J.id + " " + J.suffix + ")";
   let run = { upload: null, tries: [], rows: [], doors: 0 };
   try { run = await workspaceUploadAndExtract(page, { project, pdf: PDF, uploadMs: 900000 }); } finally { clearInterval(watch); }
-  J.note("upload", { upload: run.upload, tries: run.tries, lines: seen.slice(0, 12) });
-  const kept = seen.map((t) => /Keeping (\d+) of (\d+) pages/i.exec(t)).find(Boolean);
-  const sent = seen.map((t) => /Uploading (\d+(?:\.\d+)?) MB/i.exec(t)).find(Boolean);
-  J.check("the tab keeps only the schedule and plan pages and says how many (Keeping N of M pages)", !!kept && +kept[1] > 0 && +kept[1] < +kept[2], { kept: kept && kept[0], lines: seen.slice(0, 8) });
+  J.note("upload", { upload: run.upload, tries: run.tries, lines: seen.slice(0, 16) });
+  const kept = seen.map((t) => /(?:Keeping|Kept) (\d+) of (\d+) (?:bid-set )?pages/i.exec(t.text)).find(Boolean);
+  const sent = seen.map((t) => /Uploading (\d+(?:\.\d+)?) MB/i.exec(t.text)).find(Boolean);
+  J.check("the tab keeps only the schedule and plan pages and says how many (Kept N of M bid-set pages)", !!kept && +kept[1] > 0 && +kept[1] < +kept[2], { kept: kept && kept[0], lines: seen.slice(0, 10) });
   J.check("only the cut leaves the browser, under 30 MB (Uploading X MB)", !!sent && +sent[1] < 30, { uploading: sent && sent[0] });
   J.check("SubX uploads the cut and opens it", /^Uploaded/i.test(run.upload || ""), { upload: run.upload });
   const sessionId = await page.evaluate(() => { const w = document.getElementById("walk-it"); return w ? w.getAttribute("data-walk") : null; });
