@@ -1,0 +1,1690 @@
+{
+  "rooms": [
+    {
+      "name": "STAIRWELL",
+      "number": "1102",
+      "page": 4,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 455,
+      "y": 243
+    },
+    {
+      "name": "WOMEN'S RESTROOM",
+      "number": "1103",
+      "page": 4,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 949,
+      "y": 411
+    },
+    {
+      "name": "MEN'S RESTROOM",
+      "number": "1104",
+      "page": 4,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 952,
+      "y": 586
+    },
+    {
+      "name": "LOBBY",
+      "number": "1101",
+      "page": 4,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 432,
+      "y": 637
+    },
+    {
+      "name": "NEW STORAGE ROOM",
+      "number": "1219",
+      "page": 4,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 872,
+      "y": 897
+    },
+    {
+      "name": "NEW STORAGE ROOM",
+      "number": "1217",
+      "page": 4,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 270,
+      "y": 982
+    },
+    {
+      "name": "CONFERENCE ROOM",
+      "number": "1218",
+      "page": 4,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 675,
+      "y": 1099
+    },
+    {
+      "name": "PROJECT # O2339-01",
+      "number": "1025",
+      "page": 4,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 2451,
+      "y": 1169
+    },
+    {
+      "name": "ENTRY",
+      "number": "1100",
+      "page": 4,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 445,
+      "y": 1258
+    },
+    {
+      "name": "AREA PAINT FLOORING WALL BASE",
+      "number": "C1",
+      "page": 4,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 1364,
+      "y": 1512
+    },
+    {
+      "name": "AREA PAINT FLOORING WALL BASE",
+      "number": "B1",
+      "page": 4,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 1446,
+      "y": 1512
+    },
+    {
+      "name": "AREA PAINT FLOORING WALL BASE",
+      "number": "C1",
+      "page": 4,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 1364,
+      "y": 1518
+    },
+    {
+      "name": "AREA PAINT FLOORING WALL BASE",
+      "number": "B1",
+      "page": 4,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 1446,
+      "y": 1518
+    },
+    {
+      "name": "SIZE MARK WD HGT THK MATL GLAZING",
+      "number": "1",
+      "page": 4,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 162,
+      "y": 1528
+    },
+    {
+      "name": "DETAIL EL HEAD JAMB SILL",
+      "number": "8",
+      "page": 4,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 517,
+      "y": 1528
+    },
+    {
+      "name": "DETAIL EL HEAD JAMB SILL",
+      "number": "10",
+      "page": 4,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 563,
+      "y": 1528
+    },
+    {
+      "name": "SET NO",
+      "number": "5",
+      "page": 4,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 780,
+      "y": 1537
+    },
+    {
+      "name": "KEYSIDE RM NO",
+      "number": "1101",
+      "page": 4,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 836,
+      "y": 1537
+    },
+    {
+      "name": "SET NO",
+      "number": "4",
+      "page": 4,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 780,
+      "y": 1543
+    },
+    {
+      "name": "KEYSIDE RM NO",
+      "number": "1101",
+      "page": 4,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 836,
+      "y": 1543
+    },
+    {
+      "name": "C2/CT1 C1/CT1",
+      "number": "ST1",
+      "page": 4,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 1364,
+      "y": 1560
+    },
+    {
+      "name": "C1/CT1 ST1",
+      "number": "CT1",
+      "page": 4,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 1364,
+      "y": 1572
+    },
+    {
+      "name": "ST1 CT1",
+      "number": "CT1",
+      "page": 4,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 1364,
+      "y": 1583
+    },
+    {
+      "name": "CT1 CT1",
+      "number": "C1",
+      "page": 4,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 1364,
+      "y": 1595
+    },
+    {
+      "name": "STAIRWELL",
+      "number": "1102",
+      "page": 5,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 474,
+      "y": 779
+    },
+    {
+      "name": "WOMEN'S RESTROOM",
+      "number": "2203",
+      "page": 5,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 983,
+      "y": 881
+    },
+    {
+      "name": "LOBBY",
+      "number": "2202",
+      "page": 5,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 476,
+      "y": 974
+    },
+    {
+      "name": "MEN'S RESTROOM",
+      "number": "2204",
+      "page": 5,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 981,
+      "y": 1077
+    },
+    {
+      "name": "PROJECT # O2339-01",
+      "number": "1025",
+      "page": 5,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 2451,
+      "y": 1169
+    },
+    {
+      "name": "MARK",
+      "number": "8",
+      "page": 5,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 258,
+      "y": 1414
+    },
+    {
+      "name": "HEAD JAMB SILL",
+      "number": "8",
+      "page": 5,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 614,
+      "y": 1419
+    },
+    {
+      "name": "HEAD JAMB SILL",
+      "number": "9",
+      "page": 5,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 659,
+      "y": 1419
+    },
+    {
+      "name": "AREA PAINT FLOORING WALL BASE",
+      "number": "P3",
+      "page": 5,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 626,
+      "y": 1550
+    },
+    {
+      "name": "AREA PAINT FLOORING WALL BASE",
+      "number": "C1",
+      "page": 5,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 691,
+      "y": 1550
+    },
+    {
+      "name": "AREA PAINT FLOORING WALL BASE",
+      "number": "B1",
+      "page": 5,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 772,
+      "y": 1550
+    },
+    {
+      "name": "AREA PAINT FLOORING WALL BASE",
+      "number": "P3",
+      "page": 5,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 626,
+      "y": 1556
+    },
+    {
+      "name": "AREA PAINT FLOORING WALL BASE",
+      "number": "C1",
+      "page": 5,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 691,
+      "y": 1556
+    },
+    {
+      "name": "AREA PAINT FLOORING WALL BASE",
+      "number": "B1",
+      "page": 5,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 772,
+      "y": 1556
+    },
+    {
+      "name": "ST1 C1/CT1",
+      "number": "CT1",
+      "page": 5,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 691,
+      "y": 1598
+    },
+    {
+      "name": "C1/CT1 CT1",
+      "number": "CT1",
+      "page": 5,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 691,
+      "y": 1610
+    },
+    {
+      "name": "WOMEN'S RESTROOM",
+      "number": "1126",
+      "page": 6,
+      "points_per_foot": 27,
+      "sheet": "A-104",
+      "x": 1311,
+      "y": 185
+    },
+    {
+      "name": "WOMEN'S RESTROOM",
+      "number": "1103",
+      "page": 6,
+      "points_per_foot": 27,
+      "sheet": "A-104",
+      "x": 381,
+      "y": 212
+    },
+    {
+      "name": "MEN'S RESTROOM",
+      "number": "1104",
+      "page": 6,
+      "points_per_foot": 27,
+      "sheet": "A-104",
+      "x": 379,
+      "y": 596
+    },
+    {
+      "name": "MEN'S RESTROOM",
+      "number": "1127",
+      "page": 6,
+      "points_per_foot": 27,
+      "sheet": "A-104",
+      "x": 1408,
+      "y": 629
+    },
+    {
+      "name": "FINISH",
+      "number": "SS-2",
+      "page": 6,
+      "points_per_foot": 27,
+      "sheet": "A-104",
+      "x": 827,
+      "y": 933
+    },
+    {
+      "name": "NUMBER",
+      "number": "1103",
+      "page": 6,
+      "points_per_foot": 27,
+      "sheet": "A-104",
+      "x": 174,
+      "y": 941
+    },
+    {
+      "name": "NUMBER",
+      "number": "1104",
+      "page": 6,
+      "points_per_foot": 27,
+      "sheet": "A-104",
+      "x": 174,
+      "y": 947
+    },
+    {
+      "name": "CT-1",
+      "number": "CT-1",
+      "page": 6,
+      "points_per_foot": 27,
+      "sheet": "A-104",
+      "x": 553,
+      "y": 953
+    },
+    {
+      "name": "SS-1",
+      "number": "SS-1",
+      "page": 6,
+      "points_per_foot": 27,
+      "sheet": "A-104",
+      "x": 705,
+      "y": 953
+    },
+    {
+      "name": "SS-2",
+      "number": "SS-2",
+      "page": 6,
+      "points_per_foot": 27,
+      "sheet": "A-104",
+      "x": 827,
+      "y": 953
+    },
+    {
+      "name": "CT-1 CT-1",
+      "number": "CT-1",
+      "page": 6,
+      "points_per_foot": 27,
+      "sheet": "A-104",
+      "x": 553,
+      "y": 965
+    },
+    {
+      "name": "SS-1 SS-1",
+      "number": "SS-1",
+      "page": 6,
+      "points_per_foot": 27,
+      "sheet": "A-104",
+      "x": 705,
+      "y": 965
+    },
+    {
+      "name": "SS-2 SS-2",
+      "number": "SS-2",
+      "page": 6,
+      "points_per_foot": 27,
+      "sheet": "A-104",
+      "x": 827,
+      "y": 965
+    },
+    {
+      "name": "CT-1 CT-1",
+      "number": "CT-1",
+      "page": 6,
+      "points_per_foot": 27,
+      "sheet": "A-104",
+      "x": 553,
+      "y": 978
+    },
+    {
+      "name": "SS-1 SS-1",
+      "number": "SS-2",
+      "page": 6,
+      "points_per_foot": 27,
+      "sheet": "A-104",
+      "x": 704,
+      "y": 978
+    },
+    {
+      "name": "SS-2 SS-2",
+      "number": "SS-2",
+      "page": 6,
+      "points_per_foot": 27,
+      "sheet": "A-104",
+      "x": 827,
+      "y": 978
+    },
+    {
+      "name": "CT-1 ACT-1",
+      "number": "SS-1",
+      "page": 6,
+      "points_per_foot": 27,
+      "sheet": "A-104",
+      "x": 162,
+      "y": 1023
+    },
+    {
+      "name": "ACT-1 SS-1",
+      "number": "SS-2",
+      "page": 6,
+      "points_per_foot": 27,
+      "sheet": "A-104",
+      "x": 162,
+      "y": 1035
+    },
+    {
+      "name": "SS-1 SS-2",
+      "number": "B-1",
+      "page": 6,
+      "points_per_foot": 27,
+      "sheet": "A-104",
+      "x": 159,
+      "y": 1047
+    },
+    {
+      "name": "PROJECT # O2339-01",
+      "number": "1025",
+      "page": 6,
+      "points_per_foot": 27,
+      "sheet": "A-104",
+      "x": 2451,
+      "y": 1170
+    },
+    {
+      "name": "MARK",
+      "number": "GB-1",
+      "page": 6,
+      "points_per_foot": 27,
+      "sheet": "A-104",
+      "x": 176,
+      "y": 1180
+    },
+    {
+      "name": "QTY",
+      "number": "2",
+      "page": 6,
+      "points_per_foot": 27,
+      "sheet": "A-104",
+      "x": 866,
+      "y": 1180
+    },
+    {
+      "name": "QTY",
+      "number": "2",
+      "page": 6,
+      "points_per_foot": 27,
+      "sheet": "A-104",
+      "x": 866,
+      "y": 1185
+    },
+    {
+      "name": "GB-1",
+      "number": "GB-2",
+      "page": 6,
+      "points_per_foot": 27,
+      "sheet": "A-104",
+      "x": 175,
+      "y": 1192
+    },
+    {
+      "name": "GB-1 GB-2",
+      "number": "GB-3",
+      "page": 6,
+      "points_per_foot": 27,
+      "sheet": "A-104",
+      "x": 175,
+      "y": 1204
+    },
+    {
+      "name": "GB-3 LAV-1",
+      "number": "TA-1",
+      "page": 6,
+      "points_per_foot": 27,
+      "sheet": "A-104",
+      "x": 176,
+      "y": 1230
+    },
+    {
+      "name": "TA-4",
+      "number": "TA-5",
+      "page": 6,
+      "points_per_foot": 27,
+      "sheet": "A-104",
+      "x": 175,
+      "y": 1321
+    },
+    {
+      "name": "TA-4 TA-5",
+      "number": "TA-6",
+      "page": 6,
+      "points_per_foot": 27,
+      "sheet": "A-104",
+      "x": 175,
+      "y": 1336
+    },
+    {
+      "name": "TA-6",
+      "number": "TA-7",
+      "page": 6,
+      "points_per_foot": 27,
+      "sheet": "A-104",
+      "x": 175,
+      "y": 1356
+    },
+    {
+      "name": "TA-7",
+      "number": "TA-8",
+      "page": 6,
+      "points_per_foot": 27,
+      "sheet": "A-104",
+      "x": 175,
+      "y": 1377
+    },
+    {
+      "name": "TA-8",
+      "number": "TA-9",
+      "page": 6,
+      "points_per_foot": 27,
+      "sheet": "A-104",
+      "x": 175,
+      "y": 1392
+    },
+    {
+      "name": "TA-8 TA-9",
+      "number": "TA-10",
+      "page": 6,
+      "points_per_foot": 27,
+      "sheet": "A-104",
+      "x": 176,
+      "y": 1404
+    },
+    {
+      "name": "TA-9 TA-10",
+      "number": "WC-1",
+      "page": 6,
+      "points_per_foot": 27,
+      "sheet": "A-104",
+      "x": 176,
+      "y": 1418
+    },
+    {
+      "name": "WC-1",
+      "number": "WC-2",
+      "page": 6,
+      "points_per_foot": 27,
+      "sheet": "A-104",
+      "x": 176,
+      "y": 1436
+    },
+    {
+      "name": "WC-2",
+      "number": "U-1",
+      "page": 6,
+      "points_per_foot": 27,
+      "sheet": "A-104",
+      "x": 176,
+      "y": 1454
+    },
+    {
+      "name": "WOMEN'S RESTROOM",
+      "number": "2223",
+      "page": 7,
+      "points_per_foot": 27,
+      "sheet": "A-105",
+      "x": 2016,
+      "y": 162
+    },
+    {
+      "name": "WOMEN'S RESTROOM",
+      "number": "2223",
+      "page": 7,
+      "points_per_foot": 27,
+      "sheet": "A-105",
+      "x": 1146,
+      "y": 174
+    },
+    {
+      "name": "MEN'S RESTROOM",
+      "number": "2224",
+      "page": 7,
+      "points_per_foot": 27,
+      "sheet": "A-105",
+      "x": 2027,
+      "y": 198
+    },
+    {
+      "name": "WOMEN'S RESTROOM",
+      "number": "2203",
+      "page": 7,
+      "points_per_foot": 27,
+      "sheet": "A-105",
+      "x": 332,
+      "y": 260
+    },
+    {
+      "name": "WOMEN'S RESTROOM",
+      "number": "2203",
+      "page": 7,
+      "points_per_foot": 27,
+      "sheet": "A-105",
+      "x": 2058,
+      "y": 476
+    },
+    {
+      "name": "MEN'S RESTROOM",
+      "number": "2204",
+      "page": 7,
+      "points_per_foot": 27,
+      "sheet": "A-105",
+      "x": 2060,
+      "y": 503
+    },
+    {
+      "name": "MEN'S RESTROOM",
+      "number": "2204",
+      "page": 7,
+      "points_per_foot": 27,
+      "sheet": "A-105",
+      "x": 347,
+      "y": 579
+    },
+    {
+      "name": "MEN'S RESTROOM",
+      "number": "2224",
+      "page": 7,
+      "points_per_foot": 27,
+      "sheet": "A-105",
+      "x": 1283,
+      "y": 609
+    },
+    {
+      "name": "NUMBER",
+      "number": "2203",
+      "page": 7,
+      "points_per_foot": 27,
+      "sheet": "A-105",
+      "x": 177,
+      "y": 835
+    },
+    {
+      "name": "NUMBER",
+      "number": "2204",
+      "page": 7,
+      "points_per_foot": 27,
+      "sheet": "A-105",
+      "x": 177,
+      "y": 841
+    },
+    {
+      "name": "CT-1",
+      "number": "CT-1",
+      "page": 7,
+      "points_per_foot": 27,
+      "sheet": "A-105",
+      "x": 549,
+      "y": 848
+    },
+    {
+      "name": "SS-1",
+      "number": "SS-1",
+      "page": 7,
+      "points_per_foot": 27,
+      "sheet": "A-105",
+      "x": 702,
+      "y": 848
+    },
+    {
+      "name": "SS-2",
+      "number": "SS-2",
+      "page": 7,
+      "points_per_foot": 27,
+      "sheet": "A-105",
+      "x": 822,
+      "y": 848
+    },
+    {
+      "name": "CT-1 CT-1",
+      "number": "CT-1",
+      "page": 7,
+      "points_per_foot": 27,
+      "sheet": "A-105",
+      "x": 549,
+      "y": 860
+    },
+    {
+      "name": "SS-1 SS-1",
+      "number": "SS-1",
+      "page": 7,
+      "points_per_foot": 27,
+      "sheet": "A-105",
+      "x": 702,
+      "y": 860
+    },
+    {
+      "name": "SS-2 SS-2",
+      "number": "SS-2",
+      "page": 7,
+      "points_per_foot": 27,
+      "sheet": "A-105",
+      "x": 822,
+      "y": 860
+    },
+    {
+      "name": "CT-1 CT-1",
+      "number": "CT-1",
+      "page": 7,
+      "points_per_foot": 27,
+      "sheet": "A-105",
+      "x": 549,
+      "y": 872
+    },
+    {
+      "name": "SS-1 SS-1",
+      "number": "SS-1",
+      "page": 7,
+      "points_per_foot": 27,
+      "sheet": "A-105",
+      "x": 702,
+      "y": 872
+    },
+    {
+      "name": "SS-2 SS-2",
+      "number": "SS-2",
+      "page": 7,
+      "points_per_foot": 27,
+      "sheet": "A-105",
+      "x": 822,
+      "y": 872
+    },
+    {
+      "name": "CT-1 ACT-1",
+      "number": "SS-1",
+      "page": 7,
+      "points_per_foot": 27,
+      "sheet": "A-105",
+      "x": 167,
+      "y": 918
+    },
+    {
+      "name": "ACT-1 SS-1",
+      "number": "SS-2",
+      "page": 7,
+      "points_per_foot": 27,
+      "sheet": "A-105",
+      "x": 167,
+      "y": 930
+    },
+    {
+      "name": "SS-1 SS-2",
+      "number": "B-1",
+      "page": 7,
+      "points_per_foot": 27,
+      "sheet": "A-105",
+      "x": 164,
+      "y": 942
+    },
+    {
+      "name": "MARK",
+      "number": "GB-1",
+      "page": 7,
+      "points_per_foot": 27,
+      "sheet": "A-105",
+      "x": 178,
+      "y": 1078
+    },
+    {
+      "name": "QTY",
+      "number": "2",
+      "page": 7,
+      "points_per_foot": 27,
+      "sheet": "A-105",
+      "x": 867,
+      "y": 1078
+    },
+    {
+      "name": "QTY",
+      "number": "2",
+      "page": 7,
+      "points_per_foot": 27,
+      "sheet": "A-105",
+      "x": 867,
+      "y": 1084
+    },
+    {
+      "name": "GB-1",
+      "number": "GB-2",
+      "page": 7,
+      "points_per_foot": 27,
+      "sheet": "A-105",
+      "x": 177,
+      "y": 1091
+    },
+    {
+      "name": "GB-1 GB-2",
+      "number": "GB-3",
+      "page": 7,
+      "points_per_foot": 27,
+      "sheet": "A-105",
+      "x": 177,
+      "y": 1103
+    },
+    {
+      "name": "GB-3 LAV-1",
+      "number": "TA-1",
+      "page": 7,
+      "points_per_foot": 27,
+      "sheet": "A-105",
+      "x": 178,
+      "y": 1128
+    },
+    {
+      "name": "PROJECT # O2339-01",
+      "number": "1025",
+      "page": 7,
+      "points_per_foot": 27,
+      "sheet": "A-105",
+      "x": 2451,
+      "y": 1170
+    },
+    {
+      "name": "TA-4",
+      "number": "TA-5",
+      "page": 7,
+      "points_per_foot": 27,
+      "sheet": "A-105",
+      "x": 177,
+      "y": 1220
+    },
+    {
+      "name": "TA-4 TA-5",
+      "number": "TA-6",
+      "page": 7,
+      "points_per_foot": 27,
+      "sheet": "A-105",
+      "x": 177,
+      "y": 1235
+    },
+    {
+      "name": "TA-7",
+      "number": "TA-8",
+      "page": 7,
+      "points_per_foot": 27,
+      "sheet": "A-105",
+      "x": 177,
+      "y": 1276
+    },
+    {
+      "name": "TA-8",
+      "number": "TA-9",
+      "page": 7,
+      "points_per_foot": 27,
+      "sheet": "A-105",
+      "x": 177,
+      "y": 1291
+    },
+    {
+      "name": "TA-8 TA-9",
+      "number": "TA-10",
+      "page": 7,
+      "points_per_foot": 27,
+      "sheet": "A-105",
+      "x": 177,
+      "y": 1302
+    },
+    {
+      "name": "TA-9 TA-10",
+      "number": "WC-1",
+      "page": 7,
+      "points_per_foot": 27,
+      "sheet": "A-105",
+      "x": 178,
+      "y": 1317
+    },
+    {
+      "name": "WC-1",
+      "number": "WC-2",
+      "page": 7,
+      "points_per_foot": 27,
+      "sheet": "A-105",
+      "x": 177,
+      "y": 1335
+    },
+    {
+      "name": "WC-2",
+      "number": "U-1",
+      "page": 7,
+      "points_per_foot": 27,
+      "sheet": "A-105",
+      "x": 177,
+      "y": 1352
+    }
+  ],
+  "set": {
+    "label": null,
+    "page_count": 38,
+    "rows_total": 56,
+    "sha16": "8e3ffc5c25c7923a",
+    "source_url": null,
+    "tier": "agreed"
+  },
+  "sheets": [
+    {
+      "height": 1728,
+      "page": 4,
+      "plan_rule": "legacy",
+      "points_per_foot": [
+        18
+      ],
+      "scales": [
+        "1 SCALE: 1/4\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number",
+              "facility_number"
+            ],
+            "page": 4
+          },
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number",
+              "facility_number"
+            ],
+            "page": 5
+          }
+        ],
+        "kept_pages": [
+          4
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A-102",
+      "title": "LOBBY RENOVATION PLAN",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 5,
+      "plan_rule": "legacy",
+      "points_per_foot": [
+        18
+      ],
+      "scales": [
+        "SCALE: 1/4\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number",
+              "facility_number"
+            ],
+            "page": 4
+          },
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number",
+              "facility_number"
+            ],
+            "page": 5
+          }
+        ],
+        "kept_pages": [
+          5
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A-103",
+      "title": "LOBBY RENOVATION PLAN",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 6,
+      "plan_rule": "legacy",
+      "points_per_foot": [
+        27
+      ],
+      "scales": [
+        "SCALE: 3/8\" = 1'-0\"",
+        "SCALE: 3/8\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number",
+              "facility_number"
+            ],
+            "page": 4
+          },
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number",
+              "facility_number"
+            ],
+            "page": 5
+          }
+        ],
+        "kept_pages": [
+          4
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A-104",
+      "title": "RESTROOM RENOVATION PLAN",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 7,
+      "plan_rule": "legacy",
+      "points_per_foot": [
+        27
+      ],
+      "scales": [
+        "SCALE: 3/8\" = 1'-0\"",
+        "SCALE: 3/8\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number",
+              "facility_number"
+            ],
+            "page": 4
+          },
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number",
+              "facility_number"
+            ],
+            "page": 5
+          }
+        ],
+        "kept_pages": [
+          5
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A-105",
+      "title": "RESTROOM RENOVATION PLAN",
+      "width": 2592
+    }
+  ],
+  "summary": {
+    "marks_placed": 9,
+    "marks_total": 9,
+    "placed_rate": 1,
+    "rooms_total": 112,
+    "sheets_total": 4,
+    "sheets_with_scale": 4,
+    "unplaced": []
+  },
+  "tags": [
+    {
+      "also_on": [
+        "A-104"
+      ],
+      "door_pages": [
+        4
+      ],
+      "door_type": null,
+      "fire_rating": "--",
+      "frame_type": null,
+      "h": 9.49968,
+      "hardware_group": "6",
+      "height_inches": 84,
+      "location": "RESTROOM",
+      "mark": "4",
+      "matched_by": "exact",
+      "material": "WOOD",
+      "opening_id": "[{\"facility_number\":\"3101025001\",\"site_number\":\"1025\"},\"A\"]|4|4|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "3101025001",
+        "site_number": "1025"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"3101025001\",\"site_number\":\"1025\"},\"A\"]",
+      "page": 4,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "1103",
+      "room_by": "schedule_location",
+      "room_name": "WOMEN'S RESTROOM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": "--",
+          "frame_type": null,
+          "hardware_group": "6",
+          "height_inches": 84,
+          "location": "RESTROOM",
+          "mark": "4",
+          "material": "WOOD",
+          "page": 4,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 1578
+        }
+      ],
+      "sheet": "A-102",
+      "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "4|4|1"
+      ],
+      "width_inches": 36,
+      "x": 2453,
+      "y": 300
+    },
+    {
+      "also_on": [
+        "A-104"
+      ],
+      "door_pages": [
+        4
+      ],
+      "door_type": null,
+      "fire_rating": "--",
+      "frame_type": null,
+      "h": 9.429,
+      "hardware_group": "5",
+      "height_inches": 84,
+      "location": "ENTRY",
+      "mark": "1",
+      "matched_by": "exact",
+      "material": "WOOD",
+      "opening_id": "[{\"facility_number\":\"3101025001\",\"site_number\":\"1025\"},\"A\"]|1|4|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "3101025001",
+        "site_number": "1025"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"3101025001\",\"site_number\":\"1025\"},\"A\"]",
+      "page": 4,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "1100",
+      "room_by": "schedule_location",
+      "room_name": "ENTRY",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": "--",
+          "frame_type": null,
+          "hardware_group": "5",
+          "height_inches": 84,
+          "location": "ENTRY",
+          "mark": "1",
+          "material": "WOOD",
+          "page": 4,
+          "pair": false,
+          "size": "5'-4\" x 7'-0\"",
+          "width_inches": 64,
+          "y": 1543
+        }
+      ],
+      "sheet": "A-102",
+      "size": "5'-4\" x 7'-0\"",
+      "source_keys": [
+        "4|1|1"
+      ],
+      "width_inches": 64,
+      "x": 495,
+      "y": 1407
+    },
+    {
+      "also_on": [
+        "A-104"
+      ],
+      "door_pages": [
+        4
+      ],
+      "door_type": null,
+      "fire_rating": "9",
+      "frame_type": null,
+      "h": 9.82452,
+      "hardware_group": "2",
+      "height_inches": null,
+      "location": "CONFERENCE ROOM STORAGE ROOM",
+      "mark": "7",
+      "matched_by": "exact",
+      "material": "GLAZED DETAILS AND",
+      "opening_id": "[{\"facility_number\":\"3101025001\",\"site_number\":\"1025\"},\"A\"]|7|4|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "3101025001",
+        "site_number": "1025"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"3101025001\",\"site_number\":\"1025\"},\"A\"]",
+      "page": 4,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "1218",
+      "room_by": "schedule_location",
+      "room_name": "CONFERENCE ROOM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": "9",
+          "frame_type": null,
+          "hardware_group": "2",
+          "height_inches": null,
+          "location": "CONFERENCE ROOM STORAGE ROOM",
+          "mark": "7",
+          "material": "GLAZED DETAILS AND",
+          "page": 4,
+          "pair": false,
+          "size": "6'-0\" SHEET x 7'-0\" A-501",
+          "width_inches": null,
+          "y": 1614
+        }
+      ],
+      "sheet": "A-102",
+      "size": "6'-0\" SHEET x 7'-0\" A-501",
+      "source_keys": [
+        "4|7|1"
+      ],
+      "width_inches": null,
+      "x": 517,
+      "y": 1562
+    },
+    {
+      "also_on": [
+        "A-104"
+      ],
+      "door_pages": [
+        4
+      ],
+      "door_type": null,
+      "fire_rating": "9",
+      "frame_type": null,
+      "h": 8.84208,
+      "hardware_group": "3",
+      "height_inches": 84,
+      "location": "STORAGE ROOM",
+      "mark": "6",
+      "matched_by": "exact",
+      "material": "GLAZED",
+      "opening_id": "[{\"facility_number\":\"3101025001\",\"site_number\":\"1025\"},\"A\"]|6|4|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "3101025001",
+        "site_number": "1025"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"3101025001\",\"site_number\":\"1025\"},\"A\"]",
+      "page": 4,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "1219",
+      "room_by": "schedule_location",
+      "room_name": "NEW STORAGE ROOM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": "9",
+          "frame_type": null,
+          "hardware_group": "3",
+          "height_inches": 84,
+          "location": "STORAGE ROOM",
+          "mark": "6",
+          "material": "GLAZED",
+          "page": 4,
+          "pair": false,
+          "size": "6'-0\" x 7'-0\"",
+          "width_inches": 72,
+          "y": 1602
+        }
+      ],
+      "sheet": "A-102",
+      "size": "6'-0\" x 7'-0\"",
+      "source_keys": [
+        "4|6|1"
+      ],
+      "width_inches": 72,
+      "x": 780,
+      "y": 1574
+    },
+    {
+      "also_on": [
+        "A-104"
+      ],
+      "door_pages": [
+        4
+      ],
+      "door_type": null,
+      "fire_rating": "--",
+      "frame_type": null,
+      "h": 9.82452,
+      "hardware_group": "7",
+      "height_inches": 84,
+      "location": "STAIRWELL",
+      "mark": "3",
+      "matched_by": "exact",
+      "material": "WOOD",
+      "opening_id": "[{\"facility_number\":\"3101025001\",\"site_number\":\"1025\"},\"A\"]|3|4|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "3101025001",
+        "site_number": "1025"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"3101025001\",\"site_number\":\"1025\"},\"A\"]",
+      "page": 4,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": null,
+      "room_by": "schedule_location",
+      "room_name": "STAIRWELL",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": "--",
+          "frame_type": null,
+          "hardware_group": "7",
+          "height_inches": 84,
+          "location": "STAIRWELL",
+          "mark": "3",
+          "material": "WOOD",
+          "page": 4,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 1566
+        }
+      ],
+      "sheet": "A-102",
+      "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "4|3|1"
+      ],
+      "width_inches": 36,
+      "x": 481,
+      "y": 1597
+    },
+    {
+      "also_on": [
+        "A-105"
+      ],
+      "door_pages": [
+        5
+      ],
+      "door_type": null,
+      "fire_rating": "--",
+      "frame_type": null,
+      "h": 9.82416,
+      "hardware_group": null,
+      "height_inches": 82,
+      "location": null,
+      "mark": "8",
+      "matched_by": "exact",
+      "material": "WOOD",
+      "opening_id": "[{\"facility_number\":\"3101025001\",\"site_number\":\"1025\"},\"A\"]|8|5|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "3101025001",
+        "site_number": "1025"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"3101025001\",\"site_number\":\"1025\"},\"A\"]",
+      "page": 5,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "8",
+      "room_by": "nearest_label",
+      "room_name": "HEAD JAMB SILL",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": "--",
+          "frame_type": null,
+          "hardware_group": null,
+          "height_inches": 82,
+          "location": null,
+          "mark": "8",
+          "material": "WOOD",
+          "page": 5,
+          "pair": false,
+          "size": "5'-4\" x 6'-10\"",
+          "width_inches": 64,
+          "y": 1430
+        }
+      ],
+      "sheet": "A-103",
+      "size": "5'-4\" x 6'-10\"",
+      "source_keys": [
+        "5|8|1"
+      ],
+      "unsure": true,
+      "width_inches": 64,
+      "x": 614,
+      "y": 1437
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        5
+      ],
+      "door_type": null,
+      "fire_rating": "--",
+      "frame_type": null,
+      "h": 9.82416,
+      "hardware_group": null,
+      "height_inches": null,
+      "location": null,
+      "mark": "9",
+      "matched_by": "exact",
+      "material": "WOOD DETAILS AND",
+      "opening_id": "[{\"facility_number\":\"3101025001\",\"site_number\":\"1025\"},\"A\"]|9|5|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "3101025001",
+        "site_number": "1025"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"3101025001\",\"site_number\":\"1025\"},\"A\"]",
+      "page": 5,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "9",
+      "room_by": "nearest_label",
+      "room_name": "HEAD JAMB SILL",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": "--",
+          "frame_type": null,
+          "hardware_group": null,
+          "height_inches": null,
+          "location": null,
+          "mark": "9",
+          "material": "WOOD DETAILS AND",
+          "page": 5,
+          "pair": false,
+          "size": "5'-4\" SHEET x 6'-10\" A-501",
+          "width_inches": null,
+          "y": 1441
+        }
+      ],
+      "sheet": "A-103",
+      "size": "5'-4\" SHEET x 6'-10\" A-501",
+      "source_keys": [
+        "5|9|1"
+      ],
+      "unsure": true,
+      "width_inches": null,
+      "x": 659,
+      "y": 1437
+    },
+    {
+      "also_on": [
+        "A-102"
+      ],
+      "door_pages": [
+        4
+      ],
+      "door_type": null,
+      "fire_rating": "--",
+      "frame_type": null,
+      "h": 9.82944,
+      "hardware_group": "4",
+      "height_inches": 84,
+      "location": "LOBBY",
+      "mark": "2",
+      "matched_by": "exact",
+      "material": "WOOD",
+      "opening_id": "[{\"facility_number\":\"3101025001\",\"site_number\":\"1025\"},\"A\"]|2|4|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "3101025001",
+        "site_number": "1025"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"3101025001\",\"site_number\":\"1025\"},\"A\"]",
+      "page": 6,
+      "pair": false,
+      "points_per_foot": 27,
+      "room": "2",
+      "room_by": "nearest_label",
+      "room_name": "QTY",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": "--",
+          "frame_type": null,
+          "hardware_group": "4",
+          "height_inches": 84,
+          "location": "LOBBY",
+          "mark": "2",
+          "material": "WOOD",
+          "page": 4,
+          "pair": false,
+          "size": "5'-4\" x 7'-0\"",
+          "width_inches": 64,
+          "y": 1555
+        }
+      ],
+      "sheet": "A-104",
+      "size": "5'-4\" x 7'-0\"",
+      "source_keys": [
+        "4|2|1"
+      ],
+      "unsure": true,
+      "width_inches": 64,
+      "x": 866,
+      "y": 1205
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        4
+      ],
+      "door_type": null,
+      "fire_rating": "--",
+      "frame_type": null,
+      "h": 6.59856,
+      "hardware_group": "7",
+      "height_inches": 84,
+      "location": "RESTROOM",
+      "mark": "5",
+      "matched_by": "exact",
+      "material": "WOOD",
+      "opening_id": "[{\"facility_number\":\"3101025001\",\"site_number\":\"1025\"},\"A\"]|5|4|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "3101025001",
+        "site_number": "1025"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"3101025001\",\"site_number\":\"1025\"},\"A\"]",
+      "page": 6,
+      "pair": false,
+      "points_per_foot": 27,
+      "room": null,
+      "room_by": "schedule_location",
+      "room_name": "RESTROOM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": "--",
+          "frame_type": null,
+          "hardware_group": "7",
+          "height_inches": 84,
+          "location": "RESTROOM",
+          "mark": "5",
+          "material": "WOOD",
+          "page": 4,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 1590
+        }
+      ],
+      "sheet": "A-104",
+      "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "4|5|1"
+      ],
+      "width_inches": 36,
+      "x": 1876,
+      "y": 1550
+    }
+  ]
+}

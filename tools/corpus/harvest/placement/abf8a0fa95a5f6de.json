@@ -1,0 +1,3283 @@
+{
+  "rooms": [
+    {
+      "name": "STORAGE",
+      "number": "101",
+      "page": 28,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 1516,
+      "y": 446
+    },
+    {
+      "name": "HALL",
+      "number": "105",
+      "page": 28,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 1033,
+      "y": 779
+    },
+    {
+      "name": "STAIR",
+      "number": "101A",
+      "page": 28,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 1441,
+      "y": 782
+    },
+    {
+      "name": "STORAGE",
+      "number": "107",
+      "page": 28,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 828,
+      "y": 825
+    },
+    {
+      "name": "STORAGE",
+      "number": "106",
+      "page": 28,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 920,
+      "y": 862
+    },
+    {
+      "name": "DISH ROOM",
+      "number": "102",
+      "page": 28,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 1174,
+      "y": 862
+    },
+    {
+      "name": "MEETING ROOM",
+      "number": "109",
+      "page": 28,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 612,
+      "y": 881
+    },
+    {
+      "name": "KITCHEN",
+      "number": "103",
+      "page": 28,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 1038,
+      "y": 881
+    },
+    {
+      "name": "MECH.",
+      "number": "108",
+      "page": 28,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 823,
+      "y": 939
+    },
+    {
+      "name": "OFFICE",
+      "number": "136",
+      "page": 28,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 334,
+      "y": 964
+    },
+    {
+      "name": "LOCKER ROOM",
+      "number": "200",
+      "page": 28,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 2164,
+      "y": 987
+    },
+    {
+      "name": "MECH.",
+      "number": "111",
+      "page": 28,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 826,
+      "y": 1014
+    },
+    {
+      "name": "DRILL HALL",
+      "number": "100",
+      "page": 28,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 1461,
+      "y": 1024
+    },
+    {
+      "name": "STORAGE",
+      "number": "104",
+      "page": 28,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 985,
+      "y": 1051
+    },
+    {
+      "name": "WOMEN",
+      "number": "112",
+      "page": 28,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 884,
+      "y": 1067
+    },
+    {
+      "name": "WOMEN SHOWER",
+      "number": "112A",
+      "page": 28,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 800,
+      "y": 1078
+    },
+    {
+      "name": "OFFICE",
+      "number": "129",
+      "page": 28,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 471,
+      "y": 1114
+    },
+    {
+      "name": "MECH.",
+      "number": "134",
+      "page": 28,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 372,
+      "y": 1125
+    },
+    {
+      "name": "OFFICE",
+      "number": "135",
+      "page": 28,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 274,
+      "y": 1140
+    },
+    {
+      "name": "PROJECT #: T2405-01",
+      "number": "6256",
+      "page": 28,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 2440,
+      "y": 1151
+    },
+    {
+      "name": "MEN",
+      "number": "133",
+      "page": 28,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 370,
+      "y": 1170
+    },
+    {
+      "name": "BREAK AREA",
+      "number": "113",
+      "page": 28,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 818,
+      "y": 1174
+    },
+    {
+      "name": "COMMONS",
+      "number": "128",
+      "page": 28,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 667,
+      "y": 1197
+    },
+    {
+      "name": "STAIR",
+      "number": "132",
+      "page": 28,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 339,
+      "y": 1229
+    },
+    {
+      "name": "HALL",
+      "number": "130",
+      "page": 28,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 467,
+      "y": 1234
+    },
+    {
+      "name": "OFFICE",
+      "number": "114",
+      "page": 28,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 911,
+      "y": 1234
+    },
+    {
+      "name": "OFFICE",
+      "number": "115",
+      "page": 28,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 828,
+      "y": 1298
+    },
+    {
+      "name": "OFFICE",
+      "number": "127",
+      "page": 28,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 462,
+      "y": 1318
+    },
+    {
+      "name": "HALL",
+      "number": "116",
+      "page": 28,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 911,
+      "y": 1320
+    },
+    {
+      "name": "MEN",
+      "number": "131",
+      "page": 28,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 316,
+      "y": 1321
+    },
+    {
+      "name": "OFFICE",
+      "number": "117",
+      "page": 28,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 911,
+      "y": 1381
+    },
+    {
+      "name": "HALL",
+      "number": "125",
+      "page": 28,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 556,
+      "y": 1394
+    },
+    {
+      "name": "MEN SHOWER",
+      "number": "131A",
+      "page": 28,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 295,
+      "y": 1418
+    },
+    {
+      "name": "TOILET",
+      "number": "126",
+      "page": 28,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 461,
+      "y": 1448
+    },
+    {
+      "name": "OFFICE",
+      "number": "123",
+      "page": 28,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 579,
+      "y": 1513
+    },
+    {
+      "name": "OFFICE",
+      "number": "122",
+      "page": 28,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 686,
+      "y": 1513
+    },
+    {
+      "name": "OFFICE",
+      "number": "121",
+      "page": 28,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 800,
+      "y": 1513
+    },
+    {
+      "name": "OFFICE",
+      "number": "120",
+      "page": 28,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 911,
+      "y": 1513
+    },
+    {
+      "name": "OFFICE",
+      "number": "124",
+      "page": 28,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 471,
+      "y": 1521
+    },
+    {
+      "name": "MECH.",
+      "number": "111",
+      "page": 29,
+      "points_per_foot": 18,
+      "sheet": "A-401",
+      "x": 965,
+      "y": 179
+    },
+    {
+      "name": "WOMEN SHOWER",
+      "number": "112A",
+      "page": 29,
+      "points_per_foot": 18,
+      "sheet": "A-401",
+      "x": 930,
+      "y": 258
+    },
+    {
+      "name": "MEN",
+      "number": "133",
+      "page": 29,
+      "points_per_foot": 18,
+      "sheet": "A-401",
+      "x": 471,
+      "y": 276
+    },
+    {
+      "name": "WOMEN",
+      "number": "112",
+      "page": 29,
+      "points_per_foot": 18,
+      "sheet": "A-401",
+      "x": 1081,
+      "y": 280
+    },
+    {
+      "name": "STORAGE",
+      "number": "104",
+      "page": 29,
+      "points_per_foot": 18,
+      "sheet": "A-401",
+      "x": 1297,
+      "y": 280
+    },
+    {
+      "name": "STAIR",
+      "number": "132",
+      "page": 29,
+      "points_per_foot": 18,
+      "sheet": "A-401",
+      "x": 429,
+      "y": 382
+    },
+    {
+      "name": "MEN",
+      "number": "131",
+      "page": 29,
+      "points_per_foot": 18,
+      "sheet": "A-401",
+      "x": 291,
+      "y": 678
+    },
+    {
+      "name": "TOILET",
+      "number": "126",
+      "page": 29,
+      "points_per_foot": 18,
+      "sheet": "A-401",
+      "x": 623,
+      "y": 740
+    },
+    {
+      "name": "MEN SHOWER",
+      "number": "131A",
+      "page": 29,
+      "points_per_foot": 18,
+      "sheet": "A-401",
+      "x": 423,
+      "y": 742
+    },
+    {
+      "name": "PROJECT #: T2405-01",
+      "number": "6256",
+      "page": 29,
+      "points_per_foot": 18,
+      "sheet": "A-401",
+      "x": 2440,
+      "y": 1151
+    }
+  ],
+  "set": {
+    "label": null,
+    "page_count": 36,
+    "rows_total": 48,
+    "sha16": "abf8a0fa95a5f6de",
+    "source_url": null,
+    "tier": "agreed"
+  },
+  "sheets": [
+    {
+      "height": 1728,
+      "page": 28,
+      "plan_rule": "extended-title",
+      "points_per_foot": [
+        9
+      ],
+      "scales": [
+        "SCALE: 1/8\" = 1'-0\"",
+        "SCALE: 1/8\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 30
+          }
+        ],
+        "kept_pages": [
+          30
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A-101",
+      "title": "LEVEL 1 - FLOOR PLAN",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 29,
+      "plan_rule": "extended-title",
+      "points_per_foot": [
+        18,
+        108
+      ],
+      "scales": [
+        "SCALE: 1/4\" = 1'-0\"",
+        "SCALE: 1/4\" = 1'-0\"",
+        "SCALE: 1/4\" = 1'-0\"",
+        "SCALE: 1/4\" = 1'-0\"",
+        "SCALE: 1/4\" = 1'-0\"",
+        "SCALE: 1/4\" = 1'-0\"",
+        "SCALE: 1/4\" = 1'-0\"",
+        "SCALE: 1/4\" = 1'-0\"",
+        "SCALE: 1/4\" = 1'-0\"",
+        "SCALE: 1/4\" = 1'-0\"",
+        "SCALE: 1/4\" = 1'-0\"",
+        "SCALE: 1/4\" = 1'-0\"",
+        "SCALE: 1/4\" = 1'-0\"",
+        "SCALE: 1/4\" = 1'-0\"",
+        "SCALE: 1/4\" = 1'-0\"",
+        "SCALE: 1/4\" = 1'-0\"",
+        "SCALE: 1/4\" = 1'-0\"",
+        "SCALE: 1 1/2\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 30
+          }
+        ],
+        "kept_pages": [
+          30
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A-401",
+      "title": "ENLARGED FLOOR PLANS & INTERIOR",
+      "width": 2592
+    }
+  ],
+  "summary": {
+    "marks_placed": 48,
+    "marks_total": 48,
+    "placed_rate": 1,
+    "rooms_total": 49,
+    "sheets_total": 2,
+    "sheets_with_scale": 2,
+    "unplaced": []
+  },
+  "tags": [
+    {
+      "also_on": [],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D1",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": "3.1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "101E",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|101E|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "101",
+      "room_by": "tag_number",
+      "room_name": "STORAGE",
+      "schedule_rows": [
+        {
+          "door_type": "D1",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": "3.1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "101E",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "6' - 0\" x 7' - 0\"",
+          "width_inches": 72,
+          "y": 197
+        }
+      ],
+      "sheet": "A-101",
+      "size": "6' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|101E|1"
+      ],
+      "width_inches": 72,
+      "x": 1197,
+      "y": 143
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D6",
+      "fire_rating": null,
+      "frame_type": "--",
+      "h": 9.601916159232,
+      "hardware_group": null,
+      "height_inches": 96,
+      "location": null,
+      "mark": "101F",
+      "matched_by": "exact",
+      "material": "MTL.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|101F|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "101",
+      "room_by": "tag_number",
+      "room_name": "STORAGE",
+      "schedule_rows": [
+        {
+          "door_type": "D6",
+          "fire_rating": null,
+          "frame_type": "--",
+          "hardware_group": null,
+          "height_inches": 96,
+          "location": null,
+          "mark": "101F",
+          "material": "MTL.",
+          "page": 30,
+          "pair": false,
+          "size": "8' - 0\" x 8' - 0\"",
+          "width_inches": 96,
+          "y": 209
+        }
+      ],
+      "sheet": "A-101",
+      "size": "8' - 0\" x 8' - 0\"",
+      "source_keys": [
+        "30|101F|1"
+      ],
+      "width_inches": 96,
+      "x": 1344,
+      "y": 143
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D6",
+      "fire_rating": null,
+      "frame_type": "--",
+      "h": 9.601916159232,
+      "hardware_group": null,
+      "height_inches": 96,
+      "location": null,
+      "mark": "101G",
+      "matched_by": "exact",
+      "material": "MTL.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|101G|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "101",
+      "room_by": "tag_number",
+      "room_name": "STORAGE",
+      "schedule_rows": [
+        {
+          "door_type": "D6",
+          "fire_rating": null,
+          "frame_type": "--",
+          "hardware_group": null,
+          "height_inches": 96,
+          "location": null,
+          "mark": "101G",
+          "material": "MTL.",
+          "page": 30,
+          "pair": false,
+          "size": "8' - 0\" x 8' - 0\"",
+          "width_inches": 96,
+          "y": 222
+        }
+      ],
+      "sheet": "A-101",
+      "size": "8' - 0\" x 8' - 0\"",
+      "source_keys": [
+        "30|101G|1"
+      ],
+      "width_inches": 96,
+      "x": 1548,
+      "y": 143
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D6",
+      "fire_rating": null,
+      "frame_type": "--",
+      "h": 9.601916159232,
+      "hardware_group": null,
+      "height_inches": 96,
+      "location": null,
+      "mark": "101H",
+      "matched_by": "exact",
+      "material": "MTL.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|101H|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "101",
+      "room_by": "tag_number",
+      "room_name": "STORAGE",
+      "schedule_rows": [
+        {
+          "door_type": "D6",
+          "fire_rating": null,
+          "frame_type": "--",
+          "hardware_group": null,
+          "height_inches": 96,
+          "location": null,
+          "mark": "101H",
+          "material": "MTL.",
+          "page": 30,
+          "pair": false,
+          "size": "8' - 0\" x 8' - 0\"",
+          "width_inches": 96,
+          "y": 235
+        }
+      ],
+      "sheet": "A-101",
+      "size": "8' - 0\" x 8' - 0\"",
+      "source_keys": [
+        "30|101H|1"
+      ],
+      "width_inches": 96,
+      "x": 1779,
+      "y": 143
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D1",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": "3",
+      "height_inches": 84,
+      "location": null,
+      "mark": "101D",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|101D|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "101",
+      "room_by": "tag_number",
+      "room_name": "STORAGE",
+      "schedule_rows": [
+        {
+          "door_type": "D1",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": "3",
+          "height_inches": 84,
+          "location": null,
+          "mark": "101D",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 184
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|101D|1"
+      ],
+      "width_inches": 36,
+      "x": 1008,
+      "y": 266
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D1",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": "3",
+      "height_inches": 84,
+      "location": null,
+      "mark": "101C",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|101C|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "101",
+      "room_by": "tag_number",
+      "room_name": "STORAGE",
+      "schedule_rows": [
+        {
+          "door_type": "D1",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": "3",
+          "height_inches": 84,
+          "location": null,
+          "mark": "101C",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 171
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|101C|1"
+      ],
+      "width_inches": 36,
+      "x": 1008,
+      "y": 307
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D1",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": "3",
+      "height_inches": 84,
+      "location": null,
+      "mark": "101B",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|101B|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "101",
+      "room_by": "tag_number",
+      "room_name": "STORAGE",
+      "schedule_rows": [
+        {
+          "door_type": "D1",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": "3",
+          "height_inches": 84,
+          "location": null,
+          "mark": "101B",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 158
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|101B|1"
+      ],
+      "width_inches": 36,
+      "x": 1010,
+      "y": 557
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D1",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": "4",
+      "height_inches": 84,
+      "location": null,
+      "mark": "105A",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|105A|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "105",
+      "room_by": "tag_number",
+      "room_name": "HALL",
+      "schedule_rows": [
+        {
+          "door_type": "D1",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": "4",
+          "height_inches": 84,
+          "location": null,
+          "mark": "105A",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 301
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|105A|1"
+      ],
+      "width_inches": 36,
+      "x": 1060,
+      "y": 725
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D1",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": "3",
+      "height_inches": 84,
+      "location": null,
+      "mark": "101A",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|101A|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "101",
+      "room_by": "tag_number",
+      "room_name": "STORAGE",
+      "schedule_rows": [
+        {
+          "door_type": "D1",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": "3",
+          "height_inches": 84,
+          "location": null,
+          "mark": "101A",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 145
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|101A|1"
+      ],
+      "width_inches": 36,
+      "x": 1901,
+      "y": 732
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D1",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": "3",
+      "height_inches": 84,
+      "location": null,
+      "mark": "136",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|136|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "136",
+      "room_by": "nearest_label",
+      "room_name": "OFFICE",
+      "schedule_rows": [
+        {
+          "door_type": "D1",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": "3",
+          "height_inches": 84,
+          "location": null,
+          "mark": "136",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 713
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|136|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 262,
+      "y": 755
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D1",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": "3",
+      "height_inches": 84,
+      "location": null,
+      "mark": "109B",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|109B|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "109",
+      "room_by": "tag_number",
+      "room_name": "MEETING ROOM",
+      "schedule_rows": [
+        {
+          "door_type": "D1",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": "3",
+          "height_inches": 84,
+          "location": null,
+          "mark": "109B",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 377
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|109B|1"
+      ],
+      "width_inches": 36,
+      "x": 687,
+      "y": 755
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D1",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": "3",
+      "height_inches": 84,
+      "location": null,
+      "mark": "105",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|105|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "105",
+      "room_by": "nearest_label",
+      "room_name": "HALL",
+      "schedule_rows": [
+        {
+          "door_type": "D1",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": "3",
+          "height_inches": 84,
+          "location": null,
+          "mark": "105",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 287
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|105|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 983,
+      "y": 755
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D1",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": "3",
+      "height_inches": 84,
+      "location": null,
+      "mark": "200",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|200|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "200",
+      "room_by": "nearest_label",
+      "room_name": "LOCKER ROOM",
+      "schedule_rows": [
+        {
+          "door_type": "D1",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": "3",
+          "height_inches": 84,
+          "location": null,
+          "mark": "200",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 794
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|200|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 2213,
+      "y": 767
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D3",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": "4",
+      "height_inches": 84,
+      "location": null,
+      "mark": "102",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|102|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "102",
+      "room_by": "nearest_label",
+      "room_name": "DISH ROOM",
+      "schedule_rows": [
+        {
+          "door_type": "D3",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": "4",
+          "height_inches": 84,
+          "location": null,
+          "mark": "102",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 260
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|102|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1229,
+      "y": 777
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D1",
+      "fire_rating": "90 MIN.",
+      "frame_type": "F2",
+      "h": 9.601916159232,
+      "hardware_group": "4",
+      "height_inches": 84,
+      "location": null,
+      "mark": "106A",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|106A|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "106",
+      "room_by": "tag_number",
+      "room_name": "STORAGE",
+      "schedule_rows": [
+        {
+          "door_type": "D1",
+          "fire_rating": "90 MIN.",
+          "frame_type": "F2",
+          "hardware_group": "4",
+          "height_inches": 84,
+          "location": null,
+          "mark": "106A",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 314
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|106A|1"
+      ],
+      "width_inches": 36,
+      "x": 959,
+      "y": 782
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D1",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": "4",
+      "height_inches": 84,
+      "location": null,
+      "mark": "101J",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|101J|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "101",
+      "room_by": "tag_number",
+      "room_name": "STORAGE",
+      "schedule_rows": [
+        {
+          "door_type": "D1",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": "4",
+          "height_inches": 84,
+          "location": null,
+          "mark": "101J",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 248
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|101J|1"
+      ],
+      "width_inches": 36,
+      "x": 1464,
+      "y": 799
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D1",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": "4",
+      "height_inches": 84,
+      "location": null,
+      "mark": "107",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|107|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "108",
+      "room_by": "nearest_label",
+      "room_name": "MECH.",
+      "schedule_rows": [
+        {
+          "door_type": "D1",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": "4",
+          "height_inches": 84,
+          "location": null,
+          "mark": "107",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 342
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|107|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 796,
+      "y": 890
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D1",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": "4",
+      "height_inches": 84,
+      "location": null,
+      "mark": "108",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|108|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "108",
+      "room_by": "nearest_label",
+      "room_name": "MECH.",
+      "schedule_rows": [
+        {
+          "door_type": "D1",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": "4",
+          "height_inches": 84,
+          "location": null,
+          "mark": "108",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 351
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|108|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 777,
+      "y": 910
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D1",
+      "fire_rating": "90 MIN.",
+      "frame_type": "F2",
+      "h": 9.601916159232,
+      "hardware_group": "4",
+      "height_inches": 84,
+      "location": null,
+      "mark": "106B",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|106B|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "106",
+      "room_by": "tag_number",
+      "room_name": "STORAGE",
+      "schedule_rows": [
+        {
+          "door_type": "D1",
+          "fire_rating": "90 MIN.",
+          "frame_type": "F2",
+          "hardware_group": "4",
+          "height_inches": 84,
+          "location": null,
+          "mark": "106B",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 329
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|106B|1"
+      ],
+      "width_inches": 36,
+      "x": 959,
+      "y": 961
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D1",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": "4",
+      "height_inches": 84,
+      "location": null,
+      "mark": "111",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|111|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "111",
+      "room_by": "nearest_label",
+      "room_name": "MECH.",
+      "schedule_rows": [
+        {
+          "door_type": "D1",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": "4",
+          "height_inches": 84,
+          "location": null,
+          "mark": "111",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 404
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|111|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 797,
+      "y": 982
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D1",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 12.542394983040001,
+      "hardware_group": "4",
+      "height_inches": 84,
+      "location": null,
+      "mark": "110",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|110|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "111",
+      "room_by": "nearest_label",
+      "room_name": "MECH.",
+      "schedule_rows": [
+        {
+          "door_type": "D1",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": "4",
+          "height_inches": 84,
+          "location": null,
+          "mark": "110",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 390
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|110|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 767,
+      "y": 1018
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D3",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": "2",
+      "height_inches": 84,
+      "location": null,
+      "mark": "109A",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|109A|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "109",
+      "room_by": "tag_number",
+      "room_name": "MEETING ROOM",
+      "schedule_rows": [
+        {
+          "door_type": "D3",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": "2",
+          "height_inches": 84,
+          "location": null,
+          "mark": "109A",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 365
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|109A|1"
+      ],
+      "width_inches": 36,
+      "x": 686,
+      "y": 1023
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D1",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": "4",
+      "height_inches": 84,
+      "location": null,
+      "mark": "134",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|134|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "134",
+      "room_by": "nearest_label",
+      "room_name": "MECH.",
+      "schedule_rows": [
+        {
+          "door_type": "D1",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": "4",
+          "height_inches": 84,
+          "location": null,
+          "mark": "134",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 688
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|134|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 348,
+      "y": 1099
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D1",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": "4",
+      "height_inches": 84,
+      "location": null,
+      "mark": "104",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|104|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "104",
+      "room_by": "nearest_label",
+      "room_name": "STORAGE",
+      "schedule_rows": [
+        {
+          "door_type": "D1",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": "4",
+          "height_inches": 84,
+          "location": null,
+          "mark": "104",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 274
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|104|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1011,
+      "y": 1109
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D1",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": "6",
+      "height_inches": 84,
+      "location": null,
+      "mark": "112",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|112|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "112",
+      "room_by": "nearest_label",
+      "room_name": "WOMEN",
+      "schedule_rows": [
+        {
+          "door_type": "D1",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": "6",
+          "height_inches": 84,
+          "location": null,
+          "mark": "112",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 416
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|112|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 937,
+      "y": 1131
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D1",
+      "fire_rating": "90 MIN.",
+      "frame_type": "F2",
+      "h": 9.601916159232,
+      "hardware_group": "4",
+      "height_inches": 84,
+      "location": null,
+      "mark": "113B",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|113B|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "113",
+      "room_by": "tag_number",
+      "room_name": "BREAK AREA",
+      "schedule_rows": [
+        {
+          "door_type": "D1",
+          "fire_rating": "90 MIN.",
+          "frame_type": "F2",
+          "hardware_group": "4",
+          "height_inches": 84,
+          "location": null,
+          "mark": "113B",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 442
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|113B|1"
+      ],
+      "width_inches": 36,
+      "x": 959,
+      "y": 1154
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        30
+      ],
+      "door_type": "--",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": null,
+      "height_inches": 84,
+      "location": null,
+      "mark": "113A",
+      "matched_by": "exact",
+      "material": "--",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|113A|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "113",
+      "room_by": "tag_number",
+      "room_name": "BREAK AREA",
+      "schedule_rows": [
+        {
+          "door_type": "--",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": null,
+          "height_inches": 84,
+          "location": null,
+          "mark": "113A",
+          "material": "--",
+          "page": 30,
+          "pair": false,
+          "size": "4' - 0\" x 7' - 0\"",
+          "width_inches": 48,
+          "y": 428
+        }
+      ],
+      "sheet": "A-101",
+      "size": "4' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|113A|1"
+      ],
+      "width_inches": 48,
+      "x": 759,
+      "y": 1155
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D3",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "114",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|114|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "114",
+      "room_by": "nearest_label",
+      "room_name": "OFFICE",
+      "schedule_rows": [
+        {
+          "door_type": "D3",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "114",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 454
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|114|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 886,
+      "y": 1174
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D3",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "129",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|129|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "130",
+      "room_by": "nearest_label",
+      "room_name": "HALL",
+      "schedule_rows": [
+        {
+          "door_type": "D3",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "129",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 636
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|129|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 521,
+      "y": 1180
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D3",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "135",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|135|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "132",
+      "room_by": "nearest_label",
+      "room_name": "STAIR",
+      "schedule_rows": [
+        {
+          "door_type": "D3",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "135",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 702
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|135|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 304,
+      "y": 1199
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D1",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": "5",
+      "height_inches": 84,
+      "location": null,
+      "mark": "133",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|133|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "132",
+      "room_by": "nearest_label",
+      "room_name": "STAIR",
+      "schedule_rows": [
+        {
+          "door_type": "D1",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": "5",
+          "height_inches": 84,
+          "location": null,
+          "mark": "133",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 680
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|133|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 350,
+      "y": 1199
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D3",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": "7",
+      "height_inches": 84,
+      "location": null,
+      "mark": "159",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|159|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "130",
+      "room_by": "nearest_label",
+      "room_name": "HALL",
+      "schedule_rows": [
+        {
+          "door_type": "D3",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": "7",
+          "height_inches": 84,
+          "location": null,
+          "mark": "159",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 781
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|159|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 418,
+      "y": 1217
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        30
+      ],
+      "door_type": "--",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": null,
+      "height_inches": 84,
+      "location": null,
+      "mark": "130",
+      "matched_by": "exact",
+      "material": "--",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|130|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "130",
+      "room_by": "nearest_label",
+      "room_name": "HALL",
+      "schedule_rows": [
+        {
+          "door_type": "--",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": null,
+          "height_inches": 84,
+          "location": null,
+          "mark": "130",
+          "material": "--",
+          "page": 30,
+          "pair": false,
+          "size": "4' - 0\" x 7' - 0\"",
+          "width_inches": 48,
+          "y": 649
+        }
+      ],
+      "sheet": "A-101",
+      "size": "4' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|130|1"
+      ],
+      "unsure": true,
+      "width_inches": 48,
+      "x": 521,
+      "y": 1229
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D1",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": "6",
+      "height_inches": 84,
+      "location": null,
+      "mark": "131",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|131|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "131",
+      "room_by": "nearest_label",
+      "room_name": "MEN",
+      "schedule_rows": [
+        {
+          "door_type": "D1",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": "6",
+          "height_inches": 84,
+          "location": null,
+          "mark": "131",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 662
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|131|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 259,
+      "y": 1261
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D1",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": "3",
+      "height_inches": 84,
+      "location": null,
+      "mark": "100",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|100|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "116",
+      "room_by": "nearest_label",
+      "room_name": "HALL",
+      "schedule_rows": [
+        {
+          "door_type": "D1",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": "3",
+          "height_inches": 84,
+          "location": null,
+          "mark": "100",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 133
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|100|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 986,
+      "y": 1288
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D3",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "116B",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|116B|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "116",
+      "room_by": "tag_number",
+      "room_name": "HALL",
+      "schedule_rows": [
+        {
+          "door_type": "D3",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "116B",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 494
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|116B|1"
+      ],
+      "width_inches": 36,
+      "x": 875,
+      "y": 1316
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D1",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": "3",
+      "height_inches": 84,
+      "location": null,
+      "mark": "116A",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|116A|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "116",
+      "room_by": "tag_number",
+      "room_name": "HALL",
+      "schedule_rows": [
+        {
+          "door_type": "D1",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": "3",
+          "height_inches": 84,
+          "location": null,
+          "mark": "116A",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 481
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|116A|1"
+      ],
+      "width_inches": 36,
+      "x": 959,
+      "y": 1316
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D3",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "115",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|115|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "115",
+      "room_by": "nearest_label",
+      "room_name": "OFFICE",
+      "schedule_rows": [
+        {
+          "door_type": "D3",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "115",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 469
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|115|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 777,
+      "y": 1317
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D1",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "127",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|127|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "127",
+      "room_by": "nearest_label",
+      "room_name": "OFFICE",
+      "schedule_rows": [
+        {
+          "door_type": "D1",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "127",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "2' - 6\" x 7' - 0\"",
+          "width_inches": 30,
+          "y": 622
+        }
+      ],
+      "sheet": "A-101",
+      "size": "2' - 6\" x 7' - 0\"",
+      "source_keys": [
+        "30|127|1"
+      ],
+      "unsure": true,
+      "width_inches": 30,
+      "x": 488,
+      "y": 1365
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D1",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": "5",
+      "height_inches": 84,
+      "location": null,
+      "mark": "126",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|126|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "127",
+      "room_by": "nearest_label",
+      "room_name": "OFFICE",
+      "schedule_rows": [
+        {
+          "door_type": "D1",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": "5",
+          "height_inches": 84,
+          "location": null,
+          "mark": "126",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "2' - 6\" x 7' - 0\"",
+          "width_inches": 30,
+          "y": 609
+        }
+      ],
+      "sheet": "A-101",
+      "size": "2' - 6\" x 7' - 0\"",
+      "source_keys": [
+        "30|126|1"
+      ],
+      "unsure": true,
+      "width_inches": 30,
+      "x": 473,
+      "y": 1380
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D3",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "117",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|117|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "117",
+      "room_by": "nearest_label",
+      "room_name": "OFFICE",
+      "schedule_rows": [
+        {
+          "door_type": "D3",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "117",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 505
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|117|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 836,
+      "y": 1420
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D3",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "124",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|124|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "125",
+      "room_by": "nearest_label",
+      "room_name": "HALL",
+      "schedule_rows": [
+        {
+          "door_type": "D3",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "124",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 596
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|124|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 521,
+      "y": 1431
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D3",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": "7",
+      "height_inches": 84,
+      "location": null,
+      "mark": "118B",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|118B|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "121",
+      "room_by": "nearest_label",
+      "room_name": "OFFICE",
+      "schedule_rows": [
+        {
+          "door_type": "D3",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": "7",
+          "height_inches": 84,
+          "location": null,
+          "mark": "118B",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 533
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|118B|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 801,
+      "y": 1439
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D4",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": "BY MANFU.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "118A",
+      "matched_by": "exact",
+      "material": "ALUM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|118A|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "117",
+      "room_by": "nearest_label",
+      "room_name": "OFFICE",
+      "schedule_rows": [
+        {
+          "door_type": "D4",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": "BY MANFU.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "118A",
+          "material": "ALUM.",
+          "page": 30,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 520
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|118A|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 959,
+      "y": 1439
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D3",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "123",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|123|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "123",
+      "room_by": "nearest_label",
+      "room_name": "OFFICE",
+      "schedule_rows": [
+        {
+          "door_type": "D3",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "123",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 583
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|123|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 619,
+      "y": 1458
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D3",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "122",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|122|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "122",
+      "room_by": "nearest_label",
+      "room_name": "OFFICE",
+      "schedule_rows": [
+        {
+          "door_type": "D3",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "122",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 570
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|122|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 725,
+      "y": 1458
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D3",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "121",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|121|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "121",
+      "room_by": "nearest_label",
+      "room_name": "OFFICE",
+      "schedule_rows": [
+        {
+          "door_type": "D3",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "121",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 557
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|121|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 765,
+      "y": 1458
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        30
+      ],
+      "door_type": "D3",
+      "fire_rating": null,
+      "frame_type": "F1",
+      "h": 9.601916159232,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "120",
+      "matched_by": "exact",
+      "material": "HM.",
+      "opening_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]|120|30|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "922 INDUSTRIAL DRIVE",
+        "asset_number": "8136256005",
+        "level": "0; 1",
+        "site_number": "6256"
+      },
+      "opening_scope_id": "[{\"address\":\"922 INDUSTRIAL DRIVE\",\"asset_number\":\"8136256005\",\"level\":\"0; 1\",\"site_number\":\"6256\"},\"A\"]",
+      "page": 28,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "120",
+      "room_by": "nearest_label",
+      "room_name": "OFFICE",
+      "schedule_rows": [
+        {
+          "door_type": "D3",
+          "fire_rating": null,
+          "frame_type": "F1",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "120",
+          "material": "HM.",
+          "page": 30,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 546
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "30|120|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 880,
+      "y": 1458
+    }
+  ]
+}

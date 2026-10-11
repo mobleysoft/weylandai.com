@@ -1,0 +1,423 @@
+{
+ "sha16": "0b76241fa9aca437",
+ "sha256": "0b76241fa9aca437bb6f304eeeba8c66e7b44f983483e6d70d1a733b2785db69",
+ "file": "0b76241fa9aca437.pdf",
+ "bytes": 4405574,
+ "family": "harvest",
+ "source": "harvest",
+ "label": null,
+ "source_url": null,
+ "page_count": 24,
+ "text_layer": {
+  "pages_with_text": 23,
+  "pages": 24
+ },
+ "pages": {
+  "door_candidates": 4,
+  "hardware_candidates": 0,
+  "door_schedule_pages": [
+   13,
+   14
+  ],
+  "hardware_pages": []
+ },
+ "readers": {
+  "a": {
+   "doors": 9,
+   "sets": 0,
+   "items": 0,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 9
+  },
+  "b": {
+   "doors": 9,
+   "sets": 0,
+   "items": 0,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 2,
+   "door_rows": 9
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 13,
+    "title": "LOBBY RENOVATION PLAN",
+    "rank": 2,
+    "scope": {
+     "facility_number": "3101025001",
+     "site_number": "1025"
+    },
+    "sheet": "A-102",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "site_number",
+      "value": "1025",
+      "text": "1025",
+      "x": 2434.3199999999997,
+      "y": 1179.6,
+      "source": "title_block"
+     },
+     {
+      "field": "facility_number",
+      "value": "3101025001",
+      "text": "FACILITY # 3101025001",
+      "x": 2339.16,
+      "y": 1201.8000000000002,
+      "source": "title_block"
+     }
+    ]
+   },
+   {
+    "page": 14,
+    "title": "LOBBY RENOVATION PLAN",
+    "rank": 2,
+    "scope": {
+     "facility_number": "3101025001",
+     "site_number": "1025"
+    },
+    "sheet": "A-103",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "site_number",
+      "value": "1025",
+      "text": "1025",
+      "x": 2434.3199999999997,
+      "y": 1179.6,
+      "source": "title_block"
+     },
+     {
+      "field": "facility_number",
+      "value": "3101025001",
+      "text": "FACILITY # 3101025001",
+      "x": 2339.16,
+      "y": 1201.8000000000002,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 9,
+   "pairs": [],
+   "openings": 9,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 9,
+   "pairs": [],
+   "openings": 9,
+   "collapsed_rows": 0,
+   "repeated": []
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 9,
+ "rows_total": 9,
+ "agreement_rate": 0,
+ "agreement": {
+  "doors": {
+   "rows": 9,
+   "agreed": 0,
+   "disputed": 9,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {
+    "width_inches": {
+     "agree": 6,
+     "total": 9
+    },
+    "height_inches": {
+     "agree": 6,
+     "total": 9
+    },
+    "material": {
+     "agree": 7,
+     "total": 9
+    },
+    "fire_rating": {
+     "agree": 0,
+     "total": 9
+    },
+    "hardware_group": {
+     "agree": 7,
+     "total": 7
+    },
+    "location": {
+     "agree": 0,
+     "total": 7
+    }
+   },
+   "agreement_rate": 0
+  },
+  "items": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "sets": {
+   "sets": 0,
+   "agreed": 0
+  }
+ },
+ "triage_class": "schedule-only",
+ "triage_from": "inferred (S=true H=false plan sheets=4)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": true,
+   "total": 9,
+   "pass": 9,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "plan_sheets": [
+    "A-102 p.13",
+    "A-103 p.14",
+    "A-104 p.15",
+    "A-105 p.16"
+   ],
+   "plan_counts": {
+    "plan_sheets": 4,
+    "rooms": 113,
+    "corridors": 3,
+    "tags": 9,
+    "unmatched_tags": 12,
+    "schedule_marks": 9,
+    "marks_not_on_plan": 0,
+    "shared_marks": 0
+   }
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "no DOOR TYPES / FRAME TYPES legend title in this PDF"
+  },
+  "sizes_and_marks": {
+   "applicable": true,
+   "total": 9,
+   "pass": 6,
+   "fail": 3,
+   "pass_rate": 0.6667,
+   "examples": [
+    "mark 7 p.13: size \"6'-0\\\" SHEET x 7'-0\\\" A-501\" -> null x null",
+    "mark 8 p.14: size null -> null x null",
+    "mark 9 p.14: size null -> null x null"
+   ],
+   "size_fail": 3,
+   "mark_fail": 0
+  }
+ },
+ "tier": "oracle-checked",
+ "disagreement_count": 24,
+ "disagreements": [
+  {
+   "kind": "door",
+   "page": 13,
+   "key": "1",
+   "field": "fire_rating",
+   "a": "--",
+   "b": "B LABEL"
+  },
+  {
+   "kind": "door",
+   "page": 13,
+   "key": "1",
+   "field": "location",
+   "a": "ENTRY",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 13,
+   "key": "2",
+   "field": "fire_rating",
+   "a": "--",
+   "b": "B LABEL"
+  },
+  {
+   "kind": "door",
+   "page": 13,
+   "key": "2",
+   "field": "location",
+   "a": "LOBBY",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 13,
+   "key": "3",
+   "field": "fire_rating",
+   "a": "--",
+   "b": "B LABEL"
+  },
+  {
+   "kind": "door",
+   "page": 13,
+   "key": "3",
+   "field": "location",
+   "a": "STAIRWELL",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 13,
+   "key": "4",
+   "field": "fire_rating",
+   "a": "--",
+   "b": "B LABEL"
+  },
+  {
+   "kind": "door",
+   "page": 13,
+   "key": "4",
+   "field": "location",
+   "a": "RESTROOM",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 13,
+   "key": "5",
+   "field": "fire_rating",
+   "a": "--",
+   "b": "B LABEL"
+  },
+  {
+   "kind": "door",
+   "page": 13,
+   "key": "5",
+   "field": "location",
+   "a": "RESTROOM",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 13,
+   "key": "6",
+   "field": "fire_rating",
+   "a": "9",
+   "b": "--"
+  },
+  {
+   "kind": "door",
+   "page": 13,
+   "key": "6",
+   "field": "location",
+   "a": "STORAGE ROOM",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 13,
+   "key": "7",
+   "field": "width_inches",
+   "a": null,
+   "b": 72
+  },
+  {
+   "kind": "door",
+   "page": 13,
+   "key": "7",
+   "field": "height_inches",
+   "a": null,
+   "b": 84
+  },
+  {
+   "kind": "door",
+   "page": 13,
+   "key": "7",
+   "field": "material",
+   "a": "GLAZED DETAILS AND",
+   "b": "GLAZED"
+  },
+  {
+   "kind": "door",
+   "page": 13,
+   "key": "7",
+   "field": "fire_rating",
+   "a": "9",
+   "b": "--"
+  },
+  {
+   "kind": "door",
+   "page": 13,
+   "key": "7",
+   "field": "location",
+   "a": "CONFERENCE ROOM STORAGE ROOM",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 14,
+   "key": "8",
+   "field": "width_inches",
+   "a": null,
+   "b": 64
+  },
+  {
+   "kind": "door",
+   "page": 14,
+   "key": "8",
+   "field": "height_inches",
+   "a": null,
+   "b": 82
+  },
+  {
+   "kind": "door",
+   "page": 14,
+   "key": "8",
+   "field": "fire_rating",
+   "a": null,
+   "b": "B LABEL"
+  },
+  {
+   "kind": "door",
+   "page": 14,
+   "key": "9",
+   "field": "width_inches",
+   "a": null,
+   "b": 64
+  },
+  {
+   "kind": "door",
+   "page": 14,
+   "key": "9",
+   "field": "height_inches",
+   "a": null,
+   "b": 82
+  },
+  {
+   "kind": "door",
+   "page": 14,
+   "key": "9",
+   "field": "material",
+   "a": "WOOD DETAILS",
+   "b": "WOOD"
+  },
+  {
+   "kind": "door",
+   "page": 14,
+   "key": "9",
+   "field": "fire_rating",
+   "a": null,
+   "b": "B LABEL"
+  }
+ ],
+ "ms": 732,
+ "generated_at": "2026-10-11T14:29:33.236Z"
+}

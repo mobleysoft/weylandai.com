@@ -1,0 +1,438 @@
+{
+ "sha16": "b0ef4f54ae3466ac",
+ "sha256": "b0ef4f54ae3466ace867788ed90bf955aa6b0a9c5e4b2f96df05754a104ca6d7",
+ "file": "b0ef4f54ae3466ac.pdf",
+ "bytes": 11150420,
+ "family": "harvest",
+ "source": "harvest",
+ "label": null,
+ "source_url": null,
+ "page_count": 578,
+ "text_layer": {
+  "pages_with_text": 558,
+  "pages": 578
+ },
+ "pages": {
+  "door_candidates": 10,
+  "hardware_candidates": 1,
+  "door_schedule_pages": [],
+  "hardware_pages": [
+   251
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 2,
+   "items": 19,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 0
+  },
+  "b": {
+   "doors": 0,
+   "sets": 2,
+   "items": 19,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0,
+   "door_rows": 0
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [],
+  "a": {
+   "rows": 0,
+   "pairs": [],
+   "openings": 0,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 0,
+   "pairs": [],
+   "openings": 0,
+   "collapsed_rows": 0,
+   "repeated": []
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 19,
+ "rows_total": 19,
+ "agreement_rate": 0,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 19,
+   "agreed": 0,
+   "disputed": 19,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {
+    "qty": {
+     "agree": 19,
+     "total": 19
+    },
+    "description": {
+     "agree": 19,
+     "total": 19
+    },
+    "catalog": {
+     "agree": 0,
+     "total": 19
+    },
+    "finish": {
+     "agree": 0,
+     "total": 19
+    }
+   },
+   "agreement_rate": 0
+  },
+  "sets": {
+   "sets": 2,
+   "agreed": 2
+  }
+ },
+ "triage_class": "spec-only",
+ "triage_from": "inferred (S=false H=true plan sheets=0)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  }
+ },
+ "tier": "unread",
+ "unread_reason": "no rows agreed and no oracle applies",
+ "disagreement_count": 38,
+ "disagreements": [
+  {
+   "kind": "item",
+   "page": 251,
+   "key": "1.0 / T4A3386 (NRP and Size as US32D Required)",
+   "field": "catalog",
+   "a": "T4A3386 (NRP and Size as US32D Required)",
+   "b": "US32D MK 087100 Required)"
+  },
+  {
+   "kind": "item",
+   "page": 251,
+   "key": "1.0 / T4A3386 (NRP and Size as US32D Required)",
+   "field": "finish",
+   "a": "MK",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 251,
+   "key": "1.0 / AU 5405LN 497 1220 626",
+   "field": "catalog",
+   "a": "AU 5405LN 497 1220 626",
+   "b": "AU 5405LN 497 1220 626 YA 087100"
+  },
+  {
+   "kind": "item",
+   "page": 251,
+   "key": "1.0 / AU 5405LN 497 1220 626",
+   "field": "finish",
+   "a": "YA",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 251,
+   "key": "1.0 / 1220 CGMK 626",
+   "field": "catalog",
+   "a": "1220 CGMK 626",
+   "b": "1220 CGMK 626 YA 087100"
+  },
+  {
+   "kind": "item",
+   "page": 251,
+   "key": "1.0 / 1220 CGMK 626",
+   "field": "finish",
+   "a": "YA",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 251,
+   "key": "1.0 / UNI4400 689",
+   "field": "catalog",
+   "a": "UNI4400 689",
+   "b": "UNI4400 689 YA 087100"
+  },
+  {
+   "kind": "item",
+   "page": 251,
+   "key": "1.0 / UNI4400 689",
+   "field": "finish",
+   "a": "YA",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 251,
+   "key": "1.0 / K1050 10\" high BEV CSK US32D",
+   "field": "catalog",
+   "a": "K1050 10\" high BEV CSK US32D",
+   "b": "K1050 10\" high BEV CSK US32D RO 087100"
+  },
+  {
+   "kind": "item",
+   "page": 251,
+   "key": "1.0 / K1050 10\" high BEV CSK US32D",
+   "field": "finish",
+   "a": "RO",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 251,
+   "key": "1.0 / 303AS (Head & Jambs)",
+   "field": "catalog",
+   "a": "303AS (Head & Jambs)",
+   "b": "303AS (Head & Jambs) PE 087100 346C x Width of Frame"
+  },
+  {
+   "kind": "item",
+   "page": 251,
+   "key": "1.0 / 303AS (Head & Jambs)",
+   "field": "finish",
+   "a": "PE",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 251,
+   "key": "1.0 / 346C x Width of Frame Head",
+   "field": "catalog",
+   "a": "346C x Width of Frame Head",
+   "b": "PE 087100 Head 3452CNB x Length"
+  },
+  {
+   "kind": "item",
+   "page": 251,
+   "key": "1.0 / 346C x Width of Frame Head",
+   "field": "finish",
+   "a": "PE",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 251,
+   "key": "1.0 / 3452CNB x Length Required",
+   "field": "catalog",
+   "a": "3452CNB x Length Required",
+   "b": "PE 087100 Required 2009APK x Length"
+  },
+  {
+   "kind": "item",
+   "page": 251,
+   "key": "1.0 / 3452CNB x Length Required",
+   "field": "finish",
+   "a": "PE",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 251,
+   "key": "1.0 / 2009APK x Length Required x MSES25SS",
+   "field": "catalog",
+   "a": "2009APK x Length Required x MSES25SS",
+   "b": "PE 087100 Required x MSES25SS"
+  },
+  {
+   "kind": "item",
+   "page": 251,
+   "key": "1.0 / 2009APK x Length Required x MSES25SS",
+   "field": "finish",
+   "a": "PE",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 251,
+   "key": "2.0 / T4A3386 (NRP and Size as US32D Required)",
+   "field": "catalog",
+   "a": "T4A3386 (NRP and Size as US32D Required)",
+   "b": "US32D MK 087100 Required)"
+  },
+  {
+   "kind": "item",
+   "page": 251,
+   "key": "2.0 / T4A3386 (NRP and Size as US32D Required)",
+   "field": "finish",
+   "a": "MK",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 251,
+   "key": "2.0 / D161 1220 626",
+   "field": "catalog",
+   "a": "D161 1220 626",
+   "b": "D161 1220 626 YA 087100"
+  },
+  {
+   "kind": "item",
+   "page": 251,
+   "key": "2.0 / D161 1220 626",
+   "field": "finish",
+   "a": "YA",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 251,
+   "key": "2.0 / AU 5402LN 497 626",
+   "field": "catalog",
+   "a": "AU 5402LN 497 626",
+   "b": "AU 5402LN 497 626 YA 087100"
+  },
+  {
+   "kind": "item",
+   "page": 251,
+   "key": "2.0 / AU 5402LN 497 626",
+   "field": "finish",
+   "a": "YA",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 251,
+   "key": "2.0 / 1220 CGMK 626",
+   "field": "catalog",
+   "a": "1220 CGMK 626",
+   "b": "1220 CGMK 626 YA 087100"
+  },
+  {
+   "kind": "item",
+   "page": 251,
+   "key": "2.0 / 1220 CGMK 626",
+   "field": "finish",
+   "a": "YA",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 251,
+   "key": "2.0 / UNI4400 689",
+   "field": "catalog",
+   "a": "UNI4400 689",
+   "b": "UNI4400 689 YA 087100"
+  },
+  {
+   "kind": "item",
+   "page": 251,
+   "key": "2.0 / UNI4400 689",
+   "field": "finish",
+   "a": "YA",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 251,
+   "key": "2.0 / K1050 10\" high BEV CSK US32D",
+   "field": "catalog",
+   "a": "K1050 10\" high BEV CSK US32D",
+   "b": "K1050 10\" high BEV CSK US32D RO 087100"
+  },
+  {
+   "kind": "item",
+   "page": 251,
+   "key": "2.0 / K1050 10\" high BEV CSK US32D",
+   "field": "finish",
+   "a": "RO",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 251,
+   "key": "2.0 / 303AS (Head & Jambs)",
+   "field": "catalog",
+   "a": "303AS (Head & Jambs)",
+   "b": "303AS (Head & Jambs) PE 087100 346C x Width of Frame"
+  },
+  {
+   "kind": "item",
+   "page": 251,
+   "key": "2.0 / 303AS (Head & Jambs)",
+   "field": "finish",
+   "a": "PE",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 251,
+   "key": "2.0 / 346C x Width of Frame Head",
+   "field": "catalog",
+   "a": "346C x Width of Frame Head",
+   "b": "PE 087100 Head 3452CNB x Length"
+  },
+  {
+   "kind": "item",
+   "page": 251,
+   "key": "2.0 / 346C x Width of Frame Head",
+   "field": "finish",
+   "a": "PE",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 251,
+   "key": "2.0 / 3452CNB x Length Required",
+   "field": "catalog",
+   "a": "3452CNB x Length Required",
+   "b": "PE 087100 Required 2009APK x Length"
+  },
+  {
+   "kind": "item",
+   "page": 251,
+   "key": "2.0 / 3452CNB x Length Required",
+   "field": "finish",
+   "a": "PE",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 251,
+   "key": "2.0 / 2009APK x Length Required x MSES25SS",
+   "field": "catalog",
+   "a": "2009APK x Length Required x MSES25SS",
+   "b": "PE 087100 Required x MSES25SS"
+  },
+  {
+   "kind": "item",
+   "page": 251,
+   "key": "2.0 / 2009APK x Length Required x MSES25SS",
+   "field": "finish",
+   "a": "PE",
+   "b": null
+  }
+ ],
+ "ms": 1454,
+ "generated_at": "2026-10-11T14:30:59.901Z"
+}

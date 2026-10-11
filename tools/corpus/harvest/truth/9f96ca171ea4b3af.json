@@ -1,0 +1,460 @@
+{
+ "sha16": "9f96ca171ea4b3af",
+ "sha256": "9f96ca171ea4b3af398929fe6992ce235c88c5e0fb9af28fc22554640e0b2d42",
+ "file": "9f96ca171ea4b3af.pdf",
+ "bytes": 7404366,
+ "family": "harvest",
+ "source": "harvest",
+ "label": null,
+ "source_url": null,
+ "page_count": 272,
+ "text_layer": {
+  "pages_with_text": 258,
+  "pages": 272
+ },
+ "pages": {
+  "door_candidates": 0,
+  "hardware_candidates": 1,
+  "door_schedule_pages": [],
+  "hardware_pages": [
+   157
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 3,
+   "items": 22,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 0
+  },
+  "b": {
+   "doors": 0,
+   "sets": 3,
+   "items": 22,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0,
+   "door_rows": 0
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [],
+  "a": {
+   "rows": 0,
+   "pairs": [],
+   "openings": 0,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 0,
+   "pairs": [],
+   "openings": 0,
+   "collapsed_rows": 0,
+   "repeated": []
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 23,
+ "rows_total": 23,
+ "agreement_rate": 0,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 23,
+   "agreed": 0,
+   "disputed": 21,
+   "only_a": 1,
+   "only_b": 1,
+   "fields": {
+    "qty": {
+     "agree": 21,
+     "total": 21
+    },
+    "description": {
+     "agree": 21,
+     "total": 21
+    },
+    "catalog": {
+     "agree": 0,
+     "total": 21
+    },
+    "finish": {
+     "agree": 0,
+     "total": 19
+    },
+    "manufacturer": {
+     "agree": 0,
+     "total": 2
+    }
+   },
+   "agreement_rate": 0
+  },
+  "sets": {
+   "sets": 3,
+   "agreed": 3
+  }
+ },
+ "triage_class": "spec-only",
+ "triage_from": "inferred (S=false H=true plan sheets=0)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  }
+ },
+ "tier": "unread",
+ "unread_reason": "no rows agreed and no oracle applies",
+ "disagreement_count": 44,
+ "disagreements": [
+  {
+   "kind": "item",
+   "page": 157,
+   "key": "1 / Butts",
+   "field": "catalog",
+   "a": "Butts",
+   "b": "Butts Hager"
+  },
+  {
+   "kind": "item",
+   "page": 157,
+   "key": "1 / Butts",
+   "field": "finish",
+   "a": "Hager",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 157,
+   "key": "1 / Leverset",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 157,
+   "key": "1 / Threshold",
+   "field": "catalog",
+   "a": "Threshold",
+   "b": "Threshold Hager"
+  },
+  {
+   "kind": "item",
+   "page": 157,
+   "key": "1 / Threshold",
+   "field": "finish",
+   "a": "Hager",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 157,
+   "key": "1 / Weatherstrip\\",
+   "field": "catalog",
+   "a": "Weatherstrip\\",
+   "b": "Weatherstrip\\ Hager"
+  },
+  {
+   "kind": "item",
+   "page": 157,
+   "key": "1 / Weatherstrip\\",
+   "field": "finish",
+   "a": "Hager",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 157,
+   "key": "1 / Drip Guard",
+   "field": "catalog",
+   "a": "Drip Guard",
+   "b": "Drip Guard Hager"
+  },
+  {
+   "kind": "item",
+   "page": 157,
+   "key": "1 / Drip Guard",
+   "field": "finish",
+   "a": "Hager",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 157,
+   "key": "1 / F86) Leverset (Tactile) Falcon",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 157,
+   "key": "2 / Butts",
+   "field": "catalog",
+   "a": "Butts",
+   "b": "Butts Hager"
+  },
+  {
+   "kind": "item",
+   "page": 157,
+   "key": "2 / Butts",
+   "field": "finish",
+   "a": "Hager",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 157,
+   "key": "2 / Closer",
+   "field": "catalog",
+   "a": "Closer",
+   "b": "Closer LCN"
+  },
+  {
+   "kind": "item",
+   "page": 157,
+   "key": "2 / Closer",
+   "field": "manufacturer",
+   "a": "LCN",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 157,
+   "key": "2 / Pull",
+   "field": "catalog",
+   "a": "Pull",
+   "b": "Pull Hager"
+  },
+  {
+   "kind": "item",
+   "page": 157,
+   "key": "2 / Pull",
+   "field": "finish",
+   "a": "Hager",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 157,
+   "key": "2 / Push",
+   "field": "catalog",
+   "a": "Push",
+   "b": "Push Hager"
+  },
+  {
+   "kind": "item",
+   "page": 157,
+   "key": "2 / Push",
+   "field": "finish",
+   "a": "Hager",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 157,
+   "key": "2 / Tubular Deadbolt",
+   "field": "catalog",
+   "a": "Tubular Deadbolt",
+   "b": "Tubular Deadbolt Falcon"
+  },
+  {
+   "kind": "item",
+   "page": 157,
+   "key": "2 / Tubular Deadbolt",
+   "field": "finish",
+   "a": "Falcon",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 157,
+   "key": "2 / Threshold",
+   "field": "catalog",
+   "a": "Threshold",
+   "b": "Threshold Hager"
+  },
+  {
+   "kind": "item",
+   "page": 157,
+   "key": "2 / Threshold",
+   "field": "finish",
+   "a": "Hager",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 157,
+   "key": "2 / Weatherstrip",
+   "field": "catalog",
+   "a": "Weatherstrip",
+   "b": "Weatherstrip Hager"
+  },
+  {
+   "kind": "item",
+   "page": 157,
+   "key": "2 / Weatherstrip",
+   "field": "finish",
+   "a": "Hager",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 157,
+   "key": "2 / Floor Stop w/ Holder",
+   "field": "catalog",
+   "a": "Floor Stop w/ Holder",
+   "b": "Floor Stop w/ Holder Hager"
+  },
+  {
+   "kind": "item",
+   "page": 157,
+   "key": "2 / Floor Stop w/ Holder",
+   "field": "finish",
+   "a": "Hager",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 157,
+   "key": "2 / Drip Guard",
+   "field": "catalog",
+   "a": "Drip Guard",
+   "b": "Drip Guard Hager"
+  },
+  {
+   "kind": "item",
+   "page": 157,
+   "key": "2 / Drip Guard",
+   "field": "finish",
+   "a": "Hager",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 157,
+   "key": "3 / Butts",
+   "field": "catalog",
+   "a": "Butts",
+   "b": "Butts Hager"
+  },
+  {
+   "kind": "item",
+   "page": 157,
+   "key": "3 / Butts",
+   "field": "finish",
+   "a": "Hager",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 157,
+   "key": "3 / Closer",
+   "field": "catalog",
+   "a": "Closer",
+   "b": "Closer LCN"
+  },
+  {
+   "kind": "item",
+   "page": 157,
+   "key": "3 / Closer",
+   "field": "manufacturer",
+   "a": "LCN",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 157,
+   "key": "3 / Leverset",
+   "field": "catalog",
+   "a": "Leverset",
+   "b": "Leverset Falcon"
+  },
+  {
+   "kind": "item",
+   "page": 157,
+   "key": "3 / Leverset",
+   "field": "finish",
+   "a": "Falcon",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 157,
+   "key": "3 / Tubular Deadbolt",
+   "field": "catalog",
+   "a": "Tubular Deadbolt",
+   "b": "Tubular Deadbolt Falcon"
+  },
+  {
+   "kind": "item",
+   "page": 157,
+   "key": "3 / Tubular Deadbolt",
+   "field": "finish",
+   "a": "Falcon",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 157,
+   "key": "3 / Threshold",
+   "field": "catalog",
+   "a": "Threshold",
+   "b": "Threshold Hager"
+  },
+  {
+   "kind": "item",
+   "page": 157,
+   "key": "3 / Threshold",
+   "field": "finish",
+   "a": "Hager",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 157,
+   "key": "3 / Weatherstrip",
+   "field": "catalog",
+   "a": "Weatherstrip",
+   "b": "Weatherstrip Hager"
+  },
+  {
+   "kind": "item",
+   "page": 157,
+   "key": "3 / Weatherstrip",
+   "field": "finish",
+   "a": "Hager",
+   "b": null
+  }
+ ],
+ "ms": 1018,
+ "generated_at": "2026-10-11T14:33:25.812Z"
+}

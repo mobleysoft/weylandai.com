@@ -1,0 +1,189 @@
+{
+ "sha16": "5813ba8078c4e7ac",
+ "sha256": "5813ba8078c4e7acc115216f525878db41c93c7a0f3b804aa3f9ec3c50d3eb69",
+ "file": "5813ba8078c4e7ac.pdf",
+ "bytes": 9534908,
+ "family": "harvest",
+ "source": "harvest",
+ "label": null,
+ "source_url": null,
+ "page_count": 25,
+ "text_layer": {
+  "pages_with_text": 25,
+  "pages": 25
+ },
+ "pages": {
+  "door_candidates": 4,
+  "hardware_candidates": 0,
+  "door_schedule_pages": [
+   12
+  ],
+  "hardware_pages": []
+ },
+ "readers": {
+  "a": {
+   "doors": 3,
+   "sets": 0,
+   "items": 0,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 3
+  },
+  "b": {
+   "doors": 0,
+   "sets": 0,
+   "items": 0,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0,
+   "door_rows": 0
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 12,
+    "title": "PAVILION PLANS, ELEVATIONS, & SCHEDULES",
+    "rank": 2,
+    "scope": {
+     "address": "2400 VETERANS MEMORIAL DR"
+    },
+    "sheet": "A-101",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "address",
+      "value": "2400 VETERANS MEMORIAL DR",
+      "text": "2400 Veterans Memorial Dr.",
+      "x": 2336.9991,
+      "y": 1071.3603,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 3,
+   "pairs": [],
+   "openings": 3,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 0,
+   "pairs": [],
+   "openings": 0,
+   "collapsed_rows": 0,
+   "repeated": []
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 3,
+ "rows_total": 3,
+ "agreement_rate": 0,
+ "agreement": {
+  "doors": {
+   "rows": 3,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 3,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": 0
+  },
+  "items": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "sets": {
+   "sets": 0,
+   "agreed": 0
+  }
+ },
+ "triage_class": "schedule-only",
+ "triage_from": "inferred (S=true H=false plan sheets=2)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": true,
+   "total": 3,
+   "pass": 3,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "plan_sheets": [
+    "A-101 p.12",
+    "A-102 p.13"
+   ],
+   "plan_counts": {
+    "plan_sheets": 2,
+    "rooms": 9,
+    "corridors": 0,
+    "tags": 3,
+    "unmatched_tags": 0,
+    "schedule_marks": 3,
+    "marks_not_on_plan": 0,
+    "shared_marks": 0
+   }
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "schedule types present, but no legend title for them",
+   "skipped": []
+  },
+  "sizes_and_marks": {
+   "applicable": true,
+   "total": 3,
+   "pass": 3,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "size_fail": 0,
+   "mark_fail": 0
+  }
+ },
+ "tier": "oracle-checked",
+ "disagreement_count": 3,
+ "disagreements": [
+  {
+   "kind": "door",
+   "page": 12,
+   "key": "P001",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 12,
+   "key": "P002",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 12,
+   "key": "P003",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  }
+ ],
+ "ms": 2500,
+ "generated_at": "2026-10-11T14:30:16.708Z"
+}

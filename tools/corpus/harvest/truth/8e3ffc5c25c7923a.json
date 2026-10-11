@@ -1,0 +1,591 @@
+{
+ "sha16": "8e3ffc5c25c7923a",
+ "sha256": "8e3ffc5c25c7923a0bba57ab1c8dc4455507c0e03b7d6d97f20cf673910b4e87",
+ "file": "8e3ffc5c25c7923a.pdf",
+ "bytes": 6776049,
+ "family": "harvest",
+ "source": "harvest",
+ "label": null,
+ "source_url": null,
+ "page_count": 38,
+ "text_layer": {
+  "pages_with_text": 38,
+  "pages": 38
+ },
+ "pages": {
+  "door_candidates": 5,
+  "hardware_candidates": 1,
+  "door_schedule_pages": [
+   4,
+   5
+  ],
+  "hardware_pages": [
+   18
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 9,
+   "sets": 7,
+   "items": 40,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 9
+  },
+  "b": {
+   "doors": 9,
+   "sets": 6,
+   "items": 28,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 2,
+   "door_rows": 9
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 4,
+    "title": "LOBBY RENOVATION PLAN",
+    "rank": 2,
+    "scope": {
+     "facility_number": "3101025001",
+     "site_number": "1025"
+    },
+    "sheet": "A-102",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "site_number",
+      "value": "1025",
+      "text": "1025",
+      "x": 2434.3199999999997,
+      "y": 1179.6,
+      "source": "title_block"
+     },
+     {
+      "field": "facility_number",
+      "value": "3101025001",
+      "text": "FACILITY # 3101025001",
+      "x": 2339.16,
+      "y": 1201.8000000000002,
+      "source": "title_block"
+     }
+    ]
+   },
+   {
+    "page": 5,
+    "title": "LOBBY RENOVATION PLAN",
+    "rank": 2,
+    "scope": {
+     "facility_number": "3101025001",
+     "site_number": "1025"
+    },
+    "sheet": "A-103",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "site_number",
+      "value": "1025",
+      "text": "1025",
+      "x": 2434.3199999999997,
+      "y": 1179.6,
+      "source": "title_block"
+     },
+     {
+      "field": "facility_number",
+      "value": "3101025001",
+      "text": "FACILITY # 3101025001",
+      "x": 2339.16,
+      "y": 1201.8000000000002,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 9,
+   "pairs": [],
+   "openings": 9,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 9,
+   "pairs": [],
+   "openings": 9,
+   "collapsed_rows": 0,
+   "repeated": []
+  }
+ },
+ "rows_agreed": 13,
+ "rows_disputed": 43,
+ "rows_total": 56,
+ "agreement_rate": 0.2321,
+ "agreement": {
+  "doors": {
+   "rows": 9,
+   "agreed": 0,
+   "disputed": 9,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {
+    "width_inches": {
+     "agree": 7,
+     "total": 9
+    },
+    "height_inches": {
+     "agree": 7,
+     "total": 9
+    },
+    "material": {
+     "agree": 7,
+     "total": 9
+    },
+    "fire_rating": {
+     "agree": 0,
+     "total": 9
+    },
+    "hardware_group": {
+     "agree": 7,
+     "total": 7
+    },
+    "location": {
+     "agree": 0,
+     "total": 7
+    }
+   },
+   "agreement_rate": 0
+  },
+  "items": {
+   "rows": 47,
+   "agreed": 13,
+   "disputed": 8,
+   "only_a": 19,
+   "only_b": 7,
+   "fields": {
+    "qty": {
+     "agree": 21,
+     "total": 21
+    },
+    "description": {
+     "agree": 21,
+     "total": 21
+    },
+    "catalog": {
+     "agree": 7,
+     "total": 15
+    },
+    "finish": {
+     "agree": 0,
+     "total": 6
+    },
+    "manufacturer": {
+     "agree": 0,
+     "total": 6
+    }
+   },
+   "agreement_rate": 0.2766
+  },
+  "sets": {
+   "sets": 7,
+   "agreed": 5
+  }
+ },
+ "triage_class": "complete",
+ "triage_from": "inferred (S=true H=true plan sheets=4)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": true,
+   "total": 9,
+   "pass": 9,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "plan_sheets": [
+    "A-102 p.4",
+    "A-103 p.5",
+    "A-104 p.6",
+    "A-105 p.7"
+   ],
+   "plan_counts": {
+    "plan_sheets": 4,
+    "rooms": 112,
+    "corridors": 3,
+    "tags": 9,
+    "unmatched_tags": 6,
+    "schedule_marks": 9,
+    "marks_not_on_plan": 0,
+    "shared_marks": 0
+   }
+  },
+  "sets_exist": {
+   "applicable": true,
+   "total": 6,
+   "pass": 6,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": []
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "no hardware set prints its own door list"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "no DOOR TYPES / FRAME TYPES legend title in this PDF"
+  },
+  "sizes_and_marks": {
+   "applicable": true,
+   "total": 9,
+   "pass": 7,
+   "fail": 2,
+   "pass_rate": 0.7778,
+   "examples": [
+    "mark 7 p.4: size \"6'-0\\\" SHEET x 7'-0\\\" A-501\" -> null x null",
+    "mark 9 p.5: size \"5'-4\\\" SHEET x 6'-10\\\" A-501\" -> null x null"
+   ],
+   "size_fail": 2,
+   "mark_fail": 0
+  }
+ },
+ "tier": "agreed",
+ "disagreement_count": 70,
+ "disagreements": [
+  {
+   "kind": "door",
+   "page": 4,
+   "key": "1",
+   "field": "fire_rating",
+   "a": "--",
+   "b": "B LABEL"
+  },
+  {
+   "kind": "door",
+   "page": 4,
+   "key": "1",
+   "field": "location",
+   "a": "ENTRY",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 4,
+   "key": "2",
+   "field": "fire_rating",
+   "a": "--",
+   "b": "B LABEL"
+  },
+  {
+   "kind": "door",
+   "page": 4,
+   "key": "2",
+   "field": "location",
+   "a": "LOBBY",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 4,
+   "key": "3",
+   "field": "fire_rating",
+   "a": "--",
+   "b": "B LABEL"
+  },
+  {
+   "kind": "door",
+   "page": 4,
+   "key": "3",
+   "field": "location",
+   "a": "STAIRWELL",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 4,
+   "key": "4",
+   "field": "fire_rating",
+   "a": "--",
+   "b": "B LABEL"
+  },
+  {
+   "kind": "door",
+   "page": 4,
+   "key": "4",
+   "field": "location",
+   "a": "RESTROOM",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 4,
+   "key": "5",
+   "field": "fire_rating",
+   "a": "--",
+   "b": "B LABEL"
+  },
+  {
+   "kind": "door",
+   "page": 4,
+   "key": "5",
+   "field": "location",
+   "a": "RESTROOM",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 4,
+   "key": "6",
+   "field": "fire_rating",
+   "a": "9",
+   "b": "--"
+  },
+  {
+   "kind": "door",
+   "page": 4,
+   "key": "6",
+   "field": "location",
+   "a": "STORAGE ROOM",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 4,
+   "key": "7",
+   "field": "width_inches",
+   "a": null,
+   "b": 72
+  },
+  {
+   "kind": "door",
+   "page": 4,
+   "key": "7",
+   "field": "height_inches",
+   "a": null,
+   "b": 84
+  },
+  {
+   "kind": "door",
+   "page": 4,
+   "key": "7",
+   "field": "material",
+   "a": "GLAZED DETAILS AND",
+   "b": "GLAZED"
+  },
+  {
+   "kind": "door",
+   "page": 4,
+   "key": "7",
+   "field": "fire_rating",
+   "a": "9",
+   "b": "--"
+  },
+  {
+   "kind": "door",
+   "page": 4,
+   "key": "7",
+   "field": "location",
+   "a": "CONFERENCE ROOM STORAGE ROOM",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 5,
+   "key": "8",
+   "field": "fire_rating",
+   "a": "--",
+   "b": "B LABEL"
+  },
+  {
+   "kind": "door",
+   "page": 5,
+   "key": "9",
+   "field": "width_inches",
+   "a": null,
+   "b": 64
+  },
+  {
+   "kind": "door",
+   "page": 5,
+   "key": "9",
+   "field": "height_inches",
+   "a": null,
+   "b": 82
+  },
+  {
+   "kind": "door",
+   "page": 5,
+   "key": "9",
+   "field": "material",
+   "a": "WOOD DETAILS AND",
+   "b": "WOOD"
+  },
+  {
+   "kind": "door",
+   "page": 5,
+   "key": "9",
+   "field": "fire_rating",
+   "a": "--",
+   "b": "B LABEL"
+  },
+  {
+   "kind": "item",
+   "page": 18,
+   "key": "(CONTINUED) / GLAZING GLAZING",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 18,
+   "key": "(CONTINUED) / 12/13/24 dM. S c h a e f e r - A r c h i t e c t - 2 0 0 9 0 2 7 2 9 4",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 18,
+   "key": "2 / HINGES",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 18,
+   "key": "3 / HINGES SOCIAL SERVICES",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 18,
+   "key": "3 / OPEN DEVICE",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 18,
+   "key": "3 / BOTH SIDES OF DOORS",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 18,
+   "key": "3 / EXIT DEVICES GENERAL NOTES: MULTI. DIVISION",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 18,
+   "key": "3 / 1. FIELD VERIFY ACCURACY OF ALL CONDITIONS AND NOTIFY ARCHITECT OF ANY DISCREPANCIES.",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 18,
+   "key": "3 / REMOVE AND REINSTALL DOOR CLOSERS",
+   "field": "catalog",
+   "a": null,
+   "b": "2. REPAIR FINISH ON ALL EXISTING DOORS TO REMAIN WITHIN SCOPE OF WORK, INCLUDING FILLING, SANDING, STAINING, AND/OR HOWERTON STATE"
+  },
+  {
+   "kind": "item",
+   "page": 18,
+   "key": "3 / SOCIAL SERVICES",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 18,
+   "key": "3 / REMOVE AND REINSTALL DOOR HOLD OPEN DEVICE",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 18,
+   "key": "3 / PUSH / PULL HANDLES ON BOTH SIDES OF DOORS",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 18,
+   "key": "3 / GENERAL NOTES: MULTI. DIVISION",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 18,
+   "key": "4 / MATERIAL, AND FINISH; HARDWARE STYLE, FUNCTION, AND FINISH; AND FRAME SIZE, TYPE, AND FINISH.",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 18,
+   "key": "4 / 4. FIELD VERIFY ALL DOOR AND FRAME SIZES PRIOR TO FABRICATION AND INSTALLATION.",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 18,
+   "key": "4 / 5. THE CARD READERS SHALL REMAIN AND BE COORDINATED WITH OWNER'S SECURITY.",
+   "field": "catalog",
+   "a": "5. THE CARD READERS SHALL REMAIN AND BE COORDINATED WITH OWNER'S SECURITY.",
+   "b": "5. THE CARD READERS SHALL REMAIN AND BE COORDINATED WITH OWNER'S SECURITY. AND RESTROOMS"
+  },
+  {
+   "kind": "item",
+   "page": 18,
+   "key": "4 / 5. THE CARD READERS SHALL REMAIN AND BE COORDINATED WITH OWNER'S SECURITY.",
+   "field": "finish",
+   "a": "AND",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 18,
+   "key": "4 / 5. THE CARD READERS SHALL REMAIN AND BE COORDINATED WITH OWNER'S SECURITY.",
+   "field": "manufacturer",
+   "a": "RESTROOMS",
+   "b": null
+  }
+ ],
+ "ms": 1144,
+ "generated_at": "2026-10-11T14:30:43.769Z"
+}

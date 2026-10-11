@@ -1,0 +1,330 @@
+{
+  "rooms": [
+    {
+      "name": "CL. P003",
+      "number": "P003",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 1189,
+      "y": 1280
+    },
+    {
+      "name": "REST F.D. ROOM",
+      "number": "P001",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 1100,
+      "y": 1318
+    },
+    {
+      "name": "REST ROOM",
+      "number": "P002",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 1100,
+      "y": 1384
+    },
+    {
+      "name": "ENGINEERED HEAVY TIMBER MANUFACTURER",
+      "number": "4",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 727,
+      "y": 1658
+    },
+    {
+      "name": "ENGINEERED HEAVY TIMBER MANUFACTURER",
+      "number": "8",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 763,
+      "y": 1658
+    },
+    {
+      "name": "ENGINEERED HEAVY TIMBER MANUFACTURER",
+      "number": "16",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 832,
+      "y": 1658
+    },
+    {
+      "name": "CL.",
+      "number": "P003",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 2065,
+      "y": 1259
+    },
+    {
+      "name": "REST ROOM",
+      "number": "P001",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 1921,
+      "y": 1337
+    },
+    {
+      "name": "REST ROOM",
+      "number": "P002",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 1921,
+      "y": 1448
+    }
+  ],
+  "set": {
+    "label": null,
+    "page_count": 25,
+    "rows_total": 3,
+    "sha16": "5813ba8078c4e7ac",
+    "source_url": null,
+    "tier": "oracle-checked"
+  },
+  "sheets": [
+    {
+      "height": 1728,
+      "page": 12,
+      "plan_rule": "legacy",
+      "points_per_foot": [
+        9
+      ],
+      "scales": [
+        "Scale: 1/8\" = 1'-0\"",
+        "Scale: 1/8\" = 1'-0\"",
+        "Scale: 1/8\" = 1'-0\"",
+        "Scale: 1/8\" = 1'-0\"",
+        "Scale: 1/8\" = 1'-0\"",
+        "Scale: 1/8\" = 1'-0\"",
+        "Scale: 1/8\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [],
+            "page": 12
+          }
+        ],
+        "kept_pages": [
+          12
+        ],
+        "rule": "similarity"
+      },
+      "sheet": "A-101",
+      "title": "PAVILION PLANS, ELEVATIONS, & SCHEDULES",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 13,
+      "plan_rule": "drawing-title",
+      "points_per_foot": [
+        18
+      ],
+      "scales": [
+        "Scale: 1/4\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [],
+            "page": 12
+          }
+        ],
+        "kept_pages": [
+          12
+        ],
+        "rule": "similarity"
+      },
+      "sheet": "A-102",
+      "title": "PAVILION DETAILS",
+      "width": 2592
+    }
+  ],
+  "summary": {
+    "marks_placed": 3,
+    "marks_total": 3,
+    "placed_rate": 1,
+    "rooms_total": 9,
+    "sheets_total": 2,
+    "sheets_with_scale": 2,
+    "unplaced": []
+  },
+  "tags": [
+    {
+      "also_on": [],
+      "door_pages": [
+        12
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603,
+      "hardware_group": "2.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "P001",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|P001|12|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 12,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "P001",
+      "room_by": "nearest_label",
+      "room_name": "REST F.D. ROOM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "2.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "P001",
+          "material": "HM",
+          "page": 12,
+          "pair": false,
+          "size": "3' - 6\" x 7' - 0\"",
+          "width_inches": 42,
+          "y": 619
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 6\" x 7' - 0\"",
+      "source_keys": [
+        "12|P001|1"
+      ],
+      "unsure": true,
+      "width_inches": 42,
+      "x": 1110,
+      "y": 1245
+    },
+    {
+      "also_on": [
+        "A-102"
+      ],
+      "door_pages": [
+        12
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603,
+      "hardware_group": "1.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "P003",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|P003|12|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 12,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "P003",
+      "room_by": "nearest_label",
+      "room_name": "CL. P003",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "1.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "P003",
+          "material": "HM",
+          "page": 12,
+          "pair": false,
+          "size": "3' - 6\" x 7' - 0\"",
+          "width_inches": 42,
+          "y": 644
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 6\" x 7' - 0\"",
+      "source_keys": [
+        "12|P003|1"
+      ],
+      "unsure": true,
+      "width_inches": 42,
+      "x": 1215,
+      "y": 1274
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        12
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603,
+      "hardware_group": "2.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "P002",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|P002|12|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 12,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "P002",
+      "room_by": "nearest_label",
+      "room_name": "REST ROOM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "2.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "P002",
+          "material": "HM",
+          "page": 12,
+          "pair": false,
+          "size": "3' - 6\" x 7' - 0\"",
+          "width_inches": 42,
+          "y": 632
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 6\" x 7' - 0\"",
+      "source_keys": [
+        "12|P002|1"
+      ],
+      "unsure": true,
+      "width_inches": 42,
+      "x": 1112,
+      "y": 1433
+    }
+  ]
+}

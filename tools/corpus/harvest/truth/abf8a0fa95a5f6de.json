@@ -1,0 +1,303 @@
+{
+ "sha16": "abf8a0fa95a5f6de",
+ "sha256": "abf8a0fa95a5f6de49ff5ebdddd912ce52c785b426566060490740fc0b57aac1",
+ "file": "abf8a0fa95a5f6de.pdf",
+ "bytes": 9400322,
+ "family": "harvest",
+ "source": "harvest",
+ "label": null,
+ "source_url": null,
+ "page_count": 36,
+ "text_layer": {
+  "pages_with_text": 20,
+  "pages": 36
+ },
+ "pages": {
+  "door_candidates": 2,
+  "hardware_candidates": 1,
+  "door_schedule_pages": [
+   30
+  ],
+  "hardware_pages": []
+ },
+ "readers": {
+  "a": {
+   "doors": 48,
+   "sets": 0,
+   "items": 0,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 48
+  },
+  "b": {
+   "doors": 46,
+   "sets": 0,
+   "items": 0,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 1,
+   "door_rows": 46
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 30,
+    "title": "SCHEDULES",
+    "rank": 2,
+    "scope": {
+     "address": "922 INDUSTRIAL DRIVE",
+     "asset_number": "8136256005",
+     "level": "0; 1",
+     "site_number": "6256"
+    },
+    "sheet": "A-601",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "address",
+      "value": "922 INDUSTRIAL DRIVE",
+      "text": "922 INDUSTRIAL DRIVE",
+      "x": 2338.439064624,
+      "y": 1074.0002616000002,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "6256",
+      "text": "6256",
+      "x": 2423.1590307359997,
+      "y": 1161.720226512,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "8136256005",
+      "text": "ASSET#: 8136256005",
+      "x": 2338.439064624,
+      "y": 1183.5602177760002,
+      "source": "title_block"
+     },
+     {
+      "field": "level",
+      "value": "1",
+      "text": "LEVEL 1",
+      "x": 1686.479325408,
+      "y": 1167.840224064,
+      "source": "sheet_label"
+     },
+     {
+      "field": "level",
+      "value": "1",
+      "text": "LEVEL 1",
+      "x": 2027.519188992,
+      "y": 1167.840224064,
+      "source": "sheet_label"
+     },
+     {
+      "field": "level",
+      "value": "1",
+      "text": "LEVEL 1",
+      "x": 181.439927424,
+      "y": 1281.0001788,
+      "source": "sheet_label"
+     },
+     {
+      "field": "level",
+      "value": "1",
+      "text": "LEVEL 1",
+      "x": 695.2797218879999,
+      "y": 1281.0001788,
+      "source": "sheet_label"
+     },
+     {
+      "field": "level",
+      "value": "1",
+      "text": "LEVEL 1",
+      "x": 896.2796414879999,
+      "y": 1281.0001788,
+      "source": "sheet_label"
+     },
+     {
+      "field": "level",
+      "value": "1",
+      "text": "LEVEL 1",
+      "x": 1511.6393953440001,
+      "y": 1281.0001788,
+      "source": "sheet_label"
+     },
+     {
+      "field": "level",
+      "value": "0",
+      "text": "LEVEL 0",
+      "x": 181.439927424,
+      "y": 1424.880121248,
+      "source": "sheet_label"
+     },
+     {
+      "field": "level",
+      "value": "0",
+      "text": "LEVEL 0",
+      "x": 695.2797218879999,
+      "y": 1424.880121248,
+      "source": "sheet_label"
+     },
+     {
+      "field": "level",
+      "value": "0",
+      "text": "LEVEL 0",
+      "x": 896.2796414879999,
+      "y": 1424.880121248,
+      "source": "sheet_label"
+     },
+     {
+      "field": "level",
+      "value": "0",
+      "text": "LEVEL 0",
+      "x": 1511.6393953440001,
+      "y": 1424.880121248,
+      "source": "sheet_label"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 48,
+   "pairs": [],
+   "openings": 48,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 46,
+   "pairs": [],
+   "openings": 46,
+   "collapsed_rows": 0,
+   "repeated": []
+  }
+ },
+ "rows_agreed": 46,
+ "rows_disputed": 2,
+ "rows_total": 48,
+ "agreement_rate": 0.9583,
+ "agreement": {
+  "doors": {
+   "rows": 48,
+   "agreed": 46,
+   "disputed": 0,
+   "only_a": 2,
+   "only_b": 0,
+   "fields": {
+    "width_inches": {
+     "agree": 46,
+     "total": 46
+    },
+    "height_inches": {
+     "agree": 46,
+     "total": 46
+    },
+    "door_type": {
+     "agree": 44,
+     "total": 44
+    },
+    "material": {
+     "agree": 44,
+     "total": 44
+    },
+    "hardware_group": {
+     "agree": 41,
+     "total": 41
+    },
+    "fire_rating": {
+     "agree": 3,
+     "total": 3
+    }
+   },
+   "agreement_rate": 0.9583
+  },
+  "items": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "sets": {
+   "sets": 0,
+   "agreed": 0
+  }
+ },
+ "triage_class": "schedule-only",
+ "triage_from": "inferred (S=true H=false plan sheets=2)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": true,
+   "total": 48,
+   "pass": 48,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "plan_sheets": [
+    "A-101 p.28",
+    "A-401 p.29"
+   ],
+   "plan_counts": {
+    "plan_sheets": 2,
+    "rooms": 49,
+    "corridors": 5,
+    "tags": 48,
+    "unmatched_tags": 0,
+    "schedule_marks": 48,
+    "marks_not_on_plan": 0,
+    "shared_marks": 0
+   }
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "no DOOR TYPES / FRAME TYPES legend title in this PDF"
+  },
+  "sizes_and_marks": {
+   "applicable": true,
+   "total": 48,
+   "pass": 48,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "size_fail": 0,
+   "mark_fail": 0
+  }
+ },
+ "tier": "agreed",
+ "disagreement_count": 2,
+ "disagreements": [
+  {
+   "kind": "door",
+   "page": 30,
+   "key": "100",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 30,
+   "key": "101A",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  }
+ ],
+ "ms": 672,
+ "generated_at": "2026-10-11T14:33:37.261Z"
+}

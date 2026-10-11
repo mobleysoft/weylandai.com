@@ -1,0 +1,477 @@
+{
+ "sha16": "a250bbf43f248fbb",
+ "sha256": "a250bbf43f248fbb53f36e53182ffff34d57f8463a12da48e811109369e8c7cd",
+ "file": "a250bbf43f248fbb.pdf",
+ "bytes": 10252805,
+ "family": "harvest",
+ "source": "harvest",
+ "label": null,
+ "source_url": null,
+ "page_count": 400,
+ "text_layer": {
+  "pages_with_text": 382,
+  "pages": 400
+ },
+ "pages": {
+  "door_candidates": 0,
+  "hardware_candidates": 1,
+  "door_schedule_pages": [],
+  "hardware_pages": [
+   151
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 7,
+   "items": 35,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 0
+  },
+  "b": {
+   "doors": 0,
+   "sets": 0,
+   "items": 0,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0,
+   "door_rows": 0
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [],
+  "a": {
+   "rows": 0,
+   "pairs": [],
+   "openings": 0,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 0,
+   "pairs": [],
+   "openings": 0,
+   "collapsed_rows": 0,
+   "repeated": []
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 35,
+ "rows_total": 35,
+ "agreement_rate": 0,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 35,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 35,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": 0
+  },
+  "sets": {
+   "sets": 7,
+   "agreed": 0
+  }
+ },
+ "triage_class": "spec-only",
+ "triage_from": "inferred (S=false H=true plan sheets=0)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  }
+ },
+ "tier": "unread",
+ "unread_reason": "no rows agreed and no oracle applies",
+ "disagreement_count": 42,
+ "disagreements": [
+  {
+   "kind": "item",
+   "page": 151,
+   "key": "1 / BB1279 x 4.5 x 4.5 x 626 x NRP x Hinges",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 151,
+   "key": "1 / ND53BD x RHO x 626 x Keyed to Owner's System - Office Lockset",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 151,
+   "key": "1 / WS407CCV x 32D x Wall Stop",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 151,
+   "key": "2 / BB1279 x 4.5 x 4.5 x 626 x NRP x Hinges",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 151,
+   "key": "2 / ND70BD x RHO x 626 x Keyed to Owner's System - Classroom Lockset",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 151,
+   "key": "2 / 4040XP x Reg w/ PA x 689 x Closer",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 151,
+   "key": "2 / WS407CCV x 32D x Wall Stop",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 151,
+   "key": "3 / BB1279 x 4.5 x 4.5 x 626 x NRP x Hinges",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 151,
+   "key": "3 / 99 x 996L x 36\" x 626 x Exit Device",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 151,
+   "key": "3 / 626 x Keyed to Owner's system",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 151,
+   "key": "3 / 4040XP x Reg w/ PA x 689 x Closer",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 151,
+   "key": "3 / 425 x 36\" x Al x Threshold",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 151,
+   "key": "3 / 199NA x 36\" x AL x Sweep",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 151,
+   "key": "3 / 160V x 17' x Al x Weatherstrip",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 151,
+   "key": "3.1 / BB1279 x 4.5 x 4.5 x 626 x NRP x Hinges",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 151,
+   "key": "3.1 / 99 x 996L x 36\" x 626 x Exit Device",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 151,
+   "key": "3.1 / 99 x 996-DT x 36\" x 626 x Exit Device",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 151,
+   "key": "3.1 / 626 x Keyed to Owner's system",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 151,
+   "key": "3.1 / KR4954 x 7' x AL x Removable Mullion",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 151,
+   "key": "3.1 / 626 x Keyed to Owner's System",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 151,
+   "key": "3.1 / 4040XP x Reg w/ PA x 689 x Closer",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 151,
+   "key": "3.1 / 425 x 72\" x Al x Threshold",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 151,
+   "key": "3.1 / 199NA x 36\" x AL x Sweep",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 151,
+   "key": "3.1 / 160V x 20' x Al x Weatherstrip",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 151,
+   "key": "4 / BB1279 x 4.5 x 4.5 x 626 x NRP x Hinges",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 151,
+   "key": "4 / ND80PD x RHO x 626 x Keyed to Owner's System - Storeroom Lockset",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 151,
+   "key": "4 / 4040XP x Reg w/ PA x 689 x Closer",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 151,
+   "key": "4 / WS407CCV x 32D x Wall Stop",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 151,
+   "key": "5 / BB1279 x 4.5 x 4.5 x 626 x NRP x Hinges",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 151,
+   "key": "5 / ND40S x RHO x 626 x Privacy Set",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 151,
+   "key": "5 / 4040XP x Reg w/ PA x 689 x Closer",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 151,
+   "key": "5 / WS407CCV x 32D x Wall Stop",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 151,
+   "key": "6 / BB1279 x 4.5 x 4.5 x 626 x NRP x Hinges",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 151,
+   "key": "6 / 70C x 4\" x 16\" x .050 x 32D x Push Plate",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 151,
+   "key": "6 / 122 x 70C x 4\" x 16\" x .050 x 32D x Pull Plate",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "group",
+   "page": null,
+   "key": "1",
+   "field": "(set)",
+   "a": "",
+   "b": null,
+   "why": "only reader A read this set"
+  },
+  {
+   "kind": "group",
+   "page": null,
+   "key": "2",
+   "field": "(set)",
+   "a": "",
+   "b": null,
+   "why": "only reader A read this set"
+  },
+  {
+   "kind": "group",
+   "page": null,
+   "key": "3",
+   "field": "(set)",
+   "a": "",
+   "b": null,
+   "why": "only reader A read this set"
+  },
+  {
+   "kind": "group",
+   "page": null,
+   "key": "3.1",
+   "field": "(set)",
+   "a": "",
+   "b": null,
+   "why": "only reader A read this set"
+  },
+  {
+   "kind": "group",
+   "page": null,
+   "key": "4",
+   "field": "(set)",
+   "a": "",
+   "b": null,
+   "why": "only reader A read this set"
+  }
+ ],
+ "ms": 1754,
+ "generated_at": "2026-10-11T14:30:52.783Z"
+}
