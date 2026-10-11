@@ -62,7 +62,7 @@
   }
  },
  "triage_class": "none",
- "triage_from": "inferred (S=false H=false plan sheets=0)",
+ "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
    "applicable": false,
@@ -90,5 +90,5 @@
  "disagreement_count": 0,
  "disagreements": [],
  "ms": 102,
- "generated_at": "2026-10-11T04:34:17.833Z"
+ "generated_at": "2026-10-11T05:22:32.013Z"
 }

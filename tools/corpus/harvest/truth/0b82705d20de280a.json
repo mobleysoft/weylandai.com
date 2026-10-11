@@ -85,7 +85,7 @@
   }
  },
  "triage_class": "spec-only",
- "triage_from": "inferred (S=false H=true plan sheets=0)",
+ "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
    "applicable": false,
@@ -148,6 +148,6 @@
    "why": "the set's door lists differ"
   }
  ],
- "ms": 1545,
- "generated_at": "2026-10-11T04:31:03.101Z"
+ "ms": 1552,
+ "generated_at": "2026-10-11T05:19:16.113Z"
 }

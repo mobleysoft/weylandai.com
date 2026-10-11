@@ -84,7 +84,7 @@
   }
  },
  "triage_class": "schedule-only",
- "triage_from": "inferred (S=true H=false plan sheets=6)",
+ "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
    "applicable": true,
@@ -515,6 +515,6 @@
    "why": "only reader B read this row"
   }
  ],
- "ms": 46133,
- "generated_at": "2026-10-11T04:41:04.148Z"
+ "ms": 44855,
+ "generated_at": "2026-10-11T05:29:14.384Z"
 }

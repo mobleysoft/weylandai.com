@@ -103,8 +103,8 @@
    "agreed": 1
   }
  },
- "triage_class": "complete",
- "triage_from": "inferred (S=true H=true plan sheets=3)",
+ "triage_class": "schedule-only",
+ "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
    "applicable": true,
@@ -132,18 +132,12 @@
    }
   },
   "sets_exist": {
-   "applicable": true,
-   "total": 1,
-   "pass": 0,
-   "fail": 1,
-   "pass_rate": 0,
-   "examples": [
-    "schedule set 1 not in 08 71 00 (sets read: (CONTINUED))"
-   ]
+   "applicable": false,
+   "reason": "not for class schedule-only"
   },
   "set_door_lists": {
    "applicable": false,
-   "reason": "no hardware set prints its own door list"
+   "reason": "not for class schedule-only"
   },
   "types_in_legend": {
    "applicable": false,
@@ -484,6 +478,6 @@
    "b": null
   }
  ],
- "ms": 1128,
- "generated_at": "2026-10-11T04:37:00.989Z"
+ "ms": 1097,
+ "generated_at": "2026-10-11T05:25:13.663Z"
 }

@@ -100,7 +100,7 @@
   }
  },
  "triage_class": "spec-only",
- "triage_from": "inferred (S=false H=true plan sheets=0)",
+ "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
    "applicable": false,
@@ -447,6 +447,6 @@
    "b": "16 43 8804 Less Pull US32D SA 087100"
   }
  ],
- "ms": 1561,
- "generated_at": "2026-10-11T04:38:04.488Z"
+ "ms": 1582,
+ "generated_at": "2026-10-11T05:26:16.707Z"
 }

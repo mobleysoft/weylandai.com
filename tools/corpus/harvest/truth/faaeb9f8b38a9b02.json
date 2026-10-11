@@ -89,7 +89,7 @@
   }
  },
  "triage_class": "spec-only",
- "triage_from": "inferred (S=false H=true plan sheets=0)",
+ "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
    "applicable": false,
@@ -198,6 +198,6 @@
    "b": "BYOT"
   }
  ],
- "ms": 1801,
- "generated_at": "2026-10-11T04:41:39.328Z"
+ "ms": 1693,
+ "generated_at": "2026-10-11T05:29:47.902Z"
 }

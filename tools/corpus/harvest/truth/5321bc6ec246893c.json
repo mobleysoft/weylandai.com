@@ -105,7 +105,7 @@
   }
  },
  "triage_class": "complete",
- "triage_from": "inferred (S=true H=true plan sheets=2)",
+ "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
    "applicable": true,
@@ -489,6 +489,6 @@
    "b": "ETR ETR PROFESSIONAL SEAL"
   }
  ],
- "ms": 552,
- "generated_at": "2026-10-11T04:32:57.818Z"
+ "ms": 546,
+ "generated_at": "2026-10-11T05:21:13.565Z"
 }
