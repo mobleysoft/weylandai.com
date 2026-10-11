@@ -26,7 +26,7 @@
      "h": 408,
      "v": 4433
     },
-    "ms": 9275
+    "ms": 9506
    },
    {
     "page": 2,
@@ -38,7 +38,7 @@
      "h": 150,
      "v": 977
     },
-    "ms": 11153
+    "ms": 11312
    },
    {
     "page": 3,
@@ -50,7 +50,7 @@
      "h": 168,
      "v": 1123
     },
-    "ms": 24118
+    "ms": 24464
    },
    {
     "page": 4,
@@ -62,7 +62,7 @@
      "h": 153,
      "v": 975
     },
-    "ms": 10316
+    "ms": 10691
    }
   ]
  },
@@ -144,6 +144,6 @@
  "note": "no text layer: production OCR preprocessing, cell recognition and line reader; Poppler rendering (browser rendering is a separate check). Actual DPI is recorded per page; the same words are given to both readers",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 54870,
- "generated_at": "2026-10-11T05:55:14.399Z"
+ "ms": 55981,
+ "generated_at": "2026-10-11T07:43:16.372Z"
 }
