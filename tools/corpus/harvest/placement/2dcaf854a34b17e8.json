@@ -40,6 +40,7 @@
     {
       "height": 1728.2399,
       "page": 9,
+      "plan_rule": "legacy",
       "points_per_foot": [
         18,
         27,
@@ -58,6 +59,22 @@
         "SCALE: 1/4\" = 1'-0\"",
         "SCALE: 1 1/2\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number",
+              "facility_number"
+            ],
+            "page": 12
+          }
+        ],
+        "kept_pages": [
+          12
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-100",
       "title": "FLOOR PLAN",
       "width": 2587.6797
@@ -94,6 +111,14 @@
       "mark": "101",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"620 N. JEFFERSON STREET\",\"facility_number\":\"8136801012\",\"site_number\":\"6801\"},\"A\"]|101|12|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "620 N. JEFFERSON STREET",
+        "facility_number": "8136801012",
+        "site_number": "6801"
+      },
+      "opening_scope_id": "[{\"address\":\"620 N. JEFFERSON STREET\",\"facility_number\":\"8136801012\",\"site_number\":\"6801\"},\"A\"]",
       "page": 9,
       "pair": false,
       "points_per_foot": 27,
@@ -119,6 +144,9 @@
       ],
       "sheet": "A-100",
       "size": null,
+      "source_keys": [
+        "12|101|1"
+      ],
       "width_inches": null,
       "x": 2083,
       "y": 126
@@ -138,6 +166,14 @@
       "mark": "102",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"620 N. JEFFERSON STREET\",\"facility_number\":\"8136801012\",\"site_number\":\"6801\"},\"A\"]|102|12|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "620 N. JEFFERSON STREET",
+        "facility_number": "8136801012",
+        "site_number": "6801"
+      },
+      "opening_scope_id": "[{\"address\":\"620 N. JEFFERSON STREET\",\"facility_number\":\"8136801012\",\"site_number\":\"6801\"},\"A\"]",
       "page": 9,
       "pair": false,
       "points_per_foot": 18,
@@ -163,6 +199,9 @@
       ],
       "sheet": "A-100",
       "size": null,
+      "source_keys": [
+        "12|102|1"
+      ],
       "unsure": true,
       "width_inches": null,
       "x": 1713,

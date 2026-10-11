@@ -58,12 +58,29 @@
     {
       "height": 1728,
       "page": 105,
+      "plan_rule": "legacy",
       "points_per_foot": [
         27
       ],
       "scales": [
         "3/8\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number",
+              "facility_number"
+            ],
+            "page": 108
+          }
+        ],
+        "kept_pages": [
+          108
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-401",
       "title": "ENLARGED PLANS",
       "width": 2592
@@ -71,8 +88,25 @@
     {
       "height": 1728,
       "page": 106,
+      "plan_rule": "legacy",
       "points_per_foot": null,
       "scales": [],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number",
+              "facility_number"
+            ],
+            "page": 108
+          }
+        ],
+        "kept_pages": [
+          108
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-402",
       "title": "ENLARGED PLANS",
       "width": 2592

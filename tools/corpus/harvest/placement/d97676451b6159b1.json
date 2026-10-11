@@ -31,6 +31,7 @@
     {
       "height": 1728,
       "page": 16,
+      "plan_rule": "legacy",
       "points_per_foot": [
         13.5,
         36
@@ -41,6 +42,22 @@
         "3/16\" = 1'-0\"",
         "3/16\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site"
+            ],
+            "page": 22
+          }
+        ],
+        "kept_pages": [
+          22
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-2",
       "title": "CABIN FLOOR PLAN (1)",
       "width": 2592
@@ -48,6 +65,7 @@
     {
       "height": 1728,
       "page": 17,
+      "plan_rule": "legacy",
       "points_per_foot": [
         13.5,
         36
@@ -58,6 +76,22 @@
         "3/16\" = 1'-0\"",
         "3/16\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site"
+            ],
+            "page": 22
+          }
+        ],
+        "kept_pages": [
+          22
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-3",
       "title": "CABIN FLOOR PLAN (2)",
       "width": 2592

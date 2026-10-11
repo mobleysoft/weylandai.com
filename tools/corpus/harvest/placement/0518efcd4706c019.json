@@ -481,6 +481,7 @@
     {
       "height": 1728,
       "page": 16,
+      "plan_rule": "legacy",
       "points_per_foot": [
         9
       ],
@@ -488,6 +489,22 @@
         "1/8\" = 1'-0\"",
         "1/8\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 28
+          }
+        ],
+        "kept_pages": [
+          28
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-101",
       "title": "FLOOR PLANS",
       "width": 2592
@@ -495,6 +512,7 @@
     {
       "height": 1728,
       "page": 17,
+      "plan_rule": "legacy",
       "points_per_foot": [
         9
       ],
@@ -502,6 +520,22 @@
         "1/8\" = 1'-0\"",
         "1/8\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 28
+          }
+        ],
+        "kept_pages": [
+          28
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-102",
       "title": "DIMENSION PLANS",
       "width": 2592
@@ -509,6 +543,7 @@
     {
       "height": 1728,
       "page": 18,
+      "plan_rule": "legacy",
       "points_per_foot": [
         9
       ],
@@ -516,6 +551,22 @@
         "1/8\" = 1'-0\"",
         "1/8\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 28
+          }
+        ],
+        "kept_pages": [
+          28
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-103",
       "title": "REFERENCE PLANS",
       "width": 2592
@@ -523,6 +574,7 @@
     {
       "height": 1728,
       "page": 22,
+      "plan_rule": "legacy",
       "points_per_foot": [
         18
       ],
@@ -530,6 +582,22 @@
         "1/4\" = 1'-0\"",
         "1/4\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 28
+          }
+        ],
+        "kept_pages": [
+          28
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-401",
       "title": "ENLARGED PLANS",
       "width": 2592
@@ -562,6 +630,14 @@
       "mark": "203",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]|203|28|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+        "asset_number": "3511501028",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]",
       "page": 18,
       "pair": false,
       "points_per_foot": 9,
@@ -587,6 +663,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "28|203|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1557,
@@ -609,6 +688,14 @@
       "mark": "210",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]|210|28|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+        "asset_number": "3511501028",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]",
       "page": 18,
       "pair": false,
       "points_per_foot": 9,
@@ -634,6 +721,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "28|210|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1966,
@@ -656,6 +746,14 @@
       "mark": "211",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]|211|28|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+        "asset_number": "3511501028",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]",
       "page": 18,
       "pair": false,
       "points_per_foot": 9,
@@ -681,6 +779,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "28|211|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 2017,
@@ -703,6 +804,14 @@
       "mark": "202",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]|202|28|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+        "asset_number": "3511501028",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]",
       "page": 18,
       "pair": false,
       "points_per_foot": 9,
@@ -728,6 +837,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "28|202|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1516,
@@ -750,6 +862,14 @@
       "mark": "205",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]|205|28|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+        "asset_number": "3511501028",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]",
       "page": 18,
       "pair": false,
       "points_per_foot": 9,
@@ -775,6 +895,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "28|205|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1636,
@@ -797,6 +920,14 @@
       "mark": "207",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]|207|28|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+        "asset_number": "3511501028",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]",
       "page": 18,
       "pair": false,
       "points_per_foot": 9,
@@ -822,6 +953,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "28|207|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1777,
@@ -844,6 +978,14 @@
       "mark": "208",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]|208|28|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+        "asset_number": "3511501028",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]",
       "page": 18,
       "pair": false,
       "points_per_foot": 9,
@@ -869,6 +1011,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "28|208|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1823,
@@ -891,6 +1036,14 @@
       "mark": "206",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]|206|28|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+        "asset_number": "3511501028",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]",
       "page": 18,
       "pair": false,
       "points_per_foot": 9,
@@ -916,6 +1069,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "28|206|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1672,
@@ -938,6 +1094,14 @@
       "mark": "209",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]|209|28|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+        "asset_number": "3511501028",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]",
       "page": 18,
       "pair": false,
       "points_per_foot": 9,
@@ -963,6 +1127,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "28|209|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1868,
@@ -985,6 +1152,14 @@
       "mark": "200",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]|200|28|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+        "asset_number": "3511501028",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]",
       "page": 18,
       "pair": false,
       "points_per_foot": 9,
@@ -1010,6 +1185,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "28|200|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1468,
@@ -1032,6 +1210,14 @@
       "mark": "217",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]|217|28|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+        "asset_number": "3511501028",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]",
       "page": 18,
       "pair": false,
       "points_per_foot": 9,
@@ -1057,6 +1243,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "28|217|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1558,
@@ -1079,6 +1268,14 @@
       "mark": "216",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]|216|28|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+        "asset_number": "3511501028",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]",
       "page": 18,
       "pair": false,
       "points_per_foot": 9,
@@ -1104,6 +1301,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "28|216|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1735,
@@ -1126,6 +1326,14 @@
       "mark": "215",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]|215|28|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+        "asset_number": "3511501028",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]",
       "page": 18,
       "pair": false,
       "points_per_foot": 9,
@@ -1151,6 +1359,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "28|215|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1771,
@@ -1173,6 +1384,14 @@
       "mark": "213",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]|213|28|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+        "asset_number": "3511501028",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]",
       "page": 18,
       "pair": false,
       "points_per_foot": 9,
@@ -1198,6 +1417,9 @@
       ],
       "sheet": "A-103",
       "size": "6' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "28|213|1"
+      ],
       "unsure": true,
       "width_inches": 72,
       "x": 1944,
@@ -1220,6 +1442,14 @@
       "mark": "212",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]|212|28|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+        "asset_number": "3511501028",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]",
       "page": 18,
       "pair": false,
       "points_per_foot": 9,
@@ -1245,6 +1475,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "28|212|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 2023,
@@ -1267,6 +1500,14 @@
       "mark": "219",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]|219|28|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+        "asset_number": "3511501028",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]",
       "page": 18,
       "pair": false,
       "points_per_foot": 9,
@@ -1292,6 +1533,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "28|219|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1467,
@@ -1314,6 +1558,14 @@
       "mark": "218",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]|218|28|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+        "asset_number": "3511501028",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]",
       "page": 18,
       "pair": false,
       "points_per_foot": 9,
@@ -1339,6 +1591,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "28|218|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1599,
@@ -1361,6 +1616,14 @@
       "mark": "101",
       "matched_by": "exact",
       "material": "HM",
+      "opening_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]|101|28|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+        "asset_number": "3511501028",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]",
       "page": 18,
       "pair": false,
       "points_per_foot": 9,
@@ -1386,6 +1649,9 @@
       ],
       "sheet": "A-103",
       "size": "7' - 4\" x 8' - 0\"",
+      "source_keys": [
+        "28|101|1"
+      ],
       "unsure": true,
       "width_inches": 88,
       "x": 1335,
@@ -1406,6 +1672,14 @@
       "mark": "104",
       "matched_by": "exact",
       "material": "ETR",
+      "opening_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]|104|28|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+        "asset_number": "3511501028",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]",
       "page": 18,
       "pair": false,
       "points_per_foot": 9,
@@ -1431,6 +1705,9 @@
       ],
       "sheet": "A-103",
       "size": "2' - 6\" x 6' - 8\"",
+      "source_keys": [
+        "28|104|1"
+      ],
       "width_inches": 30,
       "x": 696,
       "y": 906
@@ -1452,6 +1729,14 @@
       "mark": "107",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]|107|28|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+        "asset_number": "3511501028",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]",
       "page": 18,
       "pair": false,
       "points_per_foot": 9,
@@ -1477,6 +1762,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "28|107|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1599,
@@ -1499,6 +1787,14 @@
       "mark": "108",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]|108|28|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+        "asset_number": "3511501028",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]",
       "page": 18,
       "pair": false,
       "points_per_foot": 9,
@@ -1524,6 +1820,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "28|108|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1679,
@@ -1546,6 +1845,14 @@
       "mark": "109",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]|109|28|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+        "asset_number": "3511501028",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]",
       "page": 18,
       "pair": false,
       "points_per_foot": 9,
@@ -1571,6 +1878,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "28|109|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1760,
@@ -1593,6 +1903,14 @@
       "mark": "110",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]|110|28|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+        "asset_number": "3511501028",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]",
       "page": 18,
       "pair": false,
       "points_per_foot": 9,
@@ -1618,6 +1936,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "28|110|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1822,
@@ -1640,6 +1961,14 @@
       "mark": "111",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]|111|28|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+        "asset_number": "3511501028",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]",
       "page": 18,
       "pair": false,
       "points_per_foot": 9,
@@ -1665,6 +1994,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "28|111|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1896,
@@ -1687,6 +2019,14 @@
       "mark": "112",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]|112|28|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+        "asset_number": "3511501028",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]",
       "page": 18,
       "pair": false,
       "points_per_foot": 9,
@@ -1712,6 +2052,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "28|112|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1932,
@@ -1734,6 +2077,14 @@
       "mark": "113",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]|113|28|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+        "asset_number": "3511501028",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]",
       "page": 18,
       "pair": false,
       "points_per_foot": 9,
@@ -1759,6 +2110,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "28|113|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 2024,
@@ -1781,6 +2135,14 @@
       "mark": "105",
       "matched_by": "exact",
       "material": "HMI",
+      "opening_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]|105|28|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+        "asset_number": "3511501028",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]",
       "page": 18,
       "pair": false,
       "points_per_foot": 9,
@@ -1806,6 +2168,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "28|105|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1400,
@@ -1828,6 +2193,14 @@
       "mark": "106",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]|106|28|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+        "asset_number": "3511501028",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]",
       "page": 18,
       "pair": false,
       "points_per_foot": 9,
@@ -1853,6 +2226,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "28|106|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1468,
@@ -1875,6 +2251,14 @@
       "mark": "116A",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]|116A|28|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+        "asset_number": "3511501028",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]",
       "page": 18,
       "pair": false,
       "points_per_foot": 9,
@@ -1900,6 +2284,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "28|116A|1"
+      ],
       "width_inches": 36,
       "x": 1883,
       "y": 971
@@ -1921,6 +2308,14 @@
       "mark": "114A",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]|114A|28|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+        "asset_number": "3511501028",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]",
       "page": 18,
       "pair": false,
       "points_per_foot": 9,
@@ -1946,6 +2341,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "28|114A|1"
+      ],
       "width_inches": 36,
       "x": 2022,
       "y": 971
@@ -1967,6 +2365,14 @@
       "mark": "115",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]|115|28|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+        "asset_number": "3511501028",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]",
       "page": 18,
       "pair": false,
       "points_per_foot": 9,
@@ -1992,6 +2398,9 @@
       ],
       "sheet": "A-103",
       "size": "6' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "28|115|1"
+      ],
       "unsure": true,
       "width_inches": 72,
       "x": 1944,
@@ -2012,6 +2421,14 @@
       "mark": "120",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]|120|28|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+        "asset_number": "3511501028",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]",
       "page": 18,
       "pair": false,
       "points_per_foot": 9,
@@ -2037,6 +2454,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "28|120|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1449,
@@ -2059,6 +2479,14 @@
       "mark": "117A",
       "matched_by": "exact",
       "material": "HMI",
+      "opening_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]|117A|28|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+        "asset_number": "3511501028",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]",
       "page": 18,
       "pair": false,
       "points_per_foot": 9,
@@ -2084,6 +2512,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "28|117A|1"
+      ],
       "width_inches": 36,
       "x": 1576,
       "y": 1089
@@ -2105,6 +2536,14 @@
       "mark": "116B",
       "matched_by": "exact",
       "material": "HMI",
+      "opening_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]|116B|28|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+        "asset_number": "3511501028",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]",
       "page": 18,
       "pair": false,
       "points_per_foot": 9,
@@ -2130,6 +2569,9 @@
       ],
       "sheet": "A-103",
       "size": "6' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "28|116B|1"
+      ],
       "width_inches": 72,
       "x": 1819,
       "y": 1089
@@ -2151,6 +2593,14 @@
       "mark": "114B",
       "matched_by": "exact",
       "material": "HMI",
+      "opening_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]|114B|28|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+        "asset_number": "3511501028",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]",
       "page": 18,
       "pair": false,
       "points_per_foot": 9,
@@ -2176,6 +2626,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "28|114B|1"
+      ],
       "width_inches": 36,
       "x": 2021,
       "y": 1089
@@ -2195,6 +2648,14 @@
       "mark": "100",
       "matched_by": "exact",
       "material": "HM",
+      "opening_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]|100|28|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+        "asset_number": "3511501028",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]",
       "page": 18,
       "pair": false,
       "points_per_foot": 9,
@@ -2220,6 +2681,9 @@
       ],
       "sheet": "A-103",
       "size": "7' - 4\" x 7' - 0\"",
+      "source_keys": [
+        "28|100|1"
+      ],
       "width_inches": 88,
       "x": 638,
       "y": 1162
@@ -2239,6 +2703,14 @@
       "mark": "102",
       "matched_by": "exact",
       "material": "HM",
+      "opening_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]|102|28|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+        "asset_number": "3511501028",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]",
       "page": 18,
       "pair": false,
       "points_per_foot": 9,
@@ -2264,6 +2736,9 @@
       ],
       "sheet": "A-103",
       "size": "7' - 4\" x 7' - 0\"",
+      "source_keys": [
+        "28|102|1"
+      ],
       "unsure": true,
       "width_inches": 88,
       "x": 2045,
@@ -2284,6 +2759,14 @@
       "mark": "103",
       "matched_by": "exact",
       "material": "HM",
+      "opening_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]|103|28|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+        "asset_number": "3511501028",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]",
       "page": 18,
       "pair": false,
       "points_per_foot": 9,
@@ -2309,6 +2792,9 @@
       ],
       "sheet": "A-103",
       "size": "7' - 4\" x 7' - 0\"",
+      "source_keys": [
+        "28|103|1"
+      ],
       "width_inches": 88,
       "x": 1335,
       "y": 1512
@@ -2328,6 +2814,14 @@
       "mark": "214",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]|214|28|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+        "asset_number": "3511501028",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]",
       "page": 22,
       "pair": false,
       "points_per_foot": 18,
@@ -2353,6 +2847,9 @@
       ],
       "sheet": "A-401",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "28|214|1"
+      ],
       "width_inches": 36,
       "x": 1530,
       "y": 462
@@ -2372,6 +2869,14 @@
       "mark": "117B",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]|117B|28|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+        "asset_number": "3511501028",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST\",\"asset_number\":\"3511501028\",\"site_number\":\"1501\"},\"A\"]",
       "page": 22,
       "pair": false,
       "points_per_foot": 18,
@@ -2397,6 +2902,9 @@
       ],
       "sheet": "A-401",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "28|117B|1"
+      ],
       "width_inches": 36,
       "x": 1159,
       "y": 1244

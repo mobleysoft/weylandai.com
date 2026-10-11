@@ -12,6 +12,7 @@
     {
       "height": 1728,
       "page": 11,
+      "plan_rule": "legacy",
       "points_per_foot": [
         13.5
       ],
@@ -19,6 +20,22 @@
         "SCALE: 3/16\" = 1'-0\"",
         "SCALE: 3/16\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 15
+          }
+        ],
+        "kept_pages": [
+          15
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-100",
       "title": "GENERAL PLAN NOTES",
       "width": 2592
@@ -49,6 +66,14 @@
       "mark": "100",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"411 COLLEGE ST\",\"asset_number\":\"8136251003\",\"site_number\":\"6251\"},\"A\"]|100|15|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "411 COLLEGE ST",
+        "asset_number": "8136251003",
+        "site_number": "6251"
+      },
+      "opening_scope_id": "[{\"address\":\"411 COLLEGE ST\",\"asset_number\":\"8136251003\",\"site_number\":\"6251\"},\"A\"]",
       "page": 11,
       "pair": false,
       "points_per_foot": 13.5,
@@ -74,6 +99,9 @@
       ],
       "sheet": "A-100",
       "size": "7' - 0\"",
+      "source_keys": [
+        "15|100|1"
+      ],
       "width_inches": null,
       "x": 1758,
       "y": 377
@@ -93,6 +121,14 @@
       "mark": "101",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"411 COLLEGE ST\",\"asset_number\":\"8136251003\",\"site_number\":\"6251\"},\"A\"]|101|15|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "411 COLLEGE ST",
+        "asset_number": "8136251003",
+        "site_number": "6251"
+      },
+      "opening_scope_id": "[{\"address\":\"411 COLLEGE ST\",\"asset_number\":\"8136251003\",\"site_number\":\"6251\"},\"A\"]",
       "page": 11,
       "pair": false,
       "points_per_foot": 13.5,
@@ -118,6 +154,9 @@
       ],
       "sheet": "A-100",
       "size": "7' - 0\"",
+      "source_keys": [
+        "15|101|1"
+      ],
       "width_inches": null,
       "x": 1663,
       "y": 1524

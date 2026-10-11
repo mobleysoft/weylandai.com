@@ -1,0 +1,515 @@
+{
+  "rooms": [],
+  "set": {
+    "label": null,
+    "page_count": 76,
+    "rows_total": 74,
+    "sha16": "2a7a42fa9d09307d",
+    "source_url": null,
+    "tier": "agreed"
+  },
+  "sheets": [
+    {
+      "height": 1728,
+      "page": 56,
+      "plan_rule": "extended-title",
+      "points_per_foot": [
+        9
+      ],
+      "scales": [
+        "1/8\" = 1'-0\"",
+        "1/8\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [],
+            "page": 58
+          }
+        ],
+        "kept_pages": [
+          58
+        ],
+        "rule": "similarity"
+      },
+      "sheet": "A-102",
+      "title": "FLOOR PLANS -",
+      "width": 2592
+    }
+  ],
+  "summary": {
+    "marks_placed": 2,
+    "marks_total": 74,
+    "placed_rate": 0.02702702702702703,
+    "rooms_total": 0,
+    "sheets_total": 1,
+    "sheets_with_scale": 1,
+    "unplaced": [
+      {
+        "mark": "100",
+        "page": 58,
+        "reason": "mark 100 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "100.1",
+        "page": 58,
+        "reason": "mark 100.1 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "101",
+        "page": 58,
+        "reason": "mark 101 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "101.1",
+        "page": 58,
+        "reason": "mark 101.1 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "102",
+        "page": 58,
+        "reason": "mark 102 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "102.1",
+        "page": 58,
+        "reason": "mark 102.1 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "103",
+        "page": 58,
+        "reason": "mark 103 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "103.1",
+        "page": 58,
+        "reason": "mark 103.1 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "104",
+        "page": 58,
+        "reason": "mark 104 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "104.1",
+        "page": 58,
+        "reason": "mark 104.1 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "106",
+        "page": 58,
+        "reason": "mark 106 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "106.1",
+        "page": 58,
+        "reason": "mark 106.1 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "107",
+        "page": 58,
+        "reason": "mark 107 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "107.1",
+        "page": 58,
+        "reason": "mark 107.1 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "108",
+        "page": 58,
+        "reason": "mark 108 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "108.1",
+        "page": 58,
+        "reason": "mark 108.1 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "109",
+        "page": 58,
+        "reason": "mark 109 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "109.1",
+        "page": 58,
+        "reason": "mark 109.1 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "111",
+        "page": 58,
+        "reason": "mark 111 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "111.1",
+        "page": 58,
+        "reason": "mark 111.1 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "112",
+        "page": 58,
+        "reason": "mark 112 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "112.1",
+        "page": 58,
+        "reason": "mark 112.1 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "151",
+        "page": 58,
+        "reason": "mark 151 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "152",
+        "page": 58,
+        "reason": "mark 152 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "153",
+        "page": 58,
+        "reason": "mark 153 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "154",
+        "page": 58,
+        "reason": "mark 154 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "155",
+        "page": 58,
+        "reason": "mark 155 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "156",
+        "page": 58,
+        "reason": "mark 156 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "157",
+        "page": 58,
+        "reason": "mark 157 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "158",
+        "page": 58,
+        "reason": "mark 158 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "200.1",
+        "page": 58,
+        "reason": "mark 200.1 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "200.2",
+        "page": 58,
+        "reason": "mark 200.2 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "200.3",
+        "page": 58,
+        "reason": "mark 200.3 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "200.4",
+        "page": 58,
+        "reason": "mark 200.4 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "201",
+        "page": 58,
+        "reason": "mark 201 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "202",
+        "page": 58,
+        "reason": "mark 202 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "203",
+        "page": 58,
+        "reason": "mark 203 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "204",
+        "page": 58,
+        "reason": "mark 204 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "205",
+        "page": 58,
+        "reason": "mark 205 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "206",
+        "page": 58,
+        "reason": "mark 206 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "207",
+        "page": 58,
+        "reason": "mark 207 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "208",
+        "page": 58,
+        "reason": "mark 208 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "209",
+        "page": 58,
+        "reason": "mark 209 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "210",
+        "page": 58,
+        "reason": "mark 210 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "221",
+        "page": 58,
+        "reason": "mark 221 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "222",
+        "page": 58,
+        "reason": "mark 222 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "223",
+        "page": 58,
+        "reason": "mark 223 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "224",
+        "page": 58,
+        "reason": "mark 224 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "225.1",
+        "page": 58,
+        "reason": "mark 225.1 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "225.2",
+        "page": 58,
+        "reason": "mark 225.2 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "227",
+        "page": 58,
+        "reason": "mark 227 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "228",
+        "page": 58,
+        "reason": "mark 228 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "229",
+        "page": 58,
+        "reason": "mark 229 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "230",
+        "page": 58,
+        "reason": "mark 230 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "230.1",
+        "page": 58,
+        "reason": "mark 230.1 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "231",
+        "page": 58,
+        "reason": "mark 231 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "232",
+        "page": 58,
+        "reason": "mark 232 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "233",
+        "page": 58,
+        "reason": "mark 233 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "234",
+        "page": 58,
+        "reason": "mark 234 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "235",
+        "page": 58,
+        "reason": "mark 235 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "237",
+        "page": 58,
+        "reason": "mark 237 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "238",
+        "page": 58,
+        "reason": "mark 238 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "239",
+        "page": 58,
+        "reason": "mark 239 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "240",
+        "page": 58,
+        "reason": "mark 240 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "241",
+        "page": 58,
+        "reason": "mark 241 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "242",
+        "page": 58,
+        "reason": "mark 242 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "E101",
+        "page": 58,
+        "reason": "mark E101 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "E102",
+        "page": 58,
+        "reason": "mark E102 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "E103",
+        "page": 58,
+        "reason": "mark E103 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "E104",
+        "page": 58,
+        "reason": "mark E104 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "E201",
+        "page": 58,
+        "reason": "mark E201 (schedule p.58) not tagged on any plan"
+      },
+      {
+        "mark": "E202",
+        "page": 58,
+        "reason": "mark E202 (schedule p.58) not tagged on any plan"
+      }
+    ]
+  },
+  "tags": [
+    {
+      "also_on": [],
+      "door_pages": [
+        58
+      ],
+      "door_type": "NV",
+      "fire_rating": null,
+      "frame_type": "NV",
+      "h": 9.603716158511999,
+      "hardware_group": "23",
+      "height_inches": 84,
+      "location": null,
+      "mark": "E204",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{},\"A\"]|E204|58|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
+      "page": 56,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "NV",
+          "fire_rating": null,
+          "frame_type": "NV",
+          "hardware_group": "23",
+          "height_inches": 84,
+          "location": null,
+          "mark": "E204",
+          "material": "HM",
+          "page": 58,
+          "pair": false,
+          "size": "7' - 4\" x 7' - 0\"",
+          "width_inches": 88,
+          "y": 802
+        }
+      ],
+      "sheet": "A-102",
+      "size": "7' - 4\" x 7' - 0\"",
+      "source_keys": [
+        "58|E204|1"
+      ],
+      "width_inches": 88,
+      "x": 1534,
+      "y": 762
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        58
+      ],
+      "door_type": "NV",
+      "fire_rating": null,
+      "frame_type": "NV",
+      "h": 9.603716158511999,
+      "hardware_group": "23",
+      "height_inches": 80,
+      "location": null,
+      "mark": "E203",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{},\"A\"]|E203|58|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
+      "page": 56,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "NV",
+          "fire_rating": null,
+          "frame_type": "NV",
+          "hardware_group": "23",
+          "height_inches": 80,
+          "location": null,
+          "mark": "E203",
+          "material": "WD",
+          "page": 58,
+          "pair": false,
+          "size": "7' - 4\" x 6' - 8\"",
+          "width_inches": 88,
+          "y": 791
+        }
+      ],
+      "sheet": "A-102",
+      "size": "7' - 4\" x 6' - 8\"",
+      "source_keys": [
+        "58|E203|1"
+      ],
+      "width_inches": 88,
+      "x": 1575,
+      "y": 1491
+    }
+  ]
+}

@@ -1,6 +1,177 @@
 {
   "rooms": [
     {
+      "name": "TYPE",
+      "number": "F2",
+      "page": 20,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 593,
+      "y": 575
+    },
+    {
+      "name": "TYPE",
+      "number": "F2",
+      "page": 20,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 593,
+      "y": 580
+    },
+    {
+      "name": "ADA SHOWER",
+      "number": "117",
+      "page": 20,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 1543,
+      "y": 1131
+    },
+    {
+      "name": "SHOWER",
+      "number": "111",
+      "page": 20,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 1229,
+      "y": 1137
+    },
+    {
+      "name": "SHOWER",
+      "number": "113",
+      "page": 20,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 1334,
+      "y": 1138
+    },
+    {
+      "name": "SHOWER",
+      "number": "115",
+      "page": 20,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 1428,
+      "y": 1139
+    },
+    {
+      "name": "ADA RESTROOM",
+      "number": "105",
+      "page": 20,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 491,
+      "y": 1140
+    },
+    {
+      "name": "RESTROOM",
+      "number": "103",
+      "page": 20,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 630,
+      "y": 1149
+    },
+    {
+      "name": "ADA RESTROOM",
+      "number": "101",
+      "page": 20,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 769,
+      "y": 1149
+    },
+    {
+      "name": "MECH",
+      "number": "110",
+      "page": 20,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 1313,
+      "y": 1284
+    },
+    {
+      "name": "MECH",
+      "number": "109",
+      "page": 20,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 577,
+      "y": 1290
+    },
+    {
+      "name": "LAUNDRY",
+      "number": "100",
+      "page": 20,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 961,
+      "y": 1308
+    },
+    {
+      "name": "ADA RESTROOM",
+      "number": "102",
+      "page": 20,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 769,
+      "y": 1355
+    },
+    {
+      "name": "ADA SHOWER",
+      "number": "118",
+      "page": 20,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 1531,
+      "y": 1363
+    },
+    {
+      "name": "SHOWER",
+      "number": "116",
+      "page": 20,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 1434,
+      "y": 1367
+    },
+    {
+      "name": "SHOWER",
+      "number": "114",
+      "page": 20,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 1326,
+      "y": 1380
+    },
+    {
+      "name": "SHOWER",
+      "number": "112",
+      "page": 20,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 1229,
+      "y": 1382
+    },
+    {
+      "name": "ADA RESTROOM",
+      "number": "106",
+      "page": 20,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 490,
+      "y": 1398
+    },
+    {
+      "name": "RESTROOM",
+      "number": "104",
+      "page": 20,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 650,
+      "y": 1443
+    },
+    {
       "name": "SHOWER",
       "number": "116",
       "page": 24,
@@ -48,7 +219,42 @@
   "sheets": [
     {
       "height": 1728,
+      "page": 20,
+      "plan_rule": "extended-title",
+      "points_per_foot": [
+        18,
+        108
+      ],
+      "scales": [
+        "SCALE 1 1/2\" = 1'-0\"",
+        "FINISHSCALE 1 1/2\" = 1'-0\"",
+        "SCALE 1/4\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site",
+              "asset_number",
+              "site_number"
+            ],
+            "page": 20
+          }
+        ],
+        "kept_pages": [
+          20
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A-101",
+      "title": "FLOOR PLAN",
+      "width": 2592
+    },
+    {
+      "height": 1728,
       "page": 24,
+      "plan_rule": "legacy",
       "points_per_foot": [
         18,
         36,
@@ -64,90 +270,36 @@
         "SCALE 1/2\" = 1'-0\"",
         "SCALE 1/2\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site",
+              "asset_number",
+              "site_number"
+            ],
+            "page": 20
+          }
+        ],
+        "kept_pages": [
+          20
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-401",
       "title": "FLOOR PLANS & INT ELEVATIONS",
       "width": 2592
     }
   ],
   "summary": {
-    "marks_placed": 4,
+    "marks_placed": 18,
     "marks_total": 18,
-    "placed_rate": 0.2222222222222222,
-    "rooms_total": 4,
-    "sheets_total": 1,
-    "sheets_with_scale": 1,
-    "unplaced": [
-      {
-        "mark": "100-1",
-        "page": 20,
-        "reason": "mark 100-1 (schedule p.20) not tagged on any plan"
-      },
-      {
-        "mark": "100-2",
-        "page": 20,
-        "reason": "mark 100-2 (schedule p.20) not tagged on any plan"
-      },
-      {
-        "mark": "101-1",
-        "page": 20,
-        "reason": "mark 101-1 (schedule p.20) not tagged on any plan"
-      },
-      {
-        "mark": "103-1",
-        "page": 20,
-        "reason": "mark 103-1 (schedule p.20) not tagged on any plan"
-      },
-      {
-        "mark": "105-1",
-        "page": 20,
-        "reason": "mark 105-1 (schedule p.20) not tagged on any plan"
-      },
-      {
-        "mark": "106-1",
-        "page": 20,
-        "reason": "mark 106-1 (schedule p.20) not tagged on any plan"
-      },
-      {
-        "mark": "109-1",
-        "page": 20,
-        "reason": "mark 109-1 (schedule p.20) not tagged on any plan"
-      },
-      {
-        "mark": "110-1",
-        "page": 20,
-        "reason": "mark 110-1 (schedule p.20) not tagged on any plan"
-      },
-      {
-        "mark": "111-1",
-        "page": 20,
-        "reason": "mark 111-1 (schedule p.20) not tagged on any plan"
-      },
-      {
-        "mark": "112-1",
-        "page": 20,
-        "reason": "mark 112-1 (schedule p.20) not tagged on any plan"
-      },
-      {
-        "mark": "113-1",
-        "page": 20,
-        "reason": "mark 113-1 (schedule p.20) not tagged on any plan"
-      },
-      {
-        "mark": "114-1",
-        "page": 20,
-        "reason": "mark 114-1 (schedule p.20) not tagged on any plan"
-      },
-      {
-        "mark": "115-1",
-        "page": 20,
-        "reason": "mark 115-1 (schedule p.20) not tagged on any plan"
-      },
-      {
-        "mark": "117-1",
-        "page": 20,
-        "reason": "mark 117-1 (schedule p.20) not tagged on any plan"
-      }
-    ]
+    "placed_rate": 1,
+    "rooms_total": 23,
+    "sheets_total": 2,
+    "sheets_with_scale": 2,
+    "unplaced": []
   },
   "tags": [
     {
@@ -162,15 +314,24 @@
       "hardware_group": "1",
       "height_inches": 84,
       "location": null,
-      "mark": "116-1",
+      "mark": "105-1",
       "matched_by": "exact",
       "material": "HM",
-      "page": 24,
+      "opening_id": "[{\"asset_number\":\"7815116003\",\"facility_name\":\"SHOWER HOUSE; WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]|105-1|20|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "7815116003",
+        "facility_name": "SHOWER HOUSE; WAKONDA STATE PARK",
+        "site": "WAKONDA STATE PARK",
+        "site_number": "5116"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"7815116003\",\"facility_name\":\"SHOWER HOUSE; WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]",
+      "page": 20,
       "pair": false,
-      "points_per_foot": 36,
-      "room": "116",
+      "points_per_foot": 18,
+      "room": "105",
       "room_by": "tag_number",
-      "room_name": "SHOWER",
+      "room_name": "ADA RESTROOM",
       "schedule_rows": [
         {
           "door_type": "L",
@@ -179,20 +340,23 @@
           "hardware_group": "1",
           "height_inches": 84,
           "location": null,
-          "mark": "116-1",
+          "mark": "105-1",
           "material": "HM",
           "page": 20,
           "pair": false,
           "size": "3' - 0\" x 7' - 0\"",
           "width_inches": 36,
-          "y": 743
+          "y": 646
         }
       ],
-      "sheet": "A-401",
+      "sheet": "A-101",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "20|105-1|1"
+      ],
       "width_inches": 36,
-      "x": 1586,
-      "y": 553
+      "x": 455,
+      "y": 1043
     },
     {
       "also_on": [],
@@ -206,13 +370,134 @@
       "hardware_group": "1",
       "height_inches": 84,
       "location": null,
-      "mark": "118-1",
+      "mark": "101-1",
       "matched_by": "exact",
       "material": "HM",
-      "page": 24,
+      "opening_id": "[{\"asset_number\":\"7815116003\",\"facility_name\":\"SHOWER HOUSE; WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]|101-1|20|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "7815116003",
+        "facility_name": "SHOWER HOUSE; WAKONDA STATE PARK",
+        "site": "WAKONDA STATE PARK",
+        "site_number": "5116"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"7815116003\",\"facility_name\":\"SHOWER HOUSE; WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]",
+      "page": 20,
       "pair": false,
-      "points_per_foot": 36,
-      "room": "118",
+      "points_per_foot": 18,
+      "room": "101",
+      "room_by": "tag_number",
+      "room_name": "ADA RESTROOM",
+      "schedule_rows": [
+        {
+          "door_type": "L",
+          "fire_rating": null,
+          "frame_type": "F2",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "101-1",
+          "material": "HM",
+          "page": 20,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 603
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "20|101-1|1"
+      ],
+      "width_inches": 36,
+      "x": 732,
+      "y": 1043
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        20
+      ],
+      "door_type": "L",
+      "fire_rating": "45 MIN.",
+      "frame_type": "F2",
+      "h": 8.00789,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "100-1",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"asset_number\":\"7815116003\",\"facility_name\":\"SHOWER HOUSE; WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]|100-1|20|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "7815116003",
+        "facility_name": "SHOWER HOUSE; WAKONDA STATE PARK",
+        "site": "WAKONDA STATE PARK",
+        "site_number": "5116"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"7815116003\",\"facility_name\":\"SHOWER HOUSE; WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]",
+      "page": 20,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "100",
+      "room_by": "tag_number",
+      "room_name": "LAUNDRY",
+      "schedule_rows": [
+        {
+          "door_type": "L",
+          "fire_rating": "45 MIN.",
+          "frame_type": "F2",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "100-1",
+          "material": "HM",
+          "page": 20,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 582
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "20|100-1|1"
+      ],
+      "width_inches": 36,
+      "x": 935,
+      "y": 1043
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        20
+      ],
+      "door_type": "L",
+      "fire_rating": null,
+      "frame_type": "F2",
+      "h": 8.00789,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "117-1",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"asset_number\":\"7815116003\",\"facility_name\":\"SHOWER HOUSE; WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]|117-1|20|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "7815116003",
+        "facility_name": "SHOWER HOUSE; WAKONDA STATE PARK",
+        "site": "WAKONDA STATE PARK",
+        "site_number": "5116"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"7815116003\",\"facility_name\":\"SHOWER HOUSE; WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]",
+      "page": 20,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "117",
       "room_by": "tag_number",
       "room_name": "ADA SHOWER",
       "schedule_rows": [
@@ -223,23 +508,364 @@
           "hardware_group": "1",
           "height_inches": 84,
           "location": null,
-          "mark": "118-1",
+          "mark": "117-1",
           "material": "HM",
           "page": 20,
           "pair": false,
           "size": "3' - 0\" x 7' - 0\"",
           "width_inches": 36,
-          "y": 764
+          "y": 754
         }
       ],
-      "sheet": "A-401",
+      "sheet": "A-101",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "20|117-1|1"
+      ],
       "width_inches": 36,
-      "x": 1811,
-      "y": 679
+      "x": 1581,
+      "y": 1043
     },
     {
       "also_on": [],
+      "door_pages": [
+        20
+      ],
+      "door_type": "L",
+      "fire_rating": null,
+      "frame_type": "F2",
+      "h": 8.00789,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "103-1",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"asset_number\":\"7815116003\",\"facility_name\":\"SHOWER HOUSE; WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]|103-1|20|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "7815116003",
+        "facility_name": "SHOWER HOUSE; WAKONDA STATE PARK",
+        "site": "WAKONDA STATE PARK",
+        "site_number": "5116"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"7815116003\",\"facility_name\":\"SHOWER HOUSE; WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]",
+      "page": 20,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "103",
+      "room_by": "tag_number",
+      "room_name": "RESTROOM",
+      "schedule_rows": [
+        {
+          "door_type": "L",
+          "fire_rating": null,
+          "frame_type": "F2",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "103-1",
+          "material": "HM",
+          "page": 20,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 624
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "20|103-1|1"
+      ],
+      "width_inches": 36,
+      "x": 611,
+      "y": 1107
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        20
+      ],
+      "door_type": "L",
+      "fire_rating": null,
+      "frame_type": "F2",
+      "h": 8.00789,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "111-1",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"asset_number\":\"7815116003\",\"facility_name\":\"SHOWER HOUSE; WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]|111-1|20|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "7815116003",
+        "facility_name": "SHOWER HOUSE; WAKONDA STATE PARK",
+        "site": "WAKONDA STATE PARK",
+        "site_number": "5116"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"7815116003\",\"facility_name\":\"SHOWER HOUSE; WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]",
+      "page": 20,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "111",
+      "room_by": "tag_number",
+      "room_name": "SHOWER",
+      "schedule_rows": [
+        {
+          "door_type": "L",
+          "fire_rating": null,
+          "frame_type": "F2",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "111-1",
+          "material": "HM",
+          "page": 20,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 689
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "20|111-1|1"
+      ],
+      "width_inches": 36,
+      "x": 1274,
+      "y": 1107
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        20
+      ],
+      "door_type": "L",
+      "fire_rating": null,
+      "frame_type": "F2",
+      "h": 8.00789,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "113-1",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"asset_number\":\"7815116003\",\"facility_name\":\"SHOWER HOUSE; WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]|113-1|20|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "7815116003",
+        "facility_name": "SHOWER HOUSE; WAKONDA STATE PARK",
+        "site": "WAKONDA STATE PARK",
+        "site_number": "5116"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"7815116003\",\"facility_name\":\"SHOWER HOUSE; WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]",
+      "page": 20,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "113",
+      "room_by": "tag_number",
+      "room_name": "SHOWER",
+      "schedule_rows": [
+        {
+          "door_type": "L",
+          "fire_rating": null,
+          "frame_type": "F2",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "113-1",
+          "material": "HM",
+          "page": 20,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 711
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "20|113-1|1"
+      ],
+      "width_inches": 36,
+      "x": 1370,
+      "y": 1107
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        20
+      ],
+      "door_type": "L",
+      "fire_rating": null,
+      "frame_type": "F2",
+      "h": 8.00789,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "115-1",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"asset_number\":\"7815116003\",\"facility_name\":\"SHOWER HOUSE; WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]|115-1|20|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "7815116003",
+        "facility_name": "SHOWER HOUSE; WAKONDA STATE PARK",
+        "site": "WAKONDA STATE PARK",
+        "site_number": "5116"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"7815116003\",\"facility_name\":\"SHOWER HOUSE; WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]",
+      "page": 20,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "115",
+      "room_by": "tag_number",
+      "room_name": "SHOWER",
+      "schedule_rows": [
+        {
+          "door_type": "L",
+          "fire_rating": null,
+          "frame_type": "F2",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "115-1",
+          "material": "HM",
+          "page": 20,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 735
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "20|115-1|1"
+      ],
+      "width_inches": 36,
+      "x": 1466,
+      "y": 1107
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        20
+      ],
+      "door_type": "L",
+      "fire_rating": null,
+      "frame_type": "F2",
+      "h": 8.00789,
+      "hardware_group": "2",
+      "height_inches": 84,
+      "location": null,
+      "mark": "109-1",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"asset_number\":\"7815116003\",\"facility_name\":\"SHOWER HOUSE; WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]|109-1|20|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "7815116003",
+        "facility_name": "SHOWER HOUSE; WAKONDA STATE PARK",
+        "site": "WAKONDA STATE PARK",
+        "site_number": "5116"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"7815116003\",\"facility_name\":\"SHOWER HOUSE; WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]",
+      "page": 20,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "109",
+      "room_by": "tag_number",
+      "room_name": "MECH",
+      "schedule_rows": [
+        {
+          "door_type": "L",
+          "fire_rating": null,
+          "frame_type": "F2",
+          "hardware_group": "2",
+          "height_inches": 84,
+          "location": null,
+          "mark": "109-1",
+          "material": "HM",
+          "page": 20,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 666
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "20|109-1|1"
+      ],
+      "width_inches": 36,
+      "x": 379,
+      "y": 1239
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        20
+      ],
+      "door_type": "L",
+      "fire_rating": null,
+      "frame_type": "F2",
+      "h": 8.00789,
+      "hardware_group": "2",
+      "height_inches": 84,
+      "location": null,
+      "mark": "110-1",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"asset_number\":\"7815116003\",\"facility_name\":\"SHOWER HOUSE; WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]|110-1|20|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "7815116003",
+        "facility_name": "SHOWER HOUSE; WAKONDA STATE PARK",
+        "site": "WAKONDA STATE PARK",
+        "site_number": "5116"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"7815116003\",\"facility_name\":\"SHOWER HOUSE; WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]",
+      "page": 20,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "110",
+      "room_by": "tag_number",
+      "room_name": "MECH",
+      "schedule_rows": [
+        {
+          "door_type": "L",
+          "fire_rating": null,
+          "frame_type": "F2",
+          "hardware_group": "2",
+          "height_inches": 84,
+          "location": null,
+          "mark": "110-1",
+          "material": "HM",
+          "page": 20,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 679
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "20|110-1|1"
+      ],
+      "width_inches": 36,
+      "x": 1630,
+      "y": 1290
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
       "door_pages": [
         20
       ],
@@ -253,9 +879,18 @@
       "mark": "104-1",
       "matched_by": "exact",
       "material": "HM",
-      "page": 24,
+      "opening_id": "[{\"asset_number\":\"7815116003\",\"facility_name\":\"SHOWER HOUSE; WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]|104-1|20|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "7815116003",
+        "facility_name": "SHOWER HOUSE; WAKONDA STATE PARK",
+        "site": "WAKONDA STATE PARK",
+        "site_number": "5116"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"7815116003\",\"facility_name\":\"SHOWER HOUSE; WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]",
+      "page": 20,
       "pair": false,
-      "points_per_foot": 36,
+      "points_per_foot": 18,
       "room": "104",
       "room_by": "tag_number",
       "room_name": "RESTROOM",
@@ -276,11 +911,14 @@
           "y": 635
         }
       ],
-      "sheet": "A-401",
+      "sheet": "A-101",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "20|104-1|1"
+      ],
       "width_inches": 36,
-      "x": 1337,
-      "y": 1296
+      "x": 612,
+      "y": 1439
     },
     {
       "also_on": [],
@@ -294,12 +932,249 @@
       "hardware_group": "1",
       "height_inches": 84,
       "location": null,
+      "mark": "112-1",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"asset_number\":\"7815116003\",\"facility_name\":\"SHOWER HOUSE; WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]|112-1|20|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "7815116003",
+        "facility_name": "SHOWER HOUSE; WAKONDA STATE PARK",
+        "site": "WAKONDA STATE PARK",
+        "site_number": "5116"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"7815116003\",\"facility_name\":\"SHOWER HOUSE; WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]",
+      "page": 20,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "112",
+      "room_by": "tag_number",
+      "room_name": "SHOWER",
+      "schedule_rows": [
+        {
+          "door_type": "L",
+          "fire_rating": null,
+          "frame_type": "F2",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "112-1",
+          "material": "HM",
+          "page": 20,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 700
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "20|112-1|1"
+      ],
+      "width_inches": 36,
+      "x": 1274,
+      "y": 1439
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        20
+      ],
+      "door_type": "L",
+      "fire_rating": null,
+      "frame_type": "F2",
+      "h": 8.00789,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "114-1",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"asset_number\":\"7815116003\",\"facility_name\":\"SHOWER HOUSE; WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]|114-1|20|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "7815116003",
+        "facility_name": "SHOWER HOUSE; WAKONDA STATE PARK",
+        "site": "WAKONDA STATE PARK",
+        "site_number": "5116"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"7815116003\",\"facility_name\":\"SHOWER HOUSE; WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]",
+      "page": 20,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "114",
+      "room_by": "tag_number",
+      "room_name": "SHOWER",
+      "schedule_rows": [
+        {
+          "door_type": "L",
+          "fire_rating": null,
+          "frame_type": "F2",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "114-1",
+          "material": "HM",
+          "page": 20,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 721
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "20|114-1|1"
+      ],
+      "width_inches": 36,
+      "x": 1370,
+      "y": 1439
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        20
+      ],
+      "door_type": "L",
+      "fire_rating": null,
+      "frame_type": "F2",
+      "h": 8.00789,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "116-1",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"asset_number\":\"7815116003\",\"facility_name\":\"SHOWER HOUSE; WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]|116-1|20|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "7815116003",
+        "facility_name": "SHOWER HOUSE; WAKONDA STATE PARK",
+        "site": "WAKONDA STATE PARK",
+        "site_number": "5116"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"7815116003\",\"facility_name\":\"SHOWER HOUSE; WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]",
+      "page": 20,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "116",
+      "room_by": "tag_number",
+      "room_name": "SHOWER",
+      "schedule_rows": [
+        {
+          "door_type": "L",
+          "fire_rating": null,
+          "frame_type": "F2",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "116-1",
+          "material": "HM",
+          "page": 20,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 743
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "20|116-1|1"
+      ],
+      "width_inches": 36,
+      "x": 1468,
+      "y": 1439
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        20
+      ],
+      "door_type": "L",
+      "fire_rating": null,
+      "frame_type": "F2",
+      "h": 8.00789,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "106-1",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"asset_number\":\"7815116003\",\"facility_name\":\"SHOWER HOUSE; WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]|106-1|20|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "7815116003",
+        "facility_name": "SHOWER HOUSE; WAKONDA STATE PARK",
+        "site": "WAKONDA STATE PARK",
+        "site_number": "5116"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"7815116003\",\"facility_name\":\"SHOWER HOUSE; WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]",
+      "page": 20,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "106",
+      "room_by": "tag_number",
+      "room_name": "ADA RESTROOM",
+      "schedule_rows": [
+        {
+          "door_type": "L",
+          "fire_rating": null,
+          "frame_type": "F2",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "106-1",
+          "material": "HM",
+          "page": 20,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 657
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "20|106-1|1"
+      ],
+      "width_inches": 36,
+      "x": 455,
+      "y": 1504
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        20
+      ],
+      "door_type": "L",
+      "fire_rating": null,
+      "frame_type": "F2",
+      "h": 8.00789,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
       "mark": "102-1",
       "matched_by": "exact",
       "material": "HM",
-      "page": 24,
+      "opening_id": "[{\"asset_number\":\"7815116003\",\"facility_name\":\"SHOWER HOUSE; WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]|102-1|20|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "7815116003",
+        "facility_name": "SHOWER HOUSE; WAKONDA STATE PARK",
+        "site": "WAKONDA STATE PARK",
+        "site_number": "5116"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"7815116003\",\"facility_name\":\"SHOWER HOUSE; WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]",
+      "page": 20,
       "pair": false,
-      "points_per_foot": 36,
+      "points_per_foot": 18,
       "room": "102",
       "room_by": "tag_number",
       "room_name": "ADA RESTROOM",
@@ -320,11 +1195,128 @@
           "y": 614
         }
       ],
-      "sheet": "A-401",
+      "sheet": "A-101",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "20|102-1|1"
+      ],
       "width_inches": 36,
-      "x": 1577,
-      "y": 1427
+      "x": 732,
+      "y": 1504
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        20
+      ],
+      "door_type": "L",
+      "fire_rating": "45 MIN.",
+      "frame_type": "F2",
+      "h": 8.00789,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "100-2",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"asset_number\":\"7815116003\",\"facility_name\":\"SHOWER HOUSE; WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]|100-2|20|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "7815116003",
+        "facility_name": "SHOWER HOUSE; WAKONDA STATE PARK",
+        "site": "WAKONDA STATE PARK",
+        "site_number": "5116"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"7815116003\",\"facility_name\":\"SHOWER HOUSE; WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]",
+      "page": 20,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "100",
+      "room_by": "tag_number",
+      "room_name": "LAUNDRY",
+      "schedule_rows": [
+        {
+          "door_type": "L",
+          "fire_rating": "45 MIN.",
+          "frame_type": "F2",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "100-2",
+          "material": "HM",
+          "page": 20,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 593
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "20|100-2|1"
+      ],
+      "width_inches": 36,
+      "x": 932,
+      "y": 1504
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        20
+      ],
+      "door_type": "L",
+      "fire_rating": null,
+      "frame_type": "F2",
+      "h": 8.00789,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "118-1",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"asset_number\":\"7815116003\",\"facility_name\":\"SHOWER HOUSE; WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]|118-1|20|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "7815116003",
+        "facility_name": "SHOWER HOUSE; WAKONDA STATE PARK",
+        "site": "WAKONDA STATE PARK",
+        "site_number": "5116"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"7815116003\",\"facility_name\":\"SHOWER HOUSE; WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]",
+      "page": 20,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "118",
+      "room_by": "tag_number",
+      "room_name": "ADA SHOWER",
+      "schedule_rows": [
+        {
+          "door_type": "L",
+          "fire_rating": null,
+          "frame_type": "F2",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "118-1",
+          "material": "HM",
+          "page": 20,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 764
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "20|118-1|1"
+      ],
+      "width_inches": 36,
+      "x": 1581,
+      "y": 1504
     }
   ]
 }

@@ -355,12 +355,26 @@
     {
       "height": 1728,
       "page": 12,
+      "plan_rule": "legacy",
       "points_per_foot": [
         9
       ],
       "scales": [
         "SCALE: 1/8\"=1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [],
+            "page": 15
+          }
+        ],
+        "kept_pages": [
+          15
+        ],
+        "rule": "similarity"
+      },
       "sheet": "A-100",
       "title": "FLOOR PLAN",
       "width": 2592
@@ -368,12 +382,29 @@
     {
       "height": 1728,
       "page": 13,
+      "plan_rule": "legacy",
       "points_per_foot": [
         18
       ],
       "scales": [
         "SCALE: 1/4\"=1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number",
+              "facility_number"
+            ],
+            "page": 15
+          }
+        ],
+        "kept_pages": [
+          15
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-110",
       "title": "ENLARGED FLOOR PLAN",
       "width": 2592
@@ -404,6 +435,14 @@
       "mark": "114A",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]|114A|15|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "712 ANDERSON STREET",
+        "facility_number": "8136272002",
+        "site_number": "6272"
+      },
+      "opening_scope_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]",
       "page": 12,
       "pair": false,
       "points_per_foot": 9,
@@ -429,6 +468,9 @@
       ],
       "sheet": "A-100",
       "size": "E x ISTING DOOR & FRAME TO REMAIN",
+      "source_keys": [
+        "15|114A|1"
+      ],
       "width_inches": null,
       "x": 1005,
       "y": 337
@@ -448,6 +490,14 @@
       "mark": "116",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]|116|15|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "712 ANDERSON STREET",
+        "facility_number": "8136272002",
+        "site_number": "6272"
+      },
+      "opening_scope_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]",
       "page": 12,
       "pair": false,
       "points_per_foot": 9,
@@ -473,6 +523,9 @@
       ],
       "sheet": "A-100",
       "size": "E x ISTING DOOR & FRAME TO REMAIN",
+      "source_keys": [
+        "15|116|1"
+      ],
       "unsure": true,
       "width_inches": null,
       "x": 1418,
@@ -493,6 +546,14 @@
       "mark": "112",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]|112|15|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "712 ANDERSON STREET",
+        "facility_number": "8136272002",
+        "site_number": "6272"
+      },
+      "opening_scope_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]",
       "page": 12,
       "pair": false,
       "points_per_foot": 9,
@@ -518,6 +579,9 @@
       ],
       "sheet": "A-100",
       "size": "E x ISTING DOOR & FRAME TO REMAIN",
+      "source_keys": [
+        "15|112|1"
+      ],
       "unsure": true,
       "width_inches": null,
       "x": 729,
@@ -538,6 +602,14 @@
       "mark": "113",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]|113|15|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "712 ANDERSON STREET",
+        "facility_number": "8136272002",
+        "site_number": "6272"
+      },
+      "opening_scope_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]",
       "page": 12,
       "pair": false,
       "points_per_foot": 9,
@@ -563,6 +635,9 @@
       ],
       "sheet": "A-100",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "15|113|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 962,
@@ -583,6 +658,14 @@
       "mark": "115",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]|115|15|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "712 ANDERSON STREET",
+        "facility_number": "8136272002",
+        "site_number": "6272"
+      },
+      "opening_scope_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]",
       "page": 12,
       "pair": false,
       "points_per_foot": 9,
@@ -608,6 +691,9 @@
       ],
       "sheet": "A-100",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "15|115|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1056,
@@ -628,6 +714,14 @@
       "mark": "110",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]|110|15|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "712 ANDERSON STREET",
+        "facility_number": "8136272002",
+        "site_number": "6272"
+      },
+      "opening_scope_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]",
       "page": 12,
       "pair": false,
       "points_per_foot": 9,
@@ -653,6 +747,9 @@
       ],
       "sheet": "A-100",
       "size": "E x ISTING CHAIN LINK GATE DOOR TO REMAIN",
+      "source_keys": [
+        "15|110|1"
+      ],
       "unsure": true,
       "width_inches": null,
       "x": 530,
@@ -673,6 +770,14 @@
       "mark": "111",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]|111|15|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "712 ANDERSON STREET",
+        "facility_number": "8136272002",
+        "site_number": "6272"
+      },
+      "opening_scope_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]",
       "page": 12,
       "pair": false,
       "points_per_foot": 9,
@@ -698,6 +803,9 @@
       ],
       "sheet": "A-100",
       "size": "E x ISTING STEEL VAULT DOOR TO REMAIN",
+      "source_keys": [
+        "15|111|1"
+      ],
       "unsure": true,
       "width_inches": null,
       "x": 622,
@@ -718,6 +826,14 @@
       "mark": "114",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]|114|15|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "712 ANDERSON STREET",
+        "facility_number": "8136272002",
+        "site_number": "6272"
+      },
+      "opening_scope_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]",
       "page": 12,
       "pair": false,
       "points_per_foot": 9,
@@ -743,6 +859,9 @@
       ],
       "sheet": "A-100",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "15|114|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1017,
@@ -763,6 +882,14 @@
       "mark": "117",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]|117|15|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "712 ANDERSON STREET",
+        "facility_number": "8136272002",
+        "site_number": "6272"
+      },
+      "opening_scope_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]",
       "page": 12,
       "pair": false,
       "points_per_foot": 9,
@@ -788,6 +915,9 @@
       ],
       "sheet": "A-100",
       "size": "E x ISTING DOOR & FRAME TO REMAIN",
+      "source_keys": [
+        "15|117|1"
+      ],
       "unsure": true,
       "width_inches": null,
       "x": 1388,
@@ -808,6 +938,14 @@
       "mark": "118",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]|118|15|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "712 ANDERSON STREET",
+        "facility_number": "8136272002",
+        "site_number": "6272"
+      },
+      "opening_scope_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]",
       "page": 12,
       "pair": false,
       "points_per_foot": 9,
@@ -833,6 +971,9 @@
       ],
       "sheet": "A-100",
       "size": "E x ISTING DOOR & FRAME TO REMAIN",
+      "source_keys": [
+        "15|118|1"
+      ],
       "unsure": true,
       "width_inches": null,
       "x": 1429,
@@ -853,6 +994,14 @@
       "mark": "119",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]|119|15|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "712 ANDERSON STREET",
+        "facility_number": "8136272002",
+        "site_number": "6272"
+      },
+      "opening_scope_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]",
       "page": 12,
       "pair": false,
       "points_per_foot": 9,
@@ -878,6 +1027,9 @@
       ],
       "sheet": "A-100",
       "size": "E x ISTING DOOR & FRAME TO REMAIN",
+      "source_keys": [
+        "15|119|1"
+      ],
       "unsure": true,
       "width_inches": null,
       "x": 1478,
@@ -898,6 +1050,14 @@
       "mark": "109",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]|109|15|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "712 ANDERSON STREET",
+        "facility_number": "8136272002",
+        "site_number": "6272"
+      },
+      "opening_scope_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]",
       "page": 12,
       "pair": false,
       "points_per_foot": 9,
@@ -923,6 +1083,9 @@
       ],
       "sheet": "A-100",
       "size": "E x ISTING DOOR & FRAME TO REMAIN",
+      "source_keys": [
+        "15|109|1"
+      ],
       "unsure": true,
       "width_inches": null,
       "x": 644,
@@ -943,6 +1106,14 @@
       "mark": "128A",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]|128A|15|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "712 ANDERSON STREET",
+        "facility_number": "8136272002",
+        "site_number": "6272"
+      },
+      "opening_scope_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]",
       "page": 12,
       "pair": false,
       "points_per_foot": 9,
@@ -968,6 +1139,9 @@
       ],
       "sheet": "A-100",
       "size": "E x ISTING SECTIONAL OVERHEAD DOOR TO REMAIN",
+      "source_keys": [
+        "15|128A|1"
+      ],
       "width_inches": null,
       "x": 662,
       "y": 706
@@ -989,6 +1163,14 @@
       "mark": "121",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]|121|15|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "712 ANDERSON STREET",
+        "facility_number": "8136272002",
+        "site_number": "6272"
+      },
+      "opening_scope_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]",
       "page": 12,
       "pair": false,
       "points_per_foot": 9,
@@ -1014,6 +1196,9 @@
       ],
       "sheet": "A-100",
       "size": "E x ISTING DOOR & FRAME TO REMAIN",
+      "source_keys": [
+        "15|121|1"
+      ],
       "unsure": true,
       "width_inches": null,
       "x": 1479,
@@ -1034,6 +1219,14 @@
       "mark": "128",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]|128|15|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "712 ANDERSON STREET",
+        "facility_number": "8136272002",
+        "site_number": "6272"
+      },
+      "opening_scope_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]",
       "page": 12,
       "pair": false,
       "points_per_foot": 9,
@@ -1059,6 +1252,9 @@
       ],
       "sheet": "A-100",
       "size": "E x ISTING DOOR & FRAME TO REMAIN",
+      "source_keys": [
+        "15|128|1"
+      ],
       "unsure": true,
       "width_inches": null,
       "x": 626,
@@ -1081,6 +1277,14 @@
       "mark": "122",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]|122|15|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "712 ANDERSON STREET",
+        "facility_number": "8136272002",
+        "site_number": "6272"
+      },
+      "opening_scope_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]",
       "page": 12,
       "pair": false,
       "points_per_foot": 9,
@@ -1106,6 +1310,9 @@
       ],
       "sheet": "A-100",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "15|122|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1534,
@@ -1128,6 +1335,14 @@
       "mark": "122A",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]|122A|15|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "712 ANDERSON STREET",
+        "facility_number": "8136272002",
+        "site_number": "6272"
+      },
+      "opening_scope_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]",
       "page": 12,
       "pair": false,
       "points_per_foot": 9,
@@ -1153,6 +1368,9 @@
       ],
       "sheet": "A-100",
       "size": "E x ISTING DOOR & FRAME TO REMAIN",
+      "source_keys": [
+        "15|122A|1"
+      ],
       "unsure": true,
       "width_inches": null,
       "x": 1618,
@@ -1175,6 +1393,14 @@
       "mark": "123",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]|123|15|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "712 ANDERSON STREET",
+        "facility_number": "8136272002",
+        "site_number": "6272"
+      },
+      "opening_scope_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]",
       "page": 12,
       "pair": false,
       "points_per_foot": 9,
@@ -1200,6 +1426,9 @@
       ],
       "sheet": "A-100",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "15|123|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1448,
@@ -1220,6 +1449,14 @@
       "mark": "107A",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]|107A|15|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "712 ANDERSON STREET",
+        "facility_number": "8136272002",
+        "site_number": "6272"
+      },
+      "opening_scope_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]",
       "page": 12,
       "pair": false,
       "points_per_foot": 9,
@@ -1245,6 +1482,9 @@
       ],
       "sheet": "A-100",
       "size": "E x ISTING DOOR & FRAME TO REMAIN",
+      "source_keys": [
+        "15|107A|1"
+      ],
       "width_inches": null,
       "x": 429,
       "y": 1037
@@ -1264,6 +1504,14 @@
       "mark": "107",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]|107|15|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "712 ANDERSON STREET",
+        "facility_number": "8136272002",
+        "site_number": "6272"
+      },
+      "opening_scope_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]",
       "page": 12,
       "pair": false,
       "points_per_foot": 9,
@@ -1289,6 +1537,9 @@
       ],
       "sheet": "A-100",
       "size": "E x ISTING DOOR & FRAME TO REMAIN",
+      "source_keys": [
+        "15|107|1"
+      ],
       "unsure": true,
       "width_inches": null,
       "x": 568,
@@ -1309,6 +1560,14 @@
       "mark": "108",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]|108|15|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "712 ANDERSON STREET",
+        "facility_number": "8136272002",
+        "site_number": "6272"
+      },
+      "opening_scope_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]",
       "page": 12,
       "pair": false,
       "points_per_foot": 9,
@@ -1334,6 +1593,9 @@
       ],
       "sheet": "A-100",
       "size": "E x ISTING DOOR & FRAME TO REMAIN",
+      "source_keys": [
+        "15|108|1"
+      ],
       "unsure": true,
       "width_inches": null,
       "x": 629,
@@ -1356,6 +1618,14 @@
       "mark": "127",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]|127|15|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "712 ANDERSON STREET",
+        "facility_number": "8136272002",
+        "site_number": "6272"
+      },
+      "opening_scope_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]",
       "page": 12,
       "pair": false,
       "points_per_foot": 9,
@@ -1381,6 +1651,9 @@
       ],
       "sheet": "A-100",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "15|127|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1173,
@@ -1401,6 +1674,14 @@
       "mark": "103A",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]|103A|15|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "712 ANDERSON STREET",
+        "facility_number": "8136272002",
+        "site_number": "6272"
+      },
+      "opening_scope_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]",
       "page": 12,
       "pair": false,
       "points_per_foot": 9,
@@ -1426,6 +1707,9 @@
       ],
       "sheet": "A-100",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "15|103A|1"
+      ],
       "width_inches": 36,
       "x": 701,
       "y": 1107
@@ -1447,6 +1731,14 @@
       "mark": "101A",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]|101A|15|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "712 ANDERSON STREET",
+        "facility_number": "8136272002",
+        "site_number": "6272"
+      },
+      "opening_scope_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]",
       "page": 12,
       "pair": true,
       "points_per_foot": 9,
@@ -1472,6 +1764,9 @@
       ],
       "sheet": "A-100",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "15|101A|1"
+      ],
       "width_inches": 36,
       "x": 1090,
       "y": 1107
@@ -1493,6 +1788,14 @@
       "mark": "126",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]|126|15|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "712 ANDERSON STREET",
+        "facility_number": "8136272002",
+        "site_number": "6272"
+      },
+      "opening_scope_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]",
       "page": 12,
       "pair": false,
       "points_per_foot": 9,
@@ -1518,6 +1821,9 @@
       ],
       "sheet": "A-100",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "15|126|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1437,
@@ -1538,6 +1844,14 @@
       "mark": "103",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]|103|15|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "712 ANDERSON STREET",
+        "facility_number": "8136272002",
+        "site_number": "6272"
+      },
+      "opening_scope_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]",
       "page": 12,
       "pair": false,
       "points_per_foot": 9,
@@ -1563,6 +1877,9 @@
       ],
       "sheet": "A-100",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "15|103|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1046,
@@ -1583,6 +1900,14 @@
       "mark": "106",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]|106|15|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "712 ANDERSON STREET",
+        "facility_number": "8136272002",
+        "site_number": "6272"
+      },
+      "opening_scope_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]",
       "page": 12,
       "pair": true,
       "points_per_foot": 9,
@@ -1608,6 +1933,9 @@
       ],
       "sheet": "A-100",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "15|106|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 623,
@@ -1628,6 +1956,14 @@
       "mark": "105",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]|105|15|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "712 ANDERSON STREET",
+        "facility_number": "8136272002",
+        "site_number": "6272"
+      },
+      "opening_scope_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]",
       "page": 12,
       "pair": false,
       "points_per_foot": 9,
@@ -1653,6 +1989,9 @@
       ],
       "sheet": "A-100",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "15|105|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 562,
@@ -1673,6 +2012,14 @@
       "mark": "102A",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]|102A|15|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "712 ANDERSON STREET",
+        "facility_number": "8136272002",
+        "site_number": "6272"
+      },
+      "opening_scope_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]",
       "page": 12,
       "pair": false,
       "points_per_foot": 9,
@@ -1698,6 +2045,9 @@
       ],
       "sheet": "A-100",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "15|102A|1"
+      ],
       "width_inches": 36,
       "x": 1005,
       "y": 1181
@@ -1717,6 +2067,14 @@
       "mark": "102",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]|102|15|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "712 ANDERSON STREET",
+        "facility_number": "8136272002",
+        "site_number": "6272"
+      },
+      "opening_scope_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]",
       "page": 12,
       "pair": false,
       "points_per_foot": 9,
@@ -1742,6 +2100,9 @@
       ],
       "sheet": "A-100",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "15|102|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1049,
@@ -1762,6 +2123,14 @@
       "mark": "104",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]|104|15|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "712 ANDERSON STREET",
+        "facility_number": "8136272002",
+        "site_number": "6272"
+      },
+      "opening_scope_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]",
       "page": 12,
       "pair": false,
       "points_per_foot": 9,
@@ -1787,6 +2156,9 @@
       ],
       "sheet": "A-100",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "15|104|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 563,
@@ -1809,6 +2181,14 @@
       "mark": "124",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]|124|15|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "712 ANDERSON STREET",
+        "facility_number": "8136272002",
+        "site_number": "6272"
+      },
+      "opening_scope_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]",
       "page": 12,
       "pair": false,
       "points_per_foot": 9,
@@ -1834,6 +2214,9 @@
       ],
       "sheet": "A-100",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "15|124|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1638,
@@ -1856,6 +2239,14 @@
       "mark": "101",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]|101|15|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "712 ANDERSON STREET",
+        "facility_number": "8136272002",
+        "site_number": "6272"
+      },
+      "opening_scope_id": "[{\"address\":\"712 ANDERSON STREET\",\"facility_number\":\"8136272002\",\"site_number\":\"6272\"},\"A\"]",
       "page": 12,
       "pair": false,
       "points_per_foot": 9,
@@ -1881,6 +2272,9 @@
       ],
       "sheet": "A-100",
       "size": "E x ISTING ALUM STOREFRONT DOOR SYSTEM TO REMAIN",
+      "source_keys": [
+        "15|101|1"
+      ],
       "unsure": true,
       "width_inches": null,
       "x": 1091,

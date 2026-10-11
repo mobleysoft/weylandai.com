@@ -1390,12 +1390,26 @@
     {
       "height": 2160,
       "page": 26,
+      "plan_rule": "legacy",
       "points_per_foot": [
         6.75
       ],
       "scales": [
         "SCALE: 3/32\" 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [],
+            "page": 29
+          }
+        ],
+        "kept_pages": [
+          29
+        ],
+        "rule": "similarity"
+      },
       "sheet": "A1.1",
       "title": "1ST FLOOR PLAN",
       "width": 3024
@@ -1403,6 +1417,7 @@
     {
       "height": 2160,
       "page": 27,
+      "plan_rule": "legacy",
       "points_per_foot": [
         9,
         13.5
@@ -1411,6 +1426,19 @@
         "SCALE: 1/8\" 1'-0\"",
         "SCALE: 3/16\" 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [],
+            "page": 29
+          }
+        ],
+        "kept_pages": [
+          29
+        ],
+        "rule": "similarity"
+      },
       "sheet": "A1.2",
       "title": "ENLARGED PLANS",
       "width": 3024
@@ -1447,6 +1475,12 @@
       "mark": "148.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|148.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -1472,6 +1506,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|148.1|1"
+      ],
       "width_inches": 36,
       "x": 1396,
       "y": 159
@@ -1491,6 +1528,12 @@
       "mark": "147.1.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|147.1.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -1516,6 +1559,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|147.1.1|1"
+      ],
       "width_inches": 36,
       "x": 1486,
       "y": 227
@@ -1535,6 +1581,12 @@
       "mark": "147.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|147.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -1560,6 +1612,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|147.1|1"
+      ],
       "width_inches": 36,
       "x": 1507,
       "y": 233
@@ -1579,6 +1634,12 @@
       "mark": "146.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|146.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -1604,6 +1665,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|146.1|1"
+      ],
       "width_inches": 36,
       "x": 1299,
       "y": 369
@@ -1623,6 +1687,12 @@
       "mark": "144.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|144.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -1648,6 +1718,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|144.1|1"
+      ],
       "width_inches": 36,
       "x": 1168,
       "y": 416
@@ -1667,6 +1740,12 @@
       "mark": "145.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|145.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -1692,6 +1771,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|145.1|1"
+      ],
       "width_inches": 36,
       "x": 1397,
       "y": 427
@@ -1711,6 +1793,12 @@
       "mark": "142.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|142.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -1736,6 +1824,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|142.1|1"
+      ],
       "width_inches": 36,
       "x": 1201,
       "y": 516
@@ -1755,6 +1846,12 @@
       "mark": "150.1",
       "matched_by": "exact",
       "material": "ALUM1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|150.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -1780,6 +1877,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|150.1|1"
+      ],
       "width_inches": 36,
       "x": 1293,
       "y": 516
@@ -1799,6 +1899,12 @@
       "mark": "143.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|143.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -1824,6 +1930,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|143.1|1"
+      ],
       "width_inches": 36,
       "x": 1395,
       "y": 547
@@ -1843,6 +1952,12 @@
       "mark": "114.1",
       "matched_by": "exact",
       "material": "EXIST. (WD)",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|114.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": true,
       "points_per_foot": 6.75,
@@ -1868,6 +1983,9 @@
       ],
       "sheet": "A1.1",
       "size": "6'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|114.1|1"
+      ],
       "width_inches": 72,
       "x": 2239,
       "y": 579
@@ -1887,6 +2005,12 @@
       "mark": "141.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|141.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -1912,6 +2036,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|141.1|1"
+      ],
       "width_inches": 36,
       "x": 1322,
       "y": 582
@@ -1933,6 +2060,12 @@
       "mark": "155.2",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|155.2|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -1958,6 +2091,9 @@
       ],
       "sheet": "A1.1",
       "size": "2'-6\" x 7'-10\"",
+      "source_keys": [
+        "29|155.2|1"
+      ],
       "width_inches": 30,
       "x": 836,
       "y": 631
@@ -1979,6 +2115,12 @@
       "mark": "155.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|155.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2004,6 +2146,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|155.1|1"
+      ],
       "width_inches": 36,
       "x": 817,
       "y": 664
@@ -2025,6 +2170,12 @@
       "mark": "153.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|153.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2050,6 +2201,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|153.1|1"
+      ],
       "width_inches": 36,
       "x": 922,
       "y": 666
@@ -2071,6 +2225,12 @@
       "mark": "151.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|151.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2096,6 +2256,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|151.1|1"
+      ],
       "width_inches": 36,
       "x": 950,
       "y": 666
@@ -2117,6 +2280,12 @@
       "mark": "131.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|131.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2142,6 +2311,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|131.1|1"
+      ],
       "width_inches": 36,
       "x": 1641,
       "y": 691
@@ -2163,6 +2335,12 @@
       "mark": "129.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|129.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2188,6 +2366,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|129.1|1"
+      ],
       "width_inches": 36,
       "x": 1717,
       "y": 691
@@ -2209,6 +2390,12 @@
       "mark": "152.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|152.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2234,6 +2421,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|152.1|1"
+      ],
       "width_inches": 36,
       "x": 836,
       "y": 735
@@ -2255,6 +2445,12 @@
       "mark": "152.1.1",
       "matched_by": "exact",
       "material": "ALUM2",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|152.1.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2280,6 +2476,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|152.1.1|1"
+      ],
       "width_inches": 36,
       "x": 816,
       "y": 777
@@ -2301,6 +2500,12 @@
       "mark": "133.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|133.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2326,6 +2531,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|133.1|1"
+      ],
       "width_inches": 36,
       "x": 1573,
       "y": 785
@@ -2347,6 +2555,12 @@
       "mark": "127.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|127.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2372,6 +2586,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|127.1|1"
+      ],
       "width_inches": 36,
       "x": 1667,
       "y": 786
@@ -2393,6 +2610,12 @@
       "mark": "126.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|126.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": true,
       "points_per_foot": 6.75,
@@ -2418,6 +2641,9 @@
       ],
       "sheet": "A1.1",
       "size": "6'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|126.1|1"
+      ],
       "width_inches": 72,
       "x": 1485,
       "y": 803
@@ -2439,6 +2665,12 @@
       "mark": "126.2",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|126.2|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": true,
       "points_per_foot": 6.75,
@@ -2464,6 +2696,9 @@
       ],
       "sheet": "A1.1",
       "size": "6'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|126.2|1"
+      ],
       "width_inches": 72,
       "x": 1719,
       "y": 803
@@ -2485,6 +2720,12 @@
       "mark": "109.2",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|109.2|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2510,6 +2751,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|109.2|1"
+      ],
       "width_inches": 36,
       "x": 1924,
       "y": 867
@@ -2529,6 +2773,12 @@
       "mark": "136.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|136.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2554,6 +2804,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|136.1|1"
+      ],
       "width_inches": 36,
       "x": 1401,
       "y": 869
@@ -2575,6 +2828,12 @@
       "mark": "128.1.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|128.1.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2600,6 +2859,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|128.1.1|1"
+      ],
       "width_inches": 36,
       "x": 1627,
       "y": 880
@@ -2621,6 +2883,12 @@
       "mark": "109.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|109.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2646,6 +2914,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|109.1|1"
+      ],
       "width_inches": 36,
       "x": 1729,
       "y": 889
@@ -2665,6 +2936,12 @@
       "mark": "157.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|157.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2690,6 +2967,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|157.1|1"
+      ],
       "width_inches": 36,
       "x": 882,
       "y": 898
@@ -2711,6 +2991,12 @@
       "mark": "130.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|130.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2736,6 +3022,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|130.1|1"
+      ],
       "width_inches": 36,
       "x": 1666,
       "y": 898
@@ -2757,6 +3046,12 @@
       "mark": "132.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|132.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2782,6 +3077,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|132.1|1"
+      ],
       "width_inches": 36,
       "x": 1681,
       "y": 928
@@ -2801,6 +3099,12 @@
       "mark": "159.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|159.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2826,6 +3130,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|159.1|1"
+      ],
       "width_inches": 36,
       "x": 852,
       "y": 950
@@ -2847,6 +3154,12 @@
       "mark": "134.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|134.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2872,6 +3185,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|134.1|1"
+      ],
       "width_inches": 36,
       "x": 1710,
       "y": 969
@@ -2893,6 +3209,12 @@
       "mark": "126.1.1",
       "matched_by": "exact",
       "material": "ALUM2",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|126.1.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2918,6 +3240,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|126.1.1|1"
+      ],
       "width_inches": 36,
       "x": 1771,
       "y": 974
@@ -2937,6 +3262,12 @@
       "mark": "138.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|138.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2962,6 +3293,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|138.1|1"
+      ],
       "width_inches": 36,
       "x": 1417,
       "y": 977
@@ -2983,6 +3317,12 @@
       "mark": "138.1.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|138.1.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -3008,6 +3348,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "29|138.1.1|1"
+      ],
       "width_inches": 36,
       "x": 1459,
       "y": 978
@@ -3029,6 +3372,12 @@
       "mark": "1J.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|1J.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -3054,6 +3403,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|1J.1|1"
+      ],
       "width_inches": 36,
       "x": 1722,
       "y": 998
@@ -3073,6 +3425,12 @@
       "mark": "111.1",
       "matched_by": "exact",
       "material": "EXIST. (WD)",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|111.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -3098,6 +3456,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|111.1|1"
+      ],
       "width_inches": 36,
       "x": 1988,
       "y": 1008
@@ -3117,6 +3478,12 @@
       "mark": "138.2",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|138.2|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -3142,6 +3509,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|138.2|1"
+      ],
       "width_inches": 36,
       "x": 1135,
       "y": 1010
@@ -3163,6 +3533,12 @@
       "mark": "163.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|163.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -3188,6 +3564,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|163.1|1"
+      ],
       "width_inches": 36,
       "x": 581,
       "y": 1022
@@ -3209,6 +3588,12 @@
       "mark": "165.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|165.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -3234,6 +3619,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|165.1|1"
+      ],
       "width_inches": 36,
       "x": 455,
       "y": 1074
@@ -3255,6 +3643,12 @@
       "mark": "161.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|161.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -3280,6 +3674,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|161.1|1"
+      ],
       "width_inches": 36,
       "x": 632,
       "y": 1087
@@ -3299,6 +3696,12 @@
       "mark": "167.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|167.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -3324,6 +3727,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|167.1|1"
+      ],
       "width_inches": 36,
       "x": 229,
       "y": 1090
@@ -3343,6 +3749,12 @@
       "mark": "119.1",
       "matched_by": "exact",
       "material": "HM",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|119.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": true,
       "points_per_foot": 6.75,
@@ -3368,6 +3780,9 @@
       ],
       "sheet": "A1.1",
       "size": "6'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|119.1|1"
+      ],
       "width_inches": 72,
       "x": 2691,
       "y": 1101
@@ -3387,6 +3802,12 @@
       "mark": "119.2",
       "matched_by": "exact",
       "material": "EXIST. (WD)",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|119.2|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -3412,6 +3833,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|119.2|1"
+      ],
       "width_inches": 36,
       "x": 2503,
       "y": 1113
@@ -3433,6 +3857,12 @@
       "mark": "167.1.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|167.1.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -3458,6 +3888,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|167.1.1|1"
+      ],
       "width_inches": 36,
       "x": 228,
       "y": 1114
@@ -3477,6 +3910,12 @@
       "mark": "113.1",
       "matched_by": "exact",
       "material": "EXIST. (WD)",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|113.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -3502,6 +3941,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|113.1|1"
+      ],
       "width_inches": 36,
       "x": 2299,
       "y": 1124
@@ -3521,6 +3963,12 @@
       "mark": "118.1",
       "matched_by": "exact",
       "material": "EXIST. (WD)",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|118.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -3546,6 +3994,9 @@
       ],
       "sheet": "A1.1",
       "size": "2'-8\" x 7'-10\"",
+      "source_keys": [
+        "29|118.1|1"
+      ],
       "width_inches": 32,
       "x": 2519,
       "y": 1125
@@ -3567,6 +4018,12 @@
       "mark": "170.1",
       "matched_by": "exact",
       "material": "ALUM1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|170.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -3592,6 +4049,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|170.1|1"
+      ],
       "width_inches": 36,
       "x": 585,
       "y": 1132
@@ -3611,6 +4071,12 @@
       "mark": "111.1.1",
       "matched_by": "exact",
       "material": "EXIST. (WD)",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|111.1.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": true,
       "points_per_foot": 6.75,
@@ -3636,6 +4102,9 @@
       ],
       "sheet": "A1.1",
       "size": "6'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|111.1.1|1"
+      ],
       "width_inches": 72,
       "x": 2056,
       "y": 1197
@@ -3657,6 +4126,12 @@
       "mark": "162.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|162.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -3682,6 +4157,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|162.1|1"
+      ],
       "width_inches": 36,
       "x": 627,
       "y": 1202
@@ -3703,6 +4181,12 @@
       "mark": "166.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|166.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -3728,6 +4212,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|166.1|1"
+      ],
       "width_inches": 36,
       "x": 458,
       "y": 1212
@@ -3747,6 +4234,12 @@
       "mark": "113.1.1",
       "matched_by": "exact",
       "material": "EXIST. (WD)",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|113.1.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": true,
       "points_per_foot": 6.75,
@@ -3772,6 +4265,9 @@
       ],
       "sheet": "A1.1",
       "size": "6'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|113.1.1|1"
+      ],
       "width_inches": 72,
       "x": 2378,
       "y": 1220
@@ -3791,6 +4287,12 @@
       "mark": "168.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|168.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -3816,6 +4318,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|168.1|1"
+      ],
       "width_inches": 36,
       "x": 221,
       "y": 1223
@@ -3837,6 +4342,12 @@
       "mark": "164.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|164.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -3862,6 +4373,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|164.1|1"
+      ],
       "width_inches": 36,
       "x": 581,
       "y": 1285
@@ -3881,6 +4395,12 @@
       "mark": "174.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|174.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -3906,6 +4426,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|174.1|1"
+      ],
       "width_inches": 36,
       "x": 1111,
       "y": 1361
@@ -3925,6 +4448,12 @@
       "mark": "176.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|176.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -3950,6 +4479,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|176.1|1"
+      ],
       "width_inches": 36,
       "x": 1190,
       "y": 1376
@@ -3969,6 +4501,12 @@
       "mark": "173.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|173.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -3994,6 +4532,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|173.1|1"
+      ],
       "width_inches": 36,
       "x": 987,
       "y": 1409
@@ -4013,6 +4554,12 @@
       "mark": "182.1",
       "matched_by": "exact",
       "material": "ALUM1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|182.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -4038,6 +4585,9 @@
       ],
       "sheet": "A1.1",
       "size": "2'-11\" x 7'-10\"",
+      "source_keys": [
+        "29|182.1|1"
+      ],
       "width_inches": 35,
       "x": 1057,
       "y": 1417
@@ -4057,6 +4607,12 @@
       "mark": "178.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|178.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -4082,6 +4638,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|178.1|1"
+      ],
       "width_inches": 36,
       "x": 1181,
       "y": 1495
@@ -4101,6 +4660,12 @@
       "mark": "175.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|175.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -4126,6 +4691,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|175.1|1"
+      ],
       "width_inches": 36,
       "x": 961,
       "y": 1508
@@ -4145,6 +4713,12 @@
       "mark": "177.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|177.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -4170,6 +4744,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|177.1|1"
+      ],
       "width_inches": 36,
       "x": 1090,
       "y": 1574
@@ -4189,6 +4766,12 @@
       "mark": "180.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|180.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -4214,6 +4797,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|180.1|1"
+      ],
       "width_inches": 36,
       "x": 1317,
       "y": 1686
@@ -4233,6 +4819,12 @@
       "mark": "179.1.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|179.1.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -4258,6 +4850,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|179.1.1|1"
+      ],
       "width_inches": 36,
       "x": 1218,
       "y": 1728
@@ -4277,6 +4872,12 @@
       "mark": "179.1",
       "matched_by": "exact",
       "material": "WD1",
+      "opening_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]|179.1|29|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+      },
+      "opening_scope_id": "[{\"address\":\"4015 PEPPER DR, ROCKFORD, IL 61114\"},\"A\"]",
       "page": 26,
       "pair": false,
       "points_per_foot": 6.75,
@@ -4302,6 +4903,9 @@
       ],
       "sheet": "A1.1",
       "size": "3'-0\" x 7'-10\"",
+      "source_keys": [
+        "29|179.1|1"
+      ],
       "width_inches": 36,
       "x": 1195,
       "y": 1744

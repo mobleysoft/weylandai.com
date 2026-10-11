@@ -1156,12 +1156,29 @@
     {
       "height": 1728,
       "page": 46,
+      "plan_rule": "legacy",
       "points_per_foot": [
         9
       ],
       "scales": [
         "1/8\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 63
+          }
+        ],
+        "kept_pages": [
+          63
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-101",
       "title": "OVERALL FIRST FLOOR PLAN",
       "width": 2592
@@ -1169,12 +1186,29 @@
     {
       "height": 1728,
       "page": 47,
+      "plan_rule": "legacy",
       "points_per_foot": [
         9
       ],
       "scales": [
         "1/8\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 63
+          }
+        ],
+        "kept_pages": [
+          63
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-102",
       "title": "OVERALL FIRST FLOOR FFE PLAN",
       "width": 2592
@@ -1182,6 +1216,7 @@
     {
       "height": 1728,
       "page": 49,
+      "plan_rule": "legacy",
       "points_per_foot": [
         18
       ],
@@ -1194,6 +1229,22 @@
         "1/4\" = 1'-0\"",
         "1/4\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 63
+          }
+        ],
+        "kept_pages": [
+          63
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-111",
       "title": "ENLARGED FLOOR PLANS",
       "width": 2592
@@ -1201,6 +1252,7 @@
     {
       "height": 1728,
       "page": 51,
+      "plan_rule": "legacy",
       "points_per_foot": [
         72,
         108
@@ -1217,6 +1269,22 @@
         "1\" = 1'-0\"",
         "1\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 63
+          }
+        ],
+        "kept_pages": [
+          63
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-121",
       "title": "PLAN DETAILS",
       "width": 2592
@@ -1273,6 +1341,14 @@
       "mark": "161.2",
       "matched_by": "exact",
       "material": "ALUM",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|161.2|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -1298,6 +1374,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|161.2|1"
+      ],
       "width_inches": 36,
       "x": 1362,
       "y": 377
@@ -1317,6 +1396,14 @@
       "mark": "124.2",
       "matched_by": "exact",
       "material": "ALUM",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|124.2|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -1342,6 +1429,9 @@
       ],
       "sheet": "A-101",
       "size": "7'-0\" x 3'-0\"",
+      "source_keys": [
+        "63|124.2|1"
+      ],
       "width_inches": 84,
       "x": 1890,
       "y": 401
@@ -1361,6 +1451,14 @@
       "mark": "161.1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|161.1|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -1386,6 +1484,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|161.1|1"
+      ],
       "width_inches": 36,
       "x": 1362,
       "y": 438
@@ -1407,6 +1508,14 @@
       "mark": "149",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|149|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -1432,6 +1541,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|149|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 447,
@@ -1454,6 +1566,14 @@
       "mark": "150",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|150|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -1479,6 +1599,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|150|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 497,
@@ -1499,6 +1622,14 @@
       "mark": "154",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|154|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -1524,6 +1655,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|154|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 874,
@@ -1544,6 +1678,14 @@
       "mark": "155",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|155|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -1569,6 +1711,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|155|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 965,
@@ -1589,6 +1734,14 @@
       "mark": "156",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|156|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -1614,6 +1767,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|156|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1059,
@@ -1634,6 +1790,14 @@
       "mark": "103.2",
       "matched_by": "exact",
       "material": "ALUM",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|103.2|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -1659,6 +1823,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|103.2|1"
+      ],
       "width_inches": 36,
       "x": 2080,
       "y": 540
@@ -1678,6 +1845,14 @@
       "mark": "124.1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|124.1|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -1703,6 +1878,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|124.1|1"
+      ],
       "width_inches": 36,
       "x": 1880,
       "y": 545
@@ -1722,6 +1900,14 @@
       "mark": "162",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|162|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -1747,6 +1933,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|162|1"
+      ],
       "width_inches": 36,
       "x": 1432,
       "y": 572
@@ -1766,6 +1955,14 @@
       "mark": "163",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|163|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -1791,6 +1988,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|163|1"
+      ],
       "width_inches": 36,
       "x": 1537,
       "y": 572
@@ -1810,6 +2010,14 @@
       "mark": "164",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|164|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -1835,6 +2043,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|164|1"
+      ],
       "width_inches": 36,
       "x": 1624,
       "y": 572
@@ -1854,6 +2065,14 @@
       "mark": "165",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|165|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -1879,6 +2098,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|165|1"
+      ],
       "width_inches": 36,
       "x": 1717,
       "y": 572
@@ -1898,6 +2120,14 @@
       "mark": "166",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|166|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -1923,6 +2153,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|166|1"
+      ],
       "width_inches": 36,
       "x": 1819,
       "y": 572
@@ -1942,6 +2175,14 @@
       "mark": "103.3",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|103.3|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -1967,6 +2208,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|103.3|1"
+      ],
       "width_inches": 36,
       "x": 1927,
       "y": 594
@@ -1988,6 +2232,14 @@
       "mark": "151",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|151|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -2013,6 +2265,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|151|1"
+      ],
       "width_inches": 36,
       "x": 596,
       "y": 605
@@ -2034,6 +2289,14 @@
       "mark": "152",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|152|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -2059,6 +2322,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|152|1"
+      ],
       "width_inches": 36,
       "x": 682,
       "y": 605
@@ -2078,6 +2344,14 @@
       "mark": "153",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|153|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -2103,6 +2377,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|153|1"
+      ],
       "width_inches": 36,
       "x": 777,
       "y": 605
@@ -2124,6 +2401,14 @@
       "mark": "157",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|157|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -2149,6 +2434,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|157|1"
+      ],
       "width_inches": 36,
       "x": 1156,
       "y": 605
@@ -2168,6 +2456,14 @@
       "mark": "169.1",
       "matched_by": "exact",
       "material": "ALUM",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|169.1|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -2193,6 +2489,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|169.1|1"
+      ],
       "width_inches": 36,
       "x": 372,
       "y": 618
@@ -2212,6 +2511,14 @@
       "mark": "108",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|108|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -2237,6 +2544,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|108|1"
+      ],
       "width_inches": 36,
       "x": 1839,
       "y": 631
@@ -2256,6 +2566,14 @@
       "mark": "105",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|105|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -2281,6 +2599,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|105|1"
+      ],
       "width_inches": 36,
       "x": 1881,
       "y": 635
@@ -2300,6 +2621,14 @@
       "mark": "123.1",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|123.1|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -2325,6 +2654,9 @@
       ],
       "sheet": "A-101",
       "size": null,
+      "source_keys": [
+        "63|123.1|1"
+      ],
       "width_inches": null,
       "x": 1619,
       "y": 654
@@ -2346,6 +2678,14 @@
       "mark": "104",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|104|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -2371,6 +2711,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|104|1"
+      ],
       "width_inches": 36,
       "x": 1980,
       "y": 664
@@ -2390,6 +2733,14 @@
       "mark": "169.2",
       "matched_by": "exact",
       "material": "ALUM",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|169.2|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -2415,6 +2766,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|169.2|1"
+      ],
       "width_inches": 36,
       "x": 318,
       "y": 676
@@ -2434,6 +2788,14 @@
       "mark": "103.1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|103.1|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -2459,6 +2821,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|103.1|1"
+      ],
       "width_inches": 36,
       "x": 2065,
       "y": 682
@@ -2478,6 +2843,14 @@
       "mark": "148",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|148|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -2503,6 +2876,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|148|1"
+      ],
       "width_inches": 36,
       "x": 427,
       "y": 693
@@ -2522,6 +2898,14 @@
       "mark": "147",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|147|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -2547,6 +2931,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|147|1"
+      ],
       "width_inches": 36,
       "x": 519,
       "y": 693
@@ -2568,6 +2955,14 @@
       "mark": "139.1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|139.1|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -2593,6 +2988,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|139.1|1"
+      ],
       "width_inches": 36,
       "x": 853,
       "y": 707
@@ -2612,6 +3010,14 @@
       "mark": "106",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|106|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -2637,6 +3043,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|106|1"
+      ],
       "width_inches": 36,
       "x": 1863,
       "y": 710
@@ -2658,6 +3067,14 @@
       "mark": "143",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|143|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -2683,6 +3100,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|143|1"
+      ],
       "width_inches": 36,
       "x": 910,
       "y": 763
@@ -2704,6 +3124,14 @@
       "mark": "142",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|142|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -2729,6 +3157,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|142|1"
+      ],
       "width_inches": 36,
       "x": 1010,
       "y": 763
@@ -2748,6 +3179,14 @@
       "mark": "141",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|141|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -2773,6 +3212,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|141|1"
+      ],
       "width_inches": 36,
       "x": 1097,
       "y": 763
@@ -2794,6 +3236,14 @@
       "mark": "140",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|140|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -2819,6 +3269,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|140|1"
+      ],
       "width_inches": 36,
       "x": 1196,
       "y": 763
@@ -2838,6 +3291,14 @@
       "mark": "146",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|146|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -2863,6 +3324,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|146|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 604,
@@ -2883,6 +3347,14 @@
       "mark": "102.2",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|102.2|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -2908,6 +3380,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|102.2|1"
+      ],
       "width_inches": 36,
       "x": 1941,
       "y": 768
@@ -2927,6 +3402,14 @@
       "mark": "123.2",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|123.2|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -2952,6 +3435,9 @@
       ],
       "sheet": "A-101",
       "size": null,
+      "source_keys": [
+        "63|123.2|1"
+      ],
       "width_inches": null,
       "x": 1738,
       "y": 782
@@ -2971,6 +3457,14 @@
       "mark": "122",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|122|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -2996,6 +3490,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|122|1"
+      ],
       "width_inches": 36,
       "x": 1605,
       "y": 817
@@ -3017,6 +3514,14 @@
       "mark": "107",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|107|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -3042,6 +3547,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|107|1"
+      ],
       "width_inches": 36,
       "x": 1863,
       "y": 824
@@ -3061,6 +3569,14 @@
       "mark": "102.1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|102.1|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -3086,6 +3602,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|102.1|1"
+      ],
       "width_inches": 36,
       "x": 1941,
       "y": 842
@@ -3107,6 +3626,14 @@
       "mark": "109",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|109|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -3132,6 +3659,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|109|1"
+      ],
       "width_inches": 36,
       "x": 2034,
       "y": 876
@@ -3153,6 +3683,14 @@
       "mark": "100",
       "matched_by": "exact",
       "material": "ALUM",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|100|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -3178,6 +3716,9 @@
       ],
       "sheet": "A-101",
       "size": "7'-0\" x 3'-0\"",
+      "source_keys": [
+        "63|100|1"
+      ],
       "width_inches": 84,
       "x": 2101,
       "y": 876
@@ -3197,6 +3738,14 @@
       "mark": "119",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|119|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -3222,6 +3771,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|119|1"
+      ],
       "width_inches": 36,
       "x": 1863,
       "y": 950
@@ -3241,6 +3793,14 @@
       "mark": "110",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|110|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -3266,6 +3826,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|110|1"
+      ],
       "width_inches": 36,
       "x": 1911,
       "y": 961
@@ -3285,6 +3848,14 @@
       "mark": "111",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|111|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -3310,6 +3881,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|111|1"
+      ],
       "width_inches": 36,
       "x": 1911,
       "y": 998
@@ -3329,6 +3903,14 @@
       "mark": "121",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|121|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -3354,6 +3936,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|121|1"
+      ],
       "width_inches": 36,
       "x": 1605,
       "y": 1048
@@ -3373,6 +3958,14 @@
       "mark": "139.2",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|139.2|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -3398,6 +3991,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 3'-0\"",
+      "source_keys": [
+        "63|139.2|1"
+      ],
       "width_inches": 36,
       "x": 1549,
       "y": 1049
@@ -3417,6 +4013,14 @@
       "mark": "131",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|131|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -3442,6 +4046,9 @@
       ],
       "sheet": "A-101",
       "size": "4'-0\" x 9'-0\"",
+      "source_keys": [
+        "63|131|1"
+      ],
       "width_inches": 48,
       "x": 1360,
       "y": 1076
@@ -3461,6 +4068,14 @@
       "mark": "112",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|112|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -3486,6 +4101,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|112|1"
+      ],
       "width_inches": 36,
       "x": 1911,
       "y": 1077
@@ -3507,6 +4125,14 @@
       "mark": "120",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|120|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -3532,6 +4158,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|120|1"
+      ],
       "width_inches": 36,
       "x": 1605,
       "y": 1087
@@ -3551,6 +4180,14 @@
       "mark": "117",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|117|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -3576,6 +4213,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|117|1"
+      ],
       "width_inches": 36,
       "x": 1863,
       "y": 1087
@@ -3597,6 +4237,14 @@
       "mark": "130.2",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|130.2|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -3622,6 +4270,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|130.2|1"
+      ],
       "width_inches": 36,
       "x": 1383,
       "y": 1097
@@ -3641,6 +4292,14 @@
       "mark": "130.3",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|130.3|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -3666,6 +4325,9 @@
       ],
       "sheet": "A-101",
       "size": "2'-0\" x 3'-0\"",
+      "source_keys": [
+        "63|130.3|1"
+      ],
       "width_inches": 24,
       "x": 1417,
       "y": 1114
@@ -3687,6 +4349,14 @@
       "mark": "132",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|132|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -3712,6 +4382,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|132|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1278,
@@ -3732,6 +4405,14 @@
       "mark": "136",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|136|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -3757,6 +4438,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|136|1"
+      ],
       "width_inches": 36,
       "x": 1553,
       "y": 1143
@@ -3778,6 +4462,14 @@
       "mark": "128",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|128|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -3803,6 +4495,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|128|1"
+      ],
       "width_inches": 36,
       "x": 1355,
       "y": 1152
@@ -3822,6 +4517,14 @@
       "mark": "113",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|113|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -3847,6 +4550,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|113|1"
+      ],
       "width_inches": 36,
       "x": 1911,
       "y": 1162
@@ -3866,6 +4572,14 @@
       "mark": "125.1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|125.1|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -3891,6 +4605,9 @@
       ],
       "sheet": "A-101",
       "size": "4'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|125.1|1"
+      ],
       "width_inches": 48,
       "x": 1576,
       "y": 1166
@@ -3910,6 +4627,14 @@
       "mark": "116",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|116|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -3935,6 +4660,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|116|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1823,
@@ -3957,6 +4685,14 @@
       "mark": "129",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|129|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -3982,6 +4718,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|129|1"
+      ],
       "width_inches": 36,
       "x": 1304,
       "y": 1190
@@ -4001,6 +4740,14 @@
       "mark": "115",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|115|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -4026,6 +4773,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|115|1"
+      ],
       "width_inches": 36,
       "x": 1848,
       "y": 1220
@@ -4045,6 +4795,14 @@
       "mark": "114",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|114|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -4070,6 +4828,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|114|1"
+      ],
       "width_inches": 36,
       "x": 1885,
       "y": 1220
@@ -4091,6 +4852,14 @@
       "mark": "130.1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|130.1|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -4116,6 +4885,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|130.1|1"
+      ],
       "width_inches": 36,
       "x": 1394,
       "y": 1224
@@ -4137,6 +4909,14 @@
       "mark": "126.2",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|126.2|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -4162,6 +4942,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|126.2|1"
+      ],
       "width_inches": 36,
       "x": 1355,
       "y": 1239
@@ -4181,6 +4964,14 @@
       "mark": "101",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|101|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -4206,6 +4997,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|101|1"
+      ],
       "width_inches": 36,
       "x": 656,
       "y": 1319
@@ -4228,6 +5022,14 @@
       "mark": "127",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|127|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -4253,6 +5055,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|127|1"
+      ],
       "width_inches": 36,
       "x": 1336,
       "y": 1326
@@ -4274,6 +5079,14 @@
       "mark": "126.1",
       "matched_by": "exact",
       "material": "HM",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|126.1|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -4299,6 +5112,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-6\" x 7'-0\"",
+      "source_keys": [
+        "63|126.1|1"
+      ],
       "width_inches": 42,
       "x": 1439,
       "y": 1349
@@ -4318,6 +5134,14 @@
       "mark": "125.2",
       "matched_by": "exact",
       "material": "HM",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|125.2|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -4343,6 +5167,9 @@
       ],
       "sheet": "A-101",
       "size": "4'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|125.2|1"
+      ],
       "width_inches": 48,
       "x": 1576,
       "y": 1477
@@ -4362,6 +5189,14 @@
       "mark": "125.3",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|125.3|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
       "page": 46,
       "pair": false,
       "points_per_foot": 9,
@@ -4387,6 +5222,9 @@
       ],
       "sheet": "A-101",
       "size": "10'-0\" x 10'-0\"",
+      "source_keys": [
+        "63|125.3|1"
+      ],
       "width_inches": 120,
       "x": 1681,
       "y": 1491

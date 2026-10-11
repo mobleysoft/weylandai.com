@@ -5980,6 +5980,7 @@
     {
       "height": 1728,
       "page": 3,
+      "plan_rule": "legacy",
       "points_per_foot": [
         6.75,
         18
@@ -5990,6 +5991,21 @@
         "1/4\" = 1'-0\"",
         "3/32\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number"
+            ],
+            "page": 12
+          }
+        ],
+        "kept_pages": [
+          12
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A102",
       "title": "PARTIAL FL. PLAN - HOUSING UNIT 5",
       "width": 2592
@@ -5997,12 +6013,28 @@
     {
       "height": 1728,
       "page": 4,
+      "plan_rule": "legacy",
       "points_per_foot": [
         6.75
       ],
       "scales": [
         "3/32\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number"
+            ],
+            "page": 12
+          }
+        ],
+        "kept_pages": [
+          12
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A103",
       "title": "FLOOR PLAN - HOUSING UNIT 1",
       "width": 2592
@@ -6010,12 +6042,28 @@
     {
       "height": 1728,
       "page": 5,
+      "plan_rule": "legacy",
       "points_per_foot": [
         6.75
       ],
       "scales": [
         "3/32\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number"
+            ],
+            "page": 12
+          }
+        ],
+        "kept_pages": [
+          12
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A104",
       "title": "MEZZANINE PLAN - HOUSING UNIT 1",
       "width": 2592
@@ -6023,12 +6071,28 @@
     {
       "height": 1728,
       "page": 6,
+      "plan_rule": "legacy",
       "points_per_foot": [
         6.75
       ],
       "scales": [
         "3/32\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number"
+            ],
+            "page": 12
+          }
+        ],
+        "kept_pages": [
+          12
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A105",
       "title": "FLOOR PLAN - HOUSING UNIT 2",
       "width": 2592
@@ -6036,12 +6100,28 @@
     {
       "height": 1728,
       "page": 7,
+      "plan_rule": "legacy",
       "points_per_foot": [
         6.75
       ],
       "scales": [
         "3/32\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number"
+            ],
+            "page": 12
+          }
+        ],
+        "kept_pages": [
+          12
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A106",
       "title": "MEZZANINE PLAN - HOUSING UNIT 2",
       "width": 2592
@@ -6049,12 +6129,28 @@
     {
       "height": 1728,
       "page": 8,
+      "plan_rule": "legacy",
       "points_per_foot": [
         6.75
       ],
       "scales": [
         "3/32\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number"
+            ],
+            "page": 12
+          }
+        ],
+        "kept_pages": [
+          12
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A107",
       "title": "FLOOR PLAN - HOUSING UNIT 3",
       "width": 2592
@@ -6062,12 +6158,28 @@
     {
       "height": 1728,
       "page": 9,
+      "plan_rule": "legacy",
       "points_per_foot": [
         6.75
       ],
       "scales": [
         "3/32\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number"
+            ],
+            "page": 12
+          }
+        ],
+        "kept_pages": [
+          12
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A108",
       "title": "MEZZANINE PLAN - HOUSING UNIT 3",
       "width": 2592
@@ -6075,12 +6187,28 @@
     {
       "height": 1728,
       "page": 10,
+      "plan_rule": "legacy",
       "points_per_foot": [
         6.75
       ],
       "scales": [
         "3/32\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number"
+            ],
+            "page": 12
+          }
+        ],
+        "kept_pages": [
+          12
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A109",
       "title": "FLOOR PLAN - HOUSING UNIT 4",
       "width": 2592
@@ -6088,12 +6216,28 @@
     {
       "height": 1728,
       "page": 11,
+      "plan_rule": "legacy",
       "points_per_foot": [
         6.75
       ],
       "scales": [
         "3/32\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number"
+            ],
+            "page": 12
+          }
+        ],
+        "kept_pages": [
+          12
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A110",
       "title": "MEZZANINE PLAN - HOUSING UNIT 4",
       "width": 2592
@@ -6130,6 +6274,12 @@
       ],
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"site_number\":\"7007\"},\"A\"]|151A|12|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "site_number": "7007"
+      },
+      "opening_scope_id": "[{\"site_number\":\"7007\"},\"A\"]",
       "page": 3,
       "pair": false,
       "points_per_foot": 18,
@@ -6163,6 +6313,9 @@
       ],
       "sheet": "A102",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "12|151A|1"
+      ],
       "width_inches": 36,
       "x": 447,
       "y": 529
@@ -6187,6 +6340,12 @@
       ],
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"site_number\":\"7007\"},\"A\"]|259A|12|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "site_number": "7007"
+      },
+      "opening_scope_id": "[{\"site_number\":\"7007\"},\"A\"]",
       "page": 3,
       "pair": false,
       "points_per_foot": 18,
@@ -6219,6 +6378,9 @@
       ],
       "sheet": "A102",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "12|259A|1"
+      ],
       "width_inches": 36,
       "x": 1135,
       "y": 1007
@@ -6243,6 +6405,12 @@
       ],
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"site_number\":\"7007\"},\"A\"]|258A|12|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "site_number": "7007"
+      },
+      "opening_scope_id": "[{\"site_number\":\"7007\"},\"A\"]",
       "page": 3,
       "pair": false,
       "points_per_foot": 18,
@@ -6275,6 +6443,9 @@
       ],
       "sheet": "A102",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "12|258A|1"
+      ],
       "width_inches": 36,
       "x": 1161,
       "y": 1034
@@ -6294,6 +6465,12 @@
       "mark": "256",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"site_number\":\"7007\"},\"A\"]|256|12|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "site_number": "7007"
+      },
+      "opening_scope_id": "[{\"site_number\":\"7007\"},\"A\"]",
       "page": 3,
       "pair": false,
       "points_per_foot": 6.75,
@@ -6321,6 +6498,9 @@
       ],
       "sheet": "A102",
       "size": "4'-0\" x 7'-0\"",
+      "source_keys": [
+        "12|256|1"
+      ],
       "width_inches": 48,
       "x": 818,
       "y": 1050
@@ -6350,6 +6530,12 @@
       ],
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"site_number\":\"7007\"},\"A\"]|1A101|12|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "site_number": "7007"
+      },
+      "opening_scope_id": "[{\"site_number\":\"7007\"},\"A\"]",
       "page": 4,
       "pair": false,
       "points_per_foot": 6.75,
@@ -6387,6 +6573,9 @@
       ],
       "sheet": "A103",
       "size": "2'-4\" x 7'-0\"",
+      "source_keys": [
+        "12|1A101|1"
+      ],
       "width_inches": 28,
       "x": 799,
       "y": 1105
@@ -6416,6 +6605,12 @@
       ],
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"site_number\":\"7007\"},\"A\"]|1A103|12|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "site_number": "7007"
+      },
+      "opening_scope_id": "[{\"site_number\":\"7007\"},\"A\"]",
       "page": 4,
       "pair": false,
       "points_per_foot": 6.75,
@@ -6453,6 +6648,9 @@
       ],
       "sheet": "A103",
       "size": "2'-4\" x 7'-0\"",
+      "source_keys": [
+        "12|1A103|1"
+      ],
       "width_inches": 28,
       "x": 799,
       "y": 1204
@@ -6482,6 +6680,12 @@
       ],
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"site_number\":\"7007\"},\"A\"]|1A201|12|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "site_number": "7007"
+      },
+      "opening_scope_id": "[{\"site_number\":\"7007\"},\"A\"]",
       "page": 5,
       "pair": false,
       "points_per_foot": 6.75,
@@ -6519,6 +6723,9 @@
       ],
       "sheet": "A104",
       "size": "2'-4\" x 7'-0\"",
+      "source_keys": [
+        "12|1A201|1"
+      ],
       "width_inches": 28,
       "x": 877,
       "y": 1037
@@ -6548,6 +6755,12 @@
       ],
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"site_number\":\"7007\"},\"A\"]|2A101|12|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "site_number": "7007"
+      },
+      "opening_scope_id": "[{\"site_number\":\"7007\"},\"A\"]",
       "page": 6,
       "pair": false,
       "points_per_foot": 6.75,
@@ -6585,6 +6798,9 @@
       ],
       "sheet": "A105",
       "size": "2'-4\" x 7'-0\"",
+      "source_keys": [
+        "12|2A101|1"
+      ],
       "width_inches": 28,
       "x": 824,
       "y": 1094
@@ -6614,6 +6830,12 @@
       ],
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"site_number\":\"7007\"},\"A\"]|2A103|12|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "site_number": "7007"
+      },
+      "opening_scope_id": "[{\"site_number\":\"7007\"},\"A\"]",
       "page": 6,
       "pair": false,
       "points_per_foot": 6.75,
@@ -6651,6 +6873,9 @@
       ],
       "sheet": "A105",
       "size": "2'-4\" x 7'-0\"",
+      "source_keys": [
+        "12|2A103|1"
+      ],
       "width_inches": 28,
       "x": 824,
       "y": 1194
@@ -6680,6 +6905,12 @@
       ],
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"site_number\":\"7007\"},\"A\"]|2A201|12|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "site_number": "7007"
+      },
+      "opening_scope_id": "[{\"site_number\":\"7007\"},\"A\"]",
       "page": 7,
       "pair": false,
       "points_per_foot": 6.75,
@@ -6717,6 +6948,9 @@
       ],
       "sheet": "A106",
       "size": "2'-4\" x 7'-0\"",
+      "source_keys": [
+        "12|2A201|1"
+      ],
       "width_inches": 28,
       "x": 922,
       "y": 1042
@@ -6746,6 +6980,12 @@
       ],
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"site_number\":\"7007\"},\"A\"]|3A101|12|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "site_number": "7007"
+      },
+      "opening_scope_id": "[{\"site_number\":\"7007\"},\"A\"]",
       "page": 8,
       "pair": false,
       "points_per_foot": 6.75,
@@ -6783,6 +7023,9 @@
       ],
       "sheet": "A107",
       "size": "2'-4\" x 7'-0\"",
+      "source_keys": [
+        "12|3A101|1"
+      ],
       "width_inches": 28,
       "x": 804,
       "y": 1106
@@ -6812,6 +7055,12 @@
       ],
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"site_number\":\"7007\"},\"A\"]|3A103|12|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "site_number": "7007"
+      },
+      "opening_scope_id": "[{\"site_number\":\"7007\"},\"A\"]",
       "page": 8,
       "pair": false,
       "points_per_foot": 6.75,
@@ -6849,6 +7098,9 @@
       ],
       "sheet": "A107",
       "size": "2'-4\" x 7'-0\"",
+      "source_keys": [
+        "12|3A103|1"
+      ],
       "width_inches": 28,
       "x": 804,
       "y": 1203
@@ -6878,6 +7130,12 @@
       ],
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"site_number\":\"7007\"},\"A\"]|3A201|12|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "site_number": "7007"
+      },
+      "opening_scope_id": "[{\"site_number\":\"7007\"},\"A\"]",
       "page": 9,
       "pair": false,
       "points_per_foot": 6.75,
@@ -6915,6 +7173,9 @@
       ],
       "sheet": "A108",
       "size": "2'-4\" x 7'-0\"",
+      "source_keys": [
+        "12|3A201|1"
+      ],
       "width_inches": 28,
       "x": 923,
       "y": 1121
@@ -6944,6 +7205,12 @@
       ],
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"site_number\":\"7007\"},\"A\"]|4A101|12|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "site_number": "7007"
+      },
+      "opening_scope_id": "[{\"site_number\":\"7007\"},\"A\"]",
       "page": 10,
       "pair": false,
       "points_per_foot": 6.75,
@@ -6981,6 +7248,9 @@
       ],
       "sheet": "A109",
       "size": "2'-4\" x 7'-0\"",
+      "source_keys": [
+        "12|4A101|1"
+      ],
       "width_inches": 28,
       "x": 963,
       "y": 1085
@@ -7010,6 +7280,12 @@
       ],
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"site_number\":\"7007\"},\"A\"]|4A103|12|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "site_number": "7007"
+      },
+      "opening_scope_id": "[{\"site_number\":\"7007\"},\"A\"]",
       "page": 10,
       "pair": false,
       "points_per_foot": 6.75,
@@ -7047,6 +7323,9 @@
       ],
       "sheet": "A109",
       "size": "2'-4\" x 7'-0\"",
+      "source_keys": [
+        "12|4A103|1"
+      ],
       "width_inches": 28,
       "x": 963,
       "y": 1182
@@ -7076,6 +7355,12 @@
       ],
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"site_number\":\"7007\"},\"A\"]|4A201|12|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "site_number": "7007"
+      },
+      "opening_scope_id": "[{\"site_number\":\"7007\"},\"A\"]",
       "page": 11,
       "pair": false,
       "points_per_foot": 6.75,
@@ -7113,6 +7398,9 @@
       ],
       "sheet": "A110",
       "size": "2'-4\" x 7'-0\"",
+      "source_keys": [
+        "12|4A201|1"
+      ],
       "width_inches": 28,
       "x": 892,
       "y": 1092

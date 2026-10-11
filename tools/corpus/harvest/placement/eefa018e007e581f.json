@@ -1,6 +1,186 @@
 {
   "rooms": [
     {
+      "name": "PLUMBING WALL ABOVE",
+      "number": "3",
+      "page": 46,
+      "points_per_foot": 13.5,
+      "sheet": "A-107",
+      "x": 1691,
+      "y": 283
+    },
+    {
+      "name": "BASEMENT MECH RM",
+      "number": "100",
+      "page": 46,
+      "points_per_foot": 13.5,
+      "sheet": "A-107",
+      "x": 1539,
+      "y": 334
+    },
+    {
+      "name": "CRAWL SPACE",
+      "number": "101",
+      "page": 46,
+      "points_per_foot": 13.5,
+      "sheet": "A-107",
+      "x": 684,
+      "y": 335
+    },
+    {
+      "name": "WALL ABOVE",
+      "number": "7",
+      "page": 46,
+      "points_per_foot": 13.5,
+      "sheet": "A-107",
+      "x": 1694,
+      "y": 381
+    },
+    {
+      "name": "DIVISION 03",
+      "number": "3.06",
+      "page": 46,
+      "points_per_foot": 13.5,
+      "sheet": "A-107",
+      "x": 1900,
+      "y": 757
+    },
+    {
+      "name": "DIVISION 04",
+      "number": "4.2",
+      "page": 46,
+      "points_per_foot": 13.5,
+      "sheet": "A-107",
+      "x": 1898,
+      "y": 806
+    },
+    {
+      "name": "DIVISION 06",
+      "number": "6.8",
+      "page": 46,
+      "points_per_foot": 13.5,
+      "sheet": "A-107",
+      "x": 1898,
+      "y": 868
+    },
+    {
+      "name": "DIVISION 07",
+      "number": "7.2",
+      "page": 46,
+      "points_per_foot": 13.5,
+      "sheet": "A-107",
+      "x": 1898,
+      "y": 931
+    },
+    {
+      "name": "DIVISION 08",
+      "number": "8.5",
+      "page": 46,
+      "points_per_foot": 13.5,
+      "sheet": "A-107",
+      "x": 1898,
+      "y": 957
+    },
+    {
+      "name": "DIVISION 09",
+      "number": "9.1",
+      "page": 46,
+      "points_per_foot": 13.5,
+      "sheet": "A-107",
+      "x": 1898,
+      "y": 1019
+    },
+    {
+      "name": "DIVISION 10",
+      "number": "10.2",
+      "page": 46,
+      "points_per_foot": 13.5,
+      "sheet": "A-107",
+      "x": 1900,
+      "y": 1057
+    },
+    {
+      "name": "UNISEX",
+      "number": "112",
+      "page": 46,
+      "points_per_foot": 13.5,
+      "sheet": "A-107",
+      "x": 1571,
+      "y": 1124
+    },
+    {
+      "name": "RR",
+      "number": "105",
+      "page": 46,
+      "points_per_foot": 13.5,
+      "sheet": "A-107",
+      "x": 781,
+      "y": 1165
+    },
+    {
+      "name": "SITTING ROOM",
+      "number": "102",
+      "page": 46,
+      "points_per_foot": 13.5,
+      "sheet": "A-107",
+      "x": 527,
+      "y": 1174
+    },
+    {
+      "name": "BEDROOM",
+      "number": "104",
+      "page": 46,
+      "points_per_foot": 13.5,
+      "sheet": "A-107",
+      "x": 683,
+      "y": 1176
+    },
+    {
+      "name": "BEDROOM",
+      "number": "106",
+      "page": 46,
+      "points_per_foot": 13.5,
+      "sheet": "A-107",
+      "x": 911,
+      "y": 1176
+    },
+    {
+      "name": "BEDROOM",
+      "number": "107",
+      "page": 46,
+      "points_per_foot": 13.5,
+      "sheet": "A-107",
+      "x": 1071,
+      "y": 1176
+    },
+    {
+      "name": "BEDROOM",
+      "number": "108",
+      "page": 46,
+      "points_per_foot": 13.5,
+      "sheet": "A-107",
+      "x": 1235,
+      "y": 1176
+    },
+    {
+      "name": "BEDROOM",
+      "number": "109",
+      "page": 46,
+      "points_per_foot": 13.5,
+      "sheet": "A-107",
+      "x": 1393,
+      "y": 1176
+    },
+    {
+      "name": "CORRIDOR",
+      "number": "103",
+      "page": 46,
+      "points_per_foot": 13.5,
+      "sheet": "A-107",
+      "x": 950,
+      "y": 1269
+    },
+    {
       "name": "DIVISION 03",
       "number": "3.2",
       "page": 47,
@@ -350,6 +530,312 @@
       "sheet": "A-110",
       "x": 1051,
       "y": 1481
+    },
+    {
+      "name": "BEDROOM",
+      "number": "607",
+      "page": 49,
+      "points_per_foot": 13.5,
+      "sheet": "A-112",
+      "x": 1475,
+      "y": 238
+    },
+    {
+      "name": "MECH",
+      "number": "609",
+      "page": 49,
+      "points_per_foot": 13.5,
+      "sheet": "A-112",
+      "x": 1325,
+      "y": 248
+    },
+    {
+      "name": "BEDROOM",
+      "number": "606",
+      "page": 49,
+      "points_per_foot": 13.5,
+      "sheet": "A-112",
+      "x": 1610,
+      "y": 306
+    },
+    {
+      "name": "SUN ROOM",
+      "number": "605",
+      "page": 49,
+      "points_per_foot": 13.5,
+      "sheet": "A-112",
+      "x": 1759,
+      "y": 306
+    },
+    {
+      "name": "BATH",
+      "number": "613",
+      "page": 49,
+      "points_per_foot": 13.5,
+      "sheet": "A-112",
+      "x": 1425,
+      "y": 347
+    },
+    {
+      "name": "GAME ROOM",
+      "number": "400",
+      "page": 49,
+      "points_per_foot": 13.5,
+      "sheet": "A-112",
+      "x": 854,
+      "y": 464
+    },
+    {
+      "name": "MECH.",
+      "number": "300",
+      "page": 49,
+      "points_per_foot": 13.5,
+      "sheet": "A-112",
+      "x": 465,
+      "y": 474
+    },
+    {
+      "name": "FRONT PORCH",
+      "number": "600",
+      "page": 49,
+      "points_per_foot": 13.5,
+      "sheet": "A-112",
+      "x": 1761,
+      "y": 525
+    },
+    {
+      "name": "UNISEX",
+      "number": "301",
+      "page": 49,
+      "points_per_foot": 13.5,
+      "sheet": "A-112",
+      "x": 217,
+      "y": 576
+    },
+    {
+      "name": "UNISEX",
+      "number": "302",
+      "page": 49,
+      "points_per_foot": 13.5,
+      "sheet": "A-112",
+      "x": 319,
+      "y": 576
+    },
+    {
+      "name": "REAR PORCH",
+      "number": "610",
+      "page": 49,
+      "points_per_foot": 13.5,
+      "sheet": "A-112",
+      "x": 1307,
+      "y": 587
+    },
+    {
+      "name": "LAUNDRY 10",
+      "number": "305",
+      "page": 49,
+      "points_per_foot": 13.5,
+      "sheet": "A-112",
+      "x": 394,
+      "y": 591
+    },
+    {
+      "name": "DINING",
+      "number": "603",
+      "page": 49,
+      "points_per_foot": 13.5,
+      "sheet": "A-112",
+      "x": 1622,
+      "y": 616
+    },
+    {
+      "name": "LIVING ROOM",
+      "number": "601",
+      "page": 49,
+      "points_per_foot": 13.5,
+      "sheet": "A-112",
+      "x": 1456,
+      "y": 621
+    },
+    {
+      "name": "MARK",
+      "number": "T1",
+      "page": 49,
+      "points_per_foot": 13.5,
+      "sheet": "A-112",
+      "x": 1896,
+      "y": 1117
+    },
+    {
+      "name": "TOILET ACCESSORY SCHEDULE",
+      "number": "T2",
+      "page": 49,
+      "points_per_foot": 13.5,
+      "sheet": "A-112",
+      "x": 1896,
+      "y": 1117
+    },
+    {
+      "name": "GYMNASIUM",
+      "number": "500",
+      "page": 49,
+      "points_per_foot": 13.5,
+      "sheet": "A-112",
+      "x": 914,
+      "y": 1276
+    },
+    {
+      "name": "DIVISION 11",
+      "number": "EQ-01",
+      "page": 49,
+      "points_per_foot": 13.5,
+      "sheet": "A-112",
+      "x": 1905,
+      "y": 1469
+    },
+    {
+      "name": "EQUIPMENT LIST",
+      "number": "EQ-02",
+      "page": 49,
+      "points_per_foot": 13.5,
+      "sheet": "A-112",
+      "x": 1905,
+      "y": 1469
+    },
+    {
+      "name": "TOILET ACCESSORY SCHEDULE",
+      "number": "T2",
+      "page": 55,
+      "points_per_foot": 27,
+      "sheet": "A-408",
+      "x": 1896,
+      "y": 369
+    },
+    {
+      "name": "MARK",
+      "number": "T1",
+      "page": 55,
+      "points_per_foot": 27,
+      "sheet": "A-408",
+      "x": 1896,
+      "y": 370
+    },
+    {
+      "name": "DIVISION 11",
+      "number": "EQ-01",
+      "page": 55,
+      "points_per_foot": 27,
+      "sheet": "A-408",
+      "x": 1904,
+      "y": 745
+    },
+    {
+      "name": "EQUIPMENT LIST",
+      "number": "EQ-02",
+      "page": 55,
+      "points_per_foot": 27,
+      "sheet": "A-408",
+      "x": 1904,
+      "y": 745
+    },
+    {
+      "name": "SS-1",
+      "number": "P-3",
+      "page": 55,
+      "points_per_foot": 27,
+      "sheet": "A-408",
+      "x": 753,
+      "y": 1077
+    },
+    {
+      "name": "SS-1",
+      "number": "SS-2",
+      "page": 55,
+      "points_per_foot": 27,
+      "sheet": "A-408",
+      "x": 1349,
+      "y": 1099
+    },
+    {
+      "name": "BEDROOM",
+      "number": "607",
+      "page": 55,
+      "points_per_foot": 27,
+      "sheet": "A-408",
+      "x": 1767,
+      "y": 1103
+    },
+    {
+      "name": "SS-1 SS-2",
+      "number": "WD-1",
+      "page": 55,
+      "points_per_foot": 27,
+      "sheet": "A-408",
+      "x": 1349,
+      "y": 1113
+    },
+    {
+      "name": "BATH",
+      "number": "613",
+      "page": 55,
+      "points_per_foot": 27,
+      "sheet": "A-408",
+      "x": 1692,
+      "y": 1157
+    },
+    {
+      "name": "BATH",
+      "number": "604",
+      "page": 55,
+      "points_per_foot": 27,
+      "sheet": "A-408",
+      "x": 1671,
+      "y": 1360
+    },
+    {
+      "name": "SS-1",
+      "number": "P-3",
+      "page": 55,
+      "points_per_foot": 27,
+      "sheet": "A-408",
+      "x": 832,
+      "y": 1474
+    },
+    {
+      "name": "CLOS.",
+      "number": "612",
+      "page": 55,
+      "points_per_foot": 27,
+      "sheet": "A-408",
+      "x": 1632,
+      "y": 1475
+    },
+    {
+      "name": "SHEET 137 of 219 SHEET",
+      "number": "36",
+      "page": 55,
+      "points_per_foot": 27,
+      "sheet": "A-408",
+      "x": 2343,
+      "y": 1679
+    },
+    {
+      "name": "HARDWARE W/ PULL AND GATE LATCH AND LOCK.",
+      "number": "1",
+      "page": 56,
+      "points_per_foot": 36,
+      "sheet": "A-409",
+      "x": 1683,
+      "y": 959
+    },
+    {
+      "name": "BASE",
+      "number": "1",
+      "page": 56,
+      "points_per_foot": 108,
+      "sheet": "A-409",
+      "x": 408,
+      "y": 1075
     }
   ],
   "set": {
@@ -363,13 +849,61 @@
   "sheets": [
     {
       "height": 1728,
+      "page": 46,
+      "plan_rule": "extended-title",
+      "points_per_foot": [
+        13.5
+      ],
+      "scales": [
+        "SCALE: 3/16\" = 1'-0\"",
+        "SCALE: 3/16\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site"
+            ],
+            "page": 59
+          }
+        ],
+        "kept_pages": [
+          59
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A-107",
+      "title": "FLOOR PLANS - BASEMENT & FIRST",
+      "width": 2592
+    },
+    {
+      "height": 1728,
       "page": 47,
+      "plan_rule": "legacy",
       "points_per_foot": [
         13.5
       ],
       "scales": [
         "SCALE: 3/16\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site"
+            ],
+            "page": 59
+          }
+        ],
+        "kept_pages": [
+          59
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-109",
       "title": "FLOOR PLANS - BASEMENT LODGE",
       "width": 2592
@@ -377,6 +911,7 @@
     {
       "height": 1728,
       "page": 48,
+      "plan_rule": "legacy",
       "points_per_foot": [
         13.5,
         108
@@ -388,208 +923,155 @@
         "SCALE: 1 1/2\" = 1'-0\"",
         "SCALE: 3/16\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site"
+            ],
+            "page": 59
+          }
+        ],
+        "kept_pages": [
+          59
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-110",
       "title": "FLOOR PLANS - FIRST FLOOR LODGE",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 49,
+      "plan_rule": "extended-title",
+      "points_per_foot": [
+        13.5
+      ],
+      "scales": [
+        "SCALE: 3/16\" = 1'-0\"",
+        "SCALE: 3/16\" = 1'-0\"",
+        "SCALE: 3/16\" = 1'-0\"",
+        "SCALE: 3/16\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site"
+            ],
+            "page": 59
+          }
+        ],
+        "kept_pages": [
+          59
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A-112",
+      "title": "FLOOR PLANS - FIRST FLOOR GYM,",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 55,
+      "plan_rule": "extended-title",
+      "points_per_foot": [
+        27,
+        54
+      ],
+      "scales": [
+        "SCALE: 3/8\" = 1'-0\"",
+        "SCALE: 3/8\" = 1'-0\"",
+        "SCALE: 3/8\" = 1'-0\"",
+        "SCALE: 3/4\" = 1'-0\"",
+        "SCALE: 3/8\" = 1'-0\"",
+        "SCALE: 3/8\" = 1'-0\"",
+        "SCALE: 3/8\" = 1'-0\"",
+        "SCALE: 3/8\" = 1'-0\"",
+        "SCALE: 3/8\" = 1'-0\"",
+        "SCALE: 3/8\" = 1'-0\"",
+        "SCALE: 3/8\" = 1'-0\"",
+        "SCALE: 3/8\" = 1'-0\"",
+        "SCALE: 3/8\" = 1'-0\"",
+        "SCALE: 3/8\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site"
+            ],
+            "page": 59
+          }
+        ],
+        "kept_pages": [
+          59
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A-408",
+      "title": "ENLARGED PLANS & INTERIOR",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 56,
+      "plan_rule": "extended-title",
+      "points_per_foot": [
+        36,
+        72,
+        108
+      ],
+      "scales": [
+        "SCALE: 1\" = 1'-0\"",
+        "SCALE: 1/2\" = 1'-0\"",
+        "SCALE: 1/2\" = 1'-0\"",
+        "SCALE: 1 1/2\" = 1'-0\"",
+        "SCALE: 1 1/2\" = 1'-0\"",
+        "SCALE: 1 1/2\" = 1'-0\"",
+        "SCALE: 1\" = 1'-0\"",
+        "SCALE: 1/2\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site"
+            ],
+            "page": 59
+          }
+        ],
+        "kept_pages": [
+          59
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A-409",
+      "title": "ENLARGED STAIR PLANS & DETAILS -",
       "width": 2592
     }
   ],
   "summary": {
-    "marks_placed": 39,
+    "marks_placed": 76,
     "marks_total": 84,
-    "placed_rate": 0.4642857142857143,
-    "rooms_total": 39,
-    "sheets_total": 2,
-    "sheets_with_scale": 2,
+    "placed_rate": 0.9047619047619048,
+    "rooms_total": 93,
+    "sheets_total": 6,
+    "sheets_with_scale": 6,
     "unplaced": [
-      {
-        "mark": "100-1",
-        "page": 59,
-        "reason": "mark 100-1 (schedule p.59) not tagged on any plan"
-      },
-      {
-        "mark": "100-2",
-        "page": 59,
-        "reason": "mark 100-2 (schedule p.59) not tagged on any plan"
-      },
-      {
-        "mark": "102-1",
-        "page": 59,
-        "reason": "mark 102-1 (schedule p.59) not tagged on any plan"
-      },
-      {
-        "mark": "103-1",
-        "page": 59,
-        "reason": "mark 103-1 (schedule p.59) not tagged on any plan"
-      },
-      {
-        "mark": "104-1",
-        "page": 59,
-        "reason": "mark 104-1 (schedule p.59) not tagged on any plan"
-      },
-      {
-        "mark": "105-1",
-        "page": 59,
-        "reason": "mark 105-1 (schedule p.59) not tagged on any plan"
-      },
-      {
-        "mark": "106-1",
-        "page": 59,
-        "reason": "mark 106-1 (schedule p.59) not tagged on any plan"
-      },
-      {
-        "mark": "107-1",
-        "page": 59,
-        "reason": "mark 107-1 (schedule p.59) not tagged on any plan"
-      },
-      {
-        "mark": "108-1",
-        "page": 59,
-        "reason": "mark 108-1 (schedule p.59) not tagged on any plan"
-      },
-      {
-        "mark": "109-1",
-        "page": 59,
-        "reason": "mark 109-1 (schedule p.59) not tagged on any plan"
-      },
-      {
-        "mark": "110-1",
-        "page": 59,
-        "reason": "mark 110-1 (schedule p.59) not tagged on any plan"
-      },
-      {
-        "mark": "111-1",
-        "page": 59,
-        "reason": "mark 111-1 (schedule p.59) not tagged on any plan"
-      },
-      {
-        "mark": "112-1",
-        "page": 59,
-        "reason": "mark 112-1 (schedule p.59) not tagged on any plan"
-      },
-      {
-        "mark": "300-1",
-        "page": 59,
-        "reason": "mark 300-1 (schedule p.59) not tagged on any plan"
-      },
-      {
-        "mark": "300-2",
-        "page": 59,
-        "reason": "mark 300-2 (schedule p.59) not tagged on any plan"
-      },
-      {
-        "mark": "301-1",
-        "page": 59,
-        "reason": "mark 301-1 (schedule p.59) not tagged on any plan"
-      },
-      {
-        "mark": "302-1",
-        "page": 59,
-        "reason": "mark 302-1 (schedule p.59) not tagged on any plan"
-      },
-      {
-        "mark": "303-1",
-        "page": 59,
-        "reason": "mark 303-1 (schedule p.59) not tagged on any plan"
-      },
-      {
-        "mark": "304-1",
-        "page": 59,
-        "reason": "mark 304-1 (schedule p.59) not tagged on any plan"
-      },
-      {
-        "mark": "305-1",
-        "page": 59,
-        "reason": "mark 305-1 (schedule p.59) not tagged on any plan"
-      },
-      {
-        "mark": "305-2",
-        "page": 59,
-        "reason": "mark 305-2 (schedule p.59) not tagged on any plan"
-      },
-      {
-        "mark": "400-1",
-        "page": 59,
-        "reason": "mark 400-1 (schedule p.59) not tagged on any plan"
-      },
-      {
-        "mark": "500-1",
-        "page": 59,
-        "reason": "mark 500-1 (schedule p.59) not tagged on any plan"
-      },
-      {
-        "mark": "500-2",
-        "page": 59,
-        "reason": "mark 500-2 (schedule p.59) not tagged on any plan"
-      },
-      {
-        "mark": "600-1",
-        "page": 59,
-        "reason": "mark 600-1 (schedule p.59) not tagged on any plan"
-      },
       {
         "mark": "600-2",
         "page": 59,
         "reason": "mark 600-2 (schedule p.59) not tagged on any plan"
-      },
-      {
-        "mark": "601-1",
-        "page": 59,
-        "reason": "mark 601-1 (schedule p.59) not tagged on any plan"
-      },
-      {
-        "mark": "603-1",
-        "page": 59,
-        "reason": "mark 603-1 (schedule p.59) not tagged on any plan"
-      },
-      {
-        "mark": "604-1",
-        "page": 59,
-        "reason": "mark 604-1 (schedule p.59) not tagged on any plan"
-      },
-      {
-        "mark": "605-1",
-        "page": 59,
-        "reason": "mark 605-1 (schedule p.59) not tagged on any plan"
-      },
-      {
-        "mark": "606-1",
-        "page": 59,
-        "reason": "mark 606-1 (schedule p.59) not tagged on any plan"
-      },
-      {
-        "mark": "606-2",
-        "page": 59,
-        "reason": "mark 606-2 (schedule p.59) not tagged on any plan"
-      },
-      {
-        "mark": "607-1",
-        "page": 59,
-        "reason": "mark 607-1 (schedule p.59) not tagged on any plan"
-      },
-      {
-        "mark": "607-2",
-        "page": 59,
-        "reason": "mark 607-2 (schedule p.59) not tagged on any plan"
-      },
-      {
-        "mark": "609-1",
-        "page": 59,
-        "reason": "mark 609-1 (schedule p.59) not tagged on any plan"
-      },
-      {
-        "mark": "610-1",
-        "page": 59,
-        "reason": "mark 610-1 (schedule p.59) not tagged on any plan"
-      },
-      {
-        "mark": "610-2",
-        "page": 59,
-        "reason": "mark 610-2 (schedule p.59) not tagged on any plan"
-      },
-      {
-        "mark": "612-1",
-        "page": 59,
-        "reason": "mark 612-1 (schedule p.59) not tagged on any plan"
       },
       {
         "mark": "700-01",
@@ -638,12 +1120,725 @@
       "fire_rating": null,
       "frame_type": null,
       "h": 9.603236158704,
+      "hardware_group": "20.0",
+      "height_inches": 80,
+      "location": null,
+      "mark": "100-2",
+      "matched_by": "exact",
+      "material": "F",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|100-2|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
+      "page": 46,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "100",
+      "room_by": "tag_number",
+      "room_name": "BASEMENT MECH RM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "20.0",
+          "height_inches": 80,
+          "location": null,
+          "mark": "100-2",
+          "material": "F",
+          "page": 59,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 169
+        }
+      ],
+      "sheet": "A-107",
+      "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "59|100-2|1"
+      ],
+      "width_inches": 36,
+      "x": 1489,
+      "y": 342
+    },
+    {
+      "also_on": [
+        "A-409"
+      ],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "8.0",
+      "height_inches": 72,
+      "location": null,
+      "mark": "100-1",
+      "matched_by": "exact",
+      "material": "F",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|100-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
+      "page": 46,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "100",
+      "room_by": "tag_number",
+      "room_name": "BASEMENT MECH RM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "8.0",
+          "height_inches": 72,
+          "location": null,
+          "mark": "100-1",
+          "material": "F",
+          "page": 59,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 0\"",
+          "width_inches": 36,
+          "y": 157
+        }
+      ],
+      "sheet": "A-107",
+      "size": "3' - 0\" x 6' - 0\"",
+      "source_keys": [
+        "59|100-1|1"
+      ],
+      "width_inches": 36,
+      "x": 1366,
+      "y": 435
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "27.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "112-1",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|112-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
+      "page": 46,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "112",
+      "room_by": "tag_number",
+      "room_name": "UNISEX",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "27.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "112-1",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 312
+        }
+      ],
+      "sheet": "A-107",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "59|112-1|1"
+      ],
+      "width_inches": 36,
+      "x": 1507,
+      "y": 1161
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "22.0",
+      "height_inches": 85,
+      "location": null,
+      "mark": "104-1",
+      "matched_by": "exact",
+      "material": "EXIST",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|104-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
+      "page": 46,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "104",
+      "room_by": "tag_number",
+      "room_name": "BEDROOM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "22.0",
+          "height_inches": 85,
+          "location": null,
+          "mark": "104-1",
+          "material": "EXIST",
+          "page": 59,
+          "pair": false,
+          "size": "5' - 8\" x 7' - 1\"",
+          "width_inches": 68,
+          "y": 210
+        }
+      ],
+      "sheet": "A-107",
+      "size": "5' - 8\" x 7' - 1\"",
+      "source_keys": [
+        "59|104-1|1"
+      ],
+      "width_inches": 68,
+      "x": 704,
+      "y": 1211
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "22.0",
+      "height_inches": 85,
+      "location": null,
+      "mark": "107-1",
+      "matched_by": "exact",
+      "material": "EXIST",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|107-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
+      "page": 46,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "107",
+      "room_by": "tag_number",
+      "room_name": "BEDROOM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "22.0",
+          "height_inches": 85,
+          "location": null,
+          "mark": "107-1",
+          "material": "EXIST",
+          "page": 59,
+          "pair": false,
+          "size": "5' - 8\" x 7' - 1\"",
+          "width_inches": 68,
+          "y": 248
+        }
+      ],
+      "sheet": "A-107",
+      "size": "5' - 8\" x 7' - 1\"",
+      "source_keys": [
+        "59|107-1|1"
+      ],
+      "width_inches": 68,
+      "x": 1095,
+      "y": 1211
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "22.0",
+      "height_inches": 85,
+      "location": null,
+      "mark": "108-1",
+      "matched_by": "exact",
+      "material": "EXIST",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|108-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
+      "page": 46,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "108",
+      "room_by": "tag_number",
+      "room_name": "BEDROOM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "22.0",
+          "height_inches": 85,
+          "location": null,
+          "mark": "108-1",
+          "material": "EXIST",
+          "page": 59,
+          "pair": false,
+          "size": "5' - 8\" x 7' - 1\"",
+          "width_inches": 68,
+          "y": 261
+        }
+      ],
+      "sheet": "A-107",
+      "size": "5' - 8\" x 7' - 1\"",
+      "source_keys": [
+        "59|108-1|1"
+      ],
+      "width_inches": 68,
+      "x": 1259,
+      "y": 1211
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "22.0",
+      "height_inches": 85,
+      "location": null,
+      "mark": "106-1",
+      "matched_by": "exact",
+      "material": "EXIST",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|106-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
+      "page": 46,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "106",
+      "room_by": "tag_number",
+      "room_name": "BEDROOM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "22.0",
+          "height_inches": 85,
+          "location": null,
+          "mark": "106-1",
+          "material": "EXIST",
+          "page": 59,
+          "pair": false,
+          "size": "5' - 8\" x 7' - 1\"",
+          "width_inches": 68,
+          "y": 235
+        }
+      ],
+      "sheet": "A-107",
+      "size": "5' - 8\" x 7' - 1\"",
+      "source_keys": [
+        "59|106-1|1"
+      ],
+      "width_inches": 68,
+      "x": 936,
+      "y": 1212
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "22.0",
+      "height_inches": 85,
+      "location": null,
+      "mark": "109-1",
+      "matched_by": "exact",
+      "material": "EXIST",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|109-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
+      "page": 46,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "109",
+      "room_by": "tag_number",
+      "room_name": "BEDROOM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "22.0",
+          "height_inches": 85,
+          "location": null,
+          "mark": "109-1",
+          "material": "EXIST",
+          "page": 59,
+          "pair": false,
+          "size": "5' - 8\" x 7' - 1\"",
+          "width_inches": 68,
+          "y": 274
+        }
+      ],
+      "sheet": "A-107",
+      "size": "5' - 8\" x 7' - 1\"",
+      "source_keys": [
+        "59|109-1|1"
+      ],
+      "width_inches": 68,
+      "x": 1420,
+      "y": 1212
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "25.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "105-1",
+      "matched_by": "exact",
+      "material": "EXIST",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|105-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
+      "page": 46,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "105",
+      "room_by": "tag_number",
+      "room_name": "RR",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "25.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "105-1",
+          "material": "EXIST",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 5\" x 7' - 0\"",
+          "width_inches": 29,
+          "y": 222
+        }
+      ],
+      "sheet": "A-107",
+      "size": "2' - 5\" x 7' - 0\"",
+      "source_keys": [
+        "59|105-1|1"
+      ],
+      "width_inches": 29,
+      "x": 805,
+      "y": 1218
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "26.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "111-1",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|111-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
+      "page": 46,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "112",
+      "room_by": "nearest_label",
+      "room_name": "UNISEX",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "26.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "111-1",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 300
+        }
+      ],
+      "sheet": "A-107",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "59|111-1|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1523,
+      "y": 1265
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "28.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "110-1",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|110-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
+      "page": 46,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "112",
+      "room_by": "nearest_label",
+      "room_name": "UNISEX",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "28.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "110-1",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 0\" x 7' - 0\"",
+          "width_inches": 24,
+          "y": 288
+        }
+      ],
+      "sheet": "A-107",
+      "size": "2' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "59|110-1|1"
+      ],
+      "unsure": true,
+      "width_inches": 24,
+      "x": 1520,
+      "y": 1278
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "2.0",
+      "height_inches": 80,
+      "location": null,
+      "mark": "102-1",
+      "matched_by": "exact",
+      "material": "F",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|102-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
+      "page": 46,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "102",
+      "room_by": "tag_number",
+      "room_name": "SITTING ROOM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "2.0",
+          "height_inches": 80,
+          "location": null,
+          "mark": "102-1",
+          "material": "F",
+          "page": 59,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 184
+        }
+      ],
+      "sheet": "A-107",
+      "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "59|102-1|1"
+      ],
+      "width_inches": 36,
+      "x": 462,
+      "y": 1291
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "2.0",
+      "height_inches": 80,
+      "location": null,
+      "mark": "103-1",
+      "matched_by": "exact",
+      "material": "F",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|103-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
+      "page": 46,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "103",
+      "room_by": "tag_number",
+      "room_name": "CORRIDOR",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "2.0",
+          "height_inches": 80,
+          "location": null,
+          "mark": "103-1",
+          "material": "F",
+          "page": 59,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 197
+        }
+      ],
+      "sheet": "A-107",
+      "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "59|103-1|1"
+      ],
+      "width_inches": 36,
+      "x": 1314,
+      "y": 1293
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
       "hardware_group": "30.0",
       "height_inches": null,
       "location": null,
       "mark": "200-9",
       "matched_by": "exact",
       "material": "EXIST",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|200-9|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
       "page": 47,
       "pair": false,
       "points_per_foot": 13.5,
@@ -669,6 +1864,9 @@
       ],
       "sheet": "A-109",
       "size": "2' - 5\" x 2' - 5\"",
+      "source_keys": [
+        "59|200-9|1"
+      ],
       "width_inches": 29,
       "x": 2237,
       "y": 1027
@@ -688,6 +1886,13 @@
       "mark": "200-7",
       "matched_by": "exact",
       "material": "EXIST",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|200-7|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
       "page": 47,
       "pair": false,
       "points_per_foot": 13.5,
@@ -713,6 +1918,9 @@
       ],
       "sheet": "A-109",
       "size": "2' - 5\" x 2' - 5\"",
+      "source_keys": [
+        "59|200-7|1"
+      ],
       "width_inches": 29,
       "x": 474,
       "y": 1230
@@ -732,6 +1940,13 @@
       "mark": "200-8",
       "matched_by": "exact",
       "material": "EXIST",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|200-8|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
       "page": 47,
       "pair": false,
       "points_per_foot": 13.5,
@@ -757,6 +1972,9 @@
       ],
       "sheet": "A-109",
       "size": "2' - 5\" x 2' - 5\"",
+      "source_keys": [
+        "59|200-8|1"
+      ],
       "width_inches": 29,
       "x": 744,
       "y": 1230
@@ -776,6 +1994,13 @@
       "mark": "200-6",
       "matched_by": "exact",
       "material": "F",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|200-6|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
       "page": 47,
       "pair": false,
       "points_per_foot": 13.5,
@@ -801,6 +2026,9 @@
       ],
       "sheet": "A-109",
       "size": "2' - 0\" x 2' - 0\"",
+      "source_keys": [
+        "59|200-6|1"
+      ],
       "width_inches": 24,
       "x": 1030,
       "y": 1256
@@ -820,6 +2048,13 @@
       "mark": "200-5",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|200-5|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
       "page": 47,
       "pair": false,
       "points_per_foot": 13.5,
@@ -845,6 +2080,9 @@
       ],
       "sheet": "A-109",
       "size": "2' - 7\" x 6' - 1\"",
+      "source_keys": [
+        "59|200-5|1"
+      ],
       "width_inches": 31,
       "x": 2220,
       "y": 1274
@@ -864,6 +2102,13 @@
       "mark": "200-3",
       "matched_by": "exact",
       "material": "F",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|200-3|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
       "page": 47,
       "pair": false,
       "points_per_foot": 13.5,
@@ -889,6 +2134,9 @@
       ],
       "sheet": "A-109",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "59|200-3|1"
+      ],
       "width_inches": 36,
       "x": 1047,
       "y": 1444
@@ -908,6 +2156,13 @@
       "mark": "200-1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|200-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
       "page": 47,
       "pair": false,
       "points_per_foot": 13.5,
@@ -933,6 +2188,9 @@
       ],
       "sheet": "A-109",
       "size": "2' - 10\" x 6' - 0\"",
+      "source_keys": [
+        "59|200-1|1"
+      ],
       "width_inches": 34,
       "x": 814,
       "y": 1474
@@ -952,6 +2210,13 @@
       "mark": "200A-1",
       "matched_by": "exact",
       "material": "F",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|200A-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
       "page": 47,
       "pair": false,
       "points_per_foot": 13.5,
@@ -977,6 +2242,9 @@
       ],
       "sheet": "A-109",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "59|200A-1|1"
+      ],
       "width_inches": 36,
       "x": 1126,
       "y": 1492
@@ -996,6 +2264,13 @@
       "mark": "200-2",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|200-2|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
       "page": 47,
       "pair": false,
       "points_per_foot": 13.5,
@@ -1021,6 +2296,9 @@
       ],
       "sheet": "A-109",
       "size": "2' - 10\" x 6' - 0\"",
+      "source_keys": [
+        "59|200-2|1"
+      ],
       "width_inches": 34,
       "x": 1047,
       "y": 1544
@@ -1040,6 +2318,13 @@
       "mark": "201-1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|201-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
       "page": 48,
       "pair": false,
       "points_per_foot": 13.5,
@@ -1065,6 +2350,9 @@
       ],
       "sheet": "A-110",
       "size": "2' - 10\" x 6' - 6\"",
+      "source_keys": [
+        "59|201-1|1"
+      ],
       "width_inches": 34,
       "x": 175,
       "y": 891
@@ -1084,6 +2372,13 @@
       "mark": "213-1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|213-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
       "page": 48,
       "pair": false,
       "points_per_foot": 13.5,
@@ -1109,6 +2404,9 @@
       ],
       "sheet": "A-110",
       "size": "2' - 10\" x 7' - 0\"",
+      "source_keys": [
+        "59|213-1|1"
+      ],
       "unsure": true,
       "width_inches": 34,
       "x": 1538,
@@ -1129,6 +2427,13 @@
       "mark": "215-1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|215-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
       "page": 48,
       "pair": false,
       "points_per_foot": 13.5,
@@ -1154,6 +2459,9 @@
       ],
       "sheet": "A-110",
       "size": "2' - 10\" x 7' - 0\"",
+      "source_keys": [
+        "59|215-1|1"
+      ],
       "width_inches": 34,
       "x": 1915,
       "y": 950
@@ -1173,6 +2481,13 @@
       "mark": "217-1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|217-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
       "page": 48,
       "pair": false,
       "points_per_foot": 13.5,
@@ -1198,6 +2513,9 @@
       ],
       "sheet": "A-110",
       "size": "2' - 10\" x 7' - 0\"",
+      "source_keys": [
+        "59|217-1|1"
+      ],
       "width_inches": 34,
       "x": 2047,
       "y": 950
@@ -1217,6 +2535,13 @@
       "mark": "202-1",
       "matched_by": "exact",
       "material": "F",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|202-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
       "page": 48,
       "pair": false,
       "points_per_foot": 13.5,
@@ -1242,6 +2567,9 @@
       ],
       "sheet": "A-110",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "59|202-1|1"
+      ],
       "width_inches": 36,
       "x": 325,
       "y": 997
@@ -1261,6 +2589,13 @@
       "mark": "211-1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|211-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
       "page": 48,
       "pair": false,
       "points_per_foot": 13.5,
@@ -1286,6 +2621,9 @@
       ],
       "sheet": "A-110",
       "size": "2' - 10\" x 7' - 0\"",
+      "source_keys": [
+        "59|211-1|1"
+      ],
       "width_inches": 34,
       "x": 1274,
       "y": 1032
@@ -1305,6 +2643,13 @@
       "mark": "207-1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|207-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
       "page": 48,
       "pair": false,
       "points_per_foot": 13.5,
@@ -1330,6 +2675,9 @@
       ],
       "sheet": "A-110",
       "size": "2' - 10\" x 7' - 0\"",
+      "source_keys": [
+        "59|207-1|1"
+      ],
       "unsure": true,
       "width_inches": 34,
       "x": 1197,
@@ -1350,6 +2698,13 @@
       "mark": "216-1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|216-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
       "page": 48,
       "pair": false,
       "points_per_foot": 13.5,
@@ -1375,6 +2730,9 @@
       ],
       "sheet": "A-110",
       "size": "2' - 10\" x 7' - 0\"",
+      "source_keys": [
+        "59|216-1|1"
+      ],
       "unsure": true,
       "width_inches": 34,
       "x": 2108,
@@ -1395,6 +2753,13 @@
       "mark": "210-1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|210-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
       "page": 48,
       "pair": false,
       "points_per_foot": 13.5,
@@ -1420,6 +2785,9 @@
       ],
       "sheet": "A-110",
       "size": "2' - 10\" x 7' - 0\"",
+      "source_keys": [
+        "59|210-1|1"
+      ],
       "width_inches": 34,
       "x": 1460,
       "y": 1076
@@ -1439,6 +2807,13 @@
       "mark": "212-1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|212-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
       "page": 48,
       "pair": false,
       "points_per_foot": 13.5,
@@ -1464,6 +2839,9 @@
       ],
       "sheet": "A-110",
       "size": "2' - 10\" x 7' - 0\"",
+      "source_keys": [
+        "59|212-1|1"
+      ],
       "width_inches": 34,
       "x": 1586,
       "y": 1076
@@ -1483,6 +2861,13 @@
       "mark": "214-1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|214-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
       "page": 48,
       "pair": false,
       "points_per_foot": 13.5,
@@ -1508,6 +2893,9 @@
       ],
       "sheet": "A-110",
       "size": "2' - 10\" x 7' - 0\"",
+      "source_keys": [
+        "59|214-1|1"
+      ],
       "width_inches": 34,
       "x": 1893,
       "y": 1076
@@ -1527,6 +2915,13 @@
       "mark": "206-1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|206-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
       "page": 48,
       "pair": false,
       "points_per_foot": 13.5,
@@ -1552,6 +2947,9 @@
       ],
       "sheet": "A-110",
       "size": "2' - 10\" x 7' - 0\"",
+      "source_keys": [
+        "59|206-1|1"
+      ],
       "unsure": true,
       "width_inches": 34,
       "x": 1045,
@@ -1572,6 +2970,13 @@
       "mark": "209-1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|209-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
       "page": 48,
       "pair": false,
       "points_per_foot": 13.5,
@@ -1597,6 +3002,9 @@
       ],
       "sheet": "A-110",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "59|209-1|1"
+      ],
       "width_inches": 36,
       "x": 1301,
       "y": 1104
@@ -1616,6 +3024,13 @@
       "mark": "208-1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|208-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
       "page": 48,
       "pair": false,
       "points_per_foot": 13.5,
@@ -1641,6 +3056,9 @@
       ],
       "sheet": "A-110",
       "size": "2' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "59|208-1|1"
+      ],
       "width_inches": 24,
       "x": 1117,
       "y": 1115
@@ -1660,6 +3078,13 @@
       "mark": "218-1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|218-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
       "page": 48,
       "pair": false,
       "points_per_foot": 13.5,
@@ -1685,6 +3110,9 @@
       ],
       "sheet": "A-110",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "59|218-1|1"
+      ],
       "width_inches": 36,
       "x": 1984,
       "y": 1120
@@ -1704,6 +3132,13 @@
       "mark": "209-3",
       "matched_by": "exact",
       "material": "F",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|209-3|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
       "page": 48,
       "pair": false,
       "points_per_foot": 13.5,
@@ -1729,6 +3164,9 @@
       ],
       "sheet": "A-110",
       "size": "2' - 10\" x 6' - 8\"",
+      "source_keys": [
+        "59|209-3|1"
+      ],
       "width_inches": 34,
       "x": 2214,
       "y": 1133
@@ -1748,6 +3186,13 @@
       "mark": "225-1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|225-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
       "page": 48,
       "pair": false,
       "points_per_foot": 13.5,
@@ -1773,6 +3218,9 @@
       ],
       "sheet": "A-110",
       "size": "2' - 10\" x 7' - 0\"",
+      "source_keys": [
+        "59|225-1|1"
+      ],
       "width_inches": 34,
       "x": 1565,
       "y": 1177
@@ -1792,6 +3240,13 @@
       "mark": "223-1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|223-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
       "page": 48,
       "pair": false,
       "points_per_foot": 13.5,
@@ -1817,6 +3272,9 @@
       ],
       "sheet": "A-110",
       "size": "2' - 10\" x 7' - 0\"",
+      "source_keys": [
+        "59|223-1|1"
+      ],
       "width_inches": 34,
       "x": 1692,
       "y": 1177
@@ -1836,6 +3294,13 @@
       "mark": "221-1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|221-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
       "page": 48,
       "pair": false,
       "points_per_foot": 13.5,
@@ -1861,6 +3326,9 @@
       ],
       "sheet": "A-110",
       "size": "2' - 10\" x 7' - 0\"",
+      "source_keys": [
+        "59|221-1|1"
+      ],
       "width_inches": 34,
       "x": 1986,
       "y": 1177
@@ -1880,6 +3348,13 @@
       "mark": "219-1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|219-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
       "page": 48,
       "pair": false,
       "points_per_foot": 13.5,
@@ -1905,6 +3380,9 @@
       ],
       "sheet": "A-110",
       "size": "2' - 10\" x 7' - 0\"",
+      "source_keys": [
+        "59|219-1|1"
+      ],
       "width_inches": 34,
       "x": 2110,
       "y": 1177
@@ -1924,6 +3402,13 @@
       "mark": "202-2",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|202-2|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
       "page": 48,
       "pair": false,
       "points_per_foot": 13.5,
@@ -1949,6 +3434,9 @@
       ],
       "sheet": "A-110",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "59|202-2|1"
+      ],
       "width_inches": 36,
       "x": 540,
       "y": 1179
@@ -1968,6 +3456,13 @@
       "mark": "222-1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|222-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
       "page": 48,
       "pair": false,
       "points_per_foot": 13.5,
@@ -1993,6 +3488,9 @@
       ],
       "sheet": "A-110",
       "size": "2' - 10\" x 7' - 0\"",
+      "source_keys": [
+        "59|222-1|1"
+      ],
       "unsure": true,
       "width_inches": 34,
       "x": 1639,
@@ -2013,6 +3511,13 @@
       "mark": "222-2",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|222-2|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
       "page": 48,
       "pair": false,
       "points_per_foot": 13.5,
@@ -2038,6 +3543,9 @@
       ],
       "sheet": "A-110",
       "size": "2' - 10\" x 7' - 0\"",
+      "source_keys": [
+        "59|222-2|1"
+      ],
       "unsure": true,
       "width_inches": 34,
       "x": 1587,
@@ -2058,6 +3566,13 @@
       "mark": "220-2",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|220-2|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
       "page": 48,
       "pair": false,
       "points_per_foot": 13.5,
@@ -2083,6 +3598,9 @@
       ],
       "sheet": "A-110",
       "size": "2' - 10\" x 7' - 0\"",
+      "source_keys": [
+        "59|220-2|1"
+      ],
       "unsure": true,
       "width_inches": 34,
       "x": 2007,
@@ -2103,6 +3621,13 @@
       "mark": "220-1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|220-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
       "page": 48,
       "pair": false,
       "points_per_foot": 13.5,
@@ -2128,6 +3653,9 @@
       ],
       "sheet": "A-110",
       "size": "2' - 10\" x 7' - 0\"",
+      "source_keys": [
+        "59|220-1|1"
+      ],
       "unsure": true,
       "width_inches": 34,
       "x": 2059,
@@ -2148,6 +3676,13 @@
       "mark": "222-3",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|222-3|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
       "page": 48,
       "pair": false,
       "points_per_foot": 13.5,
@@ -2173,6 +3708,9 @@
       ],
       "sheet": "A-110",
       "size": "2' - 10\" x 7' - 0\"",
+      "source_keys": [
+        "59|222-3|1"
+      ],
       "unsure": true,
       "width_inches": 34,
       "x": 1657,
@@ -2193,6 +3731,13 @@
       "mark": "220-3",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|220-3|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
       "page": 48,
       "pair": false,
       "points_per_foot": 13.5,
@@ -2218,6 +3763,9 @@
       ],
       "sheet": "A-110",
       "size": "2' - 10\" x 7' - 0\"",
+      "source_keys": [
+        "59|220-3|1"
+      ],
       "unsure": true,
       "width_inches": 34,
       "x": 2015,
@@ -2238,6 +3786,13 @@
       "mark": "209-2",
       "matched_by": "exact",
       "material": "F",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|209-2|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
       "page": 48,
       "pair": false,
       "points_per_foot": 13.5,
@@ -2263,6 +3818,9 @@
       ],
       "sheet": "A-110",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "59|209-2|1"
+      ],
       "width_inches": 36,
       "x": 1405,
       "y": 1288
@@ -2282,6 +3840,13 @@
       "mark": "205-2",
       "matched_by": "exact",
       "material": "EXIST",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|205-2|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
       "page": 48,
       "pair": false,
       "points_per_foot": 13.5,
@@ -2307,6 +3872,9 @@
       ],
       "sheet": "A-110",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "59|205-2|1"
+      ],
       "width_inches": 36,
       "x": 1079,
       "y": 1348
@@ -2326,6 +3894,13 @@
       "mark": "205-1",
       "matched_by": "exact",
       "material": "EXIST",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|205-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
       "page": 48,
       "pair": false,
       "points_per_foot": 13.5,
@@ -2351,9 +3926,1316 @@
       ],
       "sheet": "A-110",
       "size": "2' - 10\" x 7' - 0\"",
+      "source_keys": [
+        "59|205-1|1"
+      ],
       "width_inches": 34,
       "x": 809,
       "y": 1401
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "8.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "609-1",
+      "matched_by": "exact",
+      "material": "F",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|609-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
+      "page": 49,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "609",
+      "room_by": "tag_number",
+      "room_name": "MECH",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "8.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "609-1",
+          "material": "F",
+          "page": 59,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 1166
+        }
+      ],
+      "sheet": "A-112",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "59|609-1|1"
+      ],
+      "width_inches": 36,
+      "x": 1267,
+      "y": 219
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "9.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "606-2",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|606-2|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
+      "page": 49,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "606",
+      "room_by": "tag_number",
+      "room_name": "BEDROOM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "9.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "606-2",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 4\" x 7' - 0\"",
+          "width_inches": 28,
+          "y": 1126
+        }
+      ],
+      "sheet": "A-112",
+      "size": "2' - 4\" x 7' - 0\"",
+      "source_keys": [
+        "59|606-2|1"
+      ],
+      "width_inches": 28,
+      "x": 1688,
+      "y": 251
+    },
+    {
+      "also_on": [
+        "A-408"
+      ],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "24.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "607-2",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|607-2|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
+      "page": 49,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "607",
+      "room_by": "tag_number",
+      "room_name": "BEDROOM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "24.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "607-2",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 10\" x 7' - 0\"",
+          "width_inches": 34,
+          "y": 1152
+        }
+      ],
+      "sheet": "A-112",
+      "size": "2' - 10\" x 7' - 0\"",
+      "source_keys": [
+        "59|607-2|1"
+      ],
+      "width_inches": 34,
+      "x": 1432,
+      "y": 312
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "24.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "607-1",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|607-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
+      "page": 49,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "607",
+      "room_by": "tag_number",
+      "room_name": "BEDROOM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "24.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "607-1",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 10\" x 7' - 0\"",
+          "width_inches": 34,
+          "y": 1140
+        }
+      ],
+      "sheet": "A-112",
+      "size": "2' - 10\" x 7' - 0\"",
+      "source_keys": [
+        "59|607-1|1"
+      ],
+      "width_inches": 34,
+      "x": 1541,
+      "y": 312
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "24.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "606-1",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|606-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
+      "page": 49,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "606",
+      "room_by": "tag_number",
+      "room_name": "BEDROOM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "24.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "606-1",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 10\" x 7' - 0\"",
+          "width_inches": 34,
+          "y": 1114
+        }
+      ],
+      "sheet": "A-112",
+      "size": "2' - 10\" x 7' - 0\"",
+      "source_keys": [
+        "59|606-1|1"
+      ],
+      "width_inches": 34,
+      "x": 1567,
+      "y": 355
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "10.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "605-1",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|605-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
+      "page": 49,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "605",
+      "room_by": "tag_number",
+      "room_name": "SUN ROOM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "10.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "605-1",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 8\" x 7' - 0\"",
+          "width_inches": 32,
+          "y": 1100
+        }
+      ],
+      "sheet": "A-112",
+      "size": "2' - 8\" x 7' - 0\"",
+      "source_keys": [
+        "59|605-1|1"
+      ],
+      "width_inches": 32,
+      "x": 1803,
+      "y": 363
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "24.0",
+      "height_inches": 80,
+      "location": null,
+      "mark": "303-1",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|303-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
+      "page": 49,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "302",
+      "room_by": "nearest_label",
+      "room_name": "UNISEX",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "24.0",
+          "height_inches": 80,
+          "location": null,
+          "mark": "303-1",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 10\" x 6' - 8\"",
+          "width_inches": 34,
+          "y": 908
+        }
+      ],
+      "sheet": "A-112",
+      "size": "2' - 10\" x 6' - 8\"",
+      "source_keys": [
+        "59|303-1|1"
+      ],
+      "unsure": true,
+      "width_inches": 34,
+      "x": 281,
+      "y": 432
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "24.0",
+      "height_inches": 80,
+      "location": null,
+      "mark": "304-1",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|304-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
+      "page": 49,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "300",
+      "room_by": "nearest_label",
+      "room_name": "MECH.",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "24.0",
+          "height_inches": 80,
+          "location": null,
+          "mark": "304-1",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 10\" x 6' - 8\"",
+          "width_inches": 34,
+          "y": 919
+        }
+      ],
+      "sheet": "A-112",
+      "size": "2' - 10\" x 6' - 8\"",
+      "source_keys": [
+        "59|304-1|1"
+      ],
+      "unsure": true,
+      "width_inches": 34,
+      "x": 363,
+      "y": 432
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "18.0",
+      "height_inches": 80,
+      "location": null,
+      "mark": "300-2",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|300-2|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
+      "page": 49,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "300",
+      "room_by": "tag_number",
+      "room_name": "MECH.",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "18.0",
+          "height_inches": 80,
+          "location": null,
+          "mark": "300-2",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 10\" x 6' - 8\"",
+          "width_inches": 34,
+          "y": 868
+        }
+      ],
+      "sheet": "A-112",
+      "size": "2' - 10\" x 6' - 8\"",
+      "source_keys": [
+        "59|300-2|1"
+      ],
+      "width_inches": 34,
+      "x": 414,
+      "y": 453
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "24.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "604-1",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|604-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
+      "page": 49,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "613",
+      "room_by": "nearest_label",
+      "room_name": "BATH",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "24.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "604-1",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 10\" x 7' - 0\"",
+          "width_inches": 34,
+          "y": 1090
+        }
+      ],
+      "sheet": "A-112",
+      "size": "2' - 10\" x 7' - 0\"",
+      "source_keys": [
+        "59|604-1|1"
+      ],
+      "unsure": true,
+      "width_inches": 34,
+      "x": 1470,
+      "y": 456
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "300-1",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|300-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
+      "page": 49,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "300",
+      "room_by": "tag_number",
+      "room_name": "MECH.",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "300-1",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 10\" x 6' - 8\"",
+          "width_inches": 34,
+          "y": 855
+        }
+      ],
+      "sheet": "A-112",
+      "size": "2' - 10\" x 6' - 8\"",
+      "source_keys": [
+        "59|300-1|1"
+      ],
+      "width_inches": 34,
+      "x": 159,
+      "y": 483
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "10.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "610-1",
+      "matched_by": "exact",
+      "material": "F",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|610-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
+      "page": 49,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "610",
+      "room_by": "tag_number",
+      "room_name": "REAR PORCH",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "10.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "610-1",
+          "material": "F",
+          "page": 59,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 1177
+        }
+      ],
+      "sheet": "A-112",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "59|610-1|1"
+      ],
+      "width_inches": 36,
+      "x": 1289,
+      "y": 496
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "28.0",
+      "height_inches": 80,
+      "location": null,
+      "mark": "612-1",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|612-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
+      "page": 49,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "601",
+      "room_by": "nearest_label",
+      "room_name": "LIVING ROOM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "28.0",
+          "height_inches": 80,
+          "location": null,
+          "mark": "612-1",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 0\" x 6' - 8\"",
+          "width_inches": 24,
+          "y": 1207
+        }
+      ],
+      "sheet": "A-112",
+      "size": "2' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "59|612-1|1"
+      ],
+      "unsure": true,
+      "width_inches": 24,
+      "x": 1414,
+      "y": 528
+    },
+    {
+      "also_on": [
+        "A-408"
+      ],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "12.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "603-1",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|603-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
+      "page": 49,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "603",
+      "room_by": "tag_number",
+      "room_name": "DINING",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "12.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "603-1",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 8\" x 7' - 0\"",
+          "width_inches": 32,
+          "y": 1076
+        }
+      ],
+      "sheet": "A-112",
+      "size": "2' - 8\" x 7' - 0\"",
+      "source_keys": [
+        "59|603-1|1"
+      ],
+      "width_inches": 32,
+      "x": 1685,
+      "y": 529
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "4.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "601-1",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|601-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
+      "page": 49,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "601",
+      "room_by": "tag_number",
+      "room_name": "LIVING ROOM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "4.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "601-1",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 8\" x 7' - 0\"",
+          "width_inches": 32,
+          "y": 1062
+        }
+      ],
+      "sheet": "A-112",
+      "size": "2' - 8\" x 7' - 0\"",
+      "source_keys": [
+        "59|601-1|1"
+      ],
+      "width_inches": 32,
+      "x": 1391,
+      "y": 545
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "24.0",
+      "height_inches": 80,
+      "location": null,
+      "mark": "301-1",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|301-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
+      "page": 49,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "301",
+      "room_by": "tag_number",
+      "room_name": "UNISEX",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "24.0",
+          "height_inches": 80,
+          "location": null,
+          "mark": "301-1",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 10\" x 6' - 8\"",
+          "width_inches": 34,
+          "y": 882
+        }
+      ],
+      "sheet": "A-112",
+      "size": "2' - 10\" x 6' - 8\"",
+      "source_keys": [
+        "59|301-1|1"
+      ],
+      "width_inches": 34,
+      "x": 213,
+      "y": 550
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "24.0",
+      "height_inches": 80,
+      "location": null,
+      "mark": "302-1",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|302-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
+      "page": 49,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "302",
+      "room_by": "tag_number",
+      "room_name": "UNISEX",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "24.0",
+          "height_inches": 80,
+          "location": null,
+          "mark": "302-1",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 10\" x 6' - 8\"",
+          "width_inches": 34,
+          "y": 894
+        }
+      ],
+      "sheet": "A-112",
+      "size": "2' - 10\" x 6' - 8\"",
+      "source_keys": [
+        "59|302-1|1"
+      ],
+      "width_inches": 34,
+      "x": 369,
+      "y": 550
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "23.0",
+      "height_inches": 80,
+      "location": null,
+      "mark": "305-2",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|305-2|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
+      "page": 49,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "305",
+      "room_by": "tag_number",
+      "room_name": "LAUNDRY 10",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "23.0",
+          "height_inches": 80,
+          "location": null,
+          "mark": "305-2",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 10\" x 6' - 8\"",
+          "width_inches": 34,
+          "y": 948
+        }
+      ],
+      "sheet": "A-112",
+      "size": "2' - 10\" x 6' - 8\"",
+      "source_keys": [
+        "59|305-2|1"
+      ],
+      "width_inches": 34,
+      "x": 396,
+      "y": 550
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "2.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "400-1",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|400-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
+      "page": 49,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "400",
+      "room_by": "tag_number",
+      "room_name": "GAME ROOM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "2.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "400-1",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 974
+        }
+      ],
+      "sheet": "A-112",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "59|400-1|1"
+      ],
+      "width_inches": 36,
+      "x": 639,
+      "y": 596
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "305-1",
+      "matched_by": "exact",
+      "material": "F",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|305-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
+      "page": 49,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "305",
+      "room_by": "tag_number",
+      "room_name": "LAUNDRY 10",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "305-1",
+          "material": "F",
+          "page": 59,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 930
+        }
+      ],
+      "sheet": "A-112",
+      "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "59|305-1|1"
+      ],
+      "width_inches": 36,
+      "x": 463,
+      "y": 623
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "12.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "610-2",
+      "matched_by": "exact",
+      "material": "F",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|610-2|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
+      "page": 49,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "610",
+      "room_by": "tag_number",
+      "room_name": "REAR PORCH",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "12.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "610-2",
+          "material": "F",
+          "page": 59,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 1192
+        }
+      ],
+      "sheet": "A-112",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "59|610-2|1"
+      ],
+      "width_inches": 36,
+      "x": 1354,
+      "y": 684
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "5.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "600-1",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|600-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
+      "page": 49,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "600",
+      "room_by": "tag_number",
+      "room_name": "FRONT PORCH",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "5.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "600-1",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 1038
+        }
+      ],
+      "sheet": "A-112",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "59|600-1|1"
+      ],
+      "width_inches": 36,
+      "x": 1768,
+      "y": 690
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "2.0",
+      "height_inches": 80,
+      "location": null,
+      "mark": "500-1",
+      "matched_by": "exact",
+      "material": "F",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|500-1|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
+      "page": 49,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "500",
+      "room_by": "tag_number",
+      "room_name": "GYMNASIUM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "2.0",
+          "height_inches": 80,
+          "location": null,
+          "mark": "500-1",
+          "material": "F",
+          "page": 59,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 1000
+        }
+      ],
+      "sheet": "A-112",
+      "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "59|500-1|1"
+      ],
+      "width_inches": 36,
+      "x": 1559,
+      "y": 1024
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "2.0",
+      "height_inches": 80,
+      "location": null,
+      "mark": "500-2",
+      "matched_by": "exact",
+      "material": "F",
+      "opening_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]|500-2|59|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+        "site": "STATE PARK"
+      },
+      "opening_scope_id": "[{\"facility_name\":\"ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK\",\"site\":\"STATE PARK\"},\"A\"]",
+      "page": 49,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "500",
+      "room_by": "tag_number",
+      "room_name": "GYMNASIUM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "2.0",
+          "height_inches": 80,
+          "location": null,
+          "mark": "500-2",
+          "material": "F",
+          "page": 59,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 1015
+        }
+      ],
+      "sheet": "A-112",
+      "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "59|500-2|1"
+      ],
+      "width_inches": 36,
+      "x": 304,
+      "y": 1064
     }
   ]
 }

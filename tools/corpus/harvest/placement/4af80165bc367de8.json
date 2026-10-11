@@ -823,12 +823,26 @@
     {
       "height": 1728,
       "page": 5,
+      "plan_rule": "legacy",
       "points_per_foot": [
         3.6
       ],
       "scales": [
         "SCALE: 1\" = 20'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [],
+            "page": 7
+          }
+        ],
+        "kept_pages": [
+          7
+        ],
+        "rule": "similarity"
+      },
       "sheet": "A101",
       "title": "OVERALL FLOOR PLAN",
       "width": 2592
@@ -836,6 +850,7 @@
     {
       "height": 1728,
       "page": 6,
+      "plan_rule": "legacy",
       "points_per_foot": [
         6.75,
         9
@@ -846,6 +861,22 @@
         "SCALE: 3/32\" = 1'-0\"",
         "SCALE: 3/32\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 7
+          }
+        ],
+        "kept_pages": [
+          7
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A102",
       "title": "FLOOR PLAN",
       "width": 2592
@@ -853,6 +884,7 @@
     {
       "height": 1728,
       "page": 8,
+      "plan_rule": "legacy",
       "points_per_foot": [
         36
       ],
@@ -861,6 +893,22 @@
         "SCALE: 1/2\" = 1'-0\"",
         "SCALE: 1/2\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 7
+          }
+        ],
+        "kept_pages": [
+          7
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A602",
       "title": "PLANS AND ELEVATIONS",
       "width": 2592
@@ -902,6 +950,13 @@
       "mark": "104B",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"asset_number\":\"9327005027\",\"site_number\":\"7005\"},\"A\"]|104B|7|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "9327005027",
+        "site_number": "7005"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"9327005027\",\"site_number\":\"7005\"},\"A\"]",
       "page": 6,
       "pair": false,
       "points_per_foot": 6.75,
@@ -927,6 +982,9 @@
       ],
       "sheet": "A102",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "7|104B|1"
+      ],
       "width_inches": 36,
       "x": 1494,
       "y": 907
@@ -946,6 +1004,13 @@
       "mark": "104A",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"asset_number\":\"9327005027\",\"site_number\":\"7005\"},\"A\"]|104A|7|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "9327005027",
+        "site_number": "7005"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"9327005027\",\"site_number\":\"7005\"},\"A\"]",
       "page": 6,
       "pair": false,
       "points_per_foot": 6.75,
@@ -971,6 +1036,9 @@
       ],
       "sheet": "A102",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "7|104A|1"
+      ],
       "width_inches": 36,
       "x": 1656,
       "y": 907

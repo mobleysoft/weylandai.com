@@ -211,6 +211,7 @@
     {
       "height": 1728,
       "page": 32,
+      "plan_rule": "legacy",
       "points_per_foot": [
         9,
         72
@@ -219,6 +220,27 @@
         "1\" = 1'-0\"",
         "1/8\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [
+              {
+                "a": "T2326-01",
+                "b": "8136304011",
+                "field": "facility_number"
+              }
+            ],
+            "matched": [
+              "site_number"
+            ],
+            "page": 35
+          }
+        ],
+        "kept_pages": [
+          35
+        ],
+        "rule": "similarity-fallback-no-compatible-schedule"
+      },
       "sheet": "A100",
       "title": "FLOOR PLAN",
       "width": 2592
@@ -226,6 +248,7 @@
     {
       "height": 1728,
       "page": 33,
+      "plan_rule": "legacy",
       "points_per_foot": [
         18
       ],
@@ -234,6 +257,22 @@
         "1/4\" = 1'-0\"",
         "1/4\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number",
+              "facility_number"
+            ],
+            "page": 35
+          }
+        ],
+        "kept_pages": [
+          35
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A141",
       "title": "ENLARGED PLANS",
       "width": 2592
@@ -275,6 +314,14 @@
       "mark": "102A",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]|102A|35|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "375 COMMERCIAL AVE",
+        "facility_number": "8136304011",
+        "site_number": "6304"
+      },
+      "opening_scope_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]",
       "page": 32,
       "pair": false,
       "points_per_foot": 9,
@@ -300,6 +347,9 @@
       ],
       "sheet": "A100",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "35|102A|1"
+      ],
       "width_inches": 36,
       "x": 1761,
       "y": 695
@@ -319,6 +369,14 @@
       "mark": "102B",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]|102B|35|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "375 COMMERCIAL AVE",
+        "facility_number": "8136304011",
+        "site_number": "6304"
+      },
+      "opening_scope_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]",
       "page": 32,
       "pair": false,
       "points_per_foot": 9,
@@ -344,6 +402,9 @@
       ],
       "sheet": "A100",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "35|102B|1"
+      ],
       "width_inches": 36,
       "x": 1790,
       "y": 781
@@ -363,6 +424,14 @@
       "mark": "101",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]|101|35|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "375 COMMERCIAL AVE",
+        "facility_number": "8136304011",
+        "site_number": "6304"
+      },
+      "opening_scope_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]",
       "page": 32,
       "pair": false,
       "points_per_foot": 9,
@@ -388,6 +457,9 @@
       ],
       "sheet": "A100",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "35|101|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1761,
@@ -408,6 +480,14 @@
       "mark": "100B",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]|100B|35|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "375 COMMERCIAL AVE",
+        "facility_number": "8136304011",
+        "site_number": "6304"
+      },
+      "opening_scope_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]",
       "page": 32,
       "pair": false,
       "points_per_foot": 9,
@@ -433,6 +513,9 @@
       ],
       "sheet": "A100",
       "size": "2'-8\" x 7'-0\"",
+      "source_keys": [
+        "35|100B|1"
+      ],
       "width_inches": 32,
       "x": 1758,
       "y": 936
@@ -452,6 +535,14 @@
       "mark": "100A",
       "matched_by": "exact",
       "material": "HM",
+      "opening_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]|100A|35|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "375 COMMERCIAL AVE",
+        "facility_number": "8136304011",
+        "site_number": "6304"
+      },
+      "opening_scope_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]",
       "page": 32,
       "pair": false,
       "points_per_foot": 9,
@@ -477,6 +568,9 @@
       ],
       "sheet": "A100",
       "size": "2'-8\" x 7'-0\"",
+      "source_keys": [
+        "35|100A|1"
+      ],
       "width_inches": 32,
       "x": 1914,
       "y": 936
@@ -496,6 +590,14 @@
       "mark": "111A",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]|111A|35|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "375 COMMERCIAL AVE",
+        "facility_number": "8136304011",
+        "site_number": "6304"
+      },
+      "opening_scope_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]",
       "page": 32,
       "pair": false,
       "points_per_foot": 9,
@@ -521,6 +623,9 @@
       ],
       "sheet": "A100",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "35|111A|1"
+      ],
       "width_inches": 36,
       "x": 696,
       "y": 1018
@@ -540,6 +645,14 @@
       "mark": "122",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]|122|35|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "375 COMMERCIAL AVE",
+        "facility_number": "8136304011",
+        "site_number": "6304"
+      },
+      "opening_scope_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]",
       "page": 32,
       "pair": false,
       "points_per_foot": 9,
@@ -565,6 +678,9 @@
       ],
       "sheet": "A100",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "35|122|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1761,
@@ -585,6 +701,14 @@
       "mark": "111B",
       "matched_by": "exact",
       "material": "HM",
+      "opening_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]|111B|35|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "375 COMMERCIAL AVE",
+        "facility_number": "8136304011",
+        "site_number": "6304"
+      },
+      "opening_scope_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]",
       "page": 32,
       "pair": false,
       "points_per_foot": 9,
@@ -610,6 +734,9 @@
       ],
       "sheet": "A100",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "35|111B|1"
+      ],
       "width_inches": 36,
       "x": 543,
       "y": 1033
@@ -629,6 +756,14 @@
       "mark": "113B",
       "matched_by": "exact",
       "material": "HM",
+      "opening_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]|113B|35|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "375 COMMERCIAL AVE",
+        "facility_number": "8136304011",
+        "site_number": "6304"
+      },
+      "opening_scope_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]",
       "page": 32,
       "pair": false,
       "points_per_foot": 9,
@@ -654,6 +789,9 @@
       ],
       "sheet": "A100",
       "size": "2'-6\" x 7'-0\"",
+      "source_keys": [
+        "35|113B|1"
+      ],
       "width_inches": 30,
       "x": 411,
       "y": 1048
@@ -673,6 +811,14 @@
       "mark": "112B",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]|112B|35|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "375 COMMERCIAL AVE",
+        "facility_number": "8136304011",
+        "site_number": "6304"
+      },
+      "opening_scope_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]",
       "page": 32,
       "pair": false,
       "points_per_foot": 9,
@@ -698,6 +844,9 @@
       ],
       "sheet": "A100",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "35|112B|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 609,
@@ -718,6 +867,14 @@
       "mark": "112A",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]|112A|35|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "375 COMMERCIAL AVE",
+        "facility_number": "8136304011",
+        "site_number": "6304"
+      },
+      "opening_scope_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]",
       "page": 32,
       "pair": false,
       "points_per_foot": 9,
@@ -743,6 +900,9 @@
       ],
       "sheet": "A100",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "35|112A|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 641,
@@ -763,6 +923,14 @@
       "mark": "121B",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]|121B|35|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "375 COMMERCIAL AVE",
+        "facility_number": "8136304011",
+        "site_number": "6304"
+      },
+      "opening_scope_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]",
       "page": 32,
       "pair": false,
       "points_per_foot": 9,
@@ -788,6 +956,9 @@
       ],
       "sheet": "A100",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "35|121B|1"
+      ],
       "width_inches": 36,
       "x": 1789,
       "y": 1138
@@ -807,6 +978,14 @@
       "mark": "115",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]|115|35|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "375 COMMERCIAL AVE",
+        "facility_number": "8136304011",
+        "site_number": "6304"
+      },
+      "opening_scope_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]",
       "page": 32,
       "pair": false,
       "points_per_foot": 9,
@@ -832,6 +1011,9 @@
       ],
       "sheet": "A100",
       "size": "2'-8\" x 7'-0\"",
+      "source_keys": [
+        "35|115|1"
+      ],
       "unsure": true,
       "width_inches": 32,
       "x": 699,
@@ -854,6 +1036,14 @@
       "mark": "121A",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]|121A|35|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "375 COMMERCIAL AVE",
+        "facility_number": "8136304011",
+        "site_number": "6304"
+      },
+      "opening_scope_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]",
       "page": 32,
       "pair": false,
       "points_per_foot": 9,
@@ -879,6 +1069,9 @@
       ],
       "sheet": "A100",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "35|121A|1"
+      ],
       "width_inches": 36,
       "x": 1761,
       "y": 1204
@@ -900,6 +1093,14 @@
       "mark": "120B",
       "matched_by": "exact",
       "material": "HM",
+      "opening_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]|120B|35|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "375 COMMERCIAL AVE",
+        "facility_number": "8136304011",
+        "site_number": "6304"
+      },
+      "opening_scope_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]",
       "page": 32,
       "pair": false,
       "points_per_foot": 9,
@@ -925,6 +1126,9 @@
       ],
       "sheet": "A100",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "35|120B|1"
+      ],
       "width_inches": 36,
       "x": 1959,
       "y": 1227
@@ -944,6 +1148,14 @@
       "mark": "114",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]|114|35|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "375 COMMERCIAL AVE",
+        "facility_number": "8136304011",
+        "site_number": "6304"
+      },
+      "opening_scope_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]",
       "page": 32,
       "pair": false,
       "points_per_foot": 9,
@@ -969,6 +1181,9 @@
       ],
       "sheet": "A100",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "35|114|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 667,
@@ -989,6 +1204,14 @@
       "mark": "117",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]|117|35|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "375 COMMERCIAL AVE",
+        "facility_number": "8136304011",
+        "site_number": "6304"
+      },
+      "opening_scope_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]",
       "page": 32,
       "pair": false,
       "points_per_foot": 9,
@@ -1014,6 +1237,9 @@
       ],
       "sheet": "A100",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "35|117|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1137,
@@ -1034,6 +1260,14 @@
       "mark": "116A",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]|116A|35|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "375 COMMERCIAL AVE",
+        "facility_number": "8136304011",
+        "site_number": "6304"
+      },
+      "opening_scope_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]",
       "page": 32,
       "pair": false,
       "points_per_foot": 9,
@@ -1059,6 +1293,9 @@
       ],
       "sheet": "A100",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "35|116A|1"
+      ],
       "width_inches": 36,
       "x": 794,
       "y": 1248
@@ -1078,6 +1315,14 @@
       "mark": "118A",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]|118A|35|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "375 COMMERCIAL AVE",
+        "facility_number": "8136304011",
+        "site_number": "6304"
+      },
+      "opening_scope_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]",
       "page": 32,
       "pair": false,
       "points_per_foot": 9,
@@ -1103,6 +1348,9 @@
       ],
       "sheet": "A100",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "35|118A|1"
+      ],
       "width_inches": 36,
       "x": 1255,
       "y": 1248
@@ -1124,6 +1372,14 @@
       "mark": "120A",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]|120A|35|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "375 COMMERCIAL AVE",
+        "facility_number": "8136304011",
+        "site_number": "6304"
+      },
+      "opening_scope_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]",
       "page": 32,
       "pair": false,
       "points_per_foot": 9,
@@ -1149,6 +1405,9 @@
       ],
       "sheet": "A100",
       "size": "2'-6\" x 7'-0\"",
+      "source_keys": [
+        "35|120A|1"
+      ],
       "width_inches": 30,
       "x": 1718,
       "y": 1248
@@ -1168,6 +1427,14 @@
       "mark": "119",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]|119|35|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "375 COMMERCIAL AVE",
+        "facility_number": "8136304011",
+        "site_number": "6304"
+      },
+      "opening_scope_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]",
       "page": 32,
       "pair": false,
       "points_per_foot": 9,
@@ -1193,6 +1460,9 @@
       ],
       "sheet": "A100",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "35|119|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1413,
@@ -1213,6 +1483,14 @@
       "mark": "116B",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]|116B|35|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "375 COMMERCIAL AVE",
+        "facility_number": "8136304011",
+        "site_number": "6304"
+      },
+      "opening_scope_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]",
       "page": 32,
       "pair": false,
       "points_per_foot": 9,
@@ -1238,6 +1516,9 @@
       ],
       "sheet": "A100",
       "size": "2'-8\" x 7'-0\"",
+      "source_keys": [
+        "35|116B|1"
+      ],
       "width_inches": 32,
       "x": 763,
       "y": 1390
@@ -1257,6 +1538,14 @@
       "mark": "118B",
       "matched_by": "exact",
       "material": "HM",
+      "opening_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]|118B|35|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "375 COMMERCIAL AVE",
+        "facility_number": "8136304011",
+        "site_number": "6304"
+      },
+      "opening_scope_id": "[{\"address\":\"375 COMMERCIAL AVE\",\"facility_number\":\"8136304011\",\"site_number\":\"6304\"},\"A\"]",
       "page": 32,
       "pair": false,
       "points_per_foot": 9,
@@ -1282,6 +1571,9 @@
       ],
       "sheet": "A100",
       "size": "3'-6\" x 7'-0\"",
+      "source_keys": [
+        "35|118B|1"
+      ],
       "width_inches": 42,
       "x": 1259,
       "y": 1406

@@ -12,8 +12,26 @@
     {
       "height": 1728,
       "page": 3,
+      "plan_rule": "legacy",
       "points_per_foot": null,
       "scales": [],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "asset_number",
+              "site_number"
+            ],
+            "page": 19
+          }
+        ],
+        "kept_pages": [
+          19
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-101",
       "title": "GHQ BASEMENT FLOOR PLAN",
       "width": 2592
@@ -21,8 +39,26 @@
     {
       "height": 1728,
       "page": 4,
+      "plan_rule": "legacy",
       "points_per_foot": null,
       "scales": [],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "asset_number",
+              "site_number"
+            ],
+            "page": 19
+          }
+        ],
+        "kept_pages": [
+          19
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-102",
       "title": "GHQ FIRST FLOOR PLAN",
       "width": 2592
@@ -30,8 +66,26 @@
     {
       "height": 1728,
       "page": 5,
+      "plan_rule": "legacy",
       "points_per_foot": null,
       "scales": [],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "asset_number",
+              "site_number"
+            ],
+            "page": 19
+          }
+        ],
+        "kept_pages": [
+          19
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-103",
       "title": "GHQ SECOND FLOOR PLAN",
       "width": 2592
@@ -39,8 +93,26 @@
     {
       "height": 1728,
       "page": 12,
+      "plan_rule": "legacy",
       "points_per_foot": null,
       "scales": [],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "asset_number",
+              "site_number"
+            ],
+            "page": 19
+          }
+        ],
+        "kept_pages": [
+          19
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-401",
       "title": "RESTROOM ENLARGED PLANS",
       "width": 2592
@@ -48,8 +120,26 @@
     {
       "height": 1728,
       "page": 13,
+      "plan_rule": "legacy",
       "points_per_foot": null,
       "scales": [],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "asset_number",
+              "site_number"
+            ],
+            "page": 19
+          }
+        ],
+        "kept_pages": [
+          19
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-402",
       "title": "RESTROOM ENLARGED PLANS",
       "width": 2592
@@ -57,8 +147,26 @@
     {
       "height": 1728,
       "page": 14,
+      "plan_rule": "legacy",
       "points_per_foot": null,
       "scales": [],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "asset_number",
+              "site_number"
+            ],
+            "page": 19
+          }
+        ],
+        "kept_pages": [
+          19
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-403",
       "title": "RESTROOM ENLARGED PLANS",
       "width": 2592
@@ -66,8 +174,26 @@
     {
       "height": 1728,
       "page": 15,
+      "plan_rule": "legacy",
       "points_per_foot": null,
       "scales": [],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "asset_number",
+              "site_number"
+            ],
+            "page": 19
+          }
+        ],
+        "kept_pages": [
+          19
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-404",
       "title": "RESTROOM ENLARGED PLANS",
       "width": 2592
@@ -75,8 +201,26 @@
     {
       "height": 1728,
       "page": 16,
+      "plan_rule": "legacy",
       "points_per_foot": null,
       "scales": [],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "asset_number",
+              "site_number"
+            ],
+            "page": 19
+          }
+        ],
+        "kept_pages": [
+          19
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-405",
       "title": "RESTROOM ENLARGED PLANS",
       "width": 2592
@@ -84,8 +228,26 @@
     {
       "height": 1728,
       "page": 17,
+      "plan_rule": "legacy",
       "points_per_foot": null,
       "scales": [],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "asset_number",
+              "site_number"
+            ],
+            "page": 19
+          }
+        ],
+        "kept_pages": [
+          19
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-406",
       "title": "RESTROOM ENLARGED PLANS",
       "width": 2592
@@ -116,6 +278,15 @@
       "mark": "D1",
       "matched_by": "exact",
       "material": "WOOD",
+      "opening_id": "[{\"address\":\"1510 EAST ELM STREET\",\"asset_number\":\"8136001001\",\"facility_name\":\"GENERAL HEADQUARTERS\",\"site_number\":\"6001\"},\"A\"]|D1|19|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1510 EAST ELM STREET",
+        "asset_number": "8136001001",
+        "facility_name": "GENERAL HEADQUARTERS",
+        "site_number": "6001"
+      },
+      "opening_scope_id": "[{\"address\":\"1510 EAST ELM STREET\",\"asset_number\":\"8136001001\",\"facility_name\":\"GENERAL HEADQUARTERS\",\"site_number\":\"6001\"},\"A\"]",
       "page": 16,
       "pair": false,
       "points_per_foot": null,
@@ -141,6 +312,9 @@
       ],
       "sheet": "A-405",
       "size": "6'-10\" x 2'-8\"",
+      "source_keys": [
+        "19|D1|1"
+      ],
       "width_inches": 82,
       "x": 1021,
       "y": 1218
@@ -160,6 +334,15 @@
       "mark": "D2",
       "matched_by": "exact",
       "material": "WOOD",
+      "opening_id": "[{\"address\":\"1510 EAST ELM STREET\",\"asset_number\":\"8136001001\",\"facility_name\":\"GENERAL HEADQUARTERS\",\"site_number\":\"6001\"},\"A\"]|D2|19|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1510 EAST ELM STREET",
+        "asset_number": "8136001001",
+        "facility_name": "GENERAL HEADQUARTERS",
+        "site_number": "6001"
+      },
+      "opening_scope_id": "[{\"address\":\"1510 EAST ELM STREET\",\"asset_number\":\"8136001001\",\"facility_name\":\"GENERAL HEADQUARTERS\",\"site_number\":\"6001\"},\"A\"]",
       "page": 16,
       "pair": false,
       "points_per_foot": null,
@@ -185,6 +368,9 @@
       ],
       "sheet": "A-405",
       "size": "6'-10\" x 2'-6\"",
+      "source_keys": [
+        "19|D2|1"
+      ],
       "width_inches": 82,
       "x": 747,
       "y": 1463

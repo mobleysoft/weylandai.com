@@ -120,6 +120,15 @@
     {
       "name": "PROJECT # W2303-01",
       "number": "5001",
+      "page": 7,
+      "points_per_foot": null,
+      "sheet": "A-103",
+      "x": 2452,
+      "y": 1159
+    },
+    {
+      "name": "PROJECT # W2303-01",
+      "number": "5001",
       "page": 8,
       "points_per_foot": null,
       "sheet": "A-104",
@@ -139,21 +148,81 @@
     {
       "height": 1728,
       "page": 3,
+      "plan_rule": "legacy",
       "points_per_foot": [
         9
       ],
       "scales": [
         "SCALE: 1/8\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 14
+          }
+        ],
+        "kept_pages": [
+          14
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "ASB101",
       "title": "ASBESTOS ABATEMENT PLAN",
       "width": 2592
     },
     {
       "height": 1728,
-      "page": 8,
+      "page": 7,
+      "plan_rule": "extended-title",
       "points_per_foot": null,
       "scales": [],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 14
+          }
+        ],
+        "kept_pages": [
+          14
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A-103",
+      "title": "RENOVATION PLAN -",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 8,
+      "plan_rule": "legacy",
+      "points_per_foot": null,
+      "scales": [],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 14
+          }
+        ],
+        "kept_pages": [
+          14
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-104",
       "title": "RENOVATION PLAN - FRONT ENTRANCE & GALLERIES",
       "width": 2592
@@ -163,8 +232,8 @@
     "marks_placed": 0,
     "marks_total": 3,
     "placed_rate": 0,
-    "rooms_total": 14,
-    "sheets_total": 2,
+    "rooms_total": 15,
+    "sheets_total": 3,
     "sheets_with_scale": 1,
     "unplaced": [
       {

@@ -283,12 +283,29 @@
     {
       "height": 1728,
       "page": 15,
+      "plan_rule": "legacy",
       "points_per_foot": [
         18
       ],
       "scales": [
         "1/4\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 26
+          }
+        ],
+        "kept_pages": [
+          26
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-101",
       "title": "FLOOR PLANS",
       "width": 2592
@@ -296,12 +313,29 @@
     {
       "height": 1728,
       "page": 16,
+      "plan_rule": "legacy",
       "points_per_foot": [
         18
       ],
       "scales": [
         "1/4\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 26
+          }
+        ],
+        "kept_pages": [
+          26
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-102",
       "title": "DIMENSION PLANS",
       "width": 2592
@@ -309,12 +343,29 @@
     {
       "height": 1728,
       "page": 17,
+      "plan_rule": "legacy",
       "points_per_foot": [
         18
       ],
       "scales": [
         "1/4\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 26
+          }
+        ],
+        "kept_pages": [
+          26
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-103",
       "title": "REFERENCE PLANS",
       "width": 2592
@@ -356,6 +407,14 @@
       "mark": "115",
       "matched_by": "exact",
       "material": "CLAD WOOD",
+      "opening_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]|115|26|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2503 W. 16TH ST",
+        "asset_number": "TBD",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]",
       "page": 17,
       "pair": false,
       "points_per_foot": 18,
@@ -381,6 +440,9 @@
       ],
       "sheet": "A-103",
       "size": "6' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "26|115|1"
+      ],
       "width_inches": 72,
       "x": 1006,
       "y": 414
@@ -400,6 +462,14 @@
       "mark": "112",
       "matched_by": "exact",
       "material": "SCI",
+      "opening_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]|112|26|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2503 W. 16TH ST",
+        "asset_number": "TBD",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]",
       "page": 17,
       "pair": false,
       "points_per_foot": 18,
@@ -425,6 +495,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "26|112|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 551,
@@ -445,6 +518,14 @@
       "mark": "113",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]|113|26|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2503 W. 16TH ST",
+        "asset_number": "TBD",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]",
       "page": 17,
       "pair": false,
       "points_per_foot": 18,
@@ -470,6 +551,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "26|113|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 416,
@@ -490,6 +574,14 @@
       "mark": "111",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]|111|26|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2503 W. 16TH ST",
+        "asset_number": "TBD",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]",
       "page": 17,
       "pair": false,
       "points_per_foot": 18,
@@ -515,6 +607,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "26|111|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 968,
@@ -535,6 +630,14 @@
       "mark": "114",
       "matched_by": "exact",
       "material": "NA",
+      "opening_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]|114|26|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2503 W. 16TH ST",
+        "asset_number": "TBD",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]",
       "page": 17,
       "pair": false,
       "points_per_foot": 18,
@@ -560,6 +663,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "26|114|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 452,
@@ -580,6 +686,14 @@
       "mark": "116",
       "matched_by": "exact",
       "material": "CLAD WOOD",
+      "opening_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]|116|26|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2503 W. 16TH ST",
+        "asset_number": "TBD",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]",
       "page": 17,
       "pair": false,
       "points_per_foot": 18,
@@ -605,6 +719,9 @@
       ],
       "sheet": "A-103",
       "size": "6' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "26|116|1"
+      ],
       "width_inches": 72,
       "x": 1312,
       "y": 594
@@ -624,6 +741,14 @@
       "mark": "117",
       "matched_by": "exact",
       "material": "CLAD WOOD",
+      "opening_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]|117|26|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2503 W. 16TH ST",
+        "asset_number": "TBD",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]",
       "page": 17,
       "pair": false,
       "points_per_foot": 18,
@@ -649,6 +774,9 @@
       ],
       "sheet": "A-103",
       "size": "6' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "26|117|1"
+      ],
       "width_inches": 72,
       "x": 1658,
       "y": 594
@@ -668,6 +796,14 @@
       "mark": "110",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]|110|26|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2503 W. 16TH ST",
+        "asset_number": "TBD",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]",
       "page": 17,
       "pair": false,
       "points_per_foot": 18,
@@ -693,6 +829,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "26|110|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 918,
@@ -713,6 +852,14 @@
       "mark": "102",
       "matched_by": "exact",
       "material": "NA",
+      "opening_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]|102|26|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2503 W. 16TH ST",
+        "asset_number": "TBD",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]",
       "page": 17,
       "pair": false,
       "points_per_foot": 18,
@@ -738,6 +885,9 @@
       ],
       "sheet": "A-103",
       "size": "4' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "26|102|1"
+      ],
       "unsure": true,
       "width_inches": 48,
       "x": 1006,
@@ -758,6 +908,14 @@
       "mark": "109",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]|109|26|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2503 W. 16TH ST",
+        "asset_number": "TBD",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]",
       "page": 17,
       "pair": false,
       "points_per_foot": 18,
@@ -783,6 +941,9 @@
       ],
       "sheet": "A-103",
       "size": "2' - 10\" x 6' - 8\"",
+      "source_keys": [
+        "26|109|1"
+      ],
       "unsure": true,
       "width_inches": 34,
       "x": 919,
@@ -803,6 +964,14 @@
       "mark": "120",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]|120|26|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2503 W. 16TH ST",
+        "asset_number": "TBD",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]",
       "page": 17,
       "pair": false,
       "points_per_foot": 18,
@@ -828,6 +997,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "26|120|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1992,
@@ -848,6 +1020,14 @@
       "mark": "121",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]|121|26|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2503 W. 16TH ST",
+        "asset_number": "TBD",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]",
       "page": 17,
       "pair": false,
       "points_per_foot": 18,
@@ -873,6 +1053,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "26|121|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1955,
@@ -893,6 +1076,14 @@
       "mark": "119",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]|119|26|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2503 W. 16TH ST",
+        "asset_number": "TBD",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]",
       "page": 17,
       "pair": false,
       "points_per_foot": 18,
@@ -918,6 +1109,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "26|119|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1793,
@@ -938,6 +1132,14 @@
       "mark": "126",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]|126|26|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2503 W. 16TH ST",
+        "asset_number": "TBD",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]",
       "page": 17,
       "pair": false,
       "points_per_foot": 18,
@@ -963,6 +1165,9 @@
       ],
       "sheet": "A-103",
       "size": "2' - 6\" x 6' - 8\"",
+      "source_keys": [
+        "26|126|1"
+      ],
       "unsure": true,
       "width_inches": 30,
       "x": 1854,
@@ -983,6 +1188,14 @@
       "mark": "107",
       "matched_by": "exact",
       "material": "NA",
+      "opening_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]|107|26|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2503 W. 16TH ST",
+        "asset_number": "TBD",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]",
       "page": 17,
       "pair": false,
       "points_per_foot": 18,
@@ -1008,6 +1221,9 @@
       ],
       "sheet": "A-103",
       "size": "4' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "26|107|1"
+      ],
       "unsure": true,
       "width_inches": 48,
       "x": 920,
@@ -1028,6 +1244,14 @@
       "mark": "108",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]|108|26|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2503 W. 16TH ST",
+        "asset_number": "TBD",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]",
       "page": 17,
       "pair": false,
       "points_per_foot": 18,
@@ -1053,6 +1277,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "26|108|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 772,
@@ -1073,6 +1300,14 @@
       "mark": "103",
       "matched_by": "exact",
       "material": "CLAD WOOD",
+      "opening_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]|103|26|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2503 W. 16TH ST",
+        "asset_number": "TBD",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]",
       "page": 17,
       "pair": false,
       "points_per_foot": 18,
@@ -1098,6 +1333,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "26|103|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 968,
@@ -1118,6 +1356,14 @@
       "mark": "122",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]|122|26|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2503 W. 16TH ST",
+        "asset_number": "TBD",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]",
       "page": 17,
       "pair": false,
       "points_per_foot": 18,
@@ -1143,6 +1389,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "26|122|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1985,
@@ -1163,6 +1412,14 @@
       "mark": "118",
       "matched_by": "exact",
       "material": "NA",
+      "opening_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]|118|26|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2503 W. 16TH ST",
+        "asset_number": "TBD",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]",
       "page": 17,
       "pair": false,
       "points_per_foot": 18,
@@ -1188,6 +1445,9 @@
       ],
       "sheet": "A-103",
       "size": "4' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "26|118|1"
+      ],
       "unsure": true,
       "width_inches": 48,
       "x": 1757,
@@ -1208,6 +1468,14 @@
       "mark": "106",
       "matched_by": "exact",
       "material": "CLAD WOOD",
+      "opening_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]|106|26|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2503 W. 16TH ST",
+        "asset_number": "TBD",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]",
       "page": 17,
       "pair": false,
       "points_per_foot": 18,
@@ -1233,6 +1501,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "26|106|1"
+      ],
       "width_inches": 36,
       "x": 335,
       "y": 953
@@ -1252,6 +1523,14 @@
       "mark": "101",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]|101|26|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2503 W. 16TH ST",
+        "asset_number": "TBD",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]",
       "page": 17,
       "pair": false,
       "points_per_foot": 18,
@@ -1277,6 +1556,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "26|101|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1096,
@@ -1297,6 +1579,14 @@
       "mark": "123",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]|123|26|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2503 W. 16TH ST",
+        "asset_number": "TBD",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]",
       "page": 17,
       "pair": false,
       "points_per_foot": 18,
@@ -1322,6 +1612,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "26|123|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1955,
@@ -1342,6 +1635,14 @@
       "mark": "125",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]|125|26|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2503 W. 16TH ST",
+        "asset_number": "TBD",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]",
       "page": 17,
       "pair": false,
       "points_per_foot": 18,
@@ -1367,6 +1668,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "26|125|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1793,
@@ -1387,6 +1691,14 @@
       "mark": "124",
       "matched_by": "exact",
       "material": "SCW",
+      "opening_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]|124|26|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2503 W. 16TH ST",
+        "asset_number": "TBD",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]",
       "page": 17,
       "pair": false,
       "points_per_foot": 18,
@@ -1412,6 +1724,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "26|124|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1985,
@@ -1432,6 +1747,14 @@
       "mark": "105",
       "matched_by": "exact",
       "material": "HMI",
+      "opening_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]|105|26|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2503 W. 16TH ST",
+        "asset_number": "TBD",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]",
       "page": 17,
       "pair": false,
       "points_per_foot": 18,
@@ -1457,6 +1780,9 @@
       ],
       "sheet": "A-103",
       "size": "9' - 0\" x 9' - 0\"",
+      "source_keys": [
+        "26|105|1"
+      ],
       "width_inches": 108,
       "x": 335,
       "y": 1083
@@ -1476,6 +1802,14 @@
       "mark": "100",
       "matched_by": "exact",
       "material": "CLAD WOOD",
+      "opening_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]|100|26|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2503 W. 16TH ST",
+        "asset_number": "TBD",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]",
       "page": 17,
       "pair": false,
       "points_per_foot": 18,
@@ -1501,6 +1835,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "26|100|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1648,
@@ -1521,6 +1858,14 @@
       "mark": "104",
       "matched_by": "exact",
       "material": "HMI",
+      "opening_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]|104|26|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2503 W. 16TH ST",
+        "asset_number": "TBD",
+        "site_number": "1501"
+      },
+      "opening_scope_id": "[{\"address\":\"2503 W. 16TH ST\",\"asset_number\":\"TBD\",\"site_number\":\"1501\"},\"A\"]",
       "page": 17,
       "pair": false,
       "points_per_foot": 18,
@@ -1546,6 +1891,9 @@
       ],
       "sheet": "A-103",
       "size": "9' - 0\" x 9' - 0\"",
+      "source_keys": [
+        "26|104|1"
+      ],
       "width_inches": 108,
       "x": 335,
       "y": 1282

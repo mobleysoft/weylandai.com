@@ -436,6 +436,7 @@
     {
       "height": 2160,
       "page": 3,
+      "plan_rule": "legacy",
       "points_per_foot": [
         9,
         18,
@@ -456,6 +457,22 @@
         "1 1/2\" = 1'-0\"",
         "1 1/2\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number",
+              "facility_number"
+            ],
+            "page": 3
+          }
+        ],
+        "kept_pages": [
+          3
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-111",
       "title": "PLAN AND DOOR/WINDOW DETAILS",
       "width": 3024
@@ -486,6 +503,14 @@
       "mark": "038",
       "matched_by": "exact",
       "material": "HM",
+      "opening_id": "[{\"address\":\"2900 SCOTT ST, ST JOSEPH\",\"facility_number\":\"5012037004\",\"site_number\":\"2037\"},\"A\"]|038|3|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2900 SCOTT ST, ST JOSEPH",
+        "facility_number": "5012037004",
+        "site_number": "2037"
+      },
+      "opening_scope_id": "[{\"address\":\"2900 SCOTT ST, ST JOSEPH\",\"facility_number\":\"5012037004\",\"site_number\":\"2037\"},\"A\"]",
       "page": 3,
       "pair": false,
       "points_per_foot": 108,
@@ -511,6 +536,9 @@
       ],
       "sheet": "A-111",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "3|038|1"
+      ],
       "width_inches": 36,
       "x": 1284,
       "y": 223
@@ -530,6 +558,14 @@
       "mark": "041-2",
       "matched_by": "exact",
       "material": "HM",
+      "opening_id": "[{\"address\":\"2900 SCOTT ST, ST JOSEPH\",\"facility_number\":\"5012037004\",\"site_number\":\"2037\"},\"A\"]|041-2|3|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2900 SCOTT ST, ST JOSEPH",
+        "facility_number": "5012037004",
+        "site_number": "2037"
+      },
+      "opening_scope_id": "[{\"address\":\"2900 SCOTT ST, ST JOSEPH\",\"facility_number\":\"5012037004\",\"site_number\":\"2037\"},\"A\"]",
       "page": 3,
       "pair": false,
       "points_per_foot": 18,
@@ -555,6 +591,9 @@
       ],
       "sheet": "A-111",
       "size": "3' - 4\" x 7' - 0\"",
+      "source_keys": [
+        "3|041-2|1"
+      ],
       "width_inches": 40,
       "x": 726,
       "y": 393
@@ -574,6 +613,14 @@
       "mark": "041-1",
       "matched_by": "exact",
       "material": "HM",
+      "opening_id": "[{\"address\":\"2900 SCOTT ST, ST JOSEPH\",\"facility_number\":\"5012037004\",\"site_number\":\"2037\"},\"A\"]|041-1|3|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2900 SCOTT ST, ST JOSEPH",
+        "facility_number": "5012037004",
+        "site_number": "2037"
+      },
+      "opening_scope_id": "[{\"address\":\"2900 SCOTT ST, ST JOSEPH\",\"facility_number\":\"5012037004\",\"site_number\":\"2037\"},\"A\"]",
       "page": 3,
       "pair": false,
       "points_per_foot": 18,
@@ -599,6 +646,9 @@
       ],
       "sheet": "A-111",
       "size": "3' - 4\" x 7' - 0\"",
+      "source_keys": [
+        "3|041-1|1"
+      ],
       "width_inches": 40,
       "x": 769,
       "y": 393
@@ -618,6 +668,14 @@
       "mark": "029",
       "matched_by": "exact",
       "material": "HM",
+      "opening_id": "[{\"address\":\"2900 SCOTT ST, ST JOSEPH\",\"facility_number\":\"5012037004\",\"site_number\":\"2037\"},\"A\"]|029|3|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2900 SCOTT ST, ST JOSEPH",
+        "facility_number": "5012037004",
+        "site_number": "2037"
+      },
+      "opening_scope_id": "[{\"address\":\"2900 SCOTT ST, ST JOSEPH\",\"facility_number\":\"5012037004\",\"site_number\":\"2037\"},\"A\"]",
       "page": 3,
       "pair": false,
       "points_per_foot": 108,
@@ -643,6 +701,9 @@
       ],
       "sheet": "A-111",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "3|029|1"
+      ],
       "width_inches": 36,
       "x": 1420,
       "y": 745
@@ -662,6 +723,14 @@
       "mark": "EX-007-1",
       "matched_by": "exact",
       "material": "HM",
+      "opening_id": "[{\"address\":\"2900 SCOTT ST, ST JOSEPH\",\"facility_number\":\"5012037004\",\"site_number\":\"2037\"},\"A\"]|EX-007-1|3|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2900 SCOTT ST, ST JOSEPH",
+        "facility_number": "5012037004",
+        "site_number": "2037"
+      },
+      "opening_scope_id": "[{\"address\":\"2900 SCOTT ST, ST JOSEPH\",\"facility_number\":\"5012037004\",\"site_number\":\"2037\"},\"A\"]",
       "page": 3,
       "pair": false,
       "points_per_foot": 9,
@@ -687,6 +756,9 @@
       ],
       "sheet": "A-111",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "3|EX-007-1|1"
+      ],
       "width_inches": 36,
       "x": 299,
       "y": 993
@@ -706,6 +778,14 @@
       "mark": "EX-007-2",
       "matched_by": "exact",
       "material": "HM HM",
+      "opening_id": "[{\"address\":\"2900 SCOTT ST, ST JOSEPH\",\"facility_number\":\"5012037004\",\"site_number\":\"2037\"},\"A\"]|EX-007-2|3|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2900 SCOTT ST, ST JOSEPH",
+        "facility_number": "5012037004",
+        "site_number": "2037"
+      },
+      "opening_scope_id": "[{\"address\":\"2900 SCOTT ST, ST JOSEPH\",\"facility_number\":\"5012037004\",\"site_number\":\"2037\"},\"A\"]",
       "page": 3,
       "pair": false,
       "points_per_foot": 9,
@@ -731,6 +811,9 @@
       ],
       "sheet": "A-111",
       "size": "3' - 0\" 3' - 0\" x 7' - 0\" 7' - 0\"",
+      "source_keys": [
+        "3|EX-007-2|1"
+      ],
       "width_inches": null,
       "x": 299,
       "y": 1025

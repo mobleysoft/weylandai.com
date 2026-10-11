@@ -442,6 +442,2076 @@
       "y": 1342
     },
     {
+      "name": "SEMI-PRIVATE",
+      "number": "A115",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 815,
+      "y": 250
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "A116",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 948,
+      "y": 250
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "A112",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 628,
+      "y": 251
+    },
+    {
+      "name": "PRIVATE",
+      "number": "A113",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 771,
+      "y": 335
+    },
+    {
+      "name": "TOILET",
+      "number": "A111",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 646,
+      "y": 359
+    },
+    {
+      "name": "TOILET",
+      "number": "A114",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 821,
+      "y": 364
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "A119",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 1085,
+      "y": 374
+    },
+    {
+      "name": "STOR",
+      "number": "A110",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 625,
+      "y": 414
+    },
+    {
+      "name": "PRIVATE",
+      "number": "A108",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 514,
+      "y": 418
+    },
+    {
+      "name": "COMMONS",
+      "number": "A100",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 818,
+      "y": 460
+    },
+    {
+      "name": "STOR",
+      "number": "A105",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 664,
+      "y": 501
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "A120",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 1012,
+      "y": 516
+    },
+    {
+      "name": "TOILET",
+      "number": "A106",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 630,
+      "y": 531
+    },
+    {
+      "name": "TOILET",
+      "number": "A104",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 700,
+      "y": 536
+    },
+    {
+      "name": "CORRIDOR",
+      "number": "018",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 1477,
+      "y": 548
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "A107",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 573,
+      "y": 576
+    },
+    {
+      "name": "SHOWER",
+      "number": "A003",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 1042,
+      "y": 577
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "A103",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 655,
+      "y": 588
+    },
+    {
+      "name": "SHOWER",
+      "number": "A002",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 1096,
+      "y": 636
+    },
+    {
+      "name": "DINING ROOM",
+      "number": "A102",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 771,
+      "y": 659
+    },
+    {
+      "name": "KITCHEN",
+      "number": "A101",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 867,
+      "y": 735
+    },
+    {
+      "name": "EXAM/ TREATMENT",
+      "number": "A005",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 979,
+      "y": 741
+    },
+    {
+      "name": "MEDICATION",
+      "number": "A006",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 943,
+      "y": 785
+    },
+    {
+      "name": "NURSE STATION",
+      "number": "A004",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 1023,
+      "y": 788
+    },
+    {
+      "name": "NEIGHBORHOOD",
+      "number": "A001",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 1194,
+      "y": 794
+    },
+    {
+      "name": "NEW DINING",
+      "number": "A222",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 463,
+      "y": 818
+    },
+    {
+      "name": "HSKPNG/ JANITOR",
+      "number": "A009",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 877,
+      "y": 827
+    },
+    {
+      "name": "UTILITY",
+      "number": "A007",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 997,
+      "y": 847
+    },
+    {
+      "name": "PATIO",
+      "number": "A223F",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 739,
+      "y": 855
+    },
+    {
+      "name": "TOILET",
+      "number": "A221",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 577,
+      "y": 872
+    },
+    {
+      "name": "CLEAN UTILITY/ SOILED STORAGE",
+      "number": "A008",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 939,
+      "y": 883
+    },
+    {
+      "name": "MECH/ ELEC",
+      "number": "A010",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 858,
+      "y": 895
+    },
+    {
+      "name": "NOURISHMENT",
+      "number": "A016",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 1117,
+      "y": 923
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "A224",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 818,
+      "y": 936
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "A220",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 535,
+      "y": 938
+    },
+    {
+      "name": "TUB ROOM",
+      "number": "A017",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 1194,
+      "y": 942
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "A301",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 1558,
+      "y": 943
+    },
+    {
+      "name": "STAFF TOILET",
+      "number": "A011",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 906,
+      "y": 947
+    },
+    {
+      "name": "TOILET",
+      "number": "A219",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 663,
+      "y": 957
+    },
+    {
+      "name": "SHOWER",
+      "number": "A015",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 1079,
+      "y": 962
+    },
+    {
+      "name": "TOILET",
+      "number": "A302",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 1525,
+      "y": 985
+    },
+    {
+      "name": "SHOWER",
+      "number": "A014",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 1024,
+      "y": 990
+    },
+    {
+      "name": "TUB ROOM",
+      "number": "A018",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 1248,
+      "y": 996
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "A318",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 1185,
+      "y": 1023
+    },
+    {
+      "name": "COMMONS",
+      "number": "A300",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 1368,
+      "y": 1025
+    },
+    {
+      "name": "OXYGEN",
+      "number": "A013",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 999,
+      "y": 1064
+    },
+    {
+      "name": "ALCOVE",
+      "number": "A012",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 949,
+      "y": 1069
+    },
+    {
+      "name": "PRIVATE",
+      "number": "A306",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 1709,
+      "y": 1099
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "A215",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 581,
+      "y": 1124
+    },
+    {
+      "name": "TOILET",
+      "number": "A316",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 1246,
+      "y": 1125
+    },
+    {
+      "name": "COMMONS",
+      "number": "A200",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 801,
+      "y": 1128
+    },
+    {
+      "name": "STORAGE",
+      "number": "A214",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 686,
+      "y": 1151
+    },
+    {
+      "name": "TOILET",
+      "number": "A312",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 1402,
+      "y": 1152
+    },
+    {
+      "name": "TOILET",
+      "number": "A315",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 1281,
+      "y": 1162
+    },
+    {
+      "name": "PRIVATE",
+      "number": "A311",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 1449,
+      "y": 1180
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "A317",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 1177,
+      "y": 1185
+    },
+    {
+      "name": "PRIVATE",
+      "number": "A213",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 642,
+      "y": 1204
+    },
+    {
+      "name": "TOILET",
+      "number": "A202",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 856,
+      "y": 1269
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "A310",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 1596,
+      "y": 1277
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "A314",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 1271,
+      "y": 1278
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "A313",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 1401,
+      "y": 1282
+    },
+    {
+      "name": "STOR",
+      "number": "A203",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 821,
+      "y": 1302
+    },
+    {
+      "name": "TOILET",
+      "number": "A211",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 689,
+      "y": 1315
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "A201",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 929,
+      "y": 1328
+    },
+    {
+      "name": "TOILET",
+      "number": "A204",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 848,
+      "y": 1331
+    },
+    {
+      "name": "STOR",
+      "number": "A210",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 730,
+      "y": 1337
+    },
+    {
+      "name": "TOILET",
+      "number": "A206",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 948,
+      "y": 1359
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "A212",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 613,
+      "y": 1382
+    },
+    {
+      "name": "PRIVATE",
+      "number": "A209",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 705,
+      "y": 1399
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "A205",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 933,
+      "y": 1433
+    },
+    {
+      "name": "PRIVATE",
+      "number": "A207",
+      "page": 50,
+      "points_per_foot": 6.75,
+      "sheet": "A-110",
+      "x": 755,
+      "y": 1465
+    },
+    {
+      "name": "CHAPEL",
+      "number": "037",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 836,
+      "y": 207
+    },
+    {
+      "name": "PRIVATE",
+      "number": "B306",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1180,
+      "y": 245
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "B305",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1081,
+      "y": 250
+    },
+    {
+      "name": "PRIVATE",
+      "number": "B307",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1227,
+      "y": 280
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "B310",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1318,
+      "y": 306
+    },
+    {
+      "name": "TOILET",
+      "number": "B304",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1084,
+      "y": 347
+    },
+    {
+      "name": "STORAGE",
+      "number": "B308",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1203,
+      "y": 347
+    },
+    {
+      "name": "TOILET",
+      "number": "B309",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1247,
+      "y": 360
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "B301",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1014,
+      "y": 370
+    },
+    {
+      "name": "STORAGE",
+      "number": "B303",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1108,
+      "y": 379
+    },
+    {
+      "name": "TOILET",
+      "number": "B302",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1078,
+      "y": 412
+    },
+    {
+      "name": "PRIVATE",
+      "number": "B311",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1294,
+      "y": 477
+    },
+    {
+      "name": "TOILET",
+      "number": "B312",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1253,
+      "y": 537
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "B313",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1343,
+      "y": 568
+    },
+    {
+      "name": "COMMONS",
+      "number": "B300",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1193,
+      "y": 639
+    },
+    {
+      "name": "TOILET",
+      "number": "B315",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1257,
+      "y": 657
+    },
+    {
+      "name": "TOILET",
+      "number": "B316",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1224,
+      "y": 697
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "B314",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1340,
+      "y": 700
+    },
+    {
+      "name": "SHOWER",
+      "number": "B002",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1082,
+      "y": 704
+    },
+    {
+      "name": "SHOWER",
+      "number": "B003",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1024,
+      "y": 750
+    },
+    {
+      "name": "NEIGHBORHOOD",
+      "number": "B001",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 897,
+      "y": 751
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "B318",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1099,
+      "y": 773
+    },
+    {
+      "name": "X-RAY",
+      "number": "B019",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 711,
+      "y": 774
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "B317",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1252,
+      "y": 788
+    },
+    {
+      "name": "NOURISHMENT",
+      "number": "B004",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1016,
+      "y": 821
+    },
+    {
+      "name": "OFFICE",
+      "number": "B020",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 639,
+      "y": 825
+    },
+    {
+      "name": "TUB ROOM",
+      "number": "B018",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 726,
+      "y": 843
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "B119",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 477,
+      "y": 852
+    },
+    {
+      "name": "SHOWER",
+      "number": "B005",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1059,
+      "y": 856
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "B120",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 577,
+      "y": 891
+    },
+    {
+      "name": "NURSES STATION",
+      "number": "B016",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 883,
+      "y": 898
+    },
+    {
+      "name": "TUB ROOM",
+      "number": "B017",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 683,
+      "y": 908
+    },
+    {
+      "name": "SHOWER",
+      "number": "B006",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1082,
+      "y": 911
+    },
+    {
+      "name": "OXYGEN",
+      "number": "B008",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1149,
+      "y": 938
+    },
+    {
+      "name": "SOILED UTILITY",
+      "number": "B013",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 935,
+      "y": 953
+    },
+    {
+      "name": "TREATMENT",
+      "number": "B015",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 821,
+      "y": 959
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "B116",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 365,
+      "y": 965
+    },
+    {
+      "name": "ALCOVE",
+      "number": "B007",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1154,
+      "y": 994
+    },
+    {
+      "name": "MEDICATION",
+      "number": "B014",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 872,
+      "y": 1008
+    },
+    {
+      "name": "CLEAN UTILITY/ STORAGE",
+      "number": "B012",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 960,
+      "y": 1013
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "B201",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1382,
+      "y": 1029
+    },
+    {
+      "name": "STAFF TOILET",
+      "number": "B009",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1044,
+      "y": 1038
+    },
+    {
+      "name": "COMMONS",
+      "number": "B100",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 524,
+      "y": 1056
+    },
+    {
+      "name": "TOILET",
+      "number": "B206",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1459,
+      "y": 1057
+    },
+    {
+      "name": "HSKPNG/ JANITOR",
+      "number": "B011",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 915,
+      "y": 1080
+    },
+    {
+      "name": "TOILET",
+      "number": "B202",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1356,
+      "y": 1081
+    },
+    {
+      "name": "MECH/ ELEC",
+      "number": "B010",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 980,
+      "y": 1096
+    },
+    {
+      "name": "TOILET",
+      "number": "B204",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1427,
+      "y": 1097
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "B115",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 367,
+      "y": 1098
+    },
+    {
+      "name": "TOILET",
+      "number": "B208",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1508,
+      "y": 1111
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "B220",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1044,
+      "y": 1113
+    },
+    {
+      "name": "TOILET",
+      "number": "B114",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 450,
+      "y": 1118
+    },
+    {
+      "name": "STORAGE",
+      "number": "B203",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1391,
+      "y": 1123
+    },
+    {
+      "name": "PRIVATE",
+      "number": "B113",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 418,
+      "y": 1174
+    },
+    {
+      "name": "COMMONS",
+      "number": "B200",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1174,
+      "y": 1191
+    },
+    {
+      "name": "PRIVATE",
+      "number": "B207",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1548,
+      "y": 1194
+    },
+    {
+      "name": "STOR",
+      "number": "B210",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1430,
+      "y": 1207
+    },
+    {
+      "name": "PRIVATE",
+      "number": "B209",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1485,
+      "y": 1213
+    },
+    {
+      "name": "TOILET",
+      "number": "B218",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1082,
+      "y": 1226
+    },
+    {
+      "name": "TOILET",
+      "number": "B102",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 627,
+      "y": 1244
+    },
+    {
+      "name": "STOR",
+      "number": "B214",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1244,
+      "y": 1252
+    },
+    {
+      "name": "TOILET",
+      "number": "B211",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1404,
+      "y": 1252
+    },
+    {
+      "name": "TOILET",
+      "number": "B217",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1115,
+      "y": 1256
+    },
+    {
+      "name": "PRIVATE",
+      "number": "B219",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1007,
+      "y": 1259
+    },
+    {
+      "name": "STORAGE",
+      "number": "B103",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 591,
+      "y": 1282
+    },
+    {
+      "name": "TOILET",
+      "number": "B111",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 456,
+      "y": 1288
+    },
+    {
+      "name": "PRIVATE",
+      "number": "B213",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1286,
+      "y": 1289
+    },
+    {
+      "name": "STOR",
+      "number": "B110",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 502,
+      "y": 1310
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "B101",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 721,
+      "y": 1310
+    },
+    {
+      "name": "TOILET",
+      "number": "B104",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 614,
+      "y": 1311
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "B112",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 386,
+      "y": 1356
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "B212",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1457,
+      "y": 1358
+    },
+    {
+      "name": "TOILET",
+      "number": "B106",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 699,
+      "y": 1373
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "B215",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1224,
+      "y": 1376
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "B216",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 1106,
+      "y": 1380
+    },
+    {
+      "name": "TOILET",
+      "number": "B108",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 592,
+      "y": 1390
+    },
+    {
+      "name": "PRIVATE",
+      "number": "B109",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 468,
+      "y": 1394
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "B105",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 686,
+      "y": 1417
+    },
+    {
+      "name": "PRIVATE",
+      "number": "B107",
+      "page": 51,
+      "points_per_foot": 6.75,
+      "sheet": "A-111",
+      "x": 518,
+      "y": 1433
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "C306",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1237,
+      "y": 242
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "C309",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1429,
+      "y": 242
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "C305",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1104,
+      "y": 244
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "C302",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1013,
+      "y": 331
+    },
+    {
+      "name": "PRIVATE",
+      "number": "C307",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1286,
+      "y": 331
+    },
+    {
+      "name": "TOILET",
+      "number": "C304",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1116,
+      "y": 350
+    },
+    {
+      "name": "TOILET",
+      "number": "C308",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1237,
+      "y": 356
+    },
+    {
+      "name": "TOILET",
+      "number": "C310",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1412,
+      "y": 356
+    },
+    {
+      "name": "PRIVATE",
+      "number": "C312",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1493,
+      "y": 358
+    },
+    {
+      "name": "TOILET",
+      "number": "C303",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1085,
+      "y": 386
+    },
+    {
+      "name": "STOR",
+      "number": "C311",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1427,
+      "y": 400
+    },
+    {
+      "name": "COMMONS",
+      "number": "C300",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1164,
+      "y": 414
+    },
+    {
+      "name": "PRIVATE",
+      "number": "C313",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1550,
+      "y": 426
+    },
+    {
+      "name": "HR STORAGE",
+      "number": "051",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 591,
+      "y": 467
+    },
+    {
+      "name": "MECH.",
+      "number": "C321",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1347,
+      "y": 475
+    },
+    {
+      "name": "STOR",
+      "number": "C318",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1393,
+      "y": 490
+    },
+    {
+      "name": "TOILET",
+      "number": "C314",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1505,
+      "y": 490
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "C301",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1040,
+      "y": 494
+    },
+    {
+      "name": "MECH.",
+      "number": "042",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 952,
+      "y": 496
+    },
+    {
+      "name": "TOILET",
+      "number": "C317",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1423,
+      "y": 521
+    },
+    {
+      "name": "TOILET",
+      "number": "C320",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1353,
+      "y": 531
+    },
+    {
+      "name": "EMPLOYEE BREAK ROOM",
+      "number": "041",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 863,
+      "y": 535
+    },
+    {
+      "name": "PRIVATE",
+      "number": "C315",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1560,
+      "y": 571
+    },
+    {
+      "name": "TUB ROOM",
+      "number": "C003",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1011,
+      "y": 572
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "C319",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1393,
+      "y": 576
+    },
+    {
+      "name": "TOILET",
+      "number": "C316",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1441,
+      "y": 614
+    },
+    {
+      "name": "TUB ROOM",
+      "number": "C002",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 960,
+      "y": 629
+    },
+    {
+      "name": "TREATMENT",
+      "number": "C004",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1070,
+      "y": 735
+    },
+    {
+      "name": "NEIGHBORHOOD",
+      "number": "C001",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 877,
+      "y": 771
+    },
+    {
+      "name": "MEDICATION",
+      "number": "C006",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1120,
+      "y": 781
+    },
+    {
+      "name": "NURSES STATION",
+      "number": "C005",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1004,
+      "y": 792
+    },
+    {
+      "name": "HSKPNG/ JANITOR",
+      "number": "C009",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1185,
+      "y": 826
+    },
+    {
+      "name": "SOILED UTILITY",
+      "number": "C007",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1055,
+      "y": 834
+    },
+    {
+      "name": "UTILITY/ STORAGE",
+      "number": "C008",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1126,
+      "y": 853
+    },
+    {
+      "name": "MECH/ ELEC",
+      "number": "C010",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1198,
+      "y": 892
+    },
+    {
+      "name": "PRIVATE",
+      "number": "C202",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1383,
+      "y": 904
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "C201",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1259,
+      "y": 911
+    },
+    {
+      "name": "NOURISHMENT",
+      "number": "C016",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 936,
+      "y": 920
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "C118",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 493,
+      "y": 928
+    },
+    {
+      "name": "SHOWER",
+      "number": "C017",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 863,
+      "y": 928
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "C114",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 405,
+      "y": 943
+    },
+    {
+      "name": "SHOWER",
+      "number": "C015",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 986,
+      "y": 943
+    },
+    {
+      "name": "STAFF TOILET",
+      "number": "C011",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1146,
+      "y": 944
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "C205",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1446,
+      "y": 966
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "C101",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 906,
+      "y": 987
+    },
+    {
+      "name": "COMMONS",
+      "number": "C100",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 654,
+      "y": 1029
+    },
+    {
+      "name": "D.S. OXYGEN",
+      "number": "C013",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1051,
+      "y": 1056
+    },
+    {
+      "name": "ALCOVE",
+      "number": "C012",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1112,
+      "y": 1056
+    },
+    {
+      "name": "PRIVATE",
+      "number": "C113",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 351,
+      "y": 1069
+    },
+    {
+      "name": "STOR",
+      "number": "C111",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 464,
+      "y": 1102
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "C206",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1455,
+      "y": 1113
+    },
+    {
+      "name": "TOILET",
+      "number": "C103",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 809,
+      "y": 1118
+    },
+    {
+      "name": "COMMONS",
+      "number": "C200",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1253,
+      "y": 1118
+    },
+    {
+      "name": "STORAGE",
+      "number": "C207",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1369,
+      "y": 1143
+    },
+    {
+      "name": "PRIVATE",
+      "number": "C112",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 399,
+      "y": 1145
+    },
+    {
+      "name": "TOILET",
+      "number": "C110",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 475,
+      "y": 1147
+    },
+    {
+      "name": "TOILET",
+      "number": "C107",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 654,
+      "y": 1147
+    },
+    {
+      "name": "TOILET",
+      "number": "C104",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 775,
+      "y": 1153
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "C102",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 875,
+      "y": 1173
+    },
+    {
+      "name": "PRIVATE",
+      "number": "C108",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 601,
+      "y": 1179
+    },
+    {
+      "name": "PRIVATE",
+      "number": "C208",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1419,
+      "y": 1203
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "C109",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 464,
+      "y": 1259
+    },
+    {
+      "name": "TOILET",
+      "number": "C220",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1194,
+      "y": 1265
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "C106",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 662,
+      "y": 1269
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "C105",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 792,
+      "y": 1269
+    },
+    {
+      "name": "STOR",
+      "number": "C218",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1234,
+      "y": 1295
+    },
+    {
+      "name": "TOILET",
+      "number": "C210",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1362,
+      "y": 1311
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "C219",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1100,
+      "y": 1327
+    },
+    {
+      "name": "TOILET",
+      "number": "C217",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1212,
+      "y": 1332
+    },
+    {
+      "name": "STOR",
+      "number": "C211",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1322,
+      "y": 1332
+    },
+    {
+      "name": "TOILET",
+      "number": "C216",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1057,
+      "y": 1369
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "C209",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1439,
+      "y": 1374
+    },
+    {
+      "name": "PRIVATE",
+      "number": "C212",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1355,
+      "y": 1397
+    },
+    {
+      "name": "TOILET",
+      "number": "C214",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1291,
+      "y": 1404
+    },
+    {
+      "name": "SEMI-PRIVATE",
+      "number": "C215",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1136,
+      "y": 1431
+    },
+    {
+      "name": "PRIVATE",
+      "number": "C213",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1322,
+      "y": 1443
+    },
+    {
+      "name": "ALT 3",
+      "number": "1",
+      "page": 52,
+      "points_per_foot": 6.75,
+      "sheet": "A-112",
+      "x": 1223,
+      "y": 1524
+    },
+    {
+      "name": "STORAGE",
+      "number": "72",
+      "page": 53,
+      "points_per_foot": 6.75,
+      "sheet": "A-113",
+      "x": 1005,
+      "y": 867
+    },
+    {
+      "name": "VSO OFFICE",
+      "number": "71",
+      "page": 53,
+      "points_per_foot": 6.75,
+      "sheet": "A-113",
+      "x": 1071,
+      "y": 869
+    },
+    {
+      "name": "MEZZANINE",
+      "number": "201",
+      "page": 53,
+      "points_per_foot": 9,
+      "sheet": "A-113",
+      "x": 432,
+      "y": 1323
+    },
+    {
       "name": "MARK",
       "number": "E6",
       "page": 55,
@@ -1156,12 +3226,26 @@
     {
       "height": 1728,
       "page": 48,
+      "plan_rule": "legacy",
       "points_per_foot": [
         3.6
       ],
       "scales": [
         "Scale: 1\" = 20'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [],
+            "page": 83
+          }
+        ],
+        "kept_pages": [
+          83
+        ],
+        "rule": "similarity"
+      },
       "sheet": "A-108",
       "title": "OVERALL FLOOR PLAN",
       "width": 2592
@@ -1169,19 +3253,147 @@
     {
       "height": 1728,
       "page": 49,
+      "plan_rule": "legacy",
       "points_per_foot": [
         6.75
       ],
       "scales": [
         "Scale: 3/32\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [],
+            "page": 83
+          }
+        ],
+        "kept_pages": [
+          83
+        ],
+        "rule": "similarity"
+      },
       "sheet": "A-109",
       "title": "ENLARGED FLOOR PLAN - CENTRAL CORE",
       "width": 2592
     },
     {
       "height": 1728,
+      "page": 50,
+      "plan_rule": "extended-title",
+      "points_per_foot": [
+        6.75
+      ],
+      "scales": [
+        "Scale: 3/32\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [],
+            "page": 83
+          }
+        ],
+        "kept_pages": [
+          83
+        ],
+        "rule": "similarity"
+      },
+      "sheet": "A-110",
+      "title": "ENLARGED FLOOR PLAN - WING A",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 51,
+      "plan_rule": "extended-title",
+      "points_per_foot": [
+        6.75
+      ],
+      "scales": [
+        "Scale: 3/32\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [],
+            "page": 83
+          }
+        ],
+        "kept_pages": [
+          83
+        ],
+        "rule": "similarity"
+      },
+      "sheet": "A-111",
+      "title": "ENLARGED FLOOR PLAN - WING B",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 52,
+      "plan_rule": "extended-title",
+      "points_per_foot": [
+        6.75
+      ],
+      "scales": [
+        "Scale: 3/32\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [],
+            "page": 83
+          }
+        ],
+        "kept_pages": [
+          83
+        ],
+        "rule": "similarity"
+      },
+      "sheet": "A-112",
+      "title": "ENLARGED FLOOR PLAN - WING C",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 53,
+      "plan_rule": "extended-title",
+      "points_per_foot": [
+        6.75,
+        9,
+        36
+      ],
+      "scales": [
+        "Scale: 1/8\" = 1'-0\"",
+        "Scale: 1/2\" = 1'-0\"",
+        "Scale: 1/8\" = 1'-0\"",
+        "Scale: 3/32\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [],
+            "page": 83
+          }
+        ],
+        "kept_pages": [
+          83
+        ],
+        "rule": "similarity"
+      },
+      "sheet": "A-113",
+      "title": "ENLARGED FLOOR PLAN - ANNEX &",
+      "width": 2592
+    },
+    {
+      "height": 1728,
       "page": 55,
+      "plan_rule": "legacy",
       "points_per_foot": [
         18
       ],
@@ -1193,6 +3405,19 @@
         "Scale: 1/4\" = 1'-0\"",
         "Scale: 1/4\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [],
+            "page": 83
+          }
+        ],
+        "kept_pages": [
+          83
+        ],
+        "rule": "similarity"
+      },
       "sheet": "A-115",
       "title": "ENLARGED PLANS",
       "width": 2592
@@ -1200,6 +3425,7 @@
     {
       "height": 1728,
       "page": 56,
+      "plan_rule": "legacy",
       "points_per_foot": [
         18
       ],
@@ -1209,6 +3435,19 @@
         "Scale: 1/4\" = 1'-0\"",
         "Scale: 1/4\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [],
+            "page": 83
+          }
+        ],
+        "kept_pages": [
+          83
+        ],
+        "rule": "similarity"
+      },
       "sheet": "A-116",
       "title": "ENLARGED PLANS & ROOM ADDITIONS",
       "width": 2592
@@ -1216,6 +3455,7 @@
     {
       "height": 1728,
       "page": 57,
+      "plan_rule": "legacy",
       "points_per_foot": [
         36
       ],
@@ -1226,6 +3466,19 @@
         "Scale: 1/2\" = 1'-0\"",
         "Scale: 1/2\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [],
+            "page": 83
+          }
+        ],
+        "kept_pages": [
+          83
+        ],
+        "rule": "similarity"
+      },
       "sheet": "A-117",
       "title": "ENLARGED PLANS",
       "width": 2592
@@ -1233,6 +3486,7 @@
     {
       "height": 1728,
       "page": 82,
+      "plan_rule": "legacy",
       "points_per_foot": [
         36,
         72
@@ -1258,225 +3512,32 @@
         "Scale: 1\" = 1'-0\"",
         "Scale: 1\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [],
+            "page": 83
+          }
+        ],
+        "kept_pages": [
+          83
+        ],
+        "rule": "similarity"
+      },
       "sheet": "A-501",
       "title": "ENLARGED PLAN DETAILS",
       "width": 2592
     }
   ],
   "summary": {
-    "marks_placed": 47,
+    "marks_placed": 88,
     "marks_total": 88,
-    "placed_rate": 0.5340909090909091,
-    "rooms_total": 127,
-    "sheets_total": 6,
-    "sheets_with_scale": 6,
-    "unplaced": [
-      {
-        "mark": "043",
-        "page": 83,
-        "reason": "mark 043 (schedule p.83) not tagged on any plan"
-      },
-      {
-        "mark": "A100",
-        "page": 83,
-        "reason": "mark A100 (schedule p.83) not tagged on any plan"
-      },
-      {
-        "mark": "A103",
-        "page": 83,
-        "reason": "mark A103 (schedule p.83) not tagged on any plan"
-      },
-      {
-        "mark": "A107",
-        "page": 83,
-        "reason": "mark A107 (schedule p.83) not tagged on any plan"
-      },
-      {
-        "mark": "A108",
-        "page": 83,
-        "reason": "mark A108 (schedule p.83) not tagged on any plan"
-      },
-      {
-        "mark": "A109",
-        "page": 83,
-        "reason": "mark A109 (schedule p.83) not tagged on any plan"
-      },
-      {
-        "mark": "A112",
-        "page": 83,
-        "reason": "mark A112 (schedule p.83) not tagged on any plan"
-      },
-      {
-        "mark": "A113",
-        "page": 83,
-        "reason": "mark A113 (schedule p.83) not tagged on any plan"
-      },
-      {
-        "mark": "A115",
-        "page": 83,
-        "reason": "mark A115 (schedule p.83) not tagged on any plan"
-      },
-      {
-        "mark": "A116",
-        "page": 83,
-        "reason": "mark A116 (schedule p.83) not tagged on any plan"
-      },
-      {
-        "mark": "A119",
-        "page": 83,
-        "reason": "mark A119 (schedule p.83) not tagged on any plan"
-      },
-      {
-        "mark": "A120A",
-        "page": 83,
-        "reason": "mark A120A (schedule p.83) not tagged on any plan"
-      },
-      {
-        "mark": "A120B",
-        "page": 83,
-        "reason": "mark A120B (schedule p.83) not tagged on any plan"
-      },
-      {
-        "mark": "A201",
-        "page": 83,
-        "reason": "mark A201 (schedule p.83) not tagged on any plan"
-      },
-      {
-        "mark": "A205",
-        "page": 83,
-        "reason": "mark A205 (schedule p.83) not tagged on any plan"
-      },
-      {
-        "mark": "A206",
-        "page": 83,
-        "reason": "mark A206 (schedule p.83) not tagged on any plan"
-      },
-      {
-        "mark": "A207",
-        "page": 83,
-        "reason": "mark A207 (schedule p.83) not tagged on any plan"
-      },
-      {
-        "mark": "A208",
-        "page": 83,
-        "reason": "mark A208 (schedule p.83) not tagged on any plan"
-      },
-      {
-        "mark": "A209",
-        "page": 83,
-        "reason": "mark A209 (schedule p.83) not tagged on any plan"
-      },
-      {
-        "mark": "A212",
-        "page": 83,
-        "reason": "mark A212 (schedule p.83) not tagged on any plan"
-      },
-      {
-        "mark": "A213",
-        "page": 83,
-        "reason": "mark A213 (schedule p.83) not tagged on any plan"
-      },
-      {
-        "mark": "A215",
-        "page": 83,
-        "reason": "mark A215 (schedule p.83) not tagged on any plan"
-      },
-      {
-        "mark": "A224A",
-        "page": 83,
-        "reason": "mark A224A (schedule p.83) not tagged on any plan"
-      },
-      {
-        "mark": "A224B",
-        "page": 83,
-        "reason": "mark A224B (schedule p.83) not tagged on any plan"
-      },
-      {
-        "mark": "A300",
-        "page": 83,
-        "reason": "mark A300 (schedule p.83) not tagged on any plan"
-      },
-      {
-        "mark": "A301",
-        "page": 83,
-        "reason": "mark A301 (schedule p.83) not tagged on any plan"
-      },
-      {
-        "mark": "A305",
-        "page": 83,
-        "reason": "mark A305 (schedule p.83) not tagged on any plan"
-      },
-      {
-        "mark": "A306",
-        "page": 83,
-        "reason": "mark A306 (schedule p.83) not tagged on any plan"
-      },
-      {
-        "mark": "A307",
-        "page": 83,
-        "reason": "mark A307 (schedule p.83) not tagged on any plan"
-      },
-      {
-        "mark": "A310",
-        "page": 83,
-        "reason": "mark A310 (schedule p.83) not tagged on any plan"
-      },
-      {
-        "mark": "A311",
-        "page": 83,
-        "reason": "mark A311 (schedule p.83) not tagged on any plan"
-      },
-      {
-        "mark": "A313",
-        "page": 83,
-        "reason": "mark A313 (schedule p.83) not tagged on any plan"
-      },
-      {
-        "mark": "A314",
-        "page": 83,
-        "reason": "mark A314 (schedule p.83) not tagged on any plan"
-      },
-      {
-        "mark": "A317",
-        "page": 83,
-        "reason": "mark A317 (schedule p.83) not tagged on any plan"
-      },
-      {
-        "mark": "A318",
-        "page": 83,
-        "reason": "mark A318 (schedule p.83) not tagged on any plan"
-      },
-      {
-        "mark": "B008",
-        "page": 83,
-        "reason": "mark B008 (schedule p.83) not tagged on any plan"
-      },
-      {
-        "mark": "B100",
-        "page": 83,
-        "reason": "mark B100 (schedule p.83) not tagged on any plan"
-      },
-      {
-        "mark": "B101",
-        "page": 83,
-        "reason": "mark B101 (schedule p.83) not tagged on any plan"
-      },
-      {
-        "mark": "B105",
-        "page": 83,
-        "reason": "mark B105 (schedule p.83) not tagged on any plan"
-      },
-      {
-        "mark": "B106",
-        "page": 83,
-        "reason": "mark B106 (schedule p.83) not tagged on any plan"
-      },
-      {
-        "mark": "B107",
-        "page": 83,
-        "reason": "mark B107 (schedule p.83) not tagged on any plan"
-      }
-    ]
+    "placed_rate": 1,
+    "rooms_total": 357,
+    "sheets_total": 10,
+    "sheets_with_scale": 10,
+    "unplaced": []
   },
   "tags": [
     {
@@ -1494,6 +3555,12 @@
       "mark": "001A",
       "matched_by": "exact",
       "material": "AL",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|001A|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
       "page": 49,
       "pair": false,
       "points_per_foot": 6.75,
@@ -1519,6 +3586,9 @@
       ],
       "sheet": "A-109",
       "size": "6'- -.8 0\"1/2\" x 7' - 0\"",
+      "source_keys": [
+        "83|001A|1"
+      ],
       "width_inches": null,
       "x": 836,
       "y": 551
@@ -1538,6 +3608,12 @@
       "mark": "001C",
       "matched_by": "exact",
       "material": "AL",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|001C|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
       "page": 49,
       "pair": false,
       "points_per_foot": 6.75,
@@ -1563,6 +3639,9 @@
       ],
       "sheet": "A-109",
       "size": "3' - 6\" x 7' - 0\"",
+      "source_keys": [
+        "83|001C|1"
+      ],
       "width_inches": 42,
       "x": 974,
       "y": 598
@@ -1584,6 +3663,12 @@
       "mark": "003",
       "matched_by": "exact",
       "material": "WD/GL",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|003|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
       "page": 49,
       "pair": false,
       "points_per_foot": 6.75,
@@ -1609,6 +3694,9 @@
       ],
       "sheet": "A-109",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|003|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 730,
@@ -1629,6 +3717,12 @@
       "mark": "001B",
       "matched_by": "exact",
       "material": "AL",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|001B|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
       "page": 49,
       "pair": false,
       "points_per_foot": 6.75,
@@ -1654,6 +3748,9 @@
       ],
       "sheet": "A-109",
       "size": "6'- -.8 0\"1/2\" x 7' - 0\"",
+      "source_keys": [
+        "83|001B|1"
+      ],
       "width_inches": null,
       "x": 836,
       "y": 622
@@ -1673,6 +3770,12 @@
       "mark": "004A",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|004A|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
       "page": 49,
       "pair": false,
       "points_per_foot": 6.75,
@@ -1698,6 +3801,9 @@
       ],
       "sheet": "A-109",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|004A|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 701,
@@ -1718,6 +3824,12 @@
       "mark": "046",
       "matched_by": "exact",
       "material": "AL",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|046|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
       "page": 49,
       "pair": false,
       "points_per_foot": 6.75,
@@ -1743,6 +3855,9 @@
       ],
       "sheet": "A-109",
       "size": "6' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|046|1"
+      ],
       "unsure": true,
       "width_inches": 72,
       "x": 954,
@@ -1763,6 +3878,12 @@
       "mark": "004B",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|004B|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
       "page": 49,
       "pair": false,
       "points_per_foot": 6.75,
@@ -1788,6 +3909,9 @@
       ],
       "sheet": "A-109",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|004B|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 697,
@@ -1808,6 +3932,12 @@
       "mark": "004C",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|004C|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
       "page": 49,
       "pair": false,
       "points_per_foot": 6.75,
@@ -1833,6 +3963,9 @@
       ],
       "sheet": "A-109",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|004C|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 609,
@@ -1853,6 +3986,12 @@
       "mark": "005",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|005|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
       "page": 49,
       "pair": false,
       "points_per_foot": 6.75,
@@ -1878,6 +4017,9 @@
       ],
       "sheet": "A-109",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|005|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 440,
@@ -1898,6 +4040,12 @@
       "mark": "006",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|006|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
       "page": 49,
       "pair": false,
       "points_per_foot": 6.75,
@@ -1923,6 +4071,9 @@
       ],
       "sheet": "A-109",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|006|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 641,
@@ -1943,6 +4094,12 @@
       "mark": "007",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|007|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
       "page": 49,
       "pair": false,
       "points_per_foot": 6.75,
@@ -1968,6 +4125,9 @@
       ],
       "sheet": "A-109",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|007|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 663,
@@ -1991,6 +4151,12 @@
       "mark": "053",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|053|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
       "page": 49,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2016,6 +4182,9 @@
       ],
       "sheet": "A-109",
       "size": "3' - 6\" x 7' - 0\"",
+      "source_keys": [
+        "83|053|1"
+      ],
       "unsure": true,
       "width_inches": 42,
       "x": 996,
@@ -2036,6 +4205,12 @@
       "mark": "008",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|008|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
       "page": 49,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2061,6 +4236,9 @@
       ],
       "sheet": "A-109",
       "size": "3' - 6\" x 7' - 0\"",
+      "source_keys": [
+        "83|008|1"
+      ],
       "unsure": true,
       "width_inches": 42,
       "x": 791,
@@ -2083,6 +4261,12 @@
       "mark": "047A",
       "matched_by": "exact",
       "material": "WD/GL",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|047A|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
       "page": 49,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2108,6 +4292,9 @@
       ],
       "sheet": "A-109",
       "size": "3' - 6\" x 7' - 0\"",
+      "source_keys": [
+        "83|047A|1"
+      ],
       "unsure": true,
       "width_inches": 42,
       "x": 1320,
@@ -2128,6 +4315,12 @@
       "mark": "024",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|024|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
       "page": 49,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2153,6 +4346,9 @@
       ],
       "sheet": "A-109",
       "size": "6' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|024|1"
+      ],
       "unsure": true,
       "width_inches": 72,
       "x": 217,
@@ -2173,6 +4369,12 @@
       "mark": "014",
       "matched_by": "exact",
       "material": "WD/GL",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|014|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
       "page": 49,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2198,6 +4400,9 @@
       ],
       "sheet": "A-109",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|014|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 785,
@@ -2218,6 +4423,12 @@
       "mark": "023",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|023|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
       "page": 49,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2243,6 +4454,9 @@
       ],
       "sheet": "A-109",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|023|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 231,
@@ -2265,6 +4479,12 @@
       "mark": "047B",
       "matched_by": "exact",
       "material": "WD/GL",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|047B|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
       "page": 49,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2290,6 +4510,9 @@
       ],
       "sheet": "A-109",
       "size": "3' - 6\" x 7' - 0\"",
+      "source_keys": [
+        "83|047B|1"
+      ],
       "unsure": true,
       "width_inches": 42,
       "x": 1324,
@@ -2312,6 +4535,12 @@
       "mark": "012",
       "matched_by": "exact",
       "material": "WD/GL",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|012|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
       "page": 49,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2337,6 +4566,9 @@
       ],
       "sheet": "A-109",
       "size": "3' - 6\" x 7' - 0\"",
+      "source_keys": [
+        "83|012|1"
+      ],
       "unsure": true,
       "width_inches": 42,
       "x": 657,
@@ -2359,6 +4591,12 @@
       "mark": "048",
       "matched_by": "exact",
       "material": "HM",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|048|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
       "page": 49,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2384,6 +4622,9 @@
       ],
       "sheet": "A-109",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|048|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1371,
@@ -2406,6 +4647,12 @@
       "mark": "050B",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|050B|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
       "page": 49,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2431,6 +4678,9 @@
       ],
       "sheet": "A-109",
       "size": "4' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "83|050B|1"
+      ],
       "width_inches": 48,
       "x": 1027,
       "y": 1078
@@ -2450,6 +4700,12 @@
       "mark": "022",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|022|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
       "page": 49,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2475,6 +4731,9 @@
       ],
       "sheet": "A-109",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|022|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 232,
@@ -2495,6 +4754,12 @@
       "mark": "021",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|021|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
       "page": 49,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2520,6 +4785,9 @@
       ],
       "sheet": "A-109",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|021|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 260,
@@ -2540,6 +4808,12 @@
       "mark": "016",
       "matched_by": "exact",
       "material": "WD/GL",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|016|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
       "page": 49,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2565,6 +4839,9 @@
       ],
       "sheet": "A-109",
       "size": "3' - 6\" x 7' - 0\"",
+      "source_keys": [
+        "83|016|1"
+      ],
       "unsure": true,
       "width_inches": 42,
       "x": 530,
@@ -2585,6 +4862,12 @@
       "mark": "045",
       "matched_by": "exact",
       "material": "WD/GL",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|045|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
       "page": 49,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2610,6 +4893,9 @@
       ],
       "sheet": "A-109",
       "size": "6' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|045|1"
+      ],
       "unsure": true,
       "width_inches": 72,
       "x": 1071,
@@ -2632,6 +4918,12 @@
       "mark": "011",
       "matched_by": "exact",
       "material": "WD/GL",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|011|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
       "page": 49,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2657,6 +4949,9 @@
       ],
       "sheet": "A-109",
       "size": "3' - 6\" x 7' - 0\"",
+      "source_keys": [
+        "83|011|1"
+      ],
       "unsure": true,
       "width_inches": 42,
       "x": 750,
@@ -2679,6 +4974,12 @@
       "mark": "044",
       "matched_by": "exact",
       "material": "WD/GL",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|044|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
       "page": 49,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2704,6 +5005,9 @@
       ],
       "sheet": "A-109",
       "size": "3' - 8\" x 7' - 0\"",
+      "source_keys": [
+        "83|044|1"
+      ],
       "unsure": true,
       "width_inches": 44,
       "x": 1318,
@@ -2726,6 +5030,12 @@
       "mark": "050A",
       "matched_by": "exact",
       "material": "WD/GL",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|050A|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
       "page": 49,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2751,6 +5061,9 @@
       ],
       "sheet": "A-109",
       "size": "6' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|050A|1"
+      ],
       "width_inches": 72,
       "x": 974,
       "y": 1182
@@ -2770,6 +5083,12 @@
       "mark": "018",
       "matched_by": "exact",
       "material": "WD/GL",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|018|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
       "page": 49,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2795,6 +5114,9 @@
       ],
       "sheet": "A-109",
       "size": "7' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|018|1"
+      ],
       "unsure": true,
       "width_inches": 84,
       "x": 321,
@@ -2815,6 +5137,12 @@
       "mark": "038",
       "matched_by": "exact",
       "material": "WD/GL",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|038|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
       "page": 49,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2840,6 +5168,9 @@
       ],
       "sheet": "A-109",
       "size": "3' - 6\" x 7' - 0\"",
+      "source_keys": [
+        "83|038|1"
+      ],
       "unsure": true,
       "width_inches": 42,
       "x": 953,
@@ -2860,6 +5191,12 @@
       "mark": "033",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|033|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
       "page": 49,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2885,6 +5222,9 @@
       ],
       "sheet": "A-109",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|033|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 503,
@@ -2905,6 +5245,12 @@
       "mark": "034",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|034|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
       "page": 49,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2930,6 +5276,9 @@
       ],
       "sheet": "A-109",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|034|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 575,
@@ -2950,6 +5299,12 @@
       "mark": "035",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|035|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
       "page": 49,
       "pair": false,
       "points_per_foot": 6.75,
@@ -2975,6 +5330,9 @@
       ],
       "sheet": "A-109",
       "size": "3' - 6\" x 7' - 0\"",
+      "source_keys": [
+        "83|035|1"
+      ],
       "unsure": true,
       "width_inches": 42,
       "x": 654,
@@ -2997,6 +5355,12 @@
       "mark": "039",
       "matched_by": "exact",
       "material": "WD/GL",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|039|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
       "page": 49,
       "pair": false,
       "points_per_foot": 6.75,
@@ -3022,6 +5386,9 @@
       ],
       "sheet": "A-109",
       "size": "3' - 6\" x 6' - 10\"",
+      "source_keys": [
+        "83|039|1"
+      ],
       "unsure": true,
       "width_inches": 42,
       "x": 1197,
@@ -3042,6 +5409,12 @@
       "mark": "040",
       "matched_by": "exact",
       "material": "WD/GL",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|040|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
       "page": 49,
       "pair": false,
       "points_per_foot": 6.75,
@@ -3067,6 +5440,9 @@
       ],
       "sheet": "A-109",
       "size": "7' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|040|1"
+      ],
       "unsure": true,
       "width_inches": 84,
       "x": 1442,
@@ -3081,41 +5457,50 @@
       "fire_rating": null,
       "frame_type": null,
       "h": 9.601599130563871,
-      "hardware_group": "10.0",
+      "hardware_group": "19.0",
       "height_inches": 84,
       "location": null,
-      "mark": "041",
+      "mark": "A112",
       "matched_by": "exact",
-      "material": "WD/GL",
-      "page": 55,
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A112|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
       "pair": false,
-      "points_per_foot": 18,
-      "room": "040",
+      "points_per_foot": 6.75,
+      "room": "A112",
       "room_by": "nearest_label",
-      "room_name": "CORRIDOR",
+      "room_name": "SEMI-PRIVATE",
       "schedule_rows": [
         {
           "door_type": null,
           "fire_rating": null,
           "frame_type": null,
-          "hardware_group": "10.0",
+          "hardware_group": "19.0",
           "height_inches": 84,
           "location": null,
-          "mark": "041",
-          "material": "WD/GL",
+          "mark": "A112",
+          "material": "WD",
           "page": 83,
           "pair": false,
-          "size": "3' - 0\" x 7' - 0\"",
-          "width_inches": 36,
-          "y": 500
+          "size": "3' - 8\" x 7' - 0\"",
+          "width_inches": 44,
+          "y": 741
         }
       ],
-      "sheet": "A-115",
-      "size": "3' - 0\" x 7' - 0\"",
+      "sheet": "A-110",
+      "size": "3' - 8\" x 7' - 0\"",
+      "source_keys": [
+        "83|A112|1"
+      ],
       "unsure": true,
-      "width_inches": 36,
-      "x": 885,
-      "y": 1272
+      "width_inches": 44,
+      "x": 638,
+      "y": 291
     },
     {
       "also_on": [],
@@ -3126,41 +5511,158 @@
       "fire_rating": null,
       "frame_type": null,
       "h": 9.601599130563871,
-      "hardware_group": "12.1",
+      "hardware_group": "19.0",
       "height_inches": 84,
       "location": null,
-      "mark": "042",
+      "mark": "A116",
       "matched_by": "exact",
-      "material": "HM",
-      "page": 55,
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A116|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
       "pair": false,
-      "points_per_foot": 18,
-      "room": "042",
+      "points_per_foot": 6.75,
+      "room": "A116",
       "room_by": "nearest_label",
-      "room_name": "MECH.",
+      "room_name": "SEMI-PRIVATE",
       "schedule_rows": [
         {
           "door_type": null,
           "fire_rating": null,
           "frame_type": null,
-          "hardware_group": "12.1",
+          "hardware_group": "19.0",
           "height_inches": 84,
           "location": null,
-          "mark": "042",
-          "material": "HM",
+          "mark": "A116",
+          "material": "WD",
           "page": 83,
           "pair": false,
-          "size": "3' - 0\" x 7' - 0\"",
-          "width_inches": 36,
-          "y": 513
+          "size": "3' - 8\" x 7' - 0\"",
+          "width_inches": 44,
+          "y": 784
         }
       ],
-      "sheet": "A-115",
-      "size": "3' - 0\" x 7' - 0\"",
+      "sheet": "A-110",
+      "size": "3' - 8\" x 7' - 0\"",
+      "source_keys": [
+        "83|A116|1"
+      ],
       "unsure": true,
-      "width_inches": 36,
-      "x": 1298,
-      "y": 1282
+      "width_inches": 44,
+      "x": 930,
+      "y": 301
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "19.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "A113",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A113|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "A113",
+      "room_by": "nearest_label",
+      "room_name": "PRIVATE",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "19.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "A113",
+          "material": "WD",
+          "page": 83,
+          "pair": false,
+          "size": "4' - 0\" x 7' - 0\"",
+          "width_inches": 48,
+          "y": 756
+        }
+      ],
+      "sheet": "A-110",
+      "size": "4' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|A113|1"
+      ],
+      "unsure": true,
+      "width_inches": 48,
+      "x": 729,
+      "y": 313
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "21.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "A115",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A115|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "A114",
+      "room_by": "nearest_label",
+      "room_name": "TOILET",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "21.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "A115",
+          "material": "WD",
+          "page": 83,
+          "pair": false,
+          "size": "4' - 0\" x 7' - 0\"",
+          "width_inches": 48,
+          "y": 769
+        }
+      ],
+      "sheet": "A-110",
+      "size": "4' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|A115|1"
+      ],
+      "unsure": true,
+      "width_inches": 48,
+      "x": 862,
+      "y": 315
     },
     {
       "also_on": [],
@@ -3171,18 +5673,454 @@
       "fire_rating": null,
       "frame_type": null,
       "h": 9.601916159232,
+      "hardware_group": "19.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "A109",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A109|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "A108",
+      "room_by": "nearest_label",
+      "room_name": "PRIVATE",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "19.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "A109",
+          "material": "WD",
+          "page": 83,
+          "pair": false,
+          "size": "3' - 8\" x 7' - 0\"",
+          "width_inches": 44,
+          "y": 730
+        }
+      ],
+      "sheet": "A-110",
+      "size": "3' - 8\" x 7' - 0\"",
+      "source_keys": [
+        "83|A109|1"
+      ],
+      "unsure": true,
+      "width_inches": 44,
+      "x": 553,
+      "y": 369
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "19.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "A119",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A119|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "A119",
+      "room_by": "nearest_label",
+      "room_name": "SEMI-PRIVATE",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "19.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "A119",
+          "material": "WD",
+          "page": 83,
+          "pair": false,
+          "size": "3' - 8\" x 7' - 0\"",
+          "width_inches": 44,
+          "y": 794
+        }
+      ],
+      "sheet": "A-110",
+      "size": "3' - 8\" x 7' - 0\"",
+      "source_keys": [
+        "83|A119|1"
+      ],
+      "unsure": true,
+      "width_inches": 44,
+      "x": 1040,
+      "y": 398
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "19.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "A120B",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A120B|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "A120",
+      "room_by": "tag_number",
+      "room_name": "SEMI-PRIVATE",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "19.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "A120B",
+          "material": "WD",
+          "page": 83,
+          "pair": false,
+          "size": "3' - 8\" x 7' - 0\"",
+          "width_inches": 44,
+          "y": 821
+        }
+      ],
+      "sheet": "A-110",
+      "size": "3' - 8\" x 7' - 0\"",
+      "source_keys": [
+        "83|A120B|1"
+      ],
+      "width_inches": 44,
+      "x": 1037,
+      "y": 409
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "19.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "A108",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A108|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "A110",
+      "room_by": "nearest_label",
+      "room_name": "STOR",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "19.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "A108",
+          "material": "WD",
+          "page": 83,
+          "pair": false,
+          "size": "3' - 8\" x 7' - 0\"",
+          "width_inches": 44,
+          "y": 717
+        }
+      ],
+      "sheet": "A-110",
+      "size": "3' - 8\" x 7' - 0\"",
+      "source_keys": [
+        "83|A108|1"
+      ],
+      "unsure": true,
+      "width_inches": 44,
+      "x": 578,
+      "y": 444
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "19.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "A107",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A107|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "A106",
+      "room_by": "nearest_label",
+      "room_name": "TOILET",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "19.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "A107",
+          "material": "WD",
+          "page": 83,
+          "pair": false,
+          "size": "3' - 8\" x 7' - 0\"",
+          "width_inches": 44,
+          "y": 706
+        }
+      ],
+      "sheet": "A-110",
+      "size": "3' - 8\" x 7' - 0\"",
+      "source_keys": [
+        "83|A107|1"
+      ],
+      "unsure": true,
+      "width_inches": 44,
+      "x": 586,
+      "y": 513
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601916159232,
+      "hardware_group": "7.07.07.2",
+      "height_inches": 84,
+      "location": null,
+      "mark": "043",
+      "matched_by": "exact",
+      "material": "WD/GL",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|043|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "018",
+      "room_by": "nearest_label",
+      "room_name": "CORRIDOR",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "7.07.07.2",
+          "height_inches": 84,
+          "location": null,
+          "mark": "043",
+          "material": "WD/GL",
+          "page": 83,
+          "pair": false,
+          "size": "7' - 0\" x 7' - 0\"",
+          "width_inches": 84,
+          "y": 526
+        }
+      ],
+      "sheet": "A-110",
+      "size": "7' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|043|1"
+      ],
+      "unsure": true,
+      "width_inches": 84,
+      "x": 1329,
+      "y": 527
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "19.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "A120A",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A120A|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "A120",
+      "room_by": "tag_number",
+      "room_name": "SEMI-PRIVATE",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "19.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "A120A",
+          "material": "WD",
+          "page": 83,
+          "pair": false,
+          "size": "4' - 0\" x 7' - 0\"",
+          "width_inches": 48,
+          "y": 807
+        }
+      ],
+      "sheet": "A-110",
+      "size": "4' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|A120A|1"
+      ],
+      "width_inches": 48,
+      "x": 941,
+      "y": 530
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "19.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "A103",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A103|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "A104",
+      "room_by": "nearest_label",
+      "room_name": "TOILET",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "19.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "A103",
+          "material": "WD",
+          "page": 83,
+          "pair": false,
+          "size": "4' - 0\" x 7' - 0\"",
+          "width_inches": 48,
+          "y": 691
+        }
+      ],
+      "sheet": "A-110",
+      "size": "4' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|A103|1"
+      ],
+      "unsure": true,
+      "width_inches": 48,
+      "x": 746,
+      "y": 575
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
       "hardware_group": "7.0",
       "height_inches": 84,
       "location": null,
-      "mark": "A200",
+      "mark": "A100",
       "matched_by": "exact",
       "material": "WD/GL",
-      "page": 56,
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A100|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
       "pair": false,
-      "points_per_foot": 18,
-      "room": "A001",
+      "points_per_foot": 6.75,
+      "room": "A003",
       "room_by": "nearest_label",
-      "room_name": "NEIGHBORHOOD",
+      "room_name": "SHOWER",
       "schedule_rows": [
         {
           "door_type": null,
@@ -3191,129 +6129,51 @@
           "hardware_group": "7.0",
           "height_inches": 84,
           "location": null,
-          "mark": "A200",
+          "mark": "A100",
           "material": "WD/GL",
           "page": 83,
           "pair": false,
           "size": "7' - 0\" x 7' - 0\"",
           "width_inches": 84,
-          "y": 835
+          "y": 678
         }
       ],
-      "sheet": "A-116",
+      "sheet": "A-110",
       "size": "7' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|A100|1"
+      ],
       "unsure": true,
       "width_inches": 84,
-      "x": 419,
-      "y": 267
+      "x": 971,
+      "y": 580
     },
     {
-      "also_on": [],
+      "also_on": [
+        "A-116"
+      ],
       "door_pages": [
         83
       ],
       "door_type": null,
       "fire_rating": null,
       "frame_type": null,
-      "h": 9.601916159232,
-      "hardware_group": "13.0",
-      "height_inches": 84,
-      "location": null,
-      "mark": "A013",
-      "matched_by": "exact",
-      "material": "WD",
-      "page": 56,
-      "pair": false,
-      "points_per_foot": 18,
-      "room": "A013",
-      "room_by": "nearest_label",
-      "room_name": "OXYGEN",
-      "schedule_rows": [
-        {
-          "door_type": null,
-          "fire_rating": null,
-          "frame_type": null,
-          "hardware_group": "13.0",
-          "height_inches": 84,
-          "location": null,
-          "mark": "A013",
-          "material": "WD",
-          "page": 83,
-          "pair": false,
-          "size": "3' - 8\" x 7' - 0\"",
-          "width_inches": 44,
-          "y": 665
-        }
-      ],
-      "sheet": "A-116",
-      "size": "3' - 8\" x 7' - 0\"",
-      "unsure": true,
-      "width_inches": 44,
-      "x": 642,
-      "y": 377
-    },
-    {
-      "also_on": [],
-      "door_pages": [
-        83
-      ],
-      "door_type": null,
-      "fire_rating": null,
-      "frame_type": null,
-      "h": 9.601916159232,
-      "hardware_group": "4.0",
-      "height_inches": 84,
-      "location": null,
-      "mark": "A223",
-      "matched_by": "exact",
-      "material": "HM",
-      "page": 56,
-      "pair": false,
-      "points_per_foot": 18,
-      "room": null,
-      "room_by": null,
-      "room_name": null,
-      "schedule_rows": [
-        {
-          "door_type": null,
-          "fire_rating": null,
-          "frame_type": null,
-          "hardware_group": "4.0",
-          "height_inches": 84,
-          "location": null,
-          "mark": "A223",
-          "material": "HM",
-          "page": 83,
-          "pair": false,
-          "size": "3' - 7\" x 7' - 0\"",
-          "width_inches": 43,
-          "y": 1053
-        }
-      ],
-      "sheet": "A-116",
-      "size": "3' - 7\" x 7' - 0\"",
-      "width_inches": 43,
-      "x": 2187,
-      "y": 461
-    },
-    {
-      "also_on": [],
-      "door_pages": [
-        83
-      ],
-      "door_type": null,
-      "fire_rating": null,
-      "frame_type": null,
-      "h": 9.601916159232,
+      "h": 9.601599130563871,
       "hardware_group": "2.0",
       "height_inches": 84,
       "location": null,
       "mark": "A222B",
       "matched_by": "exact",
       "material": "HM",
-      "page": 56,
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A222B|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
       "pair": false,
-      "points_per_foot": 18,
+      "points_per_foot": 6.75,
       "room": "A222",
       "room_by": "tag_number",
       "room_name": "NEW DINING",
@@ -3334,30 +6194,41 @@
           "y": 1027
         }
       ],
-      "sheet": "A-116",
+      "sheet": "A-110",
       "size": "3' - 7\" x 7' - 0\"",
+      "source_keys": [
+        "83|A222B|1"
+      ],
       "width_inches": 43,
-      "x": 1566,
-      "y": 615
+      "x": 613,
+      "y": 710
     },
     {
-      "also_on": [],
+      "also_on": [
+        "A-116"
+      ],
       "door_pages": [
         83
       ],
       "door_type": null,
       "fire_rating": null,
       "frame_type": null,
-      "h": 9.601916159232,
+      "h": 9.601599130563871,
       "hardware_group": "7.1",
       "height_inches": 84,
       "location": null,
       "mark": "A222A",
       "matched_by": "exact",
       "material": "WD/GL",
-      "page": 56,
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A222A|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
       "pair": false,
-      "points_per_foot": 18,
+      "points_per_foot": 6.75,
       "room": "A222",
       "room_by": "tag_number",
       "room_name": "NEW DINING",
@@ -3378,104 +6249,19 @@
           "y": 1016
         }
       ],
-      "sheet": "A-116",
+      "sheet": "A-110",
       "size": "6' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|A222A|1"
+      ],
       "width_inches": 72,
-      "x": 1781,
-      "y": 786
+      "x": 623,
+      "y": 810
     },
     {
-      "also_on": [],
-      "door_pages": [
-        83
+      "also_on": [
+        "A-116"
       ],
-      "door_type": null,
-      "fire_rating": null,
-      "frame_type": null,
-      "h": 9.601916159232,
-      "hardware_group": "19.0",
-      "height_inches": 84,
-      "location": null,
-      "mark": "A220",
-      "matched_by": "exact",
-      "material": "WD",
-      "page": 56,
-      "pair": false,
-      "points_per_foot": 18,
-      "room": "A221",
-      "room_by": "nearest_label",
-      "room_name": "TOILET",
-      "schedule_rows": [
-        {
-          "door_type": null,
-          "fire_rating": null,
-          "frame_type": null,
-          "hardware_group": "19.0",
-          "height_inches": 84,
-          "location": null,
-          "mark": "A220",
-          "material": "WD",
-          "page": 83,
-          "pair": false,
-          "size": "3' - 8\" x 7' - 0\"",
-          "width_inches": 44,
-          "y": 988
-        }
-      ],
-      "sheet": "A-116",
-      "size": "3' - 8\" x 7' - 0\"",
-      "unsure": true,
-      "width_inches": 44,
-      "x": 1901,
-      "y": 919
-    },
-    {
-      "also_on": [],
-      "door_pages": [
-        83
-      ],
-      "door_type": null,
-      "fire_rating": null,
-      "frame_type": null,
-      "h": 9.601916159232,
-      "hardware_group": "19.0",
-      "height_inches": 84,
-      "location": null,
-      "mark": "A218",
-      "matched_by": "exact",
-      "material": "WD",
-      "page": 56,
-      "pair": false,
-      "points_per_foot": 18,
-      "room": "A219",
-      "room_by": "nearest_label",
-      "room_name": "TOILET",
-      "schedule_rows": [
-        {
-          "door_type": null,
-          "fire_rating": null,
-          "frame_type": null,
-          "hardware_group": "19.0",
-          "height_inches": 84,
-          "location": null,
-          "mark": "A218",
-          "material": "WD",
-          "page": 83,
-          "pair": false,
-          "size": "3' - 8\" x 7' - 0\"",
-          "width_inches": 44,
-          "y": 963
-        }
-      ],
-      "sheet": "A-116",
-      "size": "3' - 8\" x 7' - 0\"",
-      "unsure": true,
-      "width_inches": 44,
-      "x": 2076,
-      "y": 919
-    },
-    {
-      "also_on": [],
       "door_pages": [
         83
       ],
@@ -3483,44 +6269,55 @@
       "fire_rating": null,
       "frame_type": null,
       "h": 9.601599130563871,
-      "hardware_group": "20.0",
+      "hardware_group": "4.0",
       "height_inches": 84,
       "location": null,
-      "mark": "A221",
+      "mark": "A223",
       "matched_by": "exact",
-      "material": "WD",
-      "page": 56,
+      "material": "HM",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A223|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
       "pair": false,
-      "points_per_foot": 18,
-      "room": "A221",
+      "points_per_foot": 6.75,
+      "room": "A223F",
       "room_by": "nearest_label",
-      "room_name": "TOILET",
+      "room_name": "PATIO",
       "schedule_rows": [
         {
           "door_type": null,
           "fire_rating": null,
           "frame_type": null,
-          "hardware_group": "20.0",
+          "hardware_group": "4.0",
           "height_inches": 84,
           "location": null,
-          "mark": "A221",
-          "material": "WD",
+          "mark": "A223",
+          "material": "HM",
           "page": 83,
           "pair": false,
-          "size": "3' - 8\" x 7' - 0\"",
-          "width_inches": 44,
-          "y": 1001
+          "size": "3' - 7\" x 7' - 0\"",
+          "width_inches": 43,
+          "y": 1053
         }
       ],
-      "sheet": "A-116",
-      "size": "3' - 8\" x 7' - 0\"",
+      "sheet": "A-110",
+      "size": "3' - 7\" x 7' - 0\"",
+      "source_keys": [
+        "83|A223|1"
+      ],
       "unsure": true,
-      "width_inches": 44,
-      "x": 1875,
-      "y": 1030
+      "width_inches": 43,
+      "x": 803,
+      "y": 843
     },
     {
-      "also_on": [],
+      "also_on": [
+        "A-116"
+      ],
       "door_pages": [
         83
       ],
@@ -3528,60 +6325,21 @@
       "fire_rating": null,
       "frame_type": null,
       "h": 9.601599130563871,
-      "hardware_group": "20.0",
-      "height_inches": 84,
-      "location": null,
-      "mark": "A219",
-      "matched_by": "exact",
-      "material": "WD",
-      "page": 56,
-      "pair": false,
-      "points_per_foot": 18,
-      "room": "A219",
-      "room_by": "nearest_label",
-      "room_name": "TOILET",
-      "schedule_rows": [
-        {
-          "door_type": null,
-          "fire_rating": null,
-          "frame_type": null,
-          "hardware_group": "20.0",
-          "height_inches": 84,
-          "location": null,
-          "mark": "A219",
-          "material": "WD",
-          "page": 83,
-          "pair": false,
-          "size": "3' - 8\" x 7' - 0\"",
-          "width_inches": 44,
-          "y": 977
-        }
-      ],
-      "sheet": "A-116",
-      "size": "3' - 8\" x 7' - 0\"",
-      "unsure": true,
-      "width_inches": 44,
-      "x": 2085,
-      "y": 1037
-    },
-    {
-      "also_on": [],
-      "door_pages": [
-        83
-      ],
-      "door_type": null,
-      "fire_rating": null,
-      "frame_type": null,
-      "h": 9.601916159232,
       "hardware_group": "2.0",
       "height_inches": 84,
       "location": null,
       "mark": "A222C",
       "matched_by": "exact",
       "material": "HM",
-      "page": 56,
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A222C|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
       "pair": false,
-      "points_per_foot": 18,
+      "points_per_foot": 6.75,
       "room": "A222",
       "room_by": "tag_number",
       "room_name": "NEW DINING",
@@ -3602,11 +6360,1972 @@
           "y": 1042
         }
       ],
-      "sheet": "A-116",
+      "sheet": "A-110",
       "size": "3' - 7\" x 7' - 0\"",
+      "source_keys": [
+        "83|A222C|1"
+      ],
       "width_inches": 43,
-      "x": 1315,
-      "y": 1437
+      "x": 330,
+      "y": 867
+    },
+    {
+      "also_on": [
+        "A-116"
+      ],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "19.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "A220",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A220|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "A221",
+      "room_by": "nearest_label",
+      "room_name": "TOILET",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "19.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "A220",
+          "material": "WD",
+          "page": 83,
+          "pair": false,
+          "size": "3' - 8\" x 7' - 0\"",
+          "width_inches": 44,
+          "y": 988
+        }
+      ],
+      "sheet": "A-110",
+      "size": "3' - 8\" x 7' - 0\"",
+      "source_keys": [
+        "83|A220|1"
+      ],
+      "unsure": true,
+      "width_inches": 44,
+      "x": 616,
+      "y": 887
+    },
+    {
+      "also_on": [
+        "A-116"
+      ],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601916159232,
+      "hardware_group": "20.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "A221",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A221|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "A221",
+      "room_by": "nearest_label",
+      "room_name": "TOILET",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "20.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "A221",
+          "material": "WD",
+          "page": 83,
+          "pair": false,
+          "size": "3' - 8\" x 7' - 0\"",
+          "width_inches": 44,
+          "y": 1001
+        }
+      ],
+      "sheet": "A-110",
+      "size": "3' - 8\" x 7' - 0\"",
+      "source_keys": [
+        "83|A221|1"
+      ],
+      "unsure": true,
+      "width_inches": 44,
+      "x": 589,
+      "y": 916
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "7.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "A300",
+      "matched_by": "exact",
+      "material": "WD/GL",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A300|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "A017",
+      "room_by": "nearest_label",
+      "room_name": "TUB ROOM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "7.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "A300",
+          "material": "WD/GL",
+          "page": 83,
+          "pair": false,
+          "size": "7' - 0\" x 7' - 0\"",
+          "width_inches": 84,
+          "y": 1092
+        }
+      ],
+      "sheet": "A-110",
+      "size": "7' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|A300|1"
+      ],
+      "unsure": true,
+      "width_inches": 84,
+      "x": 1264,
+      "y": 921
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "19.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "A224B",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A224B|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "A224",
+      "room_by": "tag_number",
+      "room_name": "SEMI-PRIVATE",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "19.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "A224B",
+          "material": "WD",
+          "page": 83,
+          "pair": false,
+          "size": "3' - 8\" x 7' - 0\"",
+          "width_inches": 44,
+          "y": 1079
+        }
+      ],
+      "sheet": "A-110",
+      "size": "3' - 8\" x 7' - 0\"",
+      "source_keys": [
+        "83|A224B|1"
+      ],
+      "width_inches": 44,
+      "x": 753,
+      "y": 937
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "19.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "A301",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A301|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "A302",
+      "room_by": "nearest_label",
+      "room_name": "TOILET",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "19.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "A301",
+          "material": "WD",
+          "page": 83,
+          "pair": false,
+          "size": "4' - 0\" x 7' - 0\"",
+          "width_inches": 48,
+          "y": 1105
+        }
+      ],
+      "sheet": "A-110",
+      "size": "4' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|A301|1"
+      ],
+      "unsure": true,
+      "width_inches": 48,
+      "x": 1485,
+      "y": 947
+    },
+    {
+      "also_on": [
+        "A-116"
+      ],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601916159232,
+      "hardware_group": "20.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "A219",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A219|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "A219",
+      "room_by": "nearest_label",
+      "room_name": "TOILET",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "20.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "A219",
+          "material": "WD",
+          "page": 83,
+          "pair": false,
+          "size": "3' - 8\" x 7' - 0\"",
+          "width_inches": 44,
+          "y": 977
+        }
+      ],
+      "sheet": "A-110",
+      "size": "3' - 8\" x 7' - 0\"",
+      "source_keys": [
+        "83|A219|1"
+      ],
+      "unsure": true,
+      "width_inches": 44,
+      "x": 626,
+      "y": 960
+    },
+    {
+      "also_on": [
+        "A-116"
+      ],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "7.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "A200",
+      "matched_by": "exact",
+      "material": "WD/GL",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A200|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "A011",
+      "room_by": "nearest_label",
+      "room_name": "STAFF TOILET",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "7.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "A200",
+          "material": "WD/GL",
+          "page": 83,
+          "pair": false,
+          "size": "7' - 0\" x 7' - 0\"",
+          "width_inches": 84,
+          "y": 835
+        }
+      ],
+      "sheet": "A-110",
+      "size": "7' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|A200|1"
+      ],
+      "unsure": true,
+      "width_inches": 84,
+      "x": 922,
+      "y": 994
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "19.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "A305",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A305|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "A301",
+      "room_by": "nearest_label",
+      "room_name": "SEMI-PRIVATE",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "19.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "A305",
+          "material": "WD",
+          "page": 83,
+          "pair": false,
+          "size": "3' - 8\" x 7' - 0\"",
+          "width_inches": 44,
+          "y": 1118
+        }
+      ],
+      "sheet": "A-110",
+      "size": "3' - 8\" x 7' - 0\"",
+      "source_keys": [
+        "83|A305|1"
+      ],
+      "unsure": true,
+      "width_inches": 44,
+      "x": 1634,
+      "y": 1004
+    },
+    {
+      "also_on": [
+        "A-116"
+      ],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601916159232,
+      "hardware_group": "19.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "A218",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A218|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "A220",
+      "room_by": "nearest_label",
+      "room_name": "SEMI-PRIVATE",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "19.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "A218",
+          "material": "WD",
+          "page": 83,
+          "pair": false,
+          "size": "3' - 8\" x 7' - 0\"",
+          "width_inches": 44,
+          "y": 963
+        }
+      ],
+      "sheet": "A-110",
+      "size": "3' - 8\" x 7' - 0\"",
+      "source_keys": [
+        "83|A218|1"
+      ],
+      "unsure": true,
+      "width_inches": 44,
+      "x": 588,
+      "y": 1005
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "19.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "A224A",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A224A|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "A224",
+      "room_by": "tag_number",
+      "room_name": "SEMI-PRIVATE",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "19.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "A224A",
+          "material": "WD",
+          "page": 83,
+          "pair": false,
+          "size": "3' - 8\" x 7' - 0\"",
+          "width_inches": 44,
+          "y": 1066
+        }
+      ],
+      "sheet": "A-110",
+      "size": "3' - 8\" x 7' - 0\"",
+      "source_keys": [
+        "83|A224A|1"
+      ],
+      "width_inches": 44,
+      "x": 854,
+      "y": 1014
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "21.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "A318",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A318|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "A018",
+      "room_by": "nearest_label",
+      "room_name": "TUB ROOM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "21.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "A318",
+          "material": "WD",
+          "page": 83,
+          "pair": false,
+          "size": "4' - 0\" x 7' - 0\"",
+          "width_inches": 48,
+          "y": 1220
+        }
+      ],
+      "sheet": "A-110",
+      "size": "4' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|A318|1"
+      ],
+      "unsure": true,
+      "width_inches": 48,
+      "x": 1227,
+      "y": 1029
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "19.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "A306",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A306|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "A306",
+      "room_by": "nearest_label",
+      "room_name": "PRIVATE",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "19.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "A306",
+          "material": "WD",
+          "page": 83,
+          "pair": false,
+          "size": "3' - 8\" x 7' - 0\"",
+          "width_inches": 44,
+          "y": 1131
+        }
+      ],
+      "sheet": "A-110",
+      "size": "3' - 8\" x 7' - 0\"",
+      "source_keys": [
+        "83|A306|1"
+      ],
+      "unsure": true,
+      "width_inches": 44,
+      "x": 1647,
+      "y": 1046
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "19.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "A307",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A307|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "A306",
+      "room_by": "nearest_label",
+      "room_name": "PRIVATE",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "19.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "A307",
+          "material": "WD",
+          "page": 83,
+          "pair": false,
+          "size": "3' - 8\" x 7' - 0\"",
+          "width_inches": 44,
+          "y": 1146
+        }
+      ],
+      "sheet": "A-110",
+      "size": "3' - 8\" x 7' - 0\"",
+      "source_keys": [
+        "83|A307|1"
+      ],
+      "unsure": true,
+      "width_inches": 44,
+      "x": 1617,
+      "y": 1075
+    },
+    {
+      "also_on": [
+        "A-116"
+      ],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "13.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "A013",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A013|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "A013",
+      "room_by": "nearest_label",
+      "room_name": "OXYGEN",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "13.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "A013",
+          "material": "WD",
+          "page": 83,
+          "pair": false,
+          "size": "3' - 8\" x 7' - 0\"",
+          "width_inches": 44,
+          "y": 665
+        }
+      ],
+      "sheet": "A-110",
+      "size": "3' - 8\" x 7' - 0\"",
+      "source_keys": [
+        "83|A013|1"
+      ],
+      "unsure": true,
+      "width_inches": 44,
+      "x": 991,
+      "y": 1092
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "21.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "A215",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A215|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "A214",
+      "room_by": "nearest_label",
+      "room_name": "STORAGE",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "21.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "A215",
+          "material": "WD",
+          "page": 83,
+          "pair": false,
+          "size": "4' - 0\" x 7' - 0\"",
+          "width_inches": 48,
+          "y": 950
+        }
+      ],
+      "sheet": "A-110",
+      "size": "4' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|A215|1"
+      ],
+      "unsure": true,
+      "width_inches": 48,
+      "x": 656,
+      "y": 1100
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "19.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "A317",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A317|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "A316",
+      "room_by": "nearest_label",
+      "room_name": "TOILET",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "19.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "A317",
+          "material": "WD",
+          "page": 83,
+          "pair": false,
+          "size": "3' - 8\" x 7' - 0\"",
+          "width_inches": 44,
+          "y": 1208
+        }
+      ],
+      "sheet": "A-110",
+      "size": "3' - 8\" x 7' - 0\"",
+      "source_keys": [
+        "83|A317|1"
+      ],
+      "unsure": true,
+      "width_inches": 44,
+      "x": 1195,
+      "y": 1114
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "21.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "A313",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A313|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "A312",
+      "room_by": "nearest_label",
+      "room_name": "TOILET",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "21.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "A313",
+          "material": "WD",
+          "page": 83,
+          "pair": false,
+          "size": "4' - 0\" x 7' - 0\"",
+          "width_inches": 48,
+          "y": 1182
+        }
+      ],
+      "sheet": "A-110",
+      "size": "4' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|A313|1"
+      ],
+      "unsure": true,
+      "width_inches": 48,
+      "x": 1363,
+      "y": 1173
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "19.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "A310",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A310|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "A310",
+      "room_by": "nearest_label",
+      "room_name": "SEMI-PRIVATE",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "19.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "A310",
+          "material": "WD",
+          "page": 83,
+          "pair": false,
+          "size": "3' - 8\" x 7' - 0\"",
+          "width_inches": 44,
+          "y": 1156
+        }
+      ],
+      "sheet": "A-110",
+      "size": "3' - 8\" x 7' - 0\"",
+      "source_keys": [
+        "83|A310|1"
+      ],
+      "unsure": true,
+      "width_inches": 44,
+      "x": 1584,
+      "y": 1199
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "19.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "A311",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A311|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "A311",
+      "room_by": "nearest_label",
+      "room_name": "PRIVATE",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "19.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "A311",
+          "material": "WD",
+          "page": 83,
+          "pair": false,
+          "size": "4' - 0\" x 7' - 0\"",
+          "width_inches": 48,
+          "y": 1168
+        }
+      ],
+      "sheet": "A-110",
+      "size": "4' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|A311|1"
+      ],
+      "unsure": true,
+      "width_inches": 48,
+      "x": 1503,
+      "y": 1208
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "19.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "A201",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A201|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "A202",
+      "room_by": "nearest_label",
+      "room_name": "TOILET",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "19.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "A201",
+          "material": "WD",
+          "page": 83,
+          "pair": false,
+          "size": "4' - 0\" x 7' - 0\"",
+          "width_inches": 48,
+          "y": 846
+        }
+      ],
+      "sheet": "A-110",
+      "size": "4' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|A201|1"
+      ],
+      "unsure": true,
+      "width_inches": 48,
+      "x": 896,
+      "y": 1209
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "19.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "A314",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A314|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "A315",
+      "room_by": "nearest_label",
+      "room_name": "TOILET",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "19.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "A314",
+          "material": "WD",
+          "page": 83,
+          "pair": false,
+          "size": "3' - 8\" x 7' - 0\"",
+          "width_inches": 44,
+          "y": 1197
+        }
+      ],
+      "sheet": "A-110",
+      "size": "3' - 8\" x 7' - 0\"",
+      "source_keys": [
+        "83|A314|1"
+      ],
+      "unsure": true,
+      "width_inches": 44,
+      "x": 1302,
+      "y": 1222
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "19.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "A213",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A213|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "A213",
+      "room_by": "nearest_label",
+      "room_name": "PRIVATE",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "19.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "A213",
+          "material": "WD",
+          "page": 83,
+          "pair": false,
+          "size": "4' - 0\" x 7' - 0\"",
+          "width_inches": 48,
+          "y": 937
+        }
+      ],
+      "sheet": "A-110",
+      "size": "4' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|A213|1"
+      ],
+      "unsure": true,
+      "width_inches": 48,
+      "x": 634,
+      "y": 1226
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "19.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "A212",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A212|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "A212",
+      "room_by": "nearest_label",
+      "room_name": "SEMI-PRIVATE",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "19.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "A212",
+          "material": "WD",
+          "page": 83,
+          "pair": false,
+          "size": "3' - 8\" x 7' - 0\"",
+          "width_inches": 44,
+          "y": 924
+        }
+      ],
+      "sheet": "A-110",
+      "size": "3' - 8\" x 7' - 0\"",
+      "source_keys": [
+        "83|A212|1"
+      ],
+      "unsure": true,
+      "width_inches": 44,
+      "x": 624,
+      "y": 1318
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "19.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "A209",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A209|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "A210",
+      "room_by": "nearest_label",
+      "room_name": "STOR",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "19.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "A209",
+          "material": "WD",
+          "page": 83,
+          "pair": false,
+          "size": "3' - 8\" x 7' - 0\"",
+          "width_inches": 44,
+          "y": 911
+        }
+      ],
+      "sheet": "A-110",
+      "size": "3' - 8\" x 7' - 0\"",
+      "source_keys": [
+        "83|A209|1"
+      ],
+      "unsure": true,
+      "width_inches": 44,
+      "x": 758,
+      "y": 1361
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "19.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "A205",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A205|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "A204",
+      "room_by": "nearest_label",
+      "room_name": "TOILET",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "19.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "A205",
+          "material": "WD",
+          "page": 83,
+          "pair": false,
+          "size": "3' - 8\" x 7' - 0\"",
+          "width_inches": 44,
+          "y": 859
+        }
+      ],
+      "sheet": "A-110",
+      "size": "3' - 8\" x 7' - 0\"",
+      "source_keys": [
+        "83|A205|1"
+      ],
+      "unsure": true,
+      "width_inches": 44,
+      "x": 835,
+      "y": 1369
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "20.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "A206",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A206|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "A204",
+      "room_by": "nearest_label",
+      "room_name": "TOILET",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "20.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "A206",
+          "material": "WD",
+          "page": 83,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 872
+        }
+      ],
+      "sheet": "A-110",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|A206|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 865,
+      "y": 1378
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "18.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "A208",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A208|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "A204",
+      "room_by": "nearest_label",
+      "room_name": "TOILET",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "18.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "A208",
+          "material": "WD",
+          "page": 83,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 898
+        }
+      ],
+      "sheet": "A-110",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|A208|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 797,
+      "y": 1384
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "19.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "A207",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|A207|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 50,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "A210",
+      "room_by": "nearest_label",
+      "room_name": "STOR",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "19.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "A207",
+          "material": "WD",
+          "page": 83,
+          "pair": false,
+          "size": "3' - 8\" x 7' - 0\"",
+          "width_inches": 44,
+          "y": 885
+        }
+      ],
+      "sheet": "A-110",
+      "size": "3' - 8\" x 7' - 0\"",
+      "source_keys": [
+        "83|A207|1"
+      ],
+      "unsure": true,
+      "width_inches": 44,
+      "x": 783,
+      "y": 1387
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "13.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "B008",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|B008|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 51,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "B008",
+      "room_by": "nearest_label",
+      "room_name": "OXYGEN",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "13.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "B008",
+          "material": "WD",
+          "page": 83,
+          "pair": false,
+          "size": "3' - 8\" x 7' - 0\"",
+          "width_inches": 44,
+          "y": 1234
+        }
+      ],
+      "sheet": "A-111",
+      "size": "3' - 8\" x 7' - 0\"",
+      "source_keys": [
+        "83|B008|1"
+      ],
+      "unsure": true,
+      "width_inches": 44,
+      "x": 1180,
+      "y": 940
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "7.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "B100",
+      "matched_by": "exact",
+      "material": "WD/GL",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|B100|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 51,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "B017",
+      "room_by": "nearest_label",
+      "room_name": "TUB ROOM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "7.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "B100",
+          "material": "WD/GL",
+          "page": 83,
+          "pair": false,
+          "size": "7' - 0\" x 7' - 0\"",
+          "width_inches": 84,
+          "y": 1247
+        }
+      ],
+      "sheet": "A-111",
+      "size": "7' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|B100|1"
+      ],
+      "unsure": true,
+      "width_inches": 84,
+      "x": 690,
+      "y": 972
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "19.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "B101",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|B101|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 51,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "B102",
+      "room_by": "nearest_label",
+      "room_name": "TOILET",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "19.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "B101",
+          "material": "WD",
+          "page": 83,
+          "pair": false,
+          "size": "4' - 0\" x 7' - 0\"",
+          "width_inches": 48,
+          "y": 1260
+        }
+      ],
+      "sheet": "A-111",
+      "size": "4' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|B101|1"
+      ],
+      "unsure": true,
+      "width_inches": 48,
+      "x": 667,
+      "y": 1184
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "19.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "B105",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|B105|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 51,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "B104",
+      "room_by": "nearest_label",
+      "room_name": "TOILET",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "19.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "B105",
+          "material": "WD",
+          "page": 83,
+          "pair": false,
+          "size": "3' - 8\" x 7' - 0\"",
+          "width_inches": 44,
+          "y": 1273
+        }
+      ],
+      "sheet": "A-111",
+      "size": "3' - 8\" x 7' - 0\"",
+      "source_keys": [
+        "83|B105|1"
+      ],
+      "unsure": true,
+      "width_inches": 44,
+      "x": 605,
+      "y": 1343
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "20.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "B106",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|B106|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 51,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "B104",
+      "room_by": "nearest_label",
+      "room_name": "TOILET",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "20.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "B106",
+          "material": "WD",
+          "page": 83,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 1286
+        }
+      ],
+      "sheet": "A-111",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|B106|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 635,
+      "y": 1354
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "19.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "B107",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|B107|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 51,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "B108",
+      "room_by": "nearest_label",
+      "room_name": "TOILET",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "19.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "B107",
+          "material": "WD",
+          "page": 83,
+          "pair": false,
+          "size": "3' - 8\" x 7' - 0\"",
+          "width_inches": 44,
+          "y": 1300
+        }
+      ],
+      "sheet": "A-111",
+      "size": "3' - 8\" x 7' - 0\"",
+      "source_keys": [
+        "83|B107|1"
+      ],
+      "unsure": true,
+      "width_inches": 44,
+      "x": 554,
+      "y": 1363
+    },
+    {
+      "also_on": [
+        "A-115"
+      ],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "10.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "041",
+      "matched_by": "exact",
+      "material": "WD/GL",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|041|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 52,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "041",
+      "room_by": "nearest_label",
+      "room_name": "EMPLOYEE BREAK ROOM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "10.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "041",
+          "material": "WD/GL",
+          "page": 83,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 500
+        }
+      ],
+      "sheet": "A-112",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|041|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 771,
+      "y": 510
+    },
+    {
+      "also_on": [
+        "A-115"
+      ],
+      "door_pages": [
+        83
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.601599130563871,
+      "hardware_group": "12.1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "042",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]|042|83|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2400 VETERANS MEMORIAL DR"
+      },
+      "opening_scope_id": "[{\"address\":\"2400 VETERANS MEMORIAL DR\"},\"A\"]",
+      "page": 52,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "042",
+      "room_by": "nearest_label",
+      "room_name": "MECH.",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "12.1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "042",
+          "material": "HM",
+          "page": 83,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 513
+        }
+      ],
+      "sheet": "A-112",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "83|042|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 929,
+      "y": 512
     }
   ]
 }

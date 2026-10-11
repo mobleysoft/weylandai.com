@@ -1534,21 +1534,77 @@
     {
       "height": 1728,
       "page": 11,
+      "plan_rule": "legacy",
       "points_per_foot": null,
       "scales": [],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [],
+            "page": 27
+          }
+        ],
+        "kept_pages": [
+          27
+        ],
+        "rule": "similarity"
+      },
       "sheet": "A-100",
       "title": "FLOOR PLAN - OVERALL",
       "width": 2592
     },
     {
       "height": 1728,
+      "page": 12,
+      "plan_rule": "extended-title",
+      "points_per_foot": [
+        9
+      ],
+      "scales": [
+        "1/8\" = 1'-0\"",
+        "1/8\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [],
+            "page": 27
+          }
+        ],
+        "kept_pages": [
+          27
+        ],
+        "rule": "similarity"
+      },
+      "sheet": "A-102",
+      "title": "FLOOR PLANS -",
+      "width": 2592
+    },
+    {
+      "height": 1728,
       "page": 13,
+      "plan_rule": "legacy",
       "points_per_foot": [
         18
       ],
       "scales": [
         "1/4\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [],
+            "page": 27
+          }
+        ],
+        "kept_pages": [
+          27
+        ],
+        "rule": "similarity"
+      },
       "sheet": "A-103",
       "title": "FLOOR PLAN - A HOME 1",
       "width": 2592
@@ -1556,12 +1612,26 @@
     {
       "height": 1728,
       "page": 14,
+      "plan_rule": "legacy",
       "points_per_foot": [
         18
       ],
       "scales": [
         "1/4\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [],
+            "page": 27
+          }
+        ],
+        "kept_pages": [
+          27
+        ],
+        "rule": "similarity"
+      },
       "sheet": "A-104",
       "title": "FLOOR PLAN - A HOME 2",
       "width": 2592
@@ -1569,12 +1639,26 @@
     {
       "height": 1728,
       "page": 15,
+      "plan_rule": "legacy",
       "points_per_foot": [
         18
       ],
       "scales": [
         "1/4\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [],
+            "page": 27
+          }
+        ],
+        "kept_pages": [
+          27
+        ],
+        "rule": "similarity"
+      },
       "sheet": "A-105",
       "title": "FLOOR PLAN - A NBHD CTR 1",
       "width": 2592
@@ -1582,6 +1666,7 @@
     {
       "height": 1728,
       "page": 16,
+      "plan_rule": "legacy",
       "points_per_foot": [
         18
       ],
@@ -1589,27 +1674,85 @@
         "1/4\" = 1'-0\"",
         "1/4\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [],
+            "page": 27
+          }
+        ],
+        "kept_pages": [
+          27
+        ],
+        "rule": "similarity"
+      },
       "sheet": "A-106",
       "title": "FLOOR PLAN - A NBHD CTR 2",
       "width": 2592
     }
   ],
   "summary": {
-    "marks_placed": 73,
+    "marks_placed": 74,
     "marks_total": 74,
-    "placed_rate": 0.9864864864864865,
+    "placed_rate": 1,
     "rooms_total": 169,
-    "sheets_total": 5,
-    "sheets_with_scale": 4,
-    "unplaced": [
-      {
-        "mark": "E204",
-        "page": 27,
-        "reason": "mark E204 (schedule p.27) not tagged on any plan"
-      }
-    ]
+    "sheets_total": 6,
+    "sheets_with_scale": 5,
+    "unplaced": []
   },
   "tags": [
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "NV",
+      "fire_rating": null,
+      "frame_type": "NV",
+      "h": 9.60659615736,
+      "hardware_group": "23",
+      "height_inches": 84,
+      "location": null,
+      "mark": "E204",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{},\"A\"]|E204|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
+      "page": 12,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "NV",
+          "fire_rating": null,
+          "frame_type": "NV",
+          "hardware_group": "23",
+          "height_inches": 84,
+          "location": null,
+          "mark": "E204",
+          "material": "HM",
+          "page": 27,
+          "pair": false,
+          "size": "7' - 4\" x 7' - 0\"",
+          "width_inches": 88,
+          "y": 803
+        }
+      ],
+      "sheet": "A-102",
+      "size": "7' - 4\" x 7' - 0\"",
+      "source_keys": [
+        "27|E204|1"
+      ],
+      "width_inches": 88,
+      "x": 1534,
+      "y": 762
+    },
     {
       "also_on": [
         "A-104"
@@ -1627,6 +1770,10 @@
       "mark": "154",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|154|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 13,
       "pair": false,
       "points_per_foot": 18,
@@ -1652,6 +1799,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|154|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 879,
@@ -1674,6 +1824,10 @@
       "mark": "155",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|155|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 13,
       "pair": false,
       "points_per_foot": 18,
@@ -1699,6 +1853,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|155|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1306,
@@ -1721,6 +1878,10 @@
       "mark": "104.1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|104.1|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 13,
       "pair": false,
       "points_per_foot": 18,
@@ -1746,6 +1907,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 6\" x 6' - 8\"",
+      "source_keys": [
+        "27|104.1|1"
+      ],
       "width_inches": 42,
       "x": 1420,
       "y": 231
@@ -1767,6 +1931,10 @@
       "mark": "156",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|156|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 13,
       "pair": false,
       "points_per_foot": 18,
@@ -1792,6 +1960,9 @@
       ],
       "sheet": "A-103",
       "size": "5' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|156|1"
+      ],
       "unsure": true,
       "width_inches": 60,
       "x": 1242,
@@ -1814,6 +1985,10 @@
       "mark": "104",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|104|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 13,
       "pair": false,
       "points_per_foot": 18,
@@ -1839,6 +2014,9 @@
       ],
       "sheet": "A-103",
       "size": "4' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|104|1"
+      ],
       "unsure": true,
       "width_inches": 48,
       "x": 1569,
@@ -1859,6 +2037,10 @@
       "mark": "E102",
       "matched_by": "exact",
       "material": "HM",
+      "opening_id": "[{},\"A\"]|E102|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 13,
       "pair": false,
       "points_per_foot": 18,
@@ -1884,6 +2066,9 @@
       ],
       "sheet": "A-103",
       "size": "4' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "27|E102|1"
+      ],
       "width_inches": 48,
       "x": 873,
       "y": 461
@@ -1903,6 +2088,10 @@
       "mark": "106",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|106|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 13,
       "pair": false,
       "points_per_foot": 18,
@@ -1928,6 +2117,9 @@
       ],
       "sheet": "A-103",
       "size": "4' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|106|1"
+      ],
       "unsure": true,
       "width_inches": 48,
       "x": 1661,
@@ -1948,6 +2140,10 @@
       "mark": "157",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|157|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 13,
       "pair": false,
       "points_per_foot": 18,
@@ -1973,6 +2169,9 @@
       ],
       "sheet": "A-103",
       "size": "5' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|157|1"
+      ],
       "unsure": true,
       "width_inches": 60,
       "x": 1243,
@@ -1993,6 +2192,10 @@
       "mark": "158",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|158|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 13,
       "pair": false,
       "points_per_foot": 18,
@@ -2018,6 +2221,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|158|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1240,
@@ -2038,6 +2244,10 @@
       "mark": "107.1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|107.1|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 13,
       "pair": false,
       "points_per_foot": 18,
@@ -2063,6 +2273,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 6\" x 6' - 8\"",
+      "source_keys": [
+        "27|107.1|1"
+      ],
       "unsure": true,
       "width_inches": 42,
       "x": 1420,
@@ -2083,6 +2296,10 @@
       "mark": "E103",
       "matched_by": "exact",
       "material": "HM",
+      "opening_id": "[{},\"A\"]|E103|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 13,
       "pair": false,
       "points_per_foot": 18,
@@ -2108,6 +2325,9 @@
       ],
       "sheet": "A-103",
       "size": "4' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "27|E103|1"
+      ],
       "unsure": true,
       "width_inches": 48,
       "x": 651,
@@ -2128,6 +2348,10 @@
       "mark": "112.1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|112.1|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 13,
       "pair": false,
       "points_per_foot": 18,
@@ -2153,6 +2377,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 6\" x 6' - 8\"",
+      "source_keys": [
+        "27|112.1|1"
+      ],
       "width_inches": 42,
       "x": 383,
       "y": 736
@@ -2172,6 +2399,10 @@
       "mark": "107",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|107|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 13,
       "pair": false,
       "points_per_foot": 18,
@@ -2197,6 +2428,9 @@
       ],
       "sheet": "A-103",
       "size": "4' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|107|1"
+      ],
       "unsure": true,
       "width_inches": 48,
       "x": 1457,
@@ -2217,6 +2451,10 @@
       "mark": "E104",
       "matched_by": "exact",
       "material": "HM",
+      "opening_id": "[{},\"A\"]|E104|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 13,
       "pair": false,
       "points_per_foot": 18,
@@ -2242,6 +2480,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 8\" x 7' - 0\"",
+      "source_keys": [
+        "27|E104|1"
+      ],
       "width_inches": 44,
       "x": 1277,
       "y": 994
@@ -2261,6 +2502,10 @@
       "mark": "112",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|112|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 13,
       "pair": false,
       "points_per_foot": 18,
@@ -2286,6 +2531,9 @@
       ],
       "sheet": "A-103",
       "size": "4' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|112|1"
+      ],
       "unsure": true,
       "width_inches": 48,
       "x": 543,
@@ -2306,6 +2554,10 @@
       "mark": "111.1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|111.1|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 13,
       "pair": false,
       "points_per_foot": 18,
@@ -2331,6 +2583,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 6\" x 6' - 8\"",
+      "source_keys": [
+        "27|111.1|1"
+      ],
       "width_inches": 42,
       "x": 544,
       "y": 1077
@@ -2350,6 +2605,10 @@
       "mark": "108.1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|108.1|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 13,
       "pair": false,
       "points_per_foot": 18,
@@ -2375,6 +2634,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 6\" x 6' - 8\"",
+      "source_keys": [
+        "27|108.1|1"
+      ],
       "width_inches": 42,
       "x": 1045,
       "y": 1078
@@ -2394,6 +2656,10 @@
       "mark": "111",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|111|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 13,
       "pair": false,
       "points_per_foot": 18,
@@ -2419,6 +2685,9 @@
       ],
       "sheet": "A-103",
       "size": "4' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|111|1"
+      ],
       "unsure": true,
       "width_inches": 48,
       "x": 662,
@@ -2439,6 +2708,10 @@
       "mark": "108",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|108|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 13,
       "pair": false,
       "points_per_foot": 18,
@@ -2464,6 +2737,9 @@
       ],
       "sheet": "A-103",
       "size": "4' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|108|1"
+      ],
       "unsure": true,
       "width_inches": 48,
       "x": 946,
@@ -2484,6 +2760,10 @@
       "mark": "109",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|109|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 13,
       "pair": false,
       "points_per_foot": 18,
@@ -2509,6 +2789,9 @@
       ],
       "sheet": "A-103",
       "size": "4' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|109|1"
+      ],
       "unsure": true,
       "width_inches": 48,
       "x": 847,
@@ -2529,6 +2812,10 @@
       "mark": "106.1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|106.1|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 13,
       "pair": false,
       "points_per_foot": 18,
@@ -2554,6 +2841,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 6\" x 6' - 8\"",
+      "source_keys": [
+        "27|106.1|1"
+      ],
       "width_inches": 42,
       "x": 1051,
       "y": 1384
@@ -2573,6 +2863,10 @@
       "mark": "109.1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|109.1|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 13,
       "pair": false,
       "points_per_foot": 18,
@@ -2598,6 +2892,9 @@
       ],
       "sheet": "A-103",
       "size": "3' - 6\" x 6' - 8\"",
+      "source_keys": [
+        "27|109.1|1"
+      ],
       "width_inches": 42,
       "x": 1035,
       "y": 1422
@@ -2617,6 +2914,10 @@
       "mark": "100.1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|100.1|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 14,
       "pair": false,
       "points_per_foot": 18,
@@ -2642,6 +2943,9 @@
       ],
       "sheet": "A-104",
       "size": "3' - 6\" x 6' - 8\"",
+      "source_keys": [
+        "27|100.1|1"
+      ],
       "width_inches": 42,
       "x": 597,
       "y": 387
@@ -2661,6 +2965,10 @@
       "mark": "101.1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|101.1|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 14,
       "pair": false,
       "points_per_foot": 18,
@@ -2686,6 +2994,9 @@
       ],
       "sheet": "A-104",
       "size": "3' - 6\" x 6' - 8\"",
+      "source_keys": [
+        "27|101.1|1"
+      ],
       "width_inches": 42,
       "x": 266,
       "y": 401
@@ -2707,6 +3018,10 @@
       "mark": "241",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|241|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 14,
       "pair": false,
       "points_per_foot": 18,
@@ -2732,6 +3047,9 @@
       ],
       "sheet": "A-104",
       "size": "3' - 6\" x 6' - 8\"",
+      "source_keys": [
+        "27|241|1"
+      ],
       "unsure": true,
       "width_inches": 42,
       "x": 795,
@@ -2752,6 +3070,10 @@
       "mark": "100",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|100|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 14,
       "pair": false,
       "points_per_foot": 18,
@@ -2777,6 +3099,9 @@
       ],
       "sheet": "A-104",
       "size": "4' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|100|1"
+      ],
       "unsure": true,
       "width_inches": 48,
       "x": 444,
@@ -2797,6 +3122,10 @@
       "mark": "151",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|151|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 14,
       "pair": false,
       "points_per_foot": 18,
@@ -2822,6 +3151,9 @@
       ],
       "sheet": "A-104",
       "size": "3' - 6\" x 6' - 8\"",
+      "source_keys": [
+        "27|151|1"
+      ],
       "unsure": true,
       "width_inches": 42,
       "x": 693,
@@ -2842,6 +3174,10 @@
       "mark": "101",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|101|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 14,
       "pair": false,
       "points_per_foot": 18,
@@ -2867,6 +3203,9 @@
       ],
       "sheet": "A-104",
       "size": "4' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|101|1"
+      ],
       "unsure": true,
       "width_inches": 48,
       "x": 393,
@@ -2887,6 +3226,10 @@
       "mark": "E101",
       "matched_by": "exact",
       "material": "HM",
+      "opening_id": "[{},\"A\"]|E101|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 14,
       "pair": false,
       "points_per_foot": 18,
@@ -2912,6 +3255,9 @@
       ],
       "sheet": "A-104",
       "size": "4' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "27|E101|1"
+      ],
       "width_inches": 48,
       "x": 1142,
       "y": 637
@@ -2931,6 +3277,10 @@
       "mark": "102",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|102|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 14,
       "pair": false,
       "points_per_foot": 18,
@@ -2956,6 +3306,9 @@
       ],
       "sheet": "A-104",
       "size": "4' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|102|1"
+      ],
       "unsure": true,
       "width_inches": 48,
       "x": 394,
@@ -2976,6 +3329,10 @@
       "mark": "103",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|103|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 14,
       "pair": false,
       "points_per_foot": 18,
@@ -3001,6 +3358,9 @@
       ],
       "sheet": "A-104",
       "size": "4' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|103|1"
+      ],
       "unsure": true,
       "width_inches": 48,
       "x": 452,
@@ -3021,6 +3381,10 @@
       "mark": "102.1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|102.1|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 14,
       "pair": false,
       "points_per_foot": 18,
@@ -3046,6 +3410,9 @@
       ],
       "sheet": "A-104",
       "size": "3' - 6\" x 6' - 8\"",
+      "source_keys": [
+        "27|102.1|1"
+      ],
       "width_inches": 42,
       "x": 266,
       "y": 871
@@ -3065,6 +3432,10 @@
       "mark": "103.1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|103.1|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 14,
       "pair": false,
       "points_per_foot": 18,
@@ -3090,6 +3461,9 @@
       ],
       "sheet": "A-104",
       "size": "3' - 6\" x 6' - 8\"",
+      "source_keys": [
+        "27|103.1|1"
+      ],
       "width_inches": 42,
       "x": 593,
       "y": 871
@@ -3109,6 +3483,10 @@
       "mark": "153",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|153|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 14,
       "pair": false,
       "points_per_foot": 18,
@@ -3134,6 +3512,9 @@
       ],
       "sheet": "A-104",
       "size": "5' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|153|1"
+      ],
       "unsure": true,
       "width_inches": 60,
       "x": 1315,
@@ -3154,6 +3535,10 @@
       "mark": "152",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|152|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 14,
       "pair": false,
       "points_per_foot": 18,
@@ -3179,13 +3564,18 @@
       ],
       "sheet": "A-104",
       "size": "5' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|152|1"
+      ],
       "unsure": true,
       "width_inches": 60,
       "x": 1133,
       "y": 946
     },
     {
-      "also_on": [],
+      "also_on": [
+        "A-102"
+      ],
       "door_pages": [
         27
       ],
@@ -3199,6 +3589,10 @@
       "mark": "E203",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|E203|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 15,
       "pair": false,
       "points_per_foot": 18,
@@ -3224,6 +3618,9 @@
       ],
       "sheet": "A-105",
       "size": "7' - 4\" x 6' - 8\"",
+      "source_keys": [
+        "27|E203|1"
+      ],
       "unsure": true,
       "width_inches": 88,
       "x": 1213,
@@ -3244,6 +3641,10 @@
       "mark": "203",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|203|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 15,
       "pair": false,
       "points_per_foot": 18,
@@ -3269,6 +3670,9 @@
       ],
       "sheet": "A-105",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|203|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1025,
@@ -3289,6 +3693,10 @@
       "mark": "204",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|204|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 15,
       "pair": false,
       "points_per_foot": 18,
@@ -3314,6 +3722,9 @@
       ],
       "sheet": "A-105",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|204|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1267,
@@ -3334,6 +3745,10 @@
       "mark": "206",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|206|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 15,
       "pair": false,
       "points_per_foot": 18,
@@ -3359,6 +3774,9 @@
       ],
       "sheet": "A-105",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|206|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1267,
@@ -3379,6 +3797,10 @@
       "mark": "202",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|202|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 15,
       "pair": false,
       "points_per_foot": 18,
@@ -3404,6 +3826,9 @@
       ],
       "sheet": "A-105",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|202|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1753,
@@ -3424,6 +3849,10 @@
       "mark": "201",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|201|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 15,
       "pair": false,
       "points_per_foot": 18,
@@ -3449,6 +3878,9 @@
       ],
       "sheet": "A-105",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|201|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 629,
@@ -3469,6 +3901,10 @@
       "mark": "205",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|205|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 15,
       "pair": false,
       "points_per_foot": 18,
@@ -3494,6 +3930,9 @@
       ],
       "sheet": "A-105",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|205|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 786,
@@ -3514,6 +3953,10 @@
       "mark": "207",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|207|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 15,
       "pair": false,
       "points_per_foot": 18,
@@ -3539,6 +3982,9 @@
       ],
       "sheet": "A-105",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|207|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 992,
@@ -3559,6 +4005,10 @@
       "mark": "209",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|209|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 15,
       "pair": false,
       "points_per_foot": 18,
@@ -3584,6 +4034,9 @@
       ],
       "sheet": "A-105",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|209|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1065,
@@ -3604,6 +4057,10 @@
       "mark": "208",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|208|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 15,
       "pair": false,
       "points_per_foot": 18,
@@ -3629,6 +4086,9 @@
       ],
       "sheet": "A-105",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|208|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1522,
@@ -3649,6 +4109,10 @@
       "mark": "210",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|210|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 15,
       "pair": false,
       "points_per_foot": 18,
@@ -3674,6 +4138,9 @@
       ],
       "sheet": "A-105",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|210|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1599,
@@ -3694,6 +4161,10 @@
       "mark": "200.2",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|200.2|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 15,
       "pair": false,
       "points_per_foot": 18,
@@ -3719,6 +4190,9 @@
       ],
       "sheet": "A-105",
       "size": "7' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|200.2|1"
+      ],
       "width_inches": 84,
       "x": 1743,
       "y": 670
@@ -3738,6 +4212,10 @@
       "mark": "200.1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|200.1|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 15,
       "pair": false,
       "points_per_foot": 18,
@@ -3763,6 +4241,9 @@
       ],
       "sheet": "A-105",
       "size": "7' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|200.1|1"
+      ],
       "width_inches": 84,
       "x": 688,
       "y": 671
@@ -3782,6 +4263,10 @@
       "mark": "E201",
       "matched_by": "exact",
       "material": "HM",
+      "opening_id": "[{},\"A\"]|E201|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 15,
       "pair": false,
       "points_per_foot": 18,
@@ -3807,6 +4292,9 @@
       ],
       "sheet": "A-105",
       "size": "4' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "27|E201|1"
+      ],
       "width_inches": 48,
       "x": 1664,
       "y": 828
@@ -3826,6 +4314,10 @@
       "mark": "221",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|221|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 15,
       "pair": false,
       "points_per_foot": 18,
@@ -3851,6 +4343,9 @@
       ],
       "sheet": "A-105",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|221|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1037,
@@ -3871,6 +4366,10 @@
       "mark": "223",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|223|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 15,
       "pair": false,
       "points_per_foot": 18,
@@ -3896,6 +4395,9 @@
       ],
       "sheet": "A-105",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|223|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1107,
@@ -3916,6 +4418,10 @@
       "mark": "222",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|222|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 15,
       "pair": false,
       "points_per_foot": 18,
@@ -3941,6 +4447,9 @@
       ],
       "sheet": "A-105",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|222|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1267,
@@ -3961,6 +4470,10 @@
       "mark": "224",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|224|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 15,
       "pair": false,
       "points_per_foot": 18,
@@ -3986,6 +4499,9 @@
       ],
       "sheet": "A-105",
       "size": "3' - 6\" x 6' - 8\"",
+      "source_keys": [
+        "27|224|1"
+      ],
       "unsure": true,
       "width_inches": 42,
       "x": 1293,
@@ -4006,6 +4522,10 @@
       "mark": "225.1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|225.1|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 15,
       "pair": false,
       "points_per_foot": 18,
@@ -4031,6 +4551,9 @@
       ],
       "sheet": "A-105",
       "size": "3' - 6\" x 6' - 8\"",
+      "source_keys": [
+        "27|225.1|1"
+      ],
       "width_inches": 42,
       "x": 1116,
       "y": 1298
@@ -4050,6 +4573,10 @@
       "mark": "227",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|227|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 15,
       "pair": false,
       "points_per_foot": 18,
@@ -4075,6 +4602,9 @@
       ],
       "sheet": "A-105",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|227|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1116,
@@ -4097,6 +4627,10 @@
       "mark": "230.1",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|230.1|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 15,
       "pair": false,
       "points_per_foot": 18,
@@ -4122,6 +4656,9 @@
       ],
       "sheet": "A-105",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|230.1|1"
+      ],
       "width_inches": 36,
       "x": 1427,
       "y": 1477
@@ -4141,6 +4678,10 @@
       "mark": "225.2",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|225.2|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 15,
       "pair": false,
       "points_per_foot": 18,
@@ -4166,6 +4707,9 @@
       ],
       "sheet": "A-105",
       "size": "3' - 6\" x 6' - 8\"",
+      "source_keys": [
+        "27|225.2|1"
+      ],
       "width_inches": 42,
       "x": 1002,
       "y": 1539
@@ -4187,6 +4731,10 @@
       "mark": "229",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|229|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 15,
       "pair": false,
       "points_per_foot": 18,
@@ -4212,6 +4760,9 @@
       ],
       "sheet": "A-105",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|229|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1041,
@@ -4232,6 +4783,10 @@
       "mark": "230",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|230|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 16,
       "pair": false,
       "points_per_foot": 18,
@@ -4257,6 +4812,9 @@
       ],
       "sheet": "A-106",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|230|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 891,
@@ -4277,6 +4835,10 @@
       "mark": "232",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|232|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 16,
       "pair": false,
       "points_per_foot": 18,
@@ -4302,6 +4864,9 @@
       ],
       "sheet": "A-106",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|232|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 866,
@@ -4322,6 +4887,10 @@
       "mark": "231",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|231|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 16,
       "pair": false,
       "points_per_foot": 18,
@@ -4347,6 +4916,9 @@
       ],
       "sheet": "A-106",
       "size": "4' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|231|1"
+      ],
       "unsure": true,
       "width_inches": 48,
       "x": 715,
@@ -4367,6 +4939,10 @@
       "mark": "228",
       "matched_by": "exact",
       "material": "HM",
+      "opening_id": "[{},\"A\"]|228|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 16,
       "pair": false,
       "points_per_foot": 18,
@@ -4392,6 +4968,9 @@
       ],
       "sheet": "A-106",
       "size": "7' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|228|1"
+      ],
       "unsure": true,
       "width_inches": 84,
       "x": 815,
@@ -4412,6 +4991,10 @@
       "mark": "233",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|233|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 16,
       "pair": false,
       "points_per_foot": 18,
@@ -4437,6 +5020,9 @@
       ],
       "sheet": "A-106",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|233|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 715,
@@ -4457,6 +5043,10 @@
       "mark": "234",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|234|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 16,
       "pair": false,
       "points_per_foot": 18,
@@ -4482,6 +5072,9 @@
       ],
       "sheet": "A-106",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|234|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 938,
@@ -4502,6 +5095,10 @@
       "mark": "235",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|235|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 16,
       "pair": false,
       "points_per_foot": 18,
@@ -4527,6 +5124,9 @@
       ],
       "sheet": "A-106",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|235|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 713,
@@ -4547,6 +5147,10 @@
       "mark": "237",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|237|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 16,
       "pair": false,
       "points_per_foot": 18,
@@ -4572,6 +5176,9 @@
       ],
       "sheet": "A-106",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|237|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 529,
@@ -4592,6 +5199,10 @@
       "mark": "238",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|238|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 16,
       "pair": false,
       "points_per_foot": 18,
@@ -4617,6 +5228,9 @@
       ],
       "sheet": "A-106",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|238|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1054,
@@ -4637,6 +5251,10 @@
       "mark": "240",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|240|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 16,
       "pair": false,
       "points_per_foot": 18,
@@ -4662,6 +5280,9 @@
       ],
       "sheet": "A-106",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|240|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1106,
@@ -4682,6 +5303,10 @@
       "mark": "239",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|239|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 16,
       "pair": false,
       "points_per_foot": 18,
@@ -4707,6 +5332,9 @@
       ],
       "sheet": "A-106",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|239|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 475,
@@ -4727,6 +5355,10 @@
       "mark": "242",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|242|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 16,
       "pair": false,
       "points_per_foot": 18,
@@ -4752,6 +5384,9 @@
       ],
       "sheet": "A-106",
       "size": "3' - 6\" x 6' - 8\"",
+      "source_keys": [
+        "27|242|1"
+      ],
       "unsure": true,
       "width_inches": 42,
       "x": 1377,
@@ -4772,6 +5407,10 @@
       "mark": "200.3",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|200.3|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 16,
       "pair": false,
       "points_per_foot": 18,
@@ -4797,6 +5436,9 @@
       ],
       "sheet": "A-106",
       "size": "7' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|200.3|1"
+      ],
       "unsure": true,
       "width_inches": 84,
       "x": 457,
@@ -4817,6 +5459,10 @@
       "mark": "200.4",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{},\"A\"]|200.4|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 16,
       "pair": false,
       "points_per_foot": 18,
@@ -4842,6 +5488,9 @@
       ],
       "sheet": "A-106",
       "size": "7' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "27|200.4|1"
+      ],
       "unsure": true,
       "width_inches": 84,
       "x": 1126,
@@ -4862,6 +5511,10 @@
       "mark": "E202",
       "matched_by": "exact",
       "material": "HM",
+      "opening_id": "[{},\"A\"]|E202|27|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {},
+      "opening_scope_id": "[{},\"A\"]",
       "page": 16,
       "pair": false,
       "points_per_foot": 18,
@@ -4887,6 +5540,9 @@
       ],
       "sheet": "A-106",
       "size": "4' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "27|E202|1"
+      ],
       "unsure": true,
       "width_inches": 48,
       "x": 973,

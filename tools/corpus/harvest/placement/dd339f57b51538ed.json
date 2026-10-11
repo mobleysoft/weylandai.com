@@ -2479,12 +2479,61 @@
     {
       "height": 2160,
       "page": 283,
+      "plan_rule": "legacy",
       "points_per_foot": [
         9
       ],
       "scales": [
         "FLOOR PLAN - MAIN BLDG 1/8\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site"
+            ],
+            "page": 284
+          },
+          {
+            "conflicts": [
+              {
+                "a": "MAJESTIC WAY ELEMENTARY SCHOOL",
+                "b": "BROOKTREE ELEMENTARY SCHOOL",
+                "field": "facility_name"
+              },
+              {
+                "a": "MAJESTIC WAY ELEMENTARY SCHOOL",
+                "b": "BROOKTREE ELEMENTARY SCHOOL",
+                "field": "site"
+              }
+            ],
+            "matched": [],
+            "page": 286
+          },
+          {
+            "conflicts": [
+              {
+                "a": "MAJESTIC WAY ELEMENTARY SCHOOL",
+                "b": "SUMMERDALE ELEMENTARY SCHOOL",
+                "field": "facility_name"
+              },
+              {
+                "a": "MAJESTIC WAY ELEMENTARY SCHOOL",
+                "b": "SUMMERDALE ELEMENTARY SCHOOL",
+                "field": "site"
+              }
+            ],
+            "matched": [],
+            "page": 288
+          }
+        ],
+        "kept_pages": [
+          284
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A2.1",
       "title": "FLOOR PLAN - MAIN BUILDING",
       "width": 3024
@@ -2492,12 +2541,61 @@
     {
       "height": 2160,
       "page": 285,
+      "plan_rule": "legacy",
       "points_per_foot": [
         9
       ],
       "scales": [
         "1/8\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [
+              {
+                "a": "BROOKTREE ELEMENTARY SCHOOL",
+                "b": "MAJESTIC WAY ELEMENTARY SCHOOL",
+                "field": "facility_name"
+              },
+              {
+                "a": "BROOKTREE ELEMENTARY SCHOOL",
+                "b": "MAJESTIC WAY ELEMENTARY SCHOOL",
+                "field": "site"
+              }
+            ],
+            "matched": [],
+            "page": 284
+          },
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site"
+            ],
+            "page": 286
+          },
+          {
+            "conflicts": [
+              {
+                "a": "BROOKTREE ELEMENTARY SCHOOL",
+                "b": "SUMMERDALE ELEMENTARY SCHOOL",
+                "field": "facility_name"
+              },
+              {
+                "a": "BROOKTREE ELEMENTARY SCHOOL",
+                "b": "SUMMERDALE ELEMENTARY SCHOOL",
+                "field": "site"
+              }
+            ],
+            "matched": [],
+            "page": 288
+          }
+        ],
+        "kept_pages": [
+          286
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A2.1",
       "title": "FLOOR PLAN - MAIN BUILDING",
       "width": 3024
@@ -2505,12 +2603,61 @@
     {
       "height": 2160,
       "page": 287,
+      "plan_rule": "legacy",
       "points_per_foot": [
         9
       ],
       "scales": [
         "FLOOR PLAN - MAIN BUILDING 1/8\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [
+              {
+                "a": "SUMMERDALE ELEMENTARY SCHOOL",
+                "b": "MAJESTIC WAY ELEMENTARY SCHOOL",
+                "field": "facility_name"
+              },
+              {
+                "a": "SUMMERDALE ELEMENTARY SCHOOL",
+                "b": "MAJESTIC WAY ELEMENTARY SCHOOL",
+                "field": "site"
+              }
+            ],
+            "matched": [],
+            "page": 284
+          },
+          {
+            "conflicts": [
+              {
+                "a": "SUMMERDALE ELEMENTARY SCHOOL",
+                "b": "BROOKTREE ELEMENTARY SCHOOL",
+                "field": "facility_name"
+              },
+              {
+                "a": "SUMMERDALE ELEMENTARY SCHOOL",
+                "b": "BROOKTREE ELEMENTARY SCHOOL",
+                "field": "site"
+              }
+            ],
+            "matched": [],
+            "page": 286
+          },
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site"
+            ],
+            "page": 288
+          }
+        ],
+        "kept_pages": [
+          288
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A2.1",
       "title": "FLOOR PLAN - MAIN BUILDING",
       "width": 3024
@@ -2541,6 +2688,14 @@
       "mark": "006",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1855 MAJESTIC WAY, SAN JOSE, CA 95132\",\"facility_name\":\"MAJESTIC WAY ELEMENTARY SCHOOL\",\"site\":\"MAJESTIC WAY ELEMENTARY SCHOOL\"},\"A\"]|006|284|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1855 MAJESTIC WAY, SAN JOSE, CA 95132",
+        "facility_name": "MAJESTIC WAY ELEMENTARY SCHOOL",
+        "site": "MAJESTIC WAY ELEMENTARY SCHOOL"
+      },
+      "opening_scope_id": "[{\"address\":\"1855 MAJESTIC WAY, SAN JOSE, CA 95132\",\"facility_name\":\"MAJESTIC WAY ELEMENTARY SCHOOL\",\"site\":\"MAJESTIC WAY ELEMENTARY SCHOOL\"},\"A\"]",
       "page": 283,
       "pair": true,
       "points_per_foot": 9,
@@ -2566,6 +2721,9 @@
       ],
       "sheet": "A2.1",
       "size": "3'-6\" x 7'-10\"",
+      "source_keys": [
+        "284|006|1"
+      ],
       "width_inches": 42,
       "x": 761,
       "y": 626
@@ -2585,6 +2743,14 @@
       "mark": "008",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1855 MAJESTIC WAY, SAN JOSE, CA 95132\",\"facility_name\":\"MAJESTIC WAY ELEMENTARY SCHOOL\",\"site\":\"MAJESTIC WAY ELEMENTARY SCHOOL\"},\"A\"]|008|284|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1855 MAJESTIC WAY, SAN JOSE, CA 95132",
+        "facility_name": "MAJESTIC WAY ELEMENTARY SCHOOL",
+        "site": "MAJESTIC WAY ELEMENTARY SCHOOL"
+      },
+      "opening_scope_id": "[{\"address\":\"1855 MAJESTIC WAY, SAN JOSE, CA 95132\",\"facility_name\":\"MAJESTIC WAY ELEMENTARY SCHOOL\",\"site\":\"MAJESTIC WAY ELEMENTARY SCHOOL\"},\"A\"]",
       "page": 283,
       "pair": true,
       "points_per_foot": 9,
@@ -2610,6 +2776,9 @@
       ],
       "sheet": "A2.1",
       "size": "3'-6\" x 7'-10\"",
+      "source_keys": [
+        "284|008|1"
+      ],
       "width_inches": 42,
       "x": 1630,
       "y": 666
@@ -2629,6 +2798,14 @@
       "mark": "007",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1855 MAJESTIC WAY, SAN JOSE, CA 95132\",\"facility_name\":\"MAJESTIC WAY ELEMENTARY SCHOOL\",\"site\":\"MAJESTIC WAY ELEMENTARY SCHOOL\"},\"A\"]|007|284|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1855 MAJESTIC WAY, SAN JOSE, CA 95132",
+        "facility_name": "MAJESTIC WAY ELEMENTARY SCHOOL",
+        "site": "MAJESTIC WAY ELEMENTARY SCHOOL"
+      },
+      "opening_scope_id": "[{\"address\":\"1855 MAJESTIC WAY, SAN JOSE, CA 95132\",\"facility_name\":\"MAJESTIC WAY ELEMENTARY SCHOOL\",\"site\":\"MAJESTIC WAY ELEMENTARY SCHOOL\"},\"A\"]",
       "page": 283,
       "pair": true,
       "points_per_foot": 9,
@@ -2654,6 +2831,9 @@
       ],
       "sheet": "A2.1",
       "size": "3'-6\" x 7'-10\"",
+      "source_keys": [
+        "284|007|1"
+      ],
       "width_inches": 42,
       "x": 1028,
       "y": 675
@@ -2673,6 +2853,14 @@
       "mark": "009",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1855 MAJESTIC WAY, SAN JOSE, CA 95132\",\"facility_name\":\"MAJESTIC WAY ELEMENTARY SCHOOL\",\"site\":\"MAJESTIC WAY ELEMENTARY SCHOOL\"},\"A\"]|009|284|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1855 MAJESTIC WAY, SAN JOSE, CA 95132",
+        "facility_name": "MAJESTIC WAY ELEMENTARY SCHOOL",
+        "site": "MAJESTIC WAY ELEMENTARY SCHOOL"
+      },
+      "opening_scope_id": "[{\"address\":\"1855 MAJESTIC WAY, SAN JOSE, CA 95132\",\"facility_name\":\"MAJESTIC WAY ELEMENTARY SCHOOL\",\"site\":\"MAJESTIC WAY ELEMENTARY SCHOOL\"},\"A\"]",
       "page": 283,
       "pair": true,
       "points_per_foot": 9,
@@ -2698,6 +2886,9 @@
       ],
       "sheet": "A2.1",
       "size": "3'-6\" x 7'-10\"",
+      "source_keys": [
+        "284|009|1"
+      ],
       "width_inches": 42,
       "x": 1798,
       "y": 829
@@ -2717,6 +2908,14 @@
       "mark": "005",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1855 MAJESTIC WAY, SAN JOSE, CA 95132\",\"facility_name\":\"MAJESTIC WAY ELEMENTARY SCHOOL\",\"site\":\"MAJESTIC WAY ELEMENTARY SCHOOL\"},\"A\"]|005|284|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1855 MAJESTIC WAY, SAN JOSE, CA 95132",
+        "facility_name": "MAJESTIC WAY ELEMENTARY SCHOOL",
+        "site": "MAJESTIC WAY ELEMENTARY SCHOOL"
+      },
+      "opening_scope_id": "[{\"address\":\"1855 MAJESTIC WAY, SAN JOSE, CA 95132\",\"facility_name\":\"MAJESTIC WAY ELEMENTARY SCHOOL\",\"site\":\"MAJESTIC WAY ELEMENTARY SCHOOL\"},\"A\"]",
       "page": 283,
       "pair": true,
       "points_per_foot": 9,
@@ -2742,6 +2941,9 @@
       ],
       "sheet": "A2.1",
       "size": "3'-6\" x 7'-10\"",
+      "source_keys": [
+        "284|005|1"
+      ],
       "width_inches": 42,
       "x": 760,
       "y": 1241
@@ -2761,6 +2963,14 @@
       "mark": "003",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1855 MAJESTIC WAY, SAN JOSE, CA 95132\",\"facility_name\":\"MAJESTIC WAY ELEMENTARY SCHOOL\",\"site\":\"MAJESTIC WAY ELEMENTARY SCHOOL\"},\"A\"]|003|284|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1855 MAJESTIC WAY, SAN JOSE, CA 95132",
+        "facility_name": "MAJESTIC WAY ELEMENTARY SCHOOL",
+        "site": "MAJESTIC WAY ELEMENTARY SCHOOL"
+      },
+      "opening_scope_id": "[{\"address\":\"1855 MAJESTIC WAY, SAN JOSE, CA 95132\",\"facility_name\":\"MAJESTIC WAY ELEMENTARY SCHOOL\",\"site\":\"MAJESTIC WAY ELEMENTARY SCHOOL\"},\"A\"]",
       "page": 283,
       "pair": false,
       "points_per_foot": 9,
@@ -2786,6 +2996,9 @@
       ],
       "sheet": "A2.1",
       "size": "3'-6\" x 7'-10",
+      "source_keys": [
+        "284|003|1"
+      ],
       "width_inches": 42,
       "x": 1331,
       "y": 1481
@@ -2805,6 +3018,14 @@
       "mark": "004",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1855 MAJESTIC WAY, SAN JOSE, CA 95132\",\"facility_name\":\"MAJESTIC WAY ELEMENTARY SCHOOL\",\"site\":\"MAJESTIC WAY ELEMENTARY SCHOOL\"},\"A\"]|004|284|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1855 MAJESTIC WAY, SAN JOSE, CA 95132",
+        "facility_name": "MAJESTIC WAY ELEMENTARY SCHOOL",
+        "site": "MAJESTIC WAY ELEMENTARY SCHOOL"
+      },
+      "opening_scope_id": "[{\"address\":\"1855 MAJESTIC WAY, SAN JOSE, CA 95132\",\"facility_name\":\"MAJESTIC WAY ELEMENTARY SCHOOL\",\"site\":\"MAJESTIC WAY ELEMENTARY SCHOOL\"},\"A\"]",
       "page": 283,
       "pair": true,
       "points_per_foot": 9,
@@ -2830,6 +3051,9 @@
       ],
       "sheet": "A2.1",
       "size": "3'-6\" x 7'-10\"",
+      "source_keys": [
+        "284|004|1"
+      ],
       "width_inches": 42,
       "x": 728,
       "y": 1491
@@ -2849,6 +3073,14 @@
       "mark": "001",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1855 MAJESTIC WAY, SAN JOSE, CA 95132\",\"facility_name\":\"MAJESTIC WAY ELEMENTARY SCHOOL\",\"site\":\"MAJESTIC WAY ELEMENTARY SCHOOL\"},\"A\"]|001|284|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1855 MAJESTIC WAY, SAN JOSE, CA 95132",
+        "facility_name": "MAJESTIC WAY ELEMENTARY SCHOOL",
+        "site": "MAJESTIC WAY ELEMENTARY SCHOOL"
+      },
+      "opening_scope_id": "[{\"address\":\"1855 MAJESTIC WAY, SAN JOSE, CA 95132\",\"facility_name\":\"MAJESTIC WAY ELEMENTARY SCHOOL\",\"site\":\"MAJESTIC WAY ELEMENTARY SCHOOL\"},\"A\"]",
       "page": 283,
       "pair": true,
       "points_per_foot": 9,
@@ -2874,6 +3106,9 @@
       ],
       "sheet": "A2.1",
       "size": "3'-6\" x 7'-10\"",
+      "source_keys": [
+        "284|001|1"
+      ],
       "width_inches": 42,
       "x": 1457,
       "y": 1502
@@ -2893,6 +3128,14 @@
       "mark": "002",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1855 MAJESTIC WAY, SAN JOSE, CA 95132\",\"facility_name\":\"MAJESTIC WAY ELEMENTARY SCHOOL\",\"site\":\"MAJESTIC WAY ELEMENTARY SCHOOL\"},\"A\"]|002|284|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1855 MAJESTIC WAY, SAN JOSE, CA 95132",
+        "facility_name": "MAJESTIC WAY ELEMENTARY SCHOOL",
+        "site": "MAJESTIC WAY ELEMENTARY SCHOOL"
+      },
+      "opening_scope_id": "[{\"address\":\"1855 MAJESTIC WAY, SAN JOSE, CA 95132\",\"facility_name\":\"MAJESTIC WAY ELEMENTARY SCHOOL\",\"site\":\"MAJESTIC WAY ELEMENTARY SCHOOL\"},\"A\"]",
       "page": 283,
       "pair": false,
       "points_per_foot": 9,
@@ -2918,6 +3161,9 @@
       ],
       "sheet": "A2.1",
       "size": "3'-6\" x 7'-10",
+      "source_keys": [
+        "284|002|1"
+      ],
       "width_inches": 42,
       "x": 1373,
       "y": 1504
@@ -2937,6 +3183,14 @@
       "mark": "005",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1781 OLIVETREE DRIVE, SAN JOSE, CA 95131\",\"facility_name\":\"BROOKTREE ELEMENTARY SCHOOL\",\"site\":\"BROOKTREE ELEMENTARY SCHOOL\"},\"A\"]|005|286|2",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1781 OLIVETREE DRIVE, SAN JOSE, CA 95131",
+        "facility_name": "BROOKTREE ELEMENTARY SCHOOL",
+        "site": "BROOKTREE ELEMENTARY SCHOOL"
+      },
+      "opening_scope_id": "[{\"address\":\"1781 OLIVETREE DRIVE, SAN JOSE, CA 95131\",\"facility_name\":\"BROOKTREE ELEMENTARY SCHOOL\",\"site\":\"BROOKTREE ELEMENTARY SCHOOL\"},\"A\"]",
       "page": 285,
       "pair": true,
       "points_per_foot": 9,
@@ -2962,6 +3216,9 @@
       ],
       "sheet": "A2.1",
       "size": "3'-6\" x 7'-10\"",
+      "source_keys": [
+        "286|005|1"
+      ],
       "unsure": true,
       "width_inches": 42,
       "x": 728,
@@ -2982,6 +3239,14 @@
       "mark": "006",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1781 OLIVETREE DRIVE, SAN JOSE, CA 95131\",\"facility_name\":\"BROOKTREE ELEMENTARY SCHOOL\",\"site\":\"BROOKTREE ELEMENTARY SCHOOL\"},\"A\"]|006|286|2",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1781 OLIVETREE DRIVE, SAN JOSE, CA 95131",
+        "facility_name": "BROOKTREE ELEMENTARY SCHOOL",
+        "site": "BROOKTREE ELEMENTARY SCHOOL"
+      },
+      "opening_scope_id": "[{\"address\":\"1781 OLIVETREE DRIVE, SAN JOSE, CA 95131\",\"facility_name\":\"BROOKTREE ELEMENTARY SCHOOL\",\"site\":\"BROOKTREE ELEMENTARY SCHOOL\"},\"A\"]",
       "page": 285,
       "pair": true,
       "points_per_foot": 9,
@@ -3007,6 +3272,9 @@
       ],
       "sheet": "A2.1",
       "size": "3'-6\" x 7'-10\"",
+      "source_keys": [
+        "286|006|1"
+      ],
       "unsure": true,
       "width_inches": 42,
       "x": 991,
@@ -3027,6 +3295,14 @@
       "mark": "008",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1781 OLIVETREE DRIVE, SAN JOSE, CA 95131\",\"facility_name\":\"BROOKTREE ELEMENTARY SCHOOL\",\"site\":\"BROOKTREE ELEMENTARY SCHOOL\"},\"A\"]|008|286|2",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1781 OLIVETREE DRIVE, SAN JOSE, CA 95131",
+        "facility_name": "BROOKTREE ELEMENTARY SCHOOL",
+        "site": "BROOKTREE ELEMENTARY SCHOOL"
+      },
+      "opening_scope_id": "[{\"address\":\"1781 OLIVETREE DRIVE, SAN JOSE, CA 95131\",\"facility_name\":\"BROOKTREE ELEMENTARY SCHOOL\",\"site\":\"BROOKTREE ELEMENTARY SCHOOL\"},\"A\"]",
       "page": 285,
       "pair": true,
       "points_per_foot": 9,
@@ -3052,6 +3328,9 @@
       ],
       "sheet": "A2.1",
       "size": "3'-6\" x 7'-10\"",
+      "source_keys": [
+        "286|008|1"
+      ],
       "width_inches": 42,
       "x": 1754,
       "y": 832
@@ -3071,6 +3350,14 @@
       "mark": "004",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1781 OLIVETREE DRIVE, SAN JOSE, CA 95131\",\"facility_name\":\"BROOKTREE ELEMENTARY SCHOOL\",\"site\":\"BROOKTREE ELEMENTARY SCHOOL\"},\"A\"]|004|286|2",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1781 OLIVETREE DRIVE, SAN JOSE, CA 95131",
+        "facility_name": "BROOKTREE ELEMENTARY SCHOOL",
+        "site": "BROOKTREE ELEMENTARY SCHOOL"
+      },
+      "opening_scope_id": "[{\"address\":\"1781 OLIVETREE DRIVE, SAN JOSE, CA 95131\",\"facility_name\":\"BROOKTREE ELEMENTARY SCHOOL\",\"site\":\"BROOKTREE ELEMENTARY SCHOOL\"},\"A\"]",
       "page": 285,
       "pair": true,
       "points_per_foot": 9,
@@ -3096,6 +3383,9 @@
       ],
       "sheet": "A2.1",
       "size": "3'-6\" x 7'-10\"",
+      "source_keys": [
+        "286|004|1"
+      ],
       "unsure": true,
       "width_inches": 42,
       "x": 725,
@@ -3116,6 +3406,14 @@
       "mark": "003",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1781 OLIVETREE DRIVE, SAN JOSE, CA 95131\",\"facility_name\":\"BROOKTREE ELEMENTARY SCHOOL\",\"site\":\"BROOKTREE ELEMENTARY SCHOOL\"},\"A\"]|003|286|2",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1781 OLIVETREE DRIVE, SAN JOSE, CA 95131",
+        "facility_name": "BROOKTREE ELEMENTARY SCHOOL",
+        "site": "BROOKTREE ELEMENTARY SCHOOL"
+      },
+      "opening_scope_id": "[{\"address\":\"1781 OLIVETREE DRIVE, SAN JOSE, CA 95131\",\"facility_name\":\"BROOKTREE ELEMENTARY SCHOOL\",\"site\":\"BROOKTREE ELEMENTARY SCHOOL\"},\"A\"]",
       "page": 285,
       "pair": true,
       "points_per_foot": 9,
@@ -3141,6 +3439,9 @@
       ],
       "sheet": "A2.1",
       "size": "3'-6\" x 7'-10\"",
+      "source_keys": [
+        "286|003|1"
+      ],
       "unsure": true,
       "width_inches": 42,
       "x": 686,
@@ -3161,6 +3462,14 @@
       "mark": "002",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1781 OLIVETREE DRIVE, SAN JOSE, CA 95131\",\"facility_name\":\"BROOKTREE ELEMENTARY SCHOOL\",\"site\":\"BROOKTREE ELEMENTARY SCHOOL\"},\"A\"]|002|286|2",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1781 OLIVETREE DRIVE, SAN JOSE, CA 95131",
+        "facility_name": "BROOKTREE ELEMENTARY SCHOOL",
+        "site": "BROOKTREE ELEMENTARY SCHOOL"
+      },
+      "opening_scope_id": "[{\"address\":\"1781 OLIVETREE DRIVE, SAN JOSE, CA 95131\",\"facility_name\":\"BROOKTREE ELEMENTARY SCHOOL\",\"site\":\"BROOKTREE ELEMENTARY SCHOOL\"},\"A\"]",
       "page": 285,
       "pair": true,
       "points_per_foot": 9,
@@ -3186,6 +3495,9 @@
       ],
       "sheet": "A2.1",
       "size": "3'-6\" x 7'-10\"",
+      "source_keys": [
+        "286|002|1"
+      ],
       "unsure": true,
       "width_inches": 42,
       "x": 1288,
@@ -3206,6 +3518,14 @@
       "mark": "001",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1781 OLIVETREE DRIVE, SAN JOSE, CA 95131\",\"facility_name\":\"BROOKTREE ELEMENTARY SCHOOL\",\"site\":\"BROOKTREE ELEMENTARY SCHOOL\"},\"A\"]|001|286|2",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1781 OLIVETREE DRIVE, SAN JOSE, CA 95131",
+        "facility_name": "BROOKTREE ELEMENTARY SCHOOL",
+        "site": "BROOKTREE ELEMENTARY SCHOOL"
+      },
+      "opening_scope_id": "[{\"address\":\"1781 OLIVETREE DRIVE, SAN JOSE, CA 95131\",\"facility_name\":\"BROOKTREE ELEMENTARY SCHOOL\",\"site\":\"BROOKTREE ELEMENTARY SCHOOL\"},\"A\"]",
       "page": 285,
       "pair": true,
       "points_per_foot": 9,
@@ -3231,6 +3551,9 @@
       ],
       "sheet": "A2.1",
       "size": "3'-6\" x 7'-10\"",
+      "source_keys": [
+        "286|001|1"
+      ],
       "width_inches": 42,
       "x": 1416,
       "y": 1503
@@ -3250,6 +3573,14 @@
       "mark": "005",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1100 SUMMERDALE RD., SAN JOSE, CA 95132\",\"facility_name\":\"SUMMERDALE ELEMENTARY SCHOOL\",\"site\":\"SUMMERDALE ELEMENTARY SCHOOL\"},\"A\"]|005|288|3",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1100 SUMMERDALE RD., SAN JOSE, CA 95132",
+        "facility_name": "SUMMERDALE ELEMENTARY SCHOOL",
+        "site": "SUMMERDALE ELEMENTARY SCHOOL"
+      },
+      "opening_scope_id": "[{\"address\":\"1100 SUMMERDALE RD., SAN JOSE, CA 95132\",\"facility_name\":\"SUMMERDALE ELEMENTARY SCHOOL\",\"site\":\"SUMMERDALE ELEMENTARY SCHOOL\"},\"A\"]",
       "page": 287,
       "pair": true,
       "points_per_foot": 9,
@@ -3275,6 +3606,9 @@
       ],
       "sheet": "A2.1",
       "size": "3'-6\" x 7'-10\"",
+      "source_keys": [
+        "288|005|1"
+      ],
       "width_inches": 42,
       "x": 726,
       "y": 614
@@ -3294,6 +3628,14 @@
       "mark": "007",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1100 SUMMERDALE RD., SAN JOSE, CA 95132\",\"facility_name\":\"SUMMERDALE ELEMENTARY SCHOOL\",\"site\":\"SUMMERDALE ELEMENTARY SCHOOL\"},\"A\"]|007|288|2",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1100 SUMMERDALE RD., SAN JOSE, CA 95132",
+        "facility_name": "SUMMERDALE ELEMENTARY SCHOOL",
+        "site": "SUMMERDALE ELEMENTARY SCHOOL"
+      },
+      "opening_scope_id": "[{\"address\":\"1100 SUMMERDALE RD., SAN JOSE, CA 95132\",\"facility_name\":\"SUMMERDALE ELEMENTARY SCHOOL\",\"site\":\"SUMMERDALE ELEMENTARY SCHOOL\"},\"A\"]",
       "page": 287,
       "pair": true,
       "points_per_foot": 9,
@@ -3319,6 +3661,9 @@
       ],
       "sheet": "A2.1",
       "size": "3'-6\" x 7'-10\"",
+      "source_keys": [
+        "288|007|1"
+      ],
       "unsure": true,
       "width_inches": 42,
       "x": 1589,
@@ -3339,6 +3684,14 @@
       "mark": "006",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1100 SUMMERDALE RD., SAN JOSE, CA 95132\",\"facility_name\":\"SUMMERDALE ELEMENTARY SCHOOL\",\"site\":\"SUMMERDALE ELEMENTARY SCHOOL\"},\"A\"]|006|288|3",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1100 SUMMERDALE RD., SAN JOSE, CA 95132",
+        "facility_name": "SUMMERDALE ELEMENTARY SCHOOL",
+        "site": "SUMMERDALE ELEMENTARY SCHOOL"
+      },
+      "opening_scope_id": "[{\"address\":\"1100 SUMMERDALE RD., SAN JOSE, CA 95132\",\"facility_name\":\"SUMMERDALE ELEMENTARY SCHOOL\",\"site\":\"SUMMERDALE ELEMENTARY SCHOOL\"},\"A\"]",
       "page": 287,
       "pair": true,
       "points_per_foot": 9,
@@ -3364,6 +3717,9 @@
       ],
       "sheet": "A2.1",
       "size": "3'-6\" x 7'-10\"",
+      "source_keys": [
+        "288|006|1"
+      ],
       "width_inches": 42,
       "x": 988,
       "y": 659
@@ -3383,6 +3739,14 @@
       "mark": "008",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1100 SUMMERDALE RD., SAN JOSE, CA 95132\",\"facility_name\":\"SUMMERDALE ELEMENTARY SCHOOL\",\"site\":\"SUMMERDALE ELEMENTARY SCHOOL\"},\"A\"]|008|288|3",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1100 SUMMERDALE RD., SAN JOSE, CA 95132",
+        "facility_name": "SUMMERDALE ELEMENTARY SCHOOL",
+        "site": "SUMMERDALE ELEMENTARY SCHOOL"
+      },
+      "opening_scope_id": "[{\"address\":\"1100 SUMMERDALE RD., SAN JOSE, CA 95132\",\"facility_name\":\"SUMMERDALE ELEMENTARY SCHOOL\",\"site\":\"SUMMERDALE ELEMENTARY SCHOOL\"},\"A\"]",
       "page": 287,
       "pair": true,
       "points_per_foot": 9,
@@ -3408,6 +3772,9 @@
       ],
       "sheet": "A2.1",
       "size": "3'-6\" x 7'-10\"",
+      "source_keys": [
+        "288|008|1"
+      ],
       "width_inches": 42,
       "x": 1751,
       "y": 822
@@ -3427,6 +3794,14 @@
       "mark": "004",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1100 SUMMERDALE RD., SAN JOSE, CA 95132\",\"facility_name\":\"SUMMERDALE ELEMENTARY SCHOOL\",\"site\":\"SUMMERDALE ELEMENTARY SCHOOL\"},\"A\"]|004|288|3",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1100 SUMMERDALE RD., SAN JOSE, CA 95132",
+        "facility_name": "SUMMERDALE ELEMENTARY SCHOOL",
+        "site": "SUMMERDALE ELEMENTARY SCHOOL"
+      },
+      "opening_scope_id": "[{\"address\":\"1100 SUMMERDALE RD., SAN JOSE, CA 95132\",\"facility_name\":\"SUMMERDALE ELEMENTARY SCHOOL\",\"site\":\"SUMMERDALE ELEMENTARY SCHOOL\"},\"A\"]",
       "page": 287,
       "pair": true,
       "points_per_foot": 9,
@@ -3452,6 +3827,9 @@
       ],
       "sheet": "A2.1",
       "size": "3'-6\" x 7'-10\"",
+      "source_keys": [
+        "288|004|1"
+      ],
       "width_inches": 42,
       "x": 723,
       "y": 1220
@@ -3471,6 +3849,14 @@
       "mark": "003",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1100 SUMMERDALE RD., SAN JOSE, CA 95132\",\"facility_name\":\"SUMMERDALE ELEMENTARY SCHOOL\",\"site\":\"SUMMERDALE ELEMENTARY SCHOOL\"},\"A\"]|003|288|3",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1100 SUMMERDALE RD., SAN JOSE, CA 95132",
+        "facility_name": "SUMMERDALE ELEMENTARY SCHOOL",
+        "site": "SUMMERDALE ELEMENTARY SCHOOL"
+      },
+      "opening_scope_id": "[{\"address\":\"1100 SUMMERDALE RD., SAN JOSE, CA 95132\",\"facility_name\":\"SUMMERDALE ELEMENTARY SCHOOL\",\"site\":\"SUMMERDALE ELEMENTARY SCHOOL\"},\"A\"]",
       "page": 287,
       "pair": true,
       "points_per_foot": 9,
@@ -3496,6 +3882,9 @@
       ],
       "sheet": "A2.1",
       "size": "3'-6\" x 7'-10\"",
+      "source_keys": [
+        "288|003|1"
+      ],
       "width_inches": 42,
       "x": 683,
       "y": 1476
@@ -3515,6 +3904,14 @@
       "mark": "002",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1100 SUMMERDALE RD., SAN JOSE, CA 95132\",\"facility_name\":\"SUMMERDALE ELEMENTARY SCHOOL\",\"site\":\"SUMMERDALE ELEMENTARY SCHOOL\"},\"A\"]|002|288|3",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1100 SUMMERDALE RD., SAN JOSE, CA 95132",
+        "facility_name": "SUMMERDALE ELEMENTARY SCHOOL",
+        "site": "SUMMERDALE ELEMENTARY SCHOOL"
+      },
+      "opening_scope_id": "[{\"address\":\"1100 SUMMERDALE RD., SAN JOSE, CA 95132\",\"facility_name\":\"SUMMERDALE ELEMENTARY SCHOOL\",\"site\":\"SUMMERDALE ELEMENTARY SCHOOL\"},\"A\"]",
       "page": 287,
       "pair": true,
       "points_per_foot": 9,
@@ -3540,6 +3937,9 @@
       ],
       "sheet": "A2.1",
       "size": "3'-6\" x 7'-10\"",
+      "source_keys": [
+        "288|002|1"
+      ],
       "width_inches": 42,
       "x": 1285,
       "y": 1479
@@ -3559,6 +3959,14 @@
       "mark": "001",
       "matched_by": "exact",
       "material": "WD",
+      "opening_id": "[{\"address\":\"1100 SUMMERDALE RD., SAN JOSE, CA 95132\",\"facility_name\":\"SUMMERDALE ELEMENTARY SCHOOL\",\"site\":\"SUMMERDALE ELEMENTARY SCHOOL\"},\"A\"]|001|288|3",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1100 SUMMERDALE RD., SAN JOSE, CA 95132",
+        "facility_name": "SUMMERDALE ELEMENTARY SCHOOL",
+        "site": "SUMMERDALE ELEMENTARY SCHOOL"
+      },
+      "opening_scope_id": "[{\"address\":\"1100 SUMMERDALE RD., SAN JOSE, CA 95132\",\"facility_name\":\"SUMMERDALE ELEMENTARY SCHOOL\",\"site\":\"SUMMERDALE ELEMENTARY SCHOOL\"},\"A\"]",
       "page": 287,
       "pair": true,
       "points_per_foot": 9,
@@ -3584,6 +3992,9 @@
       ],
       "sheet": "A2.1",
       "size": "3'-6\" x 7'-10\"",
+      "source_keys": [
+        "288|001|1"
+      ],
       "width_inches": 42,
       "x": 1414,
       "y": 1492

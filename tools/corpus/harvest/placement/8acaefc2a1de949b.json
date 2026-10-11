@@ -1,0 +1,959 @@
+{
+  "rooms": [
+    {
+      "name": "LIVING AREA",
+      "number": "121",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A101",
+      "x": 1062,
+      "y": 308
+    },
+    {
+      "name": "LIVING AREA",
+      "number": "120",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A101",
+      "x": 1386,
+      "y": 308
+    },
+    {
+      "name": "CLOSET",
+      "number": "122",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A101",
+      "x": 943,
+      "y": 401
+    },
+    {
+      "name": "DINING",
+      "number": "119",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A101",
+      "x": 1386,
+      "y": 500
+    },
+    {
+      "name": "KEYNOTES",
+      "number": "101",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A101",
+      "x": 1947,
+      "y": 559
+    },
+    {
+      "name": "NURSE STATION",
+      "number": "114",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A101",
+      "x": 1057,
+      "y": 645
+    },
+    {
+      "name": "MECHANICAL",
+      "number": "105",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A101",
+      "x": 1622,
+      "y": 645
+    },
+    {
+      "name": "KITCHEN",
+      "number": "118",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A101",
+      "x": 1422,
+      "y": 655
+    },
+    {
+      "name": "STAFF TOILET",
+      "number": "116",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A101",
+      "x": 1116,
+      "y": 666
+    },
+    {
+      "name": "STORAGE",
+      "number": "106",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A101",
+      "x": 1631,
+      "y": 736
+    },
+    {
+      "name": "SECURE STORAGE",
+      "number": "115",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A101",
+      "x": 1009,
+      "y": 763
+    },
+    {
+      "name": "LAUNDRY / HSK",
+      "number": "107",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A101",
+      "x": 1700,
+      "y": 851
+    },
+    {
+      "name": "CIRCULATION",
+      "number": "117",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A101",
+      "x": 1309,
+      "y": 854
+    },
+    {
+      "name": "CL",
+      "number": "108",
+      "page": 16,
+      "points_per_foot": 36,
+      "sheet": "A101",
+      "x": 323,
+      "y": 1019
+    },
+    {
+      "name": "BEDROOM",
+      "number": "111",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A101",
+      "x": 919,
+      "y": 1051
+    },
+    {
+      "name": "BATHROOM",
+      "number": "113",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A101",
+      "x": 1073,
+      "y": 1051
+    },
+    {
+      "name": "BEDROOM",
+      "number": "110",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A101",
+      "x": 1220,
+      "y": 1051
+    },
+    {
+      "name": "BEDROOM",
+      "number": "109",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A101",
+      "x": 1402,
+      "y": 1051
+    },
+    {
+      "name": "BATHROOM",
+      "number": "112",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A101",
+      "x": 1538,
+      "y": 1051
+    },
+    {
+      "name": "BEDROOM",
+      "number": "108",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A101",
+      "x": 1703,
+      "y": 1051
+    },
+    {
+      "name": "OPP",
+      "number": "7",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A101",
+      "x": 1539,
+      "y": 1126
+    },
+    {
+      "name": "PROJECT # 16224-MO01",
+      "number": "7356",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A101",
+      "x": 2459,
+      "y": 1183
+    },
+    {
+      "name": "FD",
+      "number": "104",
+      "page": 16,
+      "points_per_foot": 36,
+      "sheet": "A101",
+      "x": 405,
+      "y": 1260
+    },
+    {
+      "name": "NAME",
+      "number": "100",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A101",
+      "x": 1970,
+      "y": 1433
+    }
+  ],
+  "set": {
+    "label": null,
+    "page_count": 64,
+    "rows_total": 12,
+    "sha16": "8acaefc2a1de949b",
+    "source_url": null,
+    "tier": "oracle-checked"
+  },
+  "sheets": [
+    {
+      "height": 1728,
+      "page": 16,
+      "plan_rule": "extended-title",
+      "points_per_foot": [
+        9,
+        18,
+        36
+      ],
+      "scales": [
+        "1/8\" = 1'-0\"",
+        "1/2\" = 1'-0\"",
+        "1/4\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "building",
+              "asset_number",
+              "site_number"
+            ],
+            "page": 23
+          }
+        ],
+        "kept_pages": [
+          23
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A101",
+      "title": "FIRST FLOOR PLAN",
+      "width": 2592
+    }
+  ],
+  "summary": {
+    "marks_placed": 12,
+    "marks_total": 12,
+    "placed_rate": 1,
+    "rooms_total": 24,
+    "sheets_total": 1,
+    "sheets_with_scale": 1,
+    "unplaced": []
+  },
+  "tags": [
+    {
+      "also_on": [],
+      "door_pages": [
+        23
+      ],
+      "door_type": "A",
+      "fire_rating": "NONE",
+      "frame_type": "A",
+      "h": 9.54,
+      "hardware_group": "STORAGE",
+      "height_inches": 80,
+      "location": null,
+      "mark": "122",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"address\":\"10695 BELLEFONTAINE RD\",\"asset_number\":\"6517356071\",\"building\":\"1802\",\"site_number\":\"7356\"},\"A\"]|122|23|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "10695 BELLEFONTAINE RD",
+        "asset_number": "6517356071",
+        "building": "1802",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"address\":\"10695 BELLEFONTAINE RD\",\"asset_number\":\"6517356071\",\"building\":\"1802\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 16,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "122",
+      "room_by": "nearest_label",
+      "room_name": "CLOSET",
+      "schedule_rows": [
+        {
+          "door_type": "A",
+          "fire_rating": "NONE",
+          "frame_type": "A",
+          "hardware_group": "STORAGE",
+          "height_inches": 80,
+          "location": null,
+          "mark": "122",
+          "material": "HM",
+          "page": 23,
+          "pair": false,
+          "size": "6' - 8\"",
+          "width_inches": null,
+          "y": 374
+        }
+      ],
+      "sheet": "A101",
+      "size": "6' - 8\"",
+      "source_keys": [
+        "23|122|1"
+      ],
+      "unsure": true,
+      "width_inches": null,
+      "x": 991,
+      "y": 386
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        23
+      ],
+      "door_type": "A",
+      "fire_rating": "NONE",
+      "frame_type": "A",
+      "h": 9.54,
+      "hardware_group": "SECURE",
+      "height_inches": 80,
+      "location": null,
+      "mark": "115",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"address\":\"10695 BELLEFONTAINE RD\",\"asset_number\":\"6517356071\",\"building\":\"1802\",\"site_number\":\"7356\"},\"A\"]|115|23|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "10695 BELLEFONTAINE RD",
+        "asset_number": "6517356071",
+        "building": "1802",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"address\":\"10695 BELLEFONTAINE RD\",\"asset_number\":\"6517356071\",\"building\":\"1802\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 16,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "114",
+      "room_by": "nearest_label",
+      "room_name": "NURSE STATION",
+      "schedule_rows": [
+        {
+          "door_type": "A",
+          "fire_rating": "NONE",
+          "frame_type": "A",
+          "hardware_group": "SECURE",
+          "height_inches": 80,
+          "location": null,
+          "mark": "115",
+          "material": "HM",
+          "page": 23,
+          "pair": false,
+          "size": "6' - 8\"",
+          "width_inches": null,
+          "y": 338
+        }
+      ],
+      "sheet": "A101",
+      "size": "6' - 8\"",
+      "source_keys": [
+        "23|115|1"
+      ],
+      "unsure": true,
+      "width_inches": null,
+      "x": 1009,
+      "y": 681
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        23
+      ],
+      "door_type": "A",
+      "fire_rating": "NONE",
+      "frame_type": "A",
+      "h": 9.54,
+      "hardware_group": "SECURE",
+      "height_inches": 80,
+      "location": null,
+      "mark": "116",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"address\":\"10695 BELLEFONTAINE RD\",\"asset_number\":\"6517356071\",\"building\":\"1802\",\"site_number\":\"7356\"},\"A\"]|116|23|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "10695 BELLEFONTAINE RD",
+        "asset_number": "6517356071",
+        "building": "1802",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"address\":\"10695 BELLEFONTAINE RD\",\"asset_number\":\"6517356071\",\"building\":\"1802\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 16,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "116",
+      "room_by": "nearest_label",
+      "room_name": "STAFF TOILET",
+      "schedule_rows": [
+        {
+          "door_type": "A",
+          "fire_rating": "NONE",
+          "frame_type": "A",
+          "hardware_group": "SECURE",
+          "height_inches": 80,
+          "location": null,
+          "mark": "116",
+          "material": "HM",
+          "page": 23,
+          "pair": false,
+          "size": "6' - 8\"",
+          "width_inches": null,
+          "y": 355
+        }
+      ],
+      "sheet": "A101",
+      "size": "6' - 8\"",
+      "source_keys": [
+        "23|116|1"
+      ],
+      "unsure": true,
+      "width_inches": null,
+      "x": 1141,
+      "y": 717
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        23
+      ],
+      "door_type": "A",
+      "fire_rating": "NONE",
+      "frame_type": "A",
+      "h": 9.54,
+      "hardware_group": "STORAGE",
+      "height_inches": 80,
+      "location": null,
+      "mark": "106",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"address\":\"10695 BELLEFONTAINE RD\",\"asset_number\":\"6517356071\",\"building\":\"1802\",\"site_number\":\"7356\"},\"A\"]|106|23|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "10695 BELLEFONTAINE RD",
+        "asset_number": "6517356071",
+        "building": "1802",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"address\":\"10695 BELLEFONTAINE RD\",\"asset_number\":\"6517356071\",\"building\":\"1802\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 16,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "106",
+      "room_by": "nearest_label",
+      "room_name": "STORAGE",
+      "schedule_rows": [
+        {
+          "door_type": "A",
+          "fire_rating": "NONE",
+          "frame_type": "A",
+          "hardware_group": "STORAGE",
+          "height_inches": 80,
+          "location": null,
+          "mark": "106",
+          "material": "HM",
+          "page": 23,
+          "pair": false,
+          "size": "6' - 8\"",
+          "width_inches": null,
+          "y": 200
+        }
+      ],
+      "sheet": "A101",
+      "size": "6' - 8\"",
+      "source_keys": [
+        "23|106|1"
+      ],
+      "unsure": true,
+      "width_inches": null,
+      "x": 1557,
+      "y": 778
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        23
+      ],
+      "door_type": "A",
+      "fire_rating": "NONE",
+      "frame_type": "A",
+      "h": 9.54,
+      "hardware_group": "MAIN ENTRY",
+      "height_inches": 80,
+      "location": null,
+      "mark": "100A",
+      "matched_by": "exact",
+      "material": "STL",
+      "opening_id": "[{\"address\":\"10695 BELLEFONTAINE RD\",\"asset_number\":\"6517356071\",\"building\":\"1802\",\"site_number\":\"7356\"},\"A\"]|100A|23|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "10695 BELLEFONTAINE RD",
+        "asset_number": "6517356071",
+        "building": "1802",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"address\":\"10695 BELLEFONTAINE RD\",\"asset_number\":\"6517356071\",\"building\":\"1802\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 16,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "100",
+      "room_by": "tag_number",
+      "room_name": "NAME",
+      "schedule_rows": [
+        {
+          "door_type": "A",
+          "fire_rating": "NONE",
+          "frame_type": "A",
+          "hardware_group": "MAIN ENTRY",
+          "height_inches": 80,
+          "location": null,
+          "mark": "100A",
+          "material": "STL",
+          "page": 23,
+          "pair": false,
+          "size": "2 6' - 0\" 4' - 7\" FIXED SIDE-BY-SIDE x 6' - 8\"",
+          "width_inches": null,
+          "y": 180
+        }
+      ],
+      "sheet": "A101",
+      "size": "2 6' - 0\" 4' - 7\" FIXED SIDE-BY-SIDE x 6' - 8\"",
+      "source_keys": [
+        "23|100A|1"
+      ],
+      "width_inches": null,
+      "x": 955,
+      "y": 866
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        23
+      ],
+      "door_type": "A",
+      "fire_rating": "NONE",
+      "frame_type": "A",
+      "h": 9.54,
+      "hardware_group": "UTILITY",
+      "height_inches": 80,
+      "location": null,
+      "mark": "107",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"address\":\"10695 BELLEFONTAINE RD\",\"asset_number\":\"6517356071\",\"building\":\"1802\",\"site_number\":\"7356\"},\"A\"]|107|23|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "10695 BELLEFONTAINE RD",
+        "asset_number": "6517356071",
+        "building": "1802",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"address\":\"10695 BELLEFONTAINE RD\",\"asset_number\":\"6517356071\",\"building\":\"1802\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 16,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "107",
+      "room_by": "nearest_label",
+      "room_name": "LAUNDRY / HSK",
+      "schedule_rows": [
+        {
+          "door_type": "A",
+          "fire_rating": "NONE",
+          "frame_type": "A",
+          "hardware_group": "UTILITY",
+          "height_inches": 80,
+          "location": null,
+          "mark": "107",
+          "material": "HM",
+          "page": 23,
+          "pair": false,
+          "size": "WINDOW TYPES x 6' - 8\"",
+          "width_inches": null,
+          "y": 216
+        }
+      ],
+      "sheet": "A101",
+      "size": "WINDOW TYPES x 6' - 8\"",
+      "source_keys": [
+        "23|107|1"
+      ],
+      "unsure": true,
+      "width_inches": null,
+      "x": 1629,
+      "y": 870
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        23
+      ],
+      "door_type": "A",
+      "fire_rating": "20 MIN.",
+      "frame_type": "A",
+      "h": 9.54,
+      "hardware_group": "BEDROOM",
+      "height_inches": 80,
+      "location": null,
+      "mark": "111",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"address\":\"10695 BELLEFONTAINE RD\",\"asset_number\":\"6517356071\",\"building\":\"1802\",\"site_number\":\"7356\"},\"A\"]|111|23|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "10695 BELLEFONTAINE RD",
+        "asset_number": "6517356071",
+        "building": "1802",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"address\":\"10695 BELLEFONTAINE RD\",\"asset_number\":\"6517356071\",\"building\":\"1802\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 16,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "115",
+      "room_by": "nearest_label",
+      "room_name": "SECURE STORAGE",
+      "schedule_rows": [
+        {
+          "door_type": "A",
+          "fire_rating": "20 MIN.",
+          "frame_type": "A",
+          "hardware_group": "BEDROOM",
+          "height_inches": 80,
+          "location": null,
+          "mark": "111",
+          "material": "HM",
+          "page": 23,
+          "pair": false,
+          "size": "6' - 8\"",
+          "width_inches": null,
+          "y": 287
+        }
+      ],
+      "sheet": "A101",
+      "size": "6' - 8\"",
+      "source_keys": [
+        "23|111|1"
+      ],
+      "unsure": true,
+      "width_inches": null,
+      "x": 989,
+      "y": 910
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        23
+      ],
+      "door_type": "A",
+      "fire_rating": "20 MIN.",
+      "frame_type": "A",
+      "h": 9.54,
+      "hardware_group": "BEDROOM",
+      "height_inches": 80,
+      "location": null,
+      "mark": "110",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"address\":\"10695 BELLEFONTAINE RD\",\"asset_number\":\"6517356071\",\"building\":\"1802\",\"site_number\":\"7356\"},\"A\"]|110|23|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "10695 BELLEFONTAINE RD",
+        "asset_number": "6517356071",
+        "building": "1802",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"address\":\"10695 BELLEFONTAINE RD\",\"asset_number\":\"6517356071\",\"building\":\"1802\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 16,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "110",
+      "room_by": "nearest_label",
+      "room_name": "BEDROOM",
+      "schedule_rows": [
+        {
+          "door_type": "A",
+          "fire_rating": "20 MIN.",
+          "frame_type": "A",
+          "hardware_group": "BEDROOM",
+          "height_inches": 80,
+          "location": null,
+          "mark": "110",
+          "material": "HM",
+          "page": 23,
+          "pair": false,
+          "size": "6' - 8\"",
+          "width_inches": null,
+          "y": 268
+        }
+      ],
+      "sheet": "A101",
+      "size": "6' - 8\"",
+      "source_keys": [
+        "23|110|1"
+      ],
+      "unsure": true,
+      "width_inches": null,
+      "x": 1149,
+      "y": 910
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        23
+      ],
+      "door_type": "A",
+      "fire_rating": "20 MIN.",
+      "frame_type": "A",
+      "h": 9.54,
+      "hardware_group": "BEDROOM",
+      "height_inches": 80,
+      "location": null,
+      "mark": "109",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"address\":\"10695 BELLEFONTAINE RD\",\"asset_number\":\"6517356071\",\"building\":\"1802\",\"site_number\":\"7356\"},\"A\"]|109|23|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "10695 BELLEFONTAINE RD",
+        "asset_number": "6517356071",
+        "building": "1802",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"address\":\"10695 BELLEFONTAINE RD\",\"asset_number\":\"6517356071\",\"building\":\"1802\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 16,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "109",
+      "room_by": "nearest_label",
+      "room_name": "BEDROOM",
+      "schedule_rows": [
+        {
+          "door_type": "A",
+          "fire_rating": "20 MIN.",
+          "frame_type": "A",
+          "hardware_group": "BEDROOM",
+          "height_inches": 80,
+          "location": null,
+          "mark": "109",
+          "material": "HM",
+          "page": 23,
+          "pair": false,
+          "size": "PER SCHED x 6' - 8\"",
+          "width_inches": null,
+          "y": 250
+        }
+      ],
+      "sheet": "A101",
+      "size": "PER SCHED x 6' - 8\"",
+      "source_keys": [
+        "23|109|1"
+      ],
+      "unsure": true,
+      "width_inches": null,
+      "x": 1469,
+      "y": 910
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        23
+      ],
+      "door_type": "A",
+      "fire_rating": "20 MIN.",
+      "frame_type": "A",
+      "h": 9.54,
+      "hardware_group": "BEDROOM",
+      "height_inches": 80,
+      "location": null,
+      "mark": "108",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"address\":\"10695 BELLEFONTAINE RD\",\"asset_number\":\"6517356071\",\"building\":\"1802\",\"site_number\":\"7356\"},\"A\"]|108|23|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "10695 BELLEFONTAINE RD",
+        "asset_number": "6517356071",
+        "building": "1802",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"address\":\"10695 BELLEFONTAINE RD\",\"asset_number\":\"6517356071\",\"building\":\"1802\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 16,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "107",
+      "room_by": "nearest_label",
+      "room_name": "LAUNDRY / HSK",
+      "schedule_rows": [
+        {
+          "door_type": "A",
+          "fire_rating": "20 MIN.",
+          "frame_type": "A",
+          "hardware_group": "BEDROOM",
+          "height_inches": 80,
+          "location": null,
+          "mark": "108",
+          "material": "HM",
+          "page": 23,
+          "pair": false,
+          "size": "6' - 8\"",
+          "width_inches": null,
+          "y": 232
+        }
+      ],
+      "sheet": "A101",
+      "size": "6' - 8\"",
+      "source_keys": [
+        "23|108|1"
+      ],
+      "unsure": true,
+      "width_inches": null,
+      "x": 1629,
+      "y": 910
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        23
+      ],
+      "door_type": "A",
+      "fire_rating": "NONE",
+      "frame_type": "A",
+      "h": 9.54,
+      "hardware_group": "BATHROOM",
+      "height_inches": 80,
+      "location": null,
+      "mark": "113",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"address\":\"10695 BELLEFONTAINE RD\",\"asset_number\":\"6517356071\",\"building\":\"1802\",\"site_number\":\"7356\"},\"A\"]|113|23|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "10695 BELLEFONTAINE RD",
+        "asset_number": "6517356071",
+        "building": "1802",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"address\":\"10695 BELLEFONTAINE RD\",\"asset_number\":\"6517356071\",\"building\":\"1802\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 16,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "113",
+      "room_by": "nearest_label",
+      "room_name": "BATHROOM",
+      "schedule_rows": [
+        {
+          "door_type": "A",
+          "fire_rating": "NONE",
+          "frame_type": "A",
+          "hardware_group": "BATHROOM",
+          "height_inches": 80,
+          "location": null,
+          "mark": "113",
+          "material": "HM",
+          "page": 23,
+          "pair": false,
+          "size": "6' - 8\"",
+          "width_inches": null,
+          "y": 319
+        }
+      ],
+      "sheet": "A101",
+      "size": "6' - 8\"",
+      "source_keys": [
+        "23|113|1"
+      ],
+      "unsure": true,
+      "width_inches": null,
+      "x": 1115,
+      "y": 999
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        23
+      ],
+      "door_type": "A",
+      "fire_rating": "NONE",
+      "frame_type": "A",
+      "h": 9.54,
+      "hardware_group": "BATHROOM",
+      "height_inches": 80,
+      "location": null,
+      "mark": "112",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"address\":\"10695 BELLEFONTAINE RD\",\"asset_number\":\"6517356071\",\"building\":\"1802\",\"site_number\":\"7356\"},\"A\"]|112|23|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "10695 BELLEFONTAINE RD",
+        "asset_number": "6517356071",
+        "building": "1802",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"address\":\"10695 BELLEFONTAINE RD\",\"asset_number\":\"6517356071\",\"building\":\"1802\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 16,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "112",
+      "room_by": "nearest_label",
+      "room_name": "BATHROOM",
+      "schedule_rows": [
+        {
+          "door_type": "A",
+          "fire_rating": "NONE",
+          "frame_type": "A",
+          "hardware_group": "BATHROOM",
+          "height_inches": 80,
+          "location": null,
+          "mark": "112",
+          "material": "HM",
+          "page": 23,
+          "pair": false,
+          "size": "6' - 8\"",
+          "width_inches": null,
+          "y": 303
+        }
+      ],
+      "sheet": "A101",
+      "size": "6' - 8\"",
+      "source_keys": [
+        "23|112|1"
+      ],
+      "unsure": true,
+      "width_inches": null,
+      "x": 1523,
+      "y": 999
+    }
+  ]
+}

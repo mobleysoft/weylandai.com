@@ -508,6 +508,7 @@
     {
       "height": 1728,
       "page": 5,
+      "plan_rule": "legacy",
       "points_per_foot": [
         3.6,
         18,
@@ -520,6 +521,22 @@
         "1/2\" = 1'-0\"",
         "1\" = 20'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 8
+          }
+        ],
+        "kept_pages": [
+          8
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A101",
       "title": "FLOOR PLANS",
       "width": 2592
@@ -527,6 +544,7 @@
     {
       "height": 1728,
       "page": 7,
+      "plan_rule": "legacy",
       "points_per_foot": [
         18,
         216
@@ -551,6 +569,22 @@
         "1/4\" = 1'-0\"",
         "1/4\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 8
+          }
+        ],
+        "kept_pages": [
+          8
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A402",
       "title": "ELEVATIONS & ACCESSORY PLAN",
       "width": 2592
@@ -624,6 +658,14 @@
       "mark": "110",
       "matched_by": "exact",
       "material": "HM",
+      "opening_id": "[{\"asset_number\":\"81362800001\",\"facility_name\":\"LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS\",\"site_number\":\"6280\"},\"A\"]|110|8|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "81362800001",
+        "facility_name": "LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS",
+        "site_number": "6280"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"81362800001\",\"facility_name\":\"LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS\",\"site_number\":\"6280\"},\"A\"]",
       "page": 5,
       "pair": false,
       "points_per_foot": 3.6,
@@ -649,6 +691,9 @@
       ],
       "sheet": "A101",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "8|110|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1880,
@@ -671,6 +716,14 @@
       "mark": "105",
       "matched_by": "exact",
       "material": "HM",
+      "opening_id": "[{\"asset_number\":\"81362800001\",\"facility_name\":\"LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS\",\"site_number\":\"6280\"},\"A\"]|105|8|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "81362800001",
+        "facility_name": "LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS",
+        "site_number": "6280"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"81362800001\",\"facility_name\":\"LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS\",\"site_number\":\"6280\"},\"A\"]",
       "page": 5,
       "pair": false,
       "points_per_foot": 3.6,
@@ -696,6 +749,9 @@
       ],
       "sheet": "A101",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "8|105|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1922,
@@ -718,6 +774,14 @@
       "mark": "104",
       "matched_by": "exact",
       "material": "HM",
+      "opening_id": "[{\"asset_number\":\"81362800001\",\"facility_name\":\"LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS\",\"site_number\":\"6280\"},\"A\"]|104|8|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "81362800001",
+        "facility_name": "LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS",
+        "site_number": "6280"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"81362800001\",\"facility_name\":\"LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS\",\"site_number\":\"6280\"},\"A\"]",
       "page": 5,
       "pair": false,
       "points_per_foot": 18,
@@ -743,6 +807,9 @@
       ],
       "sheet": "A101",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "8|104|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1809,
@@ -765,6 +832,14 @@
       "mark": "106",
       "matched_by": "exact",
       "material": "HM",
+      "opening_id": "[{\"asset_number\":\"81362800001\",\"facility_name\":\"LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS\",\"site_number\":\"6280\"},\"A\"]|106|8|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "81362800001",
+        "facility_name": "LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS",
+        "site_number": "6280"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"81362800001\",\"facility_name\":\"LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS\",\"site_number\":\"6280\"},\"A\"]",
       "page": 5,
       "pair": false,
       "points_per_foot": 3.6,
@@ -790,6 +865,9 @@
       ],
       "sheet": "A101",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "8|106|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 2101,
@@ -812,6 +890,14 @@
       "mark": "107",
       "matched_by": "exact",
       "material": "HM",
+      "opening_id": "[{\"asset_number\":\"81362800001\",\"facility_name\":\"LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS\",\"site_number\":\"6280\"},\"A\"]|107|8|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "81362800001",
+        "facility_name": "LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS",
+        "site_number": "6280"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"81362800001\",\"facility_name\":\"LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS\",\"site_number\":\"6280\"},\"A\"]",
       "page": 5,
       "pair": false,
       "points_per_foot": 3.6,
@@ -837,6 +923,9 @@
       ],
       "sheet": "A101",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "8|107|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1988,
@@ -859,6 +948,14 @@
       "mark": "108",
       "matched_by": "exact",
       "material": "HM",
+      "opening_id": "[{\"asset_number\":\"81362800001\",\"facility_name\":\"LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS\",\"site_number\":\"6280\"},\"A\"]|108|8|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "81362800001",
+        "facility_name": "LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS",
+        "site_number": "6280"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"81362800001\",\"facility_name\":\"LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS\",\"site_number\":\"6280\"},\"A\"]",
       "page": 5,
       "pair": false,
       "points_per_foot": 3.6,
@@ -884,6 +981,9 @@
       ],
       "sheet": "A101",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "8|108|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 2140,
@@ -914,7 +1014,15 @@
       ],
       "matched_by": "exact",
       "material": "RESINOUS FLOORING SEALED CONCRETE VINYL FLOORING TOILET PARTITION URINAL PARTITION PAINT",
+      "opening_id": "[{\"asset_number\":\"81362800001\",\"facility_name\":\"LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS\",\"site_number\":\"6280\"},\"A\"]|SC-1|8|1",
       "opening_index": 2,
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "81362800001",
+        "facility_name": "LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS",
+        "site_number": "6280"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"81362800001\",\"facility_name\":\"LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS\",\"site_number\":\"6280\"},\"A\"]",
       "page": 7,
       "pair": false,
       "points_per_foot": 18,
@@ -957,6 +1065,9 @@
       "shared_row": true,
       "sheet": "A402",
       "size": "12\" x 12\"",
+      "source_keys": [
+        "8|SC-1|1"
+      ],
       "source_quantity": 6,
       "source_row": 1,
       "width_inches": 12,
@@ -988,7 +1099,15 @@
       ],
       "matched_by": "exact",
       "material": "RESINOUS FLOORING SEALED CONCRETE VINYL FLOORING TOILET PARTITION URINAL PARTITION PAINT",
+      "opening_id": "[{\"asset_number\":\"81362800001\",\"facility_name\":\"LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS\",\"site_number\":\"6280\"},\"A\"]|PT-1|8|1",
       "opening_index": 6,
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "81362800001",
+        "facility_name": "LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS",
+        "site_number": "6280"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"81362800001\",\"facility_name\":\"LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS\",\"site_number\":\"6280\"},\"A\"]",
       "page": 7,
       "pair": false,
       "points_per_foot": 18,
@@ -1031,6 +1150,9 @@
       "shared_row": true,
       "sheet": "A402",
       "size": "12\" x 12\"",
+      "source_keys": [
+        "8|PT-1|1"
+      ],
       "source_quantity": 6,
       "source_row": 1,
       "width_inches": 12,
@@ -1062,7 +1184,15 @@
       ],
       "matched_by": "exact",
       "material": "RESINOUS FLOORING SEALED CONCRETE VINYL FLOORING TOILET PARTITION URINAL PARTITION PAINT",
+      "opening_id": "[{\"asset_number\":\"81362800001\",\"facility_name\":\"LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS\",\"site_number\":\"6280\"},\"A\"]|TP-1|8|1",
       "opening_index": 4,
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "81362800001",
+        "facility_name": "LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS",
+        "site_number": "6280"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"81362800001\",\"facility_name\":\"LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS\",\"site_number\":\"6280\"},\"A\"]",
       "page": 7,
       "pair": false,
       "points_per_foot": 18,
@@ -1105,6 +1235,9 @@
       "shared_row": true,
       "sheet": "A402",
       "size": "12\" x 12\"",
+      "source_keys": [
+        "8|TP-1|1"
+      ],
       "source_quantity": 6,
       "source_row": 1,
       "width_inches": 12,
@@ -1126,6 +1259,14 @@
       "mark": "RFB-1",
       "matched_by": "exact",
       "material": "RESINOUS BASE",
+      "opening_id": "[{\"asset_number\":\"81362800001\",\"facility_name\":\"LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS\",\"site_number\":\"6280\"},\"A\"]|RFB-1|8|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "81362800001",
+        "facility_name": "LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS",
+        "site_number": "6280"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"81362800001\",\"facility_name\":\"LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS\",\"site_number\":\"6280\"},\"A\"]",
       "page": 7,
       "pair": false,
       "points_per_foot": 18,
@@ -1151,6 +1292,9 @@
       ],
       "sheet": "A402",
       "size": null,
+      "source_keys": [
+        "8|RFB-1|1"
+      ],
       "width_inches": null,
       "x": 1061,
       "y": 260

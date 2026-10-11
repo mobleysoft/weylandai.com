@@ -67,12 +67,29 @@
     {
       "height": 1728,
       "page": 9,
+      "plan_rule": "legacy",
       "points_per_foot": [
         18
       ],
       "scales": [
         "1/4\"=1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number",
+              "facility_number"
+            ],
+            "page": 16
+          }
+        ],
+        "kept_pages": [
+          16
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-101",
       "title": "ARCHITECTURAL FLOOR PLAN",
       "width": 2592
@@ -103,6 +120,15 @@
       "mark": "101",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"10625 LEWIS & CLARK BLVD\",\"building\":\"COLUMN\",\"facility_number\":\"7016322002\",\"site_number\":\"6322\"},\"A\"]|101|16|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "10625 LEWIS & CLARK BLVD",
+        "building": "COLUMN",
+        "facility_number": "7016322002",
+        "site_number": "6322"
+      },
+      "opening_scope_id": "[{\"address\":\"10625 LEWIS & CLARK BLVD\",\"building\":\"COLUMN\",\"facility_number\":\"7016322002\",\"site_number\":\"6322\"},\"A\"]",
       "page": 9,
       "pair": false,
       "points_per_foot": 18,
@@ -128,6 +154,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "16|101|1"
+      ],
       "width_inches": 36,
       "x": 1014,
       "y": 809
@@ -147,6 +176,15 @@
       "mark": "102",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"10625 LEWIS & CLARK BLVD\",\"building\":\"COLUMN\",\"facility_number\":\"7016322002\",\"site_number\":\"6322\"},\"A\"]|102|16|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "10625 LEWIS & CLARK BLVD",
+        "building": "COLUMN",
+        "facility_number": "7016322002",
+        "site_number": "6322"
+      },
+      "opening_scope_id": "[{\"address\":\"10625 LEWIS & CLARK BLVD\",\"building\":\"COLUMN\",\"facility_number\":\"7016322002\",\"site_number\":\"6322\"},\"A\"]",
       "page": 9,
       "pair": false,
       "points_per_foot": 18,
@@ -172,6 +210,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "16|102|1"
+      ],
       "width_inches": 36,
       "x": 1280,
       "y": 810
@@ -191,6 +232,15 @@
       "mark": "103",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"10625 LEWIS & CLARK BLVD\",\"building\":\"COLUMN\",\"facility_number\":\"7016322002\",\"site_number\":\"6322\"},\"A\"]|103|16|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "10625 LEWIS & CLARK BLVD",
+        "building": "COLUMN",
+        "facility_number": "7016322002",
+        "site_number": "6322"
+      },
+      "opening_scope_id": "[{\"address\":\"10625 LEWIS & CLARK BLVD\",\"building\":\"COLUMN\",\"facility_number\":\"7016322002\",\"site_number\":\"6322\"},\"A\"]",
       "page": 9,
       "pair": false,
       "points_per_foot": 18,
@@ -216,6 +266,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "16|103|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1634,
@@ -236,6 +289,15 @@
       "mark": "104",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"10625 LEWIS & CLARK BLVD\",\"building\":\"COLUMN\",\"facility_number\":\"7016322002\",\"site_number\":\"6322\"},\"A\"]|104|16|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "10625 LEWIS & CLARK BLVD",
+        "building": "COLUMN",
+        "facility_number": "7016322002",
+        "site_number": "6322"
+      },
+      "opening_scope_id": "[{\"address\":\"10625 LEWIS & CLARK BLVD\",\"building\":\"COLUMN\",\"facility_number\":\"7016322002\",\"site_number\":\"6322\"},\"A\"]",
       "page": 9,
       "pair": false,
       "points_per_foot": 18,
@@ -261,6 +323,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "16|104|1"
+      ],
       "width_inches": 36,
       "x": 1970,
       "y": 810
@@ -280,6 +345,15 @@
       "mark": "OVHD-1",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"10625 LEWIS & CLARK BLVD\",\"building\":\"COLUMN\",\"facility_number\":\"7016322002\",\"site_number\":\"6322\"},\"A\"]|OVHD-1|16|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "10625 LEWIS & CLARK BLVD",
+        "building": "COLUMN",
+        "facility_number": "7016322002",
+        "site_number": "6322"
+      },
+      "opening_scope_id": "[{\"address\":\"10625 LEWIS & CLARK BLVD\",\"building\":\"COLUMN\",\"facility_number\":\"7016322002\",\"site_number\":\"6322\"},\"A\"]",
       "page": 9,
       "pair": false,
       "points_per_foot": 18,
@@ -305,6 +379,9 @@
       ],
       "sheet": "A-101",
       "size": null,
+      "source_keys": [
+        "16|OVHD-1|1"
+      ],
       "width_inches": null,
       "x": 1172,
       "y": 817
@@ -324,6 +401,15 @@
       "mark": "OVHD-2",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"10625 LEWIS & CLARK BLVD\",\"building\":\"COLUMN\",\"facility_number\":\"7016322002\",\"site_number\":\"6322\"},\"A\"]|OVHD-2|16|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "10625 LEWIS & CLARK BLVD",
+        "building": "COLUMN",
+        "facility_number": "7016322002",
+        "site_number": "6322"
+      },
+      "opening_scope_id": "[{\"address\":\"10625 LEWIS & CLARK BLVD\",\"building\":\"COLUMN\",\"facility_number\":\"7016322002\",\"site_number\":\"6322\"},\"A\"]",
       "page": 9,
       "pair": false,
       "points_per_foot": 18,
@@ -349,6 +435,9 @@
       ],
       "sheet": "A-101",
       "size": null,
+      "source_keys": [
+        "16|OVHD-2|1"
+      ],
       "width_inches": null,
       "x": 1428,
       "y": 817
@@ -368,6 +457,15 @@
       "mark": "OVHD-3",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"10625 LEWIS & CLARK BLVD\",\"building\":\"COLUMN\",\"facility_number\":\"7016322002\",\"site_number\":\"6322\"},\"A\"]|OVHD-3|16|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "10625 LEWIS & CLARK BLVD",
+        "building": "COLUMN",
+        "facility_number": "7016322002",
+        "site_number": "6322"
+      },
+      "opening_scope_id": "[{\"address\":\"10625 LEWIS & CLARK BLVD\",\"building\":\"COLUMN\",\"facility_number\":\"7016322002\",\"site_number\":\"6322\"},\"A\"]",
       "page": 9,
       "pair": false,
       "points_per_foot": 18,
@@ -393,6 +491,9 @@
       ],
       "sheet": "A-101",
       "size": null,
+      "source_keys": [
+        "16|OVHD-3|1"
+      ],
       "unsure": true,
       "width_inches": null,
       "x": 1795,
@@ -413,6 +514,15 @@
       "mark": "OVHD-4",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"10625 LEWIS & CLARK BLVD\",\"building\":\"COLUMN\",\"facility_number\":\"7016322002\",\"site_number\":\"6322\"},\"A\"]|OVHD-4|16|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "10625 LEWIS & CLARK BLVD",
+        "building": "COLUMN",
+        "facility_number": "7016322002",
+        "site_number": "6322"
+      },
+      "opening_scope_id": "[{\"address\":\"10625 LEWIS & CLARK BLVD\",\"building\":\"COLUMN\",\"facility_number\":\"7016322002\",\"site_number\":\"6322\"},\"A\"]",
       "page": 9,
       "pair": false,
       "points_per_foot": 18,
@@ -438,6 +548,9 @@
       ],
       "sheet": "A-101",
       "size": null,
+      "source_keys": [
+        "16|OVHD-4|1"
+      ],
       "width_inches": null,
       "x": 2131,
       "y": 817

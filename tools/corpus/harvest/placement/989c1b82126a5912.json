@@ -301,12 +301,29 @@
     {
       "height": 1728,
       "page": 8,
+      "plan_rule": "legacy",
       "points_per_foot": [
         6.75
       ],
       "scales": [
         "3/32\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number",
+              "facility_number"
+            ],
+            "page": 18
+          }
+        ],
+        "kept_pages": [
+          18
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-100",
       "title": "FLOOR PLAN",
       "width": 2592
@@ -314,12 +331,29 @@
     {
       "height": 1728,
       "page": 12,
+      "plan_rule": "legacy",
       "points_per_foot": [
         27
       ],
       "scales": [
         "3/8\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number",
+              "facility_number"
+            ],
+            "page": 18
+          }
+        ],
+        "kept_pages": [
+          18
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-401",
       "title": "ENLARGED PLANS",
       "width": 2592
@@ -327,8 +361,25 @@
     {
       "height": 1728,
       "page": 13,
+      "plan_rule": "legacy",
       "points_per_foot": null,
       "scales": [],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number",
+              "facility_number"
+            ],
+            "page": 18
+          }
+        ],
+        "kept_pages": [
+          18
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-402",
       "title": "ENLARGED PLANS",
       "width": 2592
