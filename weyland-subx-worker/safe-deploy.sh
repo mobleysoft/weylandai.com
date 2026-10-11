@@ -12,7 +12,7 @@ export CLOUDFLARE_ACCOUNT_ID="$CF_PRIMARY_ACCOUNT_ID"
 source /Users/johnmobley/mascom/safe-deploy-lib.sh
 
 REPO_ROOT="$(git rev-parse --show-toplevel)"
-CONFIG="weyland-subx-worker/wrangler.toml"
+CONFIG="wrangler.toml"
 
 sd_banner "weyland-subx-worker"
 sd_require_branch "$REPO_ROOT" main
