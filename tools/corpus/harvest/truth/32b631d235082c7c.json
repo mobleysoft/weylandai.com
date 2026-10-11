@@ -25,14 +25,89 @@
    "doors": 8,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 8
   },
   "b": {
    "doors": 0,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 0
+   "tables": 0,
+   "door_rows": 0
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 31,
+    "title": "SCHEDULES AND",
+    "rank": 2,
+    "scope": {
+     "facility_name": "SAM A. BAKER STATE PARK",
+     "site": "SAM A. BAKER STATE PARK",
+     "site_number": "5218"
+    },
+    "sheet": "A-601",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "facility_name",
+      "value": "SAM A. BAKER STATE PARK",
+      "text": "SAM A. BAKER STATE PARK",
+      "x": 2338.679044428008,
+      "y": 986.880296448,
+      "source": "title_block"
+     },
+     {
+      "field": "site",
+      "value": "SAM A. BAKER STATE PARK",
+      "text": "SAM A. BAKER STATE PARK",
+      "x": 2338.679044428008,
+      "y": 986.880296448,
+      "source": "title_block"
+     },
+     {
+      "field": "facility_name",
+      "value": "SAM A. BAKER STATE PARK",
+      "text": "SAM A. BAKER STATE PARK",
+      "x": 2339.279064288,
+      "y": 1012.20028632,
+      "source": "title_block"
+     },
+     {
+      "field": "site",
+      "value": "SAM A. BAKER STATE PARK",
+      "text": "SAM A. BAKER STATE PARK",
+      "x": 2339.279064288,
+      "y": 1012.20028632,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "5218",
+      "text": "5218",
+      "x": 2433.359026656,
+      "y": 1106.280248688,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 8,
+   "pairs": [],
+   "openings": 8,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 0,
+   "pairs": [],
+   "openings": 0,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 0,
@@ -67,36 +142,17 @@
  "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
-   "applicable": true,
-   "total": 8,
-   "pass": 0,
-   "fail": 8,
-   "pass_rate": 0,
-   "examples": [
-    "mark A (schedule p.31) not tagged on any plan",
-    "mark A (schedule p.31) not tagged on any plan",
-    "mark A (schedule p.31) not tagged on any plan",
-    "mark A (schedule p.31) not tagged on any plan",
-    "mark B (schedule p.31) not tagged on any plan",
-    "mark B (schedule p.31) not tagged on any plan",
-    "mark B (schedule p.31) not tagged on any plan",
-    "mark B (schedule p.31) not tagged on any plan"
-   ],
-   "plan_sheets": [
-    "A-101 p.16",
-    "A-102 p.17",
-    "A-103 p.18",
-    "A-104 p.19"
-   ],
+   "applicable": false,
+   "reason": "no floor plan sheet found in this PDF (title blocks)",
    "plan_counts": {
-    "plan_sheets": 4,
-    "rooms": 52,
+    "plan_sheets": 0,
+    "rooms": 0,
     "corridors": 0,
     "tags": 0,
     "unmatched_tags": 0,
     "schedule_marks": 8,
     "marks_not_on_plan": 8,
-    "shared_marks": 8
+    "shared_marks": 0
    }
   },
   "sets_exist": {
@@ -208,6 +264,6 @@
    "why": "only reader A read this row"
   }
  ],
- "ms": 2017,
- "generated_at": "2026-10-10T13:24:25.090Z"
+ "ms": 2248,
+ "generated_at": "2026-10-11T08:55:12.386Z"
 }

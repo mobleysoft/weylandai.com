@@ -25,14 +25,73 @@
    "doors": 7,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 7
   },
   "b": {
    "doors": 4,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 4
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 7,
+    "title": "PARTITION, DOOR AND FINISH",
+    "rank": 2,
+    "scope": {
+     "address": "100 W 1ST STREET",
+     "facility_number": "6517357027",
+     "site_number": "7357"
+    },
+    "sheet": "A040",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "address",
+      "value": "100 W 1ST STREET",
+      "text": "100 W 1st Street",
+      "x": 2329.04529,
+      "y": 1097.1104537275,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "7357",
+      "text": "7357",
+      "x": 2424.464158365,
+      "y": 1181.2370324575,
+      "source": "title_block"
+     },
+     {
+      "field": "facility_number",
+      "value": "6517357027",
+      "text": "FACILITY # 6517357027",
+      "x": 2329.10999,
+      "y": 1201.83292,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 7,
+   "pairs": [],
+   "openings": 7,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 4,
+   "pairs": [],
+   "openings": 4,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 0,
@@ -64,15 +123,23 @@
   }
  },
  "triage_class": "schedule-only",
- "triage_from": "inferred (S=true H=false plan sheets=2)",
+ "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
    "applicable": true,
    "total": 7,
-   "pass": 7,
-   "fail": 0,
-   "pass_rate": 1,
-   "examples": [],
+   "pass": 0,
+   "fail": 7,
+   "pass_rate": 0,
+   "examples": [
+    "mark 100/1 (schedule p.7) not tagged on any plan",
+    "mark 101/1 (schedule p.7) not tagged on any plan",
+    "mark 102/1 (schedule p.7) not tagged on any plan",
+    "mark 110/1 (schedule p.7) not tagged on any plan",
+    "mark 110A/1 (schedule p.7) not tagged on any plan",
+    "mark 111/1 (schedule p.7) not tagged on any plan",
+    "mark 111A/1 (schedule p.7) not tagged on any plan"
+   ],
    "plan_sheets": [
     "A100 p.8",
     "A500 p.10"
@@ -81,10 +148,10 @@
     "plan_sheets": 2,
     "rooms": 37,
     "corridors": 0,
-    "tags": 7,
+    "tags": 0,
     "unmatched_tags": 0,
     "schedule_marks": 7,
-    "marks_not_on_plan": 0,
+    "marks_not_on_plan": 7,
     "shared_marks": 0
    }
   },
@@ -226,6 +293,6 @@
    "why": "only reader B read this row"
   }
  ],
- "ms": 2038,
- "generated_at": "2026-10-10T13:31:37.951Z"
+ "ms": 2893,
+ "generated_at": "2026-10-11T08:56:29.893Z"
 }

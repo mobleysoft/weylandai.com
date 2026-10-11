@@ -99,12 +99,15 @@ test("duplicate marks keep their own door cards and shared-mark warning", () => 
   assert.equal(r.summary.marks_placed, 3);
 });
 
-test("one tag can cover repeated schedule pages; summary counts rows", () => {
-  const r = buildPlacement(truth, pages, [...doors, { ...doors[0], page: 3 }]);
+test("one tag can cover repeated schedule pages; summary counts openings and retains rows", () => {
+  const ps = structuredClone(pages);
+  ps.push({ ...structuredClone(ps[1]), page: 3 });
+  for (const p of ps) p.items.push({ str: 'FACILITY: TEST CENTER', x: 2700, y: 1800, h: 18, w: 190 });
+  const r = buildPlacement(truth, ps, [...doors, { ...doors[0], page: 3 }]);
   assert.equal(r.tags.length, 3);
   assert.equal(r.tags[0].schedule_rows.length, 2);
-  assert.equal(r.summary.marks_placed, 4);
-  assert.equal(r.summary.marks_total, 4);
+  assert.equal(r.summary.marks_placed, 3);
+  assert.equal(r.summary.marks_total, 3);
 });
 
 test("report sorts by rate then marks descending, escaping labels", () => {

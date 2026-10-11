@@ -25,14 +25,73 @@
    "doors": 22,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 22
   },
   "b": {
    "doors": 22,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 22
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 18,
+    "title": "DOOR & FINISH SCHEDULE",
+    "rank": 2,
+    "scope": {
+     "address": "74 KEARNEY ST",
+     "facility_number": "8136303050",
+     "site_number": "6303"
+    },
+    "sheet": "A-601",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "address",
+      "value": "74 KEARNEY ST",
+      "text": "74 KEARNEY ST,",
+      "x": 2335.1431782188,
+      "y": 1077.99880953,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "6303",
+      "text": "6303",
+      "x": 2433.19642,
+      "y": 1171.5679778511999,
+      "source": "title_block"
+     },
+     {
+      "field": "facility_number",
+      "value": "8136303050",
+      "text": "FACILITY #8136303050",
+      "x": 2339.6481999999996,
+      "y": 1194.2180321072,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 22,
+   "pairs": [],
+   "openings": 22,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 22,
+   "pairs": [],
+   "openings": 22,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 22,
@@ -149,6 +208,6 @@
  "tier": "agreed",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 3025,
- "generated_at": "2026-10-10T13:32:06.669Z"
+ "ms": 3790,
+ "generated_at": "2026-10-11T08:56:36.410Z"
 }

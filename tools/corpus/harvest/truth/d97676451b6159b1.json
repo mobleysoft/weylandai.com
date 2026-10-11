@@ -25,14 +25,139 @@
    "doors": 4,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 4
   },
   "b": {
    "doors": 4,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 4
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 22,
+    "title": "SCHEDULES &",
+    "rank": 2,
+    "scope": {
+     "asset_number": "7815107005; 7815107007",
+     "facility_name": "CROWDER STATE PARK",
+     "facility_number": "7815107001; 7815107011",
+     "site": "CROWDER STATE PARK",
+     "site_number": "5107; 7815107010"
+    },
+    "sheet": "A-8",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "facility_name",
+      "value": "CROWDER STATE PARK",
+      "text": "CROWDER STATE PARK",
+      "x": 2334.083,
+      "y": 1035.2617,
+      "source": "title_block"
+     },
+     {
+      "field": "site",
+      "value": "CROWDER STATE PARK",
+      "text": "CROWDER STATE PARK",
+      "x": 2334.083,
+      "y": 1035.2617,
+      "source": "title_block"
+     },
+     {
+      "field": "facility_name",
+      "value": "CROWDER STATE PARK",
+      "text": "CROWDER STATE PARK",
+      "x": 2333.639066544,
+      "y": 1084.320257472,
+      "source": "title_block"
+     },
+     {
+      "field": "site",
+      "value": "CROWDER STATE PARK",
+      "text": "CROWDER STATE PARK",
+      "x": 2333.639066544,
+      "y": 1084.320257472,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "5107",
+      "text": "5107",
+      "x": 2403.8630000000007,
+      "y": 1109.8069,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "7815107005",
+      "text": "7815107005",
+      "x": 2403.367,
+      "y": 1124.8015,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "7815107007",
+      "text": "7815107007",
+      "x": 2403.367,
+      "y": 1139.7514999999999,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "7815107010",
+      "text": "7815107010",
+      "x": 2403.367,
+      "y": 1184.6015,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "5107",
+      "text": "5107",
+      "x": 2428.7990284800003,
+      "y": 1179.60021936,
+      "source": "title_block"
+     },
+     {
+      "field": "facility_number",
+      "value": "7815107011",
+      "text": "7815107011",
+      "x": 2403.367,
+      "y": 1199.5515,
+      "source": "title_block"
+     },
+     {
+      "field": "facility_number",
+      "value": "7815107001",
+      "text": "7815107001",
+      "x": 2428.9190367489964,
+      "y": 1201.920210432,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 4,
+   "pairs": [],
+   "openings": 4,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 4,
+   "pairs": [],
+   "openings": 4,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 0,
@@ -80,24 +205,11 @@
  "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
-   "applicable": true,
-   "total": 4,
-   "pass": 0,
-   "fail": 4,
-   "pass_rate": 0,
-   "examples": [
-    "mark 101 (schedule p.22) not tagged on any plan",
-    "mark 102 (schedule p.22) not tagged on any plan",
-    "mark 103 (schedule p.22) not tagged on any plan",
-    "mark 104 (schedule p.22) not tagged on any plan"
-   ],
-   "plan_sheets": [
-    "A-2 p.16",
-    "A-3 p.17"
-   ],
+   "applicable": false,
+   "reason": "no floor plan sheet found in this PDF (title blocks)",
    "plan_counts": {
-    "plan_sheets": 2,
-    "rooms": 2,
+    "plan_sheets": 0,
+    "rooms": 0,
     "corridors": 0,
     "tags": 0,
     "unmatched_tags": 0,
@@ -175,6 +287,6 @@
    "b": "2"
   }
  ],
- "ms": 2514,
- "generated_at": "2026-10-10T13:31:47.780Z"
+ "ms": 3230,
+ "generated_at": "2026-10-11T08:56:45.021Z"
 }

@@ -25,14 +25,90 @@
    "doors": 8,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 8
   },
   "b": {
    "doors": 7,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 7
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 16,
+    "title": "TYPICAL DETAILS",
+    "rank": 2,
+    "scope": {
+     "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
+     "asset_number": "3511501149",
+     "facility_name": "HOUSE",
+     "site_number": "1501"
+    },
+    "sheet": "A-501",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "address",
+      "value": "1000 W. NIFONG BLVD., BLDG. 1",
+      "text": "1000 W. Nifong Blvd., Bldg. 1.",
+      "x": 2387.5306,
+      "y": 868.7225,
+      "source": "title_block"
+     },
+     {
+      "field": "facility_name",
+      "value": "HOUSE",
+      "text": "HOUSE",
+      "x": 2347.7026,
+      "y": 1042.4215,
+      "source": "title_block"
+     },
+     {
+      "field": "address",
+      "value": "2503 W. 16TH ST",
+      "text": "2503 W. 16TH ST",
+      "x": 2347.7026,
+      "y": 1081.8397961,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "1501",
+      "text": "SITE # 1501",
+      "x": 2347.7026,
+      "y": 1158.2543,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "3511501149",
+      "text": "ASSET # 3511501149",
+      "x": 2347.7026,
+      "y": 1180.4025987,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 8,
+   "pairs": [],
+   "openings": 8,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 7,
+   "pairs": [],
+   "openings": 7,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 7,
@@ -151,6 +227,6 @@
    "why": "only reader A read this row"
   }
  ],
- "ms": 1371,
- "generated_at": "2026-10-10T13:26:44.339Z"
+ "ms": 1897,
+ "generated_at": "2026-10-11T08:55:50.523Z"
 }

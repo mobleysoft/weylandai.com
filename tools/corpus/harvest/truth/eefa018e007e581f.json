@@ -25,14 +25,64 @@
    "doors": 84,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 84
   },
   "b": {
    "doors": 84,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 84
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 59,
+    "title": "DOOR SCHEDULE, ELEVATIONS AND",
+    "rank": 3,
+    "scope": {
+     "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+     "site": "STATE PARK"
+    },
+    "sheet": "A-602",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "facility_name",
+      "value": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+      "text": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+      "x": 2336.9990652,
+      "y": 972.0003024,
+      "source": "title_block"
+     },
+     {
+      "field": "site",
+      "value": "STATE PARK",
+      "text": "STATE PARK",
+      "x": 2336.9990652,
+      "y": 972.0003024,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 84,
+   "pairs": [],
+   "openings": 84,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 84,
+   "pairs": [],
+   "openings": 84,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 78,
@@ -86,35 +136,35 @@
   "marks_on_plan": {
    "applicable": true,
    "total": 84,
-   "pass": 39,
-   "fail": 45,
-   "pass_rate": 0.4643,
+   "pass": 76,
+   "fail": 8,
+   "pass_rate": 0.9048,
    "examples": [
-    "mark 100-1 (schedule p.59) not tagged on any plan",
-    "mark 100-2 (schedule p.59) not tagged on any plan",
-    "mark 102-1 (schedule p.59) not tagged on any plan",
-    "mark 103-1 (schedule p.59) not tagged on any plan",
-    "mark 104-1 (schedule p.59) not tagged on any plan",
-    "mark 105-1 (schedule p.59) not tagged on any plan",
-    "mark 106-1 (schedule p.59) not tagged on any plan",
-    "mark 107-1 (schedule p.59) not tagged on any plan",
-    "mark 108-1 (schedule p.59) not tagged on any plan",
-    "mark 109-1 (schedule p.59) not tagged on any plan",
-    "mark 110-1 (schedule p.59) not tagged on any plan",
-    "mark 111-1 (schedule p.59) not tagged on any plan"
+    "mark 600-2 (schedule p.59) not tagged on any plan",
+    "mark 700-01 (schedule p.59) not tagged on any plan",
+    "mark 701-01 (schedule p.59) not tagged on any plan",
+    "mark 702-01 (schedule p.59) not tagged on any plan",
+    "mark 703-01 (schedule p.59) not tagged on any plan",
+    "mark 705-01 (schedule p.59) not tagged on any plan",
+    "mark 706-01 (schedule p.59) not tagged on any plan",
+    "mark 707-01 (schedule p.59) not tagged on any plan"
    ],
    "plan_sheets": [
+    "A-107 p.46",
     "A-109 p.47",
-    "A-110 p.48"
+    "A-110 p.48",
+    "A-112 p.49",
+    "A-408 p.55",
+    "A-409 p.56"
    ],
    "plan_counts": {
-    "plan_sheets": 2,
-    "rooms": 39,
-    "corridors": 1,
-    "tags": 39,
+    "plan_sheets": 6,
+    "rooms": 93,
+    "corridors": 2,
+    "tags": 76,
     "unmatched_tags": 0,
     "schedule_marks": 84,
-    "marks_not_on_plan": 45,
+    "marks_not_on_plan": 8,
     "shared_marks": 0
    }
   },
@@ -202,6 +252,6 @@
    "b": 24
   }
  ],
- "ms": 2332,
- "generated_at": "2026-10-10T13:33:23.887Z"
+ "ms": 2467,
+ "generated_at": "2026-10-11T08:57:47.821Z"
 }

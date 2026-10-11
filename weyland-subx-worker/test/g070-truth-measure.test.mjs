@@ -39,7 +39,7 @@ test('record selection resolves repo PDFs by SHA without --dir and covers all no
   assert.throws(() => recordedInputs({ repo, shas: [harvest.sha16] }), /Missing PDF/);
 });
 
-test('key lists validate unique SHA16s and missing OCC must be supplied explicitly', t => {
+test('key lists validate unique SHA16s; the outside-repository OCC record is skipped unless OCC_PDF names it', t => {
   const { repo, put, corpus, bidset } = fixture(t);
   const list = put('keys.json', { sets: [{ name: 'Corpus', sha16: corpus.sha16 }, { name: 'Building', sha16: bidset.sha16 }] });
   assert.deepEqual(readKeySets(list), [corpus.sha16, bidset.sha16]);
@@ -47,7 +47,10 @@ test('key lists validate unique SHA16s and missing OCC must be supplied explicit
   assert.throws(() => readKeySets(list), /unique SHA16/);
   const occ = { sha16: '4444444444444444', file: 'occ-a-801-pg4.pdf', source: 'files' };
   put(`tools/corpus/harvest/truth/${occ.sha16}.json`, occ);
-  assert.throws(() => recordedInputs({ repo, nonHarvest: true }), /set OCC_PDF/);
+  // Without OCC_PDF the outside-repository record is skipped by name (the run must not crash in a clone);
+  // the repository records still regenerate.
+  const withoutOcc = recordedInputs({ repo, nonHarvest: true }).map(r => r.record.sha16);
+  assert.ok(!withoutOcc.includes(occ.sha16) && withoutOcc.length > 0, JSON.stringify(withoutOcc));
   const occPdf = put('private/occ.pdf', 'pdf');
   assert.equal(recordedInputs({ repo, shas: [occ.sha16], occPdf })[0].file, occPdf);
 });

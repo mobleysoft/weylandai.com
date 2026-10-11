@@ -1233,7 +1233,9 @@ function doorFromRow(row, fields, index, pageSize, { allowLetterMark = false, la
   }
   if (!looksLikeMark(mark) && !(size.width_inches && size.height_inches)) return null;
   const pairCol = fields.includes("pair") ? yesNo(get("pair")) : null;
-  const pair = pairCol != null ? pairCol : size.pair;
+  // g074: a REMARKS cell that begins with the word PAIR (or PR) is a pair too (the WeylandAI Building's
+  // A-601 prints PAIR there; on 100A the DOOR TYPES legend shares the line and runs into the cell).
+  const pair = pairCol != null ? pairCol : (size.pair || /^(PAIR|PR\.?)(\s|$)/i.test(get("notes") || ""));
   let head = get("head_detail"), jamb = get("jamb_detail"), sill = get("sill_detail");
   const details = get("details");
   if (details && !head && !jamb) {

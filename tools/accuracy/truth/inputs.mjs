@@ -28,12 +28,18 @@ export function recordedInputs({ repo, harvestDir, shas = null, nonHarvest = fal
   const unknown = (shas || []).filter(sha => !selected.some(r => r.sha16 === sha));
   if (unknown.length) throw new Error(`No truth record in the selected scope for: ${unknown.join(', ')}`);
   if (!selected.length) throw new Error('No truth records selected');
-  return selected.map(record => {
+  return selected.flatMap(record => {
     let file;
     if (!isNonHarvest(record)) file = join(harvestDir || join(repo, 'tools/corpus/harvest/downloads'), basename(record.file));
     else if (occPdf && /occ/i.test(record.file) && !record.file.startsWith('tools/')) file = resolve(occPdf);
+    else if (!record.file.startsWith('tools/')) {
+      // A PDF outside the repository (the OCC sample) has no path in a clone. Without its environment variable the
+      // record stands as committed and is named here, so a run neither crashes nor drops it silently.
+      console.log('skipped', record.sha16, record.file, '(outside the repository; set OCC_PDF to regenerate it)');
+      return [];
+    }
     else file = resolve(repo, record.file);
     if (!existsSync(file)) throw new Error(`Missing PDF for ${record.sha16}: ${file}${/occ/i.test(record.file) ? ' (set OCC_PDF)' : ''}`);
-    return { file, record };
+    return [{ file, record }];
   });
 }

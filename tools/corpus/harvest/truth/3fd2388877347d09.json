@@ -27,14 +27,55 @@
    "doors": 9,
    "sets": 2,
    "items": 25,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 9
   },
   "b": {
    "doors": 9,
    "sets": 2,
    "items": 1,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 9
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 13,
+    "title": "SCHEDULE & LEGENDS",
+    "rank": 2,
+    "scope": {
+     "site_number": "6261"
+    },
+    "sheet": "A-700",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "site_number",
+      "value": "6261",
+      "text": "6261",
+      "x": 2426.0390295839998,
+      "y": 1117.080244368,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 9,
+   "pairs": [],
+   "openings": 9,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 9,
+   "pairs": [],
+   "openings": 9,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 0,
@@ -495,6 +536,6 @@
    "why": "only reader A read this row"
   }
  ],
- "ms": 1124,
- "generated_at": "2026-10-10T13:24:38.854Z"
+ "ms": 1185,
+ "generated_at": "2026-10-11T08:55:09.827Z"
 }

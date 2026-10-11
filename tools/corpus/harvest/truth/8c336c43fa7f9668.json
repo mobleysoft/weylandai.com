@@ -25,14 +25,73 @@
    "doors": 2,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 2
   },
   "b": {
    "doors": 0,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 0
+   "tables": 0,
+   "door_rows": 0
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 10,
+    "title": "DOOR SCHEDULE",
+    "rank": 3,
+    "scope": {
+     "address": "1510 E ELM ST",
+     "asset_number": "8136001003",
+     "site_number": "6001"
+    },
+    "sheet": "A-601",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "address",
+      "value": "1510 E ELM ST",
+      "text": "1510 E ELM ST",
+      "x": 2339.4,
+      "y": 1092.1599999999999,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "6001",
+      "text": "6001",
+      "x": 2434.56,
+      "y": 1180,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "8136001003",
+      "text": "8136001003",
+      "x": 2434.68,
+      "y": 1202.44,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 2,
+   "pairs": [],
+   "openings": 2,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 0,
+   "pairs": [],
+   "openings": 0,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 0,
@@ -74,11 +133,12 @@
    "pass_rate": 1,
    "examples": [],
    "plan_sheets": [
-    "A-101 p.4"
+    "A-101 p.4",
+    "A-103 p.6"
    ],
    "plan_counts": {
-    "plan_sheets": 1,
-    "rooms": 17,
+    "plan_sheets": 2,
+    "rooms": 19,
     "corridors": 0,
     "tags": 2,
     "unmatched_tags": 0,
@@ -142,6 +202,6 @@
    "why": "only reader A read this row"
   }
  ],
- "ms": 395,
- "generated_at": "2026-10-10T13:28:56.808Z"
+ "ms": 565,
+ "generated_at": "2026-10-11T08:56:01.040Z"
 }

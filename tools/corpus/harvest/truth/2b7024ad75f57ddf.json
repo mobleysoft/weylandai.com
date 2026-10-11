@@ -25,14 +25,82 @@
    "doors": 8,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 8
   },
   "b": {
    "doors": 4,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 4
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 16,
+    "title": "DOOR SCHEDULE,",
+    "rank": 3,
+    "scope": {
+     "address": "10625 LEWIS & CLARK BLVD",
+     "building": "COLUMN",
+     "facility_number": "7016322002",
+     "site_number": "6322"
+    },
+    "sheet": "A-601",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "address",
+      "value": "10625 LEWIS & CLARK BLVD",
+      "text": "10625 LEWIS & CLARK BLVD.",
+      "x": 2339.16,
+      "y": 1093.2,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "6322",
+      "text": "6322",
+      "x": 2434.3199999999997,
+      "y": 1179.96,
+      "source": "title_block"
+     },
+     {
+      "field": "facility_number",
+      "value": "7016322002",
+      "text": "FACILITY # 7016322002",
+      "x": 2339.16,
+      "y": 1202.1599999999999,
+      "source": "title_block"
+     },
+     {
+      "field": "building",
+      "value": "COLUMN",
+      "text": "BUILDING COLUMN",
+      "x": 1652.04,
+      "y": 614.6400000000001,
+      "source": "sheet_label"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 8,
+   "pairs": [],
+   "openings": 8,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 4,
+   "pairs": [],
+   "openings": 4,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 4,
@@ -84,23 +152,16 @@
  "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
-   "applicable": true,
-   "total": 8,
-   "pass": 8,
-   "fail": 0,
-   "pass_rate": 1,
-   "examples": [],
-   "plan_sheets": [
-    "A-101 p.9"
-   ],
+   "applicable": false,
+   "reason": "no floor plan sheet found in this PDF (title blocks)",
    "plan_counts": {
-    "plan_sheets": 1,
-    "rooms": 6,
-    "corridors": 1,
-    "tags": 8,
+    "plan_sheets": 0,
+    "rooms": 0,
+    "corridors": 0,
+    "tags": 0,
     "unmatched_tags": 0,
     "schedule_marks": 8,
-    "marks_not_on_plan": 0,
+    "marks_not_on_plan": 8,
     "shared_marks": 0
    }
   },
@@ -185,6 +246,6 @@
    "why": "only reader A read this row"
   }
  ],
- "ms": 704,
- "generated_at": "2026-10-10T13:24:17.571Z"
+ "ms": 829,
+ "generated_at": "2026-10-11T08:55:06.370Z"
 }

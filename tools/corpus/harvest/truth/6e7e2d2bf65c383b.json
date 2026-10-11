@@ -25,14 +25,91 @@
    "doors": 8,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 8
   },
   "b": {
    "doors": 8,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 8
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 81,
+    "title": "DOOR & WINDOW SCHEDULE & DETAILS",
+    "rank": 2,
+    "scope": {
+     "address": "32836 STATE PARK ROAD",
+     "asset_number": "7815116063",
+     "facility_name": "WAKONDA STATE PARK",
+     "site": "WAKONDA STATE PARK",
+     "site_number": "5116"
+    },
+    "sheet": "A601",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "facility_name",
+      "value": "WAKONDA STATE PARK",
+      "text": "WAKONDA STATE PARK",
+      "x": 2193.479122608,
+      "y": 1024.560223776,
+      "source": "title_block"
+     },
+     {
+      "field": "site",
+      "value": "WAKONDA STATE PARK",
+      "text": "WAKONDA STATE PARK",
+      "x": 2193.479122608,
+      "y": 1024.560223776,
+      "source": "title_block"
+     },
+     {
+      "field": "address",
+      "value": "32836 STATE PARK ROAD",
+      "text": "32836 STATE PARK ROAD",
+      "x": 2193.479122608,
+      "y": 1041.960216816,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "5116",
+      "text": "5116",
+      "x": 2287.3190850720002,
+      "y": 1107.840190464,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "7815116063",
+      "text": "7815116063",
+      "x": 2287.3190850720002,
+      "y": 1125.360183456,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 8,
+   "pairs": [],
+   "openings": 8,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 8,
+   "pairs": [],
+   "openings": 8,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 8,
@@ -141,6 +218,6 @@
  "tier": "agreed",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 2529,
- "generated_at": "2026-10-10T13:25:58.100Z"
+ "ms": 3499,
+ "generated_at": "2026-10-11T08:55:29.049Z"
 }

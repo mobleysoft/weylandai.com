@@ -28,14 +28,64 @@
    "doors": 1,
    "sets": 1,
    "items": 33,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 1
   },
   "b": {
    "doors": 1,
    "sets": 1,
    "items": 27,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 1
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 108,
+    "title": "SCHEDULES",
+    "rank": 2,
+    "scope": {
+     "facility_number": "8136271003",
+     "site_number": "6271"
+    },
+    "sheet": "A-600",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "site_number",
+      "value": "6271",
+      "text": "SITE # 6271",
+      "x": 2335.319065872,
+      "y": 1178.39952864,
+      "source": "title_block"
+     },
+     {
+      "field": "facility_number",
+      "value": "8136271003",
+      "text": "FACILITY #8136271003",
+      "x": 2335.559065961601,
+      "y": 1200.59951976,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 1,
+   "pairs": [],
+   "openings": 1,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 1,
+   "pairs": [],
+   "openings": 1,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 1,
@@ -105,7 +155,7 @@
   }
  },
  "triage_class": "complete",
- "triage_from": "inferred (S=true H=true plan sheets=2)",
+ "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
    "applicable": true,
@@ -489,6 +539,6 @@
    "b": "ETR ETR PROFESSIONAL SEAL"
   }
  ],
- "ms": 519,
- "generated_at": "2026-10-10T13:25:06.981Z"
+ "ms": 866,
+ "generated_at": "2026-10-11T08:55:13.836Z"
 }

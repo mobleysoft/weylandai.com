@@ -23,45 +23,2716 @@
  },
  "readers": {
   "a": {
-   "doors": 35,
+   "doors": 27,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 53
   },
   "b": {
-   "doors": 53,
+   "doors": 27,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 2
+   "tables": 2,
+   "door_rows": 53
   }
  },
- "rows_agreed": 31,
- "rows_disputed": 23,
- "rows_total": 54,
- "agreement_rate": 0.5741,
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 5,
+    "title": "H.M. H.M. H.M. H.M.",
+    "rank": 0,
+    "scope": {
+     "address": "1155 SR 74 S",
+     "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+    },
+    "sheet": null,
+    "sheet_family": null,
+    "scope_evidence": [
+     {
+      "field": "facility_name",
+      "value": "FAYETTE COUNTY ANIMAL SHELTER",
+      "text": "FAYETTE COUNTY ANIMAL SHELTER",
+      "x": 2404.9243354101955,
+      "y": 758.8158067201122,
+      "source": "title_block"
+     },
+     {
+      "field": "address",
+      "value": "1155 SR 74 S",
+      "text": "1155 SR 74 S",
+      "x": 2412.4743345795446,
+      "y": 787.0930036090546,
+      "source": "title_block"
+     }
+    ]
+   },
+   {
+    "page": 14,
+    "title": "DOOR SCHEDULE",
+    "rank": 3,
+    "scope": {
+     "address": "1155 SR 74 S",
+     "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+    },
+    "sheet": "A3.2",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "facility_name",
+      "value": "FAYETTE COUNTY ANIMAL SHELTER",
+      "text": "FAYETTE COUNTY ANIMAL SHELTER",
+      "x": 2404.924335410196,
+      "y": 758.815806720099,
+      "source": "title_block"
+     },
+     {
+      "field": "address",
+      "value": "1155 SR 74 S",
+      "text": "1155 SR 74 S",
+      "x": 2412.474334579545,
+      "y": 787.0930036090414,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 53,
+   "pairs": [
+    {
+     "pages": [
+      5,
+      14
+     ],
+     "shared_marks": 26,
+     "smaller_inventory": 26,
+     "scope_comparison": {
+      "agrees": true,
+      "conflicts": false,
+      "matched": [
+       "address",
+       "facility_name"
+      ],
+      "differences": []
+     },
+     "repeated_inventory": true,
+     "reason": "at least two marks and 80% of the smaller inventory repeat"
+    }
+   ],
+   "openings": 27,
+   "collapsed_rows": 26,
+   "repeated": [
+    {
+     "mark": "101A",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|101A|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "101A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 196
+      },
+      {
+       "page": 5,
+       "mark": "101A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "C",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1090
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "102A",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|102A|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "102A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 222
+      },
+      {
+       "page": 5,
+       "mark": "102A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "A",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1105
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "103A",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|103A|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "103A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 255
+      },
+      {
+       "page": 5,
+       "mark": "103A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "C",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1119
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "104A",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|104A|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "104A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 280
+      },
+      {
+       "page": 5,
+       "mark": "104A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "B",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1134
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "104B",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|104B|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "104B",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 312
+      },
+      {
+       "page": 5,
+       "mark": "104B",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "C",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1148
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "105A",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|105A|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "105A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 342
+      },
+      {
+       "page": 5,
+       "mark": "105A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "A",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1163
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "106A",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|106A|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "106A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 367
+      },
+      {
+       "page": 5,
+       "mark": "106A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "C",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1178
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "107A",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|107A|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "107A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 395
+      },
+      {
+       "page": 5,
+       "mark": "107A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "C",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1191
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "110A",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|110A|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "110A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 426
+      },
+      {
+       "page": 5,
+       "mark": "110A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "C",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1205
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "110B",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|110B|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "110B",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 455
+      },
+      {
+       "page": 5,
+       "mark": "110B",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "C",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1221
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "111A",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|111A|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "111A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 484
+      },
+      {
+       "page": 5,
+       "mark": "111A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "C DATE",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1235
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "112A",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|112A|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "112A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 511
+      },
+      {
+       "page": 5,
+       "mark": "112A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "C",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1251
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "113A",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|113A|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "113A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 541
+      },
+      {
+       "page": 5,
+       "mark": "113A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "A",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1264
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "114A",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|114A|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "114A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 568
+      },
+      {
+       "page": 5,
+       "mark": "114A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "C SHEET",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1278
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "114B",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|114B|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "114B",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 599
+      },
+      {
+       "page": 5,
+       "mark": "114B",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "C",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1293
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "115A",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|115A|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "115A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 628
+      },
+      {
+       "page": 5,
+       "mark": "115A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "A",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1309
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "116A",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|116A|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "116A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 657
+      },
+      {
+       "page": 5,
+       "mark": "116A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "A",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1323
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "117A",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|117A|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "117A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 685
+      },
+      {
+       "page": 5,
+       "mark": "117A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "C",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1339
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "118A",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|118A|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "118A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 716
+      },
+      {
+       "page": 5,
+       "mark": "118A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "C",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1352
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "118B",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|118B|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "118B",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 743
+      },
+      {
+       "page": 5,
+       "mark": "118B",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "A",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1367
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "119A",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|119A|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "119A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 772
+      },
+      {
+       "page": 5,
+       "mark": "119A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "C",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1380
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "119B",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|119B|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "119B",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 803
+      },
+      {
+       "page": 5,
+       "mark": "119B",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "C",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1396
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "119C",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|119C|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "119C",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 826
+      },
+      {
+       "page": 5,
+       "mark": "119C",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "C",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1409
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "120A",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|120A|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "120A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 858
+      },
+      {
+       "page": 5,
+       "mark": "120A",
+       "location": null,
+       "size": "4'-6\" x 7'-0\"",
+       "width_inches": 54,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "D",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1440
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "width_inches",
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "121A",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|121A|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "121A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 887
+      },
+      {
+       "page": 5,
+       "mark": "121A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "A PROJECT",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1453
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "122A",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|122A|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "122A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\" 3'-0\"",
+       "width_inches": 36,
+       "height_inches": null,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 916
+      },
+      {
+       "page": 5,
+       "mark": "122A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\" 6'-0\"",
+       "width_inches": 36,
+       "height_inches": null,
+       "pair": false,
+       "door_type": "C E",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1467
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "b": {
+   "rows": 53,
+   "pairs": [
+    {
+     "pages": [
+      5,
+      14
+     ],
+     "shared_marks": 26,
+     "smaller_inventory": 26,
+     "scope_comparison": {
+      "agrees": true,
+      "conflicts": false,
+      "matched": [
+       "address",
+       "facility_name"
+      ],
+      "differences": []
+     },
+     "repeated_inventory": true,
+     "reason": "at least two marks and 80% of the smaller inventory repeat"
+    }
+   ],
+   "openings": 27,
+   "collapsed_rows": 26,
+   "repeated": [
+    {
+     "mark": "101A",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|101A|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "101A",
+       "location": null,
+       "size": "3'-0\"×7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 178
+      },
+      {
+       "page": 5,
+       "mark": "101A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "C",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1080
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "102A",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|102A|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "102A",
+       "location": null,
+       "size": "3'-0\"×7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 207
+      },
+      {
+       "page": 5,
+       "mark": "102A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "A",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1094
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "103A",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|103A|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "103A",
+       "location": null,
+       "size": "3'-0\"×7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 236
+      },
+      {
+       "page": 5,
+       "mark": "103A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "C",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1109
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "104A",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|104A|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "104A",
+       "location": null,
+       "size": "3'-0\"×7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 265
+      },
+      {
+       "page": 5,
+       "mark": "104A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "B",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1123
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "104B",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|104B|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "104B",
+       "location": null,
+       "size": "3'-0\"×7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 294
+      },
+      {
+       "page": 5,
+       "mark": "104B",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "C",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1138
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "105A",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|105A|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "105A",
+       "location": null,
+       "size": "3'-0\"×7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 322
+      },
+      {
+       "page": 5,
+       "mark": "105A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "A",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1152
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "106A",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|106A|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "106A",
+       "location": null,
+       "size": "3'-0\"×7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 351
+      },
+      {
+       "page": 5,
+       "mark": "106A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "C",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1167
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "107A",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|107A|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "107A",
+       "location": null,
+       "size": "3'-0\"×7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 380
+      },
+      {
+       "page": 5,
+       "mark": "107A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "C",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1182
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "110A",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|110A|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "110A",
+       "location": null,
+       "size": "3'-0\"×7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 409
+      },
+      {
+       "page": 5,
+       "mark": "110A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "C",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1196
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "110B",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|110B|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "110B",
+       "location": null,
+       "size": "3'-0\"×7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 438
+      },
+      {
+       "page": 5,
+       "mark": "110B",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "C",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1211
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "111A",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|111A|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "111A",
+       "location": null,
+       "size": "3'-0\"×7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 466
+      },
+      {
+       "page": 5,
+       "mark": "111A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "MARK C",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1225
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "112A",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|112A|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "112A",
+       "location": null,
+       "size": "3'-0\"×7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 495
+      },
+      {
+       "page": 5,
+       "mark": "112A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "C",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1240
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "113A",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|113A|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "113A",
+       "location": null,
+       "size": "3'-0\"×7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 524
+      },
+      {
+       "page": 5,
+       "mark": "113A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "A",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1255
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "114A",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|114A|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "114A",
+       "location": null,
+       "size": "3'-0\"×7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 553
+      },
+      {
+       "page": 5,
+       "mark": "114A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "C",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1269
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "114B",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|114B|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "114B",
+       "location": null,
+       "size": "3'-0\"×7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 582
+      },
+      {
+       "page": 5,
+       "mark": "114B",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "C",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1284
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "115A",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|115A|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "115A",
+       "location": null,
+       "size": "3'-0\"×7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 610
+      },
+      {
+       "page": 5,
+       "mark": "115A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "A",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1298
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "116A",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|116A|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "116A",
+       "location": null,
+       "size": "3'-0\"×7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 639
+      },
+      {
+       "page": 5,
+       "mark": "116A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "A",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1313
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "117A",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|117A|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "117A",
+       "location": null,
+       "size": "3'-0\"×7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 668
+      },
+      {
+       "page": 5,
+       "mark": "117A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "C",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1327
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "118A",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|118A|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "118A",
+       "location": null,
+       "size": "3'-0\"×7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 697
+      },
+      {
+       "page": 5,
+       "mark": "118A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "C",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1342
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "118B",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|118B|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "118B",
+       "location": null,
+       "size": "3'-0\"×7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 726
+      },
+      {
+       "page": 5,
+       "mark": "118B",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "A",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1357
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "119A",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|119A|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "119A",
+       "location": null,
+       "size": "3'-0\"×7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 754
+      },
+      {
+       "page": 5,
+       "mark": "119A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "C",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1371
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "119B",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|119B|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "119B",
+       "location": null,
+       "size": "3'-0\"×7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 783
+      },
+      {
+       "page": 5,
+       "mark": "119B",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "C",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1386
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "119C",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|119C|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "119C",
+       "location": null,
+       "size": "3'-0\"×7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 812
+      },
+      {
+       "page": 5,
+       "mark": "119C",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "C",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1400
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "120A",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|120A|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "120A",
+       "location": null,
+       "size": "3'-0\"×7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 841
+      },
+      {
+       "page": 5,
+       "mark": "120A",
+       "location": null,
+       "size": "4'-6\" x 7'-0\"",
+       "width_inches": 54,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "D",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1429
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "width_inches",
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "121A",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|121A|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "121A",
+       "location": null,
+       "size": "3'-0\"×7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 870
+      },
+      {
+       "page": 5,
+       "mark": "121A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "PROJECT A",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1444
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    },
+    {
+     "mark": "122A",
+     "page": 14,
+     "opening_id": "[{\"address\":\"1155 SR 74 S\",\"facility_name\":\"FAYETTE COUNTY ANIMAL SHELTER\"},\"A\"]|122A|5,14|1",
+     "scope": {
+      "address": "1155 SR 74 S",
+      "facility_name": "FAYETTE COUNTY ANIMAL SHELTER"
+     },
+     "sources": [
+      {
+       "page": 14,
+       "mark": "122A",
+       "location": null,
+       "size": "3'-0\"×7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": null,
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 898
+      },
+      {
+       "page": 5,
+       "mark": "122A",
+       "location": null,
+       "size": "3'-0\" x 7'-0\"",
+       "width_inches": 36,
+       "height_inches": 84,
+       "pair": false,
+       "door_type": "C",
+       "frame_type": null,
+       "material": null,
+       "fire_rating": null,
+       "hardware_group": null,
+       "y": 1459
+      }
+     ],
+     "conflicts": [
+      {
+       "page": 5,
+       "fields": [
+        "door_type"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "rows_agreed": 25,
+ "rows_disputed": 2,
+ "rows_total": 27,
+ "agreement_rate": 0.9259,
  "agreement": {
   "doors": {
-   "rows": 54,
-   "agreed": 31,
-   "disputed": 3,
-   "only_a": 1,
-   "only_b": 19,
+   "rows": 27,
+   "agreed": 25,
+   "disputed": 2,
+   "only_a": 0,
+   "only_b": 0,
    "fields": {
     "width_inches": {
-     "agree": 34,
-     "total": 34
+     "agree": 27,
+     "total": 27
     },
     "height_inches": {
-     "agree": 33,
-     "total": 34
+     "agree": 26,
+     "total": 27
     },
     "door_type": {
-     "agree": 24,
-     "total": 27
+     "agree": 0,
+     "total": 1
     }
    },
-   "agreement_rate": 0.5741
+   "agreement_rate": 0.9259
   },
   "items": {
    "rows": 0,
@@ -82,21 +2753,13 @@
  "oracles": {
   "marks_on_plan": {
    "applicable": true,
-   "total": 35,
+   "total": 27,
    "pass": 25,
-   "fail": 10,
-   "pass_rate": 0.7143,
+   "fail": 2,
+   "pass_rate": 0.9259,
    "examples": [
-    "mark 116A (schedule p.5) not tagged on any plan",
-    "mark 119D (schedule p.5) not tagged on any plan",
-    "mark 201A (schedule p.5) not tagged on any plan",
-    "mark 101A (schedule p.14) not tagged on any plan",
-    "mark 102A (schedule p.14) not tagged on any plan",
-    "mark 103A (schedule p.14) not tagged on any plan",
-    "mark 104A (schedule p.14) not tagged on any plan",
-    "mark 104B (schedule p.14) not tagged on any plan",
-    "mark 105A (schedule p.14) not tagged on any plan",
-    "mark 106A (schedule p.14) not tagged on any plan"
+    "mark 116A (schedule p.14) not tagged on any plan",
+    "mark 119D (schedule p.5) not tagged on any plan"
    ],
    "plan_sheets": [
     "A1.1 p.11"
@@ -107,8 +2770,9 @@
     "corridors": 0,
     "tags": 25,
     "unmatched_tags": 0,
-    "schedule_marks": 35,
-    "marks_not_on_plan": 10
+    "schedule_marks": 27,
+    "marks_not_on_plan": 2,
+    "shared_marks": 0
    }
   },
   "sets_exist": {
@@ -125,234 +2789,37 @@
   },
   "sizes_and_marks": {
    "applicable": true,
-   "total": 35,
-   "pass": 33,
-   "fail": 2,
-   "pass_rate": 0.9429,
+   "total": 27,
+   "pass": 26,
+   "fail": 1,
+   "pass_rate": 0.963,
    "examples": [
-    "mark 111A p.5: size \"3'-0\\\" x 7'-0\\\" MARK\" -> 36 x null",
-    "mark 201A p.5: size \"6'-0\\\" x 6'-8\\\" DRAWN DOOR TO ATTIC MECHANICAL\" -> 72 x null"
+    "mark 122A p.14: size \"3'-0\\\" x 7'-0\\\" 3'-0\\\"\" -> 36 x null"
    ],
-   "size_fail": 2,
+   "size_fail": 1,
    "mark_fail": 0
   }
  },
  "tier": "agreed",
- "disagreement_count": 24,
+ "disagreement_count": 2,
  "disagreements": [
-  {
-   "kind": "door",
-   "page": 5,
-   "key": "111A",
-   "field": "height_inches",
-   "a": null,
-   "b": 84
-  },
-  {
-   "kind": "door",
-   "page": 5,
-   "key": "111A",
-   "field": "door_type",
-   "a": "C DATE",
-   "b": "MARK C"
-  },
   {
    "kind": "door",
    "page": 5,
    "key": "119D",
    "field": "door_type",
-   "a": "PROJECTC",
+   "a": "C PROJECT DATE:",
    "b": "PROJECT C"
-  },
-  {
-   "kind": "door",
-   "page": 5,
-   "key": "121A",
-   "field": "door_type",
-   "a": "A PROJECT",
-   "b": "PROJECT A"
-  },
-  {
-   "kind": "door",
-   "page": 5,
-   "key": "201A",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 14,
-   "key": "107A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 14,
-   "key": "110A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 14,
-   "key": "110B",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 14,
-   "key": "111A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 14,
-   "key": "112A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 14,
-   "key": "113A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 14,
-   "key": "114A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 14,
-   "key": "114B",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 14,
-   "key": "115A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 14,
-   "key": "116A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 14,
-   "key": "117A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 14,
-   "key": "118A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 14,
-   "key": "118B",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 14,
-   "key": "119A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 14,
-   "key": "119B",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 14,
-   "key": "119C",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 14,
-   "key": "120A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 14,
-   "key": "121A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
   },
   {
    "kind": "door",
    "page": 14,
    "key": "122A",
-   "field": "(row)",
+   "field": "height_inches",
    "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "b": 84
   }
  ],
- "ms": 5464,
- "generated_at": "2026-10-09T09:16:04.324Z"
+ "ms": 1592,
+ "generated_at": "2026-10-11T08:53:50.887Z"
 }

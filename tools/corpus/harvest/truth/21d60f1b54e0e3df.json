@@ -25,14 +25,55 @@
    "doors": 19,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 19
   },
   "b": {
    "doors": 19,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 19
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 78,
+    "title": "DETAIL AT AL. JAMB",
+    "rank": 1,
+    "scope": {
+     "address": "100 HOBART DR, HILLSBORO, OH 45133"
+    },
+    "sheet": "A601",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "address",
+      "value": "100 HOBART DR, HILLSBORO, OH 45133",
+      "text": "100 Hobart Dr, Hillsboro, OH 45133",
+      "x": 2884.7358640268,
+      "y": 1743.8008135044,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 19,
+   "pairs": [],
+   "openings": 19,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 19,
+   "pairs": [],
+   "openings": 19,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 8,
@@ -229,6 +270,6 @@
    "b": "7.0"
   }
  ],
- "ms": 873,
- "generated_at": "2026-10-10T13:24:00.908Z"
+ "ms": 976,
+ "generated_at": "2026-10-11T08:55:01.893Z"
 }

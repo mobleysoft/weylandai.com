@@ -25,14 +25,73 @@
    "doors": 1,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 1
   },
   "b": {
    "doors": 1,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 1
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 3,
+    "title": null,
+    "rank": 2,
+    "scope": {
+     "building": "CODE DATA",
+     "facility_number": "8136905001",
+     "site_number": "6905"
+    },
+    "sheet": null,
+    "sheet_family": null,
+    "scope_evidence": [
+     {
+      "field": "site_number",
+      "value": "6905",
+      "text": "6905",
+      "x": 2444.6164218176,
+      "y": 1162.9518652128,
+      "source": "title_block"
+     },
+     {
+      "field": "facility_number",
+      "value": "8136905001",
+      "text": "FACILITY # 8136905001",
+      "x": 2348.9269999999997,
+      "y": 1184.3134,
+      "source": "title_block"
+     },
+     {
+      "field": "building",
+      "value": "CODE DATA",
+      "text": "BUILDING CODE DATA",
+      "x": 1858.5448000000001,
+      "y": 596.57996,
+      "source": "sheet_label"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 1,
+   "pairs": [],
+   "openings": 1,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 1,
+   "pairs": [],
+   "openings": 1,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 0,
@@ -85,7 +144,7 @@
   }
  },
  "triage_class": "schedule-only",
- "triage_from": "inferred (S=true H=false plan sheets=0)",
+ "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
    "applicable": false,
@@ -154,6 +213,6 @@
    "b": null
   }
  ],
- "ms": 2326,
- "generated_at": "2026-10-10T13:23:32.364Z"
+ "ms": 3370,
+ "generated_at": "2026-10-11T08:54:52.658Z"
 }

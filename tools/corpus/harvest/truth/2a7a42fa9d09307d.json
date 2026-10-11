@@ -25,14 +25,44 @@
    "doors": 74,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 74
   },
   "b": {
    "doors": 70,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 2
+   "tables": 2,
+   "door_rows": 70
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 58,
+    "title": "DOOR SCHEDULES",
+    "rank": 2,
+    "scope": {},
+    "sheet": "A-603",
+    "sheet_family": "A",
+    "scope_evidence": []
+   }
+  ],
+  "a": {
+   "rows": 74,
+   "pairs": [],
+   "openings": 74,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 70,
+   "pairs": [],
+   "openings": 70,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 55,
@@ -89,19 +119,39 @@
   }
  },
  "triage_class": "schedule-only",
- "triage_from": "inferred (S=true H=false plan sheets=0)",
+ "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
-   "applicable": false,
-   "reason": "no floor plan sheet found in this PDF (title blocks)",
+   "applicable": true,
+   "total": 74,
+   "pass": 2,
+   "fail": 72,
+   "pass_rate": 0.027,
+   "examples": [
+    "mark 200.1 (schedule p.58) not tagged on any plan",
+    "mark 200.2 (schedule p.58) not tagged on any plan",
+    "mark 200.3 (schedule p.58) not tagged on any plan",
+    "mark 200.4 (schedule p.58) not tagged on any plan",
+    "mark 201 (schedule p.58) not tagged on any plan",
+    "mark 202 (schedule p.58) not tagged on any plan",
+    "mark 203 (schedule p.58) not tagged on any plan",
+    "mark 204 (schedule p.58) not tagged on any plan",
+    "mark 205 (schedule p.58) not tagged on any plan",
+    "mark 206 (schedule p.58) not tagged on any plan",
+    "mark 207 (schedule p.58) not tagged on any plan",
+    "mark 208 (schedule p.58) not tagged on any plan"
+   ],
+   "plan_sheets": [
+    "A-102 p.56"
+   ],
    "plan_counts": {
-    "plan_sheets": 0,
+    "plan_sheets": 1,
     "rooms": 0,
     "corridors": 0,
-    "tags": 0,
+    "tags": 2,
     "unmatched_tags": 0,
     "schedule_marks": 74,
-    "marks_not_on_plan": 74,
+    "marks_not_on_plan": 72,
     "shared_marks": 0
    }
   },
@@ -288,6 +338,6 @@
    "b": "45 MIN"
   }
  ],
- "ms": 564,
- "generated_at": "2026-10-10T13:24:16.071Z"
+ "ms": 566,
+ "generated_at": "2026-10-11T08:55:04.626Z"
 }

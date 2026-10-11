@@ -25,14 +25,55 @@
    "doors": 1,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 1
   },
   "b": {
    "doors": 1,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 1
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 12,
+    "title": null,
+    "rank": 2,
+    "scope": {
+     "address": "1851 STATE ROUTE 56"
+    },
+    "sheet": null,
+    "sheet_family": null,
+    "scope_evidence": [
+     {
+      "field": "address",
+      "value": "1851 STATE ROUTE 56",
+      "text": "1851 STATE ROUTE 56",
+      "x": 2860.32,
+      "y": 1403.16,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 1,
+   "pairs": [],
+   "openings": 1,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 1,
+   "pairs": [],
+   "openings": 1,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 0,
@@ -152,6 +193,6 @@
    "b": "HM FF"
   }
  ],
- "ms": 200,
- "generated_at": "2026-10-10T13:26:34.446Z"
+ "ms": 247,
+ "generated_at": "2026-10-11T08:55:46.278Z"
 }

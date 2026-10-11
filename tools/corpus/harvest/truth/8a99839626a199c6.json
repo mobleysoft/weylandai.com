@@ -27,14 +27,90 @@
    "doors": 2,
    "sets": 2,
    "items": 9,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 2
   },
   "b": {
    "doors": 2,
    "sets": 2,
    "items": 7,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 2
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 19,
+    "title": "SCHEDULES",
+    "rank": 1,
+    "scope": {
+     "address": "1510 EAST ELM STREET",
+     "asset_number": "8136001001",
+     "facility_name": "GENERAL HEADQUARTERS",
+     "site_number": "6001"
+    },
+    "sheet": "A-601",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "facility_name",
+      "value": "GENERAL HEADQUARTERS",
+      "text": "GENERAL HEADQUARTERS",
+      "x": 2303.28000115488,
+      "y": 1075.56000260976,
+      "source": "title_block"
+     },
+     {
+      "field": "facility_name",
+      "value": "GENERAL HEADQUARTERS",
+      "text": "GENERAL HEADQUARTERS",
+      "x": 2303.28000115488,
+      "y": 1075.56000260976,
+      "source": "title_block"
+     },
+     {
+      "field": "address",
+      "value": "1510 EAST ELM STREET",
+      "text": "1510 EAST ELM STREET",
+      "x": 2303.28000115488,
+      "y": 1093.2000025391999,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "6001",
+      "text": "6001",
+      "x": 2434.44000063024,
+      "y": 1179.84000219264,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "8136001001",
+      "text": "8136001001",
+      "x": 2434.56000062976,
+      "y": 1202.2800021028802,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 2,
+   "pairs": [],
+   "openings": 2,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 2,
+   "pairs": [],
+   "openings": 2,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 1,
@@ -115,31 +191,16 @@
  "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
-   "applicable": true,
-   "total": 2,
-   "pass": 2,
-   "fail": 0,
-   "pass_rate": 1,
-   "examples": [],
-   "plan_sheets": [
-    "A-101 p.3",
-    "A-102 p.4",
-    "A-103 p.5",
-    "A-401 p.12",
-    "A-402 p.13",
-    "A-403 p.14",
-    "A-404 p.15",
-    "A-405 p.16",
-    "A-406 p.17"
-   ],
+   "applicable": false,
+   "reason": "no floor plan sheet found in this PDF (title blocks)",
    "plan_counts": {
-    "plan_sheets": 9,
+    "plan_sheets": 0,
     "rooms": 0,
     "corridors": 0,
-    "tags": 2,
+    "tags": 0,
     "unmatched_tags": 0,
     "schedule_marks": 2,
-    "marks_not_on_plan": 0,
+    "marks_not_on_plan": 2,
     "shared_marks": 0
    }
   },
@@ -343,6 +404,6 @@
    "why": "only reader B read this row"
   }
  ],
- "ms": 1291,
- "generated_at": "2026-10-10T13:28:45.579Z"
+ "ms": 1558,
+ "generated_at": "2026-10-11T08:55:40.531Z"
 }

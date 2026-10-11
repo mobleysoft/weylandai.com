@@ -29,14 +29,44 @@
    "doors": 48,
    "sets": 10,
    "items": 54,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 48
   },
   "b": {
    "doors": 48,
    "sets": 10,
    "items": 54,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 48
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 3,
+    "title": "DOOR SCHEDULE",
+    "rank": 3,
+    "scope": {},
+    "sheet": "A-601",
+    "sheet_family": "A",
+    "scope_evidence": []
+   }
+  ],
+  "a": {
+   "rows": 48,
+   "pairs": [],
+   "openings": 48,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 48,
+   "pairs": [],
+   "openings": 48,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 102,
@@ -137,7 +167,8 @@
     "tags": 48,
     "unmatched_tags": 0,
     "schedule_marks": 48,
-    "marks_not_on_plan": 0
+    "marks_not_on_plan": 0,
+    "shared_marks": 0
    }
   },
   "sets_exist": {
@@ -434,6 +465,6 @@
  "tier": "exact",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 46,
- "generated_at": "2026-10-09T11:33:45.285Z"
+ "ms": 107,
+ "generated_at": "2026-10-11T08:53:47.541Z"
 }

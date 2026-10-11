@@ -25,14 +25,34 @@
    "doors": 0,
    "sets": 1,
    "items": 5,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 0
   },
   "b": {
    "doors": 0,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 0
+   "tables": 0,
+   "door_rows": 0
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [],
+  "a": {
+   "rows": 0,
+   "pairs": [],
+   "openings": 0,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 0,
+   "pairs": [],
+   "openings": 0,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 0,
@@ -64,7 +84,7 @@
   }
  },
  "triage_class": "spec-only",
- "triage_from": "inferred (S=false H=true plan sheets=0)",
+ "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
    "applicable": false,
@@ -146,6 +166,6 @@
    "why": "only reader A read this set"
   }
  ],
- "ms": 1591,
- "generated_at": "2026-10-10T13:24:08.919Z"
+ "ms": 1904,
+ "generated_at": "2026-10-11T08:55:04.005Z"
 }

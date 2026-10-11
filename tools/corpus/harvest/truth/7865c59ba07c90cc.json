@@ -25,14 +25,44 @@
    "doors": 74,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 74
   },
   "b": {
    "doors": 70,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 2
+   "tables": 2,
+   "door_rows": 70
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 27,
+    "title": "DOOR SCHEDULES",
+    "rank": 2,
+    "scope": {},
+    "sheet": "A-603",
+    "sheet_family": "A",
+    "scope_evidence": []
+   }
+  ],
+  "a": {
+   "rows": 74,
+   "pairs": [],
+   "openings": 74,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 70,
+   "pairs": [],
+   "openings": 70,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 55,
@@ -89,32 +119,31 @@
   }
  },
  "triage_class": "schedule-only",
- "triage_from": "inferred (S=true H=false plan sheets=5)",
+ "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
    "applicable": true,
    "total": 74,
-   "pass": 73,
-   "fail": 1,
-   "pass_rate": 0.9865,
-   "examples": [
-    "mark E204 (schedule p.27) not tagged on any plan"
-   ],
+   "pass": 74,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
    "plan_sheets": [
     "A-100 p.11",
+    "A-102 p.12",
     "A-103 p.13",
     "A-104 p.14",
     "A-105 p.15",
     "A-106 p.16"
    ],
    "plan_counts": {
-    "plan_sheets": 5,
+    "plan_sheets": 6,
     "rooms": 169,
     "corridors": 2,
-    "tags": 73,
+    "tags": 74,
     "unmatched_tags": 0,
     "schedule_marks": 74,
-    "marks_not_on_plan": 1,
+    "marks_not_on_plan": 0,
     "shared_marks": 0
    }
   },
@@ -316,6 +345,6 @@
    "b": "45 MIN"
   }
  ],
- "ms": 3793,
- "generated_at": "2026-10-10T13:26:32.720Z"
+ "ms": 4567,
+ "generated_at": "2026-10-11T08:55:45.936Z"
 }

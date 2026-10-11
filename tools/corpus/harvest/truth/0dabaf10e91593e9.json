@@ -25,14 +25,98 @@
    "doors": 18,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 18
   },
   "b": {
    "doors": 18,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 18
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 18,
+    "title": "FLOOR PLAN",
+    "rank": 2,
+    "scope": {
+     "asset_number": "7815302022",
+     "facility_name": "BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE",
+     "site": "BENNET SPRING STATE PARK",
+     "site_number": "5302"
+    },
+    "sheet": "A-101",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "facility_name",
+      "value": "SHOWER HOUSE",
+      "text": "SHOWER HOUSE",
+      "x": 2343.1554,
+      "y": 1017.7882444740001,
+      "source": "title_block"
+     },
+     {
+      "field": "facility_name",
+      "value": "CANPGROUND #4 SHOWER HOUSE REPLACEMENT",
+      "text": "Canpground #4 Shower House Replacement",
+      "x": 2343.1554,
+      "y": 1108.55054,
+      "source": "title_block"
+     },
+     {
+      "field": "facility_name",
+      "value": "BENNET SPRING STATE PARK",
+      "text": "Bennet Spring State Park",
+      "x": 2343.1554,
+      "y": 1118.3101623628,
+      "source": "title_block"
+     },
+     {
+      "field": "site",
+      "value": "BENNET SPRING STATE PARK",
+      "text": "Bennet Spring State Park",
+      "x": 2343.1554,
+      "y": 1118.3101623628,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "5302",
+      "text": "5302",
+      "x": 2426.4608200000002,
+      "y": 1172.3998416223,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "7815302022",
+      "text": "7815302022",
+      "x": 2426.4608200000002,
+      "y": 1190.4176783777,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 18,
+   "pairs": [],
+   "openings": 18,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 18,
+   "pairs": [],
+   "openings": 18,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 18,
@@ -88,16 +172,23 @@
  "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
-   "applicable": false,
-   "reason": "no floor plan sheet found in this PDF (title blocks)",
+   "applicable": true,
+   "total": 18,
+   "pass": 18,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "plan_sheets": [
+    "A-101 p.18"
+   ],
    "plan_counts": {
-    "plan_sheets": 0,
-    "rooms": 0,
+    "plan_sheets": 1,
+    "rooms": 21,
     "corridors": 0,
-    "tags": 0,
+    "tags": 18,
     "unmatched_tags": 0,
     "schedule_marks": 18,
-    "marks_not_on_plan": 18,
+    "marks_not_on_plan": 0,
     "shared_marks": 0
    }
   },
@@ -127,6 +218,6 @@
  "tier": "agreed",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 4034,
- "generated_at": "2026-10-10T13:23:16.334Z"
+ "ms": 4989,
+ "generated_at": "2026-10-11T08:54:54.213Z"
 }

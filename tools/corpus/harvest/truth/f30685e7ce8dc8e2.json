@@ -25,14 +25,73 @@
    "doors": 29,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 29
   },
   "b": {
    "doors": 29,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 29
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 26,
+    "title": "DOOR - WINDOW &",
+    "rank": 2,
+    "scope": {
+     "address": "2503 W. 16TH ST",
+     "asset_number": "TBD",
+     "site_number": "1501"
+    },
+    "sheet": "A-601",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "address",
+      "value": "2503 W. 16TH ST",
+      "text": "2503 W. 16TH ST",
+      "x": 2349.5751,
+      "y": 1081.279225,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "1501",
+      "text": "SITE # 1501",
+      "x": 2351.3483,
+      "y": 1135.7321,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "TBD",
+      "text": "ASSET # TBD",
+      "x": 2349.5656754,
+      "y": 1151.0875059,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 29,
+   "pairs": [],
+   "openings": 29,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 29,
+   "pairs": [],
+   "openings": 29,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 22,
@@ -85,7 +144,7 @@
   }
  },
  "triage_class": "schedule-only",
- "triage_from": "inferred (S=true H=false plan sheets=3)",
+ "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
    "applicable": true,
@@ -209,6 +268,6 @@
    "b": 35.5
   }
  ],
- "ms": 1859,
- "generated_at": "2026-10-10T13:33:31.937Z"
+ "ms": 2058,
+ "generated_at": "2026-10-11T08:56:56.111Z"
 }

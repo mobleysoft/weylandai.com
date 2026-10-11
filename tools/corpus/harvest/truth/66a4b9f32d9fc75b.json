@@ -25,14 +25,73 @@
    "doors": 33,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 33
   },
   "b": {
    "doors": 33,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 33
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 3,
+    "title": "DOORS",
+    "rank": 2,
+    "scope": {
+     "address": "712 ANDERSON STREET",
+     "facility_number": "8136272002",
+     "site_number": "6272"
+    },
+    "sheet": "A-300",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "address",
+      "value": "712 ANDERSON STREET",
+      "text": "712 ANDERSON STREET",
+      "x": 2339.281871424,
+      "y": 1075.559478048,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "6272",
+      "text": "6272",
+      "x": 2434.4419475520003,
+      "y": 1179.959561568,
+      "source": "title_block"
+     },
+     {
+      "field": "facility_number",
+      "value": "8136272002",
+      "text": "FACILITY # 8136272002",
+      "x": 2339.281871424,
+      "y": 1202.1595793279998,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 33,
+   "pairs": [],
+   "openings": 33,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 33,
+   "pairs": [],
+   "openings": 33,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 33,
@@ -133,6 +192,6 @@
  "tier": "agreed",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 244,
- "generated_at": "2026-10-10T13:25:37.563Z"
+ "ms": 293,
+ "generated_at": "2026-10-11T08:55:33.949Z"
 }

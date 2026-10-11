@@ -27,14 +27,73 @@
    "doors": 3,
    "sets": 1,
    "items": 12,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 3
   },
   "b": {
    "doors": 3,
    "sets": 1,
    "items": 19,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 3
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 10,
+    "title": "DESIGNED BY: GW&",
+    "rank": 2,
+    "scope": {
+     "address": "475 SOUTH DAVIS AVE",
+     "asset_number": "8136265008",
+     "site_number": "6265"
+    },
+    "sheet": "A-601",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "address",
+      "value": "475 SOUTH DAVIS AVE",
+      "text": "475 South Davis Ave.",
+      "x": 2293.5591,
+      "y": 1103.5203000000001,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "6265",
+      "text": "SITE # 6265",
+      "x": 2292.8390000000004,
+      "y": 1186.6799999999998,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "8136265008",
+      "text": "ASSET # 8136265008",
+      "x": 2292.8390000000004,
+      "y": 1207.536,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 3,
+   "pairs": [],
+   "openings": 3,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 3,
+   "pairs": [],
+   "openings": 3,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 0,
@@ -69,16 +128,24 @@
  "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
-   "applicable": false,
-   "reason": "no floor plan sheet found in this PDF (title blocks)",
+   "applicable": true,
+   "total": 3,
+   "pass": 3,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "plan_sheets": [
+    "A-102 p.4",
+    "A-401 p.9"
+   ],
    "plan_counts": {
-    "plan_sheets": 0,
-    "rooms": 0,
+    "plan_sheets": 2,
+    "rooms": 1,
     "corridors": 0,
-    "tags": 0,
+    "tags": 3,
     "unmatched_tags": 0,
     "schedule_marks": 3,
-    "marks_not_on_plan": 3,
+    "marks_not_on_plan": 0,
     "shared_marks": 0
    }
   },
@@ -452,6 +519,6 @@
    "why": "only reader B read this row"
   }
  ],
- "ms": 1780,
- "generated_at": "2026-10-10T13:29:12.111Z"
+ "ms": 1831,
+ "generated_at": "2026-10-11T08:58:39.598Z"
 }

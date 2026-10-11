@@ -25,14 +25,114 @@
    "doors": 3,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 3
   },
   "b": {
    "doors": 3,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 3
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 18,
+    "title": "Interior Elevations, Schedules & Details",
+    "rank": 2,
+    "scope": {
+     "address": "1500 WASHINGTON ST",
+     "asset_number": "8136252002",
+     "level": "1",
+     "site_number": "6252"
+    },
+    "sheet": "A-500",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "address",
+      "value": "1500 WASHINGTON ST",
+      "text": "1500 Washington St.",
+      "x": 2343.5918199999996,
+      "y": 1085.84183,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "6252",
+      "text": "SITE #: 6252",
+      "x": 2343.5918199999996,
+      "y": 1202.90717,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "8136252002",
+      "text": "ASSET #: 8136252002",
+      "x": 2343.5918199999996,
+      "y": 1226.91705,
+      "source": "title_block"
+     },
+     {
+      "field": "level",
+      "value": "1",
+      "text": "LEVEL 1",
+      "x": 504.49464999999987,
+      "y": 1215.37433,
+      "source": "sheet_label"
+     },
+     {
+      "field": "level",
+      "value": "1",
+      "text": "LEVEL 1",
+      "x": 1020.7477999999999,
+      "y": 1215.37433,
+      "source": "sheet_label"
+     },
+     {
+      "field": "level",
+      "value": "1",
+      "text": "LEVEL 1",
+      "x": 498.67085999999995,
+      "y": 1585.80762,
+      "source": "sheet_label"
+     },
+     {
+      "field": "level",
+      "value": "1",
+      "text": "LEVEL 1",
+      "x": 1088.32403,
+      "y": 1585.80762,
+      "source": "sheet_label"
+     },
+     {
+      "field": "level",
+      "value": "1",
+      "text": "LEVEL 1",
+      "x": 1622.42767,
+      "y": 1585.80762,
+      "source": "sheet_label"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 3,
+   "pairs": [],
+   "openings": 3,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 3,
+   "pairs": [],
+   "openings": 3,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 3,
@@ -84,11 +184,22 @@
  "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
-   "applicable": false,
-   "reason": "no floor plan sheet found in this PDF (title blocks)",
+   "applicable": true,
+   "total": 3,
+   "pass": 0,
+   "fail": 3,
+   "pass_rate": 0,
+   "examples": [
+    "mark 110 (schedule p.18) not tagged on any plan",
+    "mark 111 (schedule p.18) not tagged on any plan",
+    "mark 112 (schedule p.18) not tagged on any plan"
+   ],
+   "plan_sheets": [
+    "A-101 p.13"
+   ],
    "plan_counts": {
-    "plan_sheets": 0,
-    "rooms": 0,
+    "plan_sheets": 1,
+    "rooms": 12,
     "corridors": 0,
     "tags": 0,
     "unmatched_tags": 0,
@@ -123,6 +234,6 @@
  "tier": "agreed",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 1637,
- "generated_at": "2026-10-10T13:29:49.714Z"
+ "ms": 1668,
+ "generated_at": "2026-10-11T08:58:50.072Z"
 }

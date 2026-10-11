@@ -23,7 +23,7 @@ const EMPTY_SET = /^(-+|—|N\/?A|NONE|EXIST(ING)?\.?|\(E\)|BY OTHERS|B\/O|NIC|E
 
 export function oracleMarksOnPlan(doors, pages, cls) {
   if (!doors.length) return na("no door schedule rows");
-  const plan = readPlan(pages, doors.map((d) => ({ mark: d.mark, location: d.location || null, page: d.page })));
+  const plan = readPlan(pages, doors);
   if (!plan.counts.plan_sheets) return { ...na("no floor plan sheet found in this PDF (title blocks)"), plan_counts: plan.counts };
   const miss = plan.marks_not_on_plan;
   return out(doors.length, miss.length, miss.map((m) => "mark " + m.mark + " (schedule p." + m.page + ") not tagged on any plan"), { plan_sheets: plan.plan_sheets.map((s) => s.sheet + " p." + s.page), plan_counts: plan.counts });

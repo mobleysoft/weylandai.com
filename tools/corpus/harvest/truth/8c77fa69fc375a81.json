@@ -39,14 +39,64 @@
    "doors": 0,
    "sets": 37,
    "items": 262,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 0
   },
   "b": {
    "doors": 8,
    "sets": 37,
    "items": 250,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 8
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 115,
+    "title": "GENERAL INFORMATION",
+    "rank": 1,
+    "scope": {
+     "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+     "site": "STATE PARK"
+    },
+    "sheet": null,
+    "sheet_family": null,
+    "scope_evidence": [
+     {
+      "field": "facility_name",
+      "value": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+      "text": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
+      "x": 2336.9990652,
+      "y": 972.0003024,
+      "source": "title_block"
+     },
+     {
+      "field": "site",
+      "value": "STATE PARK",
+      "text": "STATE PARK",
+      "x": 2336.9990652,
+      "y": 972.0003024,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 0,
+   "pairs": [],
+   "openings": 0,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 8,
+   "pairs": [],
+   "openings": 8,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 0,
@@ -456,6 +506,6 @@
    "b": "351 CPS (HD Cush STP Arm) EB SA 087100"
   }
  ],
- "ms": 3322,
- "generated_at": "2026-10-10T13:29:00.148Z"
+ "ms": 4210,
+ "generated_at": "2026-10-11T08:56:05.274Z"
 }

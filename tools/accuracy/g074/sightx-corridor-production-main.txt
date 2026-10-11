@@ -1,0 +1,16 @@
+PASS browser has GPU WebGL
+PASS the schedule matches (3 lines)
+PASS WALK THIS SCHEDULE IN SIGHTX is offered once lines matched
+FAIL SightX hangs the matched openings in the corridor walls  [SightX needs hardware-accelerated 3D. This browser draws WebGL in software (or not at all), so the corridor stays off here; your matches are above.]
+FAIL the dossier lowers to show the corridor  [html.folder-lowered]
+FAIL the 3D corridor is on screen behind the dossier  [no backdrop iframe]
+FAIL the corridor loads without the space intro (no intro=1 in the SightX frame's address)  [no backdrop iframe]
+PASS Enter brings the dossier back
+FAIL the SightX chapter's LOWER THE DOSSIER shows the jobsite twin  [{"lowered":false,"backdrop":false}]
+PASS [raise dossier] brings the dossier back
+PASS the SightX page opens in the overlay
+PASS the pasted schedule builds a corridor of its doors (3 doors, 2 sets)
+PASS TOUR stops at a door and names it
+PASS stayed in place: same document, still on weylandai.com
+FAIL test data deleted (account rows, demo clones, uploads)  [{"clonesCaptured":1,"uploadsCaptured":0,"packagesBuilt":0,"error":"Command failed: npx wrangler d1 execute weyland_db --remote --json --command SELECT id FROM users WHERE lower(email) IN (NULL);\n\u001b[33m▲ \u001b[43;33m[\u001b[43;30mWARNING\u001b[43;33m]\u001b[0m \u001b[1mProxy environment variables detected. We'll use your proxy for fetch requests.\u001b[0m\n\n\n"}]
+9 passed, 6 failed

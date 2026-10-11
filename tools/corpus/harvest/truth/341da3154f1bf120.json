@@ -25,14 +25,73 @@
    "doors": 2,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 2
   },
   "b": {
    "doors": 2,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 2
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 15,
+    "title": "Interior Elevations & Door Schedule",
+    "rank": 3,
+    "scope": {
+     "address": "411 COLLEGE ST",
+     "asset_number": "8136251003",
+     "site_number": "6251"
+    },
+    "sheet": "A-600",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "address",
+      "value": "411 COLLEGE ST",
+      "text": "411 College St",
+      "x": 2340.8391,
+      "y": 1085.8796,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "6251",
+      "text": "SITE #: 6251",
+      "x": 2340.8391,
+      "y": 1202.7595,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "8136251003",
+      "text": "ASSET #: 8136251003",
+      "x": 2340.8391,
+      "y": 1226.7595,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 2,
+   "pairs": [],
+   "openings": 2,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 2,
+   "pairs": [],
+   "openings": 2,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 2,
@@ -73,7 +132,7 @@
   }
  },
  "triage_class": "schedule-only",
- "triage_from": "inferred (S=true H=false plan sheets=1)",
+ "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
    "applicable": true,
@@ -125,6 +184,6 @@
  "tier": "agreed",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 2795,
- "generated_at": "2026-10-10T13:24:29.144Z"
+ "ms": 3547,
+ "generated_at": "2026-10-11T08:55:28.050Z"
 }

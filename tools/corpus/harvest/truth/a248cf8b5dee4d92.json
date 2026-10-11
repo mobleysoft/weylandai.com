@@ -31,14 +31,34 @@
    "doors": 0,
    "sets": 20,
    "items": 123,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 0
   },
   "b": {
    "doors": 0,
    "sets": 20,
    "items": 108,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 0
+   "tables": 0,
+   "door_rows": 0
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [],
+  "a": {
+   "rows": 0,
+   "pairs": [],
+   "openings": 0,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 0,
+   "pairs": [],
+   "openings": 0,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 108,
@@ -253,6 +273,6 @@
    "why": "only reader A read this row"
   }
  ],
- "ms": 632,
- "generated_at": "2026-10-10T13:29:22.551Z"
+ "ms": 889,
+ "generated_at": "2026-10-11T08:55:54.039Z"
 }

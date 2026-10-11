@@ -25,14 +25,82 @@
    "doors": 7,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 7
   },
   "b": {
    "doors": 7,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 7
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 14,
+    "title": "INTERIOR",
+    "rank": 1,
+    "scope": {
+     "facility_name": "REPAIR & RENOVATE INTERIOR JUDICIARY LIBRARY",
+     "facility_number": "351113001",
+     "site": "LIBRARY",
+     "site_number": "1113"
+    },
+    "sheet": "A601",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "facility_name",
+      "value": "REPAIR & RENOVATE INTERIOR JUDICIARY LIBRARY",
+      "text": "REPAIR & RENOVATE INTERIOR JUDICIARY LIBRARY",
+      "x": 2337.839064864,
+      "y": 1008.1202879520001,
+      "source": "title_block"
+     },
+     {
+      "field": "site",
+      "value": "LIBRARY",
+      "text": "LIBRARY",
+      "x": 2337.839064864,
+      "y": 1008.1202879520001,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "1113",
+      "text": "SITE # 1113",
+      "x": 2337.119065152,
+      "y": 1179.3602194559999,
+      "source": "title_block"
+     },
+     {
+      "field": "facility_number",
+      "value": "351113001",
+      "text": "FACILITY # 351113001",
+      "x": 2338.079064768,
+      "y": 1201.560210576,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 7,
+   "pairs": [],
+   "openings": 7,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 7,
+   "pairs": [],
+   "openings": 7,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 7,
@@ -144,6 +212,6 @@
  "tier": "agreed",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 1407,
- "generated_at": "2026-10-10T13:24:45.737Z"
+ "ms": 1892,
+ "generated_at": "2026-10-11T08:55:35.130Z"
 }

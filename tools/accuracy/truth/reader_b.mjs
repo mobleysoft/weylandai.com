@@ -153,7 +153,7 @@ export function inchesOf(text) {
   const frac = (s) => { if (!s) return 0; const m = s.match(/^(\d+)\/(\d+)$/); return m && +m[2] ? +m[1] / +m[2] : 0; };
   let m = t.match(/^(\d{1,2})\s*'\s*-?\s*(\d{1,2})?(?:\s*-?\s*(\d+\/\d+))?\s*"?$/);
   if (m) return +m[1] * 12 + (m[2] ? +m[2] : 0) + frac(m[3]);
-  m = t.match(/^(\d{1,2})-(\d{1,2})$/); // 3-0 = 3'-0"
+  m = t.match(/^(\d{1,2})-(\d{1,2})\s*"?$/); // 3-0 = 3'-0"; also 7-0" with the apostrophe lost (a scanned cell)
   if (m && +m[2] < 12) return +m[1] * 12 + +m[2];
   m = t.match(/^(\d{1,3})(?:\s*[- ]\s*(\d+\/\d+))?\s*"$/);
   if (m) return +m[1] + frac(m[2]);

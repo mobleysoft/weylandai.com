@@ -25,14 +25,64 @@
    "doors": 4,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 4
   },
   "b": {
    "doors": 4,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 4
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 7,
+    "title": "FINISHES AND",
+    "rank": 2,
+    "scope": {
+     "asset_number": "9327005027",
+     "site_number": "7005"
+    },
+    "sheet": "A601",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "site_number",
+      "value": "7005",
+      "text": "7005",
+      "x": 2443.072941953201,
+      "y": 1160.21066,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "9327005027",
+      "text": "9327005027",
+      "x": 2443.072941953201,
+      "y": 1182.535582003,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 4,
+   "pairs": [],
+   "openings": 4,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 4,
+   "pairs": [],
+   "openings": 4,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 4,
@@ -90,14 +140,12 @@
     "mark 123A (schedule p.7) not tagged on any plan"
    ],
    "plan_sheets": [
-    "A101 p.5",
-    "A102 p.6",
-    "A602 p.8"
+    "A102 p.6"
    ],
    "plan_counts": {
-    "plan_sheets": 3,
-    "rooms": 90,
-    "corridors": 12,
+    "plan_sheets": 1,
+    "rooms": 44,
+    "corridors": 7,
     "tags": 2,
     "unmatched_tags": 0,
     "schedule_marks": 4,
@@ -131,6 +179,6 @@
  "tier": "agreed",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 1087,
- "generated_at": "2026-10-10T13:24:58.103Z"
+ "ms": 1389,
+ "generated_at": "2026-10-11T08:55:36.877Z"
 }

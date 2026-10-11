@@ -25,14 +25,81 @@
    "doors": 6,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 6
   },
   "b": {
    "doors": 6,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 6
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 118,
+    "title": "RENOVATION SO-1847",
+    "rank": 1,
+    "scope": {
+     "address": "3201 AVERILL DR; 560 5TH ST. NW",
+     "facility_name": "LANSING SCHOOL",
+     "site": "LANSING SCHOOL"
+    },
+    "sheet": "A101",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "facility_name",
+      "value": "LANSING SCHOOL",
+      "text": "LANSING SCHOOL",
+      "x": 2339.039064384,
+      "y": 826.20036072,
+      "source": "title_block"
+     },
+     {
+      "field": "site",
+      "value": "LANSING SCHOOL",
+      "text": "LANSING SCHOOL",
+      "x": 2339.039064384,
+      "y": 826.20036072,
+      "source": "title_block"
+     },
+     {
+      "field": "address",
+      "value": "3201 AVERILL DR",
+      "text": "3201 AVERILL DR",
+      "x": 2362.9190548320003,
+      "y": 983.640297744,
+      "source": "title_block"
+     },
+     {
+      "field": "address",
+      "value": "560 5TH ST. NW",
+      "text": "560 5th St. NW",
+      "x": 2452.919018832,
+      "y": 1359.480147408,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 6,
+   "pairs": [],
+   "openings": 6,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 6,
+   "pairs": [],
+   "openings": 6,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 0,
@@ -165,6 +232,6 @@
    "b": null
   }
  ],
- "ms": 1854,
- "generated_at": "2026-10-10T13:25:21.316Z"
+ "ms": 2183,
+ "generated_at": "2026-10-11T08:55:30.896Z"
 }

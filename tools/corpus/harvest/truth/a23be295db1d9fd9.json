@@ -23,14 +23,34 @@
    "doors": 0,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 0
   },
   "b": {
    "doors": 0,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 0
+   "tables": 0,
+   "door_rows": 0
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [],
+  "a": {
+   "rows": 0,
+   "pairs": [],
+   "openings": 0,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 0,
+   "pairs": [],
+   "openings": 0,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 0,
@@ -61,34 +81,34 @@
    "agreed": 0
   }
  },
- "triage_class": "none",
- "triage_from": "inferred (S=false H=false plan sheets=0)",
+ "triage_class": "spec-only",
+ "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
    "applicable": false,
-   "reason": "not for class none"
+   "reason": "not for class spec-only"
   },
   "sets_exist": {
    "applicable": false,
-   "reason": "not for class none"
+   "reason": "not for class spec-only"
   },
   "set_door_lists": {
    "applicable": false,
-   "reason": "not for class none"
+   "reason": "not for class spec-only"
   },
   "types_in_legend": {
    "applicable": false,
-   "reason": "not for class none"
+   "reason": "not for class spec-only"
   },
   "sizes_and_marks": {
    "applicable": false,
-   "reason": "not for class none"
+   "reason": "not for class spec-only"
   }
  },
  "tier": "unread",
  "unread_reason": "no door schedule or hardware set read by either reader",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 541,
- "generated_at": "2026-10-10T13:29:21.914Z"
+ "ms": 522,
+ "generated_at": "2026-10-11T08:58:43.379Z"
 }

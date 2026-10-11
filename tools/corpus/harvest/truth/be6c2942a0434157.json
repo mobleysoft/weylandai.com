@@ -25,14 +25,73 @@
    "doors": 18,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 18
   },
   "b": {
    "doors": 6,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 6
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 5,
+    "title": "INTERIOR LEGENDS & SCHEDULES",
+    "rank": 2,
+    "scope": {
+     "asset_number": "81362800001",
+     "facility_name": "SHOWER RENOVATIONS",
+     "site_number": "6280"
+    },
+    "sheet": "A701",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "facility_name",
+      "value": "SHOWER RENOVATIONS",
+      "text": "Shower Renovations,",
+      "x": 2336.879065248,
+      "y": 1012.0802863680001,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "6280",
+      "text": "6280",
+      "x": 2441.039023584,
+      "y": 1179.480219408,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "81362800001",
+      "text": "81362800001",
+      "x": 2441.039023584,
+      "y": 1201.6802105279999,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 18,
+   "pairs": [],
+   "openings": 18,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 6,
+   "pairs": [],
+   "openings": 6,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 0,
@@ -89,7 +148,7 @@
   }
  },
  "triage_class": "schedule-only",
- "triage_from": "inferred (S=true H=false plan sheets=3)",
+ "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
    "applicable": true,
@@ -332,6 +391,6 @@
    "b": null
   }
  ],
- "ms": 301,
- "generated_at": "2026-10-10T13:30:07.668Z"
+ "ms": 432,
+ "generated_at": "2026-10-11T08:56:05.792Z"
 }

@@ -25,14 +25,73 @@
    "doors": 33,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 33
   },
   "b": {
    "doors": 33,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 33
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 15,
+    "title": "DOORS",
+    "rank": 2,
+    "scope": {
+     "address": "712 ANDERSON STREET",
+     "facility_number": "8136272002",
+     "site_number": "6272"
+    },
+    "sheet": "A-300",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "address",
+      "value": "712 ANDERSON STREET",
+      "text": "712 ANDERSON STREET",
+      "x": 2339.282,
+      "y": 1075.559,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "6272",
+      "text": "6272",
+      "x": 2434.442,
+      "y": 1179.9589999999998,
+      "source": "title_block"
+     },
+     {
+      "field": "facility_number",
+      "value": "8136272002",
+      "text": "FACILITY # 8136272002",
+      "x": 2339.2819,
+      "y": 1202.1596,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 33,
+   "pairs": [],
+   "openings": 33,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 33,
+   "pairs": [],
+   "openings": 33,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 33,
@@ -82,22 +141,34 @@
   "marks_on_plan": {
    "applicable": true,
    "total": 33,
-   "pass": 33,
-   "fail": 0,
-   "pass_rate": 1,
-   "examples": [],
+   "pass": 0,
+   "fail": 33,
+   "pass_rate": 0,
+   "examples": [
+    "mark 101 (schedule p.15) not tagged on any plan",
+    "mark 101A (schedule p.15) not tagged on any plan",
+    "mark 102 (schedule p.15) not tagged on any plan",
+    "mark 102A (schedule p.15) not tagged on any plan",
+    "mark 103 (schedule p.15) not tagged on any plan",
+    "mark 103A (schedule p.15) not tagged on any plan",
+    "mark 104 (schedule p.15) not tagged on any plan",
+    "mark 105 (schedule p.15) not tagged on any plan",
+    "mark 106 (schedule p.15) not tagged on any plan",
+    "mark 107 (schedule p.15) not tagged on any plan",
+    "mark 107A (schedule p.15) not tagged on any plan",
+    "mark 108 (schedule p.15) not tagged on any plan"
+   ],
    "plan_sheets": [
-    "A-100 p.12",
-    "A-110 p.13"
+    "A-100 p.12"
    ],
    "plan_counts": {
-    "plan_sheets": 2,
-    "rooms": 38,
-    "corridors": 5,
-    "tags": 33,
+    "plan_sheets": 1,
+    "rooms": 26,
+    "corridors": 3,
+    "tags": 0,
     "unmatched_tags": 0,
     "schedule_marks": 33,
-    "marks_not_on_plan": 0,
+    "marks_not_on_plan": 33,
     "shared_marks": 0
    }
   },
@@ -141,6 +212,6 @@
  "tier": "agreed",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 3294,
- "generated_at": "2026-10-10T13:24:55.742Z"
+ "ms": 3802,
+ "generated_at": "2026-10-11T08:55:14.990Z"
 }

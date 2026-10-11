@@ -27,14 +27,55 @@
    "doors": 16,
    "sets": 1,
    "items": 2,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 16
   },
   "b": {
    "doors": 16,
    "sets": 1,
    "items": 2,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 5
+   "tables": 5,
+   "door_rows": 16
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 12,
+    "title": "DOOR SCHEDULE &",
+    "rank": 3,
+    "scope": {
+     "site_number": "7007"
+    },
+    "sheet": "A601",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "site_number",
+      "value": "7007",
+      "text": "SITE # 7007",
+      "x": 2336.7590652960002,
+      "y": 1161.60022656,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 16,
+   "pairs": [],
+   "openings": 16,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 16,
+   "pairs": [],
+   "openings": 16,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 16,
@@ -194,6 +235,6 @@
    "why": "only reader B read this row"
   }
  ],
- "ms": 361,
- "generated_at": "2026-10-10T13:24:29.652Z"
+ "ms": 478,
+ "generated_at": "2026-10-11T08:55:05.818Z"
 }

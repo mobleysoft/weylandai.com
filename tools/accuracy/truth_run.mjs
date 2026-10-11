@@ -28,11 +28,12 @@
 //   --key-sets <file>       named JSON list of SHA16s, resolving both harvest and repo PDFs;
 //                          --dir overrides the harvest location only in this mode
 //   --out <dir>             write the records and queue to <dir> (default tools/corpus/harvest/truth)
+//   --jobs <n>              parallel Node processes (default 1); queue order stays serial
 //   --max-pages <n>         skip PDFs with more pages (default 1200)
 //   --ocr-max-pages <n>     OCR a PDF with no text layer when it has at most n pages (default 6); --ocr-dpi (600)
 // Then: node tools/accuracy/truth_report.mjs  (the per-tier report).
 // Vector reads use vendored pdf.js; scans also require Poppler (pdfinfo / pdftoppm). No network or credentials.
-import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync, statSync } from "node:fs";
+import { readFileSync, writeFileSync, appendFileSync, existsSync, readdirSync, mkdirSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { dirname, join, resolve, relative, basename } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -41,11 +42,15 @@ import { loadPages, readSchedules } from "./truth/load_set.mjs";
 import { alignDoors, alignGroups, mergeGroups, summarize, disagreements, scoreDoorsVs, scoreGroupsVs, calibrateFields, N } from "./truth/agree.mjs";
 import { oracleMarksOnPlan, oracleSetsExist, oracleSetDoorLists, oracleTypesInLegend, oracleSizesAndMarks, ORACLES_FOR } from "./truth/oracles.mjs";
 import { readKeySets, recordedInputs } from "./truth/inputs.mjs";
+import { parseJobs, runShards, summaryLine } from "./truth/run_jobs.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const REPO = resolve(here, "../..");
 const argv = process.argv.slice(2);
 const opt = (k, d = null) => { const i = argv.indexOf("--" + k); return i >= 0 && argv[i + 1] && !argv[i + 1].startsWith("--") ? argv[i + 1] : d; };
+const JOBS = parseJobs(argv);
+// Internal input snapshot retains metadata and expected hashes for every selection mode.
+const shard = opt("truth-shard") ? JSON.parse(readFileSync(opt("truth-shard"), "utf8")) : null;
 // --out <dir>: write the records and the queue there instead (a run to compare with compare_runs.mjs).
 const OUT = opt("out") ? resolve(opt("out")) : join(REPO, "tools/corpus/harvest/truth");
 const MAX_PAGES = +opt("max-pages", 1200);
@@ -79,7 +84,13 @@ const familyOf = (label) => {
 let files = [];
 const meta = new Map(); // abs path -> { family, source, label }
 const expectedSha = new Map();
-if (keySets || NON_HARVEST) {
+if (shard) {
+  for (const entry of shard.entries) {
+    files.push(entry.file);
+    if (entry.meta) meta.set(entry.file, entry.meta);
+    if (entry.expectedSha) expectedSha.set(entry.file, entry.expectedSha);
+  }
+} else if (keySets || NON_HARVEST) {
   const selected = recordedInputs({ repo: REPO, harvestDir: opt("dir") ? resolve(opt("dir")) : null,
     shas: ONLY, nonHarvest: NON_HARVEST, occPdf: process.env.OCC_PDF });
   for (const { file, record } of selected) {
@@ -153,19 +164,23 @@ async function analyze(file) {
   rec.page_count = pdf.numPages;
   if (pdf.numPages > MAX_PAGES) { return { ...rec, tier: "unread", error: "more than " + MAX_PAGES + " pages; rerun with --max-pages" }; }
   const pages = await loadPages(pdf);
-  const { textPages, doorPages, hwPages, doorsA, doorsB, tableBoxes, hwA, hwB, readerNotes, ocr } =
+  const { textPages, doorPages, hwPages, doorsA, doorsB, doorRowsA, doorRowsB, doorResolution, tableBoxes, hwA, hwB, readerNotes, ocr } =
     await readSchedules(pdf, pages, { file, ocrMax: OCR_MAX, ocrDpi: OCR_DPI });
   rec.text_layer = { pages_with_text: textPages, pages: pdf.numPages };
   if (ocr) rec.ocr = ocr;
   const groupsA = mergeGroups(hwA.filter((x) => x.groups.length)), groupsB = mergeGroups(hwB.filter((x) => x.groups.length));
   // A schedule page or a hardware page is one where either reader read rows.
-  const schedPages = [...new Set([...doorsA, ...doorsB].map((d) => d.page))].sort((a, b) => a - b);
+  const schedPages = [...new Set([...doorRowsA, ...doorRowsB].map((d) => d.page))].sort((a, b) => a - b);
   const hwRead = [...new Set([...hwA, ...hwB].filter((x) => x.groups.some((g) => g.items.length)).map((x) => x.page))].sort((a, b) => a - b);
   rec.pages = { door_candidates: doorPages.length, hardware_candidates: hwPages.length, door_schedule_pages: schedPages, hardware_pages: hwRead };
   rec.readers = {
     a: { doors: doorsA.length, sets: groupsA.length, items: groupsA.reduce((n, g) => n + g.items.length, 0), name: rec.ocr ? "production OCR + schedule line reader (Poppler renderer)" : "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)" },
     b: { doors: doorsB.length, sets: groupsB.length, items: groupsB.reduce((n, g) => n + g.items.length, 0), name: "geometry first (tools/accuracy/truth/reader_b.mjs)", tables: Object.values(tableBoxes).flat().length },
   };
+  // doors/agreement/oracles count openings; door_rows preserves the extracted evidence count.
+  rec.readers.a.door_rows = doorRowsA.length;
+  rec.readers.b.door_rows = doorRowsB.length;
+  rec.door_resolution = doorResolution;
   if (readerNotes.length) rec.reader_notes = readerNotes.slice(0, 20);
 
   // Agreement.
@@ -235,26 +250,58 @@ async function analyze(file) {
 }
 
 // ---------------------------------------------------------------- run
-const queueFile = join(OUT, "queue.jsonl");
-const done = new Set();
-const queueNew = [];
-let errors = 0;
-for (const f of files) {
-  if (!existsSync(f)) { console.log("missing", f); errors++; continue; }
-  process.stdout.write(rel(f) + " ... ");
-  let r;
-  try { r = await analyze(f); } catch (e) { console.log("error", e.stack); errors++; continue; }
-  if (!r) { console.log("skipped"); continue; }
-  const rec = r.rec || r;
-  writeFileSync(join(OUT, rec.sha16 + ".json"), JSON.stringify(rec, null, 1) + "\n");
-  done.add(rec.sha16);
-  for (const d of r.dis || []) queueNew.push({ sha16: rec.sha16, file: rec.file, family: rec.family, tier: rec.tier, ...d });
-  const or = Object.entries(rec.oracles || {}).filter(([, o]) => o.applicable).map(([k, o]) => k + " " + o.pass + "/" + o.total).join(", ");
-  console.log(rec.tier, "| class", rec.triage_class, "| A", JSON.stringify(rec.readers && rec.readers.a && { d: rec.readers.a.doors, i: rec.readers.a.items }), "B", JSON.stringify(rec.readers && rec.readers.b && { d: rec.readers.b.doors, i: rec.readers.b.items }), "| agree", rec.agreement_rate, "(" + rec.rows_agreed + "/" + rec.rows_total + ") | oracles", or || "none", "|", Math.round((rec.ms || 0) / 1000) + "s", rec.error || "");
+let entries = [];
+if (!shard && JOBS > 1 && files.length > 1) {
+  entries = files.map((file, index) => {
+    const entry = { file, index, meta: meta.get(file), expectedSha: expectedSha.get(file) };
+    // Hash one PDF at a time, without retaining its bytes. This also prevents concurrent
+    // record writes for duplicate content and applies --only before allocating workers.
+    try {
+      const bytes = readFileSync(file);
+      entry.sha16 = createHash("sha256").update(bytes).digest("hex").slice(0, 16);
+      entry.bytes = bytes.length;
+    } catch { /* Let the serial per-file error path report unreadable/missing inputs. */ }
+    return entry;
+  }).filter(e => !ONLY || !e.sha16 || ONLY.includes(e.sha16) || (e.expectedSha && e.expectedSha !== e.sha16));
 }
-const kept = existsSync(queueFile) ? readFileSync(queueFile, "utf8").split("\n").filter(Boolean).filter((l) => { try { return !done.has(JSON.parse(l).sha16); } catch (_) { return false; } }) : [];
-writeFileSync(queueFile, kept.concat(queueNew.map((q) => JSON.stringify(q))).join("\n") + "\n");
-console.log("truth records:", done.size, "queue lines:", kept.length + queueNew.length, "(" + queueNew.length + " from this run)");
-const missing = (ONLY || [...expectedSha.values()]).filter(sha => !done.has(sha));
-if (missing.length) console.error("Requested records not regenerated:", missing.join(", "));
-if (errors || missing.length) process.exitCode = 1;
+if (entries.length > 1) {
+  const result = await runShards({ entries, jobs: JOBS, out: OUT, script: fileURLToPath(import.meta.url), argv });
+  const missing = (ONLY || [...expectedSha.values()]).filter(sha => !result.done.has(sha));
+  if (missing.length) console.error("Requested records not regenerated:", missing.join(", "));
+  if (result.errors || missing.length) process.exitCode = 1;
+} else {
+  const queueFile = join(OUT, "queue.jsonl");
+  const done = new Set();
+  const queueNew = [];
+  let errors = 0;
+  if (shard) writeFileSync(shard.queueFile, "");
+  for (const [index, f] of files.entries()) {
+    const report = (log, sha16 = null, queue = []) => {
+      if (shard) appendFileSync(shard.queueFile, JSON.stringify({ index: shard.entries[index].index, sha16, queue, log }) + "\n");
+      else console.log(log);
+    };
+    if (!existsSync(f)) { report("missing " + f); errors++; continue; }
+    const prefix = rel(f) + " ... ";
+    if (!shard) process.stdout.write(prefix);
+    let r;
+    try { r = await analyze(f); } catch (e) { report((shard ? prefix : "") + "error " + e.stack); errors++; continue; }
+    if (!r) { report((shard ? prefix : "") + "skipped"); continue; }
+    const rec = r.rec || r;
+    writeFileSync(join(OUT, rec.sha16 + ".json"), JSON.stringify(rec, null, 1) + "\n");
+    done.add(rec.sha16);
+    const queue = (r.dis || []).map(d => JSON.stringify({ sha16: rec.sha16, file: rec.file, family: rec.family, tier: rec.tier, ...d }));
+    if (!shard) queueNew.push(...queue);
+    const or = Object.entries(rec.oracles || {}).filter(([, o]) => o.applicable).map(([k, o]) => k + " " + o.pass + "/" + o.total).join(", ");
+    const line = [rec.tier, "| class", rec.triage_class, "| A", JSON.stringify(rec.readers && rec.readers.a && { d: rec.readers.a.doors, i: rec.readers.a.items }), "B", JSON.stringify(rec.readers && rec.readers.b && { d: rec.readers.b.doors, i: rec.readers.b.items }), "| agree", rec.agreement_rate, "(" + rec.rows_agreed + "/" + rec.rows_total + ") | oracles", or || "none", "|", Math.round((rec.ms || 0) / 1000) + "s", rec.error || ""].map(String).join(" ");
+    report((shard ? prefix : "") + line, rec.sha16, queue);
+  }
+  if (!shard) {
+    const kept = existsSync(queueFile) ? readFileSync(queueFile, "utf8").split("\n").filter(Boolean).filter((l) => { try { return !done.has(JSON.parse(l).sha16); } catch (_) { return false; } }) : [];
+    writeFileSync(queueFile, kept.concat(queueNew).join("\n") + "\n");
+    console.log(summaryLine(done.size, kept.length + queueNew.length, queueNew.length));
+    const missing = (ONLY || [...expectedSha.values()]).filter(sha => !done.has(sha));
+    if (missing.length) console.error("Requested records not regenerated:", missing.join(", "));
+    if (missing.length) errors++;
+  }
+  if (errors) process.exitCode = 1;
+}

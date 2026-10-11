@@ -25,14 +25,91 @@
    "doors": 1,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 1
   },
   "b": {
    "doors": 1,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 1
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 4,
+    "title": "COTTAGES A-E",
+    "rank": 2,
+    "scope": {
+     "address": "1901 PENNSYLVANIA AVENUE",
+     "asset_number": "6517390003-7",
+     "facility_name": "HAWTHORN CHILDREN'S PSYCHIATRIC HOSPITAL",
+     "site": "PSYCHIATRIC HOSPITAL",
+     "site_number": "7390"
+    },
+    "sheet": "A-101",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "facility_name",
+      "value": "HAWTHORN CHILDREN'S PSYCHIATRIC HOSPITAL",
+      "text": "HAWTHORN CHILDREN'S PSYCHIATRIC HOSPITAL",
+      "x": 2319.78000463956,
+      "y": 1090.4421587248844,
+      "source": "title_block"
+     },
+     {
+      "field": "site",
+      "value": "PSYCHIATRIC HOSPITAL",
+      "text": "PSYCHIATRIC HOSPITAL",
+      "x": 2319.78000463956,
+      "y": 1090.4421587248844,
+      "source": "title_block"
+     },
+     {
+      "field": "address",
+      "value": "1901 PENNSYLVANIA AVENUE",
+      "text": "1901 PENNSYLVANIA AVENUE",
+      "x": 2319.78000463956,
+      "y": 1107.6628787593258,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "7390",
+      "text": "7390",
+      "x": 2416.863964833728,
+      "y": 1183.085938910172,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "6517390003-7",
+      "text": "6517390003-7",
+      "x": 2416.863964833728,
+      "y": 1204.5067789530135,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 1,
+   "pairs": [],
+   "openings": 1,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 1,
+   "pairs": [],
+   "openings": 1,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 0,
@@ -145,6 +222,6 @@
    "b": "MECHANICAL ROOM"
   }
  ],
- "ms": 354,
- "generated_at": "2026-10-10T13:25:12.163Z"
+ "ms": 422,
+ "generated_at": "2026-10-11T08:55:26.386Z"
 }

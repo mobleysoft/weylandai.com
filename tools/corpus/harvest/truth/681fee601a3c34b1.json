@@ -27,14 +27,90 @@
    "doors": 26,
    "sets": 2,
    "items": 7,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 26
   },
   "b": {
    "doors": 26,
    "sets": 2,
    "items": 5,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 26
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 27,
+    "title": "DOOR & FRAME SCHEDULES",
+    "rank": 2,
+    "scope": {
+     "address": "801 ARMORY DRIVE",
+     "asset_number": "8136292001",
+     "level": "01; 02",
+     "site_number": "6292"
+    },
+    "sheet": "A701",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "address",
+      "value": "801 ARMORY DRIVE",
+      "text": "801 ARMORY DRIVE,",
+      "x": 2339.8355238275,
+      "y": 1107.2584499475001,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "6292",
+      "text": "6292",
+      "x": 2435.93799,
+      "y": 1199.46335,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "8136292001",
+      "text": "8136292001",
+      "x": 2436.05302323,
+      "y": 1221.9140587775,
+      "source": "title_block"
+     },
+     {
+      "field": "level",
+      "value": "01",
+      "text": "LEVEL 01",
+      "x": 1422.3484,
+      "y": 937.37859,
+      "source": "sheet_label"
+     },
+     {
+      "field": "level",
+      "value": "02",
+      "text": "LEVEL 02",
+      "x": 1422.3484,
+      "y": 1261.14342945,
+      "source": "sheet_label"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 26,
+   "pairs": [],
+   "openings": 26,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 26,
+   "pairs": [],
+   "openings": 26,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 26,
@@ -84,10 +160,23 @@
   "marks_on_plan": {
    "applicable": true,
    "total": 26,
-   "pass": 26,
-   "fail": 0,
-   "pass_rate": 1,
-   "examples": [],
+   "pass": 0,
+   "fail": 26,
+   "pass_rate": 0,
+   "examples": [
+    "mark 102 (schedule p.27) not tagged on any plan",
+    "mark 103B (schedule p.27) not tagged on any plan",
+    "mark 103C (schedule p.27) not tagged on any plan",
+    "mark 104 (schedule p.27) not tagged on any plan",
+    "mark 105 (schedule p.27) not tagged on any plan",
+    "mark 106 (schedule p.27) not tagged on any plan",
+    "mark 107A (schedule p.27) not tagged on any plan",
+    "mark 108 (schedule p.27) not tagged on any plan",
+    "mark 110A (schedule p.27) not tagged on any plan",
+    "mark 111 (schedule p.27) not tagged on any plan",
+    "mark 112 (schedule p.27) not tagged on any plan",
+    "mark 113A (schedule p.27) not tagged on any plan"
+   ],
    "plan_sheets": [
     "A201 p.18",
     "A203 p.20",
@@ -97,10 +186,10 @@
     "plan_sheets": 3,
     "rooms": 127,
     "corridors": 12,
-    "tags": 26,
-    "unmatched_tags": 55,
+    "tags": 0,
+    "unmatched_tags": 0,
     "schedule_marks": 26,
-    "marks_not_on_plan": 0,
+    "marks_not_on_plan": 26,
     "shared_marks": 0
    }
   },
@@ -253,6 +342,6 @@
    "why": "only reader B read this row"
   }
  ],
- "ms": 4823,
- "generated_at": "2026-10-10T13:25:46.800Z"
+ "ms": 6421,
+ "generated_at": "2026-10-11T08:56:05.188Z"
 }

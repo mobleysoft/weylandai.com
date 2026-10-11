@@ -25,14 +25,81 @@
    "doors": 75,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 75
   },
   "b": {
    "doors": 75,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 75
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 63,
+    "title": "DOOR SCHEDULE & DOOR/FRAME TYPES",
+    "rank": 3,
+    "scope": {
+     "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+     "asset_number": "9327033001",
+     "site_number": "7033"
+    },
+    "sheet": "A-501",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "address",
+      "value": "1740 WALNUT ST",
+      "text": "1740 Walnut St",
+      "x": 2358.719056512,
+      "y": 874.440341424,
+      "source": "title_block"
+     },
+     {
+      "field": "address",
+      "value": "2303 WEST 20TH STREET",
+      "text": "2303 WEST 20TH STREET",
+      "x": 2338.319064672,
+      "y": 1177.5602201759998,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "7033",
+      "text": "7033",
+      "x": 2434.079026368,
+      "y": 1257.0001884,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "9327033001",
+      "text": "9327033001",
+      "x": 2434.079026368,
+      "y": 1279.20017952,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 75,
+   "pairs": [],
+   "openings": 75,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 75,
+   "pairs": [],
+   "openings": 75,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 71,
@@ -189,6 +256,6 @@
    "b": 36
   }
  ],
- "ms": 8620,
- "generated_at": "2026-10-10T13:26:12.096Z"
+ "ms": 11163,
+ "generated_at": "2026-10-11T08:56:21.406Z"
 }
