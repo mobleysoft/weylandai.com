@@ -178,3 +178,71 @@ test("--check compares Git HEAD, fails on loss, and does not overwrite working r
     assert.throws(() => execFileSync(process.execPath, ["--input-type=module", "-e", script], { stdio: "pipe" }), (e) => e.status === 1);
   } finally { rmSync(temp, { recursive: true, force: true }); }
 });
+
+// g081: a landing measures its merged tree against main's committed baselines (--base), and a loss accepted by name
+// (--allow, the same list the truth compare takes) is reported instead of failing.
+function checkRepo(prefix) {
+  const temp = mkdtempSync(join(tmpdir(), prefix));
+  const git = (...args) => execFileSync("git", args, { cwd: temp, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
+  git("init", "-q");
+  const sha = "4847b09e633103f7", recordDir = join(temp, "tools/corpus/harvest/placement");
+  const truthDir = join(temp, "tools/corpus/harvest/truth"), downloads = join(temp, "downloads");
+  for (const dir of [recordDir, truthDir, downloads]) mkdirSync(dir, { recursive: true });
+  copyFileSync(join(repo, "tools/corpus/harvest/truth", sha + ".json"), join(truthDir, sha + ".json"));
+  copyFileSync(join(repo, "tools/bidset/out/weylandai-building-bidset.pdf"), join(downloads, sha + ".pdf"));
+  const commitBaseline = (placed, message) => {
+    const baseline = fixture(); baseline.set.sha16 = sha; baseline.set.tier = "exact";
+    baseline.summary.marks_placed = placed;
+    writeFileSync(join(recordDir, sha + ".json"), stableJSON(baseline));
+    git("add", "tools/corpus/harvest/placement");
+    git("-c", "user.name=Placement Test", "-c", "user.email=test@example.invalid", "-c", "commit.gpgsign=false", "commit", "-qm", message);
+  };
+  return { temp, sha, recordDir, downloads, commitBaseline };
+}
+
+test("--check --base reads another ref's baselines; --allow reports a named loss without failing", async () => {
+  const { temp, sha, downloads, commitBaseline } = checkRepo("g081-base-");
+  try {
+    commitBaseline(100000, "main's baseline");
+    commitBaseline(1, "a branch rewrites its own baseline");
+    const quiet = { repo: temp, dir: downloads, check: true, log: () => {} };
+    assert.deepEqual((await runPlacement({ ...quiet })).errors, [], "HEAD's own rewritten baseline hides the loss");
+    const main = await runPlacement({ ...quiet, base: "HEAD~1" });
+    assert.equal(main.errors.length, 1);
+    assert.match(main.errors[0], /^4847b09e633103f7: marks_placed 100000 -> \d+$/);
+    const lines = [];
+    const allowed = await runPlacement({ ...quiet, base: "HEAD~1", allow: [sha], log: (line) => lines.push(line) });
+    assert.deepEqual(allowed.errors, []);
+    assert.equal(allowed.allowed.length, 1);
+    assert.match(allowed.allowed[0], /^4847b09e633103f7: marks_placed 100000 -> /);
+    assert.ok(lines.some((line) => line.startsWith("ALLOWED: 4847b09e633103f7: marks_placed 100000 -> ")));
+    assert.ok(lines.includes("Baselines from HEAD~1; allowed: 4847b09e633103f7"));
+    const unused = [];
+    await runPlacement({ ...quiet, allow: [sha, "0123456789abcdef"], log: (line) => unused.push(line) });
+    assert.ok(unused.includes("Allowed without a loss: 4847b09e633103f7, 0123456789abcdef"));
+    assert.throws(() => committedPlacements(temp, "--output=/tmp/x"), /plain Git ref/);
+    assert.throws(() => committedPlacements(temp, "HEAD..HEAD~1"), /plain Git ref/);
+    const cli = new URL("./placement_run.mjs", import.meta.url).pathname;
+    const run = (...args) => execFileSync(process.execPath, [cli, ...args], { cwd: temp, encoding: "utf8", stdio: "pipe" });
+    assert.throws(() => run("--dir", downloads, "--allow", sha), /apply only to --check/);
+    assert.throws(() => run("--dir", downloads, "--check", "--allow", "not-a-sha"), /comma-separated sha16/);
+  } finally { rmSync(temp, { recursive: true, force: true }); }
+});
+
+test("a full regeneration removes records of sets no longer eligible; --only and narrow tiers remove nothing", async () => {
+  const { temp, sha, recordDir, downloads } = checkRepo("g081-prune-");
+  try {
+    const stale = join(recordDir, "0123456789abcdef.json");
+    writeFileSync(stale, "{}\n");
+    const narrow = await runPlacement({ repo: temp, dir: downloads, tiers: ["exact"], log: () => {} });
+    assert.deepEqual(narrow.pruned, []);
+    const only = await runPlacement({ repo: temp, dir: downloads, only: [sha], log: () => {} });
+    assert.deepEqual(only.pruned, []);
+    assert.equal(readFileSync(stale, "utf8"), "{}\n");
+    const full = await runPlacement({ repo: temp, dir: downloads, log: () => {} });
+    assert.deepEqual(full.errors, []);
+    assert.deepEqual(full.pruned, ["0123456789abcdef"]);
+    assert.throws(() => readFileSync(stale), /ENOENT/);
+    assert.equal(JSON.parse(readFileSync(join(recordDir, sha + ".json"), "utf8")).set.sha16, sha);
+  } finally { rmSync(temp, { recursive: true, force: true }); }
+});
