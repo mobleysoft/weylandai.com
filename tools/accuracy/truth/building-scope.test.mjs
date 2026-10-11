@@ -201,3 +201,28 @@ test('affirmative facility or number evidence separates plans even when generic 
     assert.ok(r.sheets.every(s => s.schedule_selection.rule === 'building-scope-then-similarity'));
   }
 });
+
+test('g082: the strongest building evidence wins before similarity (R2502-01 rebid class)', () => {
+  // The restroom schedule shares only the facility name, but its block reads like the plan's (project and architect
+  // lines); the dorm door schedule shares the facility name and the site and facility numbers under a generic block.
+  const shared = ['PROJECT DORM RENOVATION PHASE TWO', 'ARCHITECT SMITH AND JONES'];
+  const restroom = page(1, ['FACILITY: NORTH SCHOOL', ...shared]);
+  const dorm = page(2, ['FACILITY: NORTH SCHOOL', 'SITE # 100', 'FACILITY # 7']);
+  dorm.items.find(it => it.str === 'DOOR SCHEDULE').str = 'OPENING DETAILS';
+  const plan = page(3, ['FACILITY: NORTH SCHOOL', 'SITE # 100', 'FACILITY # 7', ...shared]);
+  plan.items.find(it => it.str === 'DOOR SCHEDULE').str = 'FLOOR PLAN';
+  plan.items.push(item('101', 300, 500), item('102', 600, 700));
+  const row = (page, mark) => ({ page, mark, width_inches: 36, height_inches: 84 });
+  const rows = [row(1, '201'), row(1, '202'), row(2, '101'), row(2, '102')];
+  const r = buildPlacement({ sha16: 'fixture' }, [restroom, dorm, plan], rows);
+  const selection = r.sheets.find(s => s.page === 3).schedule_selection;
+  assert.deepEqual(selection.candidates.map(c => [c.page, c.matched.length]), [[1, 1], [2, 3]]);
+  assert.equal(selection.rule, 'strongest-building-scope-then-similarity');
+  assert.deepEqual(selection.kept_pages, [2]);
+  assert.deepEqual(r.tags.map(t => [t.mark, t.page]), [['101', 3], ['102', 3]]);
+  // Equal evidence keeps the previous rule and its similarity tie-break.
+  const equal = page(4, ['FACILITY: NORTH SCHOOL', ...shared]);
+  equal.items.find(it => it.str === 'DOOR SCHEDULE').str = 'FLOOR PLAN';
+  const e = buildPlacement({ sha16: 'fixture' }, [restroom, dorm, equal], rows);
+  assert.equal(e.sheets.find(s => s.page === 4).schedule_selection.rule, 'building-scope-then-similarity');
+});
