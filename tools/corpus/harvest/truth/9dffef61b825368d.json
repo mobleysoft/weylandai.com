@@ -23,7 +23,7 @@
  },
  "readers": {
   "a": {
-   "doors": 35,
+   "doors": 53,
    "sets": 0,
    "items": 0,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
@@ -36,32 +36,32 @@
    "tables": 2
   }
  },
- "rows_agreed": 31,
- "rows_disputed": 23,
- "rows_total": 54,
- "agreement_rate": 0.5741,
+ "rows_agreed": 47,
+ "rows_disputed": 6,
+ "rows_total": 53,
+ "agreement_rate": 0.8868,
  "agreement": {
   "doors": {
-   "rows": 54,
-   "agreed": 31,
-   "disputed": 3,
-   "only_a": 1,
-   "only_b": 19,
+   "rows": 53,
+   "agreed": 47,
+   "disputed": 6,
+   "only_a": 0,
+   "only_b": 0,
    "fields": {
     "width_inches": {
-     "agree": 34,
-     "total": 34
+     "agree": 53,
+     "total": 53
     },
     "height_inches": {
-     "agree": 33,
-     "total": 34
+     "agree": 51,
+     "total": 53
     },
     "door_type": {
-     "agree": 24,
+     "agree": 22,
      "total": 27
     }
    },
-   "agreement_rate": 0.5741
+   "agreement_rate": 0.8868
   },
   "items": {
    "rows": 0,
@@ -82,21 +82,23 @@
  "oracles": {
   "marks_on_plan": {
    "applicable": true,
-   "total": 35,
+   "total": 53,
    "pass": 25,
-   "fail": 10,
-   "pass_rate": 0.7143,
+   "fail": 28,
+   "pass_rate": 0.4717,
    "examples": [
     "mark 116A (schedule p.5) not tagged on any plan",
     "mark 119D (schedule p.5) not tagged on any plan",
-    "mark 201A (schedule p.5) not tagged on any plan",
     "mark 101A (schedule p.14) not tagged on any plan",
     "mark 102A (schedule p.14) not tagged on any plan",
     "mark 103A (schedule p.14) not tagged on any plan",
     "mark 104A (schedule p.14) not tagged on any plan",
     "mark 104B (schedule p.14) not tagged on any plan",
     "mark 105A (schedule p.14) not tagged on any plan",
-    "mark 106A (schedule p.14) not tagged on any plan"
+    "mark 106A (schedule p.14) not tagged on any plan",
+    "mark 107A (schedule p.14) not tagged on any plan",
+    "mark 110A (schedule p.14) not tagged on any plan",
+    "mark 110B (schedule p.14) not tagged on any plan"
    ],
    "plan_sheets": [
     "A1.1 p.11"
@@ -107,8 +109,9 @@
     "corridors": 0,
     "tags": 25,
     "unmatched_tags": 0,
-    "schedule_marks": 35,
-    "marks_not_on_plan": 10
+    "schedule_marks": 53,
+    "marks_not_on_plan": 28,
+    "shared_marks": 0
    }
   },
   "sets_exist": {
@@ -125,29 +128,21 @@
   },
   "sizes_and_marks": {
    "applicable": true,
-   "total": 35,
-   "pass": 33,
+   "total": 53,
+   "pass": 51,
    "fail": 2,
-   "pass_rate": 0.9429,
+   "pass_rate": 0.9623,
    "examples": [
-    "mark 111A p.5: size \"3'-0\\\" x 7'-0\\\" MARK\" -> 36 x null",
-    "mark 201A p.5: size \"6'-0\\\" x 6'-8\\\" DRAWN DOOR TO ATTIC MECHANICAL\" -> 72 x null"
+    "mark 122A p.5: size \"3'-0\\\" x 7'-0\\\" 6'-0\\\"\" -> 36 x null",
+    "mark 122A p.14: size \"3'-0\\\" x 7'-0\\\" 3'-0\\\"\" -> 36 x null"
    ],
    "size_fail": 2,
    "mark_fail": 0
   }
  },
  "tier": "agreed",
- "disagreement_count": 24,
+ "disagreement_count": 7,
  "disagreements": [
-  {
-   "kind": "door",
-   "page": 5,
-   "key": "111A",
-   "field": "height_inches",
-   "a": null,
-   "b": 84
-  },
   {
    "kind": "door",
    "page": 5,
@@ -159,9 +154,17 @@
   {
    "kind": "door",
    "page": 5,
+   "key": "114A",
+   "field": "door_type",
+   "a": "C SHEET",
+   "b": "C"
+  },
+  {
+   "kind": "door",
+   "page": 5,
    "key": "119D",
    "field": "door_type",
-   "a": "PROJECTC",
+   "a": "C PROJECT DATE:",
    "b": "PROJECT C"
   },
   {
@@ -175,184 +178,28 @@
   {
    "kind": "door",
    "page": 5,
-   "key": "201A",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "122A",
+   "field": "height_inches",
+   "a": null,
+   "b": 84
   },
   {
    "kind": "door",
-   "page": 14,
-   "key": "107A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 14,
-   "key": "110A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 14,
-   "key": "110B",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 14,
-   "key": "111A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 14,
-   "key": "112A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 14,
-   "key": "113A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 14,
-   "key": "114A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 14,
-   "key": "114B",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 14,
-   "key": "115A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 14,
-   "key": "116A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 14,
-   "key": "117A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 14,
-   "key": "118A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 14,
-   "key": "118B",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 14,
-   "key": "119A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 14,
-   "key": "119B",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 14,
-   "key": "119C",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 14,
-   "key": "120A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 14,
-   "key": "121A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "page": 5,
+   "key": "122A",
+   "field": "door_type",
+   "a": "C E",
+   "b": "C"
   },
   {
    "kind": "door",
    "page": 14,
    "key": "122A",
-   "field": "(row)",
+   "field": "height_inches",
    "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "b": 84
   }
  ],
- "ms": 5464,
- "generated_at": "2026-10-09T09:16:04.324Z"
+ "ms": 1389,
+ "generated_at": "2026-10-11T04:29:56.807Z"
 }
