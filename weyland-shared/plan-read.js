@@ -21,7 +21,10 @@
 // Nothing is guessed silently: each tag says how its room was found (room_by), and a room found
 // only as the nearest label is marked unsure.
 
-const SHEET_RE = /^[A-Z]{1,3}-?\d{1,3}(?:[.-]\d{1,3})?[A-Z]?$/;
+import { buildingScope, comparePlacementScopes } from "./building-scope.js";
+
+const SHEET_RE = /^[A-Z]{1,3}-?\d{1,3}(?:[.-]\d{1,3})?(?:[.-]?[A-Z])?$/;
+const LEGACY_SHEET_RE = /^[A-Z]{1,3}-?\d{1,3}(?:[.-]\d{1,3})?[A-Z]?$/;
 const ROOM_NO_RE = /^(?:[A-Z]{0,2}-?\d{1,4}(?:\.\d{1,2})?[A-Z]?|[A-Z]{1,2}\d{1,3})$/;
 const NOT_A_PLAN = /\b(SITE|ROOF|REFLECTED|CEILING|RCP|DEMO(LITION)?|FURNITURE|FINISH(ES)?|SIGNAGE|FOUNDATION|FRAMING|ELECTRICAL|LIGHTING|POWER|PLUMBING|MECHANICAL|HVAC|FIRE ALARM|SPRINKLER|LIFE SAFETY|EGRESS|CODE|PHASING|PAVING|GRADING|UTILITY|LANDSCAPE|IRRIGATION|STRUCTURAL|SLAB|TECHNOLOGY|DATA|KEY PLAN)\b/;
 const CORRIDOR_RE = /\b(CORR(IDOR)?|HALL(WAY)?|VEST(IBULE)?|LOBBY|ENTRY|CIRC(ULATION)?|EXIT\s*PASSAGE(WAY)?)\b/;
@@ -66,24 +69,34 @@ function offDrawing(p, it) { return !!(it.rot || 0) || it.x > p.width * 0.95; }
 
 /** The sheet number and title each page's title block prints. boiler: strings repeated on most sheets. */
 export function titleBlocks(pages) {
+  const legacy = readTitleBlocks(pages, true);
+  const extended = readTitleBlocks(pages, false);
+  // New evidence may add plans, but never remove or rename a legacy plan.
+  return extended.map((tb, i) => legacy[i].plan
+    ? { ...legacy[i], plan_rule: 'legacy' }
+    : { ...tb, plan_rule: tb.plan ? 'extended-title' : null });
+}
+
+function readTitleBlocks(pages, legacy) {
+  const sheetRE = legacy ? LEGACY_SHEET_RE : SHEET_RE;
   const drawing = (p) => p.width > p.height * 1.15 || p.width > 1500;
   const regionLines = pages.map((p) => (drawing(p) ? lines(p.items.filter((it) => inTitleRegion(p, it))) : []));
   // Where a sheet title can sit: the title block, or the strip beside it along the bottom.
   const titleLines = pages.map((p) => (drawing(p) ? lines(p.items.filter((it) => it.x > p.width * 0.62 && it.y > p.height * 0.5)) : []));
   // A string on the title blocks of many different sheets (owner, project, address) is not a sheet title;
   // a title repeats only under the same sheet number (one A2.1 per school in a three-school set).
-  const sheetOf = regionLines.map((ls) => { const n = ls.filter((l) => SHEET_RE.test(l.str.replace(/\s+/g, "")) && !/^\d/.test(l.str)).sort((a, b) => b.h - a.h)[0]; return n ? n.str.replace(/\s+/g, "") : null; });
+  const sheetOf = regionLines.map((ls) => { const n = ls.filter((l) => sheetRE.test(l.str.replace(/\s+/g, "")) && !/^\d/.test(l.str)).sort((a, b) => b.h - a.h)[0]; return n ? n.str.replace(/\s+/g, "") : null; });
   const seen = new Map();
   regionLines.forEach((ls, i) => { for (const l of ls) { const k = norm(l.str); if (!seen.has(k)) seen.set(k, new Set()); seen.get(k).add(sheetOf[i] || "?" + i); } });
   const nSheets = new Set(sheetOf.filter(Boolean)).size;
   const boiler = (s) => { const n = (seen.get(norm(s)) || new Set()).size; return n >= 3 && n >= nSheets * 0.5; };
   return pages.map((p, i) => {
     const ls = regionLines[i];
-    const nums = ls.filter((l) => SHEET_RE.test(l.str.replace(/\s+/g, "")) && !/^\d/.test(l.str)).sort((a, b) => (b.h - a.h) || ((b.x + b.y) - (a.x + a.y)));
+    const nums = ls.filter((l) => sheetRE.test(l.str.replace(/\s+/g, "")) && !/^\d/.test(l.str)).sort((a, b) => (b.h - a.h) || ((b.x + b.y) - (a.x + a.y)));
     const num = nums[0] || null;
     let title = null;
     if (num) {
-      const cand = titleLines[i].filter((l) => norm(l.str) !== norm(num.str) && /[A-Z]{3,}/.test(l.str) && !LABEL_WORDS.test(l.str.trim().toUpperCase()) && !/SCALE|\d+\s*\/\s*\d+\s*"|^[\d\/.\-\s#]+$|COPYRIGHT|©/i.test(l.str) && !boiler(l.str) && l.h <= num.h * 1.05);
+      const cand = titleLines[i].filter((l) => norm(l.str) !== norm(num.str) && /[A-Z]{3,}/.test(l.str) && !LABEL_WORDS.test(legacy ? l.str.trim().toUpperCase() : l.str.trim().toUpperCase().replace(/:$/, "")) && !/SCALE|\d+\s*\/\s*\d+\s*"|^[\d\/.\-\s#]+$|COPYRIGHT|©/i.test(l.str) && !boiler(l.str) && l.h <= num.h * 1.05);
       cand.sort((a, b) => (Math.round(b.h) - Math.round(a.h)) || ((b.xEnd + b.y) - (a.xEnd + a.y)));
       if (cand.length) {
         const top = cand[0];
@@ -92,8 +105,18 @@ export function titleBlocks(pages) {
         title = same.map((l) => l.str).join(" ").replace(/\s+/g, " ").trim();
       }
     }
+    // A labelled title is stronger evidence than a large nearby drawing caption.
+    const label = ls.find(l => /^SHEET TITLE:?$/i.test(l.str) && !l.rot);
+    if (label && !legacy) {
+      const below = ls.filter(l => !l.rot && l.y > label.y && l.y - label.y < label.h * 4
+        && Math.abs(l.x - label.x) < label.h * 2 && !LABEL_WORDS.test(l.str.toUpperCase().replace(/:$/, "")))
+        .sort((a, b) => a.y - b.y);
+      if (below.length) title = below.map(l => l.str).join(" ");
+    }
     const sheet = num ? num.str.replace(/\s+/g, "") : null;
-    const plan = !!(sheet && /^A/i.test(sheet) && title && /\bPLANS?\b/i.test(title) && !NOT_A_PLAN.test(title.toUpperCase()));
+    const plan = !!(sheet && /^A/i.test(sheet) && title && /\bPLANS?\b/i.test(title) && (legacy
+      ? !NOT_A_PLAN.test(title.toUpperCase())
+      : title.toUpperCase().split(/\s*&\s*/).some(part => /\bPLANS?\b/.test(part) && !NOT_A_PLAN.test(part))));
     return { page: p.page, sheet, title, plan, block: ls.map((l) => norm(l.str)).filter((s) => !boiler(s)) };
   });
 }
@@ -156,12 +179,19 @@ function similarity(a, b) {
 
 export function readPlan(pages, doors = [], opts = {}) {
   const tbs = titleBlocks(pages);
+  const scopes = new Map(pages.map((p, i) => [p.page, buildingScope(p, tbs[i], lines(p.items))]));
   const byPage = new Map(pages.map((p, i) => [p.page, { p, tb: tbs[i] }]));
   const planPages = tbs.filter((t) => t.plan);
   const markOf = new Map();
+  const sourceRows = d => d.schedule_rows?.length ? d.schedule_rows : [d];
   // SubX keeps a mark printed on two schedule pages apart as "001 [p.286]"; the plan prints "001".
   const tagOf = (d) => norm(String(d.mark || "").replace(/\s*\[p\.?\s*\d+\]\s*$/i, ""));
-  for (const d of doors) { const k = tagOf(d); if (!k) continue; if (!markOf.has(k)) markOf.set(k, []); markOf.get(k).push(d); }
+  for (const d of doors) {
+    for (const k of new Set([d, ...sourceRows(d)].map(tagOf).filter(Boolean))) {
+      if (!markOf.has(k)) markOf.set(k, []);
+      markOf.get(k).push(d);
+    }
+  }
   const rooms = [], tags = [], seenTag = new Map(), sheetsOut = [];
   const paired = new Set(); // g041: the items of stacked tags, which are not unmatched tags
   const shared = []; // g044: marks several schedule rows share, per sheet
@@ -172,21 +202,42 @@ export function readPlan(pages, doors = [], opts = {}) {
     const ls = lines(p.items);
     const { rooms: rs, used } = roomsOn(p, ls, t);
     const scales = scalesOn(lines(p.items, 4, 1.6));
-    sheetsOut.push({ page: t.page, sheet: t.sheet, title: t.title, rooms: rs.length, scales: scales.map((s) => s.text), points_per_foot: [...new Set(scales.map((s) => s.points_per_foot))] });
+    const sheetOut = { page: t.page, sheet: t.sheet, title: t.title, plan_rule: t.plan_rule, rooms: rs.length, scales: scales.map((s) => s.text), points_per_foot: [...new Set(scales.map((s) => s.points_per_foot))] };
+    sheetsOut.push(sheetOut);
     for (const r of rs) { r.points_per_foot = scaleAt(scales, r.x, r.y); rooms.push(r); }
-    // The schedule pages whose title block matches this sheet's best (one building of several in a set).
-    const candPages = [...new Set(doors.map((d) => d.page).filter((x) => x != null))];
+    // Prefer affirmative building evidence, then the previous title-block similarity.
+    // If every page conflicts, fall back across ALL schedule pages. There must
+    // never be an empty keep set (or a second scope veto) that rejects every door.
+    const candidates = [...new Set(doors.flatMap(sourceRows).map(d => d.page).filter(x => x != null))]
+      .map(page => ({ page, ...comparePlacementScopes(scopes.get(t.page), scopes.get(page)) }));
+    const compatible = candidates.filter(c => !c.conflicts.length);
+    const affirmative = compatible.filter(c => c.matched.length);
+    const pool = affirmative.length ? affirmative : compatible.length ? compatible : candidates;
+    const candPages = pool.map(c => c.page);
     let bestSim = -1, keep = null;
     for (const sp of candPages) { const sb = scheduleBlock(sp); const s = sb ? similarity(t.block, sb.block) : 0; if (s > bestSim + 1e-9) { bestSim = s; keep = new Set([sp]); } else if (Math.abs(s - bestSim) < 1e-9) keep.add(sp); }
-    const doorFits = (d) => !keep || d.page == null || keep.has(d.page);
+    sheetOut.schedule_selection = {
+      rule: !compatible.length && candidates.length ? 'similarity-fallback-no-compatible-schedule'
+        : affirmative.length ? 'building-scope-then-similarity'
+          : compatible.length < candidates.length ? 'scope-compatible-then-similarity' : 'similarity',
+      candidates, kept_pages: keep ? [...keep] : null,
+    };
+    const doorFits = d => !keep || sourceRows(d).some(r => r.page == null || keep.has(r.page));
     // Door tags: each single item, and each joined line, equal to a schedule mark.
     const cands = [];
     for (const it of p.items) cands.push({ str: it.str.trim(), x: it.x, y: it.y, h: it.h, w: it.w || 0, it });
     for (const l of ls) if (l.parts.length > 1) cands.push({ str: l.str, x: l.x, y: l.y, h: l.h, w: l.w, line: l });
+    // On mixed plan/schedule sheets, source baselines plus a repeated mark
+    // column locate table cells. Baseline alone could hide a real tag elsewhere
+    // on the same horizontal line. Require at least two distinct table rows.
+    const scheduleCells = cands.filter(c => (markOf.get(norm(c.str)) || []).flatMap(sourceRows)
+      .some(d => d.page === t.page && Number.isFinite(d.y) && Math.abs(c.y - d.y) < Math.max(3, c.h)));
+    const inSchedule = c => scheduleCells.includes(c) && scheduleCells.some(other =>
+      Math.abs(other.y - c.y) > Math.max(other.h, c.h) && Math.abs(other.x - c.x) < Math.max(other.h, c.h));
     // Each tag covers the schedule rows it stands for (tag._rows), so a row is "on the plan" only when
     // a tag of its own covers it (g044).
     const place = (key, rowsHere, c, extra = null) => {
-      const tag = { mark: rowsHere[0].mark, page: t.page, sheet: t.sheet, x: Math.round(cx(c)), y: Math.round(c.y - c.h / 2), h: c.h, shape: shape(c.str), door_pages: [...new Set(rowsHere.map((d) => d.page))], ...(extra || {}) };
+      const tag = { mark: rowsHere[0].mark || sourceRows(rowsHere[0])[0].mark, page: t.page, sheet: t.sheet, x: Math.round(cx(c)), y: Math.round(c.y - c.h / 2), h: c.h, shape: shape(c.str), door_pages: [...new Set(rowsHere.flatMap(sourceRows).map((d) => d.page))], ...(extra || {}) };
       Object.defineProperty(tag, "_rows", { value: rowsHere, enumerable: false });
       roomFor(tag, rs, rowsHere[0], ls, p);
       tag.points_per_foot = scaleAt(scales, tag.x, tag.y);
@@ -212,7 +263,9 @@ export function readPlan(pages, doors = [], opts = {}) {
       if (c.line && used.has(c.line)) continue;
       if (!c.line && rs.some((r) => r._line.parts.includes(c.it))) continue;
       const k = norm(c.str);
-      if ((markOf.get(k) || []).some(doorFits)) add(k, c);
+      const ds = markOf.get(k) || [];
+      // A schedule row printed on the plan sheet is evidence, not a drawn tag.
+      if (!inSchedule(c) && ds.some(doorFits)) add(k, c);
     }
     // g041: suffixed marks drawn as a stacked tag. Some sets number doors by room and letter
     // (schedule 113A, 113B) and draw the tag as the room number with the letter set directly above
@@ -260,7 +313,8 @@ export function readPlan(pages, doors = [], opts = {}) {
       if (!ds.length) continue;
       const perPage = new Map();
       for (const d of ds) perPage.set(d.page, (perPage.get(d.page) || 0) + 1);
-      if (Math.max(...perPage.values()) < 2) { place(k + "|" + [...new Set(ds.map((d) => d.page))].join(","), ds, list[0].c, list[0].extra); continue; }
+      if (Math.max(...perPage.values()) < 2 && !ds.some(d => d.opening_id)) { place(k + "|" + [...new Set(ds.map((d) => d.page))].join(","), ds, list[0].c, list[0].extra); continue; }
+      if (ds.length === 1) { place(ds[0].opening_id || k, ds, list[0].c, list[0].extra); continue; }
       const rows = [...ds].sort((a, b) => doors.indexOf(a) - doors.indexOf(b));
       if (list.length !== rows.length) {
         shared.push({ mark: rows[0].mark, sheet: t.sheet, page: t.page, rows: rows.length, tags: list.length, placed: false,
@@ -291,11 +345,11 @@ export function readPlan(pages, doors = [], opts = {}) {
     }
   }
   const placedRows = new Set(tags.flatMap((g) => g._rows || []));
-  const notOnPlan = doors.filter((d) => !placedRows.has(d)).map((d) => ({ mark: d.mark, page: d.page }));
+  const notOnPlan = doors.filter((d) => !placedRows.has(d)).map((d) => ({ mark: d.mark || sourceRows(d)[0].mark, page: d.page ?? sourceRows(d)[0].page }));
   for (const r of rooms) delete r._line;
   for (const g of tags) delete g.shape;
   return {
-    sheets: tbs.map(({ page, sheet, title, plan }) => ({ page, sheet, title, plan })),
+    sheets: tbs.map(({ page, sheet, title, plan, plan_rule }) => ({ page, sheet, title, plan, plan_rule })),
     plan_sheets: sheetsOut,
     rooms, tags, unmatched_tags: unmatched, marks_not_on_plan: notOnPlan, shared_marks: shared,
     counts: { plan_sheets: sheetsOut.length, rooms: rooms.length, corridors: rooms.filter((r) => r.corridor).length, tags: tags.length, unmatched_tags: unmatched.length, schedule_marks: doors.length, marks_not_on_plan: notOnPlan.length, shared_marks: shared.length },

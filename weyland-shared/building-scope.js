@@ -22,6 +22,9 @@ export function buildingScope(p, tb, ls) {
   const sheet_family = sm ? sm[1] + (sm[2] ? '.' + sm[2] : '') : null;
   for (const l of title) {
     const s = text(l.str);
+    // Explicit names are read once by the label parser below. Including the
+    // label itself as another inferred name would make a clear name ambiguous.
+    if (/^FACILITY(?: NAME)?\s*:/.test(s)) continue;
     // A facility name may be stacked over several same-size, aligned lines.
     // Preserve the whole name, not just a generic last line such as SHELTER.
     if (/\b(?:SCHOOL|HOSPITAL|LIBRARY|CAMPUS|STATE PARK|SHELTER|HEADQUARTERS|COMMUNITY CENTER)$/.test(s)) {
@@ -99,3 +102,18 @@ export function compareBuildingScopes(a = {}, b = {}) {
 }
 
 export const buildingScopeKey = info => JSON.stringify([info?.scope || {}, info?.sheet_family || null]);
+
+// Placement is less strict than merging schedule inventories. Floors, sheet
+// families, absent fields and ambiguous/overprinted values cannot exclude doors.
+// A partial facility name is not evidence of a different facility either.
+export function comparePlacementScopes(a = {}, b = {}) {
+  const matched = [], conflicts = [];
+  for (const field of ['building', 'facility_name', 'site', 'asset_number', 'site_number', 'facility_number']) {
+    const A = clean(a.scope?.[field]), B = clean(b.scope?.[field]);
+    if (!A || !B || A.includes(';') || B.includes(';')) continue;
+    if (A === B) { matched.push(field); continue; }
+    if (['facility_name', 'site'].includes(field) && (A.includes(B) || B.includes(A))) continue;
+    conflicts.push({ field, a: A, b: B });
+  }
+  return { matched, conflicts };
+}

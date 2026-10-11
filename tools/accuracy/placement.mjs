@@ -19,6 +19,7 @@ export function buildPlacement(truth, pages, doors) {
   const pageOf = new Map(pages.map((p) => [p.page, p]));
   const sheets = plan.plan_sheets.map((s) => ({
     page: s.page, sheet: s.sheet, title: s.title,
+    plan_rule: s.plan_rule, schedule_selection: s.schedule_selection,
     width: pageOf.get(s.page).width, height: pageOf.get(s.page).height,
     scales: [...s.scales],
     // Keep all announced scales: multiple drawings can have different scales.
