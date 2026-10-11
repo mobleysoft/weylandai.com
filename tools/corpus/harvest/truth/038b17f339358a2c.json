@@ -42,7 +42,7 @@
   "pages": [
    {
     "page": 35,
-    "title": "DOOR SCHEDULE",
+    "title": "DOOR SCHEDULE AND DETAILS",
     "rank": 3,
     "scope": {
      "address": "375 COMMERCIAL AVE",
@@ -524,6 +524,6 @@
    "b": null
   }
  ],
- "ms": 1916,
- "generated_at": "2026-10-11T11:48:37.246Z"
+ "ms": 2167,
+ "generated_at": "2026-10-11T12:37:08.438Z"
 }

@@ -44,7 +44,7 @@
   "pages": [
    {
     "page": 12,
-    "title": "DOOR SCHEDULE &",
+    "title": "DOOR SCHEDULE & DETAILS",
     "rank": 3,
     "scope": {
      "site_number": "7007"
@@ -235,6 +235,6 @@
    "why": "only reader B read this row"
   }
  ],
- "ms": 597,
- "generated_at": "2026-10-11T11:48:59.071Z"
+ "ms": 555,
+ "generated_at": "2026-10-11T12:37:32.473Z"
 }

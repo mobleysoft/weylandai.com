@@ -42,7 +42,7 @@
   "pages": [
    {
     "page": 10,
-    "title": "DOOR SCHEDULE",
+    "title": "DOOR SCHEDULE DOOR DETAILS",
     "rank": 3,
     "scope": {
      "address": "1510 E ELM ST",
@@ -202,6 +202,6 @@
    "why": "only reader A read this row"
   }
  ],
- "ms": 608,
- "generated_at": "2026-10-11T11:49:56.890Z"
+ "ms": 581,
+ "generated_at": "2026-10-11T12:38:34.949Z"
 }

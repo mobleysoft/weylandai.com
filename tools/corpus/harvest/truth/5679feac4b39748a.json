@@ -42,7 +42,7 @@
   "pages": [
    {
     "page": 4,
-    "title": "COTTAGES A-E",
+    "title": "COTTAGES A-E PARTIAL CEILING AND DOOR DETAILS",
     "rank": 2,
     "scope": {
      "address": "1901 PENNSYLVANIA AVENUE",
@@ -222,6 +222,6 @@
    "b": "MECHANICAL ROOM"
   }
  ],
- "ms": 462,
- "generated_at": "2026-10-11T11:49:21.522Z"
+ "ms": 478,
+ "generated_at": "2026-10-11T12:37:57.591Z"
 }

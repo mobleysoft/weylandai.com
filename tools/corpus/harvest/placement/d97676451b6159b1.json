@@ -17,6 +17,33 @@
       "sheet": "A-3",
       "x": 2417,
       "y": 1106
+    },
+    {
+      "name": "FAMILY",
+      "number": "103",
+      "page": 20,
+      "points_per_foot": 36,
+      "sheet": "A-6",
+      "x": 1555,
+      "y": 1205
+    },
+    {
+      "name": "FAMILY",
+      "number": "101",
+      "page": 20,
+      "points_per_foot": 36,
+      "sheet": "A-6",
+      "x": 2014,
+      "y": 1285
+    },
+    {
+      "name": "CHASE",
+      "number": "102",
+      "page": 20,
+      "points_per_foot": 36,
+      "sheet": "A-6",
+      "x": 1759,
+      "y": 1313
     }
   ],
   "set": {
@@ -95,31 +122,46 @@
       "sheet": "A-3",
       "title": "CABIN FLOOR PLAN (2)",
       "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 20,
+      "plan_rule": "room-backed-tags",
+      "points_per_foot": [
+        36
+      ],
+      "scales": [
+        "1/2\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site"
+            ],
+            "page": 22
+          }
+        ],
+        "kept_pages": [
+          22
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A-6",
+      "title": "RESTROOM BUILDING DRAWINGS",
+      "width": 2592
     }
   ],
   "summary": {
-    "marks_placed": 0,
+    "marks_placed": 3,
     "marks_total": 4,
-    "placed_rate": 0,
-    "rooms_total": 2,
-    "sheets_total": 2,
-    "sheets_with_scale": 2,
+    "placed_rate": 0.75,
+    "rooms_total": 5,
+    "sheets_total": 3,
+    "sheets_with_scale": 3,
     "unplaced": [
-      {
-        "mark": "101",
-        "page": 22,
-        "reason": "mark 101 (schedule p.22) not tagged on any plan"
-      },
-      {
-        "mark": "102",
-        "page": 22,
-        "reason": "mark 102 (schedule p.22) not tagged on any plan"
-      },
-      {
-        "mark": "103",
-        "page": 22,
-        "reason": "mark 103 (schedule p.22) not tagged on any plan"
-      },
       {
         "mark": "104",
         "page": 22,
@@ -127,5 +169,180 @@
       }
     ]
   },
-  "tags": []
+  "tags": [
+    {
+      "also_on": [],
+      "door_pages": [
+        22
+      ],
+      "door_type": "H.M.",
+      "fire_rating": null,
+      "frame_type": "1",
+      "h": 9.60419615832,
+      "hardware_group": null,
+      "height_inches": 84,
+      "location": null,
+      "mark": "103",
+      "matched_by": "exact",
+      "material": null,
+      "opening_id": "[{\"asset_number\":\"7815107005; 7815107007\",\"facility_name\":\"CROWDER STATE PARK\",\"facility_number\":\"7815107001; 7815107011\",\"site\":\"CROWDER STATE PARK\",\"site_number\":\"5107; 7815107010\"},\"A\"]|103|22|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "7815107005; 7815107007",
+        "facility_name": "CROWDER STATE PARK",
+        "facility_number": "7815107001; 7815107011",
+        "site": "CROWDER STATE PARK",
+        "site_number": "5107; 7815107010"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"7815107005; 7815107007\",\"facility_name\":\"CROWDER STATE PARK\",\"facility_number\":\"7815107001; 7815107011\",\"site\":\"CROWDER STATE PARK\",\"site_number\":\"5107; 7815107010\"},\"A\"]",
+      "page": 20,
+      "pair": false,
+      "points_per_foot": 36,
+      "room": "103",
+      "room_by": "nearest_label",
+      "room_name": "FAMILY",
+      "schedule_rows": [
+        {
+          "door_type": "H.M.",
+          "fire_rating": null,
+          "frame_type": "1",
+          "hardware_group": null,
+          "height_inches": 84,
+          "location": null,
+          "mark": "103",
+          "material": null,
+          "page": 22,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 749
+        }
+      ],
+      "sheet": "A-6",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "22|103|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1501,
+      "y": 1087
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        22
+      ],
+      "door_type": "H.M.",
+      "fire_rating": null,
+      "frame_type": "1",
+      "h": 9.60419615832,
+      "hardware_group": null,
+      "height_inches": 84,
+      "location": null,
+      "mark": "101",
+      "matched_by": "exact",
+      "material": null,
+      "opening_id": "[{\"asset_number\":\"7815107005; 7815107007\",\"facility_name\":\"CROWDER STATE PARK\",\"facility_number\":\"7815107001; 7815107011\",\"site\":\"CROWDER STATE PARK\",\"site_number\":\"5107; 7815107010\"},\"A\"]|101|22|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "7815107005; 7815107007",
+        "facility_name": "CROWDER STATE PARK",
+        "facility_number": "7815107001; 7815107011",
+        "site": "CROWDER STATE PARK",
+        "site_number": "5107; 7815107010"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"7815107005; 7815107007\",\"facility_name\":\"CROWDER STATE PARK\",\"facility_number\":\"7815107001; 7815107011\",\"site\":\"CROWDER STATE PARK\",\"site_number\":\"5107; 7815107010\"},\"A\"]",
+      "page": 20,
+      "pair": false,
+      "points_per_foot": 36,
+      "room": "101",
+      "room_by": "nearest_label",
+      "room_name": "FAMILY",
+      "schedule_rows": [
+        {
+          "door_type": "H.M.",
+          "fire_rating": null,
+          "frame_type": "1",
+          "hardware_group": null,
+          "height_inches": 84,
+          "location": null,
+          "mark": "101",
+          "material": null,
+          "page": 22,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 717
+        }
+      ],
+      "sheet": "A-6",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "22|101|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 2028,
+      "y": 1087
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        22
+      ],
+      "door_type": "H.M.",
+      "fire_rating": null,
+      "frame_type": "1",
+      "h": 9.60419615832,
+      "hardware_group": null,
+      "height_inches": 84,
+      "location": null,
+      "mark": "102",
+      "matched_by": "exact",
+      "material": null,
+      "opening_id": "[{\"asset_number\":\"7815107005; 7815107007\",\"facility_name\":\"CROWDER STATE PARK\",\"facility_number\":\"7815107001; 7815107011\",\"site\":\"CROWDER STATE PARK\",\"site_number\":\"5107; 7815107010\"},\"A\"]|102|22|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "7815107005; 7815107007",
+        "facility_name": "CROWDER STATE PARK",
+        "facility_number": "7815107001; 7815107011",
+        "site": "CROWDER STATE PARK",
+        "site_number": "5107; 7815107010"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"7815107005; 7815107007\",\"facility_name\":\"CROWDER STATE PARK\",\"facility_number\":\"7815107001; 7815107011\",\"site\":\"CROWDER STATE PARK\",\"site_number\":\"5107; 7815107010\"},\"A\"]",
+      "page": 20,
+      "pair": false,
+      "points_per_foot": 36,
+      "room": "102",
+      "room_by": "nearest_label",
+      "room_name": "CHASE",
+      "schedule_rows": [
+        {
+          "door_type": "H.M.",
+          "fire_rating": null,
+          "frame_type": "1",
+          "hardware_group": null,
+          "height_inches": 84,
+          "location": null,
+          "mark": "102",
+          "material": null,
+          "page": 22,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 735
+        }
+      ],
+      "sheet": "A-6",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "22|102|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1765,
+      "y": 1415
+    }
+  ]
 }

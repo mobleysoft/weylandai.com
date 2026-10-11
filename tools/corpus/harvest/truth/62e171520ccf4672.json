@@ -42,7 +42,7 @@
   "pages": [
    {
     "page": 3,
-    "title": "WINDOW AND",
+    "title": "WINDOW AND DOOR DETAILS",
     "rank": 1,
     "scope": {
      "facility_number": "8877712003",
@@ -154,6 +154,6 @@
    "why": "only reader B read this row"
   }
  ],
- "ms": 2253,
- "generated_at": "2026-10-11T11:49:17.266Z"
+ "ms": 2553,
+ "generated_at": "2026-10-11T12:37:52.742Z"
 }

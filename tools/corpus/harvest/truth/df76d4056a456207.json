@@ -44,7 +44,7 @@
   "pages": [
    {
     "page": 114,
-    "title": "DOOR AND WINDOW SCHEDULES AND",
+    "title": "DOOR AND WINDOW SCHEDULES AND DETAILS",
     "rank": 2,
     "scope": {
      "address": "461 COUNTY ROAD 517",
@@ -651,6 +651,6 @@
    "why": "only reader A read this set"
   }
  ],
- "ms": 2742,
- "generated_at": "2026-10-11T11:50:22.722Z"
+ "ms": 2315,
+ "generated_at": "2026-10-11T12:39:01.511Z"
 }

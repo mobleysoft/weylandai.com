@@ -1,0 +1,4145 @@
+{
+  "rooms": [
+    {
+      "name": "CELL",
+      "number": "C109",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 987,
+      "y": 270
+    },
+    {
+      "name": "CELL",
+      "number": "C110",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 1032,
+      "y": 270
+    },
+    {
+      "name": "CELL",
+      "number": "C111",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 1078,
+      "y": 290
+    },
+    {
+      "name": "CELL",
+      "number": "C112",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 1111,
+      "y": 330
+    },
+    {
+      "name": "CELL",
+      "number": "C108",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 943,
+      "y": 372
+    },
+    {
+      "name": "CELL",
+      "number": "C113",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 1136,
+      "y": 372
+    },
+    {
+      "name": "CELL",
+      "number": "C107",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 943,
+      "y": 412
+    },
+    {
+      "name": "CELL",
+      "number": "C114",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 1136,
+      "y": 418
+    },
+    {
+      "name": "DAYROOM",
+      "number": "117",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 1037,
+      "y": 431
+    },
+    {
+      "name": "CELL",
+      "number": "C106",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 943,
+      "y": 457
+    },
+    {
+      "name": "CELL",
+      "number": "C115",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 1136,
+      "y": 466
+    },
+    {
+      "name": "CELL",
+      "number": "C105",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 943,
+      "y": 503
+    },
+    {
+      "name": "CELL",
+      "number": "C116",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 1136,
+      "y": 514
+    },
+    {
+      "name": "CELL",
+      "number": "C104",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 943,
+      "y": 545
+    },
+    {
+      "name": "JANITOR",
+      "number": "118",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 1049,
+      "y": 558
+    },
+    {
+      "name": "CELL",
+      "number": "C103",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 943,
+      "y": 595
+    },
+    {
+      "name": "TOILET",
+      "number": "C119",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 1171,
+      "y": 610
+    },
+    {
+      "name": "CELL",
+      "number": "C102",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 943,
+      "y": 629
+    },
+    {
+      "name": "TOILET",
+      "number": "D119",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 1213,
+      "y": 639
+    },
+    {
+      "name": "CELL",
+      "number": "C101",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 943,
+      "y": 672
+    },
+    {
+      "name": "ELEC. CLO.",
+      "number": "113",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 1039,
+      "y": 672
+    },
+    {
+      "name": "CELL",
+      "number": "D116",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 1302,
+      "y": 672
+    },
+    {
+      "name": "CELL",
+      "number": "D115",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 1345,
+      "y": 672
+    },
+    {
+      "name": "CELL",
+      "number": "D114",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 1391,
+      "y": 672
+    },
+    {
+      "name": "CELL",
+      "number": "D113",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 1438,
+      "y": 672
+    },
+    {
+      "name": "CASE WORKER",
+      "number": "106",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 841,
+      "y": 682
+    },
+    {
+      "name": "CELL",
+      "number": "D112",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 1488,
+      "y": 700
+    },
+    {
+      "name": "CELL",
+      "number": "D111",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 1512,
+      "y": 731
+    },
+    {
+      "name": "CONFERENCE",
+      "number": "104",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 800,
+      "y": 736
+    },
+    {
+      "name": "COUNSELOR",
+      "number": "105",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 877,
+      "y": 736
+    },
+    {
+      "name": "TOILET",
+      "number": "112",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 1147,
+      "y": 745
+    },
+    {
+      "name": "JANITOR",
+      "number": "D118",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 1267,
+      "y": 746
+    },
+    {
+      "name": "CONTROL",
+      "number": "117",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 1053,
+      "y": 759
+    },
+    {
+      "name": "CELL",
+      "number": "D110",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 1534,
+      "y": 765
+    },
+    {
+      "name": "DAYROOM",
+      "number": "D117",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 1329,
+      "y": 773
+    },
+    {
+      "name": "TOILET",
+      "number": "111",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 899,
+      "y": 789
+    },
+    {
+      "name": "MANAGER",
+      "number": "103",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 796,
+      "y": 820
+    },
+    {
+      "name": "SECRETARY",
+      "number": "107",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 886,
+      "y": 820
+    },
+    {
+      "name": "CELL",
+      "number": "D109",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 1534,
+      "y": 822
+    },
+    {
+      "name": "JANITOR",
+      "number": "110",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 1015,
+      "y": 826
+    },
+    {
+      "name": "CELL",
+      "number": "D101",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 1121,
+      "y": 863
+    },
+    {
+      "name": "CELL",
+      "number": "D102",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 1166,
+      "y": 863
+    },
+    {
+      "name": "CELL",
+      "number": "103",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 1213,
+      "y": 863
+    },
+    {
+      "name": "CELL",
+      "number": "D104",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 1254,
+      "y": 863
+    },
+    {
+      "name": "CELL",
+      "number": "D105",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 1301,
+      "y": 863
+    },
+    {
+      "name": "CELL",
+      "number": "D106",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 1346,
+      "y": 863
+    },
+    {
+      "name": "CELL",
+      "number": "D107",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 1390,
+      "y": 863
+    },
+    {
+      "name": "CELL",
+      "number": "D108",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 1437,
+      "y": 863
+    },
+    {
+      "name": "FILE",
+      "number": "108",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 845,
+      "y": 866
+    },
+    {
+      "name": "CELL",
+      "number": "B108",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 427,
+      "y": 891
+    },
+    {
+      "name": "CELL",
+      "number": "B107",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 472,
+      "y": 891
+    },
+    {
+      "name": "CELL",
+      "number": "B106",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 517,
+      "y": 891
+    },
+    {
+      "name": "CELL",
+      "number": "B105",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 561,
+      "y": 891
+    },
+    {
+      "name": "CELL",
+      "number": "B104",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 606,
+      "y": 891
+    },
+    {
+      "name": "CELL",
+      "number": "B103",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 649,
+      "y": 891
+    },
+    {
+      "name": "CELL",
+      "number": "B102",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 695,
+      "y": 891
+    },
+    {
+      "name": "CELL",
+      "number": "B101",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 742,
+      "y": 891
+    },
+    {
+      "name": "PAROLE",
+      "number": "102",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 796,
+      "y": 891
+    },
+    {
+      "name": "LOBBY",
+      "number": "101",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 975,
+      "y": 911
+    },
+    {
+      "name": "CELL",
+      "number": "B109",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 324,
+      "y": 918
+    },
+    {
+      "name": "MECH",
+      "number": "109",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 886,
+      "y": 952
+    },
+    {
+      "name": "CELL",
+      "number": "B110",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 324,
+      "y": 965
+    },
+    {
+      "name": "DAYROOM",
+      "number": "B117",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 541,
+      "y": 989
+    },
+    {
+      "name": "CONTROL",
+      "number": "117",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 809,
+      "y": 993
+    },
+    {
+      "name": "TOILET",
+      "number": "117",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 716,
+      "y": 995
+    },
+    {
+      "name": "CELL",
+      "number": "B111",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 349,
+      "y": 1010
+    },
+    {
+      "name": "CELL",
+      "number": "B112",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 378,
+      "y": 1038
+    },
+    {
+      "name": "JANITOR",
+      "number": "118",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 598,
+      "y": 1059
+    },
+    {
+      "name": "ELEC. CLO.",
+      "number": "116",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 821,
+      "y": 1067
+    },
+    {
+      "name": "CELL",
+      "number": "A101",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 917,
+      "y": 1067
+    },
+    {
+      "name": "CELL",
+      "number": "B113",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 421,
+      "y": 1072
+    },
+    {
+      "name": "CELL",
+      "number": "B114",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 467,
+      "y": 1072
+    },
+    {
+      "name": "CELL",
+      "number": "B115",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 509,
+      "y": 1072
+    },
+    {
+      "name": "CELL",
+      "number": "B116",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 554,
+      "y": 1072
+    },
+    {
+      "name": "TOILET",
+      "number": "B119A",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 653,
+      "y": 1116
+    },
+    {
+      "name": "CELL",
+      "number": "A102",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 917,
+      "y": 1116
+    },
+    {
+      "name": "TOILET",
+      "number": "A119",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 693,
+      "y": 1153
+    },
+    {
+      "name": "CELL",
+      "number": "A103",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 917,
+      "y": 1163
+    },
+    {
+      "name": "CELL",
+      "number": "A104",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 917,
+      "y": 1204
+    },
+    {
+      "name": "JANITOR",
+      "number": "A118",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 743,
+      "y": 1216
+    },
+    {
+      "name": "DAYROOM",
+      "number": "A117",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 823,
+      "y": 1221
+    },
+    {
+      "name": "CELL",
+      "number": "A116",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 725,
+      "y": 1245
+    },
+    {
+      "name": "CELL",
+      "number": "A105",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 917,
+      "y": 1245
+    },
+    {
+      "name": "CELL",
+      "number": "A115",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 725,
+      "y": 1286
+    },
+    {
+      "name": "CELL",
+      "number": "A106",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 917,
+      "y": 1286
+    },
+    {
+      "name": "CELL",
+      "number": "A114",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 725,
+      "y": 1326
+    },
+    {
+      "name": "CELL",
+      "number": "A107",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 917,
+      "y": 1327
+    },
+    {
+      "name": "CELL",
+      "number": "A108",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 917,
+      "y": 1368
+    },
+    {
+      "name": "CELL",
+      "number": "A113",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 725,
+      "y": 1376
+    },
+    {
+      "name": "CELL",
+      "number": "A112",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 757,
+      "y": 1410
+    },
+    {
+      "name": "CELL",
+      "number": "A111",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 787,
+      "y": 1443
+    },
+    {
+      "name": "CELL",
+      "number": "A110",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 825,
+      "y": 1467
+    },
+    {
+      "name": "CELL",
+      "number": "A109",
+      "page": 41,
+      "points_per_foot": 6.75,
+      "sheet": "A103",
+      "x": 872,
+      "y": 1470
+    },
+    {
+      "name": "CELL",
+      "number": "C109",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 998,
+      "y": 284
+    },
+    {
+      "name": "CELL",
+      "number": "C110",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 1045,
+      "y": 284
+    },
+    {
+      "name": "CELL",
+      "number": "C111",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 1088,
+      "y": 309
+    },
+    {
+      "name": "CELL",
+      "number": "C112",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 1120,
+      "y": 342
+    },
+    {
+      "name": "CELL",
+      "number": "C108",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 958,
+      "y": 380
+    },
+    {
+      "name": "CELL",
+      "number": "C113",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 1144,
+      "y": 387
+    },
+    {
+      "name": "CELL",
+      "number": "C107",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 958,
+      "y": 427
+    },
+    {
+      "name": "CELL",
+      "number": "C114",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 1144,
+      "y": 436
+    },
+    {
+      "name": "CELL",
+      "number": "C106",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 958,
+      "y": 470
+    },
+    {
+      "name": "CELL",
+      "number": "C115",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 1144,
+      "y": 482
+    },
+    {
+      "name": "DAYROOM",
+      "number": "C117",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 1053,
+      "y": 509
+    },
+    {
+      "name": "CELL",
+      "number": "C105",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 958,
+      "y": 517
+    },
+    {
+      "name": "CELL",
+      "number": "C116",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 1144,
+      "y": 528
+    },
+    {
+      "name": "CELL",
+      "number": "C104",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 958,
+      "y": 562
+    },
+    {
+      "name": "JANITOR",
+      "number": "C118",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 1139,
+      "y": 564
+    },
+    {
+      "name": "CELL",
+      "number": "C103",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 958,
+      "y": 607
+    },
+    {
+      "name": "TOILET",
+      "number": "C119",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 1174,
+      "y": 629
+    },
+    {
+      "name": "CELL",
+      "number": "C102",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 958,
+      "y": 644
+    },
+    {
+      "name": "TOILET",
+      "number": "D119",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 1220,
+      "y": 653
+    },
+    {
+      "name": "CELL",
+      "number": "D116",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 1313,
+      "y": 685
+    },
+    {
+      "name": "CELL",
+      "number": "D115",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 1358,
+      "y": 685
+    },
+    {
+      "name": "CELL",
+      "number": "D114",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 1404,
+      "y": 685
+    },
+    {
+      "name": "CELL",
+      "number": "D113",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 1446,
+      "y": 685
+    },
+    {
+      "name": "CASEWORKER",
+      "number": "106",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 855,
+      "y": 690
+    },
+    {
+      "name": "CELL",
+      "number": "C101",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 958,
+      "y": 690
+    },
+    {
+      "name": "ELEC. CLO.",
+      "number": "113",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 1069,
+      "y": 690
+    },
+    {
+      "name": "JANITOR",
+      "number": "D118",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 1270,
+      "y": 702
+    },
+    {
+      "name": "CELL",
+      "number": "D112",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 1488,
+      "y": 715
+    },
+    {
+      "name": "CONFERENCE",
+      "number": "104",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 815,
+      "y": 745
+    },
+    {
+      "name": "COUNSELOR",
+      "number": "105",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 890,
+      "y": 745
+    },
+    {
+      "name": "CELL",
+      "number": "D111",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 1522,
+      "y": 747
+    },
+    {
+      "name": "TOILET",
+      "number": "112",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 1158,
+      "y": 756
+    },
+    {
+      "name": "CONTROL",
+      "number": "114",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 1059,
+      "y": 775
+    },
+    {
+      "name": "DAYROOM",
+      "number": "D117",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 1322,
+      "y": 787
+    },
+    {
+      "name": "CELL",
+      "number": "D110",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 1550,
+      "y": 788
+    },
+    {
+      "name": "TOILET",
+      "number": "A111",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 919,
+      "y": 802
+    },
+    {
+      "name": "CELL",
+      "number": "D109",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 1550,
+      "y": 836
+    },
+    {
+      "name": "MANAGER",
+      "number": "B103",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 810,
+      "y": 841
+    },
+    {
+      "name": "JANITOR",
+      "number": "110",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 1027,
+      "y": 844
+    },
+    {
+      "name": "SECRETARY",
+      "number": "A107",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 900,
+      "y": 853
+    },
+    {
+      "name": "FILE",
+      "number": "108",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 859,
+      "y": 877
+    },
+    {
+      "name": "CELL",
+      "number": "D101",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 1132,
+      "y": 879
+    },
+    {
+      "name": "CELL",
+      "number": "D102",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 1180,
+      "y": 879
+    },
+    {
+      "name": "CELL",
+      "number": "D103",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 1224,
+      "y": 879
+    },
+    {
+      "name": "CELL",
+      "number": "D104",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 1266,
+      "y": 879
+    },
+    {
+      "name": "CELL",
+      "number": "D105",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 1313,
+      "y": 879
+    },
+    {
+      "name": "CELL",
+      "number": "D106",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 1358,
+      "y": 879
+    },
+    {
+      "name": "CELL",
+      "number": "D107",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 1404,
+      "y": 879
+    },
+    {
+      "name": "CELL",
+      "number": "D108",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 1446,
+      "y": 879
+    },
+    {
+      "name": "CELL",
+      "number": "B108",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 439,
+      "y": 906
+    },
+    {
+      "name": "CELL",
+      "number": "B107",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 484,
+      "y": 906
+    },
+    {
+      "name": "CELL",
+      "number": "B106",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 532,
+      "y": 906
+    },
+    {
+      "name": "CELL",
+      "number": "B105",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 576,
+      "y": 906
+    },
+    {
+      "name": "CELL",
+      "number": "B104",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 617,
+      "y": 906
+    },
+    {
+      "name": "CELL",
+      "number": "B103",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 663,
+      "y": 906
+    },
+    {
+      "name": "CELL",
+      "number": "B102",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 707,
+      "y": 906
+    },
+    {
+      "name": "CELL",
+      "number": "B101",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 754,
+      "y": 906
+    },
+    {
+      "name": "PAROLE",
+      "number": "102",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 810,
+      "y": 906
+    },
+    {
+      "name": "LOBBY",
+      "number": "101",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 997,
+      "y": 926
+    },
+    {
+      "name": "CELL",
+      "number": "B109",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 335,
+      "y": 930
+    },
+    {
+      "name": "MECHANICAL",
+      "number": "109",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 897,
+      "y": 966
+    },
+    {
+      "name": "CELL",
+      "number": "B110",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 335,
+      "y": 980
+    },
+    {
+      "name": "TOILET",
+      "number": "117",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 734,
+      "y": 1013
+    },
+    {
+      "name": "CONTROL",
+      "number": "117",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 818,
+      "y": 1013
+    },
+    {
+      "name": "CELL",
+      "number": "B111",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 363,
+      "y": 1021
+    },
+    {
+      "name": "ADA CELL",
+      "number": "B112",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 391,
+      "y": 1045
+    },
+    {
+      "name": "JANITOR",
+      "number": "B118",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 607,
+      "y": 1073
+    },
+    {
+      "name": "CELL",
+      "number": "A101",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 930,
+      "y": 1073
+    },
+    {
+      "name": "CELL",
+      "number": "B113",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 434,
+      "y": 1095
+    },
+    {
+      "name": "CELL",
+      "number": "B114",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 478,
+      "y": 1095
+    },
+    {
+      "name": "CELL",
+      "number": "B115",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 523,
+      "y": 1095
+    },
+    {
+      "name": "CELL",
+      "number": "B116",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 561,
+      "y": 1095
+    },
+    {
+      "name": "ELEC. CLO.",
+      "number": "116",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 821,
+      "y": 1095
+    },
+    {
+      "name": "CELL",
+      "number": "A102",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 930,
+      "y": 1120
+    },
+    {
+      "name": "TOILET",
+      "number": "B119",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 667,
+      "y": 1124
+    },
+    {
+      "name": "TOILET",
+      "number": "A119",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 717,
+      "y": 1156
+    },
+    {
+      "name": "CELL",
+      "number": "A103",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 930,
+      "y": 1175
+    },
+    {
+      "name": "CELL",
+      "number": "A104",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 930,
+      "y": 1221
+    },
+    {
+      "name": "JANITOR",
+      "number": "A118",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 755,
+      "y": 1229
+    },
+    {
+      "name": "CELL",
+      "number": "A116",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 741,
+      "y": 1266
+    },
+    {
+      "name": "CELL",
+      "number": "A105",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 930,
+      "y": 1271
+    },
+    {
+      "name": "DAYROOM",
+      "number": "A117",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 831,
+      "y": 1290
+    },
+    {
+      "name": "CELL",
+      "number": "A115",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 741,
+      "y": 1310
+    },
+    {
+      "name": "CELL",
+      "number": "A106",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 930,
+      "y": 1310
+    },
+    {
+      "name": "CELL",
+      "number": "A114",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 741,
+      "y": 1347
+    },
+    {
+      "name": "CELL",
+      "number": "A107",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 930,
+      "y": 1347
+    },
+    {
+      "name": "CELL",
+      "number": "A108",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 930,
+      "y": 1389
+    },
+    {
+      "name": "CELL",
+      "number": "A113",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 743,
+      "y": 1393
+    },
+    {
+      "name": "CELL",
+      "number": "A112",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 772,
+      "y": 1423
+    },
+    {
+      "name": "ADA CELL",
+      "number": "A111",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 796,
+      "y": 1455
+    },
+    {
+      "name": "CELL",
+      "number": "A110",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 839,
+      "y": 1480
+    },
+    {
+      "name": "CELL",
+      "number": "A109",
+      "page": 42,
+      "points_per_foot": 6.75,
+      "sheet": "A105",
+      "x": 886,
+      "y": 1492
+    },
+    {
+      "name": "CELL",
+      "number": "C109",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 984,
+      "y": 275
+    },
+    {
+      "name": "CELL",
+      "number": "C110",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 1028,
+      "y": 275
+    },
+    {
+      "name": "CELL",
+      "number": "C111",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 1071,
+      "y": 302
+    },
+    {
+      "name": "CELL",
+      "number": "C112",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 1103,
+      "y": 335
+    },
+    {
+      "name": "CELL",
+      "number": "C108",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 944,
+      "y": 370
+    },
+    {
+      "name": "CELL",
+      "number": "C113",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 1134,
+      "y": 378
+    },
+    {
+      "name": "CELL",
+      "number": "C107",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 944,
+      "y": 415
+    },
+    {
+      "name": "CELL",
+      "number": "C114",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 1134,
+      "y": 426
+    },
+    {
+      "name": "DAYROOM",
+      "number": "C117",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 1035,
+      "y": 431
+    },
+    {
+      "name": "CELL",
+      "number": "C106",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 944,
+      "y": 461
+    },
+    {
+      "name": "CELL",
+      "number": "C115",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 1134,
+      "y": 470
+    },
+    {
+      "name": "CELL",
+      "number": "C105",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 944,
+      "y": 505
+    },
+    {
+      "name": "CELL",
+      "number": "C116",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 1134,
+      "y": 517
+    },
+    {
+      "name": "CELL",
+      "number": "C104",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 944,
+      "y": 550
+    },
+    {
+      "name": "JANITOR",
+      "number": "C118",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 1120,
+      "y": 555
+    },
+    {
+      "name": "CELL",
+      "number": "C103",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 944,
+      "y": 595
+    },
+    {
+      "name": "TOILET",
+      "number": "C119",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 1159,
+      "y": 614
+    },
+    {
+      "name": "CELL",
+      "number": "C102",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 944,
+      "y": 634
+    },
+    {
+      "name": "TOILET",
+      "number": "D119",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 1204,
+      "y": 652
+    },
+    {
+      "name": "CELL",
+      "number": "D116",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 1300,
+      "y": 677
+    },
+    {
+      "name": "CELL",
+      "number": "D115",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 1343,
+      "y": 677
+    },
+    {
+      "name": "CELL",
+      "number": "D114",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 1391,
+      "y": 677
+    },
+    {
+      "name": "CELL",
+      "number": "D113",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 1433,
+      "y": 677
+    },
+    {
+      "name": "CELL",
+      "number": "C101",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 944,
+      "y": 680
+    },
+    {
+      "name": "ELEC. CLO.",
+      "number": "113",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 1052,
+      "y": 680
+    },
+    {
+      "name": "CASE WORKER",
+      "number": "106",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 828,
+      "y": 691
+    },
+    {
+      "name": "JANITOR",
+      "number": "D118",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 1256,
+      "y": 692
+    },
+    {
+      "name": "CELL",
+      "number": "D112",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 1473,
+      "y": 701
+    },
+    {
+      "name": "TOILET",
+      "number": "112",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 1151,
+      "y": 732
+    },
+    {
+      "name": "CELL",
+      "number": "D111",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 1507,
+      "y": 736
+    },
+    {
+      "name": "CONFERENCE",
+      "number": "104",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 803,
+      "y": 751
+    },
+    {
+      "name": "COUNSELOR",
+      "number": "105",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 876,
+      "y": 751
+    },
+    {
+      "name": "DAYROOM",
+      "number": "D117",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 1307,
+      "y": 768
+    },
+    {
+      "name": "CONTROL",
+      "number": "114",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 1051,
+      "y": 771
+    },
+    {
+      "name": "CELL",
+      "number": "D110",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 1544,
+      "y": 780
+    },
+    {
+      "name": "TOILET",
+      "number": "111",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 922,
+      "y": 788
+    },
+    {
+      "name": "CELL",
+      "number": "D109",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 1538,
+      "y": 823
+    },
+    {
+      "name": "MANAGER",
+      "number": "103",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 796,
+      "y": 825
+    },
+    {
+      "name": "JANITOR",
+      "number": "110",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 1012,
+      "y": 831
+    },
+    {
+      "name": "SECRETARY",
+      "number": "107",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 880,
+      "y": 835
+    },
+    {
+      "name": "CELL",
+      "number": "D101",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 1122,
+      "y": 865
+    },
+    {
+      "name": "CELL",
+      "number": "D102",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 1164,
+      "y": 865
+    },
+    {
+      "name": "CELL",
+      "number": "D103",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 1210,
+      "y": 865
+    },
+    {
+      "name": "CELL",
+      "number": "D104",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 1253,
+      "y": 865
+    },
+    {
+      "name": "CELL",
+      "number": "D105",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 1299,
+      "y": 865
+    },
+    {
+      "name": "CELL",
+      "number": "D106",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 1343,
+      "y": 865
+    },
+    {
+      "name": "CELL",
+      "number": "D107",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 1388,
+      "y": 865
+    },
+    {
+      "name": "CELL",
+      "number": "D108",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 1433,
+      "y": 865
+    },
+    {
+      "name": "FILE",
+      "number": "108",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 844,
+      "y": 878
+    },
+    {
+      "name": "CELL",
+      "number": "B108",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 425,
+      "y": 896
+    },
+    {
+      "name": "CELL",
+      "number": "B107",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 468,
+      "y": 896
+    },
+    {
+      "name": "CELL",
+      "number": "B106",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 517,
+      "y": 896
+    },
+    {
+      "name": "CELL",
+      "number": "B105",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 559,
+      "y": 896
+    },
+    {
+      "name": "CELL",
+      "number": "B104",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 604,
+      "y": 896
+    },
+    {
+      "name": "CELL",
+      "number": "B103",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 650,
+      "y": 896
+    },
+    {
+      "name": "CELL",
+      "number": "B102",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 693,
+      "y": 896
+    },
+    {
+      "name": "CELL",
+      "number": "B101",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 738,
+      "y": 896
+    },
+    {
+      "name": "PAROLE",
+      "number": "102",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 793,
+      "y": 896
+    },
+    {
+      "name": "CELL",
+      "number": "B109",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 324,
+      "y": 924
+    },
+    {
+      "name": "LOBBY",
+      "number": "101",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 961,
+      "y": 924
+    },
+    {
+      "name": "MECHANICAL",
+      "number": "109",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 883,
+      "y": 960
+    },
+    {
+      "name": "CELL",
+      "number": "B110",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 324,
+      "y": 963
+    },
+    {
+      "name": "DAYROOM",
+      "number": "B117",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 650,
+      "y": 987
+    },
+    {
+      "name": "CONTROL",
+      "number": "117",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 802,
+      "y": 999
+    },
+    {
+      "name": "TOILET",
+      "number": "117",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 709,
+      "y": 1005
+    },
+    {
+      "name": "CELL",
+      "number": "B111",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 349,
+      "y": 1014
+    },
+    {
+      "name": "CELL",
+      "number": "B112",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 380,
+      "y": 1049
+    },
+    {
+      "name": "CELL",
+      "number": "A101",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 915,
+      "y": 1064
+    },
+    {
+      "name": "JANITOR",
+      "number": "B118",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 595,
+      "y": 1068
+    },
+    {
+      "name": "CELL",
+      "number": "B114",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 468,
+      "y": 1075
+    },
+    {
+      "name": "CELL",
+      "number": "B115",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 509,
+      "y": 1075
+    },
+    {
+      "name": "CELL",
+      "number": "B116",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 550,
+      "y": 1075
+    },
+    {
+      "name": "CELL",
+      "number": "B113",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 417,
+      "y": 1078
+    },
+    {
+      "name": "ELEC. CLO.",
+      "number": "116",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 804,
+      "y": 1084
+    },
+    {
+      "name": "TOILET",
+      "number": "B119",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 656,
+      "y": 1107
+    },
+    {
+      "name": "CELL",
+      "number": "A102",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 915,
+      "y": 1109
+    },
+    {
+      "name": "TOILET",
+      "number": "A119",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 691,
+      "y": 1149
+    },
+    {
+      "name": "CELL",
+      "number": "A103",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 915,
+      "y": 1169
+    },
+    {
+      "name": "JANITOR",
+      "number": "A118",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 741,
+      "y": 1215
+    },
+    {
+      "name": "CELL",
+      "number": "A104",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 915,
+      "y": 1215
+    },
+    {
+      "name": "DAYROOM",
+      "number": "A117",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 819,
+      "y": 1229
+    },
+    {
+      "name": "CELL",
+      "number": "A105",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 915,
+      "y": 1248
+    },
+    {
+      "name": "CELL",
+      "number": "A116",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 724,
+      "y": 1258
+    },
+    {
+      "name": "CELL",
+      "number": "A115",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 724,
+      "y": 1298
+    },
+    {
+      "name": "CELL",
+      "number": "A106",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 915,
+      "y": 1298
+    },
+    {
+      "name": "CELL",
+      "number": "A114",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 724,
+      "y": 1337
+    },
+    {
+      "name": "CELL",
+      "number": "A107",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 915,
+      "y": 1341
+    },
+    {
+      "name": "CELL",
+      "number": "A113",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 724,
+      "y": 1377
+    },
+    {
+      "name": "CELL",
+      "number": "A108",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 915,
+      "y": 1381
+    },
+    {
+      "name": "CELL",
+      "number": "A112",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 749,
+      "y": 1414
+    },
+    {
+      "name": "CELL",
+      "number": "A111",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 782,
+      "y": 1451
+    },
+    {
+      "name": "CELL",
+      "number": "A110",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 823,
+      "y": 1468
+    },
+    {
+      "name": "CELL",
+      "number": "A109",
+      "page": 43,
+      "points_per_foot": 6.75,
+      "sheet": "A107",
+      "x": 872,
+      "y": 1468
+    },
+    {
+      "name": "CELL",
+      "number": "C110",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1175,
+      "y": 250
+    },
+    {
+      "name": "CELL",
+      "number": "C109",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1125,
+      "y": 253
+    },
+    {
+      "name": "CELL",
+      "number": "C111",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1215,
+      "y": 280
+    },
+    {
+      "name": "CELL",
+      "number": "C112",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1251,
+      "y": 311
+    },
+    {
+      "name": "CELL",
+      "number": "C113",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1275,
+      "y": 353
+    },
+    {
+      "name": "CELL",
+      "number": "C108",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1085,
+      "y": 356
+    },
+    {
+      "name": "CELL",
+      "number": "C107",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1085,
+      "y": 397
+    },
+    {
+      "name": "CELL",
+      "number": "C114",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1275,
+      "y": 406
+    },
+    {
+      "name": "CELL",
+      "number": "C106",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1085,
+      "y": 440
+    },
+    {
+      "name": "CELL",
+      "number": "C115",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1275,
+      "y": 452
+    },
+    {
+      "name": "CELL",
+      "number": "C105",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1085,
+      "y": 482
+    },
+    {
+      "name": "CELL",
+      "number": "C116",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1275,
+      "y": 502
+    },
+    {
+      "name": "DAYROOM",
+      "number": "C117",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1176,
+      "y": 512
+    },
+    {
+      "name": "CELL",
+      "number": "C104",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1085,
+      "y": 531
+    },
+    {
+      "name": "JANITOR",
+      "number": "C118",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1262,
+      "y": 538
+    },
+    {
+      "name": "CELL",
+      "number": "C103",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1085,
+      "y": 571
+    },
+    {
+      "name": "TOILET",
+      "number": "C119",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1305,
+      "y": 594
+    },
+    {
+      "name": "CELL",
+      "number": "C102",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1085,
+      "y": 615
+    },
+    {
+      "name": "TOILET",
+      "number": "D119",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1333,
+      "y": 635
+    },
+    {
+      "name": "ELEC. CLO.",
+      "number": "113",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1192,
+      "y": 650
+    },
+    {
+      "name": "CELL",
+      "number": "D116",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1440,
+      "y": 658
+    },
+    {
+      "name": "CELL",
+      "number": "D115",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1486,
+      "y": 658
+    },
+    {
+      "name": "CELL",
+      "number": "D114",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1532,
+      "y": 658
+    },
+    {
+      "name": "CELL",
+      "number": "D113",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1575,
+      "y": 658
+    },
+    {
+      "name": "CELL",
+      "number": "C101",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1085,
+      "y": 661
+    },
+    {
+      "name": "CASEWORKER",
+      "number": "106",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 987,
+      "y": 668
+    },
+    {
+      "name": "JANITOR",
+      "number": "D118",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1397,
+      "y": 672
+    },
+    {
+      "name": "CELL",
+      "number": "D112",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1622,
+      "y": 682
+    },
+    {
+      "name": "CELL",
+      "number": "D111",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1656,
+      "y": 714
+    },
+    {
+      "name": "CONFERENCE",
+      "number": "104",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 939,
+      "y": 722
+    },
+    {
+      "name": "COUNCELOR",
+      "number": "105",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1018,
+      "y": 722
+    },
+    {
+      "name": "TOILET",
+      "number": "112",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1285,
+      "y": 722
+    },
+    {
+      "name": "CONTROL",
+      "number": "114",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1187,
+      "y": 745
+    },
+    {
+      "name": "DAYROOM",
+      "number": "D117",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1440,
+      "y": 745
+    },
+    {
+      "name": "CELL",
+      "number": "D110",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1682,
+      "y": 754
+    },
+    {
+      "name": "TOILET",
+      "number": "111",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1058,
+      "y": 770
+    },
+    {
+      "name": "MANAGER",
+      "number": "103",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 939,
+      "y": 807
+    },
+    {
+      "name": "CELL",
+      "number": "D109",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1682,
+      "y": 807
+    },
+    {
+      "name": "JANITOR",
+      "number": "110",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1149,
+      "y": 809
+    },
+    {
+      "name": "SECRETARY",
+      "number": "107",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1027,
+      "y": 819
+    },
+    {
+      "name": "CELL",
+      "number": "D101",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1264,
+      "y": 844
+    },
+    {
+      "name": "CELL",
+      "number": "D102",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1307,
+      "y": 844
+    },
+    {
+      "name": "CELL",
+      "number": "D103",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1353,
+      "y": 844
+    },
+    {
+      "name": "CELL",
+      "number": "D104",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1397,
+      "y": 844
+    },
+    {
+      "name": "CELL",
+      "number": "D105",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1440,
+      "y": 844
+    },
+    {
+      "name": "CELL",
+      "number": "D106",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1486,
+      "y": 844
+    },
+    {
+      "name": "CELL",
+      "number": "D107",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1532,
+      "y": 844
+    },
+    {
+      "name": "CELL",
+      "number": "D108",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1575,
+      "y": 844
+    },
+    {
+      "name": "FILE",
+      "number": "108",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 986,
+      "y": 860
+    },
+    {
+      "name": "CELL",
+      "number": "B108",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 568,
+      "y": 871
+    },
+    {
+      "name": "CELL",
+      "number": "B107",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 612,
+      "y": 871
+    },
+    {
+      "name": "CELL",
+      "number": "B106",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 658,
+      "y": 871
+    },
+    {
+      "name": "CELL",
+      "number": "B105",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 701,
+      "y": 871
+    },
+    {
+      "name": "CELL",
+      "number": "B104",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 745,
+      "y": 871
+    },
+    {
+      "name": "CELL",
+      "number": "B103",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 791,
+      "y": 871
+    },
+    {
+      "name": "CELL",
+      "number": "B102",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 835,
+      "y": 871
+    },
+    {
+      "name": "CELL",
+      "number": "B101",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 880,
+      "y": 871
+    },
+    {
+      "name": "PAROLE",
+      "number": "102",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 939,
+      "y": 871
+    },
+    {
+      "name": "LOBBY",
+      "number": "101",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1106,
+      "y": 898
+    },
+    {
+      "name": "CELL",
+      "number": "B109",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 465,
+      "y": 900
+    },
+    {
+      "name": "CELL",
+      "number": "B110",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 465,
+      "y": 946
+    },
+    {
+      "name": "MECHANICAL",
+      "number": "109",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1025,
+      "y": 948
+    },
+    {
+      "name": "DAYROOM",
+      "number": "B117",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 721,
+      "y": 967
+    },
+    {
+      "name": "TOILET",
+      "number": "117",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 854,
+      "y": 980
+    },
+    {
+      "name": "CONTROL",
+      "number": "117",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 942,
+      "y": 980
+    },
+    {
+      "name": "CELL",
+      "number": "B111",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 492,
+      "y": 990
+    },
+    {
+      "name": "CELL",
+      "number": "B112",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 519,
+      "y": 1018
+    },
+    {
+      "name": "JANITOR",
+      "number": "B118",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 739,
+      "y": 1043
+    },
+    {
+      "name": "CELL",
+      "number": "A101",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1057,
+      "y": 1050
+    },
+    {
+      "name": "CELL",
+      "number": "B113",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 556,
+      "y": 1062
+    },
+    {
+      "name": "CELL",
+      "number": "B114",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 608,
+      "y": 1062
+    },
+    {
+      "name": "CELL",
+      "number": "B115",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 651,
+      "y": 1062
+    },
+    {
+      "name": "CELL",
+      "number": "B116",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 691,
+      "y": 1062
+    },
+    {
+      "name": "ELEC. CLO.",
+      "number": "116",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 954,
+      "y": 1064
+    },
+    {
+      "name": "CELL",
+      "number": "A102",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1057,
+      "y": 1099
+    },
+    {
+      "name": "TOILET",
+      "number": "B119",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 791,
+      "y": 1106
+    },
+    {
+      "name": "DAYROOM",
+      "number": "A117",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 961,
+      "y": 1118
+    },
+    {
+      "name": "TOILET",
+      "number": "A119",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 835,
+      "y": 1138
+    },
+    {
+      "name": "CELL",
+      "number": "A103",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1057,
+      "y": 1147
+    },
+    {
+      "name": "CELL",
+      "number": "A104",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1057,
+      "y": 1194
+    },
+    {
+      "name": "JANITOR",
+      "number": "A118",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 886,
+      "y": 1198
+    },
+    {
+      "name": "CELL",
+      "number": "A105",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1057,
+      "y": 1236
+    },
+    {
+      "name": "CELL",
+      "number": "A116",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 867,
+      "y": 1239
+    },
+    {
+      "name": "CELL",
+      "number": "A115",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 867,
+      "y": 1280
+    },
+    {
+      "name": "CELL",
+      "number": "A106",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1057,
+      "y": 1280
+    },
+    {
+      "name": "CELL",
+      "number": "A107",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1057,
+      "y": 1316
+    },
+    {
+      "name": "CELL",
+      "number": "A114",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 867,
+      "y": 1321
+    },
+    {
+      "name": "CELL",
+      "number": "A113",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 867,
+      "y": 1362
+    },
+    {
+      "name": "CELL",
+      "number": "A108",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1057,
+      "y": 1362
+    },
+    {
+      "name": "CELL",
+      "number": "A112",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 891,
+      "y": 1405
+    },
+    {
+      "name": "CELL",
+      "number": "A111",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 928,
+      "y": 1437
+    },
+    {
+      "name": "CELL",
+      "number": "A110",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 963,
+      "y": 1462
+    },
+    {
+      "name": "CELL",
+      "number": "A109",
+      "page": 44,
+      "points_per_foot": 6.75,
+      "sheet": "A109",
+      "x": 1012,
+      "y": 1462
+    }
+  ],
+  "set": {
+    "label": "missouri_oa_fmdc - _C2410-01%20Add%201%20Plans-Specs_0.pdf",
+    "page_count": 45,
+    "rows_total": 22,
+    "sha16": "194733de48af8797",
+    "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_C2410-01%20Add%201%20Plans-Specs_0.pdf",
+    "tier": "agreed"
+  },
+  "sheets": [
+    {
+      "height": 1728,
+      "page": 41,
+      "plan_rule": "drawing-title",
+      "points_per_foot": [
+        6.75
+      ],
+      "scales": [
+        "3/32\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number"
+            ],
+            "page": 45
+          }
+        ],
+        "kept_pages": [
+          45
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A103",
+      "title": "HOUSING UNIT 1",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 42,
+      "plan_rule": "drawing-title",
+      "points_per_foot": [
+        6.75
+      ],
+      "scales": [
+        "3/32\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number"
+            ],
+            "page": 45
+          }
+        ],
+        "kept_pages": [
+          45
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A105",
+      "title": "HOUSING UNIT 2",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 43,
+      "plan_rule": "drawing-title",
+      "points_per_foot": [
+        6.75
+      ],
+      "scales": [
+        "3/32\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number"
+            ],
+            "page": 45
+          }
+        ],
+        "kept_pages": [
+          45
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A107",
+      "title": "HOUSING UNIT 3",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 44,
+      "plan_rule": "drawing-title",
+      "points_per_foot": [
+        6.75
+      ],
+      "scales": [
+        "3/32\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number"
+            ],
+            "page": 45
+          }
+        ],
+        "kept_pages": [
+          45
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A109",
+      "title": "HOUSING UNIT 4",
+      "width": 2592
+    }
+  ],
+  "summary": {
+    "marks_placed": 8,
+    "marks_total": 16,
+    "placed_rate": 0.5,
+    "rooms_total": 371,
+    "sheets_total": 4,
+    "sheets_with_scale": 4,
+    "unplaced": [
+      {
+        "mark": "151A",
+        "page": 45,
+        "reason": "mark 151A (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "1A201",
+        "page": 45,
+        "reason": "mark 1A201 (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "256",
+        "page": 45,
+        "reason": "mark 256 (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "258A",
+        "page": 45,
+        "reason": "mark 258A (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "259A",
+        "page": 45,
+        "reason": "mark 259A (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "2A201",
+        "page": 45,
+        "reason": "mark 2A201 (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "3A201",
+        "page": 45,
+        "reason": "mark 3A201 (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "4A201",
+        "page": 45,
+        "reason": "mark 4A201 (schedule p.45) not tagged on any plan"
+      }
+    ]
+  },
+  "tags": [
+    {
+      "also_on": [],
+      "door_pages": [
+        45
+      ],
+      "door_type": "1",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 8.654036538384,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": "CELL A101-CELL D116",
+      "mark": "1A101",
+      "mark_ranges": [
+        {
+          "from": "1A101",
+          "to": "1D116"
+        }
+      ],
+      "marks": [
+        "1A101",
+        "1D116"
+      ],
+      "matched_by": "exact",
+      "material": null,
+      "opening_id": "[{\"site_number\":\"7007\"},\"A\"]|1A101|45|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "site_number": "7007"
+      },
+      "opening_scope_id": "[{\"site_number\":\"7007\"},\"A\"]",
+      "page": 41,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "quantity": 48,
+      "room": "A101",
+      "room_by": "schedule_location",
+      "room_name": "CELL",
+      "schedule_rows": [
+        {
+          "door_type": "1",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": "CELL A101-CELL D116",
+          "mark": "1A101",
+          "mark_ranges": [
+            {
+              "from": "1A101",
+              "to": "1D116"
+            }
+          ],
+          "marks": [
+            "1A101",
+            "1D116"
+          ],
+          "material": null,
+          "page": 45,
+          "pair": false,
+          "quantity": 48,
+          "size": "2'-4\" x 7'-0\"",
+          "width_inches": 28,
+          "y": 655
+        }
+      ],
+      "sheet": "A103",
+      "size": "2'-4\" x 7'-0\"",
+      "source_keys": [
+        "45|1A101|1"
+      ],
+      "width_inches": 28,
+      "x": 840,
+      "y": 1081
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        45
+      ],
+      "door_type": "1",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 8.654036538384,
+      "hardware_group": "2",
+      "height_inches": 84,
+      "location": "CELL A105-CELL A116 CELL B109-CELL B116",
+      "mark": "1A105",
+      "mark_ranges": [
+        {
+          "from": "1A105",
+          "to": "1A116"
+        },
+        {
+          "from": "1B109",
+          "to": "1B116"
+        }
+      ],
+      "marks": [
+        "1A105",
+        "1A116",
+        "1B109",
+        "1B116"
+      ],
+      "matched_by": "exact",
+      "material": null,
+      "opening_id": "[{\"site_number\":\"7007\"},\"A\"]|1A105|45|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "site_number": "7007"
+      },
+      "opening_scope_id": "[{\"site_number\":\"7007\"},\"A\"]",
+      "page": 41,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "quantity": 16,
+      "room": "A105",
+      "room_by": "schedule_location",
+      "room_name": "CELL",
+      "schedule_rows": [
+        {
+          "door_type": "1",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "2",
+          "height_inches": 84,
+          "location": "CELL A105-CELL A116 CELL B109-CELL B116",
+          "mark": "1A105",
+          "mark_ranges": [
+            {
+              "from": "1A105",
+              "to": "1A116"
+            },
+            {
+              "from": "1B109",
+              "to": "1B116"
+            }
+          ],
+          "marks": [
+            "1A105",
+            "1A116",
+            "1B109",
+            "1B116"
+          ],
+          "material": null,
+          "page": 45,
+          "pair": false,
+          "quantity": 16,
+          "size": "2'-4\" x 7'-0\"",
+          "width_inches": 28,
+          "y": 668
+        }
+      ],
+      "sheet": "A103",
+      "size": "2'-4\" x 7'-0\"",
+      "source_keys": [
+        "45|1A105|1"
+      ],
+      "width_inches": 28,
+      "x": 840,
+      "y": 1258
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        45
+      ],
+      "door_type": "1",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 8.654036538384,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": "CELL A101-CELL D116",
+      "mark": "2A101",
+      "mark_ranges": [
+        {
+          "from": "2A101",
+          "to": "2D116"
+        }
+      ],
+      "marks": [
+        "2A101",
+        "2D116"
+      ],
+      "matched_by": "exact",
+      "material": null,
+      "opening_id": "[{\"site_number\":\"7007\"},\"A\"]|2A101|45|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "site_number": "7007"
+      },
+      "opening_scope_id": "[{\"site_number\":\"7007\"},\"A\"]",
+      "page": 42,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "quantity": 56,
+      "room": "A101",
+      "room_by": "schedule_location",
+      "room_name": "CELL",
+      "schedule_rows": [
+        {
+          "door_type": "1",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": "CELL A101-CELL D116",
+          "mark": "2A101",
+          "mark_ranges": [
+            {
+              "from": "2A101",
+              "to": "2D116"
+            }
+          ],
+          "marks": [
+            "2A101",
+            "2D116"
+          ],
+          "material": null,
+          "page": 45,
+          "pair": false,
+          "quantity": 56,
+          "size": "2'-4\" x 7'-0\"",
+          "width_inches": 28,
+          "y": 783
+        }
+      ],
+      "sheet": "A105",
+      "size": "2'-4\" x 7'-0\"",
+      "source_keys": [
+        "45|2A101|1"
+      ],
+      "width_inches": 28,
+      "x": 862,
+      "y": 1071
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        45
+      ],
+      "door_type": "1",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 8.654036538384,
+      "hardware_group": "2",
+      "height_inches": 84,
+      "location": "CELL A109-CELL A112 CELL B109-CELL B112",
+      "mark": "2A109",
+      "mark_ranges": [
+        {
+          "from": "2A109",
+          "to": "2A112"
+        },
+        {
+          "from": "2B109",
+          "to": "2B112"
+        }
+      ],
+      "marks": [
+        "2A109",
+        "2A112",
+        "2B109",
+        "2B112"
+      ],
+      "matched_by": "exact",
+      "material": null,
+      "opening_id": "[{\"site_number\":\"7007\"},\"A\"]|2A109|45|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "site_number": "7007"
+      },
+      "opening_scope_id": "[{\"site_number\":\"7007\"},\"A\"]",
+      "page": 42,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "quantity": 8,
+      "room": "A109",
+      "room_by": "schedule_location",
+      "room_name": "CELL",
+      "schedule_rows": [
+        {
+          "door_type": "1",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "2",
+          "height_inches": 84,
+          "location": "CELL A109-CELL A112 CELL B109-CELL B112",
+          "mark": "2A109",
+          "mark_ranges": [
+            {
+              "from": "2A109",
+              "to": "2A112"
+            },
+            {
+              "from": "2B109",
+              "to": "2B112"
+            }
+          ],
+          "marks": [
+            "2A109",
+            "2A112",
+            "2B109",
+            "2B112"
+          ],
+          "material": null,
+          "page": 45,
+          "pair": false,
+          "quantity": 8,
+          "size": "2'-4\" x 7'-0\"",
+          "width_inches": 28,
+          "y": 802
+        }
+      ],
+      "sheet": "A105",
+      "size": "2'-4\" x 7'-0\"",
+      "source_keys": [
+        "45|2A109|1"
+      ],
+      "width_inches": 28,
+      "x": 879,
+      "y": 1433
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        45
+      ],
+      "door_type": "1",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 8.654036538384,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": "CELL A101-CELL D116",
+      "mark": "3A101",
+      "mark_ranges": [
+        {
+          "from": "3A101",
+          "to": "3D116"
+        }
+      ],
+      "marks": [
+        "3A101",
+        "3D116"
+      ],
+      "matched_by": "exact",
+      "material": null,
+      "opening_id": "[{\"site_number\":\"7007\"},\"A\"]|3A101|45|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "site_number": "7007"
+      },
+      "opening_scope_id": "[{\"site_number\":\"7007\"},\"A\"]",
+      "page": 43,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "quantity": 60,
+      "room": "A101",
+      "room_by": "schedule_location",
+      "room_name": "CELL",
+      "schedule_rows": [
+        {
+          "door_type": "1",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": "CELL A101-CELL D116",
+          "mark": "3A101",
+          "mark_ranges": [
+            {
+              "from": "3A101",
+              "to": "3D116"
+            }
+          ],
+          "marks": [
+            "3A101",
+            "3D116"
+          ],
+          "material": null,
+          "page": 45,
+          "pair": false,
+          "quantity": 60,
+          "size": "2'-4\" x 7'-0\"",
+          "width_inches": 28,
+          "y": 913
+        }
+      ],
+      "sheet": "A107",
+      "size": "2'-4\" x 7'-0\"",
+      "source_keys": [
+        "45|3A101|1"
+      ],
+      "width_inches": 28,
+      "x": 844,
+      "y": 1082
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        45
+      ],
+      "door_type": "1",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 8.654036538384,
+      "hardware_group": "2",
+      "height_inches": 84,
+      "location": "CELL A109-CELL A112",
+      "mark": "3A109",
+      "mark_ranges": [
+        {
+          "from": "3A109",
+          "to": "3A112"
+        }
+      ],
+      "marks": [
+        "3A109",
+        "3A112"
+      ],
+      "matched_by": "exact",
+      "material": null,
+      "opening_id": "[{\"site_number\":\"7007\"},\"A\"]|3A109|45|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "site_number": "7007"
+      },
+      "opening_scope_id": "[{\"site_number\":\"7007\"},\"A\"]",
+      "page": 43,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "quantity": 4,
+      "room": "A109",
+      "room_by": "schedule_location",
+      "room_name": "CELL",
+      "schedule_rows": [
+        {
+          "door_type": "1",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "2",
+          "height_inches": 84,
+          "location": "CELL A109-CELL A112",
+          "mark": "3A109",
+          "mark_ranges": [
+            {
+              "from": "3A109",
+              "to": "3A112"
+            }
+          ],
+          "marks": [
+            "3A109",
+            "3A112"
+          ],
+          "material": null,
+          "page": 45,
+          "pair": false,
+          "quantity": 4,
+          "size": "2'-4\" x 7'-0\"",
+          "width_inches": 28,
+          "y": 929
+        }
+      ],
+      "sheet": "A107",
+      "size": "2'-4\" x 7'-0\"",
+      "source_keys": [
+        "45|3A109|1"
+      ],
+      "width_inches": 28,
+      "x": 861,
+      "y": 1421
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        45
+      ],
+      "door_type": "1",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 8.654036538384,
+      "hardware_group": "2",
+      "height_inches": 84,
+      "location": "CELL B109-CELL B112",
+      "mark": "4B109",
+      "mark_ranges": [
+        {
+          "from": "4B109",
+          "to": "4B112"
+        }
+      ],
+      "marks": [
+        "4B109",
+        "4B112"
+      ],
+      "matched_by": "exact",
+      "material": null,
+      "opening_id": "[{\"site_number\":\"7007\"},\"A\"]|4B109|45|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "site_number": "7007"
+      },
+      "opening_scope_id": "[{\"site_number\":\"7007\"},\"A\"]",
+      "page": 44,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "quantity": 4,
+      "room": "B109",
+      "room_by": "schedule_location",
+      "room_name": "CELL",
+      "schedule_rows": [
+        {
+          "door_type": "1",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "2",
+          "height_inches": 84,
+          "location": "CELL B109-CELL B112",
+          "mark": "4B109",
+          "mark_ranges": [
+            {
+              "from": "4B109",
+              "to": "4B112"
+            }
+          ],
+          "marks": [
+            "4B109",
+            "4B112"
+          ],
+          "material": null,
+          "page": 45,
+          "pair": false,
+          "quantity": 4,
+          "size": "2'-4\" x 7'-0\"",
+          "width_inches": 28,
+          "y": 1060
+        }
+      ],
+      "sheet": "A109",
+      "size": "2'-4\" x 7'-0\"",
+      "source_keys": [
+        "45|4B109|1"
+      ],
+      "width_inches": 28,
+      "x": 538,
+      "y": 916
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        45
+      ],
+      "door_type": "1",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 8.654036538384,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": "CELL A101-CELL D116",
+      "mark": "4A101",
+      "mark_ranges": [
+        {
+          "from": "4A101",
+          "to": "4D116"
+        }
+      ],
+      "marks": [
+        "4A101",
+        "4D116"
+      ],
+      "matched_by": "exact",
+      "material": null,
+      "opening_id": "[{\"site_number\":\"7007\"},\"A\"]|4A101|45|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "site_number": "7007"
+      },
+      "opening_scope_id": "[{\"site_number\":\"7007\"},\"A\"]",
+      "page": 44,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "quantity": 60,
+      "room": "A101",
+      "room_by": "schedule_location",
+      "room_name": "CELL",
+      "schedule_rows": [
+        {
+          "door_type": "1",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": "CELL A101-CELL D116",
+          "mark": "4A101",
+          "mark_ranges": [
+            {
+              "from": "4A101",
+              "to": "4D116"
+            }
+          ],
+          "marks": [
+            "4A101",
+            "4D116"
+          ],
+          "material": null,
+          "page": 45,
+          "pair": false,
+          "quantity": 60,
+          "size": "2'-4\" x 7'-0\"",
+          "width_inches": 28,
+          "y": 1044
+        }
+      ],
+      "sheet": "A109",
+      "size": "2'-4\" x 7'-0\"",
+      "source_keys": [
+        "45|4A101|1"
+      ],
+      "width_inches": 28,
+      "x": 988,
+      "y": 1063
+    }
+  ]
+}

@@ -129,27 +129,26 @@
   "marks_on_plan": {
    "applicable": true,
    "total": 9,
-   "pass": 5,
-   "fail": 4,
-   "pass_rate": 0.5556,
+   "pass": 8,
+   "fail": 1,
+   "pass_rate": 0.8889,
    "examples": [
-    "mark OH01 (schedule p.13) not tagged on any plan",
-    "mark OH02 (schedule p.13) not tagged on any plan",
-    "mark OH03 (schedule p.13) not tagged on any plan",
-    "mark OH04 (schedule p.13) not tagged on any plan"
+    "mark OH03 (schedule p.13) not tagged on any plan"
    ],
    "plan_sheets": [
     "A-101 p.7",
-    "A-500 p.10"
+    "A-500 p.10",
+    "A-100 p.6",
+    "A-600 p.11"
    ],
    "plan_counts": {
-    "plan_sheets": 2,
-    "rooms": 23,
+    "plan_sheets": 4,
+    "rooms": 26,
     "corridors": 2,
-    "tags": 5,
+    "tags": 8,
     "unmatched_tags": 1,
     "schedule_marks": 9,
-    "marks_not_on_plan": 4,
+    "marks_not_on_plan": 1,
     "shared_marks": 0
    }
   },
@@ -536,6 +535,6 @@
    "why": "only reader A read this row"
   }
  ],
- "ms": 1318,
- "generated_at": "2026-10-11T11:49:04.046Z"
+ "ms": 1445,
+ "generated_at": "2026-10-11T12:37:36.796Z"
 }

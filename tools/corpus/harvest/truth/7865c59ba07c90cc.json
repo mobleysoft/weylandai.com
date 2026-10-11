@@ -42,7 +42,7 @@
   "pages": [
    {
     "page": 27,
-    "title": "DOOR SCHEDULES",
+    "title": "DOOR SCHEDULES FOR A-WING & STAFF LOUNGE",
     "rank": 2,
     "scope": {},
     "sheet": "A-603",
@@ -134,10 +134,11 @@
     "A-103 p.13",
     "A-104 p.14",
     "A-105 p.15",
-    "A-106 p.16"
+    "A-106 p.16",
+    "A-505 p.23"
    ],
    "plan_counts": {
-    "plan_sheets": 6,
+    "plan_sheets": 7,
     "rooms": 169,
     "corridors": 2,
     "tags": 74,
@@ -345,6 +346,6 @@
    "b": "45 MIN"
   }
  ],
- "ms": 5361,
- "generated_at": "2026-10-11T11:49:41.738Z"
+ "ms": 5796,
+ "generated_at": "2026-10-11T12:38:19.023Z"
 }

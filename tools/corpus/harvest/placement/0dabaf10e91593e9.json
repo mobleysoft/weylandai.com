@@ -188,6 +188,42 @@
       "sheet": "A-101",
       "x": 494,
       "y": 1442
+    },
+    {
+      "name": "ADA SHOWER",
+      "number": "118",
+      "page": 22,
+      "points_per_foot": 36,
+      "sheet": "A-401",
+      "x": 1785,
+      "y": 386
+    },
+    {
+      "name": "SHOWER 22.002",
+      "number": "116",
+      "page": 22,
+      "points_per_foot": 36,
+      "sheet": "A-401",
+      "x": 1507,
+      "y": 393
+    },
+    {
+      "name": "RESTROOM",
+      "number": "104",
+      "page": 22,
+      "points_per_foot": 36,
+      "sheet": "A-401",
+      "x": 1407,
+      "y": 1272
+    },
+    {
+      "name": "ADA RESTROOM",
+      "number": "102",
+      "page": 22,
+      "points_per_foot": 36,
+      "sheet": "A-401",
+      "x": 1543,
+      "y": 1276
     }
   ],
   "set": {
@@ -231,15 +267,51 @@
       "sheet": "A-101",
       "title": "FLOOR PLAN",
       "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 22,
+      "plan_rule": "multiline-title",
+      "points_per_foot": [
+        36
+      ],
+      "scales": [
+        "SCALE 1/2\" = 1'-0\"",
+        "SCALE 1/2\" = 1'-0\"",
+        "SCALE 1/2\" = 1'-0\"",
+        "SCALE 1/2\" = 1'-0\"",
+        "SCALE 1/2\" = 1'-0\"",
+        "SCALE 1/2\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site",
+              "asset_number",
+              "site_number"
+            ],
+            "page": 18
+          }
+        ],
+        "kept_pages": [
+          18
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A-401",
+      "title": "ENLARGED FLOOR PLANS & INT ELEVATIONS",
+      "width": 2592
     }
   ],
   "summary": {
     "marks_placed": 18,
     "marks_total": 18,
     "placed_rate": 1,
-    "rooms_total": 21,
-    "sheets_total": 1,
-    "sheets_with_scale": 1,
+    "rooms_total": 25,
+    "sheets_total": 2,
+    "sheets_with_scale": 2,
     "unplaced": []
   },
   "tags": [
@@ -860,7 +932,9 @@
       "y": 1444
     },
     {
-      "also_on": [],
+      "also_on": [
+        "A-401"
+      ],
       "door_pages": [
         18
       ],
@@ -1028,7 +1102,9 @@
       "y": 1444
     },
     {
-      "also_on": [],
+      "also_on": [
+        "A-401"
+      ],
       "door_pages": [
         18
       ],
@@ -1140,7 +1216,9 @@
       "y": 1509
     },
     {
-      "also_on": [],
+      "also_on": [
+        "A-401"
+      ],
       "door_pages": [
         18
       ],
@@ -1196,7 +1274,9 @@
       "y": 1509
     },
     {
-      "also_on": [],
+      "also_on": [
+        "A-401"
+      ],
       "door_pages": [
         18
       ],

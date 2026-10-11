@@ -42,7 +42,7 @@
   "pages": [
    {
     "page": 10,
-    "title": "DETAILS AND",
+    "title": "DETAILS AND SCHEDULES",
     "rank": 2,
     "scope": {
      "address": "620 N. JEFFERSON STREET",
@@ -197,6 +197,6 @@
    "why": "only reader A read this row"
   }
  ],
- "ms": 519,
- "generated_at": "2026-10-11T11:50:31.260Z"
+ "ms": 477,
+ "generated_at": "2026-10-11T12:39:10.809Z"
 }

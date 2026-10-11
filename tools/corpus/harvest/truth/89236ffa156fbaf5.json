@@ -43,7 +43,7 @@
   "pages": [
    {
     "page": 42,
-    "title": "DOOR SCHEDULE",
+    "title": "DOOR SCHEDULE & DETAILS",
     "rank": 3,
     "scope": {
      "address": "1225 COOPER DRIVE",
@@ -81,7 +81,7 @@
    },
    {
     "page": 43,
-    "title": "DOOR SCHEDULE",
+    "title": "DOOR SCHEDULE & DETAILS - ALT. 1",
     "rank": 3,
     "scope": {
      "address": "1225 COOPER DRIVE",
@@ -192,36 +192,25 @@
   "marks_on_plan": {
    "applicable": true,
    "total": 29,
-   "pass": 13,
-   "fail": 16,
-   "pass_rate": 0.4483,
-   "examples": [
-    "mark 129C (schedule p.42) not tagged on any plan",
-    "mark 160 (schedule p.42) not tagged on any plan",
-    "mark 161 (schedule p.42) not tagged on any plan",
-    "mark 162 (schedule p.42) not tagged on any plan",
-    "mark 163 (schedule p.42) not tagged on any plan",
-    "mark 164 (schedule p.42) not tagged on any plan",
-    "mark 165A (schedule p.42) not tagged on any plan",
-    "mark 165B (schedule p.42) not tagged on any plan",
-    "mark 166 (schedule p.42) not tagged on any plan",
-    "mark 167A (schedule p.42) not tagged on any plan",
-    "mark 167B (schedule p.42) not tagged on any plan",
-    "mark 168A (schedule p.42) not tagged on any plan"
-   ],
+   "pass": 29,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
    "plan_sheets": [
+    "A110.A p.22",
+    "A110.B p.23",
     "A111.B p.24",
     "A113 p.27",
     "A501 p.39"
    ],
    "plan_counts": {
-    "plan_sheets": 3,
-    "rooms": 33,
-    "corridors": 2,
-    "tags": 13,
+    "plan_sheets": 5,
+    "rooms": 78,
+    "corridors": 8,
+    "tags": 29,
     "unmatched_tags": 0,
     "schedule_marks": 29,
-    "marks_not_on_plan": 16,
+    "marks_not_on_plan": 0,
     "shared_marks": 0
    }
   },
@@ -264,6 +253,6 @@
  "tier": "agreed",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 2968,
- "generated_at": "2026-10-11T11:49:32.884Z"
+ "ms": 3654,
+ "generated_at": "2026-10-11T12:38:10.509Z"
 }

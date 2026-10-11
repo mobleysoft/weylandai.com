@@ -179,11 +179,12 @@
    "pass_rate": 1,
    "examples": [],
    "plan_sheets": [
-    "A-101 p.18"
+    "A-101 p.18",
+    "A-401 p.22"
    ],
    "plan_counts": {
-    "plan_sheets": 1,
-    "rooms": 21,
+    "plan_sheets": 2,
+    "rooms": 25,
     "corridors": 0,
     "tags": 18,
     "unmatched_tags": 0,
@@ -218,6 +219,6 @@
  "tier": "agreed",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 4872,
- "generated_at": "2026-10-11T11:48:46.470Z"
+ "ms": 5115,
+ "generated_at": "2026-10-11T12:37:18.370Z"
 }

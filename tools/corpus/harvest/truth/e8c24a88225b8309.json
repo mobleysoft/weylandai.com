@@ -42,7 +42,7 @@
   "pages": [
    {
     "page": 12,
-    "title": "DETAILS AND",
+    "title": "DETAILS AND SCHEDULES",
     "rank": 2,
     "scope": {
      "address": "1600 S HICKORY ST",
@@ -227,6 +227,6 @@
    "why": "only reader A read this row"
   }
  ],
- "ms": 1223,
- "generated_at": "2026-10-11T11:50:42.522Z"
+ "ms": 1312,
+ "generated_at": "2026-10-11T12:39:22.746Z"
 }

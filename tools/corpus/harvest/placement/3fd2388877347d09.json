@@ -1,6 +1,15 @@
 {
   "rooms": [
     {
+      "name": "OH02",
+      "number": "OH03",
+      "page": 6,
+      "points_per_foot": null,
+      "sheet": "A-100",
+      "x": 759,
+      "y": 1088
+    },
+    {
       "name": "VAULT",
       "number": "10",
       "page": 7,
@@ -206,6 +215,24 @@
       "sheet": "A-500",
       "x": 2443,
       "y": 1107
+    },
+    {
+      "name": "NEW CONSTRUCTION INTERIO...",
+      "number": "1",
+      "page": 11,
+      "points_per_foot": 18,
+      "sheet": "A-600",
+      "x": 1907,
+      "y": 165
+    },
+    {
+      "name": "MEN'S ROOM",
+      "number": "15",
+      "page": 11,
+      "points_per_foot": 18,
+      "sheet": "A-600",
+      "x": 686,
+      "y": 270
     }
   ],
   "set": {
@@ -217,6 +244,31 @@
     "tier": "oracle-checked"
   },
   "sheets": [
+    {
+      "height": 1728,
+      "page": 6,
+      "plan_rule": "site-plan-tags",
+      "points_per_foot": null,
+      "scales": [],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number"
+            ],
+            "page": 13
+          }
+        ],
+        "kept_pages": [
+          13
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A-100",
+      "title": "OVERALL SITE DEMO AND CONSTRUCTION PLANS",
+      "width": 2592
+    },
     {
       "height": 1728,
       "page": 7,
@@ -275,39 +327,215 @@
       "sheet": "A-500",
       "title": "PLAN DETAILS",
       "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 11,
+      "plan_rule": "drawing-title",
+      "points_per_foot": [
+        18
+      ],
+      "scales": [
+        "1/4\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number"
+            ],
+            "page": 13
+          }
+        ],
+        "kept_pages": [
+          13
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A-600",
+      "title": "INTERIOR ELEVATIONS",
+      "width": 2592
     }
   ],
   "summary": {
-    "marks_placed": 5,
+    "marks_placed": 8,
     "marks_total": 9,
-    "placed_rate": 0.5555555555555556,
-    "rooms_total": 23,
-    "sheets_total": 2,
-    "sheets_with_scale": 2,
+    "placed_rate": 0.8888888888888888,
+    "rooms_total": 26,
+    "sheets_total": 4,
+    "sheets_with_scale": 3,
     "unplaced": [
-      {
-        "mark": "OH01",
-        "page": 13,
-        "reason": "mark OH01 (schedule p.13) not tagged on any plan"
-      },
-      {
-        "mark": "OH02",
-        "page": 13,
-        "reason": "mark OH02 (schedule p.13) not tagged on any plan"
-      },
       {
         "mark": "OH03",
         "page": 13,
         "reason": "mark OH03 (schedule p.13) not tagged on any plan"
-      },
-      {
-        "mark": "OH04",
-        "page": 13,
-        "reason": "mark OH04 (schedule p.13) not tagged on any plan"
       }
     ]
   },
   "tags": [
+    {
+      "also_on": [],
+      "door_pages": [
+        13
+      ],
+      "door_type": "OVERHEAD",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.574676170128,
+      "hardware_group": "MANUF.",
+      "height_inches": 144,
+      "location": null,
+      "mark": "OH01",
+      "matched_by": "exact",
+      "material": null,
+      "opening_id": "[{\"site_number\":\"6261\"},\"A\"]|OH01|13|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "site_number": "6261"
+      },
+      "opening_scope_id": "[{\"site_number\":\"6261\"},\"A\"]",
+      "page": 6,
+      "pair": false,
+      "points_per_foot": null,
+      "room": "OH03",
+      "room_by": "nearest_label",
+      "room_name": "OH02",
+      "schedule_rows": [
+        {
+          "door_type": "OVERHEAD",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "MANUF.",
+          "height_inches": 144,
+          "location": null,
+          "mark": "OH01",
+          "material": null,
+          "page": 13,
+          "pair": false,
+          "size": "16'-0\" x 12'-0\"",
+          "width_inches": 192,
+          "y": 196
+        }
+      ],
+      "sheet": "A-100",
+      "size": "16'-0\" x 12'-0\"",
+      "source_keys": [
+        "13|OH01|1"
+      ],
+      "unsure": true,
+      "width_inches": 192,
+      "x": 674,
+      "y": 961
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        13
+      ],
+      "door_type": "OVERHEAD",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.574676170128,
+      "hardware_group": "MANUF.",
+      "height_inches": 144,
+      "location": null,
+      "mark": "OH02",
+      "matched_by": "exact",
+      "material": null,
+      "opening_id": "[{\"site_number\":\"6261\"},\"A\"]|OH02|13|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "site_number": "6261"
+      },
+      "opening_scope_id": "[{\"site_number\":\"6261\"},\"A\"]",
+      "page": 6,
+      "pair": false,
+      "points_per_foot": null,
+      "room": "OH03",
+      "room_by": "nearest_label",
+      "room_name": "OH02",
+      "schedule_rows": [
+        {
+          "door_type": "OVERHEAD",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "MANUF.",
+          "height_inches": 144,
+          "location": null,
+          "mark": "OH02",
+          "material": null,
+          "page": 13,
+          "pair": false,
+          "size": "14'-0\" x 12'-0\"",
+          "width_inches": 168,
+          "y": 207
+        }
+      ],
+      "sheet": "A-100",
+      "size": "14'-0\" x 12'-0\"",
+      "source_keys": [
+        "13|OH02|1"
+      ],
+      "unsure": true,
+      "width_inches": 168,
+      "x": 741,
+      "y": 1074
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        13
+      ],
+      "door_type": "OVERHEAD",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.574676170128,
+      "hardware_group": "MANUF.",
+      "height_inches": 96,
+      "location": null,
+      "mark": "OH04",
+      "matched_by": "exact",
+      "material": null,
+      "opening_id": "[{\"site_number\":\"6261\"},\"A\"]|OH04|13|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "site_number": "6261"
+      },
+      "opening_scope_id": "[{\"site_number\":\"6261\"},\"A\"]",
+      "page": 6,
+      "pair": false,
+      "points_per_foot": null,
+      "room": "OH03",
+      "room_by": "nearest_label",
+      "room_name": "OH02",
+      "schedule_rows": [
+        {
+          "door_type": "OVERHEAD",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "MANUF.",
+          "height_inches": 96,
+          "location": null,
+          "mark": "OH04",
+          "material": null,
+          "page": 13,
+          "pair": false,
+          "size": "8'-0\" x 8'-0\"",
+          "width_inches": 96,
+          "y": 230
+        }
+      ],
+      "sheet": "A-100",
+      "size": "8'-0\" x 8'-0\"",
+      "source_keys": [
+        "13|OH04|1"
+      ],
+      "unsure": true,
+      "width_inches": 96,
+      "x": 786,
+      "y": 1188
+    },
     {
       "also_on": [],
       "door_pages": [

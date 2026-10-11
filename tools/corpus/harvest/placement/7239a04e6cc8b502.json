@@ -1,6 +1,24 @@
 {
   "rooms": [
     {
+      "name": "MAINTENANCE SHED",
+      "number": "173",
+      "page": 45,
+      "points_per_foot": 18,
+      "sheet": "A-011",
+      "x": 1805,
+      "y": 1063
+    },
+    {
+      "name": "TRASH ENCLOSURE",
+      "number": "174",
+      "page": 45,
+      "points_per_foot": 18,
+      "sheet": "A-011",
+      "x": 1945,
+      "y": 1406
+    },
+    {
       "name": "VESTIBULE",
       "number": "161",
       "page": 46,
@@ -1155,6 +1173,37 @@
   "sheets": [
     {
       "height": 1728,
+      "page": 45,
+      "plan_rule": "drawing-title",
+      "points_per_foot": [
+        18
+      ],
+      "scales": [
+        "1/4\" = 1'-0\"",
+        "1/4\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 63
+          }
+        ],
+        "kept_pages": [
+          63
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A-011",
+      "title": "ARCHITECTURAL SITE PLAN DETAILS",
+      "width": 2592
+    },
+    {
+      "height": 1728,
       "page": 46,
       "plan_rule": "legacy",
       "points_per_foot": [
@@ -1291,32 +1340,17 @@
     }
   ],
   "summary": {
-    "marks_placed": 70,
+    "marks_placed": 73,
     "marks_total": 75,
-    "placed_rate": 0.9333333333333333,
-    "rooms_total": 127,
-    "sheets_total": 4,
-    "sheets_with_scale": 4,
+    "placed_rate": 0.9733333333333334,
+    "rooms_total": 129,
+    "sheets_total": 5,
+    "sheets_with_scale": 5,
     "unplaced": [
       {
         "mark": "134",
         "page": 63,
         "reason": "mark 134 (schedule p.63) not tagged on any plan"
-      },
-      {
-        "mark": "173.1",
-        "page": 63,
-        "reason": "mark 173.1 (schedule p.63) not tagged on any plan"
-      },
-      {
-        "mark": "173.2",
-        "page": 63,
-        "reason": "mark 173.2 (schedule p.63) not tagged on any plan"
-      },
-      {
-        "mark": "173.3",
-        "page": 63,
-        "reason": "mark 173.3 (schedule p.63) not tagged on any plan"
       },
       {
         "mark": "176",
@@ -1326,6 +1360,171 @@
     ]
   },
   "tags": [
+    {
+      "also_on": [],
+      "door_pages": [
+        63
+      ],
+      "door_type": null,
+      "fire_rating": "--",
+      "frame_type": null,
+      "h": 9.596,
+      "hardware_group": "24A",
+      "height_inches": 84,
+      "location": "MAINTENANCE SHED",
+      "mark": "173.1",
+      "matched_by": "exact",
+      "material": "WD",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|173.1|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
+      "page": 45,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "173",
+      "room_by": "schedule_location",
+      "room_name": "MAINTENANCE SHED",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": "--",
+          "frame_type": null,
+          "hardware_group": "24A",
+          "height_inches": 84,
+          "location": "MAINTENANCE SHED",
+          "mark": "173.1",
+          "material": "WD",
+          "page": 63,
+          "pair": false,
+          "size": "4'-0\" x 7'-0\"",
+          "width_inches": 48,
+          "y": 1621
+        }
+      ],
+      "sheet": "A-011",
+      "size": "4'-0\" x 7'-0\"",
+      "source_keys": [
+        "63|173.1|1"
+      ],
+      "width_inches": 48,
+      "x": 1908,
+      "y": 847
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        63
+      ],
+      "door_type": null,
+      "fire_rating": "--",
+      "frame_type": null,
+      "h": 9.596,
+      "hardware_group": "26",
+      "height_inches": 108,
+      "location": "MAINTENANCE SHED",
+      "mark": "173.3",
+      "matched_by": "exact",
+      "material": "ALUM",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|173.3|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
+      "page": 45,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "173",
+      "room_by": "schedule_location",
+      "room_name": "MAINTENANCE SHED",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": "--",
+          "frame_type": null,
+          "hardware_group": "26",
+          "height_inches": 108,
+          "location": "MAINTENANCE SHED",
+          "mark": "173.3",
+          "material": "ALUM",
+          "page": 63,
+          "pair": false,
+          "size": "9'-0\" x 9'-0\"",
+          "width_inches": 108,
+          "y": 1642
+        }
+      ],
+      "sheet": "A-011",
+      "size": "9'-0\" x 9'-0\"",
+      "source_keys": [
+        "63|173.3|1"
+      ],
+      "width_inches": 108,
+      "x": 1988,
+      "y": 976
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        63
+      ],
+      "door_type": null,
+      "fire_rating": "--",
+      "frame_type": null,
+      "h": 9.596,
+      "hardware_group": "26",
+      "height_inches": 108,
+      "location": "MAINTENANCE SHED",
+      "mark": "173.2",
+      "matched_by": "exact",
+      "material": "ALUM",
+      "opening_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]|173.2|63|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1740 WALNUT ST; 2303 WEST 20TH STREET",
+        "asset_number": "9327033001",
+        "site_number": "7033"
+      },
+      "opening_scope_id": "[{\"address\":\"1740 WALNUT ST; 2303 WEST 20TH STREET\",\"asset_number\":\"9327033001\",\"site_number\":\"7033\"},\"A\"]",
+      "page": 45,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "173",
+      "room_by": "schedule_location",
+      "room_name": "MAINTENANCE SHED",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": "--",
+          "frame_type": null,
+          "hardware_group": "26",
+          "height_inches": 108,
+          "location": "MAINTENANCE SHED",
+          "mark": "173.2",
+          "material": "ALUM",
+          "page": 63,
+          "pair": false,
+          "size": "9'-0\" x 9'-0\"",
+          "width_inches": 108,
+          "y": 1628
+        }
+      ],
+      "sheet": "A-011",
+      "size": "9'-0\" x 9'-0\"",
+      "source_keys": [
+        "63|173.2|1"
+      ],
+      "width_inches": 108,
+      "x": 1988,
+      "y": 1191
+    },
     {
       "also_on": [],
       "door_pages": [

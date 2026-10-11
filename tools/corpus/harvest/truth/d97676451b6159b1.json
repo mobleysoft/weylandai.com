@@ -42,7 +42,7 @@
   "pages": [
    {
     "page": 22,
-    "title": "SCHEDULES &",
+    "title": "SCHEDULES & DETAILS",
     "rank": 2,
     "scope": {
      "asset_number": "7815107005; 7815107007",
@@ -207,27 +207,25 @@
   "marks_on_plan": {
    "applicable": true,
    "total": 4,
-   "pass": 0,
-   "fail": 4,
-   "pass_rate": 0,
+   "pass": 3,
+   "fail": 1,
+   "pass_rate": 0.75,
    "examples": [
-    "mark 101 (schedule p.22) not tagged on any plan",
-    "mark 102 (schedule p.22) not tagged on any plan",
-    "mark 103 (schedule p.22) not tagged on any plan",
     "mark 104 (schedule p.22) not tagged on any plan"
    ],
    "plan_sheets": [
     "A-2 p.16",
-    "A-3 p.17"
+    "A-3 p.17",
+    "A-6 p.20"
    ],
    "plan_counts": {
-    "plan_sheets": 2,
-    "rooms": 2,
+    "plan_sheets": 3,
+    "rooms": 5,
     "corridors": 0,
-    "tags": 0,
+    "tags": 3,
     "unmatched_tags": 0,
     "schedule_marks": 4,
-    "marks_not_on_plan": 4,
+    "marks_not_on_plan": 1,
     "shared_marks": 0
    }
   },
@@ -300,6 +298,6 @@
    "b": "2"
   }
  ],
- "ms": 3204,
- "generated_at": "2026-10-11T11:50:47.030Z"
+ "ms": 3511,
+ "generated_at": "2026-10-11T12:39:26.329Z"
 }

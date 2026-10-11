@@ -1690,6 +1690,33 @@
       "sheet": "A-106",
       "title": "FLOOR PLAN - A NBHD CTR 2",
       "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 23,
+      "plan_rule": "drawing-title",
+      "points_per_foot": [
+        36
+      ],
+      "scales": [
+        "1/2\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [],
+            "page": 27
+          }
+        ],
+        "kept_pages": [
+          27
+        ],
+        "rule": "similarity"
+      },
+      "sheet": "A-505",
+      "title": "CASEWORK DETAILS",
+      "width": 2592
     }
   ],
   "summary": {
@@ -1697,8 +1724,8 @@
     "marks_total": 74,
     "placed_rate": 1,
     "rooms_total": 169,
-    "sheets_total": 6,
-    "sheets_with_scale": 5,
+    "sheets_total": 7,
+    "sheets_with_scale": 6,
     "unplaced": []
   },
   "tags": [

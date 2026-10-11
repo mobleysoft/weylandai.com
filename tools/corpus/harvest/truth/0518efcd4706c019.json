@@ -42,7 +42,7 @@
   "pages": [
    {
     "page": 28,
-    "title": "DOOR - WINDOW - &",
+    "title": "DOOR - WINDOW - & FINISH SCHEDULE",
     "rank": 2,
     "scope": {
      "address": "1000 W. NIFONG BLVD., BLDG. 1; 2503 W. 16TH ST",
@@ -217,6 +217,6 @@
  "tier": "agreed",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 3070,
- "generated_at": "2026-10-11T11:48:41.840Z"
+ "ms": 3507,
+ "generated_at": "2026-10-11T12:37:13.872Z"
 }

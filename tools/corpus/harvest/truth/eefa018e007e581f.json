@@ -42,7 +42,7 @@
   "pages": [
    {
     "page": 59,
-    "title": "DOOR SCHEDULE, ELEVATIONS AND",
+    "title": "DOOR SCHEDULE, ELEVATIONS AND DETAILS",
     "rank": 3,
     "scope": {
      "facility_name": "ADD CABINS & RENOVATE LODGE CURRENT RIVER STATE PARK",
@@ -252,6 +252,6 @@
    "b": 24
   }
  ],
- "ms": 2453,
- "generated_at": "2026-10-11T11:51:52.655Z"
+ "ms": 2483,
+ "generated_at": "2026-10-11T12:40:33.234Z"
 }

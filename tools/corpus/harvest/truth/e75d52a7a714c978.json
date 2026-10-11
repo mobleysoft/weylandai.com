@@ -44,7 +44,7 @@
   "pages": [
    {
     "page": 23,
-    "title": "DOOR AND WINDOW",
+    "title": "DOOR AND WINDOW SCHEDULES (ALTERNATE NO. 1)",
     "rank": 2,
     "scope": {
      "asset_number": "8136274080",
@@ -657,6 +657,6 @@
    "why": "only reader A read this row"
   }
  ],
- "ms": 5092,
- "generated_at": "2026-10-11T11:50:30.370Z"
+ "ms": 4889,
+ "generated_at": "2026-10-11T12:39:08.638Z"
 }

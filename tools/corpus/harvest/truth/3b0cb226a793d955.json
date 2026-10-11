@@ -42,7 +42,7 @@
   "pages": [
    {
     "page": 33,
-    "title": "DOOR SCHEDULE -",
+    "title": "DOOR SCHEDULE - DOOR DETAILS",
     "rank": 3,
     "scope": {
      "address": "3815 MAGNOLIA AVENUE",
@@ -241,6 +241,6 @@
    "why": "only reader A read this row"
   }
  ],
- "ms": 2580,
- "generated_at": "2026-10-11T11:49:10.836Z"
+ "ms": 2683,
+ "generated_at": "2026-10-11T12:37:45.571Z"
 }
