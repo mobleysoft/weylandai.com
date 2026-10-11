@@ -1,6 +1,168 @@
 {
   "rooms": [
     {
+      "name": "ADDITIONAL REQUIREMENTS.",
+      "number": "S41",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 1590,
+      "y": 167
+    },
+    {
+      "name": "PLAN",
+      "number": "9",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 549,
+      "y": 317
+    },
+    {
+      "name": "PLAN",
+      "number": "A-401",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 550,
+      "y": 323
+    },
+    {
+      "name": "BARRACKS (4)",
+      "number": "106",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 1073,
+      "y": 326
+    },
+    {
+      "name": "PLAN SECTION",
+      "number": "34",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 577,
+      "y": 334
+    },
+    {
+      "name": "BARRACKS (2)",
+      "number": "105",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 674,
+      "y": 337
+    },
+    {
+      "name": "SHOWER",
+      "number": "106A",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 1198,
+      "y": 415
+    },
+    {
+      "name": "106BS43",
+      "number": "S66",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 956,
+      "y": 445
+    },
+    {
+      "name": "BARRACKS (3)",
+      "number": "107",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 1279,
+      "y": 509
+    },
+    {
+      "name": "SHOWERS",
+      "number": "107A",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 1074,
+      "y": 510
+    },
+    {
+      "name": "SHOWERS",
+      "number": "105A",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 557,
+      "y": 513
+    },
+    {
+      "name": "MECHANICAL",
+      "number": "104",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 353,
+      "y": 560
+    },
+    {
+      "name": "SHOWERS",
+      "number": "103A",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 743,
+      "y": 579
+    },
+    {
+      "name": "JAN",
+      "number": "102",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 1125,
+      "y": 660
+    },
+    {
+      "name": "CORRIDOR",
+      "number": "101",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 1031,
+      "y": 726
+    },
+    {
+      "name": "BARRACKS (1)",
+      "number": "103",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 619,
+      "y": 729
+    },
+    {
+      "name": "PROJECT # T2612-01",
+      "number": "6274",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 2451,
+      "y": 1152
+    },
+    {
+      "name": "BARRACKS (3)",
+      "number": "107",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 1282,
+      "y": 1261
+    },
+    {
       "name": "RAKE DETAIL",
       "number": "4",
       "page": 18,
@@ -215,6 +377,141 @@
       "sheet": "A-403",
       "x": 2451,
       "y": 1152
+    },
+    {
+      "name": "BARRACKS (4)",
+      "number": "106",
+      "page": 21,
+      "points_per_foot": 18,
+      "sheet": "A-404",
+      "x": 1556,
+      "y": 81
+    },
+    {
+      "name": "BARRACKS (2)",
+      "number": "105",
+      "page": 21,
+      "points_per_foot": 18,
+      "sheet": "A-404",
+      "x": 675,
+      "y": 143
+    },
+    {
+      "name": "SHOWER",
+      "number": "106A",
+      "page": 21,
+      "points_per_foot": 18,
+      "sheet": "A-404",
+      "x": 1638,
+      "y": 165
+    },
+    {
+      "name": "SHOWERS",
+      "number": "105A",
+      "page": 21,
+      "points_per_foot": 18,
+      "sheet": "A-404",
+      "x": 619,
+      "y": 374
+    },
+    {
+      "name": "3SHOWERS",
+      "number": "A-404",
+      "page": 21,
+      "points_per_foot": 18,
+      "sheet": "A-404",
+      "x": 1689,
+      "y": 388
+    },
+    {
+      "name": "3SHOWERS",
+      "number": "A-404",
+      "page": 21,
+      "points_per_foot": 18,
+      "sheet": "A-404",
+      "x": 1640,
+      "y": 389
+    },
+    {
+      "name": "BARRACKS (3)",
+      "number": "107",
+      "page": 21,
+      "points_per_foot": 18,
+      "sheet": "A-404",
+      "x": 1884,
+      "y": 458
+    },
+    {
+      "name": "MECHANICAL",
+      "number": "104",
+      "page": 21,
+      "points_per_foot": 18,
+      "sheet": "A-404",
+      "x": 194,
+      "y": 478
+    },
+    {
+      "name": "59AMA-404",
+      "number": "34",
+      "page": 21,
+      "points_per_foot": 18,
+      "sheet": "A-404",
+      "x": 608,
+      "y": 484
+    },
+    {
+      "name": "BARRACKS (1)",
+      "number": "103",
+      "page": 21,
+      "points_per_foot": 18,
+      "sheet": "A-404",
+      "x": 442,
+      "y": 627
+    },
+    {
+      "name": "JANTOR",
+      "number": "102",
+      "page": 21,
+      "points_per_foot": 18,
+      "sheet": "A-404",
+      "x": 1754,
+      "y": 679
+    },
+    {
+      "name": "CORRIDOR",
+      "number": "101",
+      "page": 21,
+      "points_per_foot": 18,
+      "sheet": "A-404",
+      "x": 1356,
+      "y": 680
+    },
+    {
+      "name": "CORRIDOR",
+      "number": "101",
+      "page": 21,
+      "points_per_foot": 18,
+      "sheet": "A-404",
+      "x": 1555,
+      "y": 748
+    },
+    {
+      "name": "MIN. 1",
+      "number": "41",
+      "page": 21,
+      "points_per_foot": 108,
+      "sheet": "A-404",
+      "x": 593,
+      "y": 1396
+    },
+    {
+      "name": "CEILING JOIST AND BRACE TO BACKING WALL AT MID-POINT.",
+      "number": "17",
+      "page": 21,
+      "points_per_foot": 54,
+      "sheet": "A-404",
+      "x": 982,
+      "y": 1588
     }
   ],
   "set": {
@@ -228,7 +525,38 @@
   "sheets": [
     {
       "height": 1728,
+      "page": 14,
+      "plan_rule": "extended-title",
+      "points_per_foot": [
+        9
+      ],
+      "scales": [
+        "1/8\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 23
+          }
+        ],
+        "kept_pages": [
+          23
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A-101",
+      "title": "FLOOR PLAN",
+      "width": 2592
+    },
+    {
+      "height": 1728,
       "page": 18,
+      "plan_rule": "legacy",
       "points_per_foot": [
         54,
         108
@@ -244,6 +572,22 @@
         "1 1/2\" = 1'-0\"",
         "3/4\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 23
+          }
+        ],
+        "kept_pages": [
+          23
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-401",
       "title": "PLAN SECTION PLAN SECTION",
       "width": 2592
@@ -251,6 +595,7 @@
     {
       "height": 1728,
       "page": 19,
+      "plan_rule": "legacy",
       "points_per_foot": [
         54,
         108
@@ -266,6 +611,22 @@
         "1 1/2\" = 1'-0\"",
         "1 1/2\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 23
+          }
+        ],
+        "kept_pages": [
+          23
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-402",
       "title": "PLAN SECTION JAMB",
       "width": 2592
@@ -273,6 +634,7 @@
     {
       "height": 1728,
       "page": 20,
+      "plan_rule": "legacy",
       "points_per_foot": [
         54,
         108
@@ -286,90 +648,852 @@
         "1 1/2\" = 1'-0\"",
         "1 1/2\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 23
+          }
+        ],
+        "kept_pages": [
+          23
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-403",
       "title": "PLAN SECTION",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 21,
+      "plan_rule": "extended-title",
+      "points_per_foot": [
+        18,
+        54,
+        108
+      ],
+      "scales": [
+        "1/4\" = 1'-0\"",
+        "1/4\" = 1'-0\"",
+        "1/4\" = 1'-0\"",
+        "1 1/2\" = 1'-0\"",
+        "1/4\" = 1'-0\"",
+        "1/4\" = 1'-0\"",
+        "1/4\" = 1'-0\"",
+        "3/4\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 23
+          }
+        ],
+        "kept_pages": [
+          23
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A-404",
+      "title": "ENLARGED PLAN,",
       "width": 2592
     }
   ],
   "summary": {
-    "marks_placed": 0,
+    "marks_placed": 14,
     "marks_total": 14,
-    "placed_rate": 0,
-    "rooms_total": 24,
-    "sheets_total": 3,
-    "sheets_with_scale": 3,
-    "unplaced": [
-      {
-        "mark": "101",
-        "page": 23,
-        "reason": "mark 101 (schedule p.23) not tagged on any plan"
-      },
-      {
-        "mark": "102",
-        "page": 23,
-        "reason": "mark 102 (schedule p.23) not tagged on any plan"
-      },
-      {
-        "mark": "103A",
-        "page": 23,
-        "reason": "mark 103A (schedule p.23) not tagged on any plan"
-      },
-      {
-        "mark": "103B",
-        "page": 23,
-        "reason": "mark 103B (schedule p.23) not tagged on any plan"
-      },
-      {
-        "mark": "103C",
-        "page": 23,
-        "reason": "mark 103C (schedule p.23) not tagged on any plan"
-      },
-      {
-        "mark": "104",
-        "page": 23,
-        "reason": "mark 104 (schedule p.23) not tagged on any plan"
-      },
-      {
-        "mark": "105A",
-        "page": 23,
-        "reason": "mark 105A (schedule p.23) not tagged on any plan"
-      },
-      {
-        "mark": "105B",
-        "page": 23,
-        "reason": "mark 105B (schedule p.23) not tagged on any plan"
-      },
-      {
-        "mark": "105C",
-        "page": 23,
-        "reason": "mark 105C (schedule p.23) not tagged on any plan"
-      },
-      {
-        "mark": "106A",
-        "page": 23,
-        "reason": "mark 106A (schedule p.23) not tagged on any plan"
-      },
-      {
-        "mark": "106B",
-        "page": 23,
-        "reason": "mark 106B (schedule p.23) not tagged on any plan"
-      },
-      {
-        "mark": "107A",
-        "page": 23,
-        "reason": "mark 107A (schedule p.23) not tagged on any plan"
-      },
-      {
-        "mark": "107B",
-        "page": 23,
-        "reason": "mark 107B (schedule p.23) not tagged on any plan"
-      },
-      {
-        "mark": "107C",
-        "page": 23,
-        "reason": "mark 107C (schedule p.23) not tagged on any plan"
-      }
-    ]
+    "placed_rate": 1,
+    "rooms_total": 57,
+    "sheets_total": 5,
+    "sheets_with_scale": 5,
+    "unplaced": []
   },
-  "tags": []
+  "tags": [
+    {
+      "also_on": [],
+      "door_pages": [
+        23
+      ],
+      "door_type": "A",
+      "fire_rating": "---",
+      "frame_type": "1",
+      "h": 9.04367996382528,
+      "hardware_group": "2",
+      "height_inches": 84,
+      "location": null,
+      "mark": "107B",
+      "matched_by": "exact",
+      "material": "HOL. METAL",
+      "opening_id": "[{\"asset_number\":\"8136274080\",\"level\":\"1; 2; 3\",\"site_number\":\"6274\"},\"A\"]|107B|23|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "8136274080",
+        "level": "1; 2; 3",
+        "site_number": "6274"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"8136274080\",\"level\":\"1; 2; 3\",\"site_number\":\"6274\"},\"A\"]",
+      "page": 14,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "107",
+      "room_by": "tag_number",
+      "room_name": "BARRACKS (3)",
+      "schedule_rows": [
+        {
+          "door_type": "A",
+          "fire_rating": "---",
+          "frame_type": "1",
+          "hardware_group": "2",
+          "height_inches": 84,
+          "location": null,
+          "mark": "107B",
+          "material": "HOL. METAL",
+          "page": 23,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 400
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "23|107B|1"
+      ],
+      "width_inches": 36,
+      "x": 1270,
+      "y": 217
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        23
+      ],
+      "door_type": "A",
+      "fire_rating": "---",
+      "frame_type": "1",
+      "h": 9.04367996382528,
+      "hardware_group": "2",
+      "height_inches": 84,
+      "location": null,
+      "mark": "105B",
+      "matched_by": "exact",
+      "material": "HOL. METAL",
+      "opening_id": "[{\"asset_number\":\"8136274080\",\"level\":\"1; 2; 3\",\"site_number\":\"6274\"},\"A\"]|105B|23|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "8136274080",
+        "level": "1; 2; 3",
+        "site_number": "6274"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"8136274080\",\"level\":\"1; 2; 3\",\"site_number\":\"6274\"},\"A\"]",
+      "page": 14,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "105",
+      "room_by": "tag_number",
+      "room_name": "BARRACKS (2)",
+      "schedule_rows": [
+        {
+          "door_type": "A",
+          "fire_rating": "---",
+          "frame_type": "1",
+          "hardware_group": "2",
+          "height_inches": 84,
+          "location": null,
+          "mark": "105B",
+          "material": "HOL. METAL",
+          "page": 23,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 311
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "23|105B|1"
+      ],
+      "width_inches": 36,
+      "x": 286,
+      "y": 349
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        23
+      ],
+      "door_type": "B",
+      "fire_rating": "20 MIN.",
+      "frame_type": "2",
+      "h": 9.04367996382528,
+      "hardware_group": "6",
+      "height_inches": 84,
+      "location": null,
+      "mark": "106A",
+      "matched_by": "exact",
+      "material": "HOL. METAL",
+      "opening_id": "[{\"asset_number\":\"8136274080\",\"level\":\"1; 2; 3\",\"site_number\":\"6274\"},\"A\"]|106A|23|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "8136274080",
+        "level": "1; 2; 3",
+        "site_number": "6274"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"8136274080\",\"level\":\"1; 2; 3\",\"site_number\":\"6274\"},\"A\"]",
+      "page": 14,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "106",
+      "room_by": "tag_number",
+      "room_name": "BARRACKS (4)",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "20 MIN.",
+          "frame_type": "2",
+          "hardware_group": "6",
+          "height_inches": 84,
+          "location": null,
+          "mark": "106A",
+          "material": "HOL. METAL",
+          "page": 23,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 346
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "23|106A|1"
+      ],
+      "width_inches": 36,
+      "x": 1138,
+      "y": 361
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        23
+      ],
+      "door_type": "B",
+      "fire_rating": "20 MIN.",
+      "frame_type": "2",
+      "h": 9.04367996382528,
+      "hardware_group": "5",
+      "height_inches": 84,
+      "location": null,
+      "mark": "105C",
+      "matched_by": "exact",
+      "material": "HOL. METAL",
+      "opening_id": "[{\"asset_number\":\"8136274080\",\"level\":\"1; 2; 3\",\"site_number\":\"6274\"},\"A\"]|105C|23|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "8136274080",
+        "level": "1; 2; 3",
+        "site_number": "6274"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"8136274080\",\"level\":\"1; 2; 3\",\"site_number\":\"6274\"},\"A\"]",
+      "page": 14,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "105",
+      "room_by": "tag_number",
+      "room_name": "BARRACKS (2)",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "20 MIN.",
+          "frame_type": "2",
+          "hardware_group": "5",
+          "height_inches": 84,
+          "location": null,
+          "mark": "105C",
+          "material": "HOL. METAL",
+          "page": 23,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 326
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "23|105C|1"
+      ],
+      "width_inches": 36,
+      "x": 878,
+      "y": 429
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        23
+      ],
+      "door_type": "B",
+      "fire_rating": "20 MIN.",
+      "frame_type": "2",
+      "h": 9.04367996382528,
+      "hardware_group": "5",
+      "height_inches": 84,
+      "location": null,
+      "mark": "106B",
+      "matched_by": "exact",
+      "material": "HOL. METAL",
+      "opening_id": "[{\"asset_number\":\"8136274080\",\"level\":\"1; 2; 3\",\"site_number\":\"6274\"},\"A\"]|106B|23|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "8136274080",
+        "level": "1; 2; 3",
+        "site_number": "6274"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"8136274080\",\"level\":\"1; 2; 3\",\"site_number\":\"6274\"},\"A\"]",
+      "page": 14,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "106",
+      "room_by": "tag_number",
+      "room_name": "BARRACKS (4)",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "20 MIN.",
+          "frame_type": "2",
+          "hardware_group": "5",
+          "height_inches": 84,
+          "location": null,
+          "mark": "106B",
+          "material": "HOL. METAL",
+          "page": 23,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 363
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "23|106B|1"
+      ],
+      "width_inches": 36,
+      "x": 963,
+      "y": 429
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        23
+      ],
+      "door_type": "B",
+      "fire_rating": "20 MIN.",
+      "frame_type": "2",
+      "h": 9.04367996382528,
+      "hardware_group": "5",
+      "height_inches": 84,
+      "location": null,
+      "mark": "105A",
+      "matched_by": "exact",
+      "material": "HOL. METAL",
+      "opening_id": "[{\"asset_number\":\"8136274080\",\"level\":\"1; 2; 3\",\"site_number\":\"6274\"},\"A\"]|105A|23|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "8136274080",
+        "level": "1; 2; 3",
+        "site_number": "6274"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"8136274080\",\"level\":\"1; 2; 3\",\"site_number\":\"6274\"},\"A\"]",
+      "page": 14,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "105",
+      "room_by": "tag_number",
+      "room_name": "BARRACKS (2)",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "20 MIN.",
+          "frame_type": "2",
+          "hardware_group": "5",
+          "height_inches": 84,
+          "location": null,
+          "mark": "105A",
+          "material": "HOL. METAL",
+          "page": 23,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 291
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "23|105A|1"
+      ],
+      "width_inches": 36,
+      "x": 629,
+      "y": 468
+    },
+    {
+      "also_on": [
+        "A-404"
+      ],
+      "door_pages": [
+        23
+      ],
+      "door_type": "B",
+      "fire_rating": "20 MIN.",
+      "frame_type": "2",
+      "h": 9.04367996382528,
+      "hardware_group": "5",
+      "height_inches": 84,
+      "location": null,
+      "mark": "107A",
+      "matched_by": "exact",
+      "material": "HOL. METAL",
+      "opening_id": "[{\"asset_number\":\"8136274080\",\"level\":\"1; 2; 3\",\"site_number\":\"6274\"},\"A\"]|107A|23|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "8136274080",
+        "level": "1; 2; 3",
+        "site_number": "6274"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"8136274080\",\"level\":\"1; 2; 3\",\"site_number\":\"6274\"},\"A\"]",
+      "page": 14,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "107",
+      "room_by": "tag_number",
+      "room_name": "BARRACKS (3)",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "20 MIN.",
+          "frame_type": "2",
+          "hardware_group": "5",
+          "height_inches": 84,
+          "location": null,
+          "mark": "107A",
+          "material": "HOL. METAL",
+          "page": 23,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 381
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "23|107A|1"
+      ],
+      "width_inches": 36,
+      "x": 1154,
+      "y": 507
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        23
+      ],
+      "door_type": "A",
+      "fire_rating": "---",
+      "frame_type": "1",
+      "h": 9.04367996382528,
+      "hardware_group": "3",
+      "height_inches": 84,
+      "location": null,
+      "mark": "104",
+      "matched_by": "exact",
+      "material": "HOL. METAL",
+      "opening_id": "[{\"asset_number\":\"8136274080\",\"level\":\"1; 2; 3\",\"site_number\":\"6274\"},\"A\"]|104|23|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "8136274080",
+        "level": "1; 2; 3",
+        "site_number": "6274"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"8136274080\",\"level\":\"1; 2; 3\",\"site_number\":\"6274\"},\"A\"]",
+      "page": 14,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "104",
+      "room_by": "nearest_label",
+      "room_name": "MECHANICAL",
+      "schedule_rows": [
+        {
+          "door_type": "A",
+          "fire_rating": "---",
+          "frame_type": "1",
+          "hardware_group": "3",
+          "height_inches": 84,
+          "location": null,
+          "mark": "104",
+          "material": "HOL. METAL",
+          "page": 23,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 273
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "23|104|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 313,
+      "y": 551
+    },
+    {
+      "also_on": [
+        "A-404"
+      ],
+      "door_pages": [
+        23
+      ],
+      "door_type": "B",
+      "fire_rating": "20 MIN.",
+      "frame_type": "2",
+      "h": 9.04367996382528,
+      "hardware_group": "5",
+      "height_inches": 84,
+      "location": null,
+      "mark": "103A",
+      "matched_by": "exact",
+      "material": "HOL. METAL",
+      "opening_id": "[{\"asset_number\":\"8136274080\",\"level\":\"1; 2; 3\",\"site_number\":\"6274\"},\"A\"]|103A|23|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "8136274080",
+        "level": "1; 2; 3",
+        "site_number": "6274"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"8136274080\",\"level\":\"1; 2; 3\",\"site_number\":\"6274\"},\"A\"]",
+      "page": 14,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "103",
+      "room_by": "tag_number",
+      "room_name": "BARRACKS (1)",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "20 MIN.",
+          "frame_type": "2",
+          "hardware_group": "5",
+          "height_inches": 84,
+          "location": null,
+          "mark": "103A",
+          "material": "HOL. METAL",
+          "page": 23,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 218
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "23|103A|1"
+      ],
+      "width_inches": 36,
+      "x": 668,
+      "y": 619
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        23
+      ],
+      "door_type": "B",
+      "fire_rating": "20 MIN.",
+      "frame_type": "3",
+      "h": 9.04367996382528,
+      "hardware_group": "4",
+      "height_inches": 84,
+      "location": null,
+      "mark": "102",
+      "matched_by": "exact",
+      "material": "HOL. METAL",
+      "opening_id": "[{\"asset_number\":\"8136274080\",\"level\":\"1; 2; 3\",\"site_number\":\"6274\"},\"A\"]|102|23|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "8136274080",
+        "level": "1; 2; 3",
+        "site_number": "6274"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"8136274080\",\"level\":\"1; 2; 3\",\"site_number\":\"6274\"},\"A\"]",
+      "page": 14,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "102",
+      "room_by": "nearest_label",
+      "room_name": "JAN",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "20 MIN.",
+          "frame_type": "3",
+          "hardware_group": "4",
+          "height_inches": 84,
+          "location": null,
+          "mark": "102",
+          "material": "HOL. METAL",
+          "page": 23,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 200
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "23|102|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1083,
+      "y": 670
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        23
+      ],
+      "door_type": "B",
+      "fire_rating": "20 MIN.",
+      "frame_type": "2",
+      "h": 9.04367996382528,
+      "hardware_group": "5",
+      "height_inches": 84,
+      "location": null,
+      "mark": "103C",
+      "matched_by": "exact",
+      "material": "HOL. METAL",
+      "opening_id": "[{\"asset_number\":\"8136274080\",\"level\":\"1; 2; 3\",\"site_number\":\"6274\"},\"A\"]|103C|23|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "8136274080",
+        "level": "1; 2; 3",
+        "site_number": "6274"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"8136274080\",\"level\":\"1; 2; 3\",\"site_number\":\"6274\"},\"A\"]",
+      "page": 14,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "103",
+      "room_by": "tag_number",
+      "room_name": "BARRACKS (1)",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "20 MIN.",
+          "frame_type": "2",
+          "hardware_group": "5",
+          "height_inches": 84,
+          "location": null,
+          "mark": "103C",
+          "material": "HOL. METAL",
+          "page": 23,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 255
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "23|103C|1"
+      ],
+      "width_inches": 36,
+      "x": 938,
+      "y": 710
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        23
+      ],
+      "door_type": "B",
+      "fire_rating": "20 MIN.",
+      "frame_type": "2",
+      "h": 9.04367996382528,
+      "hardware_group": "5",
+      "height_inches": 84,
+      "location": null,
+      "mark": "107C",
+      "matched_by": "exact",
+      "material": "HOL. METAL",
+      "opening_id": "[{\"asset_number\":\"8136274080\",\"level\":\"1; 2; 3\",\"site_number\":\"6274\"},\"A\"]|107C|23|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "8136274080",
+        "level": "1; 2; 3",
+        "site_number": "6274"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"8136274080\",\"level\":\"1; 2; 3\",\"site_number\":\"6274\"},\"A\"]",
+      "page": 14,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "107",
+      "room_by": "tag_number",
+      "room_name": "BARRACKS (3)",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "20 MIN.",
+          "frame_type": "2",
+          "hardware_group": "5",
+          "height_inches": 84,
+          "location": null,
+          "mark": "107C",
+          "material": "HOL. METAL",
+          "page": 23,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 416
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "23|107C|1"
+      ],
+      "width_inches": 36,
+      "x": 1109,
+      "y": 713
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        23
+      ],
+      "door_type": "A",
+      "fire_rating": "---",
+      "frame_type": "1",
+      "h": 9.04367996382528,
+      "hardware_group": "2",
+      "height_inches": 84,
+      "location": null,
+      "mark": "103B",
+      "matched_by": "exact",
+      "material": "HOL. METAL",
+      "opening_id": "[{\"asset_number\":\"8136274080\",\"level\":\"1; 2; 3\",\"site_number\":\"6274\"},\"A\"]|103B|23|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "8136274080",
+        "level": "1; 2; 3",
+        "site_number": "6274"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"8136274080\",\"level\":\"1; 2; 3\",\"site_number\":\"6274\"},\"A\"]",
+      "page": 14,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "103",
+      "room_by": "tag_number",
+      "room_name": "BARRACKS (1)",
+      "schedule_rows": [
+        {
+          "door_type": "A",
+          "fire_rating": "---",
+          "frame_type": "1",
+          "hardware_group": "2",
+          "height_inches": 84,
+          "location": null,
+          "mark": "103B",
+          "material": "HOL. METAL",
+          "page": 23,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 238
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "23|103B|1"
+      ],
+      "width_inches": 36,
+      "x": 285,
+      "y": 738
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        23
+      ],
+      "door_type": "CC",
+      "fire_rating": "---",
+      "frame_type": "4",
+      "h": 9.04367996382528,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "101",
+      "matched_by": "exact",
+      "material": "ALUMINUM",
+      "opening_id": "[{\"asset_number\":\"8136274080\",\"level\":\"1; 2; 3\",\"site_number\":\"6274\"},\"A\"]|101|23|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "8136274080",
+        "level": "1; 2; 3",
+        "site_number": "6274"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"8136274080\",\"level\":\"1; 2; 3\",\"site_number\":\"6274\"},\"A\"]",
+      "page": 14,
+      "pair": true,
+      "points_per_foot": 9,
+      "room": "101",
+      "room_by": "nearest_label",
+      "room_name": "CORRIDOR",
+      "schedule_rows": [
+        {
+          "door_type": "CC",
+          "fire_rating": "---",
+          "frame_type": "4",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "101",
+          "material": "ALUMINUM",
+          "page": 23,
+          "pair": true,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 183
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "23|101|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1025,
+      "y": 826
+    }
+  ]
 }

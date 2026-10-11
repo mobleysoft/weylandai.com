@@ -1,0 +1,627 @@
+{
+  "rooms": [],
+  "set": {
+    "label": "missouri_oa_fmdc - _R2405-01%20Final%20Bid%20Plans.pdf",
+    "page_count": 24,
+    "rows_total": 24,
+    "sha16": "a4b7b0a81c5a6602",
+    "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_R2405-01%20Final%20Bid%20Plans.pdf",
+    "tier": "agreed"
+  },
+  "sheets": [
+    {
+      "height": 1728,
+      "page": 15,
+      "plan_rule": "extended-title",
+      "points_per_foot": [
+        9
+      ],
+      "scales": [
+        "1/8\" = 1'-0\"",
+        "1/8\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site_number"
+            ],
+            "page": 15
+          },
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site_number"
+            ],
+            "page": 16
+          }
+        ],
+        "kept_pages": [
+          15
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A-101",
+      "title": "DEMO PLAN & FLOOR PLAN",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 16,
+      "plan_rule": "extended-title",
+      "points_per_foot": [
+        9
+      ],
+      "scales": [
+        "1/8\" = 1'-0\"",
+        "1/8\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site_number"
+            ],
+            "page": 15
+          },
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site_number"
+            ],
+            "page": 16
+          }
+        ],
+        "kept_pages": [
+          16
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A-102",
+      "title": "UPPER DEMO PLAN & UPPER FLOOR PLAN",
+      "width": 2592
+    }
+  ],
+  "summary": {
+    "marks_placed": 7,
+    "marks_total": 7,
+    "placed_rate": 1,
+    "rooms_total": 0,
+    "sheets_total": 2,
+    "sheets_with_scale": 2,
+    "unplaced": []
+  },
+  "tags": [
+    {
+      "also_on": [
+        "A-102"
+      ],
+      "door_pages": [
+        15,
+        16
+      ],
+      "door_type": "1",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.599,
+      "hardware_group": "01",
+      "height_inches": 84,
+      "location": null,
+      "mark": "1",
+      "matched_by": "exact",
+      "material": "INSUL HM",
+      "opening_id": "[{\"address\":\"1301 NAGOGAMI ROAD\",\"facility_name\":\"TROOP I HEADQUARTERS\",\"facility_number\":\"8136010004; 8136010005\",\"site_number\":\"6010\"},\"A\"]|1|15,16|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1301 NAGOGAMI ROAD",
+        "facility_name": "TROOP I HEADQUARTERS",
+        "facility_number": "8136010004; 8136010005",
+        "site_number": "6010"
+      },
+      "opening_scope_id": "[{\"address\":\"1301 NAGOGAMI ROAD\",\"facility_name\":\"TROOP I HEADQUARTERS\",\"facility_number\":\"8136010004; 8136010005\",\"site_number\":\"6010\"},\"A\"]",
+      "page": 15,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "1",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "01",
+          "height_inches": 84,
+          "location": null,
+          "mark": "1",
+          "material": "INSUL HM",
+          "page": 15,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 125
+        },
+        {
+          "door_type": "1",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "01",
+          "height_inches": 84,
+          "location": null,
+          "mark": "1",
+          "material": "INSUL HM",
+          "page": 16,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 125
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "15|1|1",
+        "16|1|1"
+      ],
+      "width_inches": 36,
+      "x": 1773,
+      "y": 372
+    },
+    {
+      "also_on": [
+        "A-102"
+      ],
+      "door_pages": [
+        15,
+        16
+      ],
+      "door_type": "2",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.599,
+      "hardware_group": "03",
+      "height_inches": 108,
+      "location": null,
+      "mark": "6",
+      "matched_by": "exact",
+      "material": "INSUL STEEL",
+      "opening_id": "[{\"address\":\"1301 NAGOGAMI ROAD\",\"facility_name\":\"TROOP I HEADQUARTERS\",\"facility_number\":\"8136010004; 8136010005\",\"site_number\":\"6010\"},\"A\"]|6|15,16|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1301 NAGOGAMI ROAD",
+        "facility_name": "TROOP I HEADQUARTERS",
+        "facility_number": "8136010004; 8136010005",
+        "site_number": "6010"
+      },
+      "opening_scope_id": "[{\"address\":\"1301 NAGOGAMI ROAD\",\"facility_name\":\"TROOP I HEADQUARTERS\",\"facility_number\":\"8136010004; 8136010005\",\"site_number\":\"6010\"},\"A\"]",
+      "page": 15,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "2",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "03",
+          "height_inches": 108,
+          "location": null,
+          "mark": "6",
+          "material": "INSUL STEEL",
+          "page": 15,
+          "pair": false,
+          "size": "9' - 4\" x 9' - 0\"",
+          "width_inches": 112,
+          "y": 190
+        },
+        {
+          "door_type": "2",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "03",
+          "height_inches": 108,
+          "location": null,
+          "mark": "6",
+          "material": "INSUL STEEL",
+          "page": 16,
+          "pair": false,
+          "size": "9' - 4\" x 9' - 0\"",
+          "width_inches": 112,
+          "y": 190
+        }
+      ],
+      "sheet": "A-101",
+      "size": "9' - 4\" x 9' - 0\"",
+      "source_keys": [
+        "15|6|1",
+        "16|6|1"
+      ],
+      "width_inches": 112,
+      "x": 1853,
+      "y": 504
+    },
+    {
+      "also_on": [
+        "A-102"
+      ],
+      "door_pages": [
+        15,
+        16
+      ],
+      "door_type": "1",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.599,
+      "hardware_group": "02",
+      "height_inches": 84,
+      "location": null,
+      "mark": "3",
+      "matched_by": "exact",
+      "material": "INSUL HM",
+      "opening_id": "[{\"address\":\"1301 NAGOGAMI ROAD\",\"facility_name\":\"TROOP I HEADQUARTERS\",\"facility_number\":\"8136010004; 8136010005\",\"site_number\":\"6010\"},\"A\"]|3|15,16|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1301 NAGOGAMI ROAD",
+        "facility_name": "TROOP I HEADQUARTERS",
+        "facility_number": "8136010004; 8136010005",
+        "site_number": "6010"
+      },
+      "opening_scope_id": "[{\"address\":\"1301 NAGOGAMI ROAD\",\"facility_name\":\"TROOP I HEADQUARTERS\",\"facility_number\":\"8136010004; 8136010005\",\"site_number\":\"6010\"},\"A\"]",
+      "page": 15,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "1",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "02",
+          "height_inches": 84,
+          "location": null,
+          "mark": "3",
+          "material": "INSUL HM",
+          "page": 15,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 151
+        },
+        {
+          "door_type": "1",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "02",
+          "height_inches": 84,
+          "location": null,
+          "mark": "3",
+          "material": "INSUL HM",
+          "page": 16,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 151
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "15|3|1",
+        "16|3|1"
+      ],
+      "width_inches": 36,
+      "x": 1278,
+      "y": 717
+    },
+    {
+      "also_on": [
+        "A-102"
+      ],
+      "door_pages": [
+        15,
+        16
+      ],
+      "door_type": "2",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.599,
+      "hardware_group": "03",
+      "height_inches": 108,
+      "location": null,
+      "mark": "7",
+      "matched_by": "exact",
+      "material": "INSUL STEEL",
+      "opening_id": "[{\"address\":\"1301 NAGOGAMI ROAD\",\"facility_name\":\"TROOP I HEADQUARTERS\",\"facility_number\":\"8136010004; 8136010005\",\"site_number\":\"6010\"},\"A\"]|7|15,16|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1301 NAGOGAMI ROAD",
+        "facility_name": "TROOP I HEADQUARTERS",
+        "facility_number": "8136010004; 8136010005",
+        "site_number": "6010"
+      },
+      "opening_scope_id": "[{\"address\":\"1301 NAGOGAMI ROAD\",\"facility_name\":\"TROOP I HEADQUARTERS\",\"facility_number\":\"8136010004; 8136010005\",\"site_number\":\"6010\"},\"A\"]",
+      "page": 15,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "2",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "03",
+          "height_inches": 108,
+          "location": null,
+          "mark": "7",
+          "material": "INSUL STEEL",
+          "page": 15,
+          "pair": false,
+          "size": "9' - 4\" x 9' - 0\"",
+          "width_inches": 112,
+          "y": 203
+        },
+        {
+          "door_type": "2",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "03",
+          "height_inches": 108,
+          "location": null,
+          "mark": "7",
+          "material": "INSUL STEEL",
+          "page": 16,
+          "pair": false,
+          "size": "9' - 4\" x 9' - 0\"",
+          "width_inches": 112,
+          "y": 203
+        }
+      ],
+      "sheet": "A-101",
+      "size": "9' - 4\" x 9' - 0\"",
+      "source_keys": [
+        "15|7|1",
+        "16|7|1"
+      ],
+      "width_inches": 112,
+      "x": 2189,
+      "y": 719
+    },
+    {
+      "also_on": [
+        "A-102"
+      ],
+      "door_pages": [
+        15,
+        16
+      ],
+      "door_type": "2",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.599,
+      "hardware_group": "03",
+      "height_inches": 108,
+      "location": null,
+      "mark": "5",
+      "matched_by": "exact",
+      "material": "INSUL STEEL",
+      "opening_id": "[{\"address\":\"1301 NAGOGAMI ROAD\",\"facility_name\":\"TROOP I HEADQUARTERS\",\"facility_number\":\"8136010004; 8136010005\",\"site_number\":\"6010\"},\"A\"]|5|15,16|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1301 NAGOGAMI ROAD",
+        "facility_name": "TROOP I HEADQUARTERS",
+        "facility_number": "8136010004; 8136010005",
+        "site_number": "6010"
+      },
+      "opening_scope_id": "[{\"address\":\"1301 NAGOGAMI ROAD\",\"facility_name\":\"TROOP I HEADQUARTERS\",\"facility_number\":\"8136010004; 8136010005\",\"site_number\":\"6010\"},\"A\"]",
+      "page": 15,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "2",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "03",
+          "height_inches": 108,
+          "location": null,
+          "mark": "5",
+          "material": "INSUL STEEL",
+          "page": 15,
+          "pair": false,
+          "size": "9' - 4\" x 9' - 0\"",
+          "width_inches": 112,
+          "y": 177
+        },
+        {
+          "door_type": "2",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "03",
+          "height_inches": 108,
+          "location": null,
+          "mark": "5",
+          "material": "INSUL STEEL",
+          "page": 16,
+          "pair": false,
+          "size": "9' - 4\" x 9' - 0\"",
+          "width_inches": 112,
+          "y": 177
+        }
+      ],
+      "sheet": "A-101",
+      "size": "9' - 4\" x 9' - 0\"",
+      "source_keys": [
+        "15|5|1",
+        "16|5|1"
+      ],
+      "width_inches": 112,
+      "x": 1777,
+      "y": 1128
+    },
+    {
+      "also_on": [
+        "A-102"
+      ],
+      "door_pages": [
+        15,
+        16
+      ],
+      "door_type": "2",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 18.875,
+      "hardware_group": "03",
+      "height_inches": 108,
+      "location": null,
+      "mark": "4",
+      "matched_by": "exact",
+      "material": "INSUL STEEL",
+      "opening_id": "[{\"address\":\"1301 NAGOGAMI ROAD\",\"facility_name\":\"TROOP I HEADQUARTERS\",\"facility_number\":\"8136010004; 8136010005\",\"site_number\":\"6010\"},\"A\"]|4|15,16|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1301 NAGOGAMI ROAD",
+        "facility_name": "TROOP I HEADQUARTERS",
+        "facility_number": "8136010004; 8136010005",
+        "site_number": "6010"
+      },
+      "opening_scope_id": "[{\"address\":\"1301 NAGOGAMI ROAD\",\"facility_name\":\"TROOP I HEADQUARTERS\",\"facility_number\":\"8136010004; 8136010005\",\"site_number\":\"6010\"},\"A\"]",
+      "page": 15,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "2",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "03",
+          "height_inches": 108,
+          "location": null,
+          "mark": "4",
+          "material": "INSUL STEEL",
+          "page": 15,
+          "pair": false,
+          "size": "9' - 4\" x 9' - 0\"",
+          "width_inches": 112,
+          "y": 164
+        },
+        {
+          "door_type": "2",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "03",
+          "height_inches": 108,
+          "location": null,
+          "mark": "4",
+          "material": "INSUL STEEL",
+          "page": 16,
+          "pair": false,
+          "size": "9' - 4\" x 9' - 0\"",
+          "width_inches": 112,
+          "y": 164
+        }
+      ],
+      "sheet": "A-101",
+      "size": "9' - 4\" x 9' - 0\"",
+      "source_keys": [
+        "15|4|1",
+        "16|4|1"
+      ],
+      "width_inches": 112,
+      "x": 1545,
+      "y": 1136
+    },
+    {
+      "also_on": [
+        "A-102"
+      ],
+      "door_pages": [
+        15,
+        16
+      ],
+      "door_type": "1",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 18.875,
+      "hardware_group": "01",
+      "height_inches": 84,
+      "location": null,
+      "mark": "2",
+      "matched_by": "exact",
+      "material": "INSUL HM",
+      "opening_id": "[{\"address\":\"1301 NAGOGAMI ROAD\",\"facility_name\":\"TROOP I HEADQUARTERS\",\"facility_number\":\"8136010004; 8136010005\",\"site_number\":\"6010\"},\"A\"]|2|15,16|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1301 NAGOGAMI ROAD",
+        "facility_name": "TROOP I HEADQUARTERS",
+        "facility_number": "8136010004; 8136010005",
+        "site_number": "6010"
+      },
+      "opening_scope_id": "[{\"address\":\"1301 NAGOGAMI ROAD\",\"facility_name\":\"TROOP I HEADQUARTERS\",\"facility_number\":\"8136010004; 8136010005\",\"site_number\":\"6010\"},\"A\"]",
+      "page": 15,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "1",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "01",
+          "height_inches": 84,
+          "location": null,
+          "mark": "2",
+          "material": "INSUL HM",
+          "page": 15,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 138
+        },
+        {
+          "door_type": "1",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "01",
+          "height_inches": 84,
+          "location": null,
+          "mark": "2",
+          "material": "INSUL HM",
+          "page": 16,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 138
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "15|2|1",
+        "16|2|1"
+      ],
+      "width_inches": 36,
+      "x": 1905,
+      "y": 1136
+    }
+  ]
+}

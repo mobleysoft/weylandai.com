@@ -1,0 +1,78 @@
+{
+  "rooms": [
+    {
+      "name": "PROJECT # C2509-01",
+      "number": "7007",
+      "page": 9,
+      "points_per_foot": 18,
+      "sheet": "A-401",
+      "x": 2421,
+      "y": 1170
+    }
+  ],
+  "set": {
+    "label": "missouri_oa_fmdc - _C2509-01%20Final%20Bid%20Plans.pdf",
+    "page_count": 20,
+    "rows_total": 2,
+    "sha16": "8a70af8566d61d90",
+    "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_C2509-01%20Final%20Bid%20Plans.pdf",
+    "tier": "agreed"
+  },
+  "sheets": [
+    {
+      "height": 1728,
+      "page": 9,
+      "plan_rule": "extended-title",
+      "points_per_foot": [
+        18
+      ],
+      "scales": [
+        "SCALE: 1/4\" = 1'-0\"",
+        "SCALE: 1/4\" = 1'-0\"",
+        "SCALE: 1/4\" = 1'-0\"",
+        "SCALE: 1/4\" = 1'-0\"",
+        "SCALE: 1/4\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number",
+              "facility_number"
+            ],
+            "page": 10
+          }
+        ],
+        "kept_pages": [
+          10
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A-401",
+      "title": "ENLARGED PLANS",
+      "width": 2592
+    }
+  ],
+  "summary": {
+    "marks_placed": 0,
+    "marks_total": 2,
+    "placed_rate": 0,
+    "rooms_total": 1,
+    "sheets_total": 1,
+    "sheets_with_scale": 1,
+    "unplaced": [
+      {
+        "mark": "102",
+        "page": 10,
+        "reason": "mark 102 (schedule p.10) not tagged on any plan"
+      },
+      {
+        "mark": "105",
+        "page": 10,
+        "reason": "mark 105 (schedule p.10) not tagged on any plan"
+      }
+    ]
+  },
+  "tags": []
+}

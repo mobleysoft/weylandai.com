@@ -1,6 +1,150 @@
 {
   "rooms": [
     {
+      "name": "CIRCULATION",
+      "number": "129A",
+      "page": 24,
+      "points_per_foot": 13.5,
+      "sheet": "A111.B",
+      "x": 341,
+      "y": 367
+    },
+    {
+      "name": "OFFICE",
+      "number": "161",
+      "page": 24,
+      "points_per_foot": 13.5,
+      "sheet": "A111.B",
+      "x": 767,
+      "y": 405
+    },
+    {
+      "name": "OFFICE",
+      "number": "162",
+      "page": 24,
+      "points_per_foot": 13.5,
+      "sheet": "A111.B",
+      "x": 948,
+      "y": 426
+    },
+    {
+      "name": "OFFICE",
+      "number": "163",
+      "page": 24,
+      "points_per_foot": 13.5,
+      "sheet": "A111.B",
+      "x": 1074,
+      "y": 471
+    },
+    {
+      "name": "CIRCULATION",
+      "number": "160",
+      "page": 24,
+      "points_per_foot": 13.5,
+      "sheet": "A111.B",
+      "x": 840,
+      "y": 517
+    },
+    {
+      "name": "COMSEC",
+      "number": "164",
+      "page": 24,
+      "points_per_foot": 13.5,
+      "sheet": "A111.B",
+      "x": 675,
+      "y": 680
+    },
+    {
+      "name": "ADMINISTRATION",
+      "number": "165",
+      "page": 24,
+      "points_per_foot": 13.5,
+      "sheet": "A111.B",
+      "x": 1064,
+      "y": 712
+    },
+    {
+      "name": "CONFERENCE ROOM",
+      "number": "127",
+      "page": 24,
+      "points_per_foot": 13.5,
+      "sheet": "A111.B",
+      "x": 408,
+      "y": 772
+    },
+    {
+      "name": "DECON OFFICE",
+      "number": "167",
+      "page": 24,
+      "points_per_foot": 13.5,
+      "sheet": "A111.B",
+      "x": 964,
+      "y": 929
+    },
+    {
+      "name": "TRAINING AID STORAGE",
+      "number": "166",
+      "page": 24,
+      "points_per_foot": 13.5,
+      "sheet": "A111.B",
+      "x": 1138,
+      "y": 934
+    },
+    {
+      "name": "STORAGE",
+      "number": "126B",
+      "page": 24,
+      "points_per_foot": 13.5,
+      "sheet": "A111.B",
+      "x": 347,
+      "y": 1030
+    },
+    {
+      "name": "OPS CENTER",
+      "number": "168",
+      "page": 24,
+      "points_per_foot": 13.5,
+      "sheet": "A111.B",
+      "x": 676,
+      "y": 1070
+    },
+    {
+      "name": "LOCKERS",
+      "number": "126A",
+      "page": 24,
+      "points_per_foot": 13.5,
+      "sheet": "A111.B",
+      "x": 481,
+      "y": 1128
+    },
+    {
+      "name": "PROJECT # T2147-01",
+      "number": "6298",
+      "page": 24,
+      "points_per_foot": 13.5,
+      "sheet": "A111.B",
+      "x": 2448,
+      "y": 1170
+    },
+    {
+      "name": "STORAGE/SUPPLY",
+      "number": "169",
+      "page": 24,
+      "points_per_foot": 13.5,
+      "sheet": "A111.B",
+      "x": 997,
+      "y": 1238
+    },
+    {
+      "name": "OFFICE",
+      "number": "125A",
+      "page": 24,
+      "points_per_foot": 13.5,
+      "sheet": "A111.B",
+      "x": 375,
+      "y": 1256
+    },
+    {
       "name": "TAG",
       "number": "SC-1",
       "page": 27,
@@ -165,7 +309,8 @@
   "sheets": [
     {
       "height": 1728,
-      "page": 27,
+      "page": 24,
+      "plan_rule": "extended-title",
       "points_per_foot": [
         13.5
       ],
@@ -173,6 +318,69 @@
         "3/16\" = 1'-0\"",
         "0 SCALE: 3/16\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 42
+          },
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 43
+          }
+        ],
+        "kept_pages": [
+          42
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A111.B",
+      "title": "DIMENSION PLAN",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 27,
+      "plan_rule": "legacy",
+      "points_per_foot": [
+        13.5
+      ],
+      "scales": [
+        "3/16\" = 1'-0\"",
+        "0 SCALE: 3/16\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 42
+          },
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 43
+          }
+        ],
+        "kept_pages": [
+          43
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A113",
       "title": "MAIN LEVEL FLOOR PLAN - ALT. 1",
       "width": 2592
@@ -180,6 +388,7 @@
     {
       "height": 1728,
       "page": 39,
+      "plan_rule": "legacy",
       "points_per_foot": [
         108
       ],
@@ -190,6 +399,30 @@
         "1 1/2\" = 1'-0\"",
         "SCALE: 1 1/2\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 42
+          },
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 43
+          }
+        ],
+        "kept_pages": [
+          42
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A501",
       "title": "PLAN DETAILS",
       "width": 2592
@@ -199,9 +432,9 @@
     "marks_placed": 13,
     "marks_total": 29,
     "placed_rate": 0.4482758620689655,
-    "rooms_total": 17,
-    "sheets_total": 2,
-    "sheets_with_scale": 2,
+    "rooms_total": 33,
+    "sheets_total": 3,
+    "sheets_with_scale": 3,
     "unplaced": [
       {
         "mark": "129C",
@@ -301,6 +534,14 @@
       "mark": "101A",
       "matched_by": "exact",
       "material": "--",
+      "opening_id": "[{\"address\":\"1225 COOPER DRIVE\",\"asset_number\":\"8136298008\",\"site_number\":\"6298\"},\"A\"]|101A|43|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1225 COOPER DRIVE",
+        "asset_number": "8136298008",
+        "site_number": "6298"
+      },
+      "opening_scope_id": "[{\"address\":\"1225 COOPER DRIVE\",\"asset_number\":\"8136298008\",\"site_number\":\"6298\"},\"A\"]",
       "page": 27,
       "pair": false,
       "points_per_foot": 13.5,
@@ -326,6 +567,9 @@
       ],
       "sheet": "A113",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "43|101A|1"
+      ],
       "width_inches": 36,
       "x": 356,
       "y": 642
@@ -345,6 +589,14 @@
       "mark": "101B",
       "matched_by": "exact",
       "material": "--",
+      "opening_id": "[{\"address\":\"1225 COOPER DRIVE\",\"asset_number\":\"8136298008\",\"site_number\":\"6298\"},\"A\"]|101B|43|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1225 COOPER DRIVE",
+        "asset_number": "8136298008",
+        "site_number": "6298"
+      },
+      "opening_scope_id": "[{\"address\":\"1225 COOPER DRIVE\",\"asset_number\":\"8136298008\",\"site_number\":\"6298\"},\"A\"]",
       "page": 27,
       "pair": false,
       "points_per_foot": 13.5,
@@ -370,6 +622,9 @@
       ],
       "sheet": "A113",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "43|101B|1"
+      ],
       "width_inches": 36,
       "x": 1257,
       "y": 659
@@ -389,6 +644,14 @@
       "mark": "102A",
       "matched_by": "exact",
       "material": "STEEL",
+      "opening_id": "[{\"address\":\"1225 COOPER DRIVE\",\"asset_number\":\"8136298008\",\"site_number\":\"6298\"},\"A\"]|102A|43|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1225 COOPER DRIVE",
+        "asset_number": "8136298008",
+        "site_number": "6298"
+      },
+      "opening_scope_id": "[{\"address\":\"1225 COOPER DRIVE\",\"asset_number\":\"8136298008\",\"site_number\":\"6298\"},\"A\"]",
       "page": 27,
       "pair": false,
       "points_per_foot": 13.5,
@@ -414,6 +677,9 @@
       ],
       "sheet": "A113",
       "size": "12' - 0\" x 14' - 0\"",
+      "source_keys": [
+        "43|102A|1"
+      ],
       "width_inches": 144,
       "x": 1419,
       "y": 675
@@ -433,6 +699,14 @@
       "mark": "102B",
       "matched_by": "exact",
       "material": "STEEL",
+      "opening_id": "[{\"address\":\"1225 COOPER DRIVE\",\"asset_number\":\"8136298008\",\"site_number\":\"6298\"},\"A\"]|102B|43|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1225 COOPER DRIVE",
+        "asset_number": "8136298008",
+        "site_number": "6298"
+      },
+      "opening_scope_id": "[{\"address\":\"1225 COOPER DRIVE\",\"asset_number\":\"8136298008\",\"site_number\":\"6298\"},\"A\"]",
       "page": 27,
       "pair": false,
       "points_per_foot": 13.5,
@@ -458,6 +732,9 @@
       ],
       "sheet": "A113",
       "size": "12' - 0\" x 14' - 0\"",
+      "source_keys": [
+        "43|102B|1"
+      ],
       "width_inches": 144,
       "x": 1594,
       "y": 675
@@ -477,6 +754,14 @@
       "mark": "103B",
       "matched_by": "exact",
       "material": "STEEL",
+      "opening_id": "[{\"address\":\"1225 COOPER DRIVE\",\"asset_number\":\"8136298008\",\"site_number\":\"6298\"},\"A\"]|103B|43|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1225 COOPER DRIVE",
+        "asset_number": "8136298008",
+        "site_number": "6298"
+      },
+      "opening_scope_id": "[{\"address\":\"1225 COOPER DRIVE\",\"asset_number\":\"8136298008\",\"site_number\":\"6298\"},\"A\"]",
       "page": 27,
       "pair": false,
       "points_per_foot": 13.5,
@@ -502,6 +787,9 @@
       ],
       "sheet": "A113",
       "size": "8' - 0\" x 14' - 0\"",
+      "source_keys": [
+        "43|103B|1"
+      ],
       "width_inches": 96,
       "x": 1758,
       "y": 783
@@ -521,6 +809,14 @@
       "mark": "103A",
       "matched_by": "exact",
       "material": "HM",
+      "opening_id": "[{\"address\":\"1225 COOPER DRIVE\",\"asset_number\":\"8136298008\",\"site_number\":\"6298\"},\"A\"]|103A|43|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1225 COOPER DRIVE",
+        "asset_number": "8136298008",
+        "site_number": "6298"
+      },
+      "opening_scope_id": "[{\"address\":\"1225 COOPER DRIVE\",\"asset_number\":\"8136298008\",\"site_number\":\"6298\"},\"A\"]",
       "page": 27,
       "pair": false,
       "points_per_foot": 13.5,
@@ -546,6 +842,9 @@
       ],
       "sheet": "A113",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "43|103A|1"
+      ],
       "width_inches": 36,
       "x": 1744,
       "y": 945
@@ -565,6 +864,14 @@
       "mark": "104",
       "matched_by": "exact",
       "material": "HM",
+      "opening_id": "[{\"address\":\"1225 COOPER DRIVE\",\"asset_number\":\"8136298008\",\"site_number\":\"6298\"},\"A\"]|104|43|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1225 COOPER DRIVE",
+        "asset_number": "8136298008",
+        "site_number": "6298"
+      },
+      "opening_scope_id": "[{\"address\":\"1225 COOPER DRIVE\",\"asset_number\":\"8136298008\",\"site_number\":\"6298\"},\"A\"]",
       "page": 27,
       "pair": false,
       "points_per_foot": 13.5,
@@ -590,6 +897,9 @@
       ],
       "sheet": "A113",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "43|104|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1710,
@@ -610,6 +920,14 @@
       "mark": "105",
       "matched_by": "exact",
       "material": "HM",
+      "opening_id": "[{\"address\":\"1225 COOPER DRIVE\",\"asset_number\":\"8136298008\",\"site_number\":\"6298\"},\"A\"]|105|43|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1225 COOPER DRIVE",
+        "asset_number": "8136298008",
+        "site_number": "6298"
+      },
+      "opening_scope_id": "[{\"address\":\"1225 COOPER DRIVE\",\"asset_number\":\"8136298008\",\"site_number\":\"6298\"},\"A\"]",
       "page": 27,
       "pair": false,
       "points_per_foot": 13.5,
@@ -635,6 +953,9 @@
       ],
       "sheet": "A113",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "43|105|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 2016,
@@ -655,6 +976,14 @@
       "mark": "106C",
       "matched_by": "exact",
       "material": "HM",
+      "opening_id": "[{\"address\":\"1225 COOPER DRIVE\",\"asset_number\":\"8136298008\",\"site_number\":\"6298\"},\"A\"]|106C|43|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1225 COOPER DRIVE",
+        "asset_number": "8136298008",
+        "site_number": "6298"
+      },
+      "opening_scope_id": "[{\"address\":\"1225 COOPER DRIVE\",\"asset_number\":\"8136298008\",\"site_number\":\"6298\"},\"A\"]",
       "page": 27,
       "pair": false,
       "points_per_foot": 13.5,
@@ -680,6 +1009,9 @@
       ],
       "sheet": "A113",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "43|106C|1"
+      ],
       "width_inches": 36,
       "x": 1712,
       "y": 1153
@@ -699,6 +1031,14 @@
       "mark": "102C",
       "matched_by": "exact",
       "material": "STEEL",
+      "opening_id": "[{\"address\":\"1225 COOPER DRIVE\",\"asset_number\":\"8136298008\",\"site_number\":\"6298\"},\"A\"]|102C|43|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1225 COOPER DRIVE",
+        "asset_number": "8136298008",
+        "site_number": "6298"
+      },
+      "opening_scope_id": "[{\"address\":\"1225 COOPER DRIVE\",\"asset_number\":\"8136298008\",\"site_number\":\"6298\"},\"A\"]",
       "page": 27,
       "pair": false,
       "points_per_foot": 13.5,
@@ -724,6 +1064,9 @@
       ],
       "sheet": "A113",
       "size": "12' - 0\" x 14' - 0\"",
+      "source_keys": [
+        "43|102C|1"
+      ],
       "width_inches": 144,
       "x": 1405,
       "y": 1444
@@ -743,6 +1086,14 @@
       "mark": "102D",
       "matched_by": "exact",
       "material": "STEEL",
+      "opening_id": "[{\"address\":\"1225 COOPER DRIVE\",\"asset_number\":\"8136298008\",\"site_number\":\"6298\"},\"A\"]|102D|43|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1225 COOPER DRIVE",
+        "asset_number": "8136298008",
+        "site_number": "6298"
+      },
+      "opening_scope_id": "[{\"address\":\"1225 COOPER DRIVE\",\"asset_number\":\"8136298008\",\"site_number\":\"6298\"},\"A\"]",
       "page": 27,
       "pair": false,
       "points_per_foot": 13.5,
@@ -768,6 +1119,9 @@
       ],
       "sheet": "A113",
       "size": "12' - 0\" x 14' - 0\"",
+      "source_keys": [
+        "43|102D|1"
+      ],
       "width_inches": 144,
       "x": 1594,
       "y": 1444
@@ -787,6 +1141,14 @@
       "mark": "106B",
       "matched_by": "exact",
       "material": "STEEL",
+      "opening_id": "[{\"address\":\"1225 COOPER DRIVE\",\"asset_number\":\"8136298008\",\"site_number\":\"6298\"},\"A\"]|106B|43|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1225 COOPER DRIVE",
+        "asset_number": "8136298008",
+        "site_number": "6298"
+      },
+      "opening_scope_id": "[{\"address\":\"1225 COOPER DRIVE\",\"asset_number\":\"8136298008\",\"site_number\":\"6298\"},\"A\"]",
       "page": 27,
       "pair": false,
       "points_per_foot": 13.5,
@@ -812,6 +1174,9 @@
       ],
       "sheet": "A113",
       "size": "8' - 0\" x 8' - 0\"",
+      "source_keys": [
+        "43|106B|1"
+      ],
       "width_inches": 96,
       "x": 1945,
       "y": 1444
@@ -831,6 +1196,14 @@
       "mark": "106A",
       "matched_by": "exact",
       "material": "HM",
+      "opening_id": "[{\"address\":\"1225 COOPER DRIVE\",\"asset_number\":\"8136298008\",\"site_number\":\"6298\"},\"A\"]|106A|43|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1225 COOPER DRIVE",
+        "asset_number": "8136298008",
+        "site_number": "6298"
+      },
+      "opening_scope_id": "[{\"address\":\"1225 COOPER DRIVE\",\"asset_number\":\"8136298008\",\"site_number\":\"6298\"},\"A\"]",
       "page": 27,
       "pair": false,
       "points_per_foot": 13.5,
@@ -856,6 +1229,9 @@
       ],
       "sheet": "A113",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "43|106A|1"
+      ],
       "width_inches": 36,
       "x": 1733,
       "y": 1493

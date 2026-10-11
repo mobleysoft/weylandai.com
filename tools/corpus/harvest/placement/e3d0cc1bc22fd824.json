@@ -499,6 +499,7 @@
     {
       "height": 1728.24,
       "page": 9,
+      "plan_rule": "legacy",
       "points_per_foot": [
         6.75,
         13.5,
@@ -510,6 +511,22 @@
         "SCALE: 1/4\" = 1'-0\"",
         "NORTH A-102 SCALE: 3/32\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number",
+              "facility_number"
+            ],
+            "page": 18
+          }
+        ],
+        "kept_pages": [
+          18
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-102",
       "title": "NEW CONSTRUCTION PLAN LEGEND",
       "width": 2592.24
@@ -517,6 +534,7 @@
     {
       "height": 1728.24,
       "page": 13,
+      "plan_rule": "legacy",
       "points_per_foot": [
         18
       ],
@@ -524,6 +542,22 @@
         "SCALE: 1/4\" = 1'-0\"",
         "SCALE: 1/4\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number",
+              "facility_number"
+            ],
+            "page": 18
+          }
+        ],
+        "kept_pages": [
+          18
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-401",
       "title": "NEW CONSTRUCTION PLAN LEGEND",
       "width": 2592.24
@@ -554,6 +588,14 @@
       "mark": "113",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]|113|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "74 KEARNEY ST",
+        "facility_number": "8136303050",
+        "site_number": "6303"
+      },
+      "opening_scope_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]",
       "page": 9,
       "pair": true,
       "points_per_foot": 13.5,
@@ -579,6 +621,9 @@
       ],
       "sheet": "A-102",
       "size": "PR 3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|113|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1433,
@@ -599,6 +644,14 @@
       "mark": "109",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]|109|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "74 KEARNEY ST",
+        "facility_number": "8136303050",
+        "site_number": "6303"
+      },
+      "opening_scope_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]",
       "page": 9,
       "pair": true,
       "points_per_foot": 6.75,
@@ -624,6 +677,9 @@
       ],
       "sheet": "A-102",
       "size": "PR 3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|109|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 490,
@@ -644,6 +700,14 @@
       "mark": "106",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]|106|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "74 KEARNEY ST",
+        "facility_number": "8136303050",
+        "site_number": "6303"
+      },
+      "opening_scope_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]",
       "page": 9,
       "pair": false,
       "points_per_foot": 18,
@@ -669,6 +733,9 @@
       ],
       "sheet": "A-102",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|106|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1387,
@@ -691,6 +758,14 @@
       "mark": "107",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]|107|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "74 KEARNEY ST",
+        "facility_number": "8136303050",
+        "site_number": "6303"
+      },
+      "opening_scope_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]",
       "page": 9,
       "pair": false,
       "points_per_foot": 6.75,
@@ -716,6 +791,9 @@
       ],
       "sheet": "A-102",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|107|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1411,
@@ -736,6 +814,14 @@
       "mark": "115",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]|115|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "74 KEARNEY ST",
+        "facility_number": "8136303050",
+        "site_number": "6303"
+      },
+      "opening_scope_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]",
       "page": 9,
       "pair": true,
       "points_per_foot": 6.75,
@@ -761,6 +847,9 @@
       ],
       "sheet": "A-102",
       "size": "PR 3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|115|1"
+      ],
       "width_inches": 36,
       "x": 640,
       "y": 719
@@ -782,6 +871,14 @@
       "mark": "105",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]|105|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "74 KEARNEY ST",
+        "facility_number": "8136303050",
+        "site_number": "6303"
+      },
+      "opening_scope_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]",
       "page": 9,
       "pair": false,
       "points_per_foot": 6.75,
@@ -807,6 +904,9 @@
       ],
       "sheet": "A-102",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|105|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1315,
@@ -829,6 +929,14 @@
       "mark": "104",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]|104|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "74 KEARNEY ST",
+        "facility_number": "8136303050",
+        "site_number": "6303"
+      },
+      "opening_scope_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]",
       "page": 9,
       "pair": false,
       "points_per_foot": 6.75,
@@ -854,6 +962,9 @@
       ],
       "sheet": "A-102",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|104|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1353,
@@ -874,6 +985,14 @@
       "mark": "114",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]|114|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "74 KEARNEY ST",
+        "facility_number": "8136303050",
+        "site_number": "6303"
+      },
+      "opening_scope_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]",
       "page": 9,
       "pair": false,
       "points_per_foot": 6.75,
@@ -899,6 +1018,9 @@
       ],
       "sheet": "A-102",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|114|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1019,
@@ -921,6 +1043,14 @@
       "mark": "118",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]|118|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "74 KEARNEY ST",
+        "facility_number": "8136303050",
+        "site_number": "6303"
+      },
+      "opening_scope_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]",
       "page": 9,
       "pair": false,
       "points_per_foot": 6.75,
@@ -946,6 +1076,9 @@
       ],
       "sheet": "A-102",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|118|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1216,
@@ -968,6 +1101,14 @@
       "mark": "119",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]|119|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "74 KEARNEY ST",
+        "facility_number": "8136303050",
+        "site_number": "6303"
+      },
+      "opening_scope_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]",
       "page": 9,
       "pair": false,
       "points_per_foot": 6.75,
@@ -993,6 +1134,9 @@
       ],
       "sheet": "A-102",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|119|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1386,
@@ -1015,6 +1159,14 @@
       "mark": "120",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]|120|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "74 KEARNEY ST",
+        "facility_number": "8136303050",
+        "site_number": "6303"
+      },
+      "opening_scope_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]",
       "page": 9,
       "pair": false,
       "points_per_foot": 6.75,
@@ -1040,6 +1192,9 @@
       ],
       "sheet": "A-102",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|120|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1325,
@@ -1062,6 +1217,14 @@
       "mark": "103",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]|103|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "74 KEARNEY ST",
+        "facility_number": "8136303050",
+        "site_number": "6303"
+      },
+      "opening_scope_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]",
       "page": 9,
       "pair": false,
       "points_per_foot": 6.75,
@@ -1087,6 +1250,9 @@
       ],
       "sheet": "A-102",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|103|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1251,
@@ -1109,6 +1275,14 @@
       "mark": "102",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]|102|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "74 KEARNEY ST",
+        "facility_number": "8136303050",
+        "site_number": "6303"
+      },
+      "opening_scope_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]",
       "page": 9,
       "pair": false,
       "points_per_foot": 6.75,
@@ -1134,6 +1308,9 @@
       ],
       "sheet": "A-102",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|102|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1359,
@@ -1154,6 +1331,14 @@
       "mark": "121",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]|121|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "74 KEARNEY ST",
+        "facility_number": "8136303050",
+        "site_number": "6303"
+      },
+      "opening_scope_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]",
       "page": 9,
       "pair": false,
       "points_per_foot": 6.75,
@@ -1179,6 +1364,9 @@
       ],
       "sheet": "A-102",
       "size": "5' - 4\" x 7' - 0\"",
+      "source_keys": [
+        "18|121|1"
+      ],
       "unsure": true,
       "width_inches": 64,
       "x": 1421,
@@ -1199,6 +1387,14 @@
       "mark": "100",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]|100|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "74 KEARNEY ST",
+        "facility_number": "8136303050",
+        "site_number": "6303"
+      },
+      "opening_scope_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]",
       "page": 9,
       "pair": true,
       "points_per_foot": 6.75,
@@ -1224,6 +1420,9 @@
       ],
       "sheet": "A-102",
       "size": "PR 3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|100|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1668,
@@ -1244,6 +1443,14 @@
       "mark": "108",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]|108|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "74 KEARNEY ST",
+        "facility_number": "8136303050",
+        "site_number": "6303"
+      },
+      "opening_scope_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]",
       "page": 9,
       "pair": false,
       "points_per_foot": 6.75,
@@ -1269,6 +1476,9 @@
       ],
       "sheet": "A-102",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|108|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1200,
@@ -1289,6 +1499,14 @@
       "mark": "110",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]|110|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "74 KEARNEY ST",
+        "facility_number": "8136303050",
+        "site_number": "6303"
+      },
+      "opening_scope_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]",
       "page": 9,
       "pair": true,
       "points_per_foot": 6.75,
@@ -1314,6 +1532,9 @@
       ],
       "sheet": "A-102",
       "size": "PR 3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|110|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 981,
@@ -1334,6 +1555,14 @@
       "mark": "111",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]|111|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "74 KEARNEY ST",
+        "facility_number": "8136303050",
+        "site_number": "6303"
+      },
+      "opening_scope_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]",
       "page": 9,
       "pair": true,
       "points_per_foot": 6.75,
@@ -1359,6 +1588,9 @@
       ],
       "sheet": "A-102",
       "size": "PR 3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|111|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1066,
@@ -1379,6 +1611,14 @@
       "mark": "101",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]|101|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "74 KEARNEY ST",
+        "facility_number": "8136303050",
+        "site_number": "6303"
+      },
+      "opening_scope_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]",
       "page": 9,
       "pair": false,
       "points_per_foot": 6.75,
@@ -1404,6 +1644,9 @@
       ],
       "sheet": "A-102",
       "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|101|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1440,
@@ -1424,6 +1667,14 @@
       "mark": "116",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]|116|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "74 KEARNEY ST",
+        "facility_number": "8136303050",
+        "site_number": "6303"
+      },
+      "opening_scope_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]",
       "page": 9,
       "pair": true,
       "points_per_foot": 6.75,
@@ -1449,6 +1700,9 @@
       ],
       "sheet": "A-102",
       "size": "PR 3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|116|1"
+      ],
       "width_inches": 36,
       "x": 443,
       "y": 1271
@@ -1468,6 +1722,14 @@
       "mark": "117",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]|117|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "74 KEARNEY ST",
+        "facility_number": "8136303050",
+        "site_number": "6303"
+      },
+      "opening_scope_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]",
       "page": 9,
       "pair": true,
       "points_per_foot": 6.75,
@@ -1493,6 +1755,9 @@
       ],
       "sheet": "A-102",
       "size": "PR 3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|117|1"
+      ],
       "width_inches": 36,
       "x": 832,
       "y": 1271
@@ -1512,6 +1777,14 @@
       "mark": "112",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]|112|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "74 KEARNEY ST",
+        "facility_number": "8136303050",
+        "site_number": "6303"
+      },
+      "opening_scope_id": "[{\"address\":\"74 KEARNEY ST\",\"facility_number\":\"8136303050\",\"site_number\":\"6303\"},\"A\"]",
       "page": 9,
       "pair": true,
       "points_per_foot": 6.75,
@@ -1537,6 +1810,9 @@
       ],
       "sheet": "A-102",
       "size": "PR 3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|112|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1432,

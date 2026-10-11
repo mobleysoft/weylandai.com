@@ -1,0 +1,339 @@
+{
+  "rooms": [
+    {
+      "name": "MECHANICAL",
+      "number": "112",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 653,
+      "y": 906
+    },
+    {
+      "name": "MECHANICAL",
+      "number": "112",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 1388,
+      "y": 908
+    },
+    {
+      "name": "JANITOR",
+      "number": "113",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 1057,
+      "y": 916
+    },
+    {
+      "name": "JANITOR",
+      "number": "113",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 320,
+      "y": 930
+    },
+    {
+      "name": "LACTATION ROOM",
+      "number": "110",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 1404,
+      "y": 966
+    },
+    {
+      "name": "LACTATION ROOM",
+      "number": "110",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 669,
+      "y": 984
+    },
+    {
+      "name": "WOMEN'S RESTROOM",
+      "number": "111",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 1190,
+      "y": 1057
+    },
+    {
+      "name": "WOMEN'S RESTROOM",
+      "number": "111",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 452,
+      "y": 1060
+    },
+    {
+      "name": "WOMEN'S LOCKER ROOM",
+      "number": "109",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 1357,
+      "y": 1237
+    },
+    {
+      "name": "WOMEN'S LOCKER ROOM",
+      "number": "109",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 536,
+      "y": 1278
+    },
+    {
+      "name": "OFFICE",
+      "number": "108",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 1378,
+      "y": 1426
+    },
+    {
+      "name": "OFFICE",
+      "number": "108",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 646,
+      "y": 1437
+    }
+  ],
+  "set": {
+    "label": "missouri_oa_fmdc - _T2519-01%20-%20Final%20Plans.pdf",
+    "page_count": 35,
+    "rows_total": 3,
+    "sha16": "b116a0570cbe0357",
+    "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2519-01%20-%20Final%20Plans.pdf",
+    "tier": "agreed"
+  },
+  "sheets": [
+    {
+      "height": 1728,
+      "page": 13,
+      "plan_rule": "extended-title",
+      "points_per_foot": [
+        18,
+        108
+      ],
+      "scales": [
+        "SCALE: 1 1/2\" = 1'-0\"",
+        "SCALE: 1 1/2\" = 1'-0\"",
+        "SCALE: 1/4\" = 1'-0\"",
+        "SCALE: 1/4\" = 1'-0\"",
+        "SCALE: 1/4\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 18
+          }
+        ],
+        "kept_pages": [
+          18
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A-101",
+      "title": "First Floor Plan & Reflected Ceiling Plan",
+      "width": 2602.2
+    }
+  ],
+  "summary": {
+    "marks_placed": 3,
+    "marks_total": 3,
+    "placed_rate": 1,
+    "rooms_total": 12,
+    "sheets_total": 1,
+    "sheets_with_scale": 1,
+    "unplaced": []
+  },
+  "tags": [
+    {
+      "also_on": [],
+      "door_pages": [
+        18
+      ],
+      "door_type": "WD-1",
+      "fire_rating": null,
+      "frame_type": "HMF-1",
+      "h": 9.50935,
+      "hardware_group": "01",
+      "height_inches": 84,
+      "location": null,
+      "mark": "112",
+      "matched_by": "exact",
+      "material": null,
+      "opening_id": "[{\"address\":\"1500 WASHINGTON ST\",\"asset_number\":\"8136252002\",\"level\":\"1\",\"site_number\":\"6252\"},\"A\"]|112|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1500 WASHINGTON ST",
+        "asset_number": "8136252002",
+        "level": "1",
+        "site_number": "6252"
+      },
+      "opening_scope_id": "[{\"address\":\"1500 WASHINGTON ST\",\"asset_number\":\"8136252002\",\"level\":\"1\",\"site_number\":\"6252\"},\"A\"]",
+      "page": 13,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "110",
+      "room_by": "nearest_label",
+      "room_name": "LACTATION ROOM",
+      "schedule_rows": [
+        {
+          "door_type": "WD-1",
+          "fire_rating": null,
+          "frame_type": "HMF-1",
+          "hardware_group": "01",
+          "height_inches": 84,
+          "location": null,
+          "mark": "112",
+          "material": null,
+          "page": 18,
+          "pair": false,
+          "size": "2' - 10\" x 7' - 0\"",
+          "width_inches": 34,
+          "y": 883
+        }
+      ],
+      "sheet": "A-101",
+      "size": "2' - 10\" x 7' - 0\"",
+      "source_keys": [
+        "18|112|1"
+      ],
+      "unsure": true,
+      "width_inches": 34,
+      "x": 610,
+      "y": 980
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        18
+      ],
+      "door_type": "WD-1",
+      "fire_rating": null,
+      "frame_type": "HMF-1",
+      "h": 9.50935,
+      "hardware_group": "03",
+      "height_inches": 84,
+      "location": null,
+      "mark": "110",
+      "matched_by": "exact",
+      "material": null,
+      "opening_id": "[{\"address\":\"1500 WASHINGTON ST\",\"asset_number\":\"8136252002\",\"level\":\"1\",\"site_number\":\"6252\"},\"A\"]|110|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1500 WASHINGTON ST",
+        "asset_number": "8136252002",
+        "level": "1",
+        "site_number": "6252"
+      },
+      "opening_scope_id": "[{\"address\":\"1500 WASHINGTON ST\",\"asset_number\":\"8136252002\",\"level\":\"1\",\"site_number\":\"6252\"},\"A\"]",
+      "page": 13,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "110",
+      "room_by": "nearest_label",
+      "room_name": "LACTATION ROOM",
+      "schedule_rows": [
+        {
+          "door_type": "WD-1",
+          "fire_rating": null,
+          "frame_type": "HMF-1",
+          "hardware_group": "03",
+          "height_inches": 84,
+          "location": null,
+          "mark": "110",
+          "material": null,
+          "page": 18,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 856
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|110|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 664,
+      "y": 1059
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        18
+      ],
+      "door_type": "WD-1",
+      "fire_rating": null,
+      "frame_type": "HMF-1",
+      "h": 9.50935,
+      "hardware_group": "02",
+      "height_inches": 84,
+      "location": null,
+      "mark": "111",
+      "matched_by": "exact",
+      "material": null,
+      "opening_id": "[{\"address\":\"1500 WASHINGTON ST\",\"asset_number\":\"8136252002\",\"level\":\"1\",\"site_number\":\"6252\"},\"A\"]|111|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1500 WASHINGTON ST",
+        "asset_number": "8136252002",
+        "level": "1",
+        "site_number": "6252"
+      },
+      "opening_scope_id": "[{\"address\":\"1500 WASHINGTON ST\",\"asset_number\":\"8136252002\",\"level\":\"1\",\"site_number\":\"6252\"},\"A\"]",
+      "page": 13,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "109",
+      "room_by": "nearest_label",
+      "room_name": "WOMEN'S LOCKER ROOM",
+      "schedule_rows": [
+        {
+          "door_type": "WD-1",
+          "fire_rating": null,
+          "frame_type": "HMF-1",
+          "hardware_group": "02",
+          "height_inches": 84,
+          "location": null,
+          "mark": "111",
+          "material": null,
+          "page": 18,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 869
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|111|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 593,
+      "y": 1175
+    }
+  ]
+}

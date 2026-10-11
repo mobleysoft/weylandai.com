@@ -1,0 +1,1303 @@
+{
+  "rooms": [
+    {
+      "name": "MAINTENANCE AREA",
+      "number": "114",
+      "page": 5,
+      "points_per_foot": 18,
+      "sheet": "A101",
+      "x": 760,
+      "y": 358
+    },
+    {
+      "name": "ELECTRICAL",
+      "number": "115",
+      "page": 5,
+      "points_per_foot": 18,
+      "sheet": "A101",
+      "x": 653,
+      "y": 397
+    },
+    {
+      "name": "ELECTRICAL",
+      "number": "115",
+      "page": 5,
+      "points_per_foot": 18,
+      "sheet": "A101",
+      "x": 1768,
+      "y": 397
+    },
+    {
+      "name": "SHOWERS",
+      "number": "109",
+      "page": 5,
+      "points_per_foot": 18,
+      "sheet": "A101",
+      "x": 869,
+      "y": 443
+    },
+    {
+      "name": "SHOWERS",
+      "number": "109",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1984,
+      "y": 443
+    },
+    {
+      "name": "MEN'S TOILETS",
+      "number": "101",
+      "page": 5,
+      "points_per_foot": 18,
+      "sheet": "A101",
+      "x": 1729,
+      "y": 595
+    },
+    {
+      "name": "MEN'S TOILETS",
+      "number": "101",
+      "page": 5,
+      "points_per_foot": 18,
+      "sheet": "A101",
+      "x": 591,
+      "y": 622
+    },
+    {
+      "name": "CORRIDOR",
+      "number": "110",
+      "page": 5,
+      "points_per_foot": 36,
+      "sheet": "A101",
+      "x": 752,
+      "y": 679
+    },
+    {
+      "name": "CORRIDOR",
+      "number": "110",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1867,
+      "y": 679
+    },
+    {
+      "name": "JANITOR",
+      "number": "105",
+      "page": 5,
+      "points_per_foot": 36,
+      "sheet": "A101",
+      "x": 843,
+      "y": 694
+    },
+    {
+      "name": "JANITOR",
+      "number": "105",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1953,
+      "y": 694
+    },
+    {
+      "name": "MEN'S RESTROOM",
+      "number": "104",
+      "page": 5,
+      "points_per_foot": 18,
+      "sheet": "A101",
+      "x": 598,
+      "y": 736
+    },
+    {
+      "name": "MEN'S RESTROOM",
+      "number": "104",
+      "page": 5,
+      "points_per_foot": 18,
+      "sheet": "A101",
+      "x": 1729,
+      "y": 739
+    },
+    {
+      "name": "LACTATION ROOM",
+      "number": "106",
+      "page": 5,
+      "points_per_foot": 36,
+      "sheet": "A101",
+      "x": 891,
+      "y": 789
+    },
+    {
+      "name": "LACTATION ROOM",
+      "number": "106",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 2006,
+      "y": 789
+    },
+    {
+      "name": "SHOWERS",
+      "number": "103",
+      "page": 5,
+      "points_per_foot": 18,
+      "sheet": "A101",
+      "x": 394,
+      "y": 820
+    },
+    {
+      "name": "SHOWERS",
+      "number": "103",
+      "page": 5,
+      "points_per_foot": 18,
+      "sheet": "A101",
+      "x": 1509,
+      "y": 820
+    },
+    {
+      "name": "WOMEN'S RESTROOM",
+      "number": "108",
+      "page": 5,
+      "points_per_foot": 18,
+      "sheet": "A101",
+      "x": 1037,
+      "y": 829
+    },
+    {
+      "name": "WOMEN'S RESTROOM",
+      "number": "108",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 2152,
+      "y": 829
+    },
+    {
+      "name": "LOCKER ROOM",
+      "number": "102",
+      "page": 5,
+      "points_per_foot": 18,
+      "sheet": "A101",
+      "x": 1774,
+      "y": 871
+    },
+    {
+      "name": "LOCKER ROOM",
+      "number": "102",
+      "page": 5,
+      "points_per_foot": 18,
+      "sheet": "A101",
+      "x": 659,
+      "y": 876
+    },
+    {
+      "name": "STORAGE",
+      "number": "107",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1987,
+      "y": 879
+    },
+    {
+      "name": "5 5/8\"ELECTRICAL",
+      "number": "113",
+      "page": 5,
+      "points_per_foot": 18,
+      "sheet": "A101",
+      "x": 589,
+      "y": 882
+    },
+    {
+      "name": "STORAGE",
+      "number": "107",
+      "page": 5,
+      "points_per_foot": 36,
+      "sheet": "A101",
+      "x": 872,
+      "y": 887
+    },
+    {
+      "name": "ELECTRICAL",
+      "number": "113",
+      "page": 5,
+      "points_per_foot": 18,
+      "sheet": "A101",
+      "x": 1704,
+      "y": 887
+    },
+    {
+      "name": "CORRIDOR",
+      "number": "111",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 2141,
+      "y": 979
+    },
+    {
+      "name": "CORRIDOR",
+      "number": "112",
+      "page": 5,
+      "points_per_foot": 18,
+      "sheet": "A101",
+      "x": 431,
+      "y": 987
+    },
+    {
+      "name": "CORRIDOR",
+      "number": "112",
+      "page": 5,
+      "points_per_foot": 18,
+      "sheet": "A101",
+      "x": 1546,
+      "y": 987
+    },
+    {
+      "name": "CORRIDOR",
+      "number": "111",
+      "page": 5,
+      "points_per_foot": 36,
+      "sheet": "A101",
+      "x": 1026,
+      "y": 988
+    },
+    {
+      "name": "PROJECT # T2417-01",
+      "number": "6280",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 2458,
+      "y": 1169
+    },
+    {
+      "name": "ELECTRICAL",
+      "number": "115",
+      "page": 7,
+      "points_per_foot": 18,
+      "sheet": "A402",
+      "x": 1693,
+      "y": 1050
+    },
+    {
+      "name": "MAINTENANCE AREA",
+      "number": "114",
+      "page": 7,
+      "points_per_foot": 18,
+      "sheet": "A402",
+      "x": 1791,
+      "y": 1110
+    },
+    {
+      "name": "PROJECT # T2417-01",
+      "number": "6280",
+      "page": 7,
+      "points_per_foot": 18,
+      "sheet": "A402",
+      "x": 2458,
+      "y": 1169
+    },
+    {
+      "name": "MEN'S TOILETS",
+      "number": "101",
+      "page": 7,
+      "points_per_foot": 18,
+      "sheet": "A402",
+      "x": 1569,
+      "y": 1250
+    },
+    {
+      "name": "JANITOR",
+      "number": "105",
+      "page": 7,
+      "points_per_foot": 18,
+      "sheet": "A402",
+      "x": 1890,
+      "y": 1305
+    },
+    {
+      "name": "BH-1",
+      "number": "GB-1",
+      "page": 7,
+      "points_per_foot": 18,
+      "sheet": "A402",
+      "x": 793,
+      "y": 1316
+    },
+    {
+      "name": "CORRIDOR",
+      "number": "110",
+      "page": 7,
+      "points_per_foot": 18,
+      "sheet": "A402",
+      "x": 1791,
+      "y": 1327
+    },
+    {
+      "name": "BH-1 GB-1",
+      "number": "HD-1",
+      "page": 7,
+      "points_per_foot": 18,
+      "sheet": "A402",
+      "x": 793,
+      "y": 1329
+    },
+    {
+      "name": "GB-1 HD-1",
+      "number": "LK-1",
+      "page": 7,
+      "points_per_foot": 18,
+      "sheet": "A402",
+      "x": 792,
+      "y": 1342
+    },
+    {
+      "name": "HD-1 LK-1",
+      "number": "M-1",
+      "page": 7,
+      "points_per_foot": 18,
+      "sheet": "A402",
+      "x": 790,
+      "y": 1355
+    },
+    {
+      "name": "MEN'S RESTROOM",
+      "number": "104",
+      "page": 7,
+      "points_per_foot": 18,
+      "sheet": "A402",
+      "x": 1698,
+      "y": 1366
+    },
+    {
+      "name": "MS-1",
+      "number": "SC-1",
+      "page": 7,
+      "points_per_foot": 18,
+      "sheet": "A402",
+      "x": 793,
+      "y": 1381
+    },
+    {
+      "name": "MS-1 SC-1",
+      "number": "SD-1",
+      "page": 7,
+      "points_per_foot": 18,
+      "sheet": "A402",
+      "x": 793,
+      "y": 1394
+    },
+    {
+      "name": "SC-1 SD-1",
+      "number": "SH-1",
+      "page": 7,
+      "points_per_foot": 18,
+      "sheet": "A402",
+      "x": 793,
+      "y": 1407
+    },
+    {
+      "name": "LACTATION ROOM",
+      "number": "106",
+      "page": 7,
+      "points_per_foot": 18,
+      "sheet": "A402",
+      "x": 1930,
+      "y": 1412
+    },
+    {
+      "name": "WOMEN'S RESTROOM",
+      "number": "108",
+      "page": 7,
+      "points_per_foot": 18,
+      "sheet": "A402",
+      "x": 2062,
+      "y": 1423
+    },
+    {
+      "name": "SHS-1 SND-1",
+      "number": "TP-1",
+      "page": 7,
+      "points_per_foot": 18,
+      "sheet": "A402",
+      "x": 793,
+      "y": 1446
+    },
+    {
+      "name": "SHOWERS",
+      "number": "103",
+      "page": 7,
+      "points_per_foot": 18,
+      "sheet": "A402",
+      "x": 1524,
+      "y": 1463
+    },
+    {
+      "name": "TP-1 TTH-1",
+      "number": "UP-1",
+      "page": 7,
+      "points_per_foot": 18,
+      "sheet": "A402",
+      "x": 793,
+      "y": 1471
+    },
+    {
+      "name": "SD-1",
+      "number": "M-1",
+      "page": 7,
+      "points_per_foot": 18,
+      "sheet": "A402",
+      "x": 2113,
+      "y": 1476
+    },
+    {
+      "name": "LK-1 LOCKER ROOM",
+      "number": "102",
+      "page": 7,
+      "points_per_foot": 18,
+      "sheet": "A402",
+      "x": 1704,
+      "y": 1484
+    },
+    {
+      "name": "ELECTRICAL",
+      "number": "113",
+      "page": 7,
+      "points_per_foot": 18,
+      "sheet": "A402",
+      "x": 1622,
+      "y": 1509
+    },
+    {
+      "name": "STORAGE",
+      "number": "107",
+      "page": 7,
+      "points_per_foot": 18,
+      "sheet": "A402",
+      "x": 1958,
+      "y": 1524
+    },
+    {
+      "name": "CORRIDOR",
+      "number": "112",
+      "page": 7,
+      "points_per_foot": 18,
+      "sheet": "A402",
+      "x": 1470,
+      "y": 1610
+    },
+    {
+      "name": "CORRIDOR",
+      "number": "111",
+      "page": 7,
+      "points_per_foot": 18,
+      "sheet": "A402",
+      "x": 2058,
+      "y": 1610
+    }
+  ],
+  "set": {
+    "label": null,
+    "page_count": 31,
+    "rows_total": 18,
+    "sha16": "d57ee1e27df9e299",
+    "source_url": null,
+    "tier": "oracle-checked"
+  },
+  "sheets": [
+    {
+      "height": 1728,
+      "page": 5,
+      "plan_rule": "legacy",
+      "points_per_foot": [
+        3.6,
+        18,
+        36
+      ],
+      "scales": [
+        "1/4\" = 1'-0\"",
+        "1/4\" = 1'-0\"",
+        "1/2\" = 1'-0\"",
+        "1/2\" = 1'-0\"",
+        "1\" = 20'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 8
+          }
+        ],
+        "kept_pages": [
+          8
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A101",
+      "title": "FLOOR PLANS",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 7,
+      "plan_rule": "legacy",
+      "points_per_foot": [
+        18,
+        216
+      ],
+      "scales": [
+        "1/4\" = 1'-0\"",
+        "1/4\" = 1'-0\"",
+        "1/4\" = 1'-0\"",
+        "1/4\" = 1'-0\"",
+        "1/4\" = 1'-0\"",
+        "1/4\" = 1'-0\"",
+        "1/4\" = 1'-0\"",
+        "1/4\" = 1'-0\"",
+        "1/4\" = 1'-0\"",
+        "1/4\" = 1'-0\"",
+        "1/4\" = 1'-0\"",
+        "1/4\" = 1'-0\"",
+        "1/4\" = 1'-0\"",
+        "1/4\" = 1'-0\"",
+        "3\" = 1'-0\"",
+        "3\" = 1'-0\"",
+        "1/4\" = 1'-0\"",
+        "1/4\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 8
+          }
+        ],
+        "kept_pages": [
+          8
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A402",
+      "title": "ELEVATIONS & ACCESSORY PLAN",
+      "width": 2592
+    }
+  ],
+  "summary": {
+    "marks_placed": 10,
+    "marks_total": 18,
+    "placed_rate": 0.5555555555555556,
+    "rooms_total": 55,
+    "sheets_total": 2,
+    "sheets_with_scale": 2,
+    "unplaced": [
+      {
+        "mark": "ACT-1",
+        "page": 8,
+        "reason": "mark ACT-1 (schedule p.8) not tagged on any plan"
+      },
+      {
+        "mark": "PT-2",
+        "page": 8,
+        "reason": "mark PT-2 (schedule p.8) not tagged on any plan"
+      },
+      {
+        "mark": "PT-3",
+        "page": 8,
+        "reason": "mark PT-3 (schedule p.8) not tagged on any plan"
+      },
+      {
+        "mark": "PT-4",
+        "page": 8,
+        "reason": "mark PT-4 (schedule p.8) not tagged on any plan"
+      },
+      {
+        "mark": "RB-1",
+        "page": 8,
+        "reason": "mark RB-1 (schedule p.8) not tagged on any plan"
+      },
+      {
+        "mark": "RFT-1",
+        "page": 8,
+        "reason": "mark RFT-1 (schedule p.8) not tagged on any plan"
+      },
+      {
+        "mark": "UP-1",
+        "page": 8,
+        "reason": "mark UP-1 (schedule p.8) not tagged on any plan"
+      },
+      {
+        "mark": "VCT-1",
+        "page": 8,
+        "reason": "mark VCT-1 (schedule p.8) not tagged on any plan"
+      }
+    ]
+  },
+  "tags": [
+    {
+      "also_on": [
+        "A402"
+      ],
+      "door_pages": [
+        8
+      ],
+      "door_type": "F",
+      "fire_rating": "J1",
+      "frame_type": "1",
+      "h": 9.600476159807998,
+      "hardware_group": "3",
+      "height_inches": 80,
+      "location": null,
+      "mark": "110",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"asset_number\":\"81362800001\",\"facility_name\":\"LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS\",\"site_number\":\"6280\"},\"A\"]|110|8|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "81362800001",
+        "facility_name": "LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS",
+        "site_number": "6280"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"81362800001\",\"facility_name\":\"LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS\",\"site_number\":\"6280\"},\"A\"]",
+      "page": 5,
+      "pair": false,
+      "points_per_foot": 3.6,
+      "room": "110",
+      "room_by": "nearest_label",
+      "room_name": "CORRIDOR",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": "J1",
+          "frame_type": "1",
+          "hardware_group": "3",
+          "height_inches": 80,
+          "location": null,
+          "mark": "110",
+          "material": "HM",
+          "page": 8,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 861
+        }
+      ],
+      "sheet": "A101",
+      "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "8|110|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1880,
+      "y": 608
+    },
+    {
+      "also_on": [
+        "A402"
+      ],
+      "door_pages": [
+        8
+      ],
+      "door_type": "F",
+      "fire_rating": "J1",
+      "frame_type": "1",
+      "h": 9.600476159807998,
+      "hardware_group": "1",
+      "height_inches": 80,
+      "location": null,
+      "mark": "105",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"asset_number\":\"81362800001\",\"facility_name\":\"LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS\",\"site_number\":\"6280\"},\"A\"]|105|8|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "81362800001",
+        "facility_name": "LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS",
+        "site_number": "6280"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"81362800001\",\"facility_name\":\"LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS\",\"site_number\":\"6280\"},\"A\"]",
+      "page": 5,
+      "pair": false,
+      "points_per_foot": 3.6,
+      "room": "105",
+      "room_by": "nearest_label",
+      "room_name": "JANITOR",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": "J1",
+          "frame_type": "1",
+          "hardware_group": "1",
+          "height_inches": 80,
+          "location": null,
+          "mark": "105",
+          "material": "HM",
+          "page": 8,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 811
+        }
+      ],
+      "sheet": "A101",
+      "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "8|105|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1922,
+      "y": 692
+    },
+    {
+      "also_on": [
+        "A402"
+      ],
+      "door_pages": [
+        8
+      ],
+      "door_type": "F",
+      "fire_rating": "J1",
+      "frame_type": "1",
+      "h": 9.600476159807998,
+      "hardware_group": "2",
+      "height_inches": 80,
+      "location": null,
+      "mark": "104",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"asset_number\":\"81362800001\",\"facility_name\":\"LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS\",\"site_number\":\"6280\"},\"A\"]|104|8|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "81362800001",
+        "facility_name": "LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS",
+        "site_number": "6280"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"81362800001\",\"facility_name\":\"LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS\",\"site_number\":\"6280\"},\"A\"]",
+      "page": 5,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "104",
+      "room_by": "nearest_label",
+      "room_name": "MEN'S RESTROOM",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": "J1",
+          "frame_type": "1",
+          "hardware_group": "2",
+          "height_inches": 80,
+          "location": null,
+          "mark": "104",
+          "material": "HM",
+          "page": 8,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 797
+        }
+      ],
+      "sheet": "A101",
+      "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "8|104|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1809,
+      "y": 760
+    },
+    {
+      "also_on": [
+        "A402"
+      ],
+      "door_pages": [
+        8
+      ],
+      "door_type": "F",
+      "fire_rating": "J1",
+      "frame_type": "1",
+      "h": 9.600476159807998,
+      "hardware_group": "3",
+      "height_inches": 80,
+      "location": null,
+      "mark": "106",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"asset_number\":\"81362800001\",\"facility_name\":\"LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS\",\"site_number\":\"6280\"},\"A\"]|106|8|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "81362800001",
+        "facility_name": "LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS",
+        "site_number": "6280"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"81362800001\",\"facility_name\":\"LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS\",\"site_number\":\"6280\"},\"A\"]",
+      "page": 5,
+      "pair": false,
+      "points_per_foot": 3.6,
+      "room": "108",
+      "room_by": "nearest_label",
+      "room_name": "WOMEN'S RESTROOM",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": "J1",
+          "frame_type": "1",
+          "hardware_group": "3",
+          "height_inches": 80,
+          "location": null,
+          "mark": "106",
+          "material": "HM",
+          "page": 8,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 821
+        }
+      ],
+      "sheet": "A101",
+      "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "8|106|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 2101,
+      "y": 760
+    },
+    {
+      "also_on": [
+        "A402"
+      ],
+      "door_pages": [
+        8
+      ],
+      "door_type": "F",
+      "fire_rating": "J1",
+      "frame_type": "1",
+      "h": 9.600476159807998,
+      "hardware_group": "1",
+      "height_inches": 80,
+      "location": null,
+      "mark": "107",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"asset_number\":\"81362800001\",\"facility_name\":\"LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS\",\"site_number\":\"6280\"},\"A\"]|107|8|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "81362800001",
+        "facility_name": "LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS",
+        "site_number": "6280"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"81362800001\",\"facility_name\":\"LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS\",\"site_number\":\"6280\"},\"A\"]",
+      "page": 5,
+      "pair": false,
+      "points_per_foot": 3.6,
+      "room": "107",
+      "room_by": "nearest_label",
+      "room_name": "STORAGE",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": "J1",
+          "frame_type": "1",
+          "hardware_group": "1",
+          "height_inches": 80,
+          "location": null,
+          "mark": "107",
+          "material": "HM",
+          "page": 8,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 833
+        }
+      ],
+      "sheet": "A101",
+      "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "8|107|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1988,
+      "y": 905
+    },
+    {
+      "also_on": [
+        "A402"
+      ],
+      "door_pages": [
+        8
+      ],
+      "door_type": "F",
+      "fire_rating": "J1",
+      "frame_type": "1",
+      "h": 9.600476159807998,
+      "hardware_group": "2",
+      "height_inches": 80,
+      "location": null,
+      "mark": "108",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"asset_number\":\"81362800001\",\"facility_name\":\"LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS\",\"site_number\":\"6280\"},\"A\"]|108|8|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "81362800001",
+        "facility_name": "LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS",
+        "site_number": "6280"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"81362800001\",\"facility_name\":\"LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS\",\"site_number\":\"6280\"},\"A\"]",
+      "page": 5,
+      "pair": false,
+      "points_per_foot": 3.6,
+      "room": "111",
+      "room_by": "nearest_label",
+      "room_name": "CORRIDOR",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": "J1",
+          "frame_type": "1",
+          "hardware_group": "2",
+          "height_inches": 80,
+          "location": null,
+          "mark": "108",
+          "material": "HM",
+          "page": 8,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 851
+        }
+      ],
+      "sheet": "A101",
+      "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "8|108|1"
+      ],
+      "unsure": true,
+      "width_inches": 36,
+      "x": 2140,
+      "y": 905
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        8
+      ],
+      "door_type": "FLOORING FLOORING FLOORING MISC. MISC. PAINT",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.600476159807998,
+      "hardware_group": null,
+      "height_inches": null,
+      "location": null,
+      "mark": "SC-1",
+      "mark_ranges": [],
+      "mark_text": "RFT-1 SC-1 VCT-1 TP-1 UP-1 PT-1",
+      "marks": [
+        "RFT-1",
+        "SC-1",
+        "VCT-1",
+        "TP-1",
+        "UP-1",
+        "PT-1"
+      ],
+      "matched_by": "exact",
+      "material": "RESINOUS FLOORING SEALED CONCRETE VINYL FLOORING TOILET PARTITION URINAL PARTITION PAINT",
+      "opening_id": "[{\"asset_number\":\"81362800001\",\"facility_name\":\"LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS\",\"site_number\":\"6280\"},\"A\"]|SC-1|8|1",
+      "opening_index": 2,
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "81362800001",
+        "facility_name": "LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS",
+        "site_number": "6280"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"81362800001\",\"facility_name\":\"LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS\",\"site_number\":\"6280\"},\"A\"]",
+      "page": 7,
+      "pair": false,
+      "points_per_foot": 18,
+      "quantity": 1,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "FLOORING FLOORING FLOORING MISC. MISC. PAINT",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": null,
+          "height_inches": null,
+          "location": null,
+          "mark": "SC-1",
+          "mark_ranges": [],
+          "mark_text": "RFT-1 SC-1 VCT-1 TP-1 UP-1 PT-1",
+          "marks": [
+            "RFT-1",
+            "SC-1",
+            "VCT-1",
+            "TP-1",
+            "UP-1",
+            "PT-1"
+          ],
+          "material": "RESINOUS FLOORING SEALED CONCRETE VINYL FLOORING TOILET PARTITION URINAL PARTITION PAINT",
+          "opening_index": 2,
+          "page": 8,
+          "pair": false,
+          "quantity": 1,
+          "shared_row": true,
+          "size": "12\" x 12\"",
+          "source_quantity": 6,
+          "source_row": 1,
+          "width_inches": 12,
+          "y": 512
+        }
+      ],
+      "shared_row": true,
+      "sheet": "A402",
+      "size": "12\" x 12\"",
+      "source_keys": [
+        "8|SC-1|1"
+      ],
+      "source_quantity": 6,
+      "source_row": 1,
+      "width_inches": 12,
+      "x": 1326,
+      "y": 114
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        8
+      ],
+      "door_type": "FLOORING FLOORING FLOORING MISC. MISC. PAINT",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.600476159807998,
+      "hardware_group": null,
+      "height_inches": null,
+      "location": null,
+      "mark": "PT-1",
+      "mark_ranges": [],
+      "mark_text": "RFT-1 SC-1 VCT-1 TP-1 UP-1 PT-1",
+      "marks": [
+        "RFT-1",
+        "SC-1",
+        "VCT-1",
+        "TP-1",
+        "UP-1",
+        "PT-1"
+      ],
+      "matched_by": "exact",
+      "material": "RESINOUS FLOORING SEALED CONCRETE VINYL FLOORING TOILET PARTITION URINAL PARTITION PAINT",
+      "opening_id": "[{\"asset_number\":\"81362800001\",\"facility_name\":\"LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS\",\"site_number\":\"6280\"},\"A\"]|PT-1|8|1",
+      "opening_index": 6,
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "81362800001",
+        "facility_name": "LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS",
+        "site_number": "6280"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"81362800001\",\"facility_name\":\"LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS\",\"site_number\":\"6280\"},\"A\"]",
+      "page": 7,
+      "pair": false,
+      "points_per_foot": 18,
+      "quantity": 1,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "FLOORING FLOORING FLOORING MISC. MISC. PAINT",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": null,
+          "height_inches": null,
+          "location": null,
+          "mark": "PT-1",
+          "mark_ranges": [],
+          "mark_text": "RFT-1 SC-1 VCT-1 TP-1 UP-1 PT-1",
+          "marks": [
+            "RFT-1",
+            "SC-1",
+            "VCT-1",
+            "TP-1",
+            "UP-1",
+            "PT-1"
+          ],
+          "material": "RESINOUS FLOORING SEALED CONCRETE VINYL FLOORING TOILET PARTITION URINAL PARTITION PAINT",
+          "opening_index": 6,
+          "page": 8,
+          "pair": false,
+          "quantity": 1,
+          "shared_row": true,
+          "size": "12\" x 12\"",
+          "source_quantity": 6,
+          "source_row": 1,
+          "width_inches": 12,
+          "y": 512
+        }
+      ],
+      "shared_row": true,
+      "sheet": "A402",
+      "size": "12\" x 12\"",
+      "source_keys": [
+        "8|PT-1|1"
+      ],
+      "source_quantity": 6,
+      "source_row": 1,
+      "width_inches": 12,
+      "x": 1058,
+      "y": 176
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        8
+      ],
+      "door_type": "FLOORING FLOORING FLOORING MISC. MISC. PAINT",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.600476159807998,
+      "hardware_group": null,
+      "height_inches": null,
+      "location": null,
+      "mark": "TP-1",
+      "mark_ranges": [],
+      "mark_text": "RFT-1 SC-1 VCT-1 TP-1 UP-1 PT-1",
+      "marks": [
+        "RFT-1",
+        "SC-1",
+        "VCT-1",
+        "TP-1",
+        "UP-1",
+        "PT-1"
+      ],
+      "matched_by": "exact",
+      "material": "RESINOUS FLOORING SEALED CONCRETE VINYL FLOORING TOILET PARTITION URINAL PARTITION PAINT",
+      "opening_id": "[{\"asset_number\":\"81362800001\",\"facility_name\":\"LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS\",\"site_number\":\"6280\"},\"A\"]|TP-1|8|1",
+      "opening_index": 4,
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "81362800001",
+        "facility_name": "LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS",
+        "site_number": "6280"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"81362800001\",\"facility_name\":\"LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS\",\"site_number\":\"6280\"},\"A\"]",
+      "page": 7,
+      "pair": false,
+      "points_per_foot": 18,
+      "quantity": 1,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "FLOORING FLOORING FLOORING MISC. MISC. PAINT",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": null,
+          "height_inches": null,
+          "location": null,
+          "mark": "TP-1",
+          "mark_ranges": [],
+          "mark_text": "RFT-1 SC-1 VCT-1 TP-1 UP-1 PT-1",
+          "marks": [
+            "RFT-1",
+            "SC-1",
+            "VCT-1",
+            "TP-1",
+            "UP-1",
+            "PT-1"
+          ],
+          "material": "RESINOUS FLOORING SEALED CONCRETE VINYL FLOORING TOILET PARTITION URINAL PARTITION PAINT",
+          "opening_index": 4,
+          "page": 8,
+          "pair": false,
+          "quantity": 1,
+          "shared_row": true,
+          "size": "12\" x 12\"",
+          "source_quantity": 6,
+          "source_row": 1,
+          "width_inches": 12,
+          "y": 512
+        }
+      ],
+      "shared_row": true,
+      "sheet": "A402",
+      "size": "12\" x 12\"",
+      "source_keys": [
+        "8|TP-1|1"
+      ],
+      "source_quantity": 6,
+      "source_row": 1,
+      "width_inches": 12,
+      "x": 759,
+      "y": 197
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        8
+      ],
+      "door_type": "WALL TRIM",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.600476159807998,
+      "hardware_group": null,
+      "height_inches": null,
+      "location": null,
+      "mark": "RFB-1",
+      "matched_by": "exact",
+      "material": "RESINOUS BASE",
+      "opening_id": "[{\"asset_number\":\"81362800001\",\"facility_name\":\"LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS\",\"site_number\":\"6280\"},\"A\"]|RFB-1|8|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "81362800001",
+        "facility_name": "LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS",
+        "site_number": "6280"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"81362800001\",\"facility_name\":\"LATRINES & SHOWER RENOVATIONS, BUILDING 233 ST. LOUIS LAMBERT READINESS CENTER; SHOWER RENOVATIONS\",\"site_number\":\"6280\"},\"A\"]",
+      "page": 7,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "WALL TRIM",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": null,
+          "height_inches": null,
+          "location": null,
+          "mark": "RFB-1",
+          "material": "RESINOUS BASE",
+          "page": 8,
+          "pair": false,
+          "size": null,
+          "width_inches": null,
+          "y": 677
+        }
+      ],
+      "sheet": "A402",
+      "size": null,
+      "source_keys": [
+        "8|RFB-1|1"
+      ],
+      "width_inches": null,
+      "x": 1061,
+      "y": 260
+    }
+  ]
+}

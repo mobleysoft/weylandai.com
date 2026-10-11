@@ -1,0 +1,4708 @@
+{
+  "rooms": [
+    {
+      "name": "RM",
+      "number": "C210",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 1039,
+      "y": 125
+    },
+    {
+      "name": "RM",
+      "number": "C209",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 1099,
+      "y": 125
+    },
+    {
+      "name": "RM",
+      "number": "C211",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 994,
+      "y": 188
+    },
+    {
+      "name": "RM",
+      "number": "C208",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 1158,
+      "y": 188
+    },
+    {
+      "name": "RM",
+      "number": "C212",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 953,
+      "y": 258
+    },
+    {
+      "name": "RM",
+      "number": "C207",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 1242,
+      "y": 278
+    },
+    {
+      "name": "RM",
+      "number": "C206",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 1310,
+      "y": 340
+    },
+    {
+      "name": "RM",
+      "number": "C205",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 1310,
+      "y": 400
+    },
+    {
+      "name": "RM",
+      "number": "C204",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 1250,
+      "y": 448
+    },
+    {
+      "name": "RM",
+      "number": "C203",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 974,
+      "y": 494
+    },
+    {
+      "name": "RM",
+      "number": "C202",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 917,
+      "y": 560
+    },
+    {
+      "name": "RM",
+      "number": "C218",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 1500,
+      "y": 587
+    },
+    {
+      "name": "RM",
+      "number": "C219",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 1556,
+      "y": 587
+    },
+    {
+      "name": "RM",
+      "number": "C201",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 917,
+      "y": 616
+    },
+    {
+      "name": "RM",
+      "number": "C109",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 324,
+      "y": 634
+    },
+    {
+      "name": "RM",
+      "number": "C108",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 408,
+      "y": 634
+    },
+    {
+      "name": "RM",
+      "number": "C107",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 540,
+      "y": 634
+    },
+    {
+      "name": "RM",
+      "number": "C106",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 636,
+      "y": 634
+    },
+    {
+      "name": "RM",
+      "number": "C217",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 1440,
+      "y": 642
+    },
+    {
+      "name": "RM",
+      "number": "C220",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 1618,
+      "y": 642
+    },
+    {
+      "name": "RM",
+      "number": "C110",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 288,
+      "y": 659
+    },
+    {
+      "name": "RM",
+      "number": "C105",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 672,
+      "y": 672
+    },
+    {
+      "name": "RM",
+      "number": "C200",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 989,
+      "y": 672
+    },
+    {
+      "name": "RM",
+      "number": "C221",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 1703,
+      "y": 734
+    },
+    {
+      "name": "RM",
+      "number": "C104",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 671,
+      "y": 756
+    },
+    {
+      "name": "RM",
+      "number": "C111",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 288,
+      "y": 757
+    },
+    {
+      "name": "STORAGE",
+      "number": "C256",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 1287,
+      "y": 791
+    },
+    {
+      "name": "RM",
+      "number": "C222",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 1770,
+      "y": 797
+    },
+    {
+      "name": "LAUNDRY",
+      "number": "C252",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 1025,
+      "y": 801
+    },
+    {
+      "name": "STORAGE",
+      "number": "C257",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 1283,
+      "y": 830
+    },
+    {
+      "name": "CLEAN UTILITY",
+      "number": "C255",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 1174,
+      "y": 833
+    },
+    {
+      "name": "RM",
+      "number": "C112",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 314,
+      "y": 836
+    },
+    {
+      "name": "EXAM RM",
+      "number": "C254",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 983,
+      "y": 840
+    },
+    {
+      "name": "RM",
+      "number": "C223",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 1770,
+      "y": 847
+    },
+    {
+      "name": "RM",
+      "number": "C249",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 1095,
+      "y": 874
+    },
+    {
+      "name": "RM",
+      "number": "C213",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 1224,
+      "y": 912
+    },
+    {
+      "name": "RM",
+      "number": "C224",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 1703,
+      "y": 912
+    },
+    {
+      "name": "LIBRARY /GAME RM",
+      "number": "C250",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 1063,
+      "y": 917
+    },
+    {
+      "name": "HSKP STORAGE",
+      "number": "C245",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 760,
+      "y": 922
+    },
+    {
+      "name": "RM",
+      "number": "C216",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 1393,
+      "y": 924
+    },
+    {
+      "name": "RM",
+      "number": "C225",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 1639,
+      "y": 944
+    },
+    {
+      "name": "HOSPITALITY RM",
+      "number": "C251",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 1023,
+      "y": 950
+    },
+    {
+      "name": "MEDICATION",
+      "number": "C244",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 753,
+      "y": 964
+    },
+    {
+      "name": "RM",
+      "number": "C103",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 504,
+      "y": 982
+    },
+    {
+      "name": "RM",
+      "number": "C214",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 1287,
+      "y": 983
+    },
+    {
+      "name": "RM",
+      "number": "C215",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 1344,
+      "y": 988
+    },
+    {
+      "name": "TUB RM",
+      "number": "C247",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 963,
+      "y": 1008
+    },
+    {
+      "name": "NAME",
+      "number": "100",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 1961,
+      "y": 1015
+    },
+    {
+      "name": "TOILET",
+      "number": "C248",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 1050,
+      "y": 1026
+    },
+    {
+      "name": "NURSE STATION",
+      "number": "C243",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 803,
+      "y": 1030
+    },
+    {
+      "name": "RM",
+      "number": "C102",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 495,
+      "y": 1068
+    },
+    {
+      "name": "STORAGE",
+      "number": "C237",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 668,
+      "y": 1068
+    },
+    {
+      "name": "RISER ROOM",
+      "number": "C235",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 729,
+      "y": 1068
+    },
+    {
+      "name": "TUB RM",
+      "number": "C246",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 1000,
+      "y": 1080
+    },
+    {
+      "name": "RM",
+      "number": "C101",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 540,
+      "y": 1105
+    },
+    {
+      "name": "RM",
+      "number": "C100",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 624,
+      "y": 1105
+    },
+    {
+      "name": "OFFICE",
+      "number": "C236",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 697,
+      "y": 1107
+    },
+    {
+      "name": "EQUIPMENT STORAGE",
+      "number": "C240",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 869,
+      "y": 1147
+    },
+    {
+      "name": "O2 STORAGE",
+      "number": "C239",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 781,
+      "y": 1163
+    },
+    {
+      "name": "CLEAN UTILITY",
+      "number": "C241",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 974,
+      "y": 1177
+    },
+    {
+      "name": "STORAGE",
+      "number": "C242",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 807,
+      "y": 1210
+    },
+    {
+      "name": "RM",
+      "number": "C118",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 1221,
+      "y": 1220
+    },
+    {
+      "name": "RM",
+      "number": "C117",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 1141,
+      "y": 1230
+    },
+    {
+      "name": "TELECOM",
+      "number": "C238",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 739,
+      "y": 1239
+    },
+    {
+      "name": "RM",
+      "number": "C113",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 778,
+      "y": 1268
+    },
+    {
+      "name": "RM",
+      "number": "C119",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 1266,
+      "y": 1268
+    },
+    {
+      "name": "RM",
+      "number": "C114",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 791,
+      "y": 1353
+    },
+    {
+      "name": "RM",
+      "number": "C120",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 1258,
+      "y": 1353
+    },
+    {
+      "name": "RM",
+      "number": "C116",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 918,
+      "y": 1392
+    },
+    {
+      "name": "RM",
+      "number": "C115",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 827,
+      "y": 1400
+    },
+    {
+      "name": "RM",
+      "number": "C121",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 1266,
+      "y": 1487
+    },
+    {
+      "name": "RM",
+      "number": "C122",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 1266,
+      "y": 1569
+    },
+    {
+      "name": "RM",
+      "number": "C125",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 1058,
+      "y": 1580
+    },
+    {
+      "name": "RM",
+      "number": "C124",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 1141,
+      "y": 1607
+    },
+    {
+      "name": "RM",
+      "number": "C123",
+      "page": 10,
+      "points_per_foot": 4.5,
+      "sheet": "A101",
+      "x": 1221,
+      "y": 1607
+    },
+    {
+      "name": "RM",
+      "number": "C210",
+      "page": 11,
+      "points_per_foot": 9,
+      "sheet": "A102",
+      "x": 1244,
+      "y": 138
+    },
+    {
+      "name": "RM",
+      "number": "C209",
+      "page": 11,
+      "points_per_foot": 9,
+      "sheet": "A102",
+      "x": 1370,
+      "y": 138
+    },
+    {
+      "name": "RM",
+      "number": "C211",
+      "page": 11,
+      "points_per_foot": 9,
+      "sheet": "A102",
+      "x": 1127,
+      "y": 268
+    },
+    {
+      "name": "RM",
+      "number": "C208",
+      "page": 11,
+      "points_per_foot": 9,
+      "sheet": "A102",
+      "x": 1468,
+      "y": 268
+    },
+    {
+      "name": "RM",
+      "number": "C212",
+      "page": 11,
+      "points_per_foot": 9,
+      "sheet": "A102",
+      "x": 1073,
+      "y": 412
+    },
+    {
+      "name": "RM",
+      "number": "C207",
+      "page": 11,
+      "points_per_foot": 9,
+      "sheet": "A102",
+      "x": 1650,
+      "y": 451
+    },
+    {
+      "name": "SOILED HOLDING",
+      "number": "C231",
+      "page": 11,
+      "points_per_foot": 9,
+      "sheet": "A102",
+      "x": 1479,
+      "y": 516
+    },
+    {
+      "name": "CLEAN LINEN",
+      "number": "C232",
+      "page": 11,
+      "points_per_foot": 9,
+      "sheet": "A102",
+      "x": 1478,
+      "y": 552
+    },
+    {
+      "name": "RM",
+      "number": "C206",
+      "page": 11,
+      "points_per_foot": 9,
+      "sheet": "A102",
+      "x": 1796,
+      "y": 582
+    },
+    {
+      "name": "LIFT ALCOVE",
+      "number": "C266",
+      "page": 11,
+      "points_per_foot": 9,
+      "sheet": "A102",
+      "x": 1583,
+      "y": 617
+    },
+    {
+      "name": "KEYNOTES",
+      "number": "100",
+      "page": 11,
+      "points_per_foot": 9,
+      "sheet": "A102",
+      "x": 1946,
+      "y": 664
+    },
+    {
+      "name": "RM",
+      "number": "C205",
+      "page": 11,
+      "points_per_foot": 9,
+      "sheet": "A102",
+      "x": 1783,
+      "y": 693
+    },
+    {
+      "name": "NURSING SUPPLY",
+      "number": "C227",
+      "page": 11,
+      "points_per_foot": 9,
+      "sheet": "A102",
+      "x": 1467,
+      "y": 708
+    },
+    {
+      "name": "PURCHASING SUPPLY",
+      "number": "C226",
+      "page": 11,
+      "points_per_foot": 9,
+      "sheet": "A102",
+      "x": 1465,
+      "y": 765
+    },
+    {
+      "name": "RM",
+      "number": "C204",
+      "page": 11,
+      "points_per_foot": 9,
+      "sheet": "A102",
+      "x": 1666,
+      "y": 792
+    },
+    {
+      "name": "RM",
+      "number": "C203",
+      "page": 11,
+      "points_per_foot": 9,
+      "sheet": "A102",
+      "x": 1112,
+      "y": 881
+    },
+    {
+      "name": "PANTRY",
+      "number": "C284",
+      "page": 11,
+      "points_per_foot": 9,
+      "sheet": "A102",
+      "x": 1564,
+      "y": 913
+    },
+    {
+      "name": "RM",
+      "number": "C202",
+      "page": 11,
+      "points_per_foot": 9,
+      "sheet": "A102",
+      "x": 994,
+      "y": 999
+    },
+    {
+      "name": "NAME",
+      "number": "100",
+      "page": 11,
+      "points_per_foot": 9,
+      "sheet": "A102",
+      "x": 1960,
+      "y": 1012
+    },
+    {
+      "name": "RM",
+      "number": "C201",
+      "page": 11,
+      "points_per_foot": 9,
+      "sheet": "A102",
+      "x": 1000,
+      "y": 1116
+    },
+    {
+      "name": "EQUIPMENT STORAGE",
+      "number": "C233",
+      "page": 11,
+      "points_per_foot": 9,
+      "sheet": "A102",
+      "x": 1212,
+      "y": 1144
+    },
+    {
+      "name": "PROJECT # 162_26 MO01 FAI 29-042",
+      "number": "7356",
+      "page": 11,
+      "points_per_foot": 9,
+      "sheet": "A102",
+      "x": 2459,
+      "y": 1203
+    },
+    {
+      "name": "STORAGE",
+      "number": "C267",
+      "page": 11,
+      "points_per_foot": 9,
+      "sheet": "A102",
+      "x": 1307,
+      "y": 1207
+    },
+    {
+      "name": "RM",
+      "number": "C200",
+      "page": 11,
+      "points_per_foot": 9,
+      "sheet": "A102",
+      "x": 1150,
+      "y": 1241
+    },
+    {
+      "name": "SOCIAL WORK OFFICE",
+      "number": "C253",
+      "page": 11,
+      "points_per_foot": 9,
+      "sheet": "A102",
+      "x": 1273,
+      "y": 1451
+    },
+    {
+      "name": "LAUNDRY",
+      "number": "C252",
+      "page": 11,
+      "points_per_foot": 9,
+      "sheet": "A102",
+      "x": 1213,
+      "y": 1500
+    },
+    {
+      "name": "STORAGE",
+      "number": "C256",
+      "page": 11,
+      "points_per_foot": 9,
+      "sheet": "A102",
+      "x": 1589,
+      "y": 1538
+    },
+    {
+      "name": "CLEAN UTILITY",
+      "number": "C255",
+      "page": 11,
+      "points_per_foot": 9,
+      "sheet": "A102",
+      "x": 1514,
+      "y": 1553
+    },
+    {
+      "name": "STORAGE",
+      "number": "C257",
+      "page": 11,
+      "points_per_foot": 9,
+      "sheet": "A102",
+      "x": 1644,
+      "y": 1553
+    },
+    {
+      "name": "EXAM RM",
+      "number": "C254",
+      "page": 11,
+      "points_per_foot": 9,
+      "sheet": "A102",
+      "x": 1128,
+      "y": 1571
+    },
+    {
+      "name": "KEYNOTES",
+      "number": "100",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A103",
+      "x": 1941,
+      "y": 658
+    },
+    {
+      "name": "RM",
+      "number": "C218",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A103",
+      "x": 1163,
+      "y": 684
+    },
+    {
+      "name": "RM",
+      "number": "C219",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A103",
+      "x": 1275,
+      "y": 684
+    },
+    {
+      "name": "RM",
+      "number": "C217",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A103",
+      "x": 1046,
+      "y": 796
+    },
+    {
+      "name": "RM",
+      "number": "C220",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A103",
+      "x": 1397,
+      "y": 796
+    },
+    {
+      "name": "LIFT ALCOVE",
+      "number": "C261",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A103",
+      "x": 1155,
+      "y": 886
+    },
+    {
+      "name": "LIFT ALCOVE",
+      "number": "C262",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A103",
+      "x": 1280,
+      "y": 886
+    },
+    {
+      "name": "PURCHASING SUPPLY",
+      "number": "C259",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A103",
+      "x": 1037,
+      "y": 904
+    },
+    {
+      "name": "PANTRY",
+      "number": "C258",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A103",
+      "x": 860,
+      "y": 954
+    },
+    {
+      "name": "NURSING SUPPLY",
+      "number": "C260",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A103",
+      "x": 1151,
+      "y": 971
+    },
+    {
+      "name": "CLEAN LINEN SOILED HOLDING",
+      "number": "C264",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A103",
+      "x": 1281,
+      "y": 976
+    },
+    {
+      "name": "CLEAN LINEN SOILED HOLDING",
+      "number": "C265",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A103",
+      "x": 1349,
+      "y": 976
+    },
+    {
+      "name": "RM",
+      "number": "C221",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A103",
+      "x": 1580,
+      "y": 989
+    },
+    {
+      "name": "NAME",
+      "number": "100",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A103",
+      "x": 1961,
+      "y": 1003
+    },
+    {
+      "name": "SOCIAL WORK OFFICE",
+      "number": "C253",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A103",
+      "x": 272,
+      "y": 1065
+    },
+    {
+      "name": "RM",
+      "number": "C222",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A103",
+      "x": 1700,
+      "y": 1093
+    },
+    {
+      "name": "LAUNDRY",
+      "number": "C252",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A103",
+      "x": 220,
+      "y": 1129
+    },
+    {
+      "name": "STORAGE",
+      "number": "C256",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A103",
+      "x": 585,
+      "y": 1158
+    },
+    {
+      "name": "STORAGE",
+      "number": "C257",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A103",
+      "x": 643,
+      "y": 1167
+    },
+    {
+      "name": "CLEAN UTILITY",
+      "number": "C255",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A103",
+      "x": 512,
+      "y": 1178
+    },
+    {
+      "name": "PROJECT # 162_26 MO01 FAI 29-042",
+      "number": "7356",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A103",
+      "x": 2459,
+      "y": 1203
+    },
+    {
+      "name": "RM",
+      "number": "C223",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A103",
+      "x": 1700,
+      "y": 1220
+    },
+    {
+      "name": "EQUIPMENT STORAGE",
+      "number": "C263",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A103",
+      "x": 706,
+      "y": 1264
+    },
+    {
+      "name": "FACILITIES WORK RM",
+      "number": "C249",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A103",
+      "x": 353,
+      "y": 1273
+    },
+    {
+      "name": "RM",
+      "number": "C213",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A103",
+      "x": 607,
+      "y": 1336
+    },
+    {
+      "name": "RM",
+      "number": "C224",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A103",
+      "x": 1580,
+      "y": 1336
+    },
+    {
+      "name": "LIBRARY /GAME RM",
+      "number": "C250",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A103",
+      "x": 280,
+      "y": 1341
+    },
+    {
+      "name": "RM",
+      "number": "C216",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A103",
+      "x": 953,
+      "y": 1354
+    },
+    {
+      "name": "RM",
+      "number": "C225",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A103",
+      "x": 1433,
+      "y": 1402
+    },
+    {
+      "name": "RM",
+      "number": "C215",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A103",
+      "x": 850,
+      "y": 1473
+    },
+    {
+      "name": "RM",
+      "number": "C214",
+      "page": 12,
+      "points_per_foot": 9,
+      "sheet": "A103",
+      "x": 734,
+      "y": 1479
+    },
+    {
+      "name": "LIBRARY /GAME RM",
+      "number": "C250",
+      "page": 13,
+      "points_per_foot": 9,
+      "sheet": "A104",
+      "x": 580,
+      "y": 489
+    },
+    {
+      "name": "HOSPITALITY RM",
+      "number": "C251",
+      "page": 13,
+      "points_per_foot": 9,
+      "sheet": "A104",
+      "x": 580,
+      "y": 585
+    },
+    {
+      "name": "KEYNOTES",
+      "number": "100",
+      "page": 13,
+      "points_per_foot": 9,
+      "sheet": "A104",
+      "x": 1942,
+      "y": 659
+    },
+    {
+      "name": "TOILET",
+      "number": "C248",
+      "page": 13,
+      "points_per_foot": 9,
+      "sheet": "A104",
+      "x": 606,
+      "y": 678
+    },
+    {
+      "name": "RM",
+      "number": "C119",
+      "page": 13,
+      "points_per_foot": 9,
+      "sheet": "A104",
+      "x": 1384,
+      "y": 703
+    },
+    {
+      "name": "RM",
+      "number": "C118",
+      "page": 13,
+      "points_per_foot": 9,
+      "sheet": "A104",
+      "x": 1259,
+      "y": 710
+    },
+    {
+      "name": "TUB RM",
+      "number": "C247",
+      "page": 13,
+      "points_per_foot": 9,
+      "sheet": "A104",
+      "x": 581,
+      "y": 750
+    },
+    {
+      "name": "RM",
+      "number": "C117",
+      "page": 13,
+      "points_per_foot": 9,
+      "sheet": "A104",
+      "x": 1153,
+      "y": 829
+    },
+    {
+      "name": "RM",
+      "number": "C120",
+      "page": 13,
+      "points_per_foot": 9,
+      "sheet": "A104",
+      "x": 1491,
+      "y": 843
+    },
+    {
+      "name": "TUB RM",
+      "number": "C246",
+      "page": 13,
+      "points_per_foot": 9,
+      "sheet": "A104",
+      "x": 595,
+      "y": 862
+    },
+    {
+      "name": "LIFT ALCOVE",
+      "number": "C274",
+      "page": 13,
+      "points_per_foot": 9,
+      "sheet": "A104",
+      "x": 1258,
+      "y": 911
+    },
+    {
+      "name": "LIFT ALCOVE",
+      "number": "C275",
+      "page": 13,
+      "points_per_foot": 9,
+      "sheet": "A104",
+      "x": 1385,
+      "y": 911
+    },
+    {
+      "name": "PURCHASING SUPPLY",
+      "number": "C270",
+      "page": 13,
+      "points_per_foot": 9,
+      "sheet": "A104",
+      "x": 1148,
+      "y": 932
+    },
+    {
+      "name": "PANTRY",
+      "number": "C269",
+      "page": 13,
+      "points_per_foot": 9,
+      "sheet": "A104",
+      "x": 960,
+      "y": 973
+    },
+    {
+      "name": "SOILED HOLDING",
+      "number": "C273",
+      "page": 13,
+      "points_per_foot": 9,
+      "sheet": "A104",
+      "x": 1468,
+      "y": 991
+    },
+    {
+      "name": "NURSING SUPPLY",
+      "number": "C271",
+      "page": 13,
+      "points_per_foot": 9,
+      "sheet": "A104",
+      "x": 1256,
+      "y": 993
+    },
+    {
+      "name": "CLEAN LINEN",
+      "number": "C272",
+      "page": 13,
+      "points_per_foot": 9,
+      "sheet": "A104",
+      "x": 1384,
+      "y": 993
+    },
+    {
+      "name": "NAME",
+      "number": "100",
+      "page": 13,
+      "points_per_foot": 9,
+      "sheet": "A104",
+      "x": 1961,
+      "y": 1012
+    },
+    {
+      "name": "RM",
+      "number": "C121",
+      "page": 13,
+      "points_per_foot": 9,
+      "sheet": "A104",
+      "x": 1682,
+      "y": 1016
+    },
+    {
+      "name": "RM",
+      "number": "C122",
+      "page": 13,
+      "points_per_foot": 9,
+      "sheet": "A104",
+      "x": 1807,
+      "y": 1134
+    },
+    {
+      "name": "EQUIPMENT STORAGE",
+      "number": "C240",
+      "page": 13,
+      "points_per_foot": 9,
+      "sheet": "A104",
+      "x": 601,
+      "y": 1186
+    },
+    {
+      "name": "CLEAN UTILITY",
+      "number": "C241",
+      "page": 13,
+      "points_per_foot": 9,
+      "sheet": "A104",
+      "x": 732,
+      "y": 1186
+    },
+    {
+      "name": "PROJECT # 162_26 MO01 FAI 29-042",
+      "number": "7356",
+      "page": 13,
+      "points_per_foot": 9,
+      "sheet": "A104",
+      "x": 2459,
+      "y": 1203
+    },
+    {
+      "name": "O2 STORAGE",
+      "number": "C239",
+      "page": 13,
+      "points_per_foot": 9,
+      "sheet": "A104",
+      "x": 546,
+      "y": 1241
+    },
+    {
+      "name": "RM",
+      "number": "C123",
+      "page": 13,
+      "points_per_foot": 9,
+      "sheet": "A104",
+      "x": 1808,
+      "y": 1244
+    },
+    {
+      "name": "STORAGE",
+      "number": "C242",
+      "page": 13,
+      "points_per_foot": 9,
+      "sheet": "A104",
+      "x": 674,
+      "y": 1250
+    },
+    {
+      "name": "EQUIPMENT STORAGE",
+      "number": "C268",
+      "page": 13,
+      "points_per_foot": 9,
+      "sheet": "A104",
+      "x": 813,
+      "y": 1289
+    },
+    {
+      "name": "TELECOM",
+      "number": "C238",
+      "page": 13,
+      "points_per_foot": 9,
+      "sheet": "A104",
+      "x": 546,
+      "y": 1297
+    },
+    {
+      "name": "RM",
+      "number": "C124",
+      "page": 13,
+      "points_per_foot": 9,
+      "sheet": "A104",
+      "x": 1683,
+      "y": 1359
+    },
+    {
+      "name": "RM",
+      "number": "C113",
+      "page": 13,
+      "points_per_foot": 9,
+      "sheet": "A104",
+      "x": 709,
+      "y": 1378
+    },
+    {
+      "name": "RM",
+      "number": "C116",
+      "page": 13,
+      "points_per_foot": 9,
+      "sheet": "A104",
+      "x": 1056,
+      "y": 1379
+    },
+    {
+      "name": "RM",
+      "number": "C125",
+      "page": 13,
+      "points_per_foot": 9,
+      "sheet": "A104",
+      "x": 1536,
+      "y": 1423
+    },
+    {
+      "name": "RM",
+      "number": "C114",
+      "page": 13,
+      "points_per_foot": 9,
+      "sheet": "A104",
+      "x": 837,
+      "y": 1496
+    },
+    {
+      "name": "RM",
+      "number": "C115",
+      "page": 13,
+      "points_per_foot": 9,
+      "sheet": "A104",
+      "x": 957,
+      "y": 1502
+    },
+    {
+      "name": "EXAM RM",
+      "number": "C254",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 1603,
+      "y": 215
+    },
+    {
+      "name": "LIBRARY /GAME RM",
+      "number": "C250",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 1794,
+      "y": 215
+    },
+    {
+      "name": "HOSPITALITY RM",
+      "number": "C251",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 1794,
+      "y": 313
+    },
+    {
+      "name": "RM",
+      "number": "C105",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 923,
+      "y": 429
+    },
+    {
+      "name": "RM",
+      "number": "C106",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 802,
+      "y": 431
+    },
+    {
+      "name": "TUB RM",
+      "number": "C247",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 1788,
+      "y": 474
+    },
+    {
+      "name": "RM",
+      "number": "C104",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 1042,
+      "y": 524
+    },
+    {
+      "name": "TUB RM",
+      "number": "C246",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 1787,
+      "y": 557
+    },
+    {
+      "name": "PT-1",
+      "number": "WB-1",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 1042,
+      "y": 567
+    },
+    {
+      "name": "HSKP STORAGE",
+      "number": "C245",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 1600,
+      "y": 570
+    },
+    {
+      "name": "RM",
+      "number": "C107",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 688,
+      "y": 578
+    },
+    {
+      "name": "WB-1 LVT-1",
+      "number": "105",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 1050,
+      "y": 595
+    },
+    {
+      "name": "MEDICATION",
+      "number": "C244",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 1600,
+      "y": 635
+    },
+    {
+      "name": "LIFT ALCOVE",
+      "number": "C278",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 801,
+      "y": 640
+    },
+    {
+      "name": "LIFT ALCOVE",
+      "number": "C281",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 922,
+      "y": 641
+    },
+    {
+      "name": "PURCHASING SUPPLY",
+      "number": "C282",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 1039,
+      "y": 656
+    },
+    {
+      "name": "KEYNOTES",
+      "number": "100",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 1933,
+      "y": 658
+    },
+    {
+      "name": "SOILED HOLDING",
+      "number": "C279",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 711,
+      "y": 718
+    },
+    {
+      "name": "NURSING SUPPLY",
+      "number": "C280",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 926,
+      "y": 722
+    },
+    {
+      "name": "CLEAN LINEN",
+      "number": "C277",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 795,
+      "y": 723
+    },
+    {
+      "name": "PANTRY",
+      "number": "C283",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 1213,
+      "y": 724
+    },
+    {
+      "name": "NURSE STATION",
+      "number": "C243",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 1600,
+      "y": 733
+    },
+    {
+      "name": "RM",
+      "number": "C108",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 502,
+      "y": 746
+    },
+    {
+      "name": "RM",
+      "number": "C109",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 382,
+      "y": 852
+    },
+    {
+      "name": "RISER ROOM",
+      "number": "C235",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 1570,
+      "y": 913
+    },
+    {
+      "name": "EQUIPMENT STORAGE",
+      "number": "C240",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 1790,
+      "y": 913
+    },
+    {
+      "name": "O2 STORAGE",
+      "number": "C239",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 1770,
+      "y": 969
+    },
+    {
+      "name": "RM C110.1 100",
+      "number": "C110",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 378,
+      "y": 972
+    },
+    {
+      "name": "STORAGE",
+      "number": "C237",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 1469,
+      "y": 989
+    },
+    {
+      "name": "OFFICE",
+      "number": "C236",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 1570,
+      "y": 1001
+    },
+    {
+      "name": "NAME",
+      "number": "100",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 1960,
+      "y": 1009
+    },
+    {
+      "name": "STORAGE C276 EQUIPMENT",
+      "number": "C276",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 1368,
+      "y": 1024
+    },
+    {
+      "name": "TELECOM",
+      "number": "C238",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 1772,
+      "y": 1029
+    },
+    {
+      "name": "RM101",
+      "number": "C111",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 503,
+      "y": 1074
+    },
+    {
+      "name": "RM",
+      "number": "C103",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 1126,
+      "y": 1105
+    },
+    {
+      "name": "RM",
+      "number": "C100",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 1466,
+      "y": 1114
+    },
+    {
+      "name": "RM",
+      "number": "C112",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 647,
+      "y": 1156
+    },
+    {
+      "name": "RM",
+      "number": "100",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 1205,
+      "y": 1179
+    },
+    {
+      "name": "RM",
+      "number": "C102",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 1232,
+      "y": 1182
+    },
+    {
+      "name": "PROJECT # 162_26 MO01 FAI 29-042",
+      "number": "7356",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 2459,
+      "y": 1203
+    },
+    {
+      "name": "PT-1",
+      "number": "WB-1",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 1232,
+      "y": 1225
+    },
+    {
+      "name": "RM",
+      "number": "C101",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 1353,
+      "y": 1240
+    },
+    {
+      "name": "WB-1 LVT-1",
+      "number": "105",
+      "page": 14,
+      "points_per_foot": 9,
+      "sheet": "A105",
+      "x": 1230,
+      "y": 1253
+    },
+    {
+      "name": "SHOWER RM",
+      "number": "C119",
+      "page": 16,
+      "points_per_foot": 36,
+      "sheet": "A400",
+      "x": 801,
+      "y": 259
+    },
+    {
+      "name": "EP-1",
+      "number": "EB-1",
+      "page": 16,
+      "points_per_foot": 36,
+      "sheet": "A400",
+      "x": 801,
+      "y": 301
+    },
+    {
+      "name": "EP-1 EB-1",
+      "number": "EF-1",
+      "page": 16,
+      "points_per_foot": 36,
+      "sheet": "A400",
+      "x": 801,
+      "y": 314
+    },
+    {
+      "name": "SHOWER RM",
+      "number": "C120",
+      "page": 16,
+      "points_per_foot": 36,
+      "sheet": "A400",
+      "x": 1452,
+      "y": 364
+    },
+    {
+      "name": "KEYNOTES",
+      "number": "100",
+      "page": 16,
+      "points_per_foot": 36,
+      "sheet": "A400",
+      "x": 1851,
+      "y": 404
+    },
+    {
+      "name": "EP-1",
+      "number": "EB-1",
+      "page": 16,
+      "points_per_foot": 36,
+      "sheet": "A400",
+      "x": 1452,
+      "y": 407
+    },
+    {
+      "name": "EP-1 EB-1",
+      "number": "EF-1",
+      "page": 16,
+      "points_per_foot": 36,
+      "sheet": "A400",
+      "x": 1452,
+      "y": 419
+    },
+    {
+      "name": "FINISH LEGEND",
+      "number": "EP-1",
+      "page": 16,
+      "points_per_foot": 36,
+      "sheet": "A400",
+      "x": 1828,
+      "y": 675
+    },
+    {
+      "name": "EP-1",
+      "number": "EB-1",
+      "page": 16,
+      "points_per_foot": 36,
+      "sheet": "A400",
+      "x": 1828,
+      "y": 698
+    },
+    {
+      "name": "EP-1 EB-1",
+      "number": "EF-1",
+      "page": 16,
+      "points_per_foot": 36,
+      "sheet": "A400",
+      "x": 1828,
+      "y": 713
+    },
+    {
+      "name": "LVT-1 ACT-1",
+      "number": "PT-1",
+      "page": 16,
+      "points_per_foot": 36,
+      "sheet": "A400",
+      "x": 1828,
+      "y": 756
+    },
+    {
+      "name": "ACT-1 PT-1",
+      "number": "PT-2",
+      "page": 16,
+      "points_per_foot": 36,
+      "sheet": "A400",
+      "x": 1828,
+      "y": 770
+    },
+    {
+      "name": "PT-1 PT-2",
+      "number": "PT-3",
+      "page": 16,
+      "points_per_foot": 36,
+      "sheet": "A400",
+      "x": 1828,
+      "y": 785
+    },
+    {
+      "name": "SHOWER RM",
+      "number": "C113",
+      "page": 16,
+      "points_per_foot": 36,
+      "sheet": "A400",
+      "x": 874,
+      "y": 808
+    },
+    {
+      "name": "SHOWER RM",
+      "number": "C125",
+      "page": 16,
+      "points_per_foot": 36,
+      "sheet": "A400",
+      "x": 1486,
+      "y": 808
+    },
+    {
+      "name": "EP-1",
+      "number": "EB-1",
+      "page": 16,
+      "points_per_foot": 36,
+      "sheet": "A400",
+      "x": 874,
+      "y": 851
+    },
+    {
+      "name": "EP-1",
+      "number": "EB-1",
+      "page": 16,
+      "points_per_foot": 36,
+      "sheet": "A400",
+      "x": 1486,
+      "y": 851
+    },
+    {
+      "name": "EP-1 EB-1",
+      "number": "EF-1",
+      "page": 16,
+      "points_per_foot": 36,
+      "sheet": "A400",
+      "x": 874,
+      "y": 863
+    },
+    {
+      "name": "EP-1 EB-1",
+      "number": "EF-1",
+      "page": 16,
+      "points_per_foot": 36,
+      "sheet": "A400",
+      "x": 1486,
+      "y": 863
+    },
+    {
+      "name": "PROJECT # 162_26 MO01 FAI 29-042",
+      "number": "7356",
+      "page": 16,
+      "points_per_foot": 36,
+      "sheet": "A400",
+      "x": 2459,
+      "y": 1203
+    }
+  ],
+  "set": {
+    "label": "missouri_oa_fmdc - _U2607-01%20-%20Final%20Plans.pdf",
+    "page_count": 37,
+    "rows_total": 44,
+    "sha16": "44111d93bd635936",
+    "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_U2607-01%20-%20Final%20Plans.pdf",
+    "tier": "agreed"
+  },
+  "sheets": [
+    {
+      "height": 1728,
+      "page": 10,
+      "plan_rule": "extended-title",
+      "points_per_foot": [
+        4.5
+      ],
+      "scales": [
+        "1/16\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [],
+            "page": 17
+          }
+        ],
+        "kept_pages": [
+          17
+        ],
+        "rule": "similarity"
+      },
+      "sheet": "A101",
+      "title": "OVERALL FLOOR PLAN",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 11,
+      "plan_rule": "extended-title",
+      "points_per_foot": [
+        9
+      ],
+      "scales": [
+        "1/8\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number",
+              "facility_number"
+            ],
+            "page": 17
+          }
+        ],
+        "kept_pages": [
+          17
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A102",
+      "title": "FLOOR PLAN - AREA 2C16L",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 12,
+      "plan_rule": "extended-title",
+      "points_per_foot": [
+        9
+      ],
+      "scales": [
+        "1/8\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number",
+              "facility_number"
+            ],
+            "page": 17
+          }
+        ],
+        "kept_pages": [
+          17
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A103",
+      "title": "FLOOR PLAN - AREA 2C16H",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 13,
+      "plan_rule": "extended-title",
+      "points_per_foot": [
+        9
+      ],
+      "scales": [
+        "1/8\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number",
+              "facility_number"
+            ],
+            "page": 17
+          }
+        ],
+        "kept_pages": [
+          17
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A104",
+      "title": "FLOOR PLAN - AREA 1C16H",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 14,
+      "plan_rule": "extended-title",
+      "points_per_foot": [
+        9
+      ],
+      "scales": [
+        "1/8\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number",
+              "facility_number"
+            ],
+            "page": 17
+          }
+        ],
+        "kept_pages": [
+          17
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A105",
+      "title": "FLOOR PLAN - AREA 1C16L",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 16,
+      "plan_rule": "extended-title",
+      "points_per_foot": [
+        36,
+        108
+      ],
+      "scales": [
+        "1/2\" = 1'-0\"",
+        "1/2\" = 1'-0\"",
+        "1/2\" = 1'-0\"",
+        "1/2\" = 1'-0\"",
+        "1 1/2\" = 1'-0\"",
+        "1/2\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number",
+              "facility_number"
+            ],
+            "page": 17
+          }
+        ],
+        "kept_pages": [
+          17
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A400",
+      "title": "ENLARGED SHOWER PLANS AND DETAILS",
+      "width": 2592
+    }
+  ],
+  "summary": {
+    "marks_placed": 44,
+    "marks_total": 44,
+    "placed_rate": 1,
+    "rooms_total": 233,
+    "sheets_total": 6,
+    "sheets_with_scale": 6,
+    "unplaced": []
+  },
+  "tags": [
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.547556180976,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C209.1",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C209.1|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 11,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C209",
+      "room_by": "tag_number",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C209.1",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "3' - 6\" x 7' - 0\"",
+          "width_inches": 42,
+          "y": 939
+        }
+      ],
+      "sheet": "A102",
+      "size": "3' - 6\" x 7' - 0\"",
+      "source_keys": [
+        "17|C209.1|1"
+      ],
+      "width_inches": 42,
+      "x": 1450,
+      "y": 148
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.547556180976,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C210.1",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C210.1|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 11,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C210",
+      "room_by": "tag_number",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C210.1",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "3' - 6\" x 7' - 0\"",
+          "width_inches": 42,
+          "y": 976
+        }
+      ],
+      "sheet": "A102",
+      "size": "3' - 6\" x 7' - 0\"",
+      "source_keys": [
+        "17|C210.1|1"
+      ],
+      "width_inches": 42,
+      "x": 1170,
+      "y": 149
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.547556180976,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C210",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C210|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 11,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C210",
+      "room_by": "nearest_label",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C210",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "4' - 0\" x 7' - 0\"",
+          "width_inches": 48,
+          "y": 957
+        }
+      ],
+      "sheet": "A102",
+      "size": "4' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "17|C210|1"
+      ],
+      "unsure": true,
+      "width_inches": 48,
+      "x": 1285,
+      "y": 212
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.547556180976,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C208.1",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C208.1|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 11,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C208",
+      "room_by": "tag_number",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C208.1",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "3' - 6\" x 7' - 0\"",
+          "width_inches": 42,
+          "y": 922
+        }
+      ],
+      "sheet": "A102",
+      "size": "3' - 6\" x 7' - 0\"",
+      "source_keys": [
+        "17|C208.1|1"
+      ],
+      "width_inches": 42,
+      "x": 1409,
+      "y": 319
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.547556180976,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C212",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C212|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 11,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C211",
+      "room_by": "nearest_label",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C212",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "4' - 0\" x 7' - 0\"",
+          "width_inches": 48,
+          "y": 995
+        }
+      ],
+      "sheet": "A102",
+      "size": "4' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "17|C212|1"
+      ],
+      "unsure": true,
+      "width_inches": 48,
+      "x": 1192,
+      "y": 355
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.547556180976,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C207",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C207|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 11,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C206",
+      "room_by": "nearest_label",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C207",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "4' - 0\" x 7' - 0\"",
+          "width_inches": 48,
+          "y": 904
+        }
+      ],
+      "sheet": "A102",
+      "size": "4' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "17|C207|1"
+      ],
+      "unsure": true,
+      "width_inches": 48,
+      "x": 1694,
+      "y": 570
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.547556180976,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C206",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C206|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 11,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C206",
+      "room_by": "nearest_label",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C206",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "4' - 0\" x 7' - 0\"",
+          "width_inches": 48,
+          "y": 887
+        }
+      ],
+      "sheet": "A102",
+      "size": "4' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "17|C206|1"
+      ],
+      "unsure": true,
+      "width_inches": 48,
+      "x": 1718,
+      "y": 605
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.547556180976,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C205",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C205|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 11,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C205",
+      "room_by": "nearest_label",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C205",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "4' - 0\" x 7' - 0\"",
+          "width_inches": 48,
+          "y": 852
+        }
+      ],
+      "sheet": "A102",
+      "size": "4' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "17|C205|1"
+      ],
+      "unsure": true,
+      "width_inches": 48,
+      "x": 1718,
+      "y": 653
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.547556180976,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C204.1",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C204.1|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 11,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C204",
+      "room_by": "tag_number",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C204.1",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "3' - 6\" x 7' - 0\"",
+          "width_inches": 42,
+          "y": 832
+        }
+      ],
+      "sheet": "A102",
+      "size": "3' - 6\" x 7' - 0\"",
+      "source_keys": [
+        "17|C204.1|1"
+      ],
+      "width_inches": 42,
+      "x": 1619,
+      "y": 744
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.547556180976,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C205.1",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C205.1|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 11,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C205",
+      "room_by": "tag_number",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C205.1",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "3' - 6\" x 7' - 0\"",
+          "width_inches": 42,
+          "y": 869
+        }
+      ],
+      "sheet": "A102",
+      "size": "3' - 6\" x 7' - 0\"",
+      "source_keys": [
+        "17|C205.1|1"
+      ],
+      "width_inches": 42,
+      "x": 1765,
+      "y": 748
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.547556180976,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C202.1",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C202.1|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 11,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C202",
+      "room_by": "tag_number",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C202.1",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "3' - 6\" x 7' - 0\"",
+          "width_inches": 42,
+          "y": 814
+        }
+      ],
+      "sheet": "A102",
+      "size": "3' - 6\" x 7' - 0\"",
+      "source_keys": [
+        "17|C202.1|1"
+      ],
+      "width_inches": 42,
+      "x": 1013,
+      "y": 941
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.547556180976,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C202",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C202|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 11,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C202",
+      "room_by": "nearest_label",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C202",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "4' - 0\" x 7' - 0\"",
+          "width_inches": 48,
+          "y": 800
+        }
+      ],
+      "sheet": "A102",
+      "size": "4' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "17|C202|1"
+      ],
+      "unsure": true,
+      "width_inches": 48,
+      "x": 1056,
+      "y": 1037
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.564356174256,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C219.1",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C219.1|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 12,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C219",
+      "room_by": "tag_number",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C219.1",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "3' - 6\" x 7' - 0\"",
+          "width_inches": 42,
+          "y": 1265
+        }
+      ],
+      "sheet": "A103",
+      "size": "3' - 6\" x 7' - 0\"",
+      "source_keys": [
+        "17|C219.1|1"
+      ],
+      "width_inches": 42,
+      "x": 1357,
+      "y": 682
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.564356174256,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C218",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C218|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 12,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C218",
+      "room_by": "nearest_label",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C218",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "4' - 0\" x 7' - 0\"",
+          "width_inches": 48,
+          "y": 1249
+        }
+      ],
+      "sheet": "A103",
+      "size": "4' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "17|C218|1"
+      ],
+      "unsure": true,
+      "width_inches": 48,
+      "x": 1193,
+      "y": 746
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.564356174256,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C217",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C217|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 12,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C218",
+      "room_by": "nearest_label",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C217",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "4' - 0\" x 7' - 0\"",
+          "width_inches": 48,
+          "y": 1232
+        }
+      ],
+      "sheet": "A103",
+      "size": "4' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "17|C217|1"
+      ],
+      "unsure": true,
+      "width_inches": 48,
+      "x": 1158,
+      "y": 770
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.564356174256,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C220",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C220|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 12,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C219",
+      "room_by": "nearest_label",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C220",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "4' - 0\" x 7' - 0\"",
+          "width_inches": 48,
+          "y": 1287
+        }
+      ],
+      "sheet": "A103",
+      "size": "4' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "17|C220|1"
+      ],
+      "unsure": true,
+      "width_inches": 48,
+      "x": 1275,
+      "y": 770
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.564356174256,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C221.1",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C221.1|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 12,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C221",
+      "room_by": "tag_number",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C221.1",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "3' - 6\" x 7' - 0\"",
+          "width_inches": 42,
+          "y": 1317
+        }
+      ],
+      "sheet": "A103",
+      "size": "3' - 6\" x 7' - 0\"",
+      "source_keys": [
+        "17|C221.1|1"
+      ],
+      "width_inches": 42,
+      "x": 1534,
+      "y": 1047
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.564356174256,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C221",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C221|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 12,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C222",
+      "room_by": "nearest_label",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C221",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "4' - 0\" x 7' - 0\"",
+          "width_inches": 48,
+          "y": 1302
+        }
+      ],
+      "sheet": "A103",
+      "size": "4' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "17|C221|1"
+      ],
+      "unsure": true,
+      "width_inches": 48,
+      "x": 1610,
+      "y": 1097
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.564356174256,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C223",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C223|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 12,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C223",
+      "room_by": "nearest_label",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C223",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "4' - 0\" x 7' - 0\"",
+          "width_inches": 48,
+          "y": 1337
+        }
+      ],
+      "sheet": "A103",
+      "size": "4' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "17|C223|1"
+      ],
+      "unsure": true,
+      "width_inches": 48,
+      "x": 1634,
+      "y": 1179
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.564356174256,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C224",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C224|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 12,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C223",
+      "room_by": "nearest_label",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C224",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "4' - 0\" x 7' - 0\"",
+          "width_inches": 48,
+          "y": 1354
+        }
+      ],
+      "sheet": "A103",
+      "size": "4' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "17|C224|1"
+      ],
+      "unsure": true,
+      "width_inches": 48,
+      "x": 1610,
+      "y": 1213
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.564356174256,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C224.1",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C224.1|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 12,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C224",
+      "room_by": "tag_number",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C224.1",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "3' - 6\" x 7' - 0\"",
+          "width_inches": 42,
+          "y": 1373
+        }
+      ],
+      "sheet": "A103",
+      "size": "3' - 6\" x 7' - 0\"",
+      "source_keys": [
+        "17|C224.1|1"
+      ],
+      "width_inches": 42,
+      "x": 1535,
+      "y": 1260
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.564356174256,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C225",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C225|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 12,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C224",
+      "room_by": "nearest_label",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C225",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "4' - 0\" x 7' - 0\"",
+          "width_inches": 48,
+          "y": 1391
+        }
+      ],
+      "sheet": "A103",
+      "size": "4' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "17|C225|1"
+      ],
+      "unsure": true,
+      "width_inches": 48,
+      "x": 1490,
+      "y": 1272
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.564356174256,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C216.1",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C216.1|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 12,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C216",
+      "room_by": "tag_number",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C216.1",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "3' - 6\" x 7' - 0\"",
+          "width_inches": 42,
+          "y": 1214
+        }
+      ],
+      "sheet": "A103",
+      "size": "3' - 6\" x 7' - 0\"",
+      "source_keys": [
+        "17|C216.1|1"
+      ],
+      "width_inches": 42,
+      "x": 887,
+      "y": 1302
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.564356174256,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C213.1",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C213.1|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 12,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C213",
+      "room_by": "tag_number",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C213.1",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "3' - 6\" x 7' - 0\"",
+          "width_inches": 42,
+          "y": 1145
+        }
+      ],
+      "sheet": "A103",
+      "size": "3' - 6\" x 7' - 0\"",
+      "source_keys": [
+        "17|C213.1|1"
+      ],
+      "width_inches": 42,
+      "x": 660,
+      "y": 1307
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.564356174256,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C215",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C215|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 12,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C215",
+      "room_by": "nearest_label",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C215",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "4' - 0\" x 7' - 0\"",
+          "width_inches": 48,
+          "y": 1176
+        }
+      ],
+      "sheet": "A103",
+      "size": "4' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "17|C215|1"
+      ],
+      "unsure": true,
+      "width_inches": 48,
+      "x": 809,
+      "y": 1408
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.564356174256,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C214.1",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C214.1|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 12,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C214",
+      "room_by": "tag_number",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C214.1",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "3' - 6\" x 7' - 0\"",
+          "width_inches": 42,
+          "y": 1162
+        }
+      ],
+      "sheet": "A103",
+      "size": "3' - 6\" x 7' - 0\"",
+      "source_keys": [
+        "17|C214.1|1"
+      ],
+      "width_inches": 42,
+      "x": 645,
+      "y": 1471
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.564356174256,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C215.1",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C215.1|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 12,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C215",
+      "room_by": "tag_number",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C215.1",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "3' - 6\" x 7' - 0\"",
+          "width_inches": 42,
+          "y": 1195
+        }
+      ],
+      "sheet": "A103",
+      "size": "3' - 6\" x 7' - 0\"",
+      "source_keys": [
+        "17|C215.1|1"
+      ],
+      "width_inches": 42,
+      "x": 921,
+      "y": 1472
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.564356174256,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C118.1",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C118.1|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 13,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C118",
+      "room_by": "tag_number",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C118.1",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "3' - 6\" x 7' - 0\"",
+          "width_inches": 42,
+          "y": 543
+        }
+      ],
+      "sheet": "A104",
+      "size": "3' - 6\" x 7' - 0\"",
+      "source_keys": [
+        "17|C118.1|1"
+      ],
+      "width_inches": 42,
+      "x": 1180,
+      "y": 710
+    },
+    {
+      "also_on": [
+        "A400"
+      ],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.564356174256,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C119.1",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C119.1|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 13,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C119",
+      "room_by": "tag_number",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C119.1",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "3' - 6\" x 7' - 0\"",
+          "width_inches": 42,
+          "y": 564
+        }
+      ],
+      "sheet": "A104",
+      "size": "3' - 6\" x 7' - 0\"",
+      "source_keys": [
+        "17|C119.1|1"
+      ],
+      "width_inches": 42,
+      "x": 1459,
+      "y": 710
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.564356174256,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C122.1",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C122.1|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 13,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C122",
+      "room_by": "tag_number",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C122.1",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "3' - 6\" x 7' - 0\"",
+          "width_inches": 42,
+          "y": 616
+        }
+      ],
+      "sheet": "A104",
+      "size": "3' - 6\" x 7' - 0\"",
+      "source_keys": [
+        "17|C122.1|1"
+      ],
+      "width_inches": 42,
+      "x": 1773,
+      "y": 1067
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.564356174256,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C121",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C121|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 13,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C122",
+      "room_by": "nearest_label",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C121",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "4' - 0\" x 7' - 0\"",
+          "width_inches": 48,
+          "y": 579
+        }
+      ],
+      "sheet": "A104",
+      "size": "4' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "17|C121|1"
+      ],
+      "unsure": true,
+      "width_inches": 48,
+      "x": 1713,
+      "y": 1124
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.564356174256,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C122",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C122|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 13,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C122",
+      "room_by": "nearest_label",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C122",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "4' - 0\" x 7' - 0\"",
+          "width_inches": 48,
+          "y": 599
+        }
+      ],
+      "sheet": "A104",
+      "size": "4' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "17|C122|1"
+      ],
+      "unsure": true,
+      "width_inches": 48,
+      "x": 1737,
+      "y": 1157
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.564356174256,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C124.1",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C124.1|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 13,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C124",
+      "room_by": "tag_number",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C124.1",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "3' - 6\" x 7' - 0\"",
+          "width_inches": 42,
+          "y": 632
+        }
+      ],
+      "sheet": "A104",
+      "size": "3' - 6\" x 7' - 0\"",
+      "source_keys": [
+        "17|C124.1|1"
+      ],
+      "width_inches": 42,
+      "x": 1638,
+      "y": 1287
+    },
+    {
+      "also_on": [
+        "A400"
+      ],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.564356174256,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C113.1",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C113.1|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 13,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C113",
+      "room_by": "tag_number",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C113.1",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "3' - 6\" x 7' - 0\"",
+          "width_inches": 42,
+          "y": 494
+        }
+      ],
+      "sheet": "A104",
+      "size": "3' - 6\" x 7' - 0\"",
+      "source_keys": [
+        "17|C113.1|1"
+      ],
+      "width_inches": 42,
+      "x": 765,
+      "y": 1334
+    },
+    {
+      "also_on": [
+        "A400"
+      ],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.564356174256,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C125.1",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C125.1|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 13,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C125",
+      "room_by": "tag_number",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C125.1",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "3' - 6\" x 7' - 0\"",
+          "width_inches": 42,
+          "y": 653
+        }
+      ],
+      "sheet": "A104",
+      "size": "3' - 6\" x 7' - 0\"",
+      "source_keys": [
+        "17|C125.1|1"
+      ],
+      "width_inches": 42,
+      "x": 1467,
+      "y": 1367
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.564356174256,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C113",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C113|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 13,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C114",
+      "room_by": "nearest_label",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C113",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "4' - 0\" x 7' - 0\"",
+          "width_inches": 48,
+          "y": 477
+        }
+      ],
+      "sheet": "A104",
+      "size": "4' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "17|C113|1"
+      ],
+      "unsure": true,
+      "width_inches": 48,
+      "x": 829,
+      "y": 1411
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.564356174256,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C114",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C114|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 13,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C114",
+      "room_by": "nearest_label",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C114",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "4' - 0\" x 7' - 0\"",
+          "width_inches": 48,
+          "y": 511
+        }
+      ],
+      "sheet": "A104",
+      "size": "4' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "17|C114|1"
+      ],
+      "unsure": true,
+      "width_inches": 48,
+      "x": 864,
+      "y": 1435
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.564356174256,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C115.1",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C115.1|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 13,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C115",
+      "room_by": "tag_number",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C115.1",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "3' - 6\" x 7' - 0\"",
+          "width_inches": 42,
+          "y": 529
+        }
+      ],
+      "sheet": "A104",
+      "size": "3' - 6\" x 7' - 0\"",
+      "source_keys": [
+        "17|C115.1|1"
+      ],
+      "width_inches": 42,
+      "x": 1023,
+      "y": 1498
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.547556180976,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C105.1",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C105.1|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 14,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C105",
+      "room_by": "tag_number",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C105.1",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "3' - 6\" x 7' - 0\"",
+          "width_inches": 42,
+          "y": 183
+        }
+      ],
+      "sheet": "A105",
+      "size": "3' - 6\" x 7' - 0\"",
+      "source_keys": [
+        "17|C105.1|1"
+      ],
+      "width_inches": 42,
+      "x": 976,
+      "y": 418
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.547556180976,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C107",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C107|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 14,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C106",
+      "room_by": "nearest_label",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C107",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "4' - 0\" x 7' - 0\"",
+          "width_inches": 48,
+          "y": 197
+        }
+      ],
+      "sheet": "A105",
+      "size": "4' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "17|C107|1"
+      ],
+      "unsure": true,
+      "width_inches": 48,
+      "x": 802,
+      "y": 526
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.547556180976,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C109.1",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C109.1|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 14,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C109",
+      "room_by": "tag_number",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C109.1",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "3' - 6\" x 7' - 0\"",
+          "width_inches": 42,
+          "y": 231
+        }
+      ],
+      "sheet": "A105",
+      "size": "3' - 6\" x 7' - 0\"",
+      "source_keys": [
+        "17|C109.1|1"
+      ],
+      "width_inches": 42,
+      "x": 351,
+      "y": 789
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.547556180976,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C108.1",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C108.1|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 14,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C108",
+      "room_by": "tag_number",
+      "room_name": "RM",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C108.1",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "3' - 6\" x 7' - 0\"",
+          "width_inches": 42,
+          "y": 213
+        }
+      ],
+      "sheet": "A105",
+      "size": "3' - 6\" x 7' - 0\"",
+      "source_keys": [
+        "17|C108.1|1"
+      ],
+      "width_inches": 42,
+      "x": 544,
+      "y": 805
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.547556180976,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C111",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C111|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 14,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C110",
+      "room_by": "nearest_label",
+      "room_name": "RM C110.1 100",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C111",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "4' - 0\" x 7' - 0\"",
+          "width_inches": 48,
+          "y": 252
+        }
+      ],
+      "sheet": "A105",
+      "size": "4' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "17|C111|1"
+      ],
+      "unsure": true,
+      "width_inches": 48,
+      "x": 468,
+      "y": 968
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        17
+      ],
+      "door_type": "EXIST.",
+      "fire_rating": null,
+      "frame_type": "EXIST.",
+      "h": 9.547556180976,
+      "hardware_group": "EXIST.",
+      "height_inches": 84,
+      "location": null,
+      "mark": "C112",
+      "matched_by": "exact",
+      "material": "EXIST.",
+      "opening_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]|C112|17|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "facility_number": "6517356071",
+        "site_number": "7356"
+      },
+      "opening_scope_id": "[{\"facility_number\":\"6517356071\",\"site_number\":\"7356\"},\"A\"]",
+      "page": 14,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "C111",
+      "room_by": "nearest_label",
+      "room_name": "RM101",
+      "schedule_rows": [
+        {
+          "door_type": "EXIST.",
+          "fire_rating": null,
+          "frame_type": "EXIST.",
+          "hardware_group": "EXIST.",
+          "height_inches": 84,
+          "location": null,
+          "mark": "C112",
+          "material": "EXIST.",
+          "page": 17,
+          "pair": false,
+          "size": "4' - 0\" x 7' - 0\"",
+          "width_inches": 48,
+          "y": 268
+        }
+      ],
+      "sheet": "A105",
+      "size": "4' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "17|C112|1"
+      ],
+      "unsure": true,
+      "width_inches": 48,
+      "x": 588,
+      "y": 1027
+    }
+  ]
+}

@@ -1,0 +1,1255 @@
+{
+  "rooms": [
+    {
+      "name": "TYPE",
+      "number": "F2",
+      "page": 18,
+      "points_per_foot": 108,
+      "sheet": "A-101",
+      "x": 719,
+      "y": 617
+    },
+    {
+      "name": "TYPE",
+      "number": "F2",
+      "page": 18,
+      "points_per_foot": 108,
+      "sheet": "A-101",
+      "x": 719,
+      "y": 622
+    },
+    {
+      "name": "HM DOOR FRAME @ CMU",
+      "number": "5",
+      "page": 18,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 1612,
+      "y": 854
+    },
+    {
+      "name": "ADA SHOWER",
+      "number": "117",
+      "page": 18,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 1553,
+      "y": 1135
+    },
+    {
+      "name": "ADA RESTROOM",
+      "number": "101",
+      "page": 18,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 928,
+      "y": 1141
+    },
+    {
+      "name": "SHOWER",
+      "number": "111",
+      "page": 18,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 1239,
+      "y": 1141
+    },
+    {
+      "name": "SHOWER",
+      "number": "113",
+      "page": 18,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 1344,
+      "y": 1141
+    },
+    {
+      "name": "SHOWER",
+      "number": "115",
+      "page": 18,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 1439,
+      "y": 1143
+    },
+    {
+      "name": "ADA RESTROOM",
+      "number": "107",
+      "page": 18,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 531,
+      "y": 1144
+    },
+    {
+      "name": "0.01 RESTROOM",
+      "number": "105",
+      "page": 18,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 670,
+      "y": 1149
+    },
+    {
+      "name": "RESTROOM",
+      "number": "103",
+      "page": 18,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 787,
+      "y": 1151
+    },
+    {
+      "name": "MECH",
+      "number": "110",
+      "page": 18,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 1323,
+      "y": 1288
+    },
+    {
+      "name": "MECH",
+      "number": "109",
+      "page": 18,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 617,
+      "y": 1293
+    },
+    {
+      "name": "SHOWER",
+      "number": "112",
+      "page": 18,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 1239,
+      "y": 1366
+    },
+    {
+      "name": "SHOWER",
+      "number": "114",
+      "page": 18,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 1336,
+      "y": 1366
+    },
+    {
+      "name": "SHOWER",
+      "number": "116",
+      "page": 18,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 1445,
+      "y": 1366
+    },
+    {
+      "name": "ADA SHOWER",
+      "number": "118",
+      "page": 18,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 1540,
+      "y": 1366
+    },
+    {
+      "name": "ADA RESTROOM",
+      "number": "102",
+      "page": 18,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 928,
+      "y": 1392
+    },
+    {
+      "name": "RESTROOM",
+      "number": "104",
+      "page": 18,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 812,
+      "y": 1429
+    },
+    {
+      "name": "RESTROOM",
+      "number": "106",
+      "page": 18,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 696,
+      "y": 1430
+    },
+    {
+      "name": "ADA RESTROOM",
+      "number": "108",
+      "page": 18,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 494,
+      "y": 1442
+    }
+  ],
+  "set": {
+    "label": "missouri_oa_fmdc - _X2528-01%20-%20Final%20Plans.pdf",
+    "page_count": 36,
+    "rows_total": 18,
+    "sha16": "0dabaf10e91593e9",
+    "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2528-01%20-%20Final%20Plans.pdf",
+    "tier": "agreed"
+  },
+  "sheets": [
+    {
+      "height": 1728,
+      "page": 18,
+      "plan_rule": "extended-title",
+      "points_per_foot": [
+        18,
+        108
+      ],
+      "scales": [
+        "SCALE 1 1/2\" = 1'-0\"",
+        "SCALE 1/4\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site",
+              "asset_number",
+              "site_number"
+            ],
+            "page": 18
+          }
+        ],
+        "kept_pages": [
+          18
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A-101",
+      "title": "FLOOR PLAN",
+      "width": 2592
+    }
+  ],
+  "summary": {
+    "marks_placed": 18,
+    "marks_total": 18,
+    "placed_rate": 1,
+    "rooms_total": 21,
+    "sheets_total": 1,
+    "sheets_with_scale": 1,
+    "unplaced": []
+  },
+  "tags": [
+    {
+      "also_on": [],
+      "door_pages": [
+        18
+      ],
+      "door_type": "L",
+      "fire_rating": null,
+      "frame_type": "F2",
+      "h": 8.00789,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "107-1",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"asset_number\":\"7815302022\",\"facility_name\":\"BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE\",\"site\":\"BENNET SPRING STATE PARK\",\"site_number\":\"5302\"},\"A\"]|107-1|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "7815302022",
+        "facility_name": "BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE",
+        "site": "BENNET SPRING STATE PARK",
+        "site_number": "5302"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"7815302022\",\"facility_name\":\"BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE\",\"site\":\"BENNET SPRING STATE PARK\",\"site_number\":\"5302\"},\"A\"]",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "107",
+      "room_by": "tag_number",
+      "room_name": "ADA RESTROOM",
+      "schedule_rows": [
+        {
+          "door_type": "L",
+          "fire_rating": null,
+          "frame_type": "F2",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "107-1",
+          "material": "HM",
+          "page": 18,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 688
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|107-1|1"
+      ],
+      "width_inches": 36,
+      "x": 497,
+      "y": 1046
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        18
+      ],
+      "door_type": "L",
+      "fire_rating": null,
+      "frame_type": "F2",
+      "h": 8.00789,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "101-1",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"asset_number\":\"7815302022\",\"facility_name\":\"BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE\",\"site\":\"BENNET SPRING STATE PARK\",\"site_number\":\"5302\"},\"A\"]|101-1|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "7815302022",
+        "facility_name": "BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE",
+        "site": "BENNET SPRING STATE PARK",
+        "site_number": "5302"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"7815302022\",\"facility_name\":\"BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE\",\"site\":\"BENNET SPRING STATE PARK\",\"site_number\":\"5302\"},\"A\"]",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "101",
+      "room_by": "tag_number",
+      "room_name": "ADA RESTROOM",
+      "schedule_rows": [
+        {
+          "door_type": "L",
+          "fire_rating": null,
+          "frame_type": "F2",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "101-1",
+          "material": "HM",
+          "page": 18,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 623
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|101-1|1"
+      ],
+      "width_inches": 36,
+      "x": 893,
+      "y": 1046
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        18
+      ],
+      "door_type": "L",
+      "fire_rating": null,
+      "frame_type": "F2",
+      "h": 8.00789,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "117-1",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"asset_number\":\"7815302022\",\"facility_name\":\"BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE\",\"site\":\"BENNET SPRING STATE PARK\",\"site_number\":\"5302\"},\"A\"]|117-1|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "7815302022",
+        "facility_name": "BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE",
+        "site": "BENNET SPRING STATE PARK",
+        "site_number": "5302"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"7815302022\",\"facility_name\":\"BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE\",\"site\":\"BENNET SPRING STATE PARK\",\"site_number\":\"5302\"},\"A\"]",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "117",
+      "room_by": "tag_number",
+      "room_name": "ADA SHOWER",
+      "schedule_rows": [
+        {
+          "door_type": "L",
+          "fire_rating": null,
+          "frame_type": "F2",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "117-1",
+          "material": "HM",
+          "page": 18,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 796
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|117-1|1"
+      ],
+      "width_inches": 36,
+      "x": 1590,
+      "y": 1046
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        18
+      ],
+      "door_type": "L",
+      "fire_rating": null,
+      "frame_type": "F2",
+      "h": 8.00789,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "105-1",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"asset_number\":\"7815302022\",\"facility_name\":\"BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE\",\"site\":\"BENNET SPRING STATE PARK\",\"site_number\":\"5302\"},\"A\"]|105-1|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "7815302022",
+        "facility_name": "BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE",
+        "site": "BENNET SPRING STATE PARK",
+        "site_number": "5302"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"7815302022\",\"facility_name\":\"BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE\",\"site\":\"BENNET SPRING STATE PARK\",\"site_number\":\"5302\"},\"A\"]",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "105",
+      "room_by": "tag_number",
+      "room_name": "0.01 RESTROOM",
+      "schedule_rows": [
+        {
+          "door_type": "L",
+          "fire_rating": null,
+          "frame_type": "F2",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "105-1",
+          "material": "HM",
+          "page": 18,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 665
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|105-1|1"
+      ],
+      "width_inches": 36,
+      "x": 652,
+      "y": 1109
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        18
+      ],
+      "door_type": "L",
+      "fire_rating": null,
+      "frame_type": "F2",
+      "h": 8.00789,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "103-1",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"asset_number\":\"7815302022\",\"facility_name\":\"BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE\",\"site\":\"BENNET SPRING STATE PARK\",\"site_number\":\"5302\"},\"A\"]|103-1|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "7815302022",
+        "facility_name": "BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE",
+        "site": "BENNET SPRING STATE PARK",
+        "site_number": "5302"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"7815302022\",\"facility_name\":\"BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE\",\"site\":\"BENNET SPRING STATE PARK\",\"site_number\":\"5302\"},\"A\"]",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "103",
+      "room_by": "tag_number",
+      "room_name": "RESTROOM",
+      "schedule_rows": [
+        {
+          "door_type": "L",
+          "fire_rating": null,
+          "frame_type": "F2",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "103-1",
+          "material": "HM",
+          "page": 18,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 645
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|103-1|1"
+      ],
+      "width_inches": 36,
+      "x": 773,
+      "y": 1109
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        18
+      ],
+      "door_type": "L",
+      "fire_rating": null,
+      "frame_type": "F2",
+      "h": 8.00789,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "111-1",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"asset_number\":\"7815302022\",\"facility_name\":\"BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE\",\"site\":\"BENNET SPRING STATE PARK\",\"site_number\":\"5302\"},\"A\"]|111-1|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "7815302022",
+        "facility_name": "BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE",
+        "site": "BENNET SPRING STATE PARK",
+        "site_number": "5302"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"7815302022\",\"facility_name\":\"BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE\",\"site\":\"BENNET SPRING STATE PARK\",\"site_number\":\"5302\"},\"A\"]",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "111",
+      "room_by": "tag_number",
+      "room_name": "SHOWER",
+      "schedule_rows": [
+        {
+          "door_type": "L",
+          "fire_rating": null,
+          "frame_type": "F2",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "111-1",
+          "material": "HM",
+          "page": 18,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 731
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|111-1|1"
+      ],
+      "width_inches": 36,
+      "x": 1285,
+      "y": 1109
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        18
+      ],
+      "door_type": "L",
+      "fire_rating": null,
+      "frame_type": "F2",
+      "h": 8.00789,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "113-1",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"asset_number\":\"7815302022\",\"facility_name\":\"BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE\",\"site\":\"BENNET SPRING STATE PARK\",\"site_number\":\"5302\"},\"A\"]|113-1|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "7815302022",
+        "facility_name": "BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE",
+        "site": "BENNET SPRING STATE PARK",
+        "site_number": "5302"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"7815302022\",\"facility_name\":\"BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE\",\"site\":\"BENNET SPRING STATE PARK\",\"site_number\":\"5302\"},\"A\"]",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "113",
+      "room_by": "tag_number",
+      "room_name": "SHOWER",
+      "schedule_rows": [
+        {
+          "door_type": "L",
+          "fire_rating": null,
+          "frame_type": "F2",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "113-1",
+          "material": "HM",
+          "page": 18,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 753
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|113-1|1"
+      ],
+      "width_inches": 36,
+      "x": 1380,
+      "y": 1109
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        18
+      ],
+      "door_type": "L",
+      "fire_rating": null,
+      "frame_type": "F2",
+      "h": 8.00789,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "115-1",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"asset_number\":\"7815302022\",\"facility_name\":\"BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE\",\"site\":\"BENNET SPRING STATE PARK\",\"site_number\":\"5302\"},\"A\"]|115-1|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "7815302022",
+        "facility_name": "BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE",
+        "site": "BENNET SPRING STATE PARK",
+        "site_number": "5302"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"7815302022\",\"facility_name\":\"BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE\",\"site\":\"BENNET SPRING STATE PARK\",\"site_number\":\"5302\"},\"A\"]",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "115",
+      "room_by": "tag_number",
+      "room_name": "SHOWER",
+      "schedule_rows": [
+        {
+          "door_type": "L",
+          "fire_rating": null,
+          "frame_type": "F2",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "115-1",
+          "material": "HM",
+          "page": 18,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 773
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|115-1|1"
+      ],
+      "width_inches": 36,
+      "x": 1475,
+      "y": 1109
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        18
+      ],
+      "door_type": "L",
+      "fire_rating": null,
+      "frame_type": "F2",
+      "h": 8.00789,
+      "hardware_group": "2",
+      "height_inches": 84,
+      "location": null,
+      "mark": "109-1",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"asset_number\":\"7815302022\",\"facility_name\":\"BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE\",\"site\":\"BENNET SPRING STATE PARK\",\"site_number\":\"5302\"},\"A\"]|109-1|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "7815302022",
+        "facility_name": "BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE",
+        "site": "BENNET SPRING STATE PARK",
+        "site_number": "5302"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"7815302022\",\"facility_name\":\"BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE\",\"site\":\"BENNET SPRING STATE PARK\",\"site_number\":\"5302\"},\"A\"]",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "109",
+      "room_by": "tag_number",
+      "room_name": "MECH",
+      "schedule_rows": [
+        {
+          "door_type": "L",
+          "fire_rating": null,
+          "frame_type": "F2",
+          "hardware_group": "2",
+          "height_inches": 84,
+          "location": null,
+          "mark": "109-1",
+          "material": "HM",
+          "page": 18,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 711
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|109-1|1"
+      ],
+      "width_inches": 36,
+      "x": 420,
+      "y": 1244
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        18
+      ],
+      "door_type": "L",
+      "fire_rating": null,
+      "frame_type": "F2",
+      "h": 8.00789,
+      "hardware_group": "2",
+      "height_inches": 84,
+      "location": null,
+      "mark": "110-1",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"asset_number\":\"7815302022\",\"facility_name\":\"BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE\",\"site\":\"BENNET SPRING STATE PARK\",\"site_number\":\"5302\"},\"A\"]|110-1|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "7815302022",
+        "facility_name": "BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE",
+        "site": "BENNET SPRING STATE PARK",
+        "site_number": "5302"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"7815302022\",\"facility_name\":\"BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE\",\"site\":\"BENNET SPRING STATE PARK\",\"site_number\":\"5302\"},\"A\"]",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "110",
+      "room_by": "tag_number",
+      "room_name": "MECH",
+      "schedule_rows": [
+        {
+          "door_type": "L",
+          "fire_rating": null,
+          "frame_type": "F2",
+          "hardware_group": "2",
+          "height_inches": 84,
+          "location": null,
+          "mark": "110-1",
+          "material": "HM",
+          "page": 18,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 719
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|110-1|1"
+      ],
+      "width_inches": 36,
+      "x": 1640,
+      "y": 1293
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        18
+      ],
+      "door_type": "L",
+      "fire_rating": null,
+      "frame_type": "F2",
+      "h": 8.00789,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "106-1",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"asset_number\":\"7815302022\",\"facility_name\":\"BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE\",\"site\":\"BENNET SPRING STATE PARK\",\"site_number\":\"5302\"},\"A\"]|106-1|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "7815302022",
+        "facility_name": "BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE",
+        "site": "BENNET SPRING STATE PARK",
+        "site_number": "5302"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"7815302022\",\"facility_name\":\"BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE\",\"site\":\"BENNET SPRING STATE PARK\",\"site_number\":\"5302\"},\"A\"]",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "106",
+      "room_by": "tag_number",
+      "room_name": "RESTROOM",
+      "schedule_rows": [
+        {
+          "door_type": "L",
+          "fire_rating": null,
+          "frame_type": "F2",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "106-1",
+          "material": "HM",
+          "page": 18,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 677
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|106-1|1"
+      ],
+      "width_inches": 36,
+      "x": 652,
+      "y": 1444
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        18
+      ],
+      "door_type": "L",
+      "fire_rating": null,
+      "frame_type": "F2",
+      "h": 8.00789,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "104-1",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"asset_number\":\"7815302022\",\"facility_name\":\"BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE\",\"site\":\"BENNET SPRING STATE PARK\",\"site_number\":\"5302\"},\"A\"]|104-1|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "7815302022",
+        "facility_name": "BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE",
+        "site": "BENNET SPRING STATE PARK",
+        "site_number": "5302"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"7815302022\",\"facility_name\":\"BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE\",\"site\":\"BENNET SPRING STATE PARK\",\"site_number\":\"5302\"},\"A\"]",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "104",
+      "room_by": "tag_number",
+      "room_name": "RESTROOM",
+      "schedule_rows": [
+        {
+          "door_type": "L",
+          "fire_rating": null,
+          "frame_type": "F2",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "104-1",
+          "material": "HM",
+          "page": 18,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 656
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|104-1|1"
+      ],
+      "width_inches": 36,
+      "x": 772,
+      "y": 1444
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        18
+      ],
+      "door_type": "L",
+      "fire_rating": null,
+      "frame_type": "F2",
+      "h": 8.00789,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "112-1",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"asset_number\":\"7815302022\",\"facility_name\":\"BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE\",\"site\":\"BENNET SPRING STATE PARK\",\"site_number\":\"5302\"},\"A\"]|112-1|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "7815302022",
+        "facility_name": "BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE",
+        "site": "BENNET SPRING STATE PARK",
+        "site_number": "5302"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"7815302022\",\"facility_name\":\"BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE\",\"site\":\"BENNET SPRING STATE PARK\",\"site_number\":\"5302\"},\"A\"]",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "112",
+      "room_by": "tag_number",
+      "room_name": "SHOWER",
+      "schedule_rows": [
+        {
+          "door_type": "L",
+          "fire_rating": null,
+          "frame_type": "F2",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "112-1",
+          "material": "HM",
+          "page": 18,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 742
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|112-1|1"
+      ],
+      "width_inches": 36,
+      "x": 1284,
+      "y": 1444
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        18
+      ],
+      "door_type": "L",
+      "fire_rating": null,
+      "frame_type": "F2",
+      "h": 8.00789,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "114-1",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"asset_number\":\"7815302022\",\"facility_name\":\"BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE\",\"site\":\"BENNET SPRING STATE PARK\",\"site_number\":\"5302\"},\"A\"]|114-1|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "7815302022",
+        "facility_name": "BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE",
+        "site": "BENNET SPRING STATE PARK",
+        "site_number": "5302"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"7815302022\",\"facility_name\":\"BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE\",\"site\":\"BENNET SPRING STATE PARK\",\"site_number\":\"5302\"},\"A\"]",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "114",
+      "room_by": "tag_number",
+      "room_name": "SHOWER",
+      "schedule_rows": [
+        {
+          "door_type": "L",
+          "fire_rating": null,
+          "frame_type": "F2",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "114-1",
+          "material": "HM",
+          "page": 18,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 763
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|114-1|1"
+      ],
+      "width_inches": 36,
+      "x": 1380,
+      "y": 1444
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        18
+      ],
+      "door_type": "L",
+      "fire_rating": null,
+      "frame_type": "F2",
+      "h": 8.00789,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "116-1",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"asset_number\":\"7815302022\",\"facility_name\":\"BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE\",\"site\":\"BENNET SPRING STATE PARK\",\"site_number\":\"5302\"},\"A\"]|116-1|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "7815302022",
+        "facility_name": "BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE",
+        "site": "BENNET SPRING STATE PARK",
+        "site_number": "5302"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"7815302022\",\"facility_name\":\"BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE\",\"site\":\"BENNET SPRING STATE PARK\",\"site_number\":\"5302\"},\"A\"]",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "116",
+      "room_by": "tag_number",
+      "room_name": "SHOWER",
+      "schedule_rows": [
+        {
+          "door_type": "L",
+          "fire_rating": null,
+          "frame_type": "F2",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "116-1",
+          "material": "HM",
+          "page": 18,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 784
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|116-1|1"
+      ],
+      "width_inches": 36,
+      "x": 1477,
+      "y": 1444
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        18
+      ],
+      "door_type": "L",
+      "fire_rating": null,
+      "frame_type": "F2",
+      "h": 8.00789,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "108-1",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"asset_number\":\"7815302022\",\"facility_name\":\"BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE\",\"site\":\"BENNET SPRING STATE PARK\",\"site_number\":\"5302\"},\"A\"]|108-1|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "7815302022",
+        "facility_name": "BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE",
+        "site": "BENNET SPRING STATE PARK",
+        "site_number": "5302"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"7815302022\",\"facility_name\":\"BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE\",\"site\":\"BENNET SPRING STATE PARK\",\"site_number\":\"5302\"},\"A\"]",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "108",
+      "room_by": "tag_number",
+      "room_name": "ADA RESTROOM",
+      "schedule_rows": [
+        {
+          "door_type": "L",
+          "fire_rating": null,
+          "frame_type": "F2",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "108-1",
+          "material": "HM",
+          "page": 18,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 699
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|108-1|1"
+      ],
+      "width_inches": 36,
+      "x": 496,
+      "y": 1509
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        18
+      ],
+      "door_type": "L",
+      "fire_rating": null,
+      "frame_type": "F2",
+      "h": 8.00789,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "102-1",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"asset_number\":\"7815302022\",\"facility_name\":\"BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE\",\"site\":\"BENNET SPRING STATE PARK\",\"site_number\":\"5302\"},\"A\"]|102-1|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "7815302022",
+        "facility_name": "BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE",
+        "site": "BENNET SPRING STATE PARK",
+        "site_number": "5302"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"7815302022\",\"facility_name\":\"BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE\",\"site\":\"BENNET SPRING STATE PARK\",\"site_number\":\"5302\"},\"A\"]",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "102",
+      "room_by": "tag_number",
+      "room_name": "ADA RESTROOM",
+      "schedule_rows": [
+        {
+          "door_type": "L",
+          "fire_rating": null,
+          "frame_type": "F2",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "102-1",
+          "material": "HM",
+          "page": 18,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 633
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|102-1|1"
+      ],
+      "width_inches": 36,
+      "x": 891,
+      "y": 1509
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        18
+      ],
+      "door_type": "L",
+      "fire_rating": null,
+      "frame_type": "F2",
+      "h": 8.00789,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "118-1",
+      "matched_by": "exact",
+      "material": "HM",
+      "opening_id": "[{\"asset_number\":\"7815302022\",\"facility_name\":\"BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE\",\"site\":\"BENNET SPRING STATE PARK\",\"site_number\":\"5302\"},\"A\"]|118-1|18|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "asset_number": "7815302022",
+        "facility_name": "BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE",
+        "site": "BENNET SPRING STATE PARK",
+        "site_number": "5302"
+      },
+      "opening_scope_id": "[{\"asset_number\":\"7815302022\",\"facility_name\":\"BENNET SPRING STATE PARK; CANPGROUND #4 SHOWER HOUSE REPLACEMENT; SHOWER HOUSE\",\"site\":\"BENNET SPRING STATE PARK\",\"site_number\":\"5302\"},\"A\"]",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "118",
+      "room_by": "tag_number",
+      "room_name": "ADA SHOWER",
+      "schedule_rows": [
+        {
+          "door_type": "L",
+          "fire_rating": null,
+          "frame_type": "F2",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "118-1",
+          "material": "HM",
+          "page": 18,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 807
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "18|118-1|1"
+      ],
+      "width_inches": 36,
+      "x": 1591,
+      "y": 1509
+    }
+  ]
+}

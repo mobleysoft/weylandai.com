@@ -661,6 +661,7 @@
     {
       "height": 1728,
       "page": 22,
+      "plan_rule": "legacy",
       "points_per_foot": [
         18
       ],
@@ -668,6 +669,23 @@
         "1/4\" = 1'-0\"",
         "1/4\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site",
+              "site_number"
+            ],
+            "page": 45
+          }
+        ],
+        "kept_pages": [
+          45
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-101",
       "title": "CABIN #1 - FLOOR PLANS",
       "width": 2592
@@ -675,6 +693,7 @@
     {
       "height": 1728,
       "page": 23,
+      "plan_rule": "legacy",
       "points_per_foot": [
         18
       ],
@@ -682,6 +701,23 @@
         "1/4\" = 1'-0\"",
         "1/4\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site",
+              "site_number"
+            ],
+            "page": 45
+          }
+        ],
+        "kept_pages": [
+          45
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-102",
       "title": "CABIN #2 - FLOOR PLANS",
       "width": 2592
@@ -689,6 +725,7 @@
     {
       "height": 1728,
       "page": 24,
+      "plan_rule": "legacy",
       "points_per_foot": [
         18
       ],
@@ -696,6 +733,23 @@
         "1/4\" = 1'-0\"",
         "1/4\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site",
+              "site_number"
+            ],
+            "page": 45
+          }
+        ],
+        "kept_pages": [
+          45
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-103",
       "title": "CABIN #3 - FLOOR PLANS",
       "width": 2592
@@ -703,6 +757,7 @@
     {
       "height": 1728,
       "page": 25,
+      "plan_rule": "legacy",
       "points_per_foot": [
         18
       ],
@@ -710,6 +765,23 @@
         "1/4\" = 1'-0\"",
         "1/4\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site",
+              "site_number"
+            ],
+            "page": 45
+          }
+        ],
+        "kept_pages": [
+          45
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-104",
       "title": "CABIN #4 - FLOOR PLANS",
       "width": 2592
@@ -717,6 +789,7 @@
     {
       "height": 1728,
       "page": 26,
+      "plan_rule": "legacy",
       "points_per_foot": [
         18
       ],
@@ -724,6 +797,23 @@
         "1/4\" = 1'-0\"",
         "1/4\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site",
+              "site_number"
+            ],
+            "page": 45
+          }
+        ],
+        "kept_pages": [
+          45
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-105",
       "title": "CABIN #14 - FLOOR PLANS",
       "width": 2592
@@ -731,6 +821,7 @@
     {
       "height": 1728,
       "page": 28,
+      "plan_rule": "legacy",
       "points_per_foot": [
         18
       ],
@@ -739,6 +830,23 @@
         "A-106B 1/4\" = 1'-0\"",
         "1/4\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site",
+              "site_number"
+            ],
+            "page": 45
+          }
+        ],
+        "kept_pages": [
+          45
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-106B",
       "title": "CABIN #19 - FLOOR PLANS",
       "width": 2592

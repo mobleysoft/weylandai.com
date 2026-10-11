@@ -1,0 +1,255 @@
+{
+  "rooms": [
+    {
+      "name": "CO Office",
+      "number": "103",
+      "page": 4,
+      "points_per_foot": null,
+      "sheet": "A-102",
+      "x": 1815,
+      "y": 832
+    }
+  ],
+  "set": {
+    "label": "missouri_oa_fmdc - _T2423-01%20-%20Final%20Plans.pdf",
+    "page_count": 31,
+    "rows_total": 37,
+    "sha16": "977cec6301f40433",
+    "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2423-01%20-%20Final%20Plans.pdf",
+    "tier": "oracle-checked"
+  },
+  "sheets": [
+    {
+      "height": 1728,
+      "page": 4,
+      "plan_rule": "extended-title",
+      "points_per_foot": null,
+      "scales": [],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 10
+          }
+        ],
+        "kept_pages": [
+          10
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A-102",
+      "title": "Floor Plan - Dimension",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 9,
+      "plan_rule": "extended-title",
+      "points_per_foot": [
+        108
+      ],
+      "scales": [
+        "A-401 1 1/2\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 10
+          }
+        ],
+        "kept_pages": [
+          10
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A-401",
+      "title": "Enlarged Plans, Details",
+      "width": 2592
+    }
+  ],
+  "summary": {
+    "marks_placed": 3,
+    "marks_total": 3,
+    "placed_rate": 1,
+    "rooms_total": 1,
+    "sheets_total": 2,
+    "sheets_with_scale": 1,
+    "unplaced": []
+  },
+  "tags": [
+    {
+      "also_on": [],
+      "door_pages": [
+        10
+      ],
+      "door_type": "EXISTING",
+      "fire_rating": "NONE",
+      "frame_type": "Existing",
+      "h": 18.90300000000002,
+      "hardware_group": "1",
+      "height_inches": 168,
+      "location": "Assembly",
+      "mark": "112A",
+      "matched_by": "stacked: 112 with A",
+      "material": null,
+      "opening_id": "[{\"address\":\"475 SOUTH DAVIS AVE\",\"asset_number\":\"8136265008\",\"site_number\":\"6265\"},\"A\"]|112A|10|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "475 SOUTH DAVIS AVE",
+        "asset_number": "8136265008",
+        "site_number": "6265"
+      },
+      "opening_scope_id": "[{\"address\":\"475 SOUTH DAVIS AVE\",\"asset_number\":\"8136265008\",\"site_number\":\"6265\"},\"A\"]",
+      "page": 4,
+      "pair": false,
+      "points_per_foot": null,
+      "room": null,
+      "room_by": "schedule_location",
+      "room_name": "Assembly",
+      "schedule_rows": [
+        {
+          "door_type": "EXISTING",
+          "fire_rating": "NONE",
+          "frame_type": "Existing",
+          "hardware_group": "1",
+          "height_inches": 168,
+          "location": "Assembly",
+          "mark": "112A",
+          "material": null,
+          "page": 10,
+          "pair": false,
+          "size": "14' - 0\" x 14' - 0\"",
+          "width_inches": 168,
+          "y": 1008
+        }
+      ],
+      "sheet": "A-102",
+      "size": "14' - 0\" x 14' - 0\"",
+      "source_keys": [
+        "10|112A|1"
+      ],
+      "width_inches": 168,
+      "x": 955,
+      "y": 859
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        10
+      ],
+      "door_type": "HM",
+      "fire_rating": "NONE",
+      "frame_type": "HM-1",
+      "h": 9.543,
+      "hardware_group": "3",
+      "height_inches": 84,
+      "location": "Elec. / Data",
+      "mark": "114C",
+      "matched_by": "exact",
+      "material": null,
+      "opening_id": "[{\"address\":\"475 SOUTH DAVIS AVE\",\"asset_number\":\"8136265008\",\"site_number\":\"6265\"},\"A\"]|114C|10|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "475 SOUTH DAVIS AVE",
+        "asset_number": "8136265008",
+        "site_number": "6265"
+      },
+      "opening_scope_id": "[{\"address\":\"475 SOUTH DAVIS AVE\",\"asset_number\":\"8136265008\",\"site_number\":\"6265\"},\"A\"]",
+      "page": 4,
+      "pair": false,
+      "points_per_foot": null,
+      "room": null,
+      "room_by": "schedule_location",
+      "room_name": "Data",
+      "schedule_rows": [
+        {
+          "door_type": "HM",
+          "fire_rating": "NONE",
+          "frame_type": "HM-1",
+          "hardware_group": "3",
+          "height_inches": 84,
+          "location": "Elec. / Data",
+          "mark": "114C",
+          "material": null,
+          "page": 10,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 1044
+        }
+      ],
+      "sheet": "A-102",
+      "size": "3' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "10|114C|1"
+      ],
+      "width_inches": 36,
+      "x": 875,
+      "y": 1129
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        10
+      ],
+      "door_type": "EXISTING",
+      "fire_rating": "NONE",
+      "frame_type": "Existing",
+      "h": 18.90300000000002,
+      "hardware_group": "2",
+      "height_inches": 84,
+      "location": "Elec. / Data",
+      "mark": "114B",
+      "matched_by": "stacked: 114 with B",
+      "material": null,
+      "opening_id": "[{\"address\":\"475 SOUTH DAVIS AVE\",\"asset_number\":\"8136265008\",\"site_number\":\"6265\"},\"A\"]|114B|10|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "475 SOUTH DAVIS AVE",
+        "asset_number": "8136265008",
+        "site_number": "6265"
+      },
+      "opening_scope_id": "[{\"address\":\"475 SOUTH DAVIS AVE\",\"asset_number\":\"8136265008\",\"site_number\":\"6265\"},\"A\"]",
+      "page": 4,
+      "pair": false,
+      "points_per_foot": null,
+      "room": null,
+      "room_by": "schedule_location",
+      "room_name": "Data",
+      "schedule_rows": [
+        {
+          "door_type": "EXISTING",
+          "fire_rating": "NONE",
+          "frame_type": "Existing",
+          "hardware_group": "2",
+          "height_inches": 84,
+          "location": "Elec. / Data",
+          "mark": "114B",
+          "material": null,
+          "page": 10,
+          "pair": false,
+          "size": "6' - 0\" x 7' - 0\"",
+          "width_inches": 72,
+          "y": 1028
+        }
+      ],
+      "sheet": "A-102",
+      "size": "6' - 0\" x 7' - 0\"",
+      "source_keys": [
+        "10|114B|1"
+      ],
+      "width_inches": 72,
+      "x": 732,
+      "y": 1209
+    }
+  ]
+}

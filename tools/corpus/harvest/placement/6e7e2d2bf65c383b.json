@@ -418,6 +418,7 @@
     {
       "height": 1584,
       "page": 60,
+      "plan_rule": "legacy",
       "points_per_foot": [
         27
       ],
@@ -426,6 +427,24 @@
         "3/8\" = 1'-0\"",
         "SCALE: 3/8\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site",
+              "asset_number",
+              "site_number"
+            ],
+            "page": 81
+          }
+        ],
+        "kept_pages": [
+          81
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A110",
       "title": "FIRST FLOOR ANNOTATION PLAN - CABIN \"A\"",
       "width": 2448
@@ -433,6 +452,7 @@
     {
       "height": 1584,
       "page": 61,
+      "plan_rule": "legacy",
       "points_per_foot": [
         27
       ],
@@ -441,6 +461,24 @@
         "3/8\" = 1'-0\"",
         "SCALE: 3/8\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site",
+              "asset_number",
+              "site_number"
+            ],
+            "page": 81
+          }
+        ],
+        "kept_pages": [
+          81
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A111",
       "title": "FIRST FLOOR DIMENSION PLAN - CABIN \"A\"",
       "width": 2448
@@ -448,6 +486,7 @@
     {
       "height": 1584,
       "page": 64,
+      "plan_rule": "legacy",
       "points_per_foot": [
         27
       ],
@@ -456,6 +495,24 @@
         "3/8\" = 1'-0\"",
         "SCALE: 3/8\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site",
+              "asset_number",
+              "site_number"
+            ],
+            "page": 81
+          }
+        ],
+        "kept_pages": [
+          81
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A114",
       "title": "FIRST FLOOR ANNOTATION PLAN - CABIN \"B\"",
       "width": 2448
@@ -463,6 +520,7 @@
     {
       "height": 1584,
       "page": 65,
+      "plan_rule": "legacy",
       "points_per_foot": [
         27
       ],
@@ -471,6 +529,24 @@
         "3/8\" = 1'-0\"",
         "3/8\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site",
+              "asset_number",
+              "site_number"
+            ],
+            "page": 81
+          }
+        ],
+        "kept_pages": [
+          81
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A115",
       "title": "FIRST FLOOR DIMENSION PLAN - CABIN \"B\"",
       "width": 2448
@@ -478,6 +554,7 @@
     {
       "height": 1584,
       "page": 76,
+      "plan_rule": "legacy",
       "points_per_foot": [
         54
       ],
@@ -486,6 +563,24 @@
         "3/4\" = 1'-0\"",
         "SCALE: 3/4\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site",
+              "asset_number",
+              "site_number"
+            ],
+            "page": 81
+          }
+        ],
+        "kept_pages": [
+          81
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A401",
       "title": "ENLARGED PLANS AND ELEVATIONS",
       "width": 2448
@@ -493,6 +588,7 @@
     {
       "height": 1584,
       "page": 77,
+      "plan_rule": "legacy",
       "points_per_foot": [
         54,
         108
@@ -507,6 +603,24 @@
         "1 1/2\" = 1'-0\"",
         "SCALE: 3/4\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site",
+              "asset_number",
+              "site_number"
+            ],
+            "page": 81
+          }
+        ],
+        "kept_pages": [
+          81
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A402",
       "title": "ENLARGED PLANS AND ELEVATIONS",
       "width": 2448
@@ -514,6 +628,7 @@
     {
       "height": 1584,
       "page": 78,
+      "plan_rule": "legacy",
       "points_per_foot": [
         54,
         72
@@ -527,6 +642,24 @@
         "SCALE: 1\" = 1'-0\"",
         "SCALE: 3/4\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site",
+              "asset_number",
+              "site_number"
+            ],
+            "page": 81
+          }
+        ],
+        "kept_pages": [
+          81
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A403",
       "title": "ENLARGED PLANS AND ELEVATIONS",
       "width": 2448
@@ -534,6 +667,7 @@
     {
       "height": 1584,
       "page": 79,
+      "plan_rule": "legacy",
       "points_per_foot": [
         108
       ],
@@ -543,6 +677,24 @@
         "1 1/2\" = 1'-0\"",
         "SCALE: 1 1/2\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site",
+              "asset_number",
+              "site_number"
+            ],
+            "page": 81
+          }
+        ],
+        "kept_pages": [
+          81
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A501",
       "title": "DETAILS - PLAN VIEW",
       "width": 2448
@@ -575,6 +727,16 @@
       "mark": "103A",
       "matched_by": "exact",
       "material": "FIBERGLASS",
+      "opening_id": "[{\"address\":\"32836 STATE PARK ROAD\",\"asset_number\":\"7815116063\",\"facility_name\":\"WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]|103A|81|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "32836 STATE PARK ROAD",
+        "asset_number": "7815116063",
+        "facility_name": "WAKONDA STATE PARK",
+        "site": "WAKONDA STATE PARK",
+        "site_number": "5116"
+      },
+      "opening_scope_id": "[{\"address\":\"32836 STATE PARK ROAD\",\"asset_number\":\"7815116063\",\"facility_name\":\"WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]",
       "page": 60,
       "pair": false,
       "points_per_foot": 27,
@@ -600,6 +762,9 @@
       ],
       "sheet": "A110",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "81|103A|1"
+      ],
       "width_inches": 36,
       "x": 1095,
       "y": 370
@@ -621,6 +786,16 @@
       "mark": "102A",
       "matched_by": "exact",
       "material": "WOOD",
+      "opening_id": "[{\"address\":\"32836 STATE PARK ROAD\",\"asset_number\":\"7815116063\",\"facility_name\":\"WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]|102A|81|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "32836 STATE PARK ROAD",
+        "asset_number": "7815116063",
+        "facility_name": "WAKONDA STATE PARK",
+        "site": "WAKONDA STATE PARK",
+        "site_number": "5116"
+      },
+      "opening_scope_id": "[{\"address\":\"32836 STATE PARK ROAD\",\"asset_number\":\"7815116063\",\"facility_name\":\"WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]",
       "page": 60,
       "pair": false,
       "points_per_foot": 27,
@@ -646,6 +821,9 @@
       ],
       "sheet": "A110",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "81|102A|1"
+      ],
       "width_inches": 36,
       "x": 688,
       "y": 609
@@ -668,6 +846,16 @@
       "mark": "101A",
       "matched_by": "exact",
       "material": "WOOD",
+      "opening_id": "[{\"address\":\"32836 STATE PARK ROAD\",\"asset_number\":\"7815116063\",\"facility_name\":\"WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]|101A|81|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "32836 STATE PARK ROAD",
+        "asset_number": "7815116063",
+        "facility_name": "WAKONDA STATE PARK",
+        "site": "WAKONDA STATE PARK",
+        "site_number": "5116"
+      },
+      "opening_scope_id": "[{\"address\":\"32836 STATE PARK ROAD\",\"asset_number\":\"7815116063\",\"facility_name\":\"WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]",
       "page": 60,
       "pair": false,
       "points_per_foot": 27,
@@ -693,6 +881,9 @@
       ],
       "sheet": "A110",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "81|101A|1"
+      ],
       "width_inches": 36,
       "x": 857,
       "y": 669
@@ -714,6 +905,16 @@
       "mark": "100A",
       "matched_by": "exact",
       "material": "FIBERGLASS",
+      "opening_id": "[{\"address\":\"32836 STATE PARK ROAD\",\"asset_number\":\"7815116063\",\"facility_name\":\"WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]|100A|81|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "32836 STATE PARK ROAD",
+        "asset_number": "7815116063",
+        "facility_name": "WAKONDA STATE PARK",
+        "site": "WAKONDA STATE PARK",
+        "site_number": "5116"
+      },
+      "opening_scope_id": "[{\"address\":\"32836 STATE PARK ROAD\",\"asset_number\":\"7815116063\",\"facility_name\":\"WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]",
       "page": 60,
       "pair": false,
       "points_per_foot": 27,
@@ -739,6 +940,9 @@
       ],
       "sheet": "A110",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "81|100A|1"
+      ],
       "width_inches": 36,
       "x": 646,
       "y": 769
@@ -760,6 +964,16 @@
       "mark": "107A",
       "matched_by": "exact",
       "material": "FIBERGLASS",
+      "opening_id": "[{\"address\":\"32836 STATE PARK ROAD\",\"asset_number\":\"7815116063\",\"facility_name\":\"WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]|107A|81|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "32836 STATE PARK ROAD",
+        "asset_number": "7815116063",
+        "facility_name": "WAKONDA STATE PARK",
+        "site": "WAKONDA STATE PARK",
+        "site_number": "5116"
+      },
+      "opening_scope_id": "[{\"address\":\"32836 STATE PARK ROAD\",\"asset_number\":\"7815116063\",\"facility_name\":\"WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]",
       "page": 64,
       "pair": false,
       "points_per_foot": 27,
@@ -785,6 +999,9 @@
       ],
       "sheet": "A114",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "81|107A|1"
+      ],
       "width_inches": 36,
       "x": 1179,
       "y": 249
@@ -806,6 +1023,16 @@
       "mark": "106A",
       "matched_by": "exact",
       "material": "WOOD",
+      "opening_id": "[{\"address\":\"32836 STATE PARK ROAD\",\"asset_number\":\"7815116063\",\"facility_name\":\"WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]|106A|81|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "32836 STATE PARK ROAD",
+        "asset_number": "7815116063",
+        "facility_name": "WAKONDA STATE PARK",
+        "site": "WAKONDA STATE PARK",
+        "site_number": "5116"
+      },
+      "opening_scope_id": "[{\"address\":\"32836 STATE PARK ROAD\",\"asset_number\":\"7815116063\",\"facility_name\":\"WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]",
       "page": 64,
       "pair": false,
       "points_per_foot": 27,
@@ -831,6 +1058,9 @@
       ],
       "sheet": "A114",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "81|106A|1"
+      ],
       "width_inches": 36,
       "x": 755,
       "y": 448
@@ -853,6 +1083,16 @@
       "mark": "105A",
       "matched_by": "exact",
       "material": "WOOD",
+      "opening_id": "[{\"address\":\"32836 STATE PARK ROAD\",\"asset_number\":\"7815116063\",\"facility_name\":\"WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]|105A|81|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "32836 STATE PARK ROAD",
+        "asset_number": "7815116063",
+        "facility_name": "WAKONDA STATE PARK",
+        "site": "WAKONDA STATE PARK",
+        "site_number": "5116"
+      },
+      "opening_scope_id": "[{\"address\":\"32836 STATE PARK ROAD\",\"asset_number\":\"7815116063\",\"facility_name\":\"WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]",
       "page": 64,
       "pair": false,
       "points_per_foot": 27,
@@ -878,6 +1118,9 @@
       ],
       "sheet": "A114",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "81|105A|1"
+      ],
       "width_inches": 36,
       "x": 862,
       "y": 510
@@ -899,6 +1142,16 @@
       "mark": "104A",
       "matched_by": "exact",
       "material": "FIBERGLASS",
+      "opening_id": "[{\"address\":\"32836 STATE PARK ROAD\",\"asset_number\":\"7815116063\",\"facility_name\":\"WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]|104A|81|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "32836 STATE PARK ROAD",
+        "asset_number": "7815116063",
+        "facility_name": "WAKONDA STATE PARK",
+        "site": "WAKONDA STATE PARK",
+        "site_number": "5116"
+      },
+      "opening_scope_id": "[{\"address\":\"32836 STATE PARK ROAD\",\"asset_number\":\"7815116063\",\"facility_name\":\"WAKONDA STATE PARK\",\"site\":\"WAKONDA STATE PARK\",\"site_number\":\"5116\"},\"A\"]",
       "page": 64,
       "pair": false,
       "points_per_foot": 27,
@@ -924,6 +1177,9 @@
       ],
       "sheet": "A114",
       "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "81|104A|1"
+      ],
       "width_inches": 36,
       "x": 695,
       "y": 793

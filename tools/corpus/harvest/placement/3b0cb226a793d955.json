@@ -100,6 +100,60 @@
       "y": 1409
     },
     {
+      "name": "TERRACE",
+      "number": "300",
+      "page": 25,
+      "points_per_foot": 13.5,
+      "sheet": "A-106",
+      "x": 1365,
+      "y": 408
+    },
+    {
+      "name": "CORRIDOR",
+      "number": "302",
+      "page": 25,
+      "points_per_foot": 13.5,
+      "sheet": "A-106",
+      "x": 776,
+      "y": 560
+    },
+    {
+      "name": "ELEC / MECH",
+      "number": "301",
+      "page": 25,
+      "points_per_foot": 13.5,
+      "sheet": "A-106",
+      "x": 1062,
+      "y": 575
+    },
+    {
+      "name": "LEVEL S3 / N2 (E DORM / LIFE DORM)",
+      "number": "A-106",
+      "page": 25,
+      "points_per_foot": 13.5,
+      "sheet": "A-106",
+      "x": 260,
+      "y": 851
+    },
+    {
+      "name": "(E) MECH / STORAGE",
+      "number": "400",
+      "page": 25,
+      "points_per_foot": 13.5,
+      "sheet": "A-106",
+      "x": 906,
+      "y": 1350
+    },
+    {
+      "name": "LEVEL S4 / N3 (F DORM)",
+      "number": "A-106",
+      "page": 25,
+      "points_per_foot": 13.5,
+      "sheet": "A-106",
+      "x": 260,
+      "y": 1654
+    },
+    {
       "name": "PLAYGROUND",
       "number": "100",
       "page": 32,
@@ -238,12 +292,26 @@
     {
       "height": 1728,
       "page": 20,
+      "plan_rule": "legacy",
       "points_per_foot": [
         13.5
       ],
       "scales": [
         "3/16\" = 1'-0\" 0 2' 4'"
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [],
+            "page": 33
+          }
+        ],
+        "kept_pages": [
+          33
+        ],
+        "rule": "similarity"
+      },
       "sheet": "A-101",
       "title": "PLANS - LEVEL S2 / N1 & LEVEL S3 / N2",
       "width": 2592
@@ -251,12 +319,26 @@
     {
       "height": 1728,
       "page": 21,
+      "plan_rule": "legacy",
       "points_per_foot": [
         13.5
       ],
       "scales": [
         "3/16\" = 1'-0\" 0 2' 4'"
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [],
+            "page": 33
+          }
+        ],
+        "kept_pages": [
+          33
+        ],
+        "rule": "similarity"
+      },
       "sheet": "A-102",
       "title": "REMOVAL FLOOR PLANS - LEVEL S4 /",
       "width": 2592
@@ -264,19 +346,61 @@
     {
       "height": 1728,
       "page": 24,
+      "plan_rule": "legacy",
       "points_per_foot": [
         13.5
       ],
       "scales": [
         "3/16\" = 1'-0\" 0 2' 4'"
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [],
+            "page": 33
+          }
+        ],
+        "kept_pages": [
+          33
+        ],
+        "rule": "similarity"
+      },
       "sheet": "A-105",
       "title": "FLOOR PLANS - LEVEL S1 & LEVEL",
       "width": 2592
     },
     {
       "height": 1728,
+      "page": 25,
+      "plan_rule": "extended-title",
+      "points_per_foot": [
+        13.5
+      ],
+      "scales": [
+        "3/16\" = 1'-0\" 0 2' 4'"
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [],
+            "page": 33
+          }
+        ],
+        "kept_pages": [
+          33
+        ],
+        "rule": "similarity"
+      },
+      "sheet": "A-106",
+      "title": "FLOOR PLANS -",
+      "width": 2592
+    },
+    {
+      "height": 1728,
       "page": 32,
+      "plan_rule": "legacy",
       "points_per_foot": [
         9,
         108
@@ -286,45 +410,32 @@
         "A-600 1 1/2\" = 1'-0\"",
         "1/8\" = 1'-0\" 0 3' 6'"
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [],
+            "page": 33
+          }
+        ],
+        "kept_pages": [
+          33
+        ],
+        "rule": "similarity"
+      },
       "sheet": "A-600",
       "title": "PLANS, AND PARTITION TYPE",
       "width": 2592
     }
   ],
   "summary": {
-    "marks_placed": 2,
+    "marks_placed": 7,
     "marks_total": 7,
-    "placed_rate": 0.2857142857142857,
-    "rooms_total": 25,
-    "sheets_total": 4,
-    "sheets_with_scale": 4,
-    "unplaced": [
-      {
-        "mark": "300",
-        "page": 33,
-        "reason": "mark 300 (schedule p.33) not tagged on any plan"
-      },
-      {
-        "mark": "301",
-        "page": 33,
-        "reason": "mark 301 (schedule p.33) not tagged on any plan"
-      },
-      {
-        "mark": "302",
-        "page": 33,
-        "reason": "mark 302 (schedule p.33) not tagged on any plan"
-      },
-      {
-        "mark": "302A",
-        "page": 33,
-        "reason": "mark 302A (schedule p.33) not tagged on any plan"
-      },
-      {
-        "mark": "400",
-        "page": 33,
-        "reason": "mark 400 (schedule p.33) not tagged on any plan"
-      }
-    ]
+    "placed_rate": 1,
+    "rooms_total": 31,
+    "sheets_total": 5,
+    "sheets_with_scale": 5,
+    "unplaced": []
   },
   "tags": [
     {
@@ -342,6 +453,13 @@
       "mark": "201",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"3815 MAGNOLIA AVENUE\",\"asset_number\":\"5012011011; 5012011017\"},\"A\"]|201|33|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "3815 MAGNOLIA AVENUE",
+        "asset_number": "5012011011; 5012011017"
+      },
+      "opening_scope_id": "[{\"address\":\"3815 MAGNOLIA AVENUE\",\"asset_number\":\"5012011011; 5012011017\"},\"A\"]",
       "page": 24,
       "pair": false,
       "points_per_foot": 13.5,
@@ -367,6 +485,9 @@
       ],
       "sheet": "A-105",
       "size": "3'-0 x 6'-8",
+      "source_keys": [
+        "33|201|1"
+      ],
       "width_inches": 36,
       "x": 798,
       "y": 1241
@@ -386,6 +507,13 @@
       "mark": "200",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"3815 MAGNOLIA AVENUE\",\"asset_number\":\"5012011011; 5012011017\"},\"A\"]|200|33|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "3815 MAGNOLIA AVENUE",
+        "asset_number": "5012011011; 5012011017"
+      },
+      "opening_scope_id": "[{\"address\":\"3815 MAGNOLIA AVENUE\",\"asset_number\":\"5012011011; 5012011017\"},\"A\"]",
       "page": 24,
       "pair": false,
       "points_per_foot": 13.5,
@@ -411,9 +539,282 @@
       ],
       "sheet": "A-105",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "33|200|1"
+      ],
       "width_inches": 36,
       "x": 1460,
       "y": 1317
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        33
+      ],
+      "door_type": "A1",
+      "fire_rating": "-",
+      "frame_type": "AL-2",
+      "h": 8.109836756064,
+      "hardware_group": "04",
+      "height_inches": 84,
+      "location": "(E) CORRIDOR",
+      "mark": "302",
+      "matched_by": "exact",
+      "material": null,
+      "opening_id": "[{\"address\":\"3815 MAGNOLIA AVENUE\",\"asset_number\":\"5012011011; 5012011017\"},\"A\"]|302|33|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "3815 MAGNOLIA AVENUE",
+        "asset_number": "5012011011; 5012011017"
+      },
+      "opening_scope_id": "[{\"address\":\"3815 MAGNOLIA AVENUE\",\"asset_number\":\"5012011011; 5012011017\"},\"A\"]",
+      "page": 25,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "302",
+      "room_by": "schedule_location",
+      "room_name": "CORRIDOR",
+      "schedule_rows": [
+        {
+          "door_type": "A1",
+          "fire_rating": "-",
+          "frame_type": "AL-2",
+          "hardware_group": "04",
+          "height_inches": 84,
+          "location": "(E) CORRIDOR",
+          "mark": "302",
+          "material": null,
+          "page": 33,
+          "pair": false,
+          "size": "3'-0 x 7'-0\"",
+          "width_inches": 36,
+          "y": 1226
+        }
+      ],
+      "sheet": "A-106",
+      "size": "3'-0 x 7'-0\"",
+      "source_keys": [
+        "33|302|1"
+      ],
+      "width_inches": 36,
+      "x": 936,
+      "y": 442
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        33
+      ],
+      "door_type": "A1",
+      "fire_rating": "-",
+      "frame_type": "AL-3",
+      "h": 8.109836756064,
+      "hardware_group": "03",
+      "height_inches": 84,
+      "location": "(E) CORRIDOR",
+      "mark": "300",
+      "matched_by": "exact",
+      "material": null,
+      "opening_id": "[{\"address\":\"3815 MAGNOLIA AVENUE\",\"asset_number\":\"5012011011; 5012011017\"},\"A\"]|300|33|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "3815 MAGNOLIA AVENUE",
+        "asset_number": "5012011011; 5012011017"
+      },
+      "opening_scope_id": "[{\"address\":\"3815 MAGNOLIA AVENUE\",\"asset_number\":\"5012011011; 5012011017\"},\"A\"]",
+      "page": 25,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "302",
+      "room_by": "schedule_location",
+      "room_name": "CORRIDOR",
+      "schedule_rows": [
+        {
+          "door_type": "A1",
+          "fire_rating": "-",
+          "frame_type": "AL-3",
+          "hardware_group": "03",
+          "height_inches": 84,
+          "location": "(E) CORRIDOR",
+          "mark": "300",
+          "material": null,
+          "page": 33,
+          "pair": false,
+          "size": "3'-0 x 7'-0\"",
+          "width_inches": 36,
+          "y": 1202
+        }
+      ],
+      "sheet": "A-106",
+      "size": "3'-0 x 7'-0\"",
+      "source_keys": [
+        "33|300|1"
+      ],
+      "width_inches": 36,
+      "x": 1438,
+      "y": 520
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        33
+      ],
+      "door_type": "B1",
+      "fire_rating": "1 HR",
+      "frame_type": "HMF-1",
+      "h": 8.109902473387749,
+      "hardware_group": "02",
+      "height_inches": 80,
+      "location": "ELEC/MECH",
+      "mark": "301",
+      "matched_by": "exact",
+      "material": null,
+      "opening_id": "[{\"address\":\"3815 MAGNOLIA AVENUE\",\"asset_number\":\"5012011011; 5012011017\"},\"A\"]|301|33|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "3815 MAGNOLIA AVENUE",
+        "asset_number": "5012011011; 5012011017"
+      },
+      "opening_scope_id": "[{\"address\":\"3815 MAGNOLIA AVENUE\",\"asset_number\":\"5012011011; 5012011017\"},\"A\"]",
+      "page": 25,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "301",
+      "room_by": "schedule_location",
+      "room_name": "ELEC / MECH",
+      "schedule_rows": [
+        {
+          "door_type": "B1",
+          "fire_rating": "1 HR",
+          "frame_type": "HMF-1",
+          "hardware_group": "02",
+          "height_inches": 80,
+          "location": "ELEC/MECH",
+          "mark": "301",
+          "material": null,
+          "page": 33,
+          "pair": false,
+          "size": "3'-0 x 6'-8\"",
+          "width_inches": 36,
+          "y": 1215
+        }
+      ],
+      "sheet": "A-106",
+      "size": "3'-0 x 6'-8\"",
+      "source_keys": [
+        "33|301|1"
+      ],
+      "width_inches": 36,
+      "x": 938,
+      "y": 543
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        33
+      ],
+      "door_type": "-",
+      "fire_rating": null,
+      "frame_type": "(E)",
+      "h": 6.514677394128,
+      "hardware_group": "01",
+      "height_inches": null,
+      "location": "(E) CORRIDOR",
+      "mark": "302A",
+      "matched_by": "exact",
+      "material": null,
+      "opening_id": "[{\"address\":\"3815 MAGNOLIA AVENUE\",\"asset_number\":\"5012011011; 5012011017\"},\"A\"]|302A|33|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "3815 MAGNOLIA AVENUE",
+        "asset_number": "5012011011; 5012011017"
+      },
+      "opening_scope_id": "[{\"address\":\"3815 MAGNOLIA AVENUE\",\"asset_number\":\"5012011011; 5012011017\"},\"A\"]",
+      "page": 25,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "302",
+      "room_by": "schedule_location",
+      "room_name": "CORRIDOR",
+      "schedule_rows": [
+        {
+          "door_type": "-",
+          "fire_rating": null,
+          "frame_type": "(E)",
+          "hardware_group": "01",
+          "height_inches": null,
+          "location": "(E) CORRIDOR",
+          "mark": "302A",
+          "material": null,
+          "page": 33,
+          "pair": false,
+          "size": "- x -",
+          "width_inches": null,
+          "y": 1238
+        }
+      ],
+      "sheet": "A-106",
+      "size": "- x -",
+      "source_keys": [
+        "33|302A|1"
+      ],
+      "width_inches": null,
+      "x": 839,
+      "y": 601
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        33
+      ],
+      "door_type": "A1",
+      "fire_rating": "-",
+      "frame_type": "AL-2",
+      "h": 8.109836756064,
+      "hardware_group": "04",
+      "height_inches": 84,
+      "location": "(E) MECH/STORAGE",
+      "mark": "400",
+      "matched_by": "exact",
+      "material": null,
+      "opening_id": "[{\"address\":\"3815 MAGNOLIA AVENUE\",\"asset_number\":\"5012011011; 5012011017\"},\"A\"]|400|33|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "3815 MAGNOLIA AVENUE",
+        "asset_number": "5012011011; 5012011017"
+      },
+      "opening_scope_id": "[{\"address\":\"3815 MAGNOLIA AVENUE\",\"asset_number\":\"5012011011; 5012011017\"},\"A\"]",
+      "page": 25,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": null,
+      "room_by": "schedule_location",
+      "room_name": "STORAGE",
+      "schedule_rows": [
+        {
+          "door_type": "A1",
+          "fire_rating": "-",
+          "frame_type": "AL-2",
+          "hardware_group": "04",
+          "height_inches": 84,
+          "location": "(E) MECH/STORAGE",
+          "mark": "400",
+          "material": null,
+          "page": 33,
+          "pair": false,
+          "size": "3'-0 x 7'-0\"",
+          "width_inches": 36,
+          "y": 1250
+        }
+      ],
+      "sheet": "A-106",
+      "size": "3'-0 x 7'-0\"",
+      "source_keys": [
+        "33|400|1"
+      ],
+      "width_inches": 36,
+      "x": 936,
+      "y": 1230
     }
   ]
 }

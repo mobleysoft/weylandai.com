@@ -661,6 +661,7 @@
     {
       "height": 1728,
       "page": 7,
+      "plan_rule": "legacy",
       "points_per_foot": [
         9
       ],
@@ -668,6 +669,22 @@
         "SCALE: 1/8\" = 1'-0\"",
         "SCALE: 1/8\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 8
+          }
+        ],
+        "kept_pages": [
+          8
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A101",
       "title": "FLOOR PLANS",
       "width": 2592
@@ -675,6 +692,7 @@
     {
       "height": 1728,
       "page": 10,
+      "plan_rule": "legacy",
       "points_per_foot": [
         18,
         27,
@@ -687,6 +705,22 @@
         "SCALE: 3/8\" = 1'-0\"",
         "SCALE: 3/8\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 8
+          }
+        ],
+        "kept_pages": [
+          8
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A602",
       "title": "PLANS AND ELEVATIONS",
       "width": 2592
@@ -694,6 +728,7 @@
     {
       "height": 1728,
       "page": 12,
+      "plan_rule": "legacy",
       "points_per_foot": [
         9
       ],
@@ -701,6 +736,22 @@
         "SCALE: 1/8\" = 1'-0\"",
         "SCALE: 1/8\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 8
+          }
+        ],
+        "kept_pages": [
+          8
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A901",
       "title": "PLANS & SCHEDULE",
       "width": 2592
@@ -733,6 +784,14 @@
       "mark": "201",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"1251 GALE DRIVE\",\"asset_number\":\"7815001008\",\"site_number\":\"5001\"},\"A\"]|201|8|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1251 GALE DRIVE",
+        "asset_number": "7815001008",
+        "site_number": "5001"
+      },
+      "opening_scope_id": "[{\"address\":\"1251 GALE DRIVE\",\"asset_number\":\"7815001008\",\"site_number\":\"5001\"},\"A\"]",
       "page": 7,
       "pair": false,
       "points_per_foot": 9,
@@ -758,6 +817,9 @@
       ],
       "sheet": "A101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "8|201|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 507,
@@ -780,6 +842,14 @@
       "mark": "202",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"1251 GALE DRIVE\",\"asset_number\":\"7815001008\",\"site_number\":\"5001\"},\"A\"]|202|8|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1251 GALE DRIVE",
+        "asset_number": "7815001008",
+        "site_number": "5001"
+      },
+      "opening_scope_id": "[{\"address\":\"1251 GALE DRIVE\",\"asset_number\":\"7815001008\",\"site_number\":\"5001\"},\"A\"]",
       "page": 7,
       "pair": false,
       "points_per_foot": 9,
@@ -805,6 +875,9 @@
       ],
       "sheet": "A101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "8|202|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 728,
@@ -827,6 +900,14 @@
       "mark": "203",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"1251 GALE DRIVE\",\"asset_number\":\"7815001008\",\"site_number\":\"5001\"},\"A\"]|203|8|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1251 GALE DRIVE",
+        "asset_number": "7815001008",
+        "site_number": "5001"
+      },
+      "opening_scope_id": "[{\"address\":\"1251 GALE DRIVE\",\"asset_number\":\"7815001008\",\"site_number\":\"5001\"},\"A\"]",
       "page": 7,
       "pair": false,
       "points_per_foot": 9,
@@ -852,6 +933,9 @@
       ],
       "sheet": "A101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "8|203|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 766,
@@ -874,6 +958,14 @@
       "mark": "107",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"1251 GALE DRIVE\",\"asset_number\":\"7815001008\",\"site_number\":\"5001\"},\"A\"]|107|8|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1251 GALE DRIVE",
+        "asset_number": "7815001008",
+        "site_number": "5001"
+      },
+      "opening_scope_id": "[{\"address\":\"1251 GALE DRIVE\",\"asset_number\":\"7815001008\",\"site_number\":\"5001\"},\"A\"]",
       "page": 7,
       "pair": false,
       "points_per_foot": 9,
@@ -899,6 +991,9 @@
       ],
       "sheet": "A101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "8|107|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 633,
@@ -919,6 +1014,14 @@
       "mark": "100A",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"1251 GALE DRIVE\",\"asset_number\":\"7815001008\",\"site_number\":\"5001\"},\"A\"]|100A|8|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1251 GALE DRIVE",
+        "asset_number": "7815001008",
+        "site_number": "5001"
+      },
+      "opening_scope_id": "[{\"address\":\"1251 GALE DRIVE\",\"asset_number\":\"7815001008\",\"site_number\":\"5001\"},\"A\"]",
       "page": 7,
       "pair": false,
       "points_per_foot": 9,
@@ -944,6 +1047,9 @@
       ],
       "sheet": "A101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "8|100A|1"
+      ],
       "width_inches": 36,
       "x": 756,
       "y": 1302
@@ -965,6 +1071,14 @@
       "mark": "106",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"1251 GALE DRIVE\",\"asset_number\":\"7815001008\",\"site_number\":\"5001\"},\"A\"]|106|8|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1251 GALE DRIVE",
+        "asset_number": "7815001008",
+        "site_number": "5001"
+      },
+      "opening_scope_id": "[{\"address\":\"1251 GALE DRIVE\",\"asset_number\":\"7815001008\",\"site_number\":\"5001\"},\"A\"]",
       "page": 7,
       "pair": false,
       "points_per_foot": 9,
@@ -990,6 +1104,9 @@
       ],
       "sheet": "A101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "8|106|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 372,
@@ -1012,6 +1129,14 @@
       "mark": "105",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"1251 GALE DRIVE\",\"asset_number\":\"7815001008\",\"site_number\":\"5001\"},\"A\"]|105|8|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1251 GALE DRIVE",
+        "asset_number": "7815001008",
+        "site_number": "5001"
+      },
+      "opening_scope_id": "[{\"address\":\"1251 GALE DRIVE\",\"asset_number\":\"7815001008\",\"site_number\":\"5001\"},\"A\"]",
       "page": 7,
       "pair": false,
       "points_per_foot": 9,
@@ -1037,6 +1162,9 @@
       ],
       "sheet": "A101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "8|105|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 605,
@@ -1060,6 +1188,14 @@
       "mark": "109",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"1251 GALE DRIVE\",\"asset_number\":\"7815001008\",\"site_number\":\"5001\"},\"A\"]|109|8|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1251 GALE DRIVE",
+        "asset_number": "7815001008",
+        "site_number": "5001"
+      },
+      "opening_scope_id": "[{\"address\":\"1251 GALE DRIVE\",\"asset_number\":\"7815001008\",\"site_number\":\"5001\"},\"A\"]",
       "page": 7,
       "pair": false,
       "points_per_foot": 9,
@@ -1085,6 +1221,9 @@
       ],
       "sheet": "A101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "8|109|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 763,
@@ -1107,6 +1246,14 @@
       "mark": "101",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"1251 GALE DRIVE\",\"asset_number\":\"7815001008\",\"site_number\":\"5001\"},\"A\"]|101|8|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1251 GALE DRIVE",
+        "asset_number": "7815001008",
+        "site_number": "5001"
+      },
+      "opening_scope_id": "[{\"address\":\"1251 GALE DRIVE\",\"asset_number\":\"7815001008\",\"site_number\":\"5001\"},\"A\"]",
       "page": 7,
       "pair": false,
       "points_per_foot": 9,
@@ -1132,6 +1279,9 @@
       ],
       "sheet": "A101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "8|101|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 746,
@@ -1154,6 +1304,14 @@
       "mark": "102",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"1251 GALE DRIVE\",\"asset_number\":\"7815001008\",\"site_number\":\"5001\"},\"A\"]|102|8|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1251 GALE DRIVE",
+        "asset_number": "7815001008",
+        "site_number": "5001"
+      },
+      "opening_scope_id": "[{\"address\":\"1251 GALE DRIVE\",\"asset_number\":\"7815001008\",\"site_number\":\"5001\"},\"A\"]",
       "page": 7,
       "pair": false,
       "points_per_foot": 9,
@@ -1179,6 +1337,9 @@
       ],
       "sheet": "A101",
       "size": "2'-6\" x 7'-0\"",
+      "source_keys": [
+        "8|102|1"
+      ],
       "unsure": true,
       "width_inches": 30,
       "x": 676,
@@ -1199,6 +1360,14 @@
       "mark": "100B",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"1251 GALE DRIVE\",\"asset_number\":\"7815001008\",\"site_number\":\"5001\"},\"A\"]|100B|8|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1251 GALE DRIVE",
+        "asset_number": "7815001008",
+        "site_number": "5001"
+      },
+      "opening_scope_id": "[{\"address\":\"1251 GALE DRIVE\",\"asset_number\":\"7815001008\",\"site_number\":\"5001\"},\"A\"]",
       "page": 7,
       "pair": false,
       "points_per_foot": 9,
@@ -1224,6 +1393,9 @@
       ],
       "sheet": "A101",
       "size": "3'-0\" x 8'-0\"",
+      "source_keys": [
+        "8|100B|1"
+      ],
       "width_inches": 36,
       "x": 821,
       "y": 1529

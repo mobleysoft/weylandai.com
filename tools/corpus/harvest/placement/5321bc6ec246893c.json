@@ -1,0 +1,131 @@
+{
+  "rooms": [
+    {
+      "name": "MEN RESTROOM",
+      "number": "109",
+      "page": 105,
+      "points_per_foot": 27,
+      "sheet": "A-401",
+      "x": 1375,
+      "y": 798
+    },
+    {
+      "name": "MENS SHOWER ROOM",
+      "number": "110",
+      "page": 105,
+      "points_per_foot": 27,
+      "sheet": "A-401",
+      "x": 894,
+      "y": 842
+    },
+    {
+      "name": "WOMANS RESTROOM",
+      "number": "107",
+      "page": 105,
+      "points_per_foot": 27,
+      "sheet": "A-401",
+      "x": 1444,
+      "y": 1434
+    },
+    {
+      "name": "WOMANS SHOWER ROOM",
+      "number": "108",
+      "page": 105,
+      "points_per_foot": 27,
+      "sheet": "A-401",
+      "x": 852,
+      "y": 1447
+    },
+    {
+      "name": "MENS LOCKER ROOM",
+      "number": "126",
+      "page": 106,
+      "points_per_foot": null,
+      "sheet": "A-402",
+      "x": 1044,
+      "y": 960
+    }
+  ],
+  "set": {
+    "label": null,
+    "page_count": 112,
+    "rows_total": 35,
+    "sha16": "5321bc6ec246893c",
+    "source_url": null,
+    "tier": "agreed"
+  },
+  "sheets": [
+    {
+      "height": 1728,
+      "page": 105,
+      "plan_rule": "legacy",
+      "points_per_foot": [
+        27
+      ],
+      "scales": [
+        "3/8\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number",
+              "facility_number"
+            ],
+            "page": 108
+          }
+        ],
+        "kept_pages": [
+          108
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A-401",
+      "title": "ENLARGED PLANS",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 106,
+      "plan_rule": "legacy",
+      "points_per_foot": null,
+      "scales": [],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number",
+              "facility_number"
+            ],
+            "page": 108
+          }
+        ],
+        "kept_pages": [
+          108
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A-402",
+      "title": "ENLARGED PLANS",
+      "width": 2592
+    }
+  ],
+  "summary": {
+    "marks_placed": 0,
+    "marks_total": 1,
+    "placed_rate": 0,
+    "rooms_total": 5,
+    "sheets_total": 2,
+    "sheets_with_scale": 1,
+    "unplaced": [
+      {
+        "mark": "126A",
+        "page": 108,
+        "reason": "mark 126A (schedule p.108) not tagged on any plan"
+      }
+    ]
+  },
+  "tags": []
+}

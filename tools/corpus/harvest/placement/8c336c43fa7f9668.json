@@ -152,6 +152,24 @@
       "sheet": "A-101",
       "x": 862,
       "y": 1466
+    },
+    {
+      "name": "NUMBER",
+      "number": "A-7070",
+      "page": 6,
+      "points_per_foot": 27,
+      "sheet": "A-103",
+      "x": 2443,
+      "y": 251
+    },
+    {
+      "name": "PROJECT # R2402-01",
+      "number": "6001",
+      "page": 6,
+      "points_per_foot": 27,
+      "sheet": "A-103",
+      "x": 2451,
+      "y": 1170
     }
   ],
   "set": {
@@ -166,6 +184,7 @@
     {
       "height": 1728,
       "page": 4,
+      "plan_rule": "legacy",
       "points_per_foot": [
         27
       ],
@@ -173,8 +192,54 @@
         "SCALE: 3/8\" = 1'-0\"",
         "SCALE: 3/8\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 10
+          }
+        ],
+        "kept_pages": [
+          10
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-101",
       "title": "FLOOR PLAN NOTES FLOOR PLAN DIMENSIONS",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 6,
+      "plan_rule": "extended-title",
+      "points_per_foot": [
+        27
+      ],
+      "scales": [
+        "SCALE: 3/8\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 10
+          }
+        ],
+        "kept_pages": [
+          10
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A-103",
+      "title": "FLOOR PLAN",
       "width": 2592
     }
   ],
@@ -182,9 +247,9 @@
     "marks_placed": 2,
     "marks_total": 2,
     "placed_rate": 1,
-    "rooms_total": 17,
-    "sheets_total": 1,
-    "sheets_with_scale": 1,
+    "rooms_total": 19,
+    "sheets_total": 2,
+    "sheets_with_scale": 2,
     "unplaced": []
   },
   "tags": [
@@ -203,6 +268,14 @@
       "mark": "101",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"1510 E ELM ST\",\"asset_number\":\"8136001003\",\"site_number\":\"6001\"},\"A\"]|101|10|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1510 E ELM ST",
+        "asset_number": "8136001003",
+        "site_number": "6001"
+      },
+      "opening_scope_id": "[{\"address\":\"1510 E ELM ST\",\"asset_number\":\"8136001003\",\"site_number\":\"6001\"},\"A\"]",
       "page": 4,
       "pair": false,
       "points_per_foot": 27,
@@ -228,6 +301,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "10|101|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 973,
@@ -248,6 +324,14 @@
       "mark": "102",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"1510 E ELM ST\",\"asset_number\":\"8136001003\",\"site_number\":\"6001\"},\"A\"]|102|10|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1510 E ELM ST",
+        "asset_number": "8136001003",
+        "site_number": "6001"
+      },
+      "opening_scope_id": "[{\"address\":\"1510 E ELM ST\",\"asset_number\":\"8136001003\",\"site_number\":\"6001\"},\"A\"]",
       "page": 4,
       "pair": false,
       "points_per_foot": 27,
@@ -273,6 +357,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 6'-8\"",
+      "source_keys": [
+        "10|102|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 951,

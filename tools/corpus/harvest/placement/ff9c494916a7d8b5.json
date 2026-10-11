@@ -94,6 +94,7 @@
     {
       "height": 1728,
       "page": 13,
+      "plan_rule": "legacy",
       "points_per_foot": [
         18
       ],
@@ -101,6 +102,22 @@
         "1/4\" = 1'-0\"",
         "1/4\" = 1'-0\" 11"
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 19
+          }
+        ],
+        "kept_pages": [
+          19
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-101",
       "title": "BASEMENT FLOOR PLAN",
       "width": 2592
@@ -108,6 +125,7 @@
     {
       "height": 1728,
       "page": 14,
+      "plan_rule": "legacy",
       "points_per_foot": [
         18
       ],
@@ -115,6 +133,22 @@
         "1/4\" = 1'-0\"",
         "1/4\" = 1'-0\" 11"
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "asset_number",
+              "site_number"
+            ],
+            "page": 19
+          }
+        ],
+        "kept_pages": [
+          19
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-102",
       "title": "GROUND LEVEL FLOOR PLAN",
       "width": 2592
@@ -145,6 +179,14 @@
       "mark": "B103",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"2413 EAST MCCARTY ST\",\"asset_number\":\"8136027002\",\"site_number\":\"6027\"},\"A\"]|B103|19|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2413 EAST MCCARTY ST",
+        "asset_number": "8136027002",
+        "site_number": "6027"
+      },
+      "opening_scope_id": "[{\"address\":\"2413 EAST MCCARTY ST\",\"asset_number\":\"8136027002\",\"site_number\":\"6027\"},\"A\"]",
       "page": 13,
       "pair": false,
       "points_per_foot": 18,
@@ -170,6 +212,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "19|B103|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 595,
@@ -190,6 +235,14 @@
       "mark": "101",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"address\":\"2413 EAST MCCARTY ST\",\"asset_number\":\"8136027002\",\"site_number\":\"6027\"},\"A\"]|101|19|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "2413 EAST MCCARTY ST",
+        "asset_number": "8136027002",
+        "site_number": "6027"
+      },
+      "opening_scope_id": "[{\"address\":\"2413 EAST MCCARTY ST\",\"asset_number\":\"8136027002\",\"site_number\":\"6027\"},\"A\"]",
       "page": 14,
       "pair": false,
       "points_per_foot": 18,
@@ -215,6 +268,9 @@
       ],
       "sheet": "A-102",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "19|101|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 555,

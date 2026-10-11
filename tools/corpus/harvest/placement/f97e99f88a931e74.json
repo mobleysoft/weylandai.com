@@ -1,0 +1,3668 @@
+{
+  "rooms": [
+    {
+      "name": "VESTIBULE",
+      "number": "112",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 1121,
+      "y": 245
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "101",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 1228,
+      "y": 291
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "103",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 1349,
+      "y": 292
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "105",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 1460,
+      "y": 292
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "107",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 1576,
+      "y": 292
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "109",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 1695,
+      "y": 292
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "111",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 1810,
+      "y": 292
+    },
+    {
+      "name": "OFFICE",
+      "number": "128",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 309,
+      "y": 298
+    },
+    {
+      "name": "OFFICE",
+      "number": "126",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 433,
+      "y": 298
+    },
+    {
+      "name": "OFFICE",
+      "number": "125",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 538,
+      "y": 298
+    },
+    {
+      "name": "OFFICE",
+      "number": "123",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 661,
+      "y": 298
+    },
+    {
+      "name": "OFFICE",
+      "number": "122",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 769,
+      "y": 298
+    },
+    {
+      "name": "OFFICE",
+      "number": "120",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 891,
+      "y": 298
+    },
+    {
+      "name": "CONFERENCE RM",
+      "number": "119",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 1003,
+      "y": 298
+    },
+    {
+      "name": "LOBBY",
+      "number": "134",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 1117,
+      "y": 307
+    },
+    {
+      "name": "RR",
+      "number": "126B",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 433,
+      "y": 331
+    },
+    {
+      "name": "ALL",
+      "number": "A-401",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 1353,
+      "y": 337
+    },
+    {
+      "name": "RR",
+      "number": "120B",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 890,
+      "y": 361
+    },
+    {
+      "name": "EXIST RR",
+      "number": "101B",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 1228,
+      "y": 361
+    },
+    {
+      "name": "EXIST RR",
+      "number": "105B",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 1460,
+      "y": 361
+    },
+    {
+      "name": "EXIST RR",
+      "number": "109B",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 1695,
+      "y": 361
+    },
+    {
+      "name": "RR",
+      "number": "123B",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 661,
+      "y": 362
+    },
+    {
+      "name": "DN F.F. 102'-0\" CORRIDOR",
+      "number": "132",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 1300,
+      "y": 434
+    },
+    {
+      "name": "CORRIDOR",
+      "number": "133",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 1578,
+      "y": 435
+    },
+    {
+      "name": "CORRIDOR",
+      "number": "130",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 437,
+      "y": 437
+    },
+    {
+      "name": "CORRIDOR",
+      "number": "131",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 903,
+      "y": 437
+    },
+    {
+      "name": "DN F.F. 102'-0\" CORRIDOR",
+      "number": "102",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 1318,
+      "y": 442
+    },
+    {
+      "name": "FOYER",
+      "number": "104A",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 1433,
+      "y": 494
+    },
+    {
+      "name": "PRIVATE RR",
+      "number": "104B",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 1511,
+      "y": 494
+    },
+    {
+      "name": "OFFICE",
+      "number": "118",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 903,
+      "y": 507
+    },
+    {
+      "name": "EXIST CLASSROOM",
+      "number": "127",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 367,
+      "y": 560
+    },
+    {
+      "name": "EXIST STORAGE",
+      "number": "124",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 559,
+      "y": 560
+    },
+    {
+      "name": "KITCHENETTE",
+      "number": "113",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 1213,
+      "y": 561
+    },
+    {
+      "name": "CONFERENCE ROOM",
+      "number": "121",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 712,
+      "y": 563
+    },
+    {
+      "name": "STORAGE",
+      "number": "110",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 1725,
+      "y": 563
+    },
+    {
+      "name": "EXIST LAUNDRY ROOM",
+      "number": "102",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 1308,
+      "y": 572
+    },
+    {
+      "name": "SINGLE BEDROOM",
+      "number": "104",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 1463,
+      "y": 597
+    },
+    {
+      "name": "OFFICE",
+      "number": "117",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 894,
+      "y": 604
+    },
+    {
+      "name": "STORAGE",
+      "number": "114",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 1132,
+      "y": 631
+    },
+    {
+      "name": "EXIST JANITOR RM",
+      "number": "116",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 894,
+      "y": 688
+    },
+    {
+      "name": "EXIST UNISEX RR",
+      "number": "115",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 891,
+      "y": 741
+    },
+    {
+      "name": "EXIST MECHANICAL",
+      "number": "129",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 1048,
+      "y": 993
+    },
+    {
+      "name": "PROJECT # R2502-01",
+      "number": "6001",
+      "page": 23,
+      "points_per_foot": 9,
+      "sheet": "A-105",
+      "x": 2450,
+      "y": 1161
+    },
+    {
+      "name": "BEDROOM",
+      "number": "232A",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 998,
+      "y": 266
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "220",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 305,
+      "y": 296
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "218",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 423,
+      "y": 296
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "216",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 536,
+      "y": 296
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "214",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 657,
+      "y": 296
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "212",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 770,
+      "y": 299
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "210",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 888,
+      "y": 299
+    },
+    {
+      "name": "LIVING ROOM",
+      "number": "232",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 1116,
+      "y": 299
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "221",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 1231,
+      "y": 299
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "223",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 1351,
+      "y": 299
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "225",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 1456,
+      "y": 299
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "227",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 1588,
+      "y": 299
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "229",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 1690,
+      "y": 299
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "231",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 1811,
+      "y": 299
+    },
+    {
+      "name": "RR",
+      "number": "232B",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 1003,
+      "y": 344
+    },
+    {
+      "name": "EXIST RR",
+      "number": "218B",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 423,
+      "y": 362
+    },
+    {
+      "name": "EXIST RR",
+      "number": "214B",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 657,
+      "y": 362
+    },
+    {
+      "name": "EXIST RR",
+      "number": "210B",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 888,
+      "y": 362
+    },
+    {
+      "name": "EXIST RR",
+      "number": "221B",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 1231,
+      "y": 362
+    },
+    {
+      "name": "EXIST RR",
+      "number": "225B",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 1456,
+      "y": 362
+    },
+    {
+      "name": "EXIST RR",
+      "number": "229B",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 1690,
+      "y": 362
+    },
+    {
+      "name": "AREA OF REFUGE",
+      "number": "235",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 1518,
+      "y": 439
+    },
+    {
+      "name": "CORRIDOR",
+      "number": "240",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 987,
+      "y": 466
+    },
+    {
+      "name": "RR",
+      "number": "215B",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 615,
+      "y": 497
+    },
+    {
+      "name": "AREA OF REFUGE",
+      "number": "233",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 503,
+      "y": 499
+    },
+    {
+      "name": "EXIST ACCESSIBLE RR",
+      "number": "226B",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 1490,
+      "y": 507
+    },
+    {
+      "name": "EXIST RR",
+      "number": "217B",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 423,
+      "y": 511
+    },
+    {
+      "name": "EXIST RR",
+      "number": "222B",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 1236,
+      "y": 511
+    },
+    {
+      "name": "EXIST RR",
+      "number": "228B",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 1696,
+      "y": 511
+    },
+    {
+      "name": "EXIST RR",
+      "number": "211B",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 888,
+      "y": 512
+    },
+    {
+      "name": "UNISEX RR",
+      "number": "234",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 1126,
+      "y": 527
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "213",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 770,
+      "y": 585
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "211",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 888,
+      "y": 585
+    },
+    {
+      "name": "JAN. CL.",
+      "number": "236",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 1035,
+      "y": 585
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "222",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 1236,
+      "y": 585
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "224",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 1352,
+      "y": 585
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "228",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 1696,
+      "y": 585
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "230",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 1811,
+      "y": 586
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "219",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 305,
+      "y": 588
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "217",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 423,
+      "y": 588
+    },
+    {
+      "name": "PRIVATE DORM",
+      "number": "215",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 639,
+      "y": 588
+    },
+    {
+      "name": "ACCESSIBILE DORM",
+      "number": "226",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 1483,
+      "y": 598
+    },
+    {
+      "name": "EXIST CLEAN LINEN",
+      "number": "237",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 1091,
+      "y": 731
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "202",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 848,
+      "y": 856
+    },
+    {
+      "name": "EXIST RR",
+      "number": "202B",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 848,
+      "y": 884
+    },
+    {
+      "name": "EXIST RR",
+      "number": "201B",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 1115,
+      "y": 889
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "201",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 1115,
+      "y": 920
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "203",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 1115,
+      "y": 981
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "204",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 848,
+      "y": 1002
+    },
+    {
+      "name": "EXIST RR",
+      "number": "203B",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 1115,
+      "y": 1011
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "205",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 1123,
+      "y": 1124
+    },
+    {
+      "name": "EXIST STORAGE",
+      "number": "238",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 848,
+      "y": 1156
+    },
+    {
+      "name": "CORRIDOR",
+      "number": "239",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 994,
+      "y": 1156
+    },
+    {
+      "name": "PROJECT # R2502-01",
+      "number": "6001",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 2450,
+      "y": 1161
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "207",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 1123,
+      "y": 1200
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "206",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 848,
+      "y": 1212
+    },
+    {
+      "name": "EXIST RR",
+      "number": "207B",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 1123,
+      "y": 1228
+    },
+    {
+      "name": "EXIST RR",
+      "number": "206B",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 848,
+      "y": 1243
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "208",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 848,
+      "y": 1359
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "209",
+      "page": 24,
+      "points_per_foot": 9,
+      "sheet": "A-106",
+      "x": 1123,
+      "y": 1359
+    },
+    {
+      "name": "BEDROOM",
+      "number": "332C",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 993,
+      "y": 262
+    },
+    {
+      "name": "BEDROOM",
+      "number": "332D",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 1123,
+      "y": 262
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "310",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 884,
+      "y": 300
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "321",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 1231,
+      "y": 300
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "323",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 1349,
+      "y": 300
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "325",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 1464,
+      "y": 300
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "327",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 1598,
+      "y": 300
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "329",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 1689,
+      "y": 300
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "331",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 1812,
+      "y": 300
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "320",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 309,
+      "y": 302
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "318",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 424,
+      "y": 302
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "316",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 535,
+      "y": 302
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "314",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 654,
+      "y": 302
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "312",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 771,
+      "y": 302
+    },
+    {
+      "name": "RR",
+      "number": "332B",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 999,
+      "y": 345
+    },
+    {
+      "name": "EXIST RR",
+      "number": "318B",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 424,
+      "y": 363
+    },
+    {
+      "name": "EXIST RR",
+      "number": "314B",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 654,
+      "y": 363
+    },
+    {
+      "name": "EXIST RR",
+      "number": "310B",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 884,
+      "y": 363
+    },
+    {
+      "name": "LIVING ROOM",
+      "number": "332",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 1123,
+      "y": 363
+    },
+    {
+      "name": "EXIST RR",
+      "number": "321B",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 1231,
+      "y": 363
+    },
+    {
+      "name": "EXIST RR",
+      "number": "325B",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 1457,
+      "y": 363
+    },
+    {
+      "name": "EXIST RR",
+      "number": "329B",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 1689,
+      "y": 363
+    },
+    {
+      "name": "OPP.",
+      "number": "07",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 687,
+      "y": 440
+    },
+    {
+      "name": "CORRIDOR",
+      "number": "341",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 994,
+      "y": 454
+    },
+    {
+      "name": "ACCESSIBLE RR",
+      "number": "326B",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 1502,
+      "y": 495
+    },
+    {
+      "name": "ACCESSIBLE RR",
+      "number": "01",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 1472,
+      "y": 497
+    },
+    {
+      "name": "AREA OF REFUGE",
+      "number": "333",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 504,
+      "y": 499
+    },
+    {
+      "name": "ACCESSIBLE RR",
+      "number": "315B",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 621,
+      "y": 499
+    },
+    {
+      "name": "AREA OF REFUGE",
+      "number": "335",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 1582,
+      "y": 499
+    },
+    {
+      "name": "EXIST RR",
+      "number": "317B",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 424,
+      "y": 511
+    },
+    {
+      "name": "EXIST RR",
+      "number": "311B",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 884,
+      "y": 511
+    },
+    {
+      "name": "UNISEX RR",
+      "number": "334A",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 1125,
+      "y": 511
+    },
+    {
+      "name": "EXIST RR",
+      "number": "322B",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 1231,
+      "y": 511
+    },
+    {
+      "name": "EXIST RR",
+      "number": "328B",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 1695,
+      "y": 511
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "319",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 313,
+      "y": 586
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "317",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 424,
+      "y": 586
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "313",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 771,
+      "y": 586
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "311",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 884,
+      "y": 586
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "322",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 1238,
+      "y": 586
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "324",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 1344,
+      "y": 586
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "328",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 1695,
+      "y": 586
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "330",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 1812,
+      "y": 586
+    },
+    {
+      "name": "ACCESSIBLE DORM",
+      "number": "315",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 639,
+      "y": 608
+    },
+    {
+      "name": "ACCESSIBLE DORM",
+      "number": "326",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 1478,
+      "y": 610
+    },
+    {
+      "name": "STORAGE",
+      "number": "334B",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 1236,
+      "y": 622
+    },
+    {
+      "name": "EXIST JAN. CL.",
+      "number": "336",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 905,
+      "y": 678
+    },
+    {
+      "name": "EXIST CLEAN LINEN",
+      "number": "337",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 1106,
+      "y": 738
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "302",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 852,
+      "y": 866
+    },
+    {
+      "name": "EXIST RR",
+      "number": "301B",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 1124,
+      "y": 875
+    },
+    {
+      "name": "EXIST RR",
+      "number": "302B",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 852,
+      "y": 893
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "301",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 1124,
+      "y": 903
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "303",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 1124,
+      "y": 980
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "304",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 852,
+      "y": 1003
+    },
+    {
+      "name": "EXIST RR",
+      "number": "303B",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 1124,
+      "y": 1008
+    },
+    {
+      "name": "AREA OF REFUGE",
+      "number": "338",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 852,
+      "y": 1039
+    },
+    {
+      "name": "CORRIDOR",
+      "number": "340",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 994,
+      "y": 1101
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "305",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 1124,
+      "y": 1121
+    },
+    {
+      "name": "EXIST STORAGE",
+      "number": "339",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 851,
+      "y": 1154
+    },
+    {
+      "name": "PROJECT # R2502-01",
+      "number": "6001",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 2450,
+      "y": 1161
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "306",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 851,
+      "y": 1212
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "307",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 1124,
+      "y": 1215
+    },
+    {
+      "name": "EXIST RR",
+      "number": "306B",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 851,
+      "y": 1239
+    },
+    {
+      "name": "EXIST RR",
+      "number": "307B",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 1124,
+      "y": 1241
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "308",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 851,
+      "y": 1356
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "309",
+      "page": 25,
+      "points_per_foot": 9,
+      "sheet": "A-107",
+      "x": 1124,
+      "y": 1356
+    },
+    {
+      "name": "DOOR NUMBER",
+      "number": "AD101",
+      "page": 28,
+      "points_per_foot": 108,
+      "sheet": "A-112",
+      "x": 152,
+      "y": 937
+    },
+    {
+      "name": "HARDWARE SETS",
+      "number": "06.02",
+      "page": 28,
+      "points_per_foot": 108,
+      "sheet": "A-112",
+      "x": 672,
+      "y": 937
+    },
+    {
+      "name": "FOYER",
+      "number": "104A",
+      "page": 36,
+      "points_per_foot": 36,
+      "sheet": "A-401",
+      "x": 559,
+      "y": 409
+    },
+    {
+      "name": "PRIVATE RR",
+      "number": "104B",
+      "page": 36,
+      "points_per_foot": 36,
+      "sheet": "A-401",
+      "x": 766,
+      "y": 409
+    },
+    {
+      "name": "SINGLE BEDROOM",
+      "number": "104",
+      "page": 36,
+      "points_per_foot": 36,
+      "sheet": "A-401",
+      "x": 598,
+      "y": 704
+    },
+    {
+      "name": "PROJECT # R2502-01",
+      "number": "6001",
+      "page": 36,
+      "points_per_foot": 36,
+      "sheet": "A-401",
+      "x": 2450,
+      "y": 1161
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "101",
+      "page": 36,
+      "points_per_foot": 36,
+      "sheet": "A-401",
+      "x": 235,
+      "y": 1224
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "103",
+      "page": 36,
+      "points_per_foot": 36,
+      "sheet": "A-401",
+      "x": 570,
+      "y": 1224
+    },
+    {
+      "name": "EXIST RR",
+      "number": "101B",
+      "page": 36,
+      "points_per_foot": 36,
+      "sheet": "A-401",
+      "x": 452,
+      "y": 1503
+    },
+    {
+      "name": "OFFICE",
+      "number": "125",
+      "page": 37,
+      "points_per_foot": 36,
+      "sheet": "A-402",
+      "x": 477,
+      "y": 562
+    },
+    {
+      "name": "OFFICE",
+      "number": "123",
+      "page": 37,
+      "points_per_foot": 36,
+      "sheet": "A-402",
+      "x": 987,
+      "y": 562
+    },
+    {
+      "name": "RR",
+      "number": "123B",
+      "page": 37,
+      "points_per_foot": 36,
+      "sheet": "A-402",
+      "x": 790,
+      "y": 819
+    },
+    {
+      "name": "PROJECT # R2502-01",
+      "number": "6001",
+      "page": 37,
+      "points_per_foot": 36,
+      "sheet": "A-402",
+      "x": 2450,
+      "y": 1161
+    },
+    {
+      "name": "EXIST UNISEX RR",
+      "number": "115",
+      "page": 37,
+      "points_per_foot": 36,
+      "sheet": "A-402",
+      "x": 444,
+      "y": 1455
+    },
+    {
+      "name": "BEDROOM",
+      "number": "232A",
+      "page": 38,
+      "points_per_foot": 36,
+      "sheet": "A-403",
+      "x": 446,
+      "y": 497
+    },
+    {
+      "name": "LIVING ROOM",
+      "number": "232",
+      "page": 38,
+      "points_per_foot": 36,
+      "sheet": "A-403",
+      "x": 909,
+      "y": 500
+    },
+    {
+      "name": "RR",
+      "number": "232B",
+      "page": 38,
+      "points_per_foot": 36,
+      "sheet": "A-403",
+      "x": 455,
+      "y": 741
+    },
+    {
+      "name": "UNISEX RR",
+      "number": "234",
+      "page": 38,
+      "points_per_foot": 36,
+      "sheet": "A-403",
+      "x": 1480,
+      "y": 754
+    },
+    {
+      "name": "CPT-1",
+      "number": "T-1",
+      "page": 38,
+      "points_per_foot": 36,
+      "sheet": "A-403",
+      "x": 830,
+      "y": 814
+    },
+    {
+      "name": "SS-1",
+      "number": "T-1",
+      "page": 38,
+      "points_per_foot": 36,
+      "sheet": "A-403",
+      "x": 836,
+      "y": 859
+    },
+    {
+      "name": "PROJECT # R2502-01",
+      "number": "6001",
+      "page": 38,
+      "points_per_foot": 36,
+      "sheet": "A-403",
+      "x": 2450,
+      "y": 1161
+    },
+    {
+      "name": "CHASE",
+      "number": "W5.5",
+      "page": 38,
+      "points_per_foot": 36,
+      "sheet": "A-403",
+      "x": 2031,
+      "y": 1446
+    },
+    {
+      "name": "CB-1",
+      "number": "J-1",
+      "page": 38,
+      "points_per_foot": 36,
+      "sheet": "A-403",
+      "x": 892,
+      "y": 1547
+    },
+    {
+      "name": "EXIST DORM",
+      "number": "230",
+      "page": 38,
+      "points_per_foot": 36,
+      "sheet": "A-403",
+      "x": 2098,
+      "y": 1580
+    },
+    {
+      "name": "ACCESSIBLE RR",
+      "number": "326B",
+      "page": 39,
+      "points_per_foot": 36,
+      "sheet": "A-404",
+      "x": 520,
+      "y": 392
+    },
+    {
+      "name": "CL",
+      "number": "4",
+      "page": 39,
+      "points_per_foot": 36,
+      "sheet": "A-404",
+      "x": 773,
+      "y": 502
+    },
+    {
+      "name": "ACCESSIBLE DORM",
+      "number": "326",
+      "page": 39,
+      "points_per_foot": 36,
+      "sheet": "A-404",
+      "x": 520,
+      "y": 592
+    },
+    {
+      "name": "ACCESSIBLE RESTROOM",
+      "number": "7",
+      "page": 39,
+      "points_per_foot": 36,
+      "sheet": "A-404",
+      "x": 252,
+      "y": 678
+    },
+    {
+      "name": "ACCESSIBLE RESTROOM",
+      "number": "9",
+      "page": 39,
+      "points_per_foot": 36,
+      "sheet": "A-404",
+      "x": 1174,
+      "y": 678
+    },
+    {
+      "name": "ACCESSIBLE RESTROOM",
+      "number": "4",
+      "page": 39,
+      "points_per_foot": 36,
+      "sheet": "A-404",
+      "x": 1527,
+      "y": 678
+    },
+    {
+      "name": "BEDROOM",
+      "number": "332C",
+      "page": 39,
+      "points_per_foot": 36,
+      "sheet": "A-404",
+      "x": 450,
+      "y": 923
+    },
+    {
+      "name": "BEDROOM",
+      "number": "332D",
+      "page": 39,
+      "points_per_foot": 36,
+      "sheet": "A-404",
+      "x": 971,
+      "y": 923
+    },
+    {
+      "name": "RR",
+      "number": "215B",
+      "page": 39,
+      "points_per_foot": 36,
+      "sheet": "A-404",
+      "x": 1701,
+      "y": 970
+    },
+    {
+      "name": "PRIVATE DORM",
+      "number": "215",
+      "page": 39,
+      "points_per_foot": 36,
+      "sheet": "A-404",
+      "x": 1646,
+      "y": 1113
+    },
+    {
+      "name": "PROJECT # R2502-01",
+      "number": "6001",
+      "page": 39,
+      "points_per_foot": 36,
+      "sheet": "A-404",
+      "x": 2450,
+      "y": 1161
+    },
+    {
+      "name": "RR",
+      "number": "332B",
+      "page": 39,
+      "points_per_foot": 36,
+      "sheet": "A-404",
+      "x": 472,
+      "y": 1214
+    },
+    {
+      "name": "CPT-1",
+      "number": "T-1",
+      "page": 39,
+      "points_per_foot": 36,
+      "sheet": "A-404",
+      "x": 853,
+      "y": 1303
+    },
+    {
+      "name": "LIVING ROOM",
+      "number": "332",
+      "page": 39,
+      "points_per_foot": 36,
+      "sheet": "A-404",
+      "x": 977,
+      "y": 1316
+    }
+  ],
+  "set": {
+    "label": "missouri_oa_fmdc - _R2502-01%20REBID%20Final%20Bid%20Plans.pdf",
+    "page_count": 147,
+    "rows_total": 211,
+    "sha16": "f97e99f88a931e74",
+    "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_R2502-01%20REBID%20Final%20Bid%20Plans.pdf",
+    "tier": "agreed"
+  },
+  "sheets": [
+    {
+      "height": 1728.24,
+      "page": 23,
+      "plan_rule": "extended-title",
+      "points_per_foot": [
+        9
+      ],
+      "scales": [
+        "SCALE: 1/8\" = 1'-0\"",
+        "SCALE: 1/8\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name"
+            ],
+            "page": 28
+          },
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name"
+            ],
+            "page": 32
+          },
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site_number",
+              "facility_number"
+            ],
+            "page": 44
+          },
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site_number",
+              "facility_number"
+            ],
+            "page": 45
+          }
+        ],
+        "kept_pages": [
+          28
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A-105",
+      "title": "DORM FIRST FLOOR PLAN",
+      "width": 2592.24
+    },
+    {
+      "height": 1728.24,
+      "page": 24,
+      "plan_rule": "extended-title",
+      "points_per_foot": [
+        9
+      ],
+      "scales": [
+        "SCALE: 1/8\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name"
+            ],
+            "page": 28
+          },
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name"
+            ],
+            "page": 32
+          },
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site_number",
+              "facility_number"
+            ],
+            "page": 44
+          },
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site_number",
+              "facility_number"
+            ],
+            "page": 45
+          }
+        ],
+        "kept_pages": [
+          28
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A-106",
+      "title": "DORM SECOND FLOOR PLAN",
+      "width": 2592.24
+    },
+    {
+      "height": 1728.24,
+      "page": 25,
+      "plan_rule": "extended-title",
+      "points_per_foot": [
+        9
+      ],
+      "scales": [
+        "SCALE: 1/8\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name"
+            ],
+            "page": 28
+          },
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name"
+            ],
+            "page": 32
+          },
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site_number",
+              "facility_number"
+            ],
+            "page": 44
+          },
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site_number",
+              "facility_number"
+            ],
+            "page": 45
+          }
+        ],
+        "kept_pages": [
+          28
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A-107",
+      "title": "DORM THIRD FLOOR PLAN",
+      "width": 2592.24
+    },
+    {
+      "height": 1728.24,
+      "page": 28,
+      "plan_rule": "extended-title",
+      "points_per_foot": [
+        18,
+        72,
+        108,
+        216
+      ],
+      "scales": [
+        "SCALE: 1/4\" = 1'-0\"",
+        "SCALE: 1/4\" = 1'-0\"",
+        "SCALE: 1/4\" = 1'-0\"",
+        "SCALE: 1/4\" = 1'-0\"",
+        "SCALE: 3\" = 1'-0\"",
+        "SCALE: 1/4\" = 1'-0\"",
+        "SCALE: 1/4\" = 1'-0\"",
+        "SCALE: 1/4\" = 1'-0\"",
+        "SCALE: 1/4\" = 1'-0\"",
+        "SCALE: 1\" = 1'-0\"",
+        "SCALE: 1 1/2\" = 1'-0\"",
+        "SCALE: 1 1/2\" = 1'-0\"",
+        "SCALE: 1 1/2\" = 1'-0\"",
+        "SCALE: 3\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name"
+            ],
+            "page": 28
+          },
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name"
+            ],
+            "page": 32
+          },
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name"
+            ],
+            "page": 44
+          },
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name"
+            ],
+            "page": 45
+          }
+        ],
+        "kept_pages": [
+          28
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A-112",
+      "title": "ADMIN. RESTROOM PLANS AND DETAILS ALTERNATE #1",
+      "width": 2592.24
+    },
+    {
+      "height": 1728.24,
+      "page": 36,
+      "plan_rule": "extended-title",
+      "points_per_foot": [
+        36
+      ],
+      "scales": [
+        "SCALE: 1/2\" = 1'-0\"",
+        "SCALE: 1/2\" = 1'-0\"",
+        "SCALE: 1/2\" = 1'-0\"",
+        "SCALE: 1/2\" = 1'-0\"",
+        "SCALE: 1/2\" = 1'-0\"",
+        "SCALE: 1/2\" = 1'-0\"",
+        "SCALE: 1/2\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name"
+            ],
+            "page": 28
+          },
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name"
+            ],
+            "page": 32
+          },
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site_number",
+              "facility_number"
+            ],
+            "page": 44
+          },
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site_number",
+              "facility_number"
+            ],
+            "page": 45
+          }
+        ],
+        "kept_pages": [
+          44,
+          45
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A-401",
+      "title": "DORM ENLARGE PLANS AND ELEVATIONS",
+      "width": 2592.24
+    },
+    {
+      "height": 1728.24,
+      "page": 37,
+      "plan_rule": "extended-title",
+      "points_per_foot": [
+        36
+      ],
+      "scales": [
+        "SCALE: 1/2\" = 1'-0\"",
+        "SCALE: 1/2\" = 1'-0\"",
+        "SCALE: 1/2\" = 1'-0\"",
+        "SCALE: 1/2\" = 1'-0\"",
+        "SCALE: 1/2\" = 1'-0\"",
+        "SCALE: 1/2\" = 1'-0\"",
+        "SCALE: 1/2\" = 1'-0\"",
+        "SCALE: 1/2\" = 1'-0\"",
+        "SCALE: 1/2\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name"
+            ],
+            "page": 28
+          },
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name"
+            ],
+            "page": 32
+          },
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site_number",
+              "facility_number"
+            ],
+            "page": 44
+          },
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site_number",
+              "facility_number"
+            ],
+            "page": 45
+          }
+        ],
+        "kept_pages": [
+          44,
+          45
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A-402",
+      "title": "DORM ENLARGE PLANS AND ELEVATIONS",
+      "width": 2592.24
+    },
+    {
+      "height": 1728.24,
+      "page": 38,
+      "plan_rule": "extended-title",
+      "points_per_foot": [
+        36
+      ],
+      "scales": [
+        "SCALE: 1/2\" = 1'-0\"",
+        "SCALE: 1/2\" = 1'-0\"",
+        "SCALE: 1/2\" = 1'-0\"",
+        "SCALE: 1/2\" = 1'-0\"",
+        "SCALE: 1/2\" = 1'-0\"",
+        "SCALE: 1/2\" = 1'-0\"",
+        "SCALE: 1/2\" = 1'-0\"",
+        "SCALE: 1/2\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name"
+            ],
+            "page": 28
+          },
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name"
+            ],
+            "page": 32
+          },
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site_number",
+              "facility_number"
+            ],
+            "page": 44
+          },
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site_number",
+              "facility_number"
+            ],
+            "page": 45
+          }
+        ],
+        "kept_pages": [
+          44,
+          45
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A-403",
+      "title": "DORM ENLARGE PLANS AND ELEVATIONS",
+      "width": 2592.24
+    },
+    {
+      "height": 1728.24,
+      "page": 39,
+      "plan_rule": "extended-title",
+      "points_per_foot": [
+        36
+      ],
+      "scales": [
+        "SCALE: 1/2\" = 1'-0\"",
+        "SCALE: 1/2\" = 1'-0\"",
+        "SCALE: 1/2\" = 1'-0\"",
+        "SCALE: 1/2\" = 1'-0\"",
+        "SCALE: 1/2\" = 1'-0\"",
+        "SCALE: 1/2\" = 1'-0\"",
+        "SCALE: 1/2\" = 1'-0\"",
+        "SCALE: 1/2\" = 1'-0\"",
+        "SCALE: 1/2\" = 1'-0\""
+      ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name"
+            ],
+            "page": 28
+          },
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name"
+            ],
+            "page": 32
+          },
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site_number",
+              "facility_number"
+            ],
+            "page": 44
+          },
+          {
+            "conflicts": [],
+            "matched": [
+              "facility_name",
+              "site_number",
+              "facility_number"
+            ],
+            "page": 45
+          }
+        ],
+        "kept_pages": [
+          44,
+          45
+        ],
+        "rule": "building-scope-then-similarity"
+      },
+      "sheet": "A-404",
+      "title": "DORM ENLARGE PLANS AND ELEVATIONS",
+      "width": 2592.24
+    }
+  ],
+  "summary": {
+    "marks_placed": 5,
+    "marks_total": 211,
+    "placed_rate": 0.023696682464454975,
+    "rooms_total": 206,
+    "sheets_total": 8,
+    "sheets_with_scale": 8,
+    "unplaced": [
+      {
+        "mark": "AD101",
+        "page": 28,
+        "reason": "mark AD101 (schedule p.28) not tagged on any plan"
+      },
+      {
+        "mark": "AD102",
+        "page": 28,
+        "reason": "mark AD102 (schedule p.28) not tagged on any plan"
+      },
+      {
+        "mark": "PT101",
+        "page": 32,
+        "reason": "mark PT101 (schedule p.32) not tagged on any plan"
+      },
+      {
+        "mark": "101A",
+        "page": 44,
+        "reason": "mark 101A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "101B",
+        "page": 44,
+        "reason": "mark 101B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "102",
+        "page": 44,
+        "reason": "mark 102 (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "103A",
+        "page": 44,
+        "reason": "mark 103A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "103B",
+        "page": 44,
+        "reason": "mark 103B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "105A",
+        "page": 44,
+        "reason": "mark 105A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "105B",
+        "page": 44,
+        "reason": "mark 105B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "107A",
+        "page": 44,
+        "reason": "mark 107A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "107B",
+        "page": 44,
+        "reason": "mark 107B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "109A",
+        "page": 44,
+        "reason": "mark 109A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "109B",
+        "page": 44,
+        "reason": "mark 109B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "110",
+        "page": 44,
+        "reason": "mark 110 (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "111A",
+        "page": 44,
+        "reason": "mark 111A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "111B",
+        "page": 44,
+        "reason": "mark 111B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "112A",
+        "page": 44,
+        "reason": "mark 112A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "112B",
+        "page": 44,
+        "reason": "mark 112B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "113",
+        "page": 44,
+        "reason": "mark 113 (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "114",
+        "page": 44,
+        "reason": "mark 114 (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "115",
+        "page": 44,
+        "reason": "mark 115 (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "116",
+        "page": 44,
+        "reason": "mark 116 (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "117",
+        "page": 44,
+        "reason": "mark 117 (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "118",
+        "page": 44,
+        "reason": "mark 118 (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "119",
+        "page": 44,
+        "reason": "mark 119 (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "120A",
+        "page": 44,
+        "reason": "mark 120A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "120B",
+        "page": 44,
+        "reason": "mark 120B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "121",
+        "page": 44,
+        "reason": "mark 121 (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "122A",
+        "page": 44,
+        "reason": "mark 122A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "122B",
+        "page": 44,
+        "reason": "mark 122B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "123A",
+        "page": 44,
+        "reason": "mark 123A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "123B",
+        "page": 44,
+        "reason": "mark 123B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "124",
+        "page": 44,
+        "reason": "mark 124 (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "125A",
+        "page": 44,
+        "reason": "mark 125A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "125B",
+        "page": 44,
+        "reason": "mark 125B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "126A",
+        "page": 44,
+        "reason": "mark 126A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "126B",
+        "page": 44,
+        "reason": "mark 126B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "127",
+        "page": 44,
+        "reason": "mark 127 (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "128A",
+        "page": 44,
+        "reason": "mark 128A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "128B",
+        "page": 44,
+        "reason": "mark 128B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "129A",
+        "page": 44,
+        "reason": "mark 129A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "129B",
+        "page": 44,
+        "reason": "mark 129B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "129C",
+        "page": 44,
+        "reason": "mark 129C (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "129D",
+        "page": 44,
+        "reason": "mark 129D (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "129F",
+        "page": 44,
+        "reason": "mark 129F (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "130A",
+        "page": 44,
+        "reason": "mark 130A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "130B",
+        "page": 44,
+        "reason": "mark 130B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "130C",
+        "page": 44,
+        "reason": "mark 130C (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "133A",
+        "page": 44,
+        "reason": "mark 133A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "133B",
+        "page": 44,
+        "reason": "mark 133B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "133C",
+        "page": 44,
+        "reason": "mark 133C (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "201A",
+        "page": 44,
+        "reason": "mark 201A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "201B",
+        "page": 44,
+        "reason": "mark 201B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "202A",
+        "page": 44,
+        "reason": "mark 202A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "202B",
+        "page": 44,
+        "reason": "mark 202B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "203A",
+        "page": 44,
+        "reason": "mark 203A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "203B",
+        "page": 44,
+        "reason": "mark 203B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "204A",
+        "page": 44,
+        "reason": "mark 204A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "204B",
+        "page": 44,
+        "reason": "mark 204B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "205A",
+        "page": 44,
+        "reason": "mark 205A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "205B",
+        "page": 44,
+        "reason": "mark 205B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "206A",
+        "page": 44,
+        "reason": "mark 206A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "206B",
+        "page": 44,
+        "reason": "mark 206B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "207A",
+        "page": 44,
+        "reason": "mark 207A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "207B",
+        "page": 44,
+        "reason": "mark 207B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "208A",
+        "page": 44,
+        "reason": "mark 208A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "208B",
+        "page": 44,
+        "reason": "mark 208B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "209A",
+        "page": 44,
+        "reason": "mark 209A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "209B",
+        "page": 44,
+        "reason": "mark 209B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "210A",
+        "page": 44,
+        "reason": "mark 210A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "210B",
+        "page": 44,
+        "reason": "mark 210B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "211A",
+        "page": 44,
+        "reason": "mark 211A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "211B",
+        "page": 44,
+        "reason": "mark 211B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "212A",
+        "page": 44,
+        "reason": "mark 212A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "212B",
+        "page": 44,
+        "reason": "mark 212B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "213A",
+        "page": 44,
+        "reason": "mark 213A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "213B",
+        "page": 44,
+        "reason": "mark 213B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "214A",
+        "page": 44,
+        "reason": "mark 214A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "214B",
+        "page": 44,
+        "reason": "mark 214B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "215A",
+        "page": 44,
+        "reason": "mark 215A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "215B",
+        "page": 44,
+        "reason": "mark 215B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "216A",
+        "page": 44,
+        "reason": "mark 216A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "216B",
+        "page": 44,
+        "reason": "mark 216B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "217A",
+        "page": 44,
+        "reason": "mark 217A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "217B",
+        "page": 44,
+        "reason": "mark 217B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "218A",
+        "page": 44,
+        "reason": "mark 218A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "218B",
+        "page": 44,
+        "reason": "mark 218B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "219A",
+        "page": 44,
+        "reason": "mark 219A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "219B",
+        "page": 44,
+        "reason": "mark 219B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "220A",
+        "page": 44,
+        "reason": "mark 220A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "220B",
+        "page": 44,
+        "reason": "mark 220B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "221A",
+        "page": 44,
+        "reason": "mark 221A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "221B",
+        "page": 44,
+        "reason": "mark 221B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "222A",
+        "page": 44,
+        "reason": "mark 222A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "222B",
+        "page": 44,
+        "reason": "mark 222B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "223A",
+        "page": 44,
+        "reason": "mark 223A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "223B",
+        "page": 44,
+        "reason": "mark 223B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "224A",
+        "page": 44,
+        "reason": "mark 224A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "224B",
+        "page": 44,
+        "reason": "mark 224B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "225A",
+        "page": 44,
+        "reason": "mark 225A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "225B",
+        "page": 44,
+        "reason": "mark 225B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "226A",
+        "page": 44,
+        "reason": "mark 226A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "226B",
+        "page": 44,
+        "reason": "mark 226B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "227A",
+        "page": 44,
+        "reason": "mark 227A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "227B",
+        "page": 44,
+        "reason": "mark 227B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "228A",
+        "page": 44,
+        "reason": "mark 228A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "228B",
+        "page": 44,
+        "reason": "mark 228B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "229A",
+        "page": 44,
+        "reason": "mark 229A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "229B",
+        "page": 44,
+        "reason": "mark 229B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "230A",
+        "page": 44,
+        "reason": "mark 230A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "230B",
+        "page": 44,
+        "reason": "mark 230B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "231A",
+        "page": 44,
+        "reason": "mark 231A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "231B",
+        "page": 44,
+        "reason": "mark 231B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "232A",
+        "page": 44,
+        "reason": "mark 232A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "232B",
+        "page": 44,
+        "reason": "mark 232B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "232C",
+        "page": 44,
+        "reason": "mark 232C (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "233A",
+        "page": 44,
+        "reason": "mark 233A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "233B",
+        "page": 44,
+        "reason": "mark 233B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "234",
+        "page": 44,
+        "reason": "mark 234 (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "235A",
+        "page": 44,
+        "reason": "mark 235A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "235B",
+        "page": 44,
+        "reason": "mark 235B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "236",
+        "page": 44,
+        "reason": "mark 236 (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "237",
+        "page": 44,
+        "reason": "mark 237 (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "238",
+        "page": 44,
+        "reason": "mark 238 (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "239A",
+        "page": 44,
+        "reason": "mark 239A (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "239B",
+        "page": 44,
+        "reason": "mark 239B (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "239C",
+        "page": 44,
+        "reason": "mark 239C (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "239D",
+        "page": 44,
+        "reason": "mark 239D (schedule p.44) not tagged on any plan"
+      },
+      {
+        "mark": "301A",
+        "page": 45,
+        "reason": "mark 301A (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "301B",
+        "page": 45,
+        "reason": "mark 301B (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "302A",
+        "page": 45,
+        "reason": "mark 302A (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "302B",
+        "page": 45,
+        "reason": "mark 302B (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "303A",
+        "page": 45,
+        "reason": "mark 303A (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "303B",
+        "page": 45,
+        "reason": "mark 303B (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "304A",
+        "page": 45,
+        "reason": "mark 304A (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "304B",
+        "page": 45,
+        "reason": "mark 304B (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "305A",
+        "page": 45,
+        "reason": "mark 305A (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "305B",
+        "page": 45,
+        "reason": "mark 305B (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "306A",
+        "page": 45,
+        "reason": "mark 306A (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "306B",
+        "page": 45,
+        "reason": "mark 306B (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "307A",
+        "page": 45,
+        "reason": "mark 307A (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "307B",
+        "page": 45,
+        "reason": "mark 307B (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "308A",
+        "page": 45,
+        "reason": "mark 308A (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "308B",
+        "page": 45,
+        "reason": "mark 308B (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "309A",
+        "page": 45,
+        "reason": "mark 309A (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "309B",
+        "page": 45,
+        "reason": "mark 309B (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "310A",
+        "page": 45,
+        "reason": "mark 310A (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "310B",
+        "page": 45,
+        "reason": "mark 310B (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "311A",
+        "page": 45,
+        "reason": "mark 311A (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "311B",
+        "page": 45,
+        "reason": "mark 311B (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "312A",
+        "page": 45,
+        "reason": "mark 312A (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "312B",
+        "page": 45,
+        "reason": "mark 312B (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "313A",
+        "page": 45,
+        "reason": "mark 313A (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "313B",
+        "page": 45,
+        "reason": "mark 313B (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "314A",
+        "page": 45,
+        "reason": "mark 314A (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "314B",
+        "page": 45,
+        "reason": "mark 314B (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "315A",
+        "page": 45,
+        "reason": "mark 315A (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "315B",
+        "page": 45,
+        "reason": "mark 315B (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "316A",
+        "page": 45,
+        "reason": "mark 316A (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "316B",
+        "page": 45,
+        "reason": "mark 316B (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "317A",
+        "page": 45,
+        "reason": "mark 317A (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "317B",
+        "page": 45,
+        "reason": "mark 317B (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "318A",
+        "page": 45,
+        "reason": "mark 318A (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "318B",
+        "page": 45,
+        "reason": "mark 318B (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "319A",
+        "page": 45,
+        "reason": "mark 319A (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "319B",
+        "page": 45,
+        "reason": "mark 319B (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "320A",
+        "page": 45,
+        "reason": "mark 320A (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "320B",
+        "page": 45,
+        "reason": "mark 320B (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "321A",
+        "page": 45,
+        "reason": "mark 321A (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "321B",
+        "page": 45,
+        "reason": "mark 321B (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "322A",
+        "page": 45,
+        "reason": "mark 322A (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "322B",
+        "page": 45,
+        "reason": "mark 322B (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "323A",
+        "page": 45,
+        "reason": "mark 323A (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "323B",
+        "page": 45,
+        "reason": "mark 323B (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "324A",
+        "page": 45,
+        "reason": "mark 324A (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "324B",
+        "page": 45,
+        "reason": "mark 324B (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "325A",
+        "page": 45,
+        "reason": "mark 325A (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "325B",
+        "page": 45,
+        "reason": "mark 325B (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "326A",
+        "page": 45,
+        "reason": "mark 326A (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "326B",
+        "page": 45,
+        "reason": "mark 326B (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "327A",
+        "page": 45,
+        "reason": "mark 327A (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "327B",
+        "page": 45,
+        "reason": "mark 327B (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "328A",
+        "page": 45,
+        "reason": "mark 328A (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "328B",
+        "page": 45,
+        "reason": "mark 328B (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "329A",
+        "page": 45,
+        "reason": "mark 329A (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "329B",
+        "page": 45,
+        "reason": "mark 329B (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "330A",
+        "page": 45,
+        "reason": "mark 330A (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "330B",
+        "page": 45,
+        "reason": "mark 330B (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "331A",
+        "page": 45,
+        "reason": "mark 331A (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "331B",
+        "page": 45,
+        "reason": "mark 331B (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "332A",
+        "page": 45,
+        "reason": "mark 332A (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "332B",
+        "page": 45,
+        "reason": "mark 332B (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "332C",
+        "page": 45,
+        "reason": "mark 332C (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "332D",
+        "page": 45,
+        "reason": "mark 332D (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "333A",
+        "page": 45,
+        "reason": "mark 333A (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "333B",
+        "page": 45,
+        "reason": "mark 333B (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "334",
+        "page": 45,
+        "reason": "mark 334 (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "335A",
+        "page": 45,
+        "reason": "mark 335A (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "335B",
+        "page": 45,
+        "reason": "mark 335B (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "336A",
+        "page": 45,
+        "reason": "mark 336A (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "336B",
+        "page": 45,
+        "reason": "mark 336B (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "337",
+        "page": 45,
+        "reason": "mark 337 (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "338A",
+        "page": 45,
+        "reason": "mark 338A (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "338B",
+        "page": 45,
+        "reason": "mark 338B (schedule p.45) not tagged on any plan"
+      },
+      {
+        "mark": "339",
+        "page": 45,
+        "reason": "mark 339 (schedule p.45) not tagged on any plan"
+      }
+    ]
+  },
+  "tags": [
+    {
+      "also_on": [],
+      "door_pages": [
+        44
+      ],
+      "door_type": "WD-1",
+      "fire_rating": "3/4 HR",
+      "frame_type": "TYP-2",
+      "h": 9.51068,
+      "hardware_group": "07.04",
+      "height_inches": 80,
+      "location": "SINGLE BEDROOM 104A",
+      "mark": "104A",
+      "matched_by": "exact",
+      "material": null,
+      "opening_id": "[{\"address\":\"1510 E. ELM STREET\",\"facility_name\":\"HEADQUARTERS COMPLEX\",\"facility_number\":\"8136001005\",\"site_number\":\"6001\"},\"A\"]|104A|44|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1510 E. ELM STREET",
+        "facility_name": "HEADQUARTERS COMPLEX",
+        "facility_number": "8136001005",
+        "site_number": "6001"
+      },
+      "opening_scope_id": "[{\"address\":\"1510 E. ELM STREET\",\"facility_name\":\"HEADQUARTERS COMPLEX\",\"facility_number\":\"8136001005\",\"site_number\":\"6001\"},\"A\"]",
+      "page": 36,
+      "pair": false,
+      "points_per_foot": 36,
+      "room": "104A",
+      "room_by": "schedule_location",
+      "room_name": "FOYER",
+      "schedule_rows": [
+        {
+          "door_type": "WD-1",
+          "fire_rating": "3/4 HR",
+          "frame_type": "TYP-2",
+          "hardware_group": "07.04",
+          "height_inches": 80,
+          "location": "SINGLE BEDROOM 104A",
+          "mark": "104A",
+          "material": null,
+          "page": 44,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 238
+        }
+      ],
+      "sheet": "A-401",
+      "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "44|104A|1"
+      ],
+      "width_inches": 36,
+      "x": 346,
+      "y": 226
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        44
+      ],
+      "door_type": "WD-1",
+      "fire_rating": null,
+      "frame_type": "TYP-2",
+      "h": 9.51068,
+      "hardware_group": "06.01",
+      "height_inches": 80,
+      "location": "PRIVATE BATH 104B",
+      "mark": "104B",
+      "matched_by": "exact",
+      "material": null,
+      "opening_id": "[{\"address\":\"1510 E. ELM STREET\",\"facility_name\":\"HEADQUARTERS COMPLEX\",\"facility_number\":\"8136001005\",\"site_number\":\"6001\"},\"A\"]|104B|44|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1510 E. ELM STREET",
+        "facility_name": "HEADQUARTERS COMPLEX",
+        "facility_number": "8136001005",
+        "site_number": "6001"
+      },
+      "opening_scope_id": "[{\"address\":\"1510 E. ELM STREET\",\"facility_name\":\"HEADQUARTERS COMPLEX\",\"facility_number\":\"8136001005\",\"site_number\":\"6001\"},\"A\"]",
+      "page": 36,
+      "pair": false,
+      "points_per_foot": 36,
+      "room": "104B",
+      "room_by": "schedule_location",
+      "room_name": "PRIVATE RR",
+      "schedule_rows": [
+        {
+          "door_type": "WD-1",
+          "fire_rating": null,
+          "frame_type": "TYP-2",
+          "hardware_group": "06.01",
+          "height_inches": 80,
+          "location": "PRIVATE BATH 104B",
+          "mark": "104B",
+          "material": null,
+          "page": 44,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 251
+        }
+      ],
+      "sheet": "A-401",
+      "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "44|104B|1"
+      ],
+      "width_inches": 36,
+      "x": 688,
+      "y": 300
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        44
+      ],
+      "door_type": "WD-2",
+      "fire_rating": null,
+      "frame_type": "TYP-2",
+      "h": 9.51068,
+      "hardware_group": "06.01",
+      "height_inches": 80,
+      "location": "SINGLE BEDROOM 104",
+      "mark": "104C",
+      "matched_by": "exact",
+      "material": null,
+      "opening_id": "[{\"address\":\"1510 E. ELM STREET\",\"facility_name\":\"HEADQUARTERS COMPLEX\",\"facility_number\":\"8136001005\",\"site_number\":\"6001\"},\"A\"]|104C|44|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1510 E. ELM STREET",
+        "facility_name": "HEADQUARTERS COMPLEX",
+        "facility_number": "8136001005",
+        "site_number": "6001"
+      },
+      "opening_scope_id": "[{\"address\":\"1510 E. ELM STREET\",\"facility_name\":\"HEADQUARTERS COMPLEX\",\"facility_number\":\"8136001005\",\"site_number\":\"6001\"},\"A\"]",
+      "page": 36,
+      "pair": false,
+      "points_per_foot": 36,
+      "room": "104",
+      "room_by": "schedule_location",
+      "room_name": "SINGLE BEDROOM",
+      "schedule_rows": [
+        {
+          "door_type": "WD-2",
+          "fire_rating": null,
+          "frame_type": "TYP-2",
+          "hardware_group": "06.01",
+          "height_inches": 80,
+          "location": "SINGLE BEDROOM 104",
+          "mark": "104C",
+          "material": null,
+          "page": 44,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 264
+        }
+      ],
+      "sheet": "A-401",
+      "size": "3' - 0\" x 6' - 8\"",
+      "source_keys": [
+        "44|104C|1"
+      ],
+      "width_inches": 36,
+      "x": 557,
+      "y": 497
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        44
+      ],
+      "door_type": "WD-2 (PR)",
+      "fire_rating": null,
+      "frame_type": "TYP-2",
+      "h": 9.51068,
+      "hardware_group": "04.02",
+      "height_inches": 80,
+      "location": "CLOSET 104",
+      "mark": "104E",
+      "matched_by": "exact",
+      "material": null,
+      "opening_id": "[{\"address\":\"1510 E. ELM STREET\",\"facility_name\":\"HEADQUARTERS COMPLEX\",\"facility_number\":\"8136001005\",\"site_number\":\"6001\"},\"A\"]|104E|44|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1510 E. ELM STREET",
+        "facility_name": "HEADQUARTERS COMPLEX",
+        "facility_number": "8136001005",
+        "site_number": "6001"
+      },
+      "opening_scope_id": "[{\"address\":\"1510 E. ELM STREET\",\"facility_name\":\"HEADQUARTERS COMPLEX\",\"facility_number\":\"8136001005\",\"site_number\":\"6001\"},\"A\"]",
+      "page": 36,
+      "pair": false,
+      "points_per_foot": 36,
+      "room": "104",
+      "room_by": "schedule_location",
+      "room_name": "SINGLE BEDROOM",
+      "schedule_rows": [
+        {
+          "door_type": "WD-2 (PR)",
+          "fire_rating": null,
+          "frame_type": "TYP-2",
+          "hardware_group": "04.02",
+          "height_inches": 80,
+          "location": "CLOSET 104",
+          "mark": "104E",
+          "material": null,
+          "page": 44,
+          "pair": false,
+          "size": "3' - 4\" x 6' - 8\"",
+          "width_inches": 40,
+          "y": 289
+        }
+      ],
+      "sheet": "A-401",
+      "size": "3' - 4\" x 6' - 8\"",
+      "source_keys": [
+        "44|104E|1"
+      ],
+      "width_inches": 40,
+      "x": 354,
+      "y": 601
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        44
+      ],
+      "door_type": "WD-2 (PR)",
+      "fire_rating": null,
+      "frame_type": "TYP-2",
+      "h": 9.51068,
+      "hardware_group": "04.02",
+      "height_inches": 80,
+      "location": "CLOSET 104",
+      "mark": "104D",
+      "matched_by": "exact",
+      "material": null,
+      "opening_id": "[{\"address\":\"1510 E. ELM STREET\",\"facility_name\":\"HEADQUARTERS COMPLEX\",\"facility_number\":\"8136001005\",\"site_number\":\"6001\"},\"A\"]|104D|44|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "address": "1510 E. ELM STREET",
+        "facility_name": "HEADQUARTERS COMPLEX",
+        "facility_number": "8136001005",
+        "site_number": "6001"
+      },
+      "opening_scope_id": "[{\"address\":\"1510 E. ELM STREET\",\"facility_name\":\"HEADQUARTERS COMPLEX\",\"facility_number\":\"8136001005\",\"site_number\":\"6001\"},\"A\"]",
+      "page": 36,
+      "pair": false,
+      "points_per_foot": 36,
+      "room": "104",
+      "room_by": "schedule_location",
+      "room_name": "SINGLE BEDROOM",
+      "schedule_rows": [
+        {
+          "door_type": "WD-2 (PR)",
+          "fire_rating": null,
+          "frame_type": "TYP-2",
+          "hardware_group": "04.02",
+          "height_inches": 80,
+          "location": "CLOSET 104",
+          "mark": "104D",
+          "material": null,
+          "page": 44,
+          "pair": false,
+          "size": "3' - 4\" x 6' - 8\"",
+          "width_inches": 40,
+          "y": 277
+        }
+      ],
+      "sheet": "A-401",
+      "size": "3' - 4\" x 6' - 8\"",
+      "source_keys": [
+        "44|104D|1"
+      ],
+      "width_inches": 40,
+      "x": 963,
+      "y": 601
+    }
+  ]
+}

@@ -220,12 +220,28 @@
     {
       "height": 1728,
       "page": 7,
+      "plan_rule": "legacy",
       "points_per_foot": [
         9
       ],
       "scales": [
         "1/8\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number"
+            ],
+            "page": 13
+          }
+        ],
+        "kept_pages": [
+          13
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-101",
       "title": "FLOOR PLAN",
       "width": 2592
@@ -233,6 +249,7 @@
     {
       "height": 1728,
       "page": 10,
+      "plan_rule": "legacy",
       "points_per_foot": [
         27
       ],
@@ -240,6 +257,21 @@
         "3/8\" = 1'-0\"",
         "3/8\" = 1'-0\""
       ],
+      "schedule_selection": {
+        "candidates": [
+          {
+            "conflicts": [],
+            "matched": [
+              "site_number"
+            ],
+            "page": 13
+          }
+        ],
+        "kept_pages": [
+          13
+        ],
+        "rule": "building-scope-then-similarity"
+      },
       "sheet": "A-500",
       "title": "PLAN DETAILS",
       "width": 2592
@@ -291,6 +323,12 @@
       "mark": "SE01",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"site_number\":\"6261\"},\"A\"]|SE01|13|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "site_number": "6261"
+      },
+      "opening_scope_id": "[{\"site_number\":\"6261\"},\"A\"]",
       "page": 7,
       "pair": false,
       "points_per_foot": 9,
@@ -316,6 +354,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\" WELDED",
+      "source_keys": [
+        "13|SE01|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1811,
@@ -336,6 +377,12 @@
       "mark": "001",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"site_number\":\"6261\"},\"A\"]|001|13|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "site_number": "6261"
+      },
+      "opening_scope_id": "[{\"site_number\":\"6261\"},\"A\"]",
       "page": 7,
       "pair": false,
       "points_per_foot": 9,
@@ -361,6 +408,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\"/2'-6\" x 7'-0\"",
+      "source_keys": [
+        "13|001|1"
+      ],
       "unsure": true,
       "width_inches": null,
       "x": 400,
@@ -381,6 +431,12 @@
       "mark": "004",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"site_number\":\"6261\"},\"A\"]|004|13|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "site_number": "6261"
+      },
+      "opening_scope_id": "[{\"site_number\":\"6261\"},\"A\"]",
       "page": 7,
       "pair": false,
       "points_per_foot": 9,
@@ -406,6 +462,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\" HOLLOW",
+      "source_keys": [
+        "13|004|1"
+      ],
       "width_inches": 36,
       "x": 1601,
       "y": 773
@@ -425,6 +484,12 @@
       "mark": "002",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"site_number\":\"6261\"},\"A\"]|002|13|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "site_number": "6261"
+      },
+      "opening_scope_id": "[{\"site_number\":\"6261\"},\"A\"]",
       "page": 7,
       "pair": false,
       "points_per_foot": 9,
@@ -450,6 +515,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\"",
+      "source_keys": [
+        "13|002|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 363,
@@ -470,6 +538,12 @@
       "mark": "003",
       "matched_by": "exact",
       "material": null,
+      "opening_id": "[{\"site_number\":\"6261\"},\"A\"]|003|13|1",
+      "opening_rule": "cross-page-inventory-scope-v2",
+      "opening_scope": {
+        "site_number": "6261"
+      },
+      "opening_scope_id": "[{\"site_number\":\"6261\"},\"A\"]",
       "page": 7,
       "pair": false,
       "points_per_foot": 9,
@@ -495,6 +569,9 @@
       ],
       "sheet": "A-101",
       "size": "3'-0\" x 7'-0\" HOLLOW",
+      "source_keys": [
+        "13|003|1"
+      ],
       "unsure": true,
       "width_inches": 36,
       "x": 1019,
