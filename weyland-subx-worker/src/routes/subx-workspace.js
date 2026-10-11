@@ -19,6 +19,7 @@
 //
 // Every session route checks that the session belongs to the caller.
 
+import { sourcePdf, pageSource, sourceNotes } from "../../assets/client-ocr-src/source-pages.mjs";
 import { hardwareScheduleNeed, reviewDoorRows, unsureDoorFields } from "../../assets/client-ocr-src/schedule-workspace.mjs";
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import { jsonResponse3 } from "../lib/json-response.js";
@@ -316,8 +317,9 @@ export function registerSubxWorkspaceRoutes(router, { authenticate, requireActiv
         fc = d.field_confidence_json ? JSON.parse(d.field_confidence_json) : null;
         if (fc && fc.source) source = { page: fc.source.page ?? d.page_number, table_row: fc.source.table_row ?? null, rotation: fc.source.rotation ?? null };
       } catch (_) { fc = null; }
+      if (sourcePdf(o.session)) source = { ...source, ...pageSource(o.session, source.page) };
       const corrected = !!d.corrections_json;
-      const out = { ...d, original_mark: fc?.original_mark || null, field_confidence: fc?.fields || {}, confidence_source: fc?.confidence_source || null, field_evidence: boundedFieldEvidence(fc?.field_evidence), read_audit: fc?.read_audit || null, alternate_pricing: fc?.alternate_pricing ?? null, hardware_spec_sections: fc?.hardware_spec_sections || [], source, read_from: fc ? fc.read_from || null : null, pair: fc ? fc.pair ?? null : null, glazing: fc ? fc.glazing ?? null : null, section: fc ? fc.section ?? null : null, corrected, unsure: [] };
+      const out = { ...d, notes: sourceNotes(o.session, d.notes), original_mark: fc?.original_mark || null, field_confidence: fc?.fields || {}, confidence_source: fc?.confidence_source || null, field_evidence: boundedFieldEvidence(fc?.field_evidence), read_audit: fc?.read_audit || null, alternate_pricing: fc?.alternate_pricing ?? null, hardware_spec_sections: fc?.hardware_spec_sections || [], source, read_from: fc ? fc.read_from || null : null, pair: fc ? fc.pair ?? null : null, glazing: fc ? fc.glazing ?? null : null, section: fc ? fc.section ?? null : null, corrected, unsure: [] };
       out.unsure = corrected ? [] : unsureDoorFields(out, filled);
       delete out.field_confidence_json;
       delete out.corrections_json;
@@ -364,6 +366,7 @@ export function registerSubxWorkspaceRoutes(router, { authenticate, requireActiv
         filename: o.session.filename,
         document_type: o.session.document_type,
         total_pages: o.session.total_pages,
+        source_pdf: sourcePdf(o.session),
         created_at: o.session.created_at,
         is_demo: isDemoClone(o.session),
       },

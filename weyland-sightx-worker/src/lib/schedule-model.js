@@ -113,6 +113,7 @@ function door(partial) {
     panic: !!partial.panic,
     set: partial.set || null,
     source_page: partial.source_page ?? null,
+    source_sheet: partial.source_sheet || null,
   };
 }
 
@@ -282,6 +283,7 @@ export function modelFromSubx(d) {
     panic: !!x.panic && !/^(no|n|0|false)$/i.test(String(x.panic)),
     set: x.hardware_group ? setKey(x.hardware_group) : null,
     source_page: (x.source && x.source.page) ?? x.page_number ?? null,
+    source_sheet: x.source?.sheet || null,
   }));
   const notes = [];
   const unsized = doors.filter((x) => !x.size_known).length;

@@ -23,10 +23,15 @@ test("every client-ocr-src module equals its served .bin twin", () => {
 // A file under assets/client-ocr that is neither a twin of a source module nor one of the named runtime
 // assets is a mistake (2026-10-09: an agent wrote schedule-text-layer.bin, no .mjs, and the real twin went
 // stale while the suite stayed green). The runtime assets are the ones the worker serves by name.
-const RUNTIME_ASSETS = new Set(["eng-traineddata.bin", "grid-runner.html", "pdf-worker.mjs.bin", "pdf.mjs.bin", "pdfjs-compat.js.bin", "tesseract-core-fallback.bin", "tesseract-core.bin", "tesseract-wasm-lib.mjs.bin"]);
+const RUNTIME_ASSETS = new Set(["pdf-lib.mjs.bin", "plan-read.js.bin", "building-scope.js.bin", "eng-traineddata.bin", "grid-runner.html", "pdf-worker.mjs.bin", "pdf.mjs.bin", "pdfjs-compat.js.bin", "tesseract-core-fallback.bin", "tesseract-core.bin", "tesseract-wasm-lib.mjs.bin"]);
 
 test("nothing stray sits under assets/client-ocr", () => {
   const twins = new Set(readdirSync(SRC).filter((f) => f.endsWith(".mjs")).map((f) => f + ".bin"));
   const stray = readdirSync(BIN).filter((f) => !f.startsWith(".") && !twins.has(f) && !RUNTIME_ASSETS.has(f));
   assert.deepEqual(stray, [], "stray file(s) under assets/client-ocr: " + stray.join(", ") + " (a twin must be named <module>.mjs.bin; a new runtime asset must be added to RUNTIME_ASSETS and to the asset map)");
+});
+
+// g084: never ship a frozen copy of the shared SightX title-block rule.
+for (const name of ["plan-read", "building-scope"]) test("shared " + name + " equals its browser asset", () => {
+  assert.ok(readFileSync(join(here, "../../weyland-shared/" + name + ".js")).equals(readFileSync(join(BIN, name + ".js.bin"))), "Run node scripts/vendor-bidset-assets.mjs after changing the shared reader");
 });

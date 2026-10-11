@@ -28,6 +28,7 @@
 // modularization blocker (§2/§5/§6) - verified: no reference to `cors`
 // anywhere in the extracted range.
 
+import { pageSource } from "../../assets/client-ocr-src/source-pages.mjs";
 import { authenticate } from "../lib/auth.js";
 import { jsonResponse3 } from "../lib/json-response.js";
 
@@ -128,7 +129,8 @@ router.get("/api/hardware-schedule/session/:sessionId/export", async (request2, 
                 unit_price: null,
                 compliance: "",
                 set_notes: group3.notes || "",
-                _source_page: extraction.page_number
+                _source_page: pageSource(session, extraction.page_number).page,
+                _source_sheet: pageSource(session, extraction.page_number).sheet
               });
             } else {
               for (const comp of components) {
@@ -147,7 +149,8 @@ router.get("/api/hardware-schedule/session/:sessionId/export", async (request2, 
                   unit_price: comp.unit_price || null,
                   compliance: comp.compliance || "",
                   component_notes: comp.notes || "",
-                  _source_page: extraction.page_number
+                  _source_page: pageSource(session, extraction.page_number).page,
+                  _source_sheet: pageSource(session, extraction.page_number).sheet
                 });
               }
             }
@@ -229,6 +232,9 @@ router.get("/api/hardware-schedule/session/:sessionId/door-index", async (reques
     return error4;
   try {
     const sessionId = request2.params.sessionId;
+    const session = await env2.DB.prepare("SELECT * FROM hardware_extraction_sessions WHERE id = ?").bind(sessionId).first();
+    if (!session) return jsonResponse3({ error: "Session not found" }, 404);
+    if (session.user_id !== user.userId) return jsonResponse3({ error: "Unauthorized" }, 403);
     console.log(`[Door Index] Getting door index for session ${sessionId}`);
     // verified added 2026-09-09: this column already existed on
     // door_hardware_matrix (real match-confirmed vs. pending-review state)
@@ -263,7 +269,8 @@ router.get("/api/hardware-schedule/session/:sessionId/door-index", async (reques
         door_number: doorNum,
         door_location: mapping.door_location,
         door_type: mapping.door_type,
-        source_page: mapping.source_page,
+        source_page: pageSource(session, mapping.source_page).page,
+        source_sheet: pageSource(session, mapping.source_page).sheet,
         source_type: mapping.source_type,
         confidence: mapping.extraction_confidence,
         verified: !!mapping.verified
@@ -274,7 +281,8 @@ router.get("/api/hardware-schedule/session/:sessionId/door-index", async (reques
       byDoor[doorNum].push({
         hardware_set: setNum,
         verified: !!mapping.verified,
-        source_page: mapping.source_page,
+        source_page: pageSource(session, mapping.source_page).page,
+        source_sheet: pageSource(session, mapping.source_page).sheet,
         source_type: mapping.source_type,
         confidence: mapping.extraction_confidence
       });

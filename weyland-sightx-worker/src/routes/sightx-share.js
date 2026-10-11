@@ -34,6 +34,7 @@ export function cleanModel(m) {
     width_in: Math.max(12, Math.min(144, Number(d.width_in) || 36)), height_in: Math.max(60, Math.min(168, Number(d.height_in) || 84)),
     size_known: !!d.size_known, leaves: d.leaves === 2 ? 2 : 1, rating: s(d.rating, 30), frame: s(d.frame, 40), panic: !!d.panic, set: s(d.set, 20),
     source_page: d.source_page == null ? null : Number(d.source_page) || null,
+    source_sheet: d.source_sheet ? String(d.source_sheet).slice(0, 80) : null,
   }));
   const sets = {};
   for (const [k, items] of Object.entries(m?.sets || {}).slice(0, 200)) {

@@ -96,6 +96,19 @@ test("sessions: your own only, demo clones marked; a guest is told to sign in, n
   assert.equal(none.status, 401);
 });
 
+test("cut-session sources survive reopening with original sheet/page and a separate rendering index", async () => {
+  const { call, db } = setup();
+  db.exec('ALTER TABLE hardware_extraction_sessions ADD COLUMN document_outline TEXT');
+  const map = { version: 1, original_pages: 148, original_bytes: 92000000,
+    pages: [{ pdf_page: 1, original_page: 120, sheet: 'A601' }], omitted_plans: [{ original_page: 6, sheet: 'A101' }] };
+  db.prepare('UPDATE hardware_extraction_sessions SET document_outline = ? WHERE id = ?').run(JSON.stringify({ bookmarks: [], source_pdf: map }), 'sess-a');
+  const { data } = await call('GET', '/api/hardware-schedule/session/sess-a/doors', 'a');
+  assert.deepEqual(data.session.source_pdf, map);
+  assert.deepEqual(data.doors[0].source, { page: 120, sheet: 'A601', pdf_page: 1, table_row: 7, rotation: 90 });
+  assert.equal(data.doors[0].page_number, 1, 'stored PDF indexing is preserved for readers');
+  db.close();
+});
+
 test("every session route refuses another account's session", async () => {
   const { call } = setup();
   for (const [method, path] of [
