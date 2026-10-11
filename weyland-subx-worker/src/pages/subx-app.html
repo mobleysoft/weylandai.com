@@ -2265,6 +2265,58 @@ global.SovereignPdfRender = {
           });
         });
         box.appendChild(b);
+        // g074: WALK IT opens this upload's plan sheets in SightX (/sightx/?walk=<session>): the sheets drawn in
+        // the browser from this PDF, each door tag where the plan prints it, a card per opening, the openings CSV.
+        // No page hop (g074 review): SightX opens as a view over SubX, never by replacing this document.
+        var w = document.createElement("button");
+        w.type = "button"; w.id = "walk-it";
+        w.textContent = "WALK IT IN SIGHTX";
+        w.setAttribute("data-walk", state.current);
+        w.addEventListener("click", function () { walkIt(w.getAttribute("data-walk"), w); });
+        box.appendChild(w);
+      }
+      // Inside the weylandai.com shell's overlay frame: the parent shell opens SightX in its overlay (same
+      // origin). As the top document: SightX in a same-origin frame over SubX, with a close control, focus
+      // moved into it and back to WALK IT on close, Escape closing it. The address never changes.
+      function walkIt(id, opener) {
+        var path = "/sightx/?walk=" + encodeURIComponent(id);
+        var parentShell = null;
+        try { parentShell = window.parent !== window && window.parent.WeylandShell ? window.parent.WeylandShell : null; } catch (e) { parentShell = null; }
+        if (parentShell) return parentShell.open("app", { path: path });
+        var old = $("walk-overlay"); if (old) old.remove();
+        var back = opener || document.activeElement;
+        var box = document.createElement("div");
+        box.id = "walk-overlay"; box.setAttribute("role", "dialog"); box.setAttribute("aria-modal", "true"); box.setAttribute("aria-label", "SightX: walk this schedule's plan sheets");
+        box.style.cssText = "position:fixed;inset:0;z-index:2147483000;display:flex;flex-direction:column;background:#090a0d";
+        var bar = document.createElement("div");
+        bar.style.cssText = "display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.14);color:#eef1f2;font:700 12px/1 ui-monospace,monospace;letter-spacing:.08em";
+        bar.innerHTML = "<span>SIGHTX · WALK IT</span>";
+        var close = document.createElement("button");
+        close.type = "button"; close.id = "walk-close"; close.textContent = "CLOSE"; close.setAttribute("aria-label", "Close SightX and return to SubX");
+        bar.appendChild(close);
+        var frame = document.createElement("iframe");
+        frame.id = "walk-frame"; frame.title = "SightX"; frame.src = path + "&embed=1";
+        frame.style.cssText = "flex:1;width:100%;border:0;background:#090a0d";
+        box.appendChild(bar); box.appendChild(frame);
+        document.body.appendChild(box);
+        var overflow = document.documentElement.style.overflow;
+        document.documentElement.style.overflow = "hidden";
+        function onKey(e) { if (e.key === "Escape") shut(); }
+        function shut() {
+          document.removeEventListener("keydown", onKey);
+          try { frame.contentWindow.document.removeEventListener("keydown", onKey); } catch (e) {}
+          box.remove();
+          document.documentElement.style.overflow = overflow;
+          var to = back && document.contains(back) ? back : $("walk-it");
+          if (to) { try { to.focus({ preventScroll: true }); } catch (e) {} }
+        }
+        close.addEventListener("click", shut);
+        document.addEventListener("keydown", onKey);
+        frame.addEventListener("load", function () {
+          try { frame.contentWindow.document.addEventListener("keydown", onKey); } catch (e) {}
+          try { frame.focus(); frame.contentWindow.focus(); } catch (e) {}
+        });
+        try { frame.focus(); } catch (e) {}
       }
       function renderPackageStatus() {
         var p = state.detail.package, out = $("package-result");

@@ -1,0 +1,15 @@
+PASS browser has GPU WebGL
+PASS subscriber signs in
+PASS SubX reads the Building's door schedule: 48 rows
+PASS the schedule offers WALK IT IN SIGHTX (a button, not a link)
+PASS WALK IT opens SightX in a frame over SubX (close control shown, focus in the frame) on this upload's plan sheet A-101, drawn in the browser from the uploaded PDF
+PASS the HUD shows placed-of-total: every opening of the schedule is placed (48 OF 48 PLACED)
+PASS the sheet draws one ring per placed opening, the table one row per opening
+PASS clicking tag 100A opens its door card: MAIN ENTRY, 6'-0" x 7'-0" (pair), group 01, schedule page 3, its tag on A-101 with its position
+PASS OPENINGS CSV downloads 48 rows equal to the drawn schedule (mark, room, width, height, group, schedule page, placed on A-101)
+FAIL the CSV's pair column is the drawn schedule's (100A, 111, 200, 300 pairs, the rest single)  [{"mismatches":["100A pair: \"no\" vs \"yes\"","111 pair: \"no\" vs \"yes\"","200 pair: \"no\" vs \"yes\"","300 pair: \"no\" vs \"yes\""]}]
+PASS no page hop: CLOSE returns to SubX, focus back on WALK IT, the same document at the same address throughout
+PASS phone: WALK IT taps open over SubX, a touch tap on tag 100A opens its card, CLOSE returns, same document
+PASS inside the homepage shell's overlay, WALK IT opens SightX in the shell's overlay and the homepage document stays
+PASS the upload is deleted by its owner (rows, PDF and cached copy)
+13 passed, 1 failed
