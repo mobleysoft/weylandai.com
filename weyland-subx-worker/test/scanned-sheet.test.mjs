@@ -57,5 +57,9 @@ test("sideways ARCH D image-only sheet reads the same 48 doors as vector through
   const score = scoreDoorsVs(expected, a.doors.map(d => ({page,...d})));
   assert.equal(score.extra_rows, 0);
   assert.ok(score.fields_right / score.fields_total >= 0.95, JSON.stringify(score));
+  // g072: A-601 prints both STAIR 2 openings as 3'-0" x 7'-0".
+  // The old nine-row agreement hid unread 212 height / 312 width on both readers.
+  assert.equal(a.doors.find(d => d.mark === "212").height_inches, 84);
+  assert.equal(a.doors.find(d => d.mark === "312").width_inches, 36);
   console.log("g019 scan evidence", JSON.stringify({dpi:o.dpi,rotation:o.rotation,skew:o.skew_deg,rows:score.rows_found,fields_right:score.fields_right,fields_total:score.fields_total,ms:o.ms}));
 });
