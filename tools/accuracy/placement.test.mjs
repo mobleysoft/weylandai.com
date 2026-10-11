@@ -19,6 +19,8 @@ test("placement shape, PDF points, exact schedule fields and oracle counts", () 
   const r = fixture();
   assert.deepEqual(r.set, truth);
   assert.deepEqual(r.sheets, [{ page: 1, sheet: "A-101", title: "FIRST FLOOR PLAN",
+    plan_rule: 'legacy', schedule_selection: { rule: 'similarity', kept_pages: [2],
+      candidates: [{ page: 2, matched: [], conflicts: [] }] },
     width: 3024, height: 2160, scales: ['SCALE: 1/8" = 1\'-0"'], points_per_foot: [9] }]);
   assert.deepEqual(r.rooms, [
     { number: "101", name: "OFFICE", page: 1, sheet: "A-101", x: 518, y: 510, points_per_foot: 9 },

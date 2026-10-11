@@ -5,8 +5,9 @@ import { resolveScheduleOpenings } from './openings.mjs';
 import { alignDoors, summarize } from './agree.mjs';
 import { readSchedules } from './load_set.mjs';
 import { buildPlacement } from '../placement.mjs';
-import { buildingScope, compareBuildingScopes } from '../../../weyland-shared/building-scope.js';
-import { lines, titleBlocks } from '../../../weyland-shared/plan-read.js';
+import { buildingScope, compareBuildingScopes, comparePlacementScopes } from '../../../weyland-shared/building-scope.js';
+import { lines, titleBlocks, readPlan } from '../../../weyland-shared/plan-read.js';
+import { singleBuilding } from '../fixtures/g080/single-building.mjs';
 
 const item = (str, x = 2350, y = 1000, h = 16) => ({ str, x, y, h, w: str.length * h * 0.5, rot: 0 });
 const page = (n, labels = [], sheet = `A-${100 + n}`) => ({ page: n, width: 2592, height: 1728, items: [
@@ -17,7 +18,7 @@ const resolve = ps => resolveScheduleOpenings(doors(ps), doors(ps), ps);
 const scope = p => buildingScope(p, titleBlocks([p])[0], lines(p.items));
 const count = r => [r.doorsA.length, r.doorsB.length, summarize(alignDoors(r.doorsA, r.doorsB)).agreed];
 
-test('X2530 original text: two buildings retain 36 openings, agreements and plan identities', { todo: 'g079: weyland-shared/plan-read.js is back at its pre-g078c version because the scope-aware placement placed no tags on ordinary sets (T2421-01: 33 of 33 before, 0 after; the scope detector found false conflicts); g080 brings it back behind placement_run --check' }, async () => {
+test('X2530 original text: two buildings retain 36 openings, agreements and plan identities', async () => {
   const { pdf, pages, A, B } = await readFixture(['x2530-01-p18', 'x2530-01-p53']);
   assert.deepEqual([A.length, B.length, summarize(alignDoors(A, B)).agreed], [36, 36, 36]);
   const r = resolveScheduleOpenings(A, B, pages);
@@ -52,7 +53,7 @@ test('X2530 original text: two buildings retain 36 openings, agreements and plan
   }
 });
 
-test('R2405 original text: matching scope collapses 14 rows to 7, with one canonical card per mark on A-101', { todo: 'g079: weyland-shared/plan-read.js is back at its pre-g078c version because the scope-aware placement placed no tags on ordinary sets (T2421-01: 33 of 33 before, 0 after; the scope detector found false conflicts); g080 brings it back behind placement_run --check' }, async () => {
+test('R2405 original text: matching scope collapses 14 rows to 7, with one canonical card per mark on A-101', async () => {
   const { pdf, pages, A, B } = await readFixture(['r2405-01-p15', 'r2405-01-p16']);
   assert.deepEqual([A.length, B.length, summarize(alignDoors(A, B)).agreed], [14, 14, 14]);
   const r = resolveScheduleOpenings(A, B, pages);
@@ -111,16 +112,19 @@ test('split labels, stacked values, and prose references retain their proper evi
   assert.equal(compareBuildingScopes(s, scope(page(2))).agrees, false);
 });
 
-test('placement rejects a conflicting plan even when no compatible schedule candidate remains', { todo: 'g079: weyland-shared/plan-read.js is back at its pre-g078c version because the scope-aware placement placed no tags on ordinary sets (T2421-01: 33 of 33 before, 0 after; the scope detector found false conflicts); g080 brings it back behind placement_run --check' }, () => {
+test('placement falls back to similarity when no compatible schedule candidate remains', () => {
   const sch = page(1, ['LOOP 8']);
   const plan = page(2, ['LOOP 9']);
   plan.items.find(i => i.str === 'DOOR SCHEDULE').str = 'FLOOR PLAN';
   plan.items.push(item('101', 300, 500), item('102', 600, 700));
   const r = buildPlacement({ sha16: 'fixture' }, [sch, plan], doors([sch]));
-  assert.deepEqual([r.summary.marks_total, r.summary.marks_placed], [2, 0]);
+  assert.deepEqual([r.summary.marks_total, r.summary.marks_placed], [2, 2]);
+  assert.equal(r.sheets[0].schedule_selection.rule, 'similarity-fallback-no-compatible-schedule');
+  assert.deepEqual(r.sheets[0].schedule_selection.kept_pages, [1]);
+  assert.deepEqual(r.sheets[0].schedule_selection.candidates[0].conflicts, [{ field: 'building', a: 'LOOP 9', b: 'LOOP 8' }]);
 });
 
-test('a plan tag sharing a schedule baseline stays eligible outside the mark column', { todo: 'g079: weyland-shared/plan-read.js is back at its pre-g078c version because the scope-aware placement placed no tags on ordinary sets (T2421-01: 33 of 33 before, 0 after; the scope detector found false conflicts); g080 brings it back behind placement_run --check' }, () => {
+test('a plan tag sharing a schedule baseline stays eligible outside the mark column', () => {
   const p = page(1);
   p.items.find(i => i.str === 'DOOR SCHEDULE').str = 'FLOOR PLAN';
   p.items.push(item('101', 100, 500), item('102', 100, 520), item('101', 600, 500), item('102', 800, 800));
@@ -128,4 +132,72 @@ test('a plan tag sharing a schedule baseline stays eligible outside the mark col
   const r = buildPlacement({ sha16: 'fixture' }, [p], rows);
   assert.equal(r.summary.marks_placed, 2);
   assert.ok(r.tags.every(t => t.x > 500));
+});
+
+test('T2421-class fixture: separate schedule and plan place all 33 marks, with raw or merged inputs', () => {
+  for (const [planLabels, scheduleLabels, rule] of [
+    [[], [], 'similarity'],
+    [['LEVEL 1'], ['LEVEL 2'], 'similarity'],
+    [['FACILITY: SINGLE SCHOOL'], [], 'similarity'],
+    [['FACILITY: SINGLE SCHOOL'], ['FACILITY: SCHOOL'], 'similarity'],
+    [['FACILITY: SINGLE SCHOOL'], ['FACILITY: SINGLE SCHOOL'], 'building-scope-then-similarity'],
+    [['ASSET # 1001'], ['ASSET # 9001'], 'similarity-fallback-no-compatible-schedule'],
+  ]) {
+    const { pages, rows } = singleBuilding(planLabels, scheduleLabels);
+    for (const doors of [rows, resolveScheduleOpenings(rows, [], pages).doorsA,
+      rows.map((row, i) => ({ opening_id: `opening-${i}`, schedule_rows: [row] }))]) {
+      const result = readPlan(pages, doors);
+      assert.equal(result.tags.length, 33);
+      assert.deepEqual(result.marks_not_on_plan, []);
+      assert.equal(new Set(result.tags.flatMap(t => t._rows)).size, 33);
+      assert.ok(result.tags.every(t => t.page === 12 && t.door_pages.join() === '15'));
+      assert.equal(result.plan_sheets[0].schedule_selection.rule, rule);
+    }
+    const placed = buildPlacement({ sha16: 'synthetic-single-building' }, pages, rows);
+    assert.deepEqual([placed.summary.marks_total, placed.summary.marks_placed], [33, 33]);
+  }
+});
+
+test('placement conflicts need two definite identities; missing, partial and ambiguous readings do not veto', () => {
+  const compare = (a, b) => comparePlacementScopes({ scope: a, sheet_family: 'A' }, { scope: b, sheet_family: 'A.A' });
+  for (const [a, b] of [
+    [{ facility_name: 'NORTH SCHOOL' }, {}],
+    [{ facility_name: 'NORTH SCHOOL' }, { facility_name: 'SCHOOL' }],
+    [{ asset_number: '100; 200' }, { asset_number: '200' }],
+    [{ level: '1' }, { level: '2' }],
+  ]) assert.deepEqual(compare(a, b).conflicts, []);
+  for (const field of ['building', 'facility_name', 'asset_number', 'site_number', 'facility_number']) {
+    const a = { [field]: 'NORTH 100' }, b = { [field]: 'SOUTH 200' };
+    assert.equal(compare(a, b).conflicts.length, 1, field);
+  }
+});
+
+test('an unknown schedule stays eligible when another schedule has a positive conflict', () => {
+  const wrong = page(1, ['FACILITY: SOUTH SCHOOL']), unknown = page(2);
+  const plan = page(3, ['FACILITY: NORTH SCHOOL']);
+  plan.items.find(it => it.str === 'DOOR SCHEDULE').str = 'FLOOR PLAN';
+  plan.items.push(item('101', 300, 500), item('102', 600, 700));
+  const result = readPlan([wrong, unknown, plan], doors([wrong, unknown]));
+  assert.equal(result.tags.length, 2);
+  assert.ok(result.tags.every(t => t.door_pages.join() === '2'));
+  assert.equal(result.plan_sheets[0].schedule_selection.rule, 'scope-compatible-then-similarity');
+  assert.deepEqual(result.marks_not_on_plan.map(d => d.page), [1, 1]);
+});
+
+test('affirmative facility or number evidence separates plans even when generic blocks are more similar', () => {
+  for (const labels of [['FACILITY: NORTH SCHOOL', 'FACILITY: SOUTH SCHOOL'], ['ASSET # 100', 'ASSET # 200'], ['SITE # 100', 'SITE # 200']]) {
+    const schedules = labels.map((label, i) => page(i + 1, [label]));
+    const plans = labels.map((label, i) => {
+      const p = page(i + 3, [label]);
+      p.items.find(it => it.str === 'DOOR SCHEDULE').str = 'FLOOR PLAN';
+      p.items.push(item('101', 300, 500), item('102', 600, 700));
+      return p;
+    });
+    // The first schedule has almost no common block text, but its identity is explicit.
+    schedules[0].items.find(it => it.str === 'DOOR SCHEDULE').str = 'OPENING DETAILS';
+    const r = buildPlacement({ sha16: 'fixture' }, [...schedules, ...plans], doors(schedules));
+    assert.equal(r.summary.marks_placed, 4);
+    assert.ok(r.tags.every(t => t.schedule_rows[0].page === t.page - 2));
+    assert.ok(r.sheets.every(s => s.schedule_selection.rule === 'building-scope-then-similarity'));
+  }
 });

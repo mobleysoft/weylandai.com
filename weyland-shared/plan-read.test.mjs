@@ -178,3 +178,38 @@ test("g044: the same door on two schedule pages is one door, not a shared mark",
   assert.deepEqual(r.marks_not_on_plan, []);
   assert.deepEqual(r.shared_marks, []);
 });
+
+test('new sheet numbers and labelled titles cannot erase a legacy plan', () => {
+  for (const title of ['ARCHITECTURAL FLOOR PLAN', 'CABIN #1 - FLOOR PLANS', 'CABIN FLOOR PLAN (1)',
+    'GHQ BASEMENT FLOOR PLAN', 'RESTROOM ENLARGED PLANS', 'GROUND LEVEL FLOOR PLAN']) {
+    const p = page(1, [it('A-101', 2800, 2070, 28), it(title, 2700, 1950, 24),
+      it('SHEET TITLE:', 2800, 1800, 10), it('DOOR DETAILS', 2800, 1816, 10),
+      // A newly accepted number must not displace the old architectural number.
+      it('E-101.A', 2800, 1700, 36), it('101A', 700, 700)]);
+    const tb = titleBlocks([p])[0];
+    assert.deepEqual([tb.sheet, tb.title, tb.plan, tb.plan_rule], ['A-101', title, true, 'legacy']);
+    const result = readPlan([p], [{ mark: '101A', page: 15 }]);
+    assert.equal(result.tags.length, 1);
+  }
+});
+
+test('extended titles add a combined demo/floor plan but exclude demo-only and non-floor plans', () => {
+  for (const [title, expected] of [['DEMO PLAN & FLOOR PLAN', true], ['DEMOLITION PLAN', false],
+    ['REFLECTED CEILING PLAN', false], ['ROOF PLAN', false], ['SITE PLAN', false]]) {
+    const p = page(1, [it('A-101.A', 2800, 2070, 28), it(title, 2700, 1950, 24)]);
+    const tb = titleBlocks([p])[0];
+    assert.equal(tb.plan, expected, title);
+    if (expected) assert.equal(tb.plan_rule, 'extended-title');
+  }
+});
+
+test('merged opening source marks and pages remain usable without canonical page/mark fields', () => {
+  const p = page(1, [...titleBlock('A-100', 'FLOOR PLAN'), it('101A', 700, 700)]);
+  const opening = { opening_id: 'one-opening', schedule_rows: [{ mark: '101A [p.15]', page: 15 }, { mark: '101A', page: 16 }] };
+  const result = readPlan([p], [opening]);
+  assert.equal(result.tags.length, 1);
+  assert.deepEqual(result.tags[0].door_pages, [15, 16]);
+  assert.equal(result.tags[0]._rows[0], opening);
+  assert.deepEqual(result.marks_not_on_plan, []);
+  assert.equal(readPlan([p], [{ mark: '101A' }]).tags.length, 1, 'no source pages retains keep=null');
+});
