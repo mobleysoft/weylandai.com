@@ -13,10 +13,14 @@ source /Users/johnmobley/mascom/safe-deploy-lib.sh
 
 REPO_ROOT="$(git rev-parse --show-toplevel)"
 CONFIG="wrangler.toml"
+WRANGLER_BIN="$(command -v wrangler || true)"
 
 sd_banner "weyland-subx-worker"
 sd_require_branch "$REPO_ROOT" main
 sd_require_clean_tree "$REPO_ROOT" weyland-subx-worker
+if [ -z "$WRANGLER_BIN" ]; then
+  sd_abort "wrangler CLI is not installed on PATH; refusing to download an unpinned deploy tool during release."
+fi
 
 # Wrangler replaces this worker's complete route list on deploy; assert every
 # declared binding and route so an accidental omission cannot disable one.
@@ -39,6 +43,6 @@ sd_require_config_lines "$CONFIG" \
   'pattern = "weylandai.com/api/demo/weyland-building/session*"||Weyland Building demo route'
 
 echo "Pre-deploy checks passed: on main, clean SubX worker tree, all bindings and routes present."
-sd_deploy "$CONFIG" "$@"
+"$WRANGLER_BIN" deploy --config "$CONFIG" "$@"
 sd_verify_response_body "https://weylandai.com/subx-app" "<title>SubX Workspace | WeylandAI</title>"
 sd_banner_done "weyland-subx-worker"
