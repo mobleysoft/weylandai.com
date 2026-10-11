@@ -70,17 +70,26 @@ export function mergeGroups(pageGroups) {
 }
 
 export function alignDoors(A, B) {
-  // A and B: [{ page, ...door }]
-  const key = (d) => d.page + "|" + N.mark(d.mark);
+  // Match the same opening even if one reader missed its preferred schedule page.
+  // Source aliases retain page + mark + occurrence (g044), never mark alone.
+  const keysFor = rows => {
+    const counts = new Map();
+    return rows.map(d => {
+      const key = d.page + "|" + N.mark(d.mark), n = (counts.get(key) || 0) + 1;
+      counts.set(key, n);
+      return d.source_keys || [key + "|" + n];
+    });
+  };
+  const keysA = keysFor(A), keysB = keysFor(B);
   const bBy = new Map();
-  for (const d of B) { const k = key(d); if (!bBy.has(k)) bBy.set(k, []); bBy.get(k).push(d); }
-  const rows = [];
-  for (const a of A) {
-    const list = bBy.get(key(a));
-    const b = list && list.length ? list.shift() : null;
+  B.forEach((d, i) => { for (const k of keysB[i]) { if (!bBy.has(k)) bBy.set(k, []); bBy.get(k).push(d); } });
+  const rows = [], used = new Set();
+  for (const [i, a] of A.entries()) {
+    const b = keysA[i].flatMap(k => bBy.get(k) || []).find(d => !used.has(d)) || null;
+    if (b) used.add(b);
     rows.push(rowOf("door", a.page, a.mark, a, b, ROW_FIELDS, doorNorm));
   }
-  for (const list of bBy.values()) for (const b of list) rows.push(rowOf("door", b.page, b.mark, null, b, ROW_FIELDS, doorNorm));
+  for (const b of B) if (!used.has(b)) rows.push(rowOf("door", b.page, b.mark, null, b, ROW_FIELDS, doorNorm));
   return rows;
 }
 

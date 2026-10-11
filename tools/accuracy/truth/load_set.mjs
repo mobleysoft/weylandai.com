@@ -6,6 +6,7 @@ import { readA, readAFromLines } from "./reader_a.mjs";
 import { doorPageCandidate } from "./page_candidates.mjs";
 import { ocrPage } from "./ocr.mjs";
 import { readDoorsB, readHardwareB } from "./reader_b.mjs";
+import { resolveScheduleOpenings } from "./openings.mjs";
 
 // ---------------------------------------------------------------- page finding
 // g051: an electrical panel schedule sheet (a motor schedule, panels by circuit) names a door now and then
@@ -29,6 +30,7 @@ export async function readSchedules(pdf, pages, { file, ocrMax = 6, ocrDpi = 600
   const doorsA = [], doorsB = [], tableBoxes = {};
   const hwA = [], hwB = [];
   const readerNotes = [];
+  const evidencePages = [...pages];
   // No text layer at all (a scan, a Print-to-PDF bitmap): OCR the pages once, and give both readers the
   // same words; reader A reads them as lines through the production readers, reader B with the rules
   // found in the rendered image.
@@ -38,6 +40,7 @@ export async function readSchedules(pdf, pages, { file, ocrMax = 6, ocrDpi = 600
       let o;
       try { o = await ocrPage(file, p, { dpi: ocrDpi }); } catch (e) { readerNotes.push("OCR p." + p + ": " + String(e.message).slice(0, 120)); continue; }
       const text = o.items.map((i) => i.str).join("\n"), size = { width: o.width, height: o.height };
+      evidencePages[p - 1] = { page: p, items: o.items, ...size };
       rec.ocr.pages.push({ page: p, dpi: o.dpi, words: o.words.length, rotation: o.rotation, skew_deg: o.skew_deg, rules: { h: o.rules.h.length, v: o.rules.v.length }, ms: o.ms });
       if (DOOR_PAGE(text)) {
         doorPages.push(p);
@@ -79,5 +82,6 @@ export async function readSchedules(pdf, pages, { file, ocrMax = 6, ocrDpi = 600
     const b = readHardwareB(pages[p - 1].items, rules, pages[p - 1]);
     hwB.push({ page: p, groups: b.groups });
   }
-  return { textPages, doorPages, hwPages, doorsA, doorsB, tableBoxes, hwA, hwB, readerNotes, ocr: rec.ocr };
+  return { textPages, doorPages, hwPages, ...resolveScheduleOpenings(doorsA, doorsB, evidencePages),
+    doorRowsA: doorsA, doorRowsB: doorsB, tableBoxes, hwA, hwB, readerNotes, ocr: rec.ocr };
 }
