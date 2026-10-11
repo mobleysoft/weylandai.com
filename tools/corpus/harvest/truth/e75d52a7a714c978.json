@@ -27,14 +27,137 @@
    "doors": 14,
    "sets": 3,
    "items": 21,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 14
   },
   "b": {
    "doors": 14,
    "sets": 2,
    "items": 17,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 14
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 23,
+    "title": "DOOR AND WINDOW",
+    "rank": 2,
+    "scope": {
+     "asset_number": "8136274080",
+     "level": "1; 2; 3",
+     "site_number": "6274"
+    },
+    "sheet": "A-601",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "site_number",
+      "value": "6274",
+      "text": "6274",
+      "x": 2434.31999026272,
+      "y": 1161.9600022641603,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "8136274080",
+      "text": "8136274080",
+      "x": 2434.4399902622404,
+      "y": 1184.4000021744002,
+      "source": "title_block"
+     },
+     {
+      "field": "level",
+      "value": "1",
+      "text": "LEVEL 1",
+      "x": 1115.8799951227197,
+      "y": 183.4800061780802,
+      "source": "sheet_label"
+     },
+     {
+      "field": "level",
+      "value": "3",
+      "text": "LEVEL 3",
+      "x": 1115.15999553936,
+      "y": 201.36000610656015,
+      "source": "sheet_label"
+     },
+     {
+      "field": "level",
+      "value": "1",
+      "text": "LEVEL 1",
+      "x": 1115.87999553648,
+      "y": 237.48000596207976,
+      "source": "sheet_label"
+     },
+     {
+      "field": "level",
+      "value": "3",
+      "text": "LEVEL 3",
+      "x": 1115.1599955393601,
+      "y": 273.3600058185598,
+      "source": "sheet_label"
+     },
+     {
+      "field": "level",
+      "value": "1",
+      "text": "LEVEL 1",
+      "x": 1115.8799955364802,
+      "y": 309.4800056740796,
+      "source": "sheet_label"
+     },
+     {
+      "field": "level",
+      "value": "1",
+      "text": "LEVEL 1",
+      "x": 1115.8799955364802,
+      "y": 399.4800053140798,
+      "source": "sheet_label"
+     },
+     {
+      "field": "level",
+      "value": "1",
+      "text": "LEVEL 1:",
+      "x": 1952.2799921908797,
+      "y": 777.4800038020801,
+      "source": "sheet_label"
+     },
+     {
+      "field": "level",
+      "value": "2",
+      "text": "LEVEL 2:",
+      "x": 1952.2799921908797,
+      "y": 811.5600036657601,
+      "source": "sheet_label"
+     },
+     {
+      "field": "level",
+      "value": "3",
+      "text": "LEVEL 3:",
+      "x": 1952.2799921908797,
+      "y": 845.5200035299201,
+      "source": "sheet_label"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 14,
+   "pairs": [],
+   "openings": 14,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 14,
+   "pairs": [],
+   "openings": 14,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 13,
@@ -117,36 +240,22 @@
   "marks_on_plan": {
    "applicable": true,
    "total": 14,
-   "pass": 0,
-   "fail": 14,
-   "pass_rate": 0,
-   "examples": [
-    "mark 101 (schedule p.23) not tagged on any plan",
-    "mark 102 (schedule p.23) not tagged on any plan",
-    "mark 103A (schedule p.23) not tagged on any plan",
-    "mark 103B (schedule p.23) not tagged on any plan",
-    "mark 103C (schedule p.23) not tagged on any plan",
-    "mark 104 (schedule p.23) not tagged on any plan",
-    "mark 105A (schedule p.23) not tagged on any plan",
-    "mark 105B (schedule p.23) not tagged on any plan",
-    "mark 105C (schedule p.23) not tagged on any plan",
-    "mark 106A (schedule p.23) not tagged on any plan",
-    "mark 106B (schedule p.23) not tagged on any plan",
-    "mark 107A (schedule p.23) not tagged on any plan"
-   ],
+   "pass": 14,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
    "plan_sheets": [
-    "A-401 p.18",
-    "A-402 p.19",
-    "A-403 p.20"
+    "A-101 p.14",
+    "A-404 p.21"
    ],
    "plan_counts": {
-    "plan_sheets": 3,
-    "rooms": 24,
-    "corridors": 0,
-    "tags": 0,
+    "plan_sheets": 2,
+    "rooms": 33,
+    "corridors": 3,
+    "tags": 14,
     "unmatched_tags": 0,
     "schedule_marks": 14,
-    "marks_not_on_plan": 14,
+    "marks_not_on_plan": 0,
     "shared_marks": 0
    }
   },
@@ -545,6 +654,6 @@
    "why": "only reader A read this row"
   }
  ],
- "ms": 3980,
- "generated_at": "2026-10-11T07:57:21.662Z"
+ "ms": 4131,
+ "generated_at": "2026-10-11T08:14:06.478Z"
 }

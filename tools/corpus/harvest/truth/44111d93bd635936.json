@@ -25,14 +25,64 @@
    "doors": 44,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 44
   },
   "b": {
    "doors": 44,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 4
+   "tables": 4,
+   "door_rows": 44
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 17,
+    "title": "WALL, PARTITION ASSEMBLIES, &",
+    "rank": 1,
+    "scope": {
+     "facility_number": "6517356071",
+     "site_number": "7356"
+    },
+    "sheet": "A600",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "site_number",
+      "value": "7356",
+      "text": "7356",
+      "x": 2441.879023248,
+      "y": 1212.7202061120001,
+      "source": "title_block"
+     },
+     {
+      "field": "facility_number",
+      "value": "6517356071",
+      "text": "FACILITY # 6517356071",
+      "x": 2338.439064624,
+      "y": 1232.640198144,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 44,
+   "pairs": [],
+   "openings": 44,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 44,
+   "pairs": [],
+   "openings": 44,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 44,
@@ -88,16 +138,28 @@
  "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
-   "applicable": false,
-   "reason": "no floor plan sheet found in this PDF (title blocks)",
+   "applicable": true,
+   "total": 44,
+   "pass": 44,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "plan_sheets": [
+    "A101 p.10",
+    "A102 p.11",
+    "A103 p.12",
+    "A104 p.13",
+    "A105 p.14",
+    "A400 p.16"
+   ],
    "plan_counts": {
-    "plan_sheets": 0,
-    "rooms": 0,
+    "plan_sheets": 6,
+    "rooms": 233,
     "corridors": 0,
-    "tags": 0,
-    "unmatched_tags": 0,
+    "tags": 44,
+    "unmatched_tags": 80,
     "schedule_marks": 44,
-    "marks_not_on_plan": 44,
+    "marks_not_on_plan": 0,
     "shared_marks": 0
    }
   },
@@ -127,6 +189,6 @@
  "tier": "agreed",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 977,
- "generated_at": "2026-10-11T07:56:17.241Z"
+ "ms": 1062,
+ "generated_at": "2026-10-11T08:12:59.576Z"
 }

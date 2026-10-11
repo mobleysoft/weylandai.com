@@ -25,14 +25,73 @@
    "doors": 29,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 29
   },
   "b": {
    "doors": 29,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 2
+   "tables": 2,
+   "door_rows": 29
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 7,
+    "title": "DOOR SCHEDULE",
+    "rank": 3,
+    "scope": {
+     "address": "4720 SCRUGGS STATION ROAD",
+     "asset_number": "3101046001",
+     "site_number": "1046"
+    },
+    "sheet": "A-501",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "address",
+      "value": "4720 SCRUGGS STATION ROAD",
+      "text": "4720 SCRUGGS STATION ROAD",
+      "x": 2340.2464600000003,
+      "y": 1091.39996,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "1046",
+      "text": "1046",
+      "x": 2502.2245974194,
+      "y": 1179.9795545211,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "3101046001",
+      "text": "3101046001",
+      "x": 2454.9281,
+      "y": 1222.76349,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 29,
+   "pairs": [],
+   "openings": 29,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 29,
+   "pairs": [],
+   "openings": 29,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 29,
@@ -147,6 +206,6 @@
  "tier": "agreed",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 3911,
- "generated_at": "2026-10-11T07:56:36.501Z"
+ "ms": 3851,
+ "generated_at": "2026-10-11T08:13:19.036Z"
 }

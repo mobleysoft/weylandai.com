@@ -30,14 +30,361 @@
    "doors": 24,
    "sets": 2,
    "items": 17,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 24
   },
   "b": {
    "doors": 24,
    "sets": 2,
    "items": 16,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 3
+   "tables": 3,
+   "door_rows": 24
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 284,
+    "title": "DOOR SCHEDULE",
+    "rank": 3,
+    "scope": {
+     "address": "1855 MAJESTIC WAY, SAN JOSE, CA 95132",
+     "facility_name": "MAJESTIC WAY ELEMENTARY SCHOOL",
+     "site": "MAJESTIC WAY ELEMENTARY SCHOOL"
+    },
+    "sheet": "A9.2",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "facility_name",
+      "value": "MAJESTIC WAY ELEMENTARY SCHOOL",
+      "text": "MAJESTIC WAY ELEMENTARY SCHOOL",
+      "x": 2926.44,
+      "y": 1768.56,
+      "source": "title_block"
+     },
+     {
+      "field": "site",
+      "value": "MAJESTIC WAY ELEMENTARY SCHOOL",
+      "text": "MAJESTIC WAY ELEMENTARY SCHOOL",
+      "x": 2926.44,
+      "y": 1768.56,
+      "source": "title_block"
+     },
+     {
+      "field": "address",
+      "value": "1855 MAJESTIC WAY, SAN JOSE, CA 95132",
+      "text": "1855 MAJESTIC WAY, SAN JOSE, CA 95132",
+      "x": 2949.24,
+      "y": 1769.28,
+      "source": "title_block"
+     }
+    ]
+   },
+   {
+    "page": 286,
+    "title": "DOOR SCHEDULE",
+    "rank": 3,
+    "scope": {
+     "address": "1781 OLIVETREE DRIVE, SAN JOSE, CA 95131",
+     "facility_name": "BROOKTREE ELEMENTARY SCHOOL",
+     "site": "BROOKTREE ELEMENTARY SCHOOL"
+    },
+    "sheet": "A9.2",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "facility_name",
+      "value": "BROOKTREE ELEMENTARY SCHOOL",
+      "text": "BROOKTREE ELEMENTARY SCHOOL",
+      "x": 2926.44,
+      "y": 1768.56,
+      "source": "title_block"
+     },
+     {
+      "field": "site",
+      "value": "BROOKTREE ELEMENTARY SCHOOL",
+      "text": "BROOKTREE ELEMENTARY SCHOOL",
+      "x": 2926.44,
+      "y": 1768.56,
+      "source": "title_block"
+     },
+     {
+      "field": "address",
+      "value": "1781 OLIVETREE DRIVE, SAN JOSE, CA 95131",
+      "text": "1781 OLIVETREE DRIVE, SAN JOSE, CA 95131",
+      "x": 2949.24,
+      "y": 1769.28,
+      "source": "title_block"
+     }
+    ]
+   },
+   {
+    "page": 288,
+    "title": "DOOR SCHEDULE",
+    "rank": 3,
+    "scope": {
+     "address": "1100 SUMMERDALE RD., SAN JOSE, CA 95132",
+     "facility_name": "SUMMERDALE ELEMENTARY SCHOOL",
+     "site": "SUMMERDALE ELEMENTARY SCHOOL"
+    },
+    "sheet": "A9.2",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "facility_name",
+      "value": "SUMMERDALE ELEMENTARY SCHOOL",
+      "text": "SUMMERDALE ELEMENTARY SCHOOL",
+      "x": 2926.44,
+      "y": 1768.08,
+      "source": "title_block"
+     },
+     {
+      "field": "site",
+      "value": "SUMMERDALE ELEMENTARY SCHOOL",
+      "text": "SUMMERDALE ELEMENTARY SCHOOL",
+      "x": 2926.44,
+      "y": 1768.08,
+      "source": "title_block"
+     },
+     {
+      "field": "address",
+      "value": "1100 SUMMERDALE RD., SAN JOSE, CA 95132",
+      "text": "1100 SUMMERDALE RD., SAN JOSE, CA 95132",
+      "x": 2949.24,
+      "y": 1769.28,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 24,
+   "pairs": [
+    {
+     "pages": [
+      284,
+      286
+     ],
+     "shared_marks": 7,
+     "smaller_inventory": 7,
+     "scope_comparison": {
+      "agrees": false,
+      "conflicts": true,
+      "matched": [],
+      "differences": [
+       {
+        "field": "address",
+        "a": "1855 MAJESTIC WAY, SAN JOSE, CA 95132",
+        "b": "1781 OLIVETREE DRIVE, SAN JOSE, CA 95131",
+        "kind": "conflict"
+       },
+       {
+        "field": "facility_name",
+        "a": "MAJESTIC WAY ELEMENTARY SCHOOL",
+        "b": "BROOKTREE ELEMENTARY SCHOOL",
+        "kind": "conflict"
+       },
+       {
+        "field": "site",
+        "a": "MAJESTIC WAY ELEMENTARY SCHOOL",
+        "b": "BROOKTREE ELEMENTARY SCHOOL",
+        "kind": "conflict"
+       }
+      ]
+     },
+     "repeated_inventory": false,
+     "reason": "building scopes do not agree"
+    },
+    {
+     "pages": [
+      284,
+      288
+     ],
+     "shared_marks": 8,
+     "smaller_inventory": 8,
+     "scope_comparison": {
+      "agrees": false,
+      "conflicts": true,
+      "matched": [],
+      "differences": [
+       {
+        "field": "address",
+        "a": "1855 MAJESTIC WAY, SAN JOSE, CA 95132",
+        "b": "1100 SUMMERDALE RD., SAN JOSE, CA 95132",
+        "kind": "conflict"
+       },
+       {
+        "field": "facility_name",
+        "a": "MAJESTIC WAY ELEMENTARY SCHOOL",
+        "b": "SUMMERDALE ELEMENTARY SCHOOL",
+        "kind": "conflict"
+       },
+       {
+        "field": "site",
+        "a": "MAJESTIC WAY ELEMENTARY SCHOOL",
+        "b": "SUMMERDALE ELEMENTARY SCHOOL",
+        "kind": "conflict"
+       }
+      ]
+     },
+     "repeated_inventory": false,
+     "reason": "building scopes do not agree"
+    },
+    {
+     "pages": [
+      286,
+      288
+     ],
+     "shared_marks": 7,
+     "smaller_inventory": 7,
+     "scope_comparison": {
+      "agrees": false,
+      "conflicts": true,
+      "matched": [],
+      "differences": [
+       {
+        "field": "address",
+        "a": "1781 OLIVETREE DRIVE, SAN JOSE, CA 95131",
+        "b": "1100 SUMMERDALE RD., SAN JOSE, CA 95132",
+        "kind": "conflict"
+       },
+       {
+        "field": "facility_name",
+        "a": "BROOKTREE ELEMENTARY SCHOOL",
+        "b": "SUMMERDALE ELEMENTARY SCHOOL",
+        "kind": "conflict"
+       },
+       {
+        "field": "site",
+        "a": "BROOKTREE ELEMENTARY SCHOOL",
+        "b": "SUMMERDALE ELEMENTARY SCHOOL",
+        "kind": "conflict"
+       }
+      ]
+     },
+     "repeated_inventory": false,
+     "reason": "building scopes do not agree"
+    }
+   ],
+   "openings": 24,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 24,
+   "pairs": [
+    {
+     "pages": [
+      284,
+      286
+     ],
+     "shared_marks": 7,
+     "smaller_inventory": 7,
+     "scope_comparison": {
+      "agrees": false,
+      "conflicts": true,
+      "matched": [],
+      "differences": [
+       {
+        "field": "address",
+        "a": "1855 MAJESTIC WAY, SAN JOSE, CA 95132",
+        "b": "1781 OLIVETREE DRIVE, SAN JOSE, CA 95131",
+        "kind": "conflict"
+       },
+       {
+        "field": "facility_name",
+        "a": "MAJESTIC WAY ELEMENTARY SCHOOL",
+        "b": "BROOKTREE ELEMENTARY SCHOOL",
+        "kind": "conflict"
+       },
+       {
+        "field": "site",
+        "a": "MAJESTIC WAY ELEMENTARY SCHOOL",
+        "b": "BROOKTREE ELEMENTARY SCHOOL",
+        "kind": "conflict"
+       }
+      ]
+     },
+     "repeated_inventory": false,
+     "reason": "building scopes do not agree"
+    },
+    {
+     "pages": [
+      284,
+      288
+     ],
+     "shared_marks": 8,
+     "smaller_inventory": 8,
+     "scope_comparison": {
+      "agrees": false,
+      "conflicts": true,
+      "matched": [],
+      "differences": [
+       {
+        "field": "address",
+        "a": "1855 MAJESTIC WAY, SAN JOSE, CA 95132",
+        "b": "1100 SUMMERDALE RD., SAN JOSE, CA 95132",
+        "kind": "conflict"
+       },
+       {
+        "field": "facility_name",
+        "a": "MAJESTIC WAY ELEMENTARY SCHOOL",
+        "b": "SUMMERDALE ELEMENTARY SCHOOL",
+        "kind": "conflict"
+       },
+       {
+        "field": "site",
+        "a": "MAJESTIC WAY ELEMENTARY SCHOOL",
+        "b": "SUMMERDALE ELEMENTARY SCHOOL",
+        "kind": "conflict"
+       }
+      ]
+     },
+     "repeated_inventory": false,
+     "reason": "building scopes do not agree"
+    },
+    {
+     "pages": [
+      286,
+      288
+     ],
+     "shared_marks": 7,
+     "smaller_inventory": 7,
+     "scope_comparison": {
+      "agrees": false,
+      "conflicts": true,
+      "matched": [],
+      "differences": [
+       {
+        "field": "address",
+        "a": "1781 OLIVETREE DRIVE, SAN JOSE, CA 95131",
+        "b": "1100 SUMMERDALE RD., SAN JOSE, CA 95132",
+        "kind": "conflict"
+       },
+       {
+        "field": "facility_name",
+        "a": "BROOKTREE ELEMENTARY SCHOOL",
+        "b": "SUMMERDALE ELEMENTARY SCHOOL",
+        "kind": "conflict"
+       },
+       {
+        "field": "site",
+        "a": "BROOKTREE ELEMENTARY SCHOOL",
+        "b": "SUMMERDALE ELEMENTARY SCHOOL",
+        "kind": "conflict"
+       }
+      ]
+     },
+     "repeated_inventory": false,
+     "reason": "building scopes do not agree"
+    }
+   ],
+   "openings": 24,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 40,
@@ -433,6 +780,6 @@
    "why": "only reader A read this row"
   }
  ],
- "ms": 1215,
- "generated_at": "2026-10-11T07:54:44.431Z"
+ "ms": 1227,
+ "generated_at": "2026-10-11T08:11:28.046Z"
 }

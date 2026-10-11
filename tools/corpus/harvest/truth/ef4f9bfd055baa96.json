@@ -40,14 +40,34 @@
    "doors": 0,
    "sets": 44,
    "items": 301,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 0
   },
   "b": {
    "doors": 0,
    "sets": 41,
    "items": 301,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 0
+   "tables": 0,
+   "door_rows": 0
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [],
+  "a": {
+   "rows": 0,
+   "pairs": [],
+   "openings": 0,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 0,
+   "pairs": [],
+   "openings": 0,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 1,
@@ -447,6 +467,6 @@
    "b": "L9071R 06A US26D SCH"
   }
  ],
- "ms": 478,
- "generated_at": "2026-10-11T07:58:40.230Z"
+ "ms": 494,
+ "generated_at": "2026-10-11T08:15:25.441Z"
 }

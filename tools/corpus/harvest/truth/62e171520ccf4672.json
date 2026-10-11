@@ -25,14 +25,64 @@
    "doors": 0,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 0
   },
   "b": {
    "doors": 1,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 1
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 3,
+    "title": "WINDOW AND",
+    "rank": 1,
+    "scope": {
+     "facility_number": "8877712003",
+     "site_number": "7712"
+    },
+    "sheet": "A202",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "site_number",
+      "value": "7712",
+      "text": "7712",
+      "x": 2436.420243384,
+      "y": 1179.7569993792,
+      "source": "title_block"
+     },
+     {
+      "field": "facility_number",
+      "value": "8877712003",
+      "text": "FACILITY # 8877712003",
+      "x": 2340.3961649216,
+      "y": 1201.9998431999998,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 0,
+   "pairs": [],
+   "openings": 0,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 1,
+   "pairs": [],
+   "openings": 1,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "reader_notes": [
@@ -104,6 +154,6 @@
    "why": "only reader B read this row"
   }
  ],
- "ms": 2330,
- "generated_at": "2026-10-11T07:56:18.414Z"
+ "ms": 2196,
+ "generated_at": "2026-10-11T08:13:02.374Z"
 }

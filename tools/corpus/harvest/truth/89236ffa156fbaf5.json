@@ -26,14 +26,111 @@
    "doors": 29,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 29
   },
   "b": {
    "doors": 29,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 2
+   "tables": 2,
+   "door_rows": 29
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 42,
+    "title": "DOOR SCHEDULE",
+    "rank": 3,
+    "scope": {
+     "address": "1225 COOPER DRIVE",
+     "asset_number": "8136298008",
+     "site_number": "6298"
+    },
+    "sheet": "A601",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "address",
+      "value": "1225 COOPER DRIVE",
+      "text": "1225 COOPER DRIVE",
+      "x": 2336.7590652960002,
+      "y": 1094.040253584,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "6298",
+      "text": "6298",
+      "x": 2430.59902776,
+      "y": 1180.080219168,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "8136298008",
+      "text": "8136298008",
+      "x": 2430.59902776,
+      "y": 1202.160210336,
+      "source": "title_block"
+     }
+    ]
+   },
+   {
+    "page": 43,
+    "title": "DOOR SCHEDULE",
+    "rank": 3,
+    "scope": {
+     "address": "1225 COOPER DRIVE",
+     "asset_number": "8136298008",
+     "site_number": "6298"
+    },
+    "sheet": "A602",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "address",
+      "value": "1225 COOPER DRIVE",
+      "text": "1225 COOPER DRIVE",
+      "x": 2336.7590652960002,
+      "y": 1094.040253584,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "6298",
+      "text": "6298",
+      "x": 2430.59902776,
+      "y": 1180.080219168,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "8136298008",
+      "text": "8136298008",
+      "x": 2430.59902776,
+      "y": 1202.160210336,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 29,
+   "pairs": [],
+   "openings": 29,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 29,
+   "pairs": [],
+   "openings": 29,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 29,
@@ -95,9 +192,9 @@
   "marks_on_plan": {
    "applicable": true,
    "total": 29,
-   "pass": 13,
-   "fail": 16,
-   "pass_rate": 0.4483,
+   "pass": 0,
+   "fail": 29,
+   "pass_rate": 0,
    "examples": [
     "mark 129C (schedule p.42) not tagged on any plan",
     "mark 160 (schedule p.42) not tagged on any plan",
@@ -113,17 +210,17 @@
     "mark 168A (schedule p.42) not tagged on any plan"
    ],
    "plan_sheets": [
-    "A113 p.27",
+    "A111.B p.24",
     "A501 p.39"
    ],
    "plan_counts": {
     "plan_sheets": 2,
-    "rooms": 17,
-    "corridors": 0,
-    "tags": 13,
+    "rooms": 19,
+    "corridors": 2,
+    "tags": 0,
     "unmatched_tags": 0,
     "schedule_marks": 29,
-    "marks_not_on_plan": 16,
+    "marks_not_on_plan": 29,
     "shared_marks": 0
    }
   },
@@ -166,6 +263,6 @@
  "tier": "agreed",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 2763,
- "generated_at": "2026-10-11T07:56:32.986Z"
+ "ms": 3031,
+ "generated_at": "2026-10-11T08:13:17.662Z"
 }

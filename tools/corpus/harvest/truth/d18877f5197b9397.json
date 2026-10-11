@@ -26,7 +26,7 @@
      "h": 408,
      "v": 4433
     },
-    "ms": 8925
+    "ms": 8674
    },
    {
     "page": 2,
@@ -38,7 +38,7 @@
      "h": 150,
      "v": 977
     },
-    "ms": 11027
+    "ms": 10571
    },
    {
     "page": 3,
@@ -50,7 +50,7 @@
      "h": 168,
      "v": 1123
     },
-    "ms": 24233
+    "ms": 23871
    },
    {
     "page": 4,
@@ -62,7 +62,7 @@
      "h": 153,
      "v": 975
     },
-    "ms": 10449
+    "ms": 9994
    }
   ]
  },
@@ -77,14 +77,34 @@
    "doors": 0,
    "sets": 0,
    "items": 0,
-   "name": "production OCR + schedule line reader (Poppler renderer)"
+   "name": "production OCR + schedule line reader (Poppler renderer)",
+   "door_rows": 0
   },
   "b": {
    "doors": 0,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 0
+   "tables": 0,
+   "door_rows": 0
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [],
+  "a": {
+   "rows": 0,
+   "pairs": [],
+   "openings": 0,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 0,
+   "pairs": [],
+   "openings": 0,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 0,
@@ -144,6 +164,6 @@
  "note": "no text layer: production OCR preprocessing, cell recognition and line reader; Poppler rendering (browser rendering is a separate check). Actual DPI is recorded per page; the same words are given to both readers",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 54643,
- "generated_at": "2026-10-11T08:00:41.724Z"
+ "ms": 53122,
+ "generated_at": "2026-10-11T08:17:26.380Z"
 }

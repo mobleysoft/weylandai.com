@@ -25,14 +25,73 @@
    "doors": 3,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 3
   },
   "b": {
    "doors": 0,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 0
+   "tables": 0,
+   "door_rows": 0
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 12,
+    "title": "DETAILS AND",
+    "rank": 2,
+    "scope": {
+     "address": "620 N. JEFFERSON STREET",
+     "facility_number": "8136801012",
+     "site_number": "6801"
+    },
+    "sheet": "A-300",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "address",
+      "value": "620 N. JEFFERSON STREET",
+      "text": "620 N. JEFFERSON STREET",
+      "x": 2381.853019054824,
+      "y": 1075.346894776856,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "6801",
+      "text": "6801",
+      "x": 2473.2031073516246,
+      "y": 1180.111395614972,
+      "source": "title_block"
+     },
+     {
+      "field": "facility_number",
+      "value": "8136801012",
+      "text": "FACILITY # 8136801012",
+      "x": 2373.7319189898553,
+      "y": 1203.018395798228,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 3,
+   "pairs": [],
+   "openings": 3,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 0,
+   "pairs": [],
+   "openings": 0,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 0,
@@ -147,6 +206,6 @@
    "why": "only reader A read this row"
   }
  ],
- "ms": 1567,
- "generated_at": "2026-10-11T07:56:04.404Z"
+ "ms": 1449,
+ "generated_at": "2026-10-11T08:12:46.712Z"
 }

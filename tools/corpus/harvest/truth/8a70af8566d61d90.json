@@ -25,14 +25,64 @@
    "doors": 2,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 2
   },
   "b": {
    "doors": 2,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 2
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 10,
+    "title": "SCHEDULES &",
+    "rank": 2,
+    "scope": {
+     "facility_number": "9327007014",
+     "site_number": "7007"
+    },
+    "sheet": "A-601",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "site_number",
+      "value": "7007",
+      "text": "7007",
+      "x": 2434.08,
+      "y": 1179.8400000000001,
+      "source": "title_block"
+     },
+     {
+      "field": "facility_number",
+      "value": "9327007014",
+      "text": "FACILITY# 9327007014",
+      "x": 2338.92,
+      "y": 1202.04,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 2,
+   "pairs": [],
+   "openings": 2,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 2,
+   "pairs": [],
+   "openings": 2,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 2,
@@ -88,11 +138,21 @@
  "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
-   "applicable": false,
-   "reason": "no floor plan sheet found in this PDF (title blocks)",
+   "applicable": true,
+   "total": 2,
+   "pass": 0,
+   "fail": 2,
+   "pass_rate": 0,
+   "examples": [
+    "mark 102 (schedule p.10) not tagged on any plan",
+    "mark 105 (schedule p.10) not tagged on any plan"
+   ],
+   "plan_sheets": [
+    "A-401 p.9"
+   ],
    "plan_counts": {
-    "plan_sheets": 0,
-    "rooms": 0,
+    "plan_sheets": 1,
+    "rooms": 1,
     "corridors": 0,
     "tags": 0,
     "unmatched_tags": 0,
@@ -127,6 +187,6 @@
  "tier": "agreed",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 1203,
- "generated_at": "2026-10-11T07:56:48.150Z"
+ "ms": 1178,
+ "generated_at": "2026-10-11T08:13:30.762Z"
 }

@@ -25,14 +25,64 @@
    "doors": 49,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 49
   },
   "b": {
    "doors": 49,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 49
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 10,
+    "title": "SCHEDULES AND FRAME",
+    "rank": 2,
+    "scope": {
+     "facility_number": "8136286002",
+     "site_number": "6286"
+    },
+    "sheet": "A-103",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "site_number",
+      "value": "6286",
+      "text": "6286",
+      "x": 2434.241,
+      "y": 1178.8021800000001,
+      "source": "title_block"
+     },
+     {
+      "field": "facility_number",
+      "value": "8136286002",
+      "text": "FACILITY # 8136286002",
+      "x": 2339.263,
+      "y": 1201.2513800000002,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 49,
+   "pairs": [],
+   "openings": 49,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 49,
+   "pairs": [],
+   "openings": 49,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 47,
@@ -96,13 +146,12 @@
    "examples": [],
    "plan_sheets": [
     "A-100 p.7",
-    "A-101 p.8",
     "A-104 p.11"
    ],
    "plan_counts": {
-    "plan_sheets": 3,
-    "rooms": 151,
-    "corridors": 7,
+    "plan_sheets": 2,
+    "rooms": 107,
+    "corridors": 4,
     "tags": 49,
     "unmatched_tags": 0,
     "schedule_marks": 49,
@@ -153,6 +202,6 @@
    "b": "113"
   }
  ],
- "ms": 1576,
- "generated_at": "2026-10-11T07:55:52.855Z"
+ "ms": 1645,
+ "generated_at": "2026-10-11T08:12:35.992Z"
 }

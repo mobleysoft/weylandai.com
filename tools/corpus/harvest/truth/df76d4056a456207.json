@@ -27,14 +27,170 @@
    "doors": 13,
    "sets": 6,
    "items": 19,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 13
   },
   "b": {
    "doors": 13,
    "sets": 3,
    "items": 12,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 13
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 114,
+    "title": "DOOR AND WINDOW SCHEDULES AND",
+    "rank": 2,
+    "scope": {
+     "address": "461 COUNTY ROAD 517",
+     "asset_number": "8136325016",
+     "level": "1; 2; 3",
+     "site_number": "6325"
+    },
+    "sheet": "A-601",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "address",
+      "value": "461 COUNTY ROAD 517",
+      "text": "461 COUNTY ROAD 517",
+      "x": 2340.9,
+      "y": 1064.49,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "6325",
+      "text": "6325",
+      "x": 2447.85,
+      "y": 1147.68,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "8136325016",
+      "text": "8136325016",
+      "x": 2447.85,
+      "y": 1170.5700000000002,
+      "source": "title_block"
+     },
+     {
+      "field": "level",
+      "value": "1",
+      "text": "LEVEL 1",
+      "x": 1121.1299999999999,
+      "y": 201.3900000000001,
+      "source": "sheet_label"
+     },
+     {
+      "field": "level",
+      "value": "1",
+      "text": "LEVEL 1",
+      "x": 1121.1299999999999,
+      "y": 237.42000000000007,
+      "source": "sheet_label"
+     },
+     {
+      "field": "level",
+      "value": "1",
+      "text": "LEVEL 1",
+      "x": 1121.1299999999999,
+      "y": 255.42000000000007,
+      "source": "sheet_label"
+     },
+     {
+      "field": "level",
+      "value": "2",
+      "text": "LEVEL 2",
+      "x": 1120.5,
+      "y": 309.4200000000001,
+      "source": "sheet_label"
+     },
+     {
+      "field": "level",
+      "value": "2",
+      "text": "LEVEL 2",
+      "x": 1120.5,
+      "y": 327.4200000000001,
+      "source": "sheet_label"
+     },
+     {
+      "field": "level",
+      "value": "3",
+      "text": "LEVEL 3",
+      "x": 1120.47,
+      "y": 345.3600000000001,
+      "source": "sheet_label"
+     },
+     {
+      "field": "level",
+      "value": "1",
+      "text": "LEVEL 1",
+      "x": 1121.1299999999999,
+      "y": 363.4200000000001,
+      "source": "sheet_label"
+     },
+     {
+      "field": "level",
+      "value": "3",
+      "text": "LEVEL 3",
+      "x": 1120.47,
+      "y": 417.3600000000001,
+      "source": "sheet_label"
+     },
+     {
+      "field": "level",
+      "value": "2",
+      "text": "LEVEL 2",
+      "x": 1120.5,
+      "y": 381.4200000000001,
+      "source": "sheet_label"
+     },
+     {
+      "field": "level",
+      "value": "1",
+      "text": "LEVEL 1:",
+      "x": 1952.31,
+      "y": 650.6100000000001,
+      "source": "sheet_label"
+     },
+     {
+      "field": "level",
+      "value": "2",
+      "text": "LEVEL 2:",
+      "x": 1952.31,
+      "y": 684.6000000000001,
+      "source": "sheet_label"
+     },
+     {
+      "field": "level",
+      "value": "3",
+      "text": "LEVEL 3:",
+      "x": 1952.31,
+      "y": 718.62,
+      "source": "sheet_label"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 13,
+   "pairs": [],
+   "openings": 13,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 13,
+   "pairs": [],
+   "openings": 13,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 9,
@@ -495,6 +651,6 @@
    "why": "only reader A read this set"
   }
  ],
- "ms": 2242,
- "generated_at": "2026-10-11T07:57:15.834Z"
+ "ms": 2082,
+ "generated_at": "2026-10-11T08:14:00.416Z"
 }

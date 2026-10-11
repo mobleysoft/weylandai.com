@@ -25,14 +25,72 @@
    "doors": 7,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 7
   },
   "b": {
    "doors": 0,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 0
+   "tables": 0,
+   "door_rows": 0
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 33,
+    "title": "DOOR SCHEDULE -",
+    "rank": 3,
+    "scope": {
+     "address": "3815 MAGNOLIA AVENUE",
+     "asset_number": "5012011011; 5012011017"
+    },
+    "sheet": "A-601",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "address",
+      "value": "3815 MAGNOLIA AVENUE",
+      "text": "3815 MAGNOLIA AVENUE",
+      "x": 2338.5299999999997,
+      "y": 1097.85,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "5012011017",
+      "text": "5012011017",
+      "x": 2433.54,
+      "y": 1179.33,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "5012011011",
+      "text": "5012011011",
+      "x": 2433.59902656,
+      "y": 1179.0002196,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 7,
+   "pairs": [],
+   "openings": 7,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 0,
+   "pairs": [],
+   "openings": 0,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 0,
@@ -69,10 +127,12 @@
   "marks_on_plan": {
    "applicable": true,
    "total": 7,
-   "pass": 2,
-   "fail": 5,
-   "pass_rate": 0.2857,
+   "pass": 0,
+   "fail": 7,
+   "pass_rate": 0,
    "examples": [
+    "mark 200 (schedule p.33) not tagged on any plan",
+    "mark 201 (schedule p.33) not tagged on any plan",
     "mark 300 (schedule p.33) not tagged on any plan",
     "mark 301 (schedule p.33) not tagged on any plan",
     "mark 302 (schedule p.33) not tagged on any plan",
@@ -80,19 +140,17 @@
     "mark 400 (schedule p.33) not tagged on any plan"
    ],
    "plan_sheets": [
-    "A-101 p.20",
-    "A-102 p.21",
     "A-105 p.24",
-    "A-600 p.32"
+    "A-106 p.25"
    ],
    "plan_counts": {
-    "plan_sheets": 4,
-    "rooms": 25,
-    "corridors": 1,
-    "tags": 2,
+    "plan_sheets": 2,
+    "rooms": 12,
+    "corridors": 2,
+    "tags": 0,
     "unmatched_tags": 0,
     "schedule_marks": 7,
-    "marks_not_on_plan": 5,
+    "marks_not_on_plan": 7,
     "shared_marks": 0
    }
   },
@@ -188,6 +246,6 @@
    "why": "only reader A read this row"
   }
  ],
- "ms": 2426,
- "generated_at": "2026-10-11T07:56:12.496Z"
+ "ms": 2469,
+ "generated_at": "2026-10-11T08:12:54.589Z"
 }

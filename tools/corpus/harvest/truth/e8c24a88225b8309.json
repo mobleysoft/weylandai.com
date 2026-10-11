@@ -25,14 +25,73 @@
    "doors": 5,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 5
   },
   "b": {
    "doors": 0,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 0
+   "tables": 0,
+   "door_rows": 0
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 12,
+    "title": "DETAILS AND",
+    "rank": 2,
+    "scope": {
+     "address": "1600 S HICKORY ST",
+     "facility_number": "8136905001",
+     "site_number": "6905"
+    },
+    "sheet": "A-300",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "address",
+      "value": "1600 S HICKORY ST",
+      "text": "1600 S HICKORY ST.",
+      "x": 2367.831894264,
+      "y": 1078.1664799415998,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "6905",
+      "text": "6905",
+      "x": 2473.2036424772396,
+      "y": 1180.11146149752,
+      "source": "title_block"
+     },
+     {
+      "field": "facility_number",
+      "value": "8136905001",
+      "text": "FACILITY # 8136905001",
+      "x": 2373.731898984,
+      "y": 1203.01837982304,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 5,
+   "pairs": [],
+   "openings": 5,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 0,
+   "pairs": [],
+   "openings": 0,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 0,
@@ -168,6 +227,6 @@
    "why": "only reader A read this row"
   }
  ],
- "ms": 1150,
- "generated_at": "2026-10-11T07:57:32.629Z"
+ "ms": 1156,
+ "generated_at": "2026-10-11T08:14:19.674Z"
 }

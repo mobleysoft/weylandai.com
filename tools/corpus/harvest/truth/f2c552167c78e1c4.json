@@ -26,14 +26,34 @@
    "doors": 0,
    "sets": 3,
    "items": 18,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 0
   },
   "b": {
    "doors": 0,
    "sets": 3,
    "items": 18,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 0
+   "tables": 0,
+   "door_rows": 0
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [],
+  "a": {
+   "rows": 0,
+   "pairs": [],
+   "openings": 0,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 0,
+   "pairs": [],
+   "openings": 0,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 17,
@@ -121,6 +141,6 @@
    "b": "9266F 36” 20” STD"
   }
  ],
- "ms": 1804,
- "generated_at": "2026-10-11T07:57:44.690Z"
+ "ms": 1811,
+ "generated_at": "2026-10-11T08:14:31.981Z"
 }

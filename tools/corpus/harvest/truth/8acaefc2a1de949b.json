@@ -25,14 +25,82 @@
    "doors": 12,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 12
   },
   "b": {
    "doors": 12,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 12
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 23,
+    "title": "DOORS AND WINDOWS",
+    "rank": 2,
+    "scope": {
+     "address": "10695 BELLEFONTAINE RD",
+     "asset_number": "6517356071",
+     "building": "1802",
+     "site_number": "7356"
+    },
+    "sheet": "A601",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "address",
+      "value": "10695 BELLEFONTAINE RD",
+      "text": "10695 BELLEFONTAINE RD",
+      "x": 2337.8391,
+      "y": 1113.8402,
+      "source": "title_block"
+     },
+     {
+      "field": "building",
+      "value": "1802",
+      "text": "BUILDING 1802",
+      "x": 2337.8391,
+      "y": 1094.5203000000001,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "7356",
+      "text": "7356",
+      "x": 2441.805,
+      "y": 1192.423,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "6517356071",
+      "text": "6517356071",
+      "x": 2441.805,
+      "y": 1211.083,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 12,
+   "pairs": [],
+   "openings": 12,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 12,
+   "pairs": [],
+   "openings": 12,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 0,
@@ -92,16 +160,23 @@
  "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
-   "applicable": false,
-   "reason": "no floor plan sheet found in this PDF (title blocks)",
+   "applicable": true,
+   "total": 12,
+   "pass": 12,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "plan_sheets": [
+    "A101 p.16"
+   ],
    "plan_counts": {
-    "plan_sheets": 0,
-    "rooms": 0,
-    "corridors": 0,
-    "tags": 0,
+    "plan_sheets": 1,
+    "rooms": 24,
+    "corridors": 1,
+    "tags": 12,
     "unmatched_tags": 0,
     "schedule_marks": 12,
-    "marks_not_on_plan": 12,
+    "marks_not_on_plan": 0,
     "shared_marks": 0
    }
   },
@@ -251,6 +326,6 @@
    "b": 36
   }
  ],
- "ms": 6770,
- "generated_at": "2026-10-11T07:56:54.940Z"
+ "ms": 7432,
+ "generated_at": "2026-10-11T08:13:38.215Z"
 }

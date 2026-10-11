@@ -25,14 +25,73 @@
    "doors": 6,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 6
   },
   "b": {
    "doors": 6,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 6
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 3,
+    "title": "SCHEDULES",
+    "rank": 2,
+    "scope": {
+     "address": "1581 VAN BUREN RD",
+     "facility_name": "CONNOR SCHOOL",
+     "site": "CONNOR SCHOOL"
+    },
+    "sheet": "A601",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "facility_name",
+      "value": "CONNOR SCHOOL",
+      "text": "CONNOR SCHOOL",
+      "x": 2312.039075184,
+      "y": 1421.880122448,
+      "source": "title_block"
+     },
+     {
+      "field": "site",
+      "value": "CONNOR SCHOOL",
+      "text": "CONNOR SCHOOL",
+      "x": 2312.039075184,
+      "y": 1421.880122448,
+      "source": "title_block"
+     },
+     {
+      "field": "address",
+      "value": "1581 VAN BUREN RD",
+      "text": "1581 VAN BUREN RD.",
+      "x": 2323.79907048,
+      "y": 1440.480115008,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 6,
+   "pairs": [],
+   "openings": 6,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 6,
+   "pairs": [],
+   "openings": 6,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 0,
@@ -210,6 +269,6 @@
    "b": "LEVER; OFFICE"
   }
  ],
- "ms": 70,
- "generated_at": "2026-10-11T07:54:45.149Z"
+ "ms": 72,
+ "generated_at": "2026-10-11T08:11:28.999Z"
 }

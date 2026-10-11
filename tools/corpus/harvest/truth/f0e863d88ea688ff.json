@@ -33,14 +33,55 @@
    "doors": 65,
    "sets": 14,
    "items": 110,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 65
   },
   "b": {
    "doors": 65,
    "sets": 14,
    "items": 110,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 65
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 29,
+    "title": "OPENING SCHEDULES, TYPES AND DETAILS",
+    "rank": 2,
+    "scope": {
+     "address": "4015 PEPPER DR, ROCKFORD, IL 61114"
+    },
+    "sheet": "A2.2",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "address",
+      "value": "4015 PEPPER DR, ROCKFORD, IL 61114",
+      "text": "4015 PEPPER DR, ROCKFORD, IL 61114",
+      "x": 2960.6947,
+      "y": 1647.6230500000001,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 65,
+   "pairs": [],
+   "openings": 65,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 65,
+   "pairs": [],
+   "openings": 65,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 173,
@@ -487,6 +528,6 @@
    "b": "SURFACE CLOSER"
   }
  ],
- "ms": 3477,
- "generated_at": "2026-10-11T07:54:47.863Z"
+ "ms": 3207,
+ "generated_at": "2026-10-11T08:11:31.275Z"
 }

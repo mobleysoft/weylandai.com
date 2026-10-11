@@ -26,14 +26,421 @@
    "doors": 36,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 36
   },
   "b": {
    "doors": 36,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 2
+   "tables": 2,
+   "door_rows": 36
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 18,
+    "title": "FLOOR PLAN",
+    "rank": 2,
+    "scope": {
+     "asset_number": "7815307019; 7815307024",
+     "building": "LOOP 4",
+     "facility_name": "CAMPGROUND SHOWER; HOUSE REPLACEMENTS; MONTAUK STATE PARK",
+     "site": "MONTAUK STATE PARK",
+     "site_number": "5302; 5307"
+    },
+    "sheet": "A-101",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "facility_name",
+      "value": "CAMPGROUND SHOWER",
+      "text": "CAMPGROUND SHOWER",
+      "x": 2341.8785399999997,
+      "y": 978.850306515,
+      "source": "title_block"
+     },
+     {
+      "field": "facility_name",
+      "value": "HOUSE REPLACEMENTS",
+      "text": "HOUSE REPLACEMENTS",
+      "x": 2341.8785399999997,
+      "y": 998.1818450175,
+      "source": "title_block"
+     },
+     {
+      "field": "facility_name",
+      "value": "MONTAUK STATE PARK",
+      "text": "MONTAUK STATE PARK",
+      "x": 2341.8785399999997,
+      "y": 1092.1347251175,
+      "source": "title_block"
+     },
+     {
+      "field": "site",
+      "value": "MONTAUK STATE PARK",
+      "text": "MONTAUK STATE PARK",
+      "x": 2341.8785399999997,
+      "y": 1092.1347251175,
+      "source": "title_block"
+     },
+     {
+      "field": "building",
+      "value": "LOOP 4",
+      "text": "LOOP 4",
+      "x": 2341.8785399999997,
+      "y": 1017.51338352,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "5302",
+      "text": "5302",
+      "x": 2434.18147602,
+      "y": 1175.4667708725,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "5307",
+      "text": "5307",
+      "x": 2437.2559999999994,
+      "y": 1173.423,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "5302",
+      "text": "5302",
+      "x": 2434.18147602,
+      "y": 1175.4667708725,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "5307",
+      "text": "5307",
+      "x": 2437.2559999999994,
+      "y": 1173.423,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "5302",
+      "text": "5302",
+      "x": 2434.18147602,
+      "y": 1175.4667708725,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "5307",
+      "text": "5307",
+      "x": 2437.2559999999994,
+      "y": 1173.423,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "7815307019",
+      "text": "7815307019",
+      "x": 2434.18147602,
+      "y": 1197.98895,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "7815307019",
+      "text": "7815307019",
+      "x": 2436.6979999999994,
+      "y": 1195.2161,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "7815307024",
+      "text": "7815307024",
+      "x": 2437.3759999999997,
+      "y": 1195.8629999999998,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "7815307019",
+      "text": "7815307019",
+      "x": 2434.18147602,
+      "y": 1197.98895,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "7815307019",
+      "text": "7815307019",
+      "x": 2436.6979999999994,
+      "y": 1195.2161,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "7815307024",
+      "text": "7815307024",
+      "x": 2437.3759999999997,
+      "y": 1195.8629999999998,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "7815307019",
+      "text": "7815307019",
+      "x": 2434.18147602,
+      "y": 1197.98895,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "7815307019",
+      "text": "7815307019",
+      "x": 2436.6979999999994,
+      "y": 1195.2161,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "7815307024",
+      "text": "7815307024",
+      "x": 2437.3759999999997,
+      "y": 1195.8629999999998,
+      "source": "title_block"
+     }
+    ]
+   },
+   {
+    "page": 53,
+    "title": "FLOOR PLAN",
+    "rank": 2,
+    "scope": {
+     "asset_number": "7815307024",
+     "building": "LOOP 1",
+     "facility_name": "CAMPGROUND SHOWER; HOUSE REPLACEMENTS; MONTAUK STATE PARK",
+     "site": "MONTAUK STATE PARK",
+     "site_number": "5307"
+    },
+    "sheet": "A-101.A",
+    "sheet_family": "A.A",
+    "scope_evidence": [
+     {
+      "field": "facility_name",
+      "value": "CAMPGROUND SHOWER",
+      "text": "CAMPGROUND SHOWER",
+      "x": 2337.374206275,
+      "y": 974.34597279,
+      "source": "title_block"
+     },
+     {
+      "field": "facility_name",
+      "value": "HOUSE REPLACEMENTS",
+      "text": "HOUSE REPLACEMENTS",
+      "x": 2337.374206275,
+      "y": 993.6775112925,
+      "source": "title_block"
+     },
+     {
+      "field": "facility_name",
+      "value": "MONTAUK STATE PARK",
+      "text": "MONTAUK STATE PARK",
+      "x": 2339.6263731375,
+      "y": 1078.621553775,
+      "source": "title_block"
+     },
+     {
+      "field": "site",
+      "value": "MONTAUK STATE PARK",
+      "text": "MONTAUK STATE PARK",
+      "x": 2339.6263731375,
+      "y": 1078.621553775,
+      "source": "title_block"
+     },
+     {
+      "field": "building",
+      "value": "LOOP 1",
+      "text": "LOOP 1",
+      "x": 2337.374206275,
+      "y": 1013.0088796275,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "5307",
+      "text": "5307",
+      "x": 2436.5109999999995,
+      "y": 1174.0982000000001,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "5307",
+      "text": "5307",
+      "x": 2439.4823638125,
+      "y": 1176.4416604799999,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "5307",
+      "text": "5307",
+      "x": 2436.5109999999995,
+      "y": 1174.0982000000001,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "5307",
+      "text": "5307",
+      "x": 2439.4823638125,
+      "y": 1176.4416604799999,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "7815307024",
+      "text": "7815307024",
+      "x": 2436.631,
+      "y": 1196.5382,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "7815307024",
+      "text": "7815307024",
+      "x": 2439.4823638125,
+      "y": 1197.98895,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "7815307024",
+      "text": "7815307024",
+      "x": 2436.631,
+      "y": 1196.5382,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "7815307024",
+      "text": "7815307024",
+      "x": 2439.4823638125,
+      "y": 1197.98895,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 36,
+   "pairs": [
+    {
+     "pages": [
+      18,
+      53
+     ],
+     "shared_marks": 16,
+     "smaller_inventory": 18,
+     "scope_comparison": {
+      "agrees": false,
+      "conflicts": true,
+      "matched": [
+       "facility_name",
+       "site"
+      ],
+      "differences": [
+       {
+        "field": "asset_number",
+        "a": "7815307019; 7815307024",
+        "b": "7815307024",
+        "kind": "conflict"
+       },
+       {
+        "field": "building",
+        "a": "LOOP 4",
+        "b": "LOOP 1",
+        "kind": "conflict"
+       },
+       {
+        "field": "site_number",
+        "a": "5302; 5307",
+        "b": "5307",
+        "kind": "conflict"
+       },
+       {
+        "field": "sheet_family",
+        "a": "A",
+        "b": "A.A",
+        "kind": "conflict"
+       }
+      ]
+     },
+     "repeated_inventory": false,
+     "reason": "building scopes do not agree"
+    }
+   ],
+   "openings": 36,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 36,
+   "pairs": [
+    {
+     "pages": [
+      18,
+      53
+     ],
+     "shared_marks": 16,
+     "smaller_inventory": 18,
+     "scope_comparison": {
+      "agrees": false,
+      "conflicts": true,
+      "matched": [
+       "facility_name",
+       "site"
+      ],
+      "differences": [
+       {
+        "field": "asset_number",
+        "a": "7815307019; 7815307024",
+        "b": "7815307024",
+        "kind": "conflict"
+       },
+       {
+        "field": "building",
+        "a": "LOOP 4",
+        "b": "LOOP 1",
+        "kind": "conflict"
+       },
+       {
+        "field": "site_number",
+        "a": "5302; 5307",
+        "b": "5307",
+        "kind": "conflict"
+       },
+       {
+        "field": "sheet_family",
+        "a": "A",
+        "b": "A.A",
+        "kind": "conflict"
+       }
+      ]
+     },
+     "repeated_inventory": false,
+     "reason": "building scopes do not agree"
+    }
+   ],
+   "openings": 36,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 36,
@@ -95,34 +502,24 @@
   "marks_on_plan": {
    "applicable": true,
    "total": 36,
-   "pass": 4,
-   "fail": 32,
-   "pass_rate": 0.1111,
-   "examples": [
-    "mark 100-1 (schedule p.18) not tagged on any plan",
-    "mark 100-2 (schedule p.18) not tagged on any plan",
-    "mark 101-1 (schedule p.18) not tagged on any plan",
-    "mark 103-1 (schedule p.18) not tagged on any plan",
-    "mark 105-1 (schedule p.18) not tagged on any plan",
-    "mark 106-1 (schedule p.18) not tagged on any plan",
-    "mark 109-1 (schedule p.18) not tagged on any plan",
-    "mark 110-1 (schedule p.18) not tagged on any plan",
-    "mark 111-1 (schedule p.18) not tagged on any plan",
-    "mark 112-1 (schedule p.18) not tagged on any plan",
-    "mark 113-1 (schedule p.18) not tagged on any plan",
-    "mark 114-1 (schedule p.18) not tagged on any plan"
-   ],
+   "pass": 36,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
    "plan_sheets": [
-    "A-401 p.22"
+    "A-101 p.18",
+    "A-401 p.22",
+    "A-101.A p.53",
+    "A-401.A p.57"
    ],
    "plan_counts": {
-    "plan_sheets": 1,
-    "rooms": 7,
+    "plan_sheets": 4,
+    "rooms": 56,
     "corridors": 0,
-    "tags": 4,
+    "tags": 36,
     "unmatched_tags": 0,
     "schedule_marks": 36,
-    "marks_not_on_plan": 32,
+    "marks_not_on_plan": 0,
     "shared_marks": 0
    }
   },
@@ -152,6 +549,6 @@
  "tier": "agreed",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 4572,
- "generated_at": "2026-10-11T07:56:04.892Z"
+ "ms": 4558,
+ "generated_at": "2026-10-11T08:12:47.521Z"
 }

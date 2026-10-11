@@ -25,14 +25,90 @@
    "doors": 18,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 18
   },
   "b": {
    "doors": 18,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 18
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 20,
+    "title": "FLOOR PLAN",
+    "rank": 2,
+    "scope": {
+     "asset_number": "7815116003",
+     "facility_name": "SHOWER HOUSE; WAKONDA STATE PARK",
+     "site": "WAKONDA STATE PARK",
+     "site_number": "5116"
+    },
+    "sheet": "A-101",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "facility_name",
+      "value": "SHOWER HOUSE",
+      "text": "SHOWER HOUSE",
+      "x": 2341.8785399999997,
+      "y": 1018.639484474,
+      "source": "title_block"
+     },
+     {
+      "field": "facility_name",
+      "value": "WAKONDA STATE PARK",
+      "text": "Wakonda State Park",
+      "x": 2341.8785399999997,
+      "y": 1109.40176,
+      "source": "title_block"
+     },
+     {
+      "field": "site",
+      "value": "WAKONDA STATE PARK",
+      "text": "Wakonda State Park",
+      "x": 2341.8785399999997,
+      "y": 1109.40176,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "5116",
+      "text": "5116",
+      "x": 2425.18408,
+      "y": 1173.2510716223,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "7815116003",
+      "text": "7815116003",
+      "x": 2425.18408,
+      "y": 1191.2689083777,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 18,
+   "pairs": [],
+   "openings": 18,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 18,
+   "pairs": [],
+   "openings": 18,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 18,
@@ -94,34 +170,21 @@
   "marks_on_plan": {
    "applicable": true,
    "total": 18,
-   "pass": 4,
-   "fail": 14,
-   "pass_rate": 0.2222,
-   "examples": [
-    "mark 100-1 (schedule p.20) not tagged on any plan",
-    "mark 100-2 (schedule p.20) not tagged on any plan",
-    "mark 101-1 (schedule p.20) not tagged on any plan",
-    "mark 103-1 (schedule p.20) not tagged on any plan",
-    "mark 105-1 (schedule p.20) not tagged on any plan",
-    "mark 106-1 (schedule p.20) not tagged on any plan",
-    "mark 109-1 (schedule p.20) not tagged on any plan",
-    "mark 110-1 (schedule p.20) not tagged on any plan",
-    "mark 111-1 (schedule p.20) not tagged on any plan",
-    "mark 112-1 (schedule p.20) not tagged on any plan",
-    "mark 113-1 (schedule p.20) not tagged on any plan",
-    "mark 114-1 (schedule p.20) not tagged on any plan"
-   ],
+   "pass": 18,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
    "plan_sheets": [
-    "A-401 p.24"
+    "A-101 p.20"
    ],
    "plan_counts": {
     "plan_sheets": 1,
-    "rooms": 4,
+    "rooms": 19,
     "corridors": 0,
-    "tags": 4,
+    "tags": 18,
     "unmatched_tags": 0,
     "schedule_marks": 18,
-    "marks_not_on_plan": 14,
+    "marks_not_on_plan": 0,
     "shared_marks": 0
    }
   },
@@ -151,6 +214,6 @@
  "tier": "agreed",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 4451,
- "generated_at": "2026-10-11T07:57:45.750Z"
+ "ms": 4528,
+ "generated_at": "2026-10-11T08:14:30.637Z"
 }

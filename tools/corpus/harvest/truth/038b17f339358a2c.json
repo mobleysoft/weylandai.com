@@ -25,14 +25,73 @@
    "doors": 25,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 25
   },
   "b": {
    "doors": 23,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 23
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 35,
+    "title": "DOOR SCHEDULE",
+    "rank": 3,
+    "scope": {
+     "address": "375 COMMERCIAL AVE",
+     "facility_number": "8136304011",
+     "site_number": "6304"
+    },
+    "sheet": "A700",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "address",
+      "value": "375 COMMERCIAL AVE",
+      "text": "375 COMMERCIAL AVE.",
+      "x": 2330.9990675999998,
+      "y": 1095.120253152,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "6304",
+      "text": "6304",
+      "x": 2425.679029728,
+      "y": 1177.920220032,
+      "source": "title_block"
+     },
+     {
+      "field": "facility_number",
+      "value": "8136304011",
+      "text": "FACILITY # 8136304011",
+      "x": 2330.9990675999998,
+      "y": 1200.360211056,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 25,
+   "pairs": [],
+   "openings": 25,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 23,
+   "pairs": [],
+   "openings": 23,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 0,
@@ -90,12 +149,22 @@
   "marks_on_plan": {
    "applicable": true,
    "total": 25,
-   "pass": 23,
-   "fail": 2,
-   "pass_rate": 0.92,
+   "pass": 3,
+   "fail": 22,
+   "pass_rate": 0.12,
    "examples": [
+    "mark 100A (schedule p.35) not tagged on any plan",
+    "mark 100B (schedule p.35) not tagged on any plan",
+    "mark 101 (schedule p.35) not tagged on any plan",
+    "mark 102A (schedule p.35) not tagged on any plan",
+    "mark 102B (schedule p.35) not tagged on any plan",
     "mark 106 (schedule p.35) not tagged on any plan",
-    "mark 110B (schedule p.35) not tagged on any plan"
+    "mark 110B (schedule p.35) not tagged on any plan",
+    "mark 111A (schedule p.35) not tagged on any plan",
+    "mark 111B (schedule p.35) not tagged on any plan",
+    "mark 112A (schedule p.35) not tagged on any plan",
+    "mark 112B (schedule p.35) not tagged on any plan",
+    "mark 113B (schedule p.35) not tagged on any plan"
    ],
    "plan_sheets": [
     "A100 p.32",
@@ -105,10 +174,10 @@
     "plan_sheets": 2,
     "rooms": 22,
     "corridors": 2,
-    "tags": 23,
+    "tags": 3,
     "unmatched_tags": 0,
     "schedule_marks": 25,
-    "marks_not_on_plan": 2,
+    "marks_not_on_plan": 22,
     "shared_marks": 0
    }
   },
@@ -465,6 +534,6 @@
    "b": null
   }
  ],
- "ms": 1754,
- "generated_at": "2026-10-11T07:55:40.092Z"
+ "ms": 1830,
+ "generated_at": "2026-10-11T08:12:23.499Z"
 }

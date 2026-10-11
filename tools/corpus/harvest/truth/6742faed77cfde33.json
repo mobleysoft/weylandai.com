@@ -25,14 +25,73 @@
    "doors": 11,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 11
   },
   "b": {
    "doors": 11,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 11
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 8,
+    "title": "DOOR SCHEDULE",
+    "rank": 3,
+    "scope": {
+     "address": "1251 GALE DRIVE",
+     "asset_number": "7815001008",
+     "site_number": "5001"
+    },
+    "sheet": "A501",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "address",
+      "value": "1251 GALE DRIVE",
+      "text": "1251 GALE DRIVE,",
+      "x": 2345.6980000000003,
+      "y": 1067.13,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "5001",
+      "text": "5001",
+      "x": 2443.0746454599994,
+      "y": 1160.2147046,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "7815001008",
+      "text": "7815001008",
+      "x": 2443.0706888999994,
+      "y": 1182.5372167,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 11,
+   "pairs": [],
+   "openings": 11,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 11,
+   "pairs": [],
+   "openings": 11,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 10,
@@ -91,16 +150,14 @@
    "pass_rate": 1,
    "examples": [],
    "plan_sheets": [
-    "A101 p.7",
-    "A602 p.10",
-    "A901 p.12"
+    "A101 p.7"
    ],
    "plan_counts": {
-    "plan_sheets": 3,
-    "rooms": 72,
-    "corridors": 6,
+    "plan_sheets": 1,
+    "rooms": 25,
+    "corridors": 3,
     "tags": 11,
-    "unmatched_tags": 2,
+    "unmatched_tags": 0,
     "schedule_marks": 11,
     "marks_not_on_plan": 0,
     "shared_marks": 0
@@ -141,6 +198,6 @@
    "b": "6"
   }
  ],
- "ms": 1893,
- "generated_at": "2026-10-11T07:56:24.756Z"
+ "ms": 1914,
+ "generated_at": "2026-10-11T08:13:07.112Z"
 }

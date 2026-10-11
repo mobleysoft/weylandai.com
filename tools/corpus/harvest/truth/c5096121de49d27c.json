@@ -40,14 +40,34 @@
    "doors": 0,
    "sets": 30,
    "items": 218,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 0
   },
   "b": {
    "doors": 0,
    "sets": 30,
    "items": 216,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 0
+   "tables": 0,
+   "door_rows": 0
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [],
+  "a": {
+   "rows": 0,
+   "pairs": [],
+   "openings": 0,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 0,
+   "pairs": [],
+   "openings": 0,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 3,
@@ -447,6 +467,6 @@
    "b": "16 43 8804 Less Pull US32D SA 087100"
   }
  ],
- "ms": 2397,
- "generated_at": "2026-10-11T07:57:04.435Z"
+ "ms": 2474,
+ "generated_at": "2026-10-11T08:13:50.582Z"
 }

@@ -27,14 +27,55 @@
    "doors": 16,
    "sets": 1,
    "items": 2,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 16
   },
   "b": {
    "doors": 16,
    "sets": 1,
    "items": 4,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 5
+   "tables": 5,
+   "door_rows": 16
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 45,
+    "title": "DOOR SCHEDULE & DETAILS",
+    "rank": 3,
+    "scope": {
+     "site_number": "7007"
+    },
+    "sheet": "A601",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "site_number",
+      "value": "7007",
+      "text": "SITE # 7007",
+      "x": 2228.879108448,
+      "y": 1132.320238272,
+      "source": "sheet_label"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 16,
+   "pairs": [],
+   "openings": 16,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 16,
+   "pairs": [],
+   "openings": 16,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 16,
@@ -206,6 +247,6 @@
    "why": "the set's door lists differ"
   }
  ],
- "ms": 504,
- "generated_at": "2026-10-11T07:56:05.402Z"
+ "ms": 513,
+ "generated_at": "2026-10-11T08:12:48.039Z"
 }

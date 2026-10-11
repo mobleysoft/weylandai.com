@@ -27,14 +27,73 @@
    "doors": 3,
    "sets": 2,
    "items": 7,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 3
   },
   "b": {
    "doors": 3,
    "sets": 2,
    "items": 8,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 3
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 14,
+    "title": "SCHEDULES",
+    "rank": 1,
+    "scope": {
+     "address": "111 FAIRGROUNDS ROAD",
+     "asset_number": "7815001007",
+     "site_number": "5001"
+    },
+    "sheet": "A-601",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "address",
+      "value": "111 FAIRGROUNDS ROAD",
+      "text": "111 FAIRGROUNDS ROAD",
+      "x": 2339.88,
+      "y": 1093.2,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "5001",
+      "text": "5001",
+      "x": 2435.04,
+      "y": 1169.04,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "7815001007",
+      "text": "7815001007",
+      "x": 2433.36,
+      "y": 1185.48,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 3,
+   "pairs": [],
+   "openings": 3,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 3,
+   "pairs": [],
+   "openings": 3,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 2,
@@ -126,13 +185,13 @@
     "mark D3 (schedule p.14) not tagged on any plan"
    ],
    "plan_sheets": [
-    "ASB101 p.3",
+    "A-103 p.7",
     "A-104 p.8"
    ],
    "plan_counts": {
     "plan_sheets": 2,
-    "rooms": 14,
-    "corridors": 3,
+    "rooms": 2,
+    "corridors": 0,
     "tags": 0,
     "unmatched_tags": 0,
     "schedule_marks": 3,
@@ -332,6 +391,6 @@
    "why": "only reader B read this row"
   }
  ],
- "ms": 663,
- "generated_at": "2026-10-11T07:56:22.809Z"
+ "ms": 754,
+ "generated_at": "2026-10-11T08:13:05.141Z"
 }

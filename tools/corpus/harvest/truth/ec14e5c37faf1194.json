@@ -25,14 +25,55 @@
    "doors": 88,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 88
   },
   "b": {
    "doors": 166,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 2
+   "tables": 2,
+   "door_rows": 166
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 83,
+    "title": "DOOR SCHEDULE, ELEVATIONS",
+    "rank": 3,
+    "scope": {
+     "address": "2400 VETERANS MEMORIAL DR"
+    },
+    "sheet": "A-601",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "address",
+      "value": "2400 VETERANS MEMORIAL DR",
+      "text": "2400 Veterans Memorial Dr.",
+      "x": 2336.9990652,
+      "y": 1071.360262656,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 88,
+   "pairs": [],
+   "openings": 88,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 166,
+   "pairs": [],
+   "openings": 166,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "reader_notes": [
@@ -89,39 +130,30 @@
   "marks_on_plan": {
    "applicable": true,
    "total": 88,
-   "pass": 47,
-   "fail": 41,
-   "pass_rate": 0.5341,
-   "examples": [
-    "mark 043 (schedule p.83) not tagged on any plan",
-    "mark A100 (schedule p.83) not tagged on any plan",
-    "mark A103 (schedule p.83) not tagged on any plan",
-    "mark A107 (schedule p.83) not tagged on any plan",
-    "mark A108 (schedule p.83) not tagged on any plan",
-    "mark A109 (schedule p.83) not tagged on any plan",
-    "mark A112 (schedule p.83) not tagged on any plan",
-    "mark A113 (schedule p.83) not tagged on any plan",
-    "mark A115 (schedule p.83) not tagged on any plan",
-    "mark A116 (schedule p.83) not tagged on any plan",
-    "mark A119 (schedule p.83) not tagged on any plan",
-    "mark A120A (schedule p.83) not tagged on any plan"
-   ],
+   "pass": 88,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
    "plan_sheets": [
     "A-108 p.48",
     "A-109 p.49",
+    "A-110 p.50",
+    "A-111 p.51",
+    "A-112 p.52",
+    "A-113 p.53",
     "A-115 p.55",
     "A-116 p.56",
     "A-117 p.57",
     "A-501 p.82"
    ],
    "plan_counts": {
-    "plan_sheets": 6,
-    "rooms": 127,
-    "corridors": 11,
-    "tags": 47,
-    "unmatched_tags": 3,
+    "plan_sheets": 10,
+    "rooms": 357,
+    "corridors": 12,
+    "tags": 88,
+    "unmatched_tags": 17,
     "schedule_marks": 88,
-    "marks_not_on_plan": 41,
+    "marks_not_on_plan": 0,
     "shared_marks": 0
    }
   },
@@ -515,6 +547,6 @@
    "why": "only reader B read this row"
   }
  ],
- "ms": 46061,
- "generated_at": "2026-10-11T07:58:36.711Z"
+ "ms": 46362,
+ "generated_at": "2026-10-11T08:15:21.833Z"
 }

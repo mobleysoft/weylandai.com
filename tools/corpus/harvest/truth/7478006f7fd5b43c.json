@@ -28,14 +28,221 @@
    "doors": 211,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 211
   },
   "b": {
    "doors": 211,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 5
+   "tables": 5,
+   "door_rows": 211
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 28,
+    "title": "ADMIN. RESTROOM PLANS AND DETAILS ALTERNATE #1",
+    "rank": 2,
+    "scope": {
+     "address": "1510 E. ELM STREET",
+     "facility_name": "HEADQUARTERS COMPLEX",
+     "facility_number": "6001; 8136001006"
+    },
+    "sheet": "A-112",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "facility_name",
+      "value": "HEADQUARTERS COMPLEX",
+      "text": "HEADQUARTERS COMPLEX",
+      "x": 2341.05738,
+      "y": 1060.4402075,
+      "source": "title_block"
+     },
+     {
+      "field": "address",
+      "value": "1510 E. ELM STREET",
+      "text": "1510 E. ELM STREET",
+      "x": 2339.6481931682,
+      "y": 1077.99880953,
+      "source": "title_block"
+     },
+     {
+      "field": "facility_number",
+      "value": "6001",
+      "text": "FACILITY #6001",
+      "x": 2339.6481999999996,
+      "y": 1194.2180321072,
+      "source": "title_block"
+     },
+     {
+      "field": "facility_number",
+      "value": "8136001006",
+      "text": "8136001006",
+      "x": 2433.19642,
+      "y": 1193.8426021072,
+      "source": "title_block"
+     }
+    ]
+   },
+   {
+    "page": 32,
+    "title": "PHYSICAL TRAINING DEMO AND CONSTRUCTION PLAN",
+    "rank": 2,
+    "scope": {
+     "address": "1510 E. ELM STREET",
+     "facility_name": "HEADQUARTERS COMPLEX",
+     "facility_number": "6001; 8136001003"
+    },
+    "sheet": "A-122",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "facility_name",
+      "value": "HEADQUARTERS COMPLEX",
+      "text": "HEADQUARTERS COMPLEX",
+      "x": 2341.05738,
+      "y": 1060.4402075,
+      "source": "title_block"
+     },
+     {
+      "field": "address",
+      "value": "1510 E. ELM STREET",
+      "text": "1510 E. ELM STREET",
+      "x": 2339.6481931682,
+      "y": 1077.99880953,
+      "source": "title_block"
+     },
+     {
+      "field": "facility_number",
+      "value": "6001",
+      "text": "FACILITY #6001",
+      "x": 2339.6481999999996,
+      "y": 1194.2180321072,
+      "source": "title_block"
+     },
+     {
+      "field": "facility_number",
+      "value": "8136001003",
+      "text": "8136001003",
+      "x": 2433.19642,
+      "y": 1193.8426021072,
+      "source": "title_block"
+     }
+    ]
+   },
+   {
+    "page": 45,
+    "title": "DORM DOOR SCHEDULE",
+    "rank": 3,
+    "scope": {
+     "address": "1510 E. ELM STREET",
+     "facility_name": "HEADQUARTERS COMPLEX",
+     "facility_number": "8136001005",
+     "site_number": "6001"
+    },
+    "sheet": "A-601",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "facility_name",
+      "value": "HEADQUARTERS COMPLEX",
+      "text": "HEADQUARTERS COMPLEX",
+      "x": 2341.05738,
+      "y": 1060.4402075,
+      "source": "title_block"
+     },
+     {
+      "field": "address",
+      "value": "1510 E. ELM STREET",
+      "text": "1510 E. ELM STREET",
+      "x": 2339.6481931682,
+      "y": 1077.99880953,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "6001",
+      "text": "6001",
+      "x": 2433.19642,
+      "y": 1171.5679778511999,
+      "source": "title_block"
+     },
+     {
+      "field": "facility_number",
+      "value": "8136001005",
+      "text": "FACILITY #8136001005",
+      "x": 2339.6481999999996,
+      "y": 1194.2180321072,
+      "source": "title_block"
+     }
+    ]
+   },
+   {
+    "page": 46,
+    "title": "DORM DOOR SCHEDULE AND DETAILS",
+    "rank": 3,
+    "scope": {
+     "address": "1510 E. ELM STREET",
+     "facility_name": "HEADQUARTERS COMPLEX",
+     "facility_number": "8136001005",
+     "site_number": "6001"
+    },
+    "sheet": "A-602",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "facility_name",
+      "value": "HEADQUARTERS COMPLEX",
+      "text": "HEADQUARTERS COMPLEX",
+      "x": 2341.05738,
+      "y": 1060.4402075,
+      "source": "title_block"
+     },
+     {
+      "field": "address",
+      "value": "1510 E. ELM STREET",
+      "text": "1510 E. ELM STREET",
+      "x": 2339.6481931682,
+      "y": 1077.99880953,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "6001",
+      "text": "6001",
+      "x": 2433.19642,
+      "y": 1171.5679778511999,
+      "source": "title_block"
+     },
+     {
+      "field": "facility_number",
+      "value": "8136001005",
+      "text": "FACILITY #8136001005",
+      "x": 2339.6481999999996,
+      "y": 1194.2180321072,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 211,
+   "pairs": [],
+   "openings": 211,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 211,
+   "pairs": [],
+   "openings": 211,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 210,
@@ -97,11 +304,12 @@
   "marks_on_plan": {
    "applicable": true,
    "total": 211,
-   "pass": 208,
-   "fail": 3,
-   "pass_rate": 0.9858,
+   "pass": 207,
+   "fail": 4,
+   "pass_rate": 0.981,
    "examples": [
     "mark AD101 (schedule p.28) not tagged on any plan",
+    "mark AD102 (schedule p.28) not tagged on any plan",
     "mark PT101 (schedule p.32) not tagged on any plan",
     "mark 102 (schedule p.45) not tagged on any plan"
    ],
@@ -109,16 +317,20 @@
     "A-105 p.23",
     "A-106 p.24",
     "A-107 p.25",
-    "A-112 p.28"
+    "A-112 p.28",
+    "A-401 p.36",
+    "A-402 p.37",
+    "A-403 p.38",
+    "A-404 p.39"
    ],
    "plan_counts": {
-    "plan_sheets": 4,
-    "rooms": 169,
+    "plan_sheets": 8,
+    "rooms": 203,
     "corridors": 11,
-    "tags": 208,
+    "tags": 207,
     "unmatched_tags": 0,
     "schedule_marks": 211,
-    "marks_not_on_plan": 3,
+    "marks_not_on_plan": 4,
     "shared_marks": 0
    }
   },
@@ -183,6 +395,6 @@
    "b": "HM-1(PR) 8'"
   }
  ],
- "ms": 7627,
- "generated_at": "2026-10-11T07:57:23.338Z"
+ "ms": 8333,
+ "generated_at": "2026-10-11T08:14:09.313Z"
 }

@@ -25,14 +25,73 @@
    "doors": 2,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 2
   },
   "b": {
    "doors": 0,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 0
+   "tables": 0,
+   "door_rows": 0
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 19,
+    "title": "SCHEDULES AND",
+    "rank": 2,
+    "scope": {
+     "address": "2413 EAST MCCARTY ST",
+     "asset_number": "8136027002",
+     "site_number": "6027"
+    },
+    "sheet": "A-303",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "address",
+      "value": "2413 EAST MCCARTY ST",
+      "text": "2413 EAST MCCARTY ST.",
+      "x": 2322.9,
+      "y": 1080.52,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "6027",
+      "text": "6027",
+      "x": 2418.06,
+      "y": 1161.94,
+      "source": "title_block"
+     },
+     {
+      "field": "asset_number",
+      "value": "8136027002",
+      "text": "8136027002",
+      "x": 2418.06,
+      "y": 1183.8400000000001,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 2,
+   "pairs": [],
+   "openings": 2,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 0,
+   "pairs": [],
+   "openings": 0,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 0,
@@ -67,24 +126,16 @@
  "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
-   "applicable": true,
-   "total": 2,
-   "pass": 2,
-   "fail": 0,
-   "pass_rate": 1,
-   "examples": [],
-   "plan_sheets": [
-    "A-101 p.13",
-    "A-102 p.14"
-   ],
+   "applicable": false,
+   "reason": "no floor plan sheet found in this PDF (title blocks)",
    "plan_counts": {
-    "plan_sheets": 2,
-    "rooms": 9,
-    "corridors": 1,
-    "tags": 2,
+    "plan_sheets": 0,
+    "rooms": 0,
+    "corridors": 0,
+    "tags": 0,
     "unmatched_tags": 0,
     "schedule_marks": 2,
-    "marks_not_on_plan": 0,
+    "marks_not_on_plan": 2,
     "shared_marks": 0
    }
   },
@@ -133,6 +184,6 @@
    "why": "only reader A read this row"
   }
  ],
- "ms": 629,
- "generated_at": "2026-10-11T08:00:51.074Z"
+ "ms": 663,
+ "generated_at": "2026-10-11T08:17:35.915Z"
 }

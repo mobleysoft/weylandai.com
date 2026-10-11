@@ -25,14 +25,73 @@
    "doors": 6,
    "sets": 0,
    "items": 0,
-   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)",
+   "door_rows": 6
   },
   "b": {
    "doors": 8,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 1
+   "tables": 1,
+   "door_rows": 8
+  }
+ },
+ "door_resolution": {
+  "rule": "cross-page-inventory-scope-v2",
+  "pages": [
+   {
+    "page": 3,
+    "title": "PLAN AND DOOR/WINDOW DETAILS",
+    "rank": 2,
+    "scope": {
+     "address": "2900 SCOTT ST, ST JOSEPH",
+     "facility_number": "5012037004",
+     "site_number": "2037"
+    },
+    "sheet": "A-111",
+    "sheet_family": "A",
+    "scope_evidence": [
+     {
+      "field": "address",
+      "value": "2900 SCOTT ST, ST JOSEPH",
+      "text": "2900 Scott St, St Joseph,",
+      "x": 2788.79888448,
+      "y": 1538.40024864,
+      "source": "title_block"
+     },
+     {
+      "field": "site_number",
+      "value": "2037",
+      "text": "2037",
+      "x": 2883.358846656,
+      "y": 1610.640219744,
+      "source": "title_block"
+     },
+     {
+      "field": "facility_number",
+      "value": "5012037004",
+      "text": "FACILITY # 5012037004",
+      "x": 2788.918884432,
+      "y": 1632.840210864,
+      "source": "title_block"
+     }
+    ]
+   }
+  ],
+  "a": {
+   "rows": 6,
+   "pairs": [],
+   "openings": 6,
+   "collapsed_rows": 0,
+   "repeated": []
+  },
+  "b": {
+   "rows": 8,
+   "pairs": [],
+   "openings": 8,
+   "collapsed_rows": 0,
+   "repeated": []
   }
  },
  "rows_agreed": 0,
@@ -283,6 +342,6 @@
    "why": "only reader B read this row"
   }
  ],
- "ms": 1686,
- "generated_at": "2026-10-11T07:55:49.502Z"
+ "ms": 1562,
+ "generated_at": "2026-10-11T08:12:33.019Z"
 }
