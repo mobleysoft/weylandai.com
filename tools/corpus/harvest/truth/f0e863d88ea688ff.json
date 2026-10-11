@@ -13,7 +13,7 @@
   "pages": 30
  },
  "pages": {
-  "door_candidates": 10,
+  "door_candidates": 9,
   "hardware_candidates": 8,
   "door_schedule_pages": [
    29
@@ -140,7 +140,8 @@
     "tags": 64,
     "unmatched_tags": 0,
     "schedule_marks": 65,
-    "marks_not_on_plan": 1
+    "marks_not_on_plan": 1,
+    "shared_marks": 0
    }
   },
   "sets_exist": {
@@ -486,6 +487,6 @@
    "b": "SURFACE CLOSER"
   }
  ],
- "ms": 3052,
- "generated_at": "2026-10-09T11:33:45.223Z"
+ "ms": 2644,
+ "generated_at": "2026-10-11T04:30:44.420Z"
 }

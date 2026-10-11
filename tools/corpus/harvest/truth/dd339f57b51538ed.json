@@ -13,7 +13,7 @@
   "pages": 288
  },
  "pages": {
-  "door_candidates": 9,
+  "door_candidates": 10,
   "hardware_candidates": 2,
   "door_schedule_pages": [
    284,
@@ -140,7 +140,8 @@
     "tags": 24,
     "unmatched_tags": 0,
     "schedule_marks": 24,
-    "marks_not_on_plan": 0
+    "marks_not_on_plan": 0,
+    "shared_marks": 0
    }
   },
   "sets_exist": {
@@ -432,6 +433,6 @@
    "why": "only reader A read this row"
   }
  ],
- "ms": 881,
- "generated_at": "2026-10-09T11:33:42.165Z"
+ "ms": 828,
+ "generated_at": "2026-10-11T04:29:57.911Z"
 }
