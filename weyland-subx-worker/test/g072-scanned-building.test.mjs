@@ -18,23 +18,29 @@ async function read(name) {
   return { o, a, b, rows, agreed, score: scoreDoorsVs(expected, agreed) };
 }
 
-test('g072: the old nine agreed doors include two dimensions missing on both readers', async () => {
+test('g072: on the old OCR both readers miss the same cells, so agreement there includes false agreements', async () => {
   const { a, b, agreed, score } = await read('before');
   for (const reader of [a, b]) {
     assert.equal(reader.find(d => d.mark === '212').height_inches, null);
     assert.equal(reader.find(d => d.mark === '312').width_inches, null);
   }
-  assert.equal(agreed.length, 9);
-  assert.equal(score.rows_fully_right, 7);
-  assert.equal(score.fields_right, 61);
-  assert.equal(score.fields_total, 63);
+  // g075: reader B now reads 7-0" style cells, so it agrees with A on 47 of 48 rows of the old OCR. The old OCR left
+  // five cells empty or misread (205, 208, 212, 312 dimensions; 302 hardware Q3), and both readers read the same
+  // nothing there: false agreements, which is why the OCR reread (9809ebf) matters.
+  assert.equal(agreed.length, 47);
+  assert.equal(score.rows_fully_right, 42);
+  assert.equal(score.fields_right, 324);
+  assert.equal(score.fields_total, 329);
   assert.deepEqual(score.wrong.filter(r => r.field !== '(row)'), [
+    { key: '205', page: 3, field: 'width_inches', expected: 36, read: null },
+    { key: '208', page: 3, field: 'height_inches', expected: 84, read: null },
     { key: '212', page: 3, field: 'height_inches', expected: 84, read: null },
+    { key: '302', page: 3, field: 'hardware_group', expected: '03', read: 'Q3' },
     { key: '312', page: 3, field: 'width_inches', expected: 36, read: null },
   ]);
 });
 
-test('g072: recovered OCR dimensions match A-601; seven agreements are all correct', async () => {
+test('g072: recovered OCR dimensions match A-601; with g075 both readers agree on all 48 doors, all correct', async () => {
   const before = await read('before');
   const after = await read('after');
   // A-601 prints both STAIR 2 openings as 3\'-0" x 7\'-0".
@@ -55,14 +61,14 @@ test('g072: recovered OCR dimensions match A-601; seven agreements are all corre
   assert.equal(scoreA.rows_fully_right, 48);
   assert.equal(scoreA.fields_right, 336);
   assert.equal(scoreA.extra_rows, 0);
-  // B currently requires an apostrophe or an unquoted 3-0 / 7-0 spelling.
-  // Retain the dispute until B independently reads the printed dimensions.
-  assert.equal(after.b.find(d => d.mark === '212').height_inches, null);
-  assert.equal(after.b.find(d => d.mark === '312').width_inches, null);
+  // g075: reader B reads the recovered 7-0" and 3-0" cells itself, so the dispute g072 kept is resolved by B, not
+  // assumed: both readers print 84 and 36, and every agreed row matches the exact expectations.
+  assert.equal(after.b.find(d => d.mark === '212').height_inches, 84);
+  assert.equal(after.b.find(d => d.mark === '312').width_inches, 36);
   const remaining = new Set(after.agreed.map(d => d.mark));
-  assert.deepEqual(before.agreed.filter(d => !remaining.has(d.mark)).map(d => d.mark), ['212', '312']);
-  assert.equal(after.agreed.length, 7);
-  assert.equal(after.score.rows_fully_right, 7);
-  assert.equal(after.score.fields_right, 49);
-  assert.equal(after.score.fields_total, 49);
+  assert.deepEqual(before.agreed.filter(d => !remaining.has(d.mark)).map(d => d.mark), []);
+  assert.equal(after.agreed.length, 48);
+  assert.equal(after.score.rows_fully_right, 48);
+  assert.equal(after.score.fields_right, 336);
+  assert.equal(after.score.fields_total, 336);
 });
