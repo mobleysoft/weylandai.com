@@ -160,23 +160,16 @@
  "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
-   "applicable": true,
-   "total": 12,
-   "pass": 12,
-   "fail": 0,
-   "pass_rate": 1,
-   "examples": [],
-   "plan_sheets": [
-    "A101 p.16"
-   ],
+   "applicable": false,
+   "reason": "no floor plan sheet found in this PDF (title blocks)",
    "plan_counts": {
-    "plan_sheets": 1,
-    "rooms": 24,
-    "corridors": 1,
-    "tags": 12,
+    "plan_sheets": 0,
+    "rooms": 0,
+    "corridors": 0,
+    "tags": 0,
     "unmatched_tags": 0,
     "schedule_marks": 12,
-    "marks_not_on_plan": 0,
+    "marks_not_on_plan": 12,
     "shared_marks": 0
    }
   },
@@ -326,6 +319,6 @@
    "b": 36
   }
  ],
- "ms": 7524,
- "generated_at": "2026-10-11T08:56:00.405Z"
+ "ms": 6979,
+ "generated_at": "2026-10-11T09:22:11.475Z"
 }

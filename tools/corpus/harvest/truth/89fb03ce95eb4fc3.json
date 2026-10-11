@@ -42,7 +42,7 @@
   "pages": [
    {
     "page": 32,
-    "title": "Interior Elevations, Schedules & Details",
+    "title": "WALL SECTION @ LAVATORY, TYP.",
     "rank": 2,
     "scope": {
      "address": "1500 WASHINGTON ST",
@@ -223,6 +223,6 @@
  "tier": "agreed",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 801,
- "generated_at": "2026-10-11T08:55:47.754Z"
+ "ms": 686,
+ "generated_at": "2026-10-11T09:22:00.480Z"
 }

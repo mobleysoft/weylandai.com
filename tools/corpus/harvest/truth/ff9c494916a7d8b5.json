@@ -42,7 +42,7 @@
   "pages": [
    {
     "page": 19,
-    "title": "SCHEDULES AND",
+    "title": "SCHEDULES AND DOOR DETAILS",
     "rank": 2,
     "scope": {
      "address": "2413 EAST MCCARTY ST",
@@ -126,16 +126,24 @@
  "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
-   "applicable": false,
-   "reason": "no floor plan sheet found in this PDF (title blocks)",
+   "applicable": true,
+   "total": 2,
+   "pass": 2,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "plan_sheets": [
+    "A-101 p.13",
+    "A-102 p.14"
+   ],
    "plan_counts": {
-    "plan_sheets": 0,
-    "rooms": 0,
-    "corridors": 0,
-    "tags": 0,
+    "plan_sheets": 2,
+    "rooms": 9,
+    "corridors": 1,
+    "tags": 2,
     "unmatched_tags": 0,
     "schedule_marks": 2,
-    "marks_not_on_plan": 2,
+    "marks_not_on_plan": 0,
     "shared_marks": 0
    }
   },
@@ -184,6 +192,6 @@
    "why": "only reader A read this row"
   }
  ],
- "ms": 651,
- "generated_at": "2026-10-11T09:00:03.108Z"
+ "ms": 629,
+ "generated_at": "2026-10-11T09:26:17.995Z"
 }

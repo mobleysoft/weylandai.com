@@ -150,14 +150,16 @@
    "pass_rate": 1,
    "examples": [],
    "plan_sheets": [
-    "A101 p.7"
+    "A101 p.7",
+    "A602 p.10",
+    "A901 p.12"
    ],
    "plan_counts": {
-    "plan_sheets": 1,
-    "rooms": 25,
-    "corridors": 3,
+    "plan_sheets": 3,
+    "rooms": 72,
+    "corridors": 6,
     "tags": 11,
-    "unmatched_tags": 0,
+    "unmatched_tags": 2,
     "schedule_marks": 11,
     "marks_not_on_plan": 0,
     "shared_marks": 0
@@ -198,6 +200,6 @@
    "b": "6"
   }
  ],
- "ms": 1920,
- "generated_at": "2026-10-11T08:55:28.344Z"
+ "ms": 2122,
+ "generated_at": "2026-10-11T09:21:38.715Z"
 }

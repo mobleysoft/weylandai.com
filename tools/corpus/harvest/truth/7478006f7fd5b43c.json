@@ -91,7 +91,7 @@
    },
    {
     "page": 32,
-    "title": "PHYSICAL TRAINING DEMO AND CONSTRUCTION PLAN",
+    "title": "PHYSICAL TRAINING DEMO AND CONSTRUCTION PLAN ALTERNATE #2",
     "rank": 2,
     "scope": {
      "address": "1510 E. ELM STREET",
@@ -137,8 +137,8 @@
    },
    {
     "page": 45,
-    "title": "DORM DOOR SCHEDULE",
-    "rank": 3,
+    "title": "GLZ-D",
+    "rank": 2,
     "scope": {
      "address": "1510 E. ELM STREET",
      "facility_name": "HEADQUARTERS COMPLEX",
@@ -184,8 +184,8 @@
    },
    {
     "page": 46,
-    "title": "DORM DOOR SCHEDULE AND DETAILS",
-    "rank": 3,
+    "title": "WINDOW JAMB",
+    "rank": 2,
     "scope": {
      "address": "1510 E. ELM STREET",
      "facility_name": "HEADQUARTERS COMPLEX",
@@ -304,12 +304,11 @@
   "marks_on_plan": {
    "applicable": true,
    "total": 211,
-   "pass": 207,
-   "fail": 4,
-   "pass_rate": 0.981,
+   "pass": 208,
+   "fail": 3,
+   "pass_rate": 0.9858,
    "examples": [
     "mark AD101 (schedule p.28) not tagged on any plan",
-    "mark AD102 (schedule p.28) not tagged on any plan",
     "mark PT101 (schedule p.32) not tagged on any plan",
     "mark 102 (schedule p.45) not tagged on any plan"
    ],
@@ -317,20 +316,16 @@
     "A-105 p.23",
     "A-106 p.24",
     "A-107 p.25",
-    "A-112 p.28",
-    "A-401 p.36",
-    "A-402 p.37",
-    "A-403 p.38",
-    "A-404 p.39"
+    "A-112 p.28"
    ],
    "plan_counts": {
-    "plan_sheets": 8,
-    "rooms": 203,
+    "plan_sheets": 4,
+    "rooms": 169,
     "corridors": 11,
-    "tags": 207,
+    "tags": 208,
     "unmatched_tags": 0,
     "schedule_marks": 211,
-    "marks_not_on_plan": 4,
+    "marks_not_on_plan": 3,
     "shared_marks": 0
    }
   },
@@ -395,6 +390,6 @@
    "b": "HM-1(PR) 8'"
   }
  ],
- "ms": 8342,
- "generated_at": "2026-10-11T08:56:32.671Z"
+ "ms": 8596,
+ "generated_at": "2026-10-11T09:22:43.437Z"
 }

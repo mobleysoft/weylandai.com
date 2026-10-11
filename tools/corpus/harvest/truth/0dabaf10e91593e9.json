@@ -42,7 +42,7 @@
   "pages": [
    {
     "page": 18,
-    "title": "FLOOR PLAN",
+    "title": "CAMPGROUND",
     "rank": 2,
     "scope": {
      "asset_number": "7815302022",
@@ -172,23 +172,16 @@
  "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
-   "applicable": true,
-   "total": 18,
-   "pass": 18,
-   "fail": 0,
-   "pass_rate": 1,
-   "examples": [],
-   "plan_sheets": [
-    "A-101 p.18"
-   ],
+   "applicable": false,
+   "reason": "no floor plan sheet found in this PDF (title blocks)",
    "plan_counts": {
-    "plan_sheets": 1,
-    "rooms": 21,
+    "plan_sheets": 0,
+    "rooms": 0,
     "corridors": 0,
-    "tags": 18,
+    "tags": 0,
     "unmatched_tags": 0,
     "schedule_marks": 18,
-    "marks_not_on_plan": 0,
+    "marks_not_on_plan": 18,
     "shared_marks": 0
    }
   },
@@ -218,6 +211,6 @@
  "tier": "agreed",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 4989,
- "generated_at": "2026-10-11T08:54:54.213Z"
+ "ms": 6110,
+ "generated_at": "2026-10-11T09:20:56.270Z"
 }

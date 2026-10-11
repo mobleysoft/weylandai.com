@@ -42,7 +42,7 @@
   "pages": [
    {
     "page": 18,
-    "title": "Interior Elevations, Schedules & Details",
+    "title": "WALL SECTION @ LAVATORY, TYP.",
     "rank": 2,
     "scope": {
      "address": "1500 WASHINGTON ST",
@@ -184,22 +184,11 @@
  "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
-   "applicable": true,
-   "total": 3,
-   "pass": 0,
-   "fail": 3,
-   "pass_rate": 0,
-   "examples": [
-    "mark 110 (schedule p.18) not tagged on any plan",
-    "mark 111 (schedule p.18) not tagged on any plan",
-    "mark 112 (schedule p.18) not tagged on any plan"
-   ],
-   "plan_sheets": [
-    "A-101 p.13"
-   ],
+   "applicable": false,
+   "reason": "no floor plan sheet found in this PDF (title blocks)",
    "plan_counts": {
-    "plan_sheets": 1,
-    "rooms": 12,
+    "plan_sheets": 0,
+    "rooms": 0,
     "corridors": 0,
     "tags": 0,
     "unmatched_tags": 0,
@@ -234,6 +223,6 @@
  "tier": "agreed",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 1668,
- "generated_at": "2026-10-11T08:58:50.072Z"
+ "ms": 1768,
+ "generated_at": "2026-10-11T09:25:01.054Z"
 }

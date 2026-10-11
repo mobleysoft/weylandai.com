@@ -42,7 +42,7 @@
   "pages": [
    {
     "page": 58,
-    "title": "DOOR SCHEDULES",
+    "title": "FOR A-WING & STAFF LOUNGE",
     "rank": 2,
     "scope": {},
     "sheet": "A-603",
@@ -122,36 +122,16 @@
  "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
-   "applicable": true,
-   "total": 74,
-   "pass": 2,
-   "fail": 72,
-   "pass_rate": 0.027,
-   "examples": [
-    "mark 200.1 (schedule p.58) not tagged on any plan",
-    "mark 200.2 (schedule p.58) not tagged on any plan",
-    "mark 200.3 (schedule p.58) not tagged on any plan",
-    "mark 200.4 (schedule p.58) not tagged on any plan",
-    "mark 201 (schedule p.58) not tagged on any plan",
-    "mark 202 (schedule p.58) not tagged on any plan",
-    "mark 203 (schedule p.58) not tagged on any plan",
-    "mark 204 (schedule p.58) not tagged on any plan",
-    "mark 205 (schedule p.58) not tagged on any plan",
-    "mark 206 (schedule p.58) not tagged on any plan",
-    "mark 207 (schedule p.58) not tagged on any plan",
-    "mark 208 (schedule p.58) not tagged on any plan"
-   ],
-   "plan_sheets": [
-    "A-102 p.56"
-   ],
+   "applicable": false,
+   "reason": "no floor plan sheet found in this PDF (title blocks)",
    "plan_counts": {
-    "plan_sheets": 1,
+    "plan_sheets": 0,
     "rooms": 0,
     "corridors": 0,
-    "tags": 2,
+    "tags": 0,
     "unmatched_tags": 0,
     "schedule_marks": 74,
-    "marks_not_on_plan": 72,
+    "marks_not_on_plan": 74,
     "shared_marks": 0
    }
   },
@@ -338,6 +318,6 @@
    "b": "45 MIN"
   }
  ],
- "ms": 566,
- "generated_at": "2026-10-11T08:55:04.626Z"
+ "ms": 742,
+ "generated_at": "2026-10-11T09:21:09.919Z"
 }

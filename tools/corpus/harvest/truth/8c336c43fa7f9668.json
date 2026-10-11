@@ -42,7 +42,7 @@
   "pages": [
    {
     "page": 10,
-    "title": "DOOR SCHEDULE",
+    "title": "DOOR SCHEDULE DOOR DETAILS",
     "rank": 3,
     "scope": {
      "address": "1510 E ELM ST",
@@ -133,12 +133,11 @@
    "pass_rate": 1,
    "examples": [],
    "plan_sheets": [
-    "A-101 p.4",
-    "A-103 p.6"
+    "A-101 p.4"
    ],
    "plan_counts": {
-    "plan_sheets": 2,
-    "rooms": 19,
+    "plan_sheets": 1,
+    "rooms": 17,
     "corridors": 0,
     "tags": 2,
     "unmatched_tags": 0,
@@ -202,6 +201,6 @@
    "why": "only reader A read this row"
   }
  ],
- "ms": 565,
- "generated_at": "2026-10-11T08:56:01.040Z"
+ "ms": 506,
+ "generated_at": "2026-10-11T09:22:12.048Z"
 }

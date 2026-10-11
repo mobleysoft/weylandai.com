@@ -42,8 +42,8 @@
   "pages": [
    {
     "page": 16,
-    "title": "DOOR SCHEDULE,",
-    "rank": 3,
+    "title": "ROOM SCHEDULE, & PARTITION TYPES",
+    "rank": 2,
     "scope": {
      "address": "10625 LEWIS & CLARK BLVD",
      "building": "COLUMN",
@@ -152,16 +152,23 @@
  "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
-   "applicable": false,
-   "reason": "no floor plan sheet found in this PDF (title blocks)",
+   "applicable": true,
+   "total": 8,
+   "pass": 8,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "plan_sheets": [
+    "A-101 p.9"
+   ],
    "plan_counts": {
-    "plan_sheets": 0,
-    "rooms": 0,
-    "corridors": 0,
-    "tags": 0,
+    "plan_sheets": 1,
+    "rooms": 6,
+    "corridors": 1,
+    "tags": 8,
     "unmatched_tags": 0,
     "schedule_marks": 8,
-    "marks_not_on_plan": 8,
+    "marks_not_on_plan": 0,
     "shared_marks": 0
    }
   },
@@ -246,6 +253,6 @@
    "why": "only reader A read this row"
   }
  ],
- "ms": 829,
- "generated_at": "2026-10-11T08:55:06.370Z"
+ "ms": 987,
+ "generated_at": "2026-10-11T09:21:12.048Z"
 }
