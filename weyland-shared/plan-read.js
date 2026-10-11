@@ -10,7 +10,7 @@
 //
 // readPlan(pages, doors) ->
 //   sheets:        every page's title block: { page, sheet, title, plan }
-//   plan_sheets:   the floor plans, found by their title blocks (sheet A..., title says PLAN)
+//   plan_sheets:   architectural plans, with plan_rule naming the title or drawing evidence
 //   rooms:         { page, sheet, number, name, x, y, corridor } from each plan's room labels
 //   tags:          { mark, page, sheet, x, y, room, room_name, room_by, also_on }
 //   unmatched_tags: tokens drawn like the matched door tags that no schedule mark names
@@ -71,13 +71,27 @@ function offDrawing(p, it) { return !!(it.rot || 0) || it.x > p.width * 0.95; }
 export function titleBlocks(pages) {
   const legacy = readTitleBlocks(pages, true);
   const extended = readTitleBlocks(pages, false);
-  // New evidence may add plans, but never remove or rename a legacy plan.
+  const multiline = readTitleBlocks(pages, false, true);
+  // New evidence may add plans, but never remove or rename either previous rule's plans.
   return extended.map((tb, i) => legacy[i].plan
     ? { ...legacy[i], plan_rule: 'legacy' }
-    : { ...tb, plan_rule: tb.plan ? 'extended-title' : null });
+    : tb.plan ? { ...tb, plan_rule: 'extended-title' }
+      : { ...multiline[i], plan_rule: multiline[i].plan ? 'multiline-title' : null });
 }
 
-function readTitleBlocks(pages, legacy) {
+// Grow a title through adjacent, aligned lines, not a fixed distance from its label.
+// Keep the whole stack so a qualifier on its first/last line cannot disappear.
+function titleStack(anchor, ls) {
+  if (anchor.rot) return [anchor];
+  const aligned = ls.filter(l => !l.rot && Math.abs(l.h - anchor.h) < 0.6
+    && l.x < anchor.xEnd && l.xEnd > anchor.x).sort((a, b) => a.y - b.y);
+  let first = aligned.indexOf(anchor), last = first;
+  while (first > 0 && aligned[first].y - aligned[first - 1].y < anchor.h * 1.7) first--;
+  while (last + 1 < aligned.length && aligned[last + 1].y - aligned[last].y < anchor.h * 1.7) last++;
+  return aligned.slice(first, last + 1);
+}
+
+function readTitleBlocks(pages, legacy, multiline = false) {
   const sheetRE = legacy ? LEGACY_SHEET_RE : SHEET_RE;
   const drawing = (p) => p.width > p.height * 1.15 || p.width > 1500;
   const regionLines = pages.map((p) => (drawing(p) ? lines(p.items.filter((it) => inTitleRegion(p, it))) : []));
@@ -101,7 +115,7 @@ function readTitleBlocks(pages, legacy) {
       if (cand.length) {
         const top = cand[0];
         // A title set on two lines: the lines of the same size stacked with it.
-        const same = cand.filter((l) => l.rot === top.rot && Math.abs(l.h - top.h) < 0.6 && Math.abs(l.y - top.y) < top.h * 1.7 && l.x < top.xEnd && l.xEnd > top.x).sort((a, b) => a.y - b.y);
+        const same = multiline ? titleStack(top, cand) : cand.filter((l) => l.rot === top.rot && Math.abs(l.h - top.h) < 0.6 && Math.abs(l.y - top.y) < top.h * 1.7 && l.x < top.xEnd && l.xEnd > top.x).sort((a, b) => a.y - b.y);
         title = same.map((l) => l.str).join(" ").replace(/\s+/g, " ").trim();
       }
     }
@@ -111,10 +125,15 @@ function readTitleBlocks(pages, legacy) {
       const below = ls.filter(l => !l.rot && l.y > label.y && l.y - label.y < label.h * 4
         && Math.abs(l.x - label.x) < label.h * 2 && !LABEL_WORDS.test(l.str.toUpperCase().replace(/:$/, "")))
         .sort((a, b) => a.y - b.y);
-      if (below.length) title = below.map(l => l.str).join(" ");
+      if (below.length) {
+        const stack = multiline ? titleStack(below[0], ls.filter(l => l.y > label.y
+          && !sheetRE.test(norm(l.str)) && !LABEL_WORDS.test(l.str.toUpperCase().replace(/:$/, "")))) : below;
+        title = stack.map(l => l.str).join(" ");
+      }
     }
     const sheet = num ? num.str.replace(/\s+/g, "") : null;
-    const plan = !!(sheet && /^A/i.test(sheet) && title && /\bPLANS?\b/i.test(title) && (legacy
+    const plan = !!(sheet && /^A/i.test(sheet) && title && /\bPLANS?\b/i.test(title)
+      && (!multiline || !/\b(?:DETAILS?|SCHEDULES?)\b/i.test(title)) && (legacy
       ? !NOT_A_PLAN.test(title.toUpperCase())
       : title.toUpperCase().split(/\s*&\s*/).some(part => /\bPLANS?\b/.test(part) && !NOT_A_PLAN.test(part))));
     return { page: p.page, sheet, title, plan, block: ls.map((l) => norm(l.str)).filter((s) => !boiler(s)) };
@@ -177,13 +196,91 @@ function similarity(a, b) {
   return n / Math.max(A.size, B.size);
 }
 
+const sourceRows = d => d.schedule_rows?.length ? d.schedule_rows : [d];
+
+function tagCandidates(p, ls) {
+  const cands = p.items.map(it => ({ str: it.str.trim(), x: it.x, y: it.y, h: it.h, w: it.w || 0, it }));
+  for (const l of ls) if (l.parts.length > 1) cands.push({ str: l.str, x: l.x, y: l.y, h: l.h, w: l.w, line: l });
+  return cands;
+}
+
+function scheduleCellTest(cands, markOf, page) {
+  // Baseline AND a repeated mark column: a real tag can share a table row's y.
+  const cells = cands.filter(c => (markOf.get(norm(c.str)) || []).flatMap(sourceRows)
+    .some(d => d.page === page && Number.isFinite(d.y) && Math.abs(c.y - d.y) < Math.max(3, c.h)));
+  return c => cells.includes(c) && cells.some(other =>
+    Math.abs(other.y - c.y) > Math.max(other.h, c.h) && Math.abs(other.x - c.x) < Math.max(other.h, c.h));
+}
+
+// A caption has an announced scale directly below it. Include all view types as
+// boundaries, so a plan beside elevations does not license tags in the elevations.
+// Read the scale text here even at site scales too small for room travel distances.
+function drawingViews(p, ls) {
+  const body = ls.filter(l => !offDrawing(p, l) && !inTitleRegion(p, l));
+  const scales = body.filter(l => SCALE_RE.test(l.str));
+  const text = body.filter(l => !scales.includes(l));
+  const seen = new Set();
+  const captions = text.filter(l => /\b(?:PLANS?|ELEVATIONS?|ELEV\.?|SECTIONS?|DETAILS?|BUILDING)\b/i.test(l.str))
+    .flatMap(anchor => {
+      const stack = titleStack(anchor, text), l = stack[0], last = stack[stack.length - 1];
+      if (seen.has(l)) return [];
+      seen.add(l);
+      const str = stack.map(s => s.str).join(' ');
+      if (/\b(?:NOTES?|SEE|REFER|SCHEDULES?)\b|[:;]/i.test(str) || str.length > 160) return [];
+      const scale = scales.filter(s => s.y > last.y && s.y - last.y < l.h * 3
+        && s.x >= l.x - l.h * 2 && s.x <= Math.max(...stack.map(s => s.xEnd)) + l.h * 2)
+        .sort((a, b) => (a.y - b.y) || (Math.abs(a.x - l.x) - Math.abs(b.x - l.x)))[0];
+      return scale ? [{ ...l, str, scale }] : [];
+    });
+  return captions.map(c => {
+    const left = Math.max(0, c.x - c.h * 3);
+    const right = Math.min(p.width * 0.9, ...captions.filter(other => other.x > c.x + c.h * 3
+      && Math.abs(other.y - c.y) < Math.max(other.h, c.h) * 3).map(other => other.x - other.h * 3));
+    const top = Math.max(0, ...captions.filter(other => other.scale.y < c.y - c.h * 3
+      && other.x >= left && other.x < right).map(other => other.scale.y));
+    return { caption: c.str.toUpperCase(), left, right, top, bottom: c.y - c.h, scale: c.scale };
+  });
+}
+
+const insideView = (c, v) => cx(c) >= v.left && cx(c) < v.right && c.y > v.top && c.y < v.bottom;
+const nonPlanView = s => NOT_A_PLAN.test(s) || /\b(?:ELEVATIONS?|ELEV|SECTIONS?|DETAILS?|SCHEDULES?)\b/.test(s);
+
+function drawingPlanEvidence(p, tb, markOf) {
+  if (!/^A/i.test(tb.sheet || '')) return null;
+  const title = (tb.title || '').toUpperCase();
+  // Site/details sheets can contain a floor-plan drawing. Keep explicit non-floor
+  // disciplines, phasing and key-plan readings as vetoes, even if a caption says FLOOR PLAN.
+  if (NOT_A_PLAN.test(title.replace(/\b(?:SITE|DEMO(?:LITION)?)\b/g, ''))
+    || /\bKEY\s*PLAN\b/.test(title)
+    || (/\bDEMO(?:LITION)?\b/.test(title) && !/\bCONSTRUCTION\b/.test(title))) return null;
+  const ls = lines(p.items), views = drawingViews(p, ls);
+  const { rooms, used } = roomsOn(p, ls, tb);
+  const cands = tagCandidates(p, ls), inSchedule = scheduleCellTest(cands, markOf, p.page);
+  const tags = cands.filter(c => markOf.has(norm(c.str)) && !offDrawing(p, c.it || c.line)
+    && !inTitleRegion(p, c) && !inSchedule(c)
+    && !(c.line ? used.has(c.line) : rooms.some(r => r._line.parts.includes(c.it))));
+  const floor = views.filter(v => /\bFLOOR PLANS?\b|\bENLARGED\b.*\bPLANS?\b/.test(v.caption) && !nonPlanView(v.caption));
+  if (floor.length) return { rule: 'drawing-title', views: floor };
+  const site = views.filter(v => /\bSITE\b.*\bPLANS?\b/.test(v.caption)
+    && !nonPlanView(v.caption.replace(/\b(?:KEY\s+)?SITE\b/g, ''))
+    && tags.some(c => insideView(c, v)));
+  if (site.length && !/\b(?:DETAILS?|SCHEDULES?)\b/.test(title)) return { rule: 'site-plan-tags', views: site };
+  // A building view without "PLAN" needs two different room numbers, each with
+  // a separate schedule-matching tag nearby. Room numbers alone never qualify.
+  const roomBacked = views.filter(v => /\bBUILDING\b/.test(v.caption) && !nonPlanView(v.caption)
+    && new Set(tags.filter(c => insideView(c, v) && rooms.some(r => insideView(r, v)
+      && norm(r.number) === norm(c.str) && Math.hypot(r.x - cx(c), r.y - c.y) < Math.max(r.h, c.h) * 25))
+      .map(c => norm(c.str))).size >= 2);
+  return roomBacked.length ? { rule: 'room-backed-tags', views: roomBacked } : null;
+}
+
 export function readPlan(pages, doors = [], opts = {}) {
   const tbs = titleBlocks(pages);
   const scopes = new Map(pages.map((p, i) => [p.page, buildingScope(p, tbs[i], lines(p.items))]));
   const byPage = new Map(pages.map((p, i) => [p.page, { p, tb: tbs[i] }]));
   const planPages = tbs.filter((t) => t.plan);
+  const drawingRegions = new Map();
   const markOf = new Map();
-  const sourceRows = d => d.schedule_rows?.length ? d.schedule_rows : [d];
   // SubX keeps a mark printed on two schedule pages apart as "001 [p.286]"; the plan prints "001".
   const tagOf = (d) => norm(String(d.mark || "").replace(/\s*\[p\.?\s*\d+\]\s*$/i, ""));
   for (const d of doors) {
@@ -192,6 +289,13 @@ export function readPlan(pages, doors = [], opts = {}) {
       markOf.get(k).push(d);
     }
   }
+  for (const t of tbs.filter(t => !t.plan)) {
+    const evidence = drawingPlanEvidence(byPage.get(t.page).p, t, markOf);
+    if (!evidence) continue;
+    t.plan = true; t.plan_rule = evidence.rule;
+    drawingRegions.set(t.page, evidence.views);
+    planPages.push(t);
+  }
   const rooms = [], tags = [], seenTag = new Map(), sheetsOut = [];
   const paired = new Set(); // g041: the items of stacked tags, which are not unmatched tags
   const shared = []; // g044: marks several schedule rows share, per sheet
@@ -199,9 +303,11 @@ export function readPlan(pages, doors = [], opts = {}) {
 
   for (const t of planPages) {
     const { p } = byPage.get(t.page);
-    const ls = lines(p.items);
+    const views = drawingRegions.get(t.page);
+    const inPlan = c => !views || (!offDrawing(p, c.it || c.line || c) && !inTitleRegion(p, c) && views.some(v => insideView(c, v)));
+    const ls = lines(p.items).filter(inPlan);
     const { rooms: rs, used } = roomsOn(p, ls, t);
-    const scales = scalesOn(lines(p.items, 4, 1.6));
+    const scales = scalesOn(views ? [...new Set(views.map(v => v.scale))] : lines(p.items, 4, 1.6));
     const sheetOut = { page: t.page, sheet: t.sheet, title: t.title, plan_rule: t.plan_rule, rooms: rs.length, scales: scales.map((s) => s.text), points_per_foot: [...new Set(scales.map((s) => s.points_per_foot))] };
     sheetsOut.push(sheetOut);
     for (const r of rs) { r.points_per_foot = scaleAt(scales, r.x, r.y); rooms.push(r); }
@@ -229,16 +335,11 @@ export function readPlan(pages, doors = [], opts = {}) {
     };
     const doorFits = d => !keep || sourceRows(d).some(r => r.page == null || keep.has(r.page));
     // Door tags: each single item, and each joined line, equal to a schedule mark.
-    const cands = [];
-    for (const it of p.items) cands.push({ str: it.str.trim(), x: it.x, y: it.y, h: it.h, w: it.w || 0, it });
-    for (const l of ls) if (l.parts.length > 1) cands.push({ str: l.str, x: l.x, y: l.y, h: l.h, w: l.w, line: l });
+    const cands = tagCandidates(p, ls).filter(inPlan);
     // On mixed plan/schedule sheets, source baselines plus a repeated mark
     // column locate table cells. Baseline alone could hide a real tag elsewhere
     // on the same horizontal line. Require at least two distinct table rows.
-    const scheduleCells = cands.filter(c => (markOf.get(norm(c.str)) || []).flatMap(sourceRows)
-      .some(d => d.page === t.page && Number.isFinite(d.y) && Math.abs(c.y - d.y) < Math.max(3, c.h)));
-    const inSchedule = c => scheduleCells.includes(c) && scheduleCells.some(other =>
-      Math.abs(other.y - c.y) > Math.max(other.h, c.h) && Math.abs(other.x - c.x) < Math.max(other.h, c.h));
+    const inSchedule = scheduleCellTest(cands, markOf, t.page);
     // Each tag covers the schedule rows it stands for (tag._rows), so a row is "on the plan" only when
     // a tag of its own covers it (g044).
     const place = (key, rowsHere, c, extra = null) => {
@@ -279,7 +380,7 @@ export function readPlan(pages, doors = [], opts = {}) {
     // text heights across and 2.4 down or up, at 0.6 to 1.6 times its height. An exact tag always
     // wins, each item serves one tag, and the tag says how it was matched (matched_by). A mark
     // several rows share (g044) collects up to that many pairs, closest pairs first.
-    const lone = p.items.filter((it) => /^[A-Z]$/i.test(it.str.trim()) && !offDrawing(p, it));
+    const lone = p.items.filter((it) => /^[A-Z]$/i.test(it.str.trim()) && !offDrawing(p, it) && inPlan(it));
     for (const [k, all] of markOf) {
       if (found.has(k)) continue;
       const m = /^(.*\d)-?([A-Z])$/.exec(k);
@@ -289,7 +390,7 @@ export function readPlan(pages, doors = [], opts = {}) {
       const [, base, letter] = m;
       const pairs = [];
       for (const it of p.items) {
-        if (norm(it.str) !== base || offDrawing(p, it)) continue;
+        if (norm(it.str) !== base || offDrawing(p, it) || !inPlan(it)) continue;
         for (const l of lone) {
           if (l.str.trim().toUpperCase() !== letter) continue;
           const dx = Math.abs(cx(l) - cx(it)), dy = Math.abs(l.y - it.y), hr = l.h / it.h;
@@ -342,6 +443,7 @@ export function readPlan(pages, doors = [], opts = {}) {
     const { p } = byPage.get(t.page);
     for (const it of p.items) {
       if (offDrawing(p, it)) continue;
+      if (drawingRegions.has(t.page) && (inTitleRegion(p, it) || !drawingRegions.get(t.page).some(v => insideView(it, v)))) continue;
       const k = norm(it.str);
       if (!k || allMarks.has(k) || roomNos.has(t.page + ":" + k) || paired.has(it)) continue;
       if (!styles.has(shape(it.str) + "@" + it.h.toFixed(1))) continue;
