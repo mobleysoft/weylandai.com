@@ -84,8 +84,8 @@
    "agreed": 0
   }
  },
- "triage_class": "schedule-only",
- "triage_from": "inferred (S=true H=false plan sheets=2)",
+ "triage_class": "complete",
+ "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
    "applicable": true,
@@ -114,11 +114,11 @@
   },
   "sets_exist": {
    "applicable": false,
-   "reason": "not for class schedule-only"
+   "reason": "no hardware sets read in this PDF"
   },
   "set_door_lists": {
    "applicable": false,
-   "reason": "not for class schedule-only"
+   "reason": "no hardware set prints its own door list"
   },
   "types_in_legend": {
    "applicable": false,
@@ -465,6 +465,6 @@
    "b": null
   }
  ],
- "ms": 1507,
- "generated_at": "2026-10-10T13:22:53.502Z"
+ "ms": 1754,
+ "generated_at": "2026-10-11T07:55:40.092Z"
 }

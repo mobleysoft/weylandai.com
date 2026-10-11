@@ -82,3 +82,12 @@ zone_name = "weylandai.com"
 type = "Text"
 globs = ["**/*.html"]
 fallthrough = true
+
+# g068/g074: the PDF of the one set we authored that SightX shows publicly (the WeylandAI Building,
+# tools/accuracy/g068/build-sheets.mjs), named .bin so Wrangler's built-in module handling leaves it alone
+# (weyland-subx-worker's client-ocr precedent), imported as a Data module by src/data/sheets/pdfs.js and
+# served at /api/sightx/sheets/<sha16>/set.pdf. No harvested set's sheets are bundled.
+[[rules]]
+type = "Data"
+globs = ["assets/building/*.bin"]
+fallthrough = true

@@ -50,10 +50,22 @@
     .notes{margin:12px 2px;color:var(--accent);font-size:13px;line-height:1.5}
     .table{margin-top:16px;border:1px solid var(--line);border-radius:16px;overflow-x:auto;background:rgba(17,19,24,.94)}
     table{width:100%;border-collapse:collapse;font-size:13px}th{text-align:left;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.1em;padding:12px 14px;background:#0d0f14;border-bottom:2px solid var(--line);white-space:nowrap}
-    td{padding:10px 14px;border-bottom:1px solid #1f232b;vertical-align:top}tr.door{cursor:pointer}tr.door:hover td,tr.door.sel td{background:rgba(42,82,255,.08)}
+    td{padding:10px 14px;border-bottom:1px solid #1f232b;vertical-align:top}tr.door,tr.tagrow{cursor:pointer}tr.door:hover td,tr.door.sel td,tr.tagrow:hover td,tr.tagrow.sel td{background:rgba(42,82,255,.08)}
     .badge{font:800 9px ui-monospace,monospace;padding:4px 8px;border-radius:99px;border:1px solid var(--line);white-space:nowrap}.badge.r{color:var(--red);border-color:rgba(255,113,107,.5)}
     .foot{color:var(--muted);font-size:13px;line-height:1.6;margin-top:16px;max-width:900px}
     .pay{border:1px solid rgba(255,212,0,.4);background:rgba(255,212,0,.06);border-radius:12px;padding:10px 12px;font-size:13px;line-height:1.5;margin-top:10px}
+    /* g068: a set's plan sheets with its placed door tags (placement record), drawn in PDF points. */
+    .sheetview{position:absolute;inset:0;display:none;background:#fff;touch-action:none}.sheetview.on{display:block}
+    .sheetview svg{display:block;width:100%;height:100%;cursor:grab;user-select:none}
+    .sheetview .tag .ring{fill:rgba(42,82,255,.12);stroke:var(--primary);stroke-width:2;vector-effect:non-scaling-stroke}
+    .sheetview .tag .hit{fill:transparent;cursor:pointer}
+    .sheetview .tag text{fill:var(--primary);font:800 12px ui-monospace,monospace;paint-order:stroke;stroke:#fff;stroke-width:3px}
+    .sheetview .tag.sel .ring{fill:rgba(255,212,0,.35);stroke:#d14b00;stroke-width:3}.sheetview .tag.sel text{fill:#d14b00}
+    .sheet-bar{position:absolute;left:12px;right:12px;top:48px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+    .sheet-bar .btn{background:rgba(17,19,24,.92)}.sheet-bar .btn.on{background:var(--primary);border-color:var(--primary);color:#fff}
+    .sheet-zoom{position:absolute;right:12px;bottom:12px;display:flex;gap:6px}.sheet-zoom .btn{background:rgba(17,19,24,.92);min-width:40px}
+    .sheet-note{position:absolute;left:12px;bottom:12px;max-width:min(60%,520px);color:#222;background:rgba(255,255,255,.92);border:1px solid #ccc;border-radius:8px;padding:6px 9px;font:600 11px/1.4 ui-monospace,monospace}
+    .viewer.sheets .ctrl,.viewer.sheets .hint,.viewer.sheets .weyland-stick{display:none!important}
     @media(max-width:700px){.hint{display:none}.ctrl{left:auto;right:8px;bottom:8px;transform:none;width:150px;gap:5px}.ctrl .btn{padding:9px 10px;min-height:40px}.hud{flex-wrap:wrap}}
     @media(max-width:980px){.stage{grid-template-columns:1fr}.info{max-height:none;min-height:0}.viewer{height:56vh}}
   </style>
@@ -68,6 +80,12 @@
       <div class="viewer" id="viewer">
         <canvas id="sx-canvas" aria-label="3D corridor built from the schedule"></canvas>
         <div class="nogl" id="nogl">This browser can't draw the 3D corridor (no WebGL). The door list below has everything in the schedule.</div>
+        <div class="sheetview" id="sheetview" aria-label="Plan sheets with the placed door tags">
+          <svg id="sheet-svg" xmlns="http://www.w3.org/2000/svg" role="img"></svg>
+          <div class="sheet-bar" id="sheet-bar"></div>
+          <div class="sheet-note" id="sheet-note"></div>
+          <div class="sheet-zoom"><button class="btn" id="sheet-in" type="button" aria-label="Zoom in">+</button><button class="btn" id="sheet-out" type="button" aria-label="Zoom out">−</button><button class="btn" id="sheet-fit" type="button">FIT</button></div>
+        </div>
         <div class="hud"><span id="hud-project">-</span><span id="hud-layout">-</span><span id="hud-count">-</span></div>
         <div class="hint" id="hint">W/A/S/D TO WALK · DRAG TO LOOK · CLICK A DOOR · GAMEPAD WORKS</div>
         <div class="ctrl">
@@ -151,7 +169,8 @@ HW-2: lever lockset, 3 hinges, wall stop"></textarea>
     if (embedded) {
       document.addEventListener("click", function (e) {
         var a = e.target && e.target.closest ? e.target.closest("a[href]") : null;
-        if (!a || a.target || e.metaKey || e.ctrlKey || e.shiftKey) return;
+        // A download (the openings CSV, g074) is a file to save, not an app to open.
+        if (!a || a.target || a.hasAttribute("download") || e.metaKey || e.ctrlKey || e.shiftKey) return;
         var u; try { u = new URL(a.getAttribute("href"), location.href); } catch (err) { return; }
         if (u.origin !== location.origin) return;
         e.preventDefault();
@@ -518,7 +537,7 @@ HW-2: lever lockset, 3 hinges, wall stop"></textarea>
     $("reset").onclick = function () { stopTour(); if (gl) goStart(false); };
 
     function show(model, how) {
-      st.model = model; st.sel = -1; stopTour();
+      st.model = model; st.sel = -1; stopTour(); leaveSheets();
       renderList(); buildScene(model);
       // Read-only counts for journeys and probes: what was drawn against what the data holds.
       try { window.__sxCounts = Object.freeze({ door_cards: document.querySelectorAll("#rows tr.door").length, row_cards: document.querySelectorAll("#rows tr.row-only").length, doors_drawn: gl ? doorPos.length : 0, doors_on_plan: model.doors.filter(function (d) { return !!d.plan; }).length, rows: model.set ? model.set.rows : model.doors.length, shared_flags: document.querySelectorAll("#rows tr.door .badge.shared-mark").length }); } catch (e) {}
@@ -602,8 +621,210 @@ HW-2: lever lockset, 3 hinges, wall stop"></textarea>
         $("copyLink").onclick = function () { if (navigator.clipboard) navigator.clipboard.writeText(link); $("copyLink").textContent = "COPIED"; };
       });
     };
+    // Sheet view (g068, reworked by g074): a set's plan sheets with its door tags where the plan prints them,
+    // one door card per opening, placed-of-total in the HUD, the openings list as CSV. The sheets are drawn
+    // here from the PDF by the self-hosted pdf.js (the same build SubX reads with); no sheet image is fetched.
+    // Two sources: the WeylandAI Building (?set=4847b09e633103f7, a set we authored, with its placement record)
+    // and the visitor's own SubX upload (?walk=<session>, SubX's WALK IT): its PDF, its door rows and readPlan's
+    // tags, all from the visitor's own session. 2D sheet truth: nothing is drawn that the data does not hold.
+    var sv = { d: null, k: 0, vb: null, sel: -1, down: null, loaded: {}, pdf: null, urls: {}, session: null };
+    var SVGNS = "http://www.w3.org/2000/svg", PDFJS = "/api/hardware-schedule/client-ocr-assets/";
+    var pdfjsLib = null;
+    function pdfjs() {
+      if (!pdfjsLib) pdfjsLib = import(PDFJS + "pdf.mjs?v=2").then(function (m) { m.GlobalWorkerOptions.workerSrc = PDFJS + "pdf-worker.mjs?v=2"; return m; });
+      return pdfjsLib;
+    }
+    function svEl(tag, attrs, parent) { var e = document.createElementNS(SVGNS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
+    function svScale() { var r = $("sheet-svg").getBoundingClientRect(); return r.width && sv.vb ? Math.min(r.width / sv.vb[2], r.height / sv.vb[3]) : 1; }
+    function svApply() {
+      if (!sv.vb) return;
+      var svg = $("sheet-svg"); svg.setAttribute("viewBox", sv.vb.join(" "));
+      var sc = svScale();
+      [].forEach.call(svg.querySelectorAll("g.tag"), function (g) {
+        var h = +g.dataset.h || 10, r = Math.max(h * 0.75, 7 / sc);
+        g.querySelector(".hit").setAttribute("r", Math.max(h * 1.4, 16 / sc));
+        g.querySelector(".ring").setAttribute("r", r);
+        var t = g.querySelector("text"); t.setAttribute("font-size", 12 / sc); t.setAttribute("x", r + 3 / sc); t.setAttribute("y", -r); t.style.strokeWidth = 3 / sc;
+      });
+    }
+    // The sheet buttons sit under the HUD, however many lines the HUD wraps to (a phone wraps it to three).
+    function svBar() { var h = document.querySelector("#viewer .hud"); if (h) $("sheet-bar").style.top = (h.offsetTop + h.offsetHeight + 6) + "px"; }
+    function sheet() { return sv.d.sheets[sv.k]; }
+    function svFit() { var s = sheet(); if (!s || !s.width) return; sv.vb = [0, 0, s.width, s.height]; svApply(); }
+    function svZoom(f, cx, cy) {
+      var s = sheet(), vb = sv.vb; if (!s || !vb) return;
+      var w = Math.min(s.width * 1.5, Math.max(s.width / 40, vb[2] / f)), h = w * vb[3] / vb[2];
+      if (cx == null) { cx = vb[0] + vb[2] / 2; cy = vb[1] + vb[3] / 2; }
+      sv.vb = [cx - (cx - vb[0]) * w / vb[2], cy - (cy - vb[1]) * h / vb[3], w, h]; svApply();
+    }
+    function svPoint(e) { var r = $("sheet-svg").getBoundingClientRect(), sc = svScale(), ox = (r.width - sv.vb[2] * sc) / 2, oy = (r.height - sv.vb[3] * sc) / 2; return [sv.vb[0] + (e.clientX - r.left - ox) / sc, sv.vb[1] + (e.clientY - r.top - oy) / sc]; }
+    function onSheet(k) { var p = sv.d.sheets[k] && sv.d.sheets[k].page, out = []; sv.d.openings.forEach(function (o, i) { if (o.tag && o.tag.page === p) out.push(i); }); return out; }
+    // One sheet drawn by pdf.js into a canvas, kept as an image for the SVG under the tags.
+    function drawSheet(s) {
+      if (sv.urls[s.page]) return Promise.resolve(sv.urls[s.page]);
+      return sv.pdf.getPage(s.page).then(function (pg) {
+        var vp1 = pg.getViewport({ scale: 1 });
+        s.width = vp1.width; s.height = vp1.height;
+        var max = matchMedia("(max-width:700px)").matches ? 2600 : 4200;
+        var vp = pg.getViewport({ scale: Math.min(2, max / vp1.width) });
+        var c = document.createElement("canvas"); c.width = Math.round(vp.width); c.height = Math.round(vp.height);
+        var cx2 = c.getContext("2d"); cx2.fillStyle = "#fff"; cx2.fillRect(0, 0, c.width, c.height);
+        return pg.render({ canvasContext: cx2, viewport: vp }).promise.then(function () {
+          return new Promise(function (res) { c.toBlob(function (b) { sv.urls[s.page] = URL.createObjectURL(b); c.width = c.height = 0; res(sv.urls[s.page]); }, "image/png"); });
+        });
+      });
+    }
+    function renderSheet(k) {
+      sv.k = k; var s = sheet(), svg = $("sheet-svg"); svg.innerHTML = "";
+      [].forEach.call(document.querySelectorAll("#sheet-bar .btn[data-k]"), function (b) { b.classList.toggle("on", +b.dataset.k === k); });
+      if (!s) return publishSheets();
+      var here = onSheet(k);
+      $("sheet-note").textContent = s.sheet + (s.title ? " " + s.title : "") + " · p." + s.page + " · " + here.length + " door tag" + (here.length === 1 ? "" : "s") + " placed here · drawing the sheet...";
+      return drawSheet(s).then(function (url) {
+        if (sv.k !== k) return;
+        svg.innerHTML = "";
+        var img = svEl("image", { x: 0, y: 0, width: s.width, height: s.height, preserveAspectRatio: "none" }, svg);
+        img.addEventListener("load", function () { sv.loaded[s.page] = true; publishSheets(); });
+        img.setAttribute("href", url);
+        here.forEach(function (i) {
+          var o = sv.d.openings[i], t = o.tag;
+          var g = svEl("g", { "class": "tag" + (i === sv.sel ? " sel" : ""), transform: "translate(" + t.x + " " + t.y + ")", "data-o": i, "data-h": t.h || 10, "data-mark": o.mark }, svg);
+          svEl("circle", { "class": "ring", cx: 0, cy: 0, r: 8 }, g); svEl("circle", { "class": "hit", cx: 0, cy: 0, r: 16 }, g);
+          var tx = svEl("text", { x: 10, y: -10 }, g); tx.textContent = o.mark;
+          var ti = svEl("title", {}, g); ti.textContent = o.mark + (o.room ? " · " + o.room : "");
+        });
+        $("sheet-note").textContent = s.sheet + (s.title ? " " + s.title : "") + " · p." + s.page + " · " + here.length + " door tag" + (here.length === 1 ? "" : "s") + " placed here";
+        svFit(); publishSheets();
+      }).catch(function (e) { $("sheet-note").textContent = "This sheet could not be drawn: " + ((e && e.message) || e); });
+    }
+    function publishSheets() {
+      try {
+        var s = sheet();
+        window.__sxSheets = Object.freeze({ source: sv.d.source, set: sv.d.set ? sv.d.set.sha16 : null, session: sv.session, sheet: s ? s.sheet : null, page: s ? s.page : null, image_loaded: !!(s && sv.loaded[s.page]),
+          tags_drawn: document.querySelectorAll("#sheet-svg g.tag").length, tags_on_sheet: s ? onSheet(sv.k).length : 0, placed: sv.d.summary.placed, total: sv.d.summary.total,
+          sheets: sv.d.sheets.map(function (x) { return x.sheet; }), hud: $("hud-count").textContent, selected: sv.sel >= 0 ? sv.d.openings[sv.sel].mark : null, selected_index: sv.sel,
+          table_rows: document.querySelectorAll("#rows tr.tagrow").length, unplaced_rows: document.querySelectorAll("#rows tr.tagrow.unplaced").length });
+      } catch (e) {}
+    }
+    function val(v) { return v == null || v === "" ? '<span style="color:var(--muted)">not read</span>' : esc(v); }
+    function selectOpening(i, center) {
+      var o = sv.d.openings[i]; if (!o) return;
+      sv.sel = i;
+      var t = o.tag, k = t ? sv.d.sheets.findIndex(function (s) { return s.page === t.page; }) : -1;
+      var go = k >= 0 && k !== sv.k ? renderSheet(k) : Promise.resolve();
+      [].forEach.call(document.querySelectorAll("#rows tr.tagrow"), function (tr) { tr.classList.toggle("sel", +tr.dataset.o === i); });
+      Promise.resolve(go).then(function () {
+        [].forEach.call(document.querySelectorAll("#sheet-svg g.tag"), function (g) { g.classList.toggle("sel", +g.dataset.o === i); });
+        var s = sheet();
+        if (center && t && s && s.width) { var w = s.width / 5, h = s.height / 5; sv.vb = [t.x - w / 2, t.y - h / 2, w, h]; svApply(); }
+        publishSheets();
+      });
+      var how = { tag_number: "numbered after the room", schedule_location: "the schedule's location, found on the plan", nearest_label: "the nearest room label (unsure)" }[t && t.room_by] || "";
+      var kv = [
+        ["ROOM", o.room ? esc(o.room) : (t && t.plan_room_name ? esc((t.plan_room ? t.plan_room + " " : "") + t.plan_room_name) + ' <span class="' + (t.unsure ? "flag" : "") + '" style="color:var(--muted)">(on the plan: ' + esc(how) + ")</span>" : val(null))],
+        ["SIZE", val(o.size) + (o.pair ? " (pair)" : "")],
+        ["HW GROUP", val(o.hardware_group)], ["DOOR TYPE", val(o.door_type)], ["FRAME", val(o.frame_type)], ["RATING", val(o.fire_rating)],
+        ["SCHEDULE", o.schedule && o.schedule.page != null ? "page " + esc(o.schedule.page) + (o.schedule.row != null ? ", row " + esc(o.schedule.row) : "") : val(null)],
+        ["PLAN", t ? "tag on " + esc(t.sheet) + " p." + esc(t.page) + " at x " + Math.round(t.x) + ", y " + Math.round(t.y) + " pt" + (t.also_on && t.also_on.length ? " · also printed on " + esc(t.also_on.join(", ")) : "") : '<span class="flag">not placed: no tag of its own on the plan sheets</span>']
+      ];
+      if (o.note) kv.push(["NOTE", '<span class="flag shared-mark">' + esc(o.note) + "</span>"]);
+      $("info").innerHTML = '<h2 id="card-mark">' + esc(o.mark) + '</h2><div class="loc" id="door-where">' + esc(o.room || "") + " · opening " + (i + 1) + " of " + sv.d.openings.length + "</div>" +
+        '<div class="kv">' + kv.map(function (x) { return "<b>" + x[0] + "</b><span>" + x[1] + "</span>"; }).join("") + "</div>" +
+        '<p class="foot" style="margin-top:0">The opening as its schedule row reads it; the tag where the plan sheet prints it.</p>';
+    }
+    function renderSheetList() {
+      $("rows").innerHTML = sv.d.openings.map(function (o, i) {
+        return '<tr class="tagrow' + (o.tag ? "" : " unplaced") + '" data-o="' + i + '"><td><b>' + esc(o.mark) + "</b></td><td>" + esc(o.room || "") + "</td><td>" + val(o.size) + "</td><td>" + val(o.door_type) + "</td><td>" + val(o.fire_rating) + "</td><td>" + val(o.hardware_group) + '</td><td style="color:var(--muted)">' +
+          (o.tag ? esc(o.tag.sheet) + " p." + esc(o.tag.page) : '<span class="badge r">NOT PLACED</span>') + "</td></tr>";
+      }).join("");
+    }
+    function csvName() { return String(sv.d.title || "openings").replace(/[^A-Za-z0-9]+/g, "_").replace(/^_+|_+$/g, "").slice(0, 60) + "_openings.csv"; }
+    function downloadCsv() {
+      var a = document.createElement("a");
+      a.href = URL.createObjectURL(new Blob([sv.d.csv], { type: "text/csv" })); a.download = csvName();
+      document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 2000);
+    }
+    function showSheets(d) {
+      sv.d = d; sv.sel = -1; sv.k = 0; st.model = null;
+      $("viewer").classList.add("sheets"); $("sheetview").classList.add("on");
+      $("hud-project").textContent = d.title;
+      $("hud-layout").textContent = d.sheets.length ? "PLAN SHEETS " + d.sheets.map(function (s) { return s.sheet; }).join(", ") : "NO PLAN SHEET FOUND";
+      $("hud-count").textContent = d.summary.placed + " OF " + d.summary.total + " PLACED";
+      $("sheet-bar").innerHTML = d.sheets.map(function (s, k) { return '<button class="btn" type="button" data-k="' + k + '">' + esc(s.sheet) + " · " + onSheet(k).length + "</button>"; }).join("") +
+        '<button class="btn" type="button" id="sheet-csv">OPENINGS CSV</button>' + (sv.session ? '<button class="btn" type="button" id="sheet-3d">3D CORRIDOR</button>' : "");
+      renderSheetList(); svBar();
+      $("notes").innerHTML = "<div>" + d.summary.placed + " of " + d.summary.total + " openings placed on " + d.sheets.length + " plan sheet" + (d.sheets.length === 1 ? "" : "s") + "." + (d.summary.unplaced.length ? " Not placed: " + d.summary.unplaced.map(esc).join(", ") + "." : "") + (d.reason ? " " + esc(d.reason) : "") + "</div>";
+      $("layout-note").textContent = d.note;
+      $("info").innerHTML = "<h2>Pick an opening</h2><div class=\"loc\">Tap a ring on the sheet or a row below. Drag to pan, scroll or +/− to zoom. OPENINGS CSV saves the list for your bid.</div>";
+      setStatus(d.title + ": " + d.summary.placed + " of " + d.summary.total + " openings placed on its plan sheets.");
+      if (!d.sheets.length) { $("sheet-svg").innerHTML = ""; $("sheet-note").textContent = d.reason || "No floor plan sheet was found in this PDF; the openings are listed below."; publishSheets(); return; }
+      renderSheet(Math.max(0, d.sheets.findIndex(function (s, k) { return onSheet(k).length > 0; })));
+    }
+    function leaveSheets() { $("viewer").classList.remove("sheets"); $("sheetview").classList.remove("on"); }
+    $("sheet-bar").addEventListener("click", function (e) {
+      var b = e.target.closest && e.target.closest("button"); if (!b) return;
+      if (b.id === "sheet-csv") return downloadCsv();
+      if (b.id === "sheet-3d") { leaveSheets(); tab("subx").then(function () { return loadSession(sv.session); }).then(addBack); return; }
+      renderSheet(+b.dataset.k);
+    });
+    function addBack() { if ($("sheet-back")) return; var b = document.createElement("button"); b.className = "btn"; b.type = "button"; b.id = "sheet-back"; b.textContent = "PLAN SHEETS"; b.onclick = function () { b.remove(); showSheets(sv.d); }; document.querySelector(".ctrl").appendChild(b); }
+    $("rows").addEventListener("click", function (e) { var tr = e.target.closest && e.target.closest("tr.tagrow"); if (tr && sv.d && $("sheetview").classList.contains("on")) { selectOpening(+tr.dataset.o, true); try { $("viewer").scrollIntoView({ behavior: "smooth", block: "nearest" }); } catch (x) {} } });
+    (function bindSheet() {
+      var svg = $("sheet-svg");
+      svg.addEventListener("pointerdown", function (e) { if (!sv.vb) return; sv.down = { id: e.pointerId, x: e.clientX, y: e.clientY, vb: sv.vb.slice(), moved: 0, t: e.target.closest && e.target.closest("g.tag") }; try { svg.setPointerCapture(e.pointerId); } catch (x) {} });
+      svg.addEventListener("pointermove", function (e) {
+        var d = sv.down; if (!d || d.id !== e.pointerId) return;
+        var dx = e.clientX - d.x, dy = e.clientY - d.y; d.moved = Math.max(d.moved, Math.hypot(dx, dy)); if (d.moved < 6) return;
+        var sc = svScale(); sv.vb = [d.vb[0] - dx / sc, d.vb[1] - dy / sc, d.vb[2], d.vb[3]]; svg.setAttribute("viewBox", sv.vb.join(" "));
+      });
+      svg.addEventListener("pointerup", function (e) { var d = sv.down; sv.down = null; if (!d || d.id !== e.pointerId) return; if (d.moved < 6 && d.t) selectOpening(+d.t.dataset.o, false); });
+      ["pointercancel", "lostpointercapture"].forEach(function (type) { svg.addEventListener(type, function () { sv.down = null; }); });
+      svg.addEventListener("wheel", function (e) { if (!sv.vb) return; e.preventDefault(); var p = svPoint(e); svZoom(e.deltaY < 0 ? 1.25 : 0.8, p[0], p[1]); }, { passive: false });
+      $("sheet-in").onclick = function () { svZoom(1.5); }; $("sheet-out").onclick = function () { svZoom(1 / 1.5); }; $("sheet-fit").onclick = svFit;
+      window.addEventListener("resize", function () { if (sv.d && $("sheetview").classList.contains("on")) { svBar(); svApply(); } });
+    })();
+    window.SightXSheets = Object.freeze({ state: function () { if (sv.d) publishSheets(); return window.__sxSheets || null; }, csv: function () { return sv.d ? sv.d.csv : null; } });
+    function openPdf(bytes) { return pdfjs().then(function (lib) { return lib.getDocument({ data: new Uint8Array(bytes) }).promise; }).then(function (doc) { sv.pdf = doc; }); }
+    function getBytes(url, auth) { return fetch(url, auth ? { credentials: "same-origin", headers: headers() } : {}).then(function (r) { if (!r.ok) throw new Error("the PDF did not load (HTTP " + r.status + ")"); return r.arrayBuffer(); }); }
+    // The WeylandAI Building, a set we authored, from its placement record.
+    function loadBuilding(sha) {
+      setStatus("Loading the WeylandAI Building's plan sheets...");
+      return getJSON("/api/sightx/sheets/" + encodeURIComponent(sha)).then(function (r) {
+        if (!r.ok || !r.data.success) { setStatus((r.data && r.data.message) || "The set could not be loaded (HTTP " + r.status + ").", true); loadSample(); return; }
+        var d = r.data;
+        d.source = "set"; d.title = "The WeylandAI Building (sample project)";
+        d.note = "The WeylandAI Building is WeylandAI's own sample bid set (not a real building). Its sheets are drawn here from its PDF; each ring stands on a door tag where the plan prints it, and each card gives the opening as its door schedule row reads it.";
+        return getBytes(d.set.pdf, false).then(openPdf).then(function () { showSheets(d); });
+      }).catch(function (e) { setStatus("The sheets could not be drawn: " + ((e && e.message) || e), true); });
+    }
+    // The visitor's own SubX upload (WALK IT): its door rows and readPlan's tags from SubX, its PDF from SubX's store.
+    function loadWalk(id) {
+      sv.session = id;
+      setStatus("Opening your schedule's plan sheets...");
+      var base = "/api/hardware-schedule/session/" + encodeURIComponent(id);
+      return getJSON(base + "/doors", { credentials: "same-origin", headers: headers() }).then(function (r) {
+        if (r.status === 401) { setStatus("Sign in to walk your own schedule."); $("sx-signin").hidden = false; window.WeylandPage.signIn(location.pathname + location.search); return; }
+        if (!r.ok) { setStatus((r.data && (r.data.error || r.data.message)) || "Your schedule could not be read (HTTP " + r.status + ").", true); return; }
+        var doors = r.data.doors || [], s = r.data.session || {};
+        return getJSON(base + "/plan", { credentials: "same-origin", headers: headers() }).then(function (p) {
+          var plan = p.ok && p.data && p.data.success ? p.data : null;
+          return getJSON("/api/sightx/openings", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ doors: doors, plan: plan }) }).then(function (o) {
+            if (!o.ok || !o.data.success) { setStatus((o.data && o.data.message) || "The openings could not be built.", true); return; }
+            var d = o.data;
+            d.source = "walk"; d.title = s.project_name || s.filename || "Your schedule";
+            d.reason = plan && !plan.found ? plan.reason : !plan ? "SubX could not read the plan sheets (" + ((p.data && (p.data.error || p.data.message)) || "HTTP " + p.status) + ")." : null;
+            d.note = "Your bid set, from your SubX upload: the sheets are drawn in this browser from your PDF; the door tags are where SubX's plan reader found them; each card is the opening as your door schedule row reads it. Nothing here is shared.";
+            if (!d.sheets.length) { showSheets(d); return; }
+            return getBytes(base + "/source.pdf", true).then(openPdf).then(function () { showSheets(d); });
+          });
+        });
+      }).catch(function (e) { setStatus("Your plan sheets could not be drawn: " + ((e && e.message) || e), true); });
+    }
+
     var qs = new URLSearchParams(location.search);
-    if (qs.get("set")) {
+    if (qs.get("walk")) loadWalk(qs.get("walk"));
+    else if (qs.get("set") === "4847b09e633103f7") loadBuilding(qs.get("set"));
+    else if (qs.get("set")) {
       // g028: a harvested real bid set, laid out on its own plan sheets from its schedule rows.
       setStatus("Loading the bid set...");
       getJSON("/api/sightx/sets/" + encodeURIComponent(qs.get("set"))).then(function (r) {

@@ -1,0 +1,14 @@
+PASS browser has GPU WebGL
+PASS the WeylandAI Building opens on its plan sheet and the sheet is drawn from its PDF
+PASS the Building's placement record answers
+PASS the HUD shows placed-of-total from the record (48 OF 48 PLACED, 48 of 48 drawn on the schedule)
+PASS one sheet button per plan sheet in the record (A-101)
+PASS A-101 draws its 48 placed tags at the record's coordinates, nothing more
+PASS one card per opening: the table lists all 48
+PASS the table row 104 opens its card and brings up its sheet
+PASS clicking tag 104 opens its door card: OFFICE, 3'-0" x 7'-0", group 03, schedule page 3, tag on A-101
+PASS 2D sheet truth: the HUD says PLAN SHEETS and no 3D corridor is offered for the Building
+PASS a harvested set's sheets are not served (R2502: 404)
+PASS one shell: the same document throughout, on the site
+PASS phone: a tap on tag 104 opens its card
+13 passed, 0 failed

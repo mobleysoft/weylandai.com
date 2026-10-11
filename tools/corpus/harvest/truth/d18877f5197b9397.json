@@ -26,7 +26,7 @@
      "h": 408,
      "v": 4433
     },
-    "ms": 9220
+    "ms": 8925
    },
    {
     "page": 2,
@@ -50,7 +50,7 @@
      "h": 168,
      "v": 1123
     },
-    "ms": 24725
+    "ms": 24233
    },
    {
     "page": 4,
@@ -62,7 +62,7 @@
      "h": 153,
      "v": 975
     },
-    "ms": 10491
+    "ms": 10449
    }
   ]
  },
@@ -116,7 +116,7 @@
   }
  },
  "triage_class": "none",
- "triage_from": "inferred (S=false H=false plan sheets=0)",
+ "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
    "applicable": false,
@@ -144,6 +144,6 @@
  "note": "no text layer: production OCR preprocessing, cell recognition and line reader; Poppler rendering (browser rendering is a separate check). Actual DPI is recorded per page; the same words are given to both readers",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 55473,
- "generated_at": "2026-10-10T13:31:31.780Z"
+ "ms": 54643,
+ "generated_at": "2026-10-11T08:00:41.724Z"
 }

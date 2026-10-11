@@ -1,43 +1,742 @@
 {
-  "generated_at": "2026-10-09T09:57:07Z",
-  "before": {
-    "spec-only": 34,
-    "none": 376,
-    "schedule-only": 23,
-    "plan-only": 24,
-    "pair": 1,
-    "complete": 1
+  "schema_version": 1,
+  "generated_at": "2026-10-10T13:36:39Z",
+  "round_number": 3,
+  "state_file": "round3.json",
+  "started_at": "2026-10-09T09:43:45Z",
+  "finished_at": "2026-10-09T09:49:52Z",
+  "manifest_start_line": 1633,
+  "manifest_end_line": 2206,
+  "attribution": "manifest interval [start, end), downloaded SHA256 joined to current triage.json",
+  "round_cap": 1000000000,
+  "file_cap": 150000000,
+  "received_bytes": 999553931,
+  "saved_bytes": 998371271,
+  "interruption_reserve_bytes": 0,
+  "overflow_chunk_bytes": 0,
+  "downloaded": 139,
+  "skipped_at_cap": 422,
+  "remaining": 426,
+  "blockers": [
+    "https://www.umsystem.edu/ums/fa/facilities/construction-bids — no exposed relevant PDF links",
+    "https://pdc-projects.missouri.edu/pdc/adsite/ — robots unavailable; fail closed",
+    "https://www.oafmdcplanroom.com/projects/3127/details/c2238-01-service-add-electrical-circuits-er-generator-food-svc-warehouse-farmington-correctional — no exposed relevant PDF links",
+    "https://oa.mo.gov/sites/default/files/bid-opportunities/_U1503-01%20-%20Final%20Bid%20Docs_2.pdf — Round cap: next file cannot fit remaining budget (Content-Length)",
+    "https://operations-webapps.missouri.edu/pdc/adsite/ad.php — robots unavailable; fetch failed (UNABLE_TO_GET_ISSUER_CERT_LOCALLY); no page or project PDFs fetched"
+  ],
+  "blocker_count": 5,
+  "triaged": 139,
+  "untriaged": [],
+  "class_counts": {
+    "complete": 0,
+    "pair": 0,
+    "schedule-only": 12,
+    "spec-only": 11,
+    "plan-only": 23,
+    "none": 93
   },
-  "after_existing": {
-    "complete": 3,
-    "pair": 1,
-    "schedule-only": 32,
-    "spec-only": 36,
-    "plan-only": 50,
-    "none": 337
-  },
-  "after_all": {
-    "complete": 3,
-    "pair": 1,
-    "schedule-only": 44,
-    "spec-only": 47,
-    "plan-only": 73,
-    "none": 430
-  },
-  "existing_sets": 459,
-  "total_sets": 598,
-  "architectural_floor_plan_sets": 60,
-  "architectural_first_quarter_sets": 25,
-  "plan_other_sets": 122,
-  "raster_only_sets": 1,
+  "architectural_floor_plan_sets": 15,
   "new_downloads_by_family": {
     "missouri_oa_fmdc": {
       "sets": 139,
       "bytes": 998371271
-    },
-    "missouri_um_pdc": {
-      "sets": 0,
-      "bytes": 0
     }
-  }
+  },
+  "downloads": [
+    {
+      "sha256": "ea26cf717ffa6ca7623f9399fffaeb4c4ef1c65624d6d552b9c026303804e672",
+      "filename": "downloads/ea26cf717ffa6ca7.pdf",
+      "bytes": 2235595
+    },
+    {
+      "sha256": "5648348d1c7752ddc90b8603353e37d40b0e9ee76fee15acf0b3aae8e6139fb2",
+      "filename": "downloads/5648348d1c7752dd.pdf",
+      "bytes": 5644485
+    },
+    {
+      "sha256": "053883c6630d3ca4e1883b8fee4f2ef1be3b939c07227ef489496bc31436f57b",
+      "filename": "downloads/053883c6630d3ca4.pdf",
+      "bytes": 3142192
+    },
+    {
+      "sha256": "a93f05a0ea0378a3fdf29e4715401ebbc0b50e01500147e4be8c441b57f2da5f",
+      "filename": "downloads/a93f05a0ea0378a3.pdf",
+      "bytes": 126033
+    },
+    {
+      "sha256": "98b7d32414e7c748fcee4e3b80a41ba7edc8ce8b0e0e2ffbd487ae845f30ed58",
+      "filename": "downloads/98b7d32414e7c748.pdf",
+      "bytes": 802821
+    },
+    {
+      "sha256": "b1b8acd2eeadb18f0af163492f23619ecf2e0022686b3f113362fd521809b5f3",
+      "filename": "downloads/b1b8acd2eeadb18f.pdf",
+      "bytes": 2087502
+    },
+    {
+      "sha256": "02207abd41ae353d16f62962cae79053ce777b90064c9342c72ae541eb299a6e",
+      "filename": "downloads/02207abd41ae353d.pdf",
+      "bytes": 7896224
+    },
+    {
+      "sha256": "e7d87bdafecf8b47669b6825a076e848336f9178276c01c40816fb3d64ed8598",
+      "filename": "downloads/e7d87bdafecf8b47.pdf",
+      "bytes": 1011659
+    },
+    {
+      "sha256": "9ae8852eb6afab514f3e573deac357198ec6713078456adc5a165a73ff35fd6d",
+      "filename": "downloads/9ae8852eb6afab51.pdf",
+      "bytes": 1778726
+    },
+    {
+      "sha256": "e5963633cb05296a7fe8af2172f9d16ecdec38a1e8a8d1cc8f5663b2d73296cd",
+      "filename": "downloads/e5963633cb05296a.pdf",
+      "bytes": 801588
+    },
+    {
+      "sha256": "70ab5446590e40cc8e7b81d1aa662ef7cbf631e36c3c33d5ef366e17c6e9062c",
+      "filename": "downloads/70ab5446590e40cc.pdf",
+      "bytes": 57185427
+    },
+    {
+      "sha256": "d366b315407c2b213fedcc1be1950d08437864024ce71f97cb1641adcd403564",
+      "filename": "downloads/d366b315407c2b21.pdf",
+      "bytes": 12887339
+    },
+    {
+      "sha256": "488d3da15a88bef8564e586398af3bfa3651fbe85db0f6211cc88baf47e66660",
+      "filename": "downloads/488d3da15a88bef8.pdf",
+      "bytes": 112317
+    },
+    {
+      "sha256": "3952cacfa1762e9cd0b570fd073e69d42d1df53f36931ba47202c2618d25256a",
+      "filename": "downloads/3952cacfa1762e9c.pdf",
+      "bytes": 2869680
+    },
+    {
+      "sha256": "2ffea3533bdb072730c0f82996fac7de3d23047eb6035f03e76c0f328e4098fb",
+      "filename": "downloads/2ffea3533bdb0727.pdf",
+      "bytes": 710094
+    },
+    {
+      "sha256": "977cec6301f40433bfd05b46b7406a4efc0455466cb878a1a0171803fe910182",
+      "filename": "downloads/977cec6301f40433.pdf",
+      "bytes": 3906878
+    },
+    {
+      "sha256": "82f455c55139f8ff8e33311c4e2f4699bcbe4b1fe6a1f538d89cb498bf02e6be",
+      "filename": "downloads/82f455c55139f8ff.pdf",
+      "bytes": 7051847
+    },
+    {
+      "sha256": "d0eb3491a8ae1e049b7cadd99943071dcf430846f44b39e2e1f9d53188c81c8d",
+      "filename": "downloads/d0eb3491a8ae1e04.pdf",
+      "bytes": 100176
+    },
+    {
+      "sha256": "ca8dc1fd8e44382cfb8f5cf65ee57e09d4ebc8b9735ce8b060920ef3856089a3",
+      "filename": "downloads/ca8dc1fd8e44382c.pdf",
+      "bytes": 88892
+    },
+    {
+      "sha256": "5f61d18622c0845a64b0750c28e3317fa9dc9926422323df6587342d0d308d02",
+      "filename": "downloads/5f61d18622c0845a.pdf",
+      "bytes": 2905548
+    },
+    {
+      "sha256": "5fd552afee701a12058a3b07849ee492acdb2f29f6c312327a2fd457eea4c967",
+      "filename": "downloads/5fd552afee701a12.pdf",
+      "bytes": 1760755
+    },
+    {
+      "sha256": "6742faed77cfde339764a45b2ec1f21debaea252cdde96635efecc1c669bed53",
+      "filename": "downloads/6742faed77cfde33.pdf",
+      "bytes": 16773455
+    },
+    {
+      "sha256": "c5ae1b3f2fbd462eebc338ae269d61ad1f4084916552d9c0ec78761959ccc4ea",
+      "filename": "downloads/c5ae1b3f2fbd462e.pdf",
+      "bytes": 12599187
+    },
+    {
+      "sha256": "d67baadf32900c032a3a848a170e1e3490494fb3df03783204bfcdca97f8e787",
+      "filename": "downloads/d67baadf32900c03.pdf",
+      "bytes": 10576909
+    },
+    {
+      "sha256": "0d518909fb8349f9bbb228a7a4c69bcfeb71102daf09fadaf0794b87d49494fc",
+      "filename": "downloads/0d518909fb8349f9.pdf",
+      "bytes": 138317
+    },
+    {
+      "sha256": "8982c1c80bbdff7b156590755442dcc66373e4539298a2074650ef3ec587027e",
+      "filename": "downloads/8982c1c80bbdff7b.pdf",
+      "bytes": 7975455
+    },
+    {
+      "sha256": "41917ea2a5eeda671b6c0bd381be476f2323c288c1d80ebcee95fdb21b1aa5f7",
+      "filename": "downloads/41917ea2a5eeda67.pdf",
+      "bytes": 179365
+    },
+    {
+      "sha256": "1bf58869b846dcf76ced06006914776df2e2854d46f214c71d2c6d79b505645e",
+      "filename": "downloads/1bf58869b846dcf7.pdf",
+      "bytes": 227018
+    },
+    {
+      "sha256": "014c6f8ae2d6c158ed363f1ac98100599859152f99eca632af8bb21b68875f81",
+      "filename": "downloads/014c6f8ae2d6c158.pdf",
+      "bytes": 899895
+    },
+    {
+      "sha256": "18b27b8baa47f0e12774ee77ddf4dee7a25847a9641b17b11d5bd42f90dabb25",
+      "filename": "downloads/18b27b8baa47f0e1.pdf",
+      "bytes": 18824389
+    },
+    {
+      "sha256": "1859c08cd450a2bd1d7c35f8da3dda138956a0312324438091aa63d0d2b9b08f",
+      "filename": "downloads/1859c08cd450a2bd.pdf",
+      "bytes": 13061441
+    },
+    {
+      "sha256": "9ebe3bd1a816592a35e409a63187a4a320b7d56223f28df843ad134551e2a557",
+      "filename": "downloads/9ebe3bd1a816592a.pdf",
+      "bytes": 2678176
+    },
+    {
+      "sha256": "2b68bb45f5993150c9a8bd7ec5c9b83a2d105652c4dfcb0ec5de604a3577399a",
+      "filename": "downloads/2b68bb45f5993150.pdf",
+      "bytes": 385766
+    },
+    {
+      "sha256": "78917ebbb84c7bd20969d2526e4226adb541f71db9fd0432c2c9755ef25a3feb",
+      "filename": "downloads/78917ebbb84c7bd2.pdf",
+      "bytes": 10255719
+    },
+    {
+      "sha256": "0c6a67bea90d6181e3226eb01050b705f4e6297bb9fd4a4f5ba9a9abdfec0e46",
+      "filename": "downloads/0c6a67bea90d6181.pdf",
+      "bytes": 6687432
+    },
+    {
+      "sha256": "f80b255845f1675a3cb6afdd3dece21c15f126591986baff8acd8428a5ed6813",
+      "filename": "downloads/f80b255845f1675a.pdf",
+      "bytes": 3564426
+    },
+    {
+      "sha256": "b77926ccb9c56bddaa6d9f4ff777545dd160dafdcdd7326e7a521add72cf9d1d",
+      "filename": "downloads/b77926ccb9c56bdd.pdf",
+      "bytes": 1035421
+    },
+    {
+      "sha256": "1b2c4bc26b1ad520b44bdba2b8c53d7dac9032b8b20763a5b0026490285b874a",
+      "filename": "downloads/1b2c4bc26b1ad520.pdf",
+      "bytes": 38684246
+    },
+    {
+      "sha256": "639c7a837ce9700dc17b78257e1acca1e7a15fe216a234f0e6956e82f2e145b7",
+      "filename": "downloads/639c7a837ce9700d.pdf",
+      "bytes": 6623191
+    },
+    {
+      "sha256": "ae76db062cdc63a9108b5b33dda1f8626d12dd496a13369aecc1944c67b3637e",
+      "filename": "downloads/ae76db062cdc63a9.pdf",
+      "bytes": 1030034
+    },
+    {
+      "sha256": "1c5f3c6800774c1da3373b29204690f85f505d2fb0107cfa4239f75113ce4e18",
+      "filename": "downloads/1c5f3c6800774c1d.pdf",
+      "bytes": 387359
+    },
+    {
+      "sha256": "90ee27ac625e19b33b19a2aaf8d70bff3ab6398c1a7ebb6365b33b81386a1089",
+      "filename": "downloads/90ee27ac625e19b3.pdf",
+      "bytes": 9620781
+    },
+    {
+      "sha256": "8d58ff441ef70ccadc3580cd09aaddeda98eec1815a55b4f50d4a69205a7c228",
+      "filename": "downloads/8d58ff441ef70cca.pdf",
+      "bytes": 5260087
+    },
+    {
+      "sha256": "925a8e35e1c99235279083034094f6088cec4c6b043bc8897a7ffd1957e262c9",
+      "filename": "downloads/925a8e35e1c99235.pdf",
+      "bytes": 669367
+    },
+    {
+      "sha256": "fc992bc46bb8e8fd0ee0077fa6262cef4f8aae316b3a970990fa48971f492557",
+      "filename": "downloads/fc992bc46bb8e8fd.pdf",
+      "bytes": 710439
+    },
+    {
+      "sha256": "5582b45d115bc18b476f5e7762bc48078f4b0573ddd4f1825439aeeef314b11e",
+      "filename": "downloads/5582b45d115bc18b.pdf",
+      "bytes": 3116024
+    },
+    {
+      "sha256": "0d27143b5fdca7744f99035d7eaef1d6a066a2e8a0ca08189384218fb1de1a84",
+      "filename": "downloads/0d27143b5fdca774.pdf",
+      "bytes": 3671371
+    },
+    {
+      "sha256": "d92fcc6b79208e11ad339398593375819e7b72e36ce4698b243b9c743aee5cac",
+      "filename": "downloads/d92fcc6b79208e11.pdf",
+      "bytes": 1049997
+    },
+    {
+      "sha256": "41f56a81d206ffac5645745659733110242a80c64b238a49d4e4c573e60ab614",
+      "filename": "downloads/41f56a81d206ffac.pdf",
+      "bytes": 1078978
+    },
+    {
+      "sha256": "cd673574910f06193cc6c5ea166f9a0d2b9fc35ba1d03e37fd65f47ae97e208d",
+      "filename": "downloads/cd673574910f0619.pdf",
+      "bytes": 135123994
+    },
+    {
+      "sha256": "27413bf3c25d2a48977e4a77e07dfa974bf0cee6b90bbfd05b75d5d06964fdc2",
+      "filename": "downloads/27413bf3c25d2a48.pdf",
+      "bytes": 9918945
+    },
+    {
+      "sha256": "60b6d30fc22b94dedf1ee748ca1d1eefba9ca5c44d37230d1c38aae9998c43af",
+      "filename": "downloads/60b6d30fc22b94de.pdf",
+      "bytes": 1378080
+    },
+    {
+      "sha256": "228666ed0b112248ea261400af2bb3d64fa5ba879e17ecc1aa1d42fe3b6155d7",
+      "filename": "downloads/228666ed0b112248.pdf",
+      "bytes": 949456
+    },
+    {
+      "sha256": "5f647581c95047292a529ab40f0747c1bb9564b376c596a512f13138798ce7c3",
+      "filename": "downloads/5f647581c9504729.pdf",
+      "bytes": 388149
+    },
+    {
+      "sha256": "4c6b3f45d61978e16fd7ca63b9ed7495985410ff5cb8ca6803aa821f041ac7f1",
+      "filename": "downloads/4c6b3f45d61978e1.pdf",
+      "bytes": 10514791
+    },
+    {
+      "sha256": "e176acb1ea9c116d8fc73bd83f39bfe7bcd588073988af00d2de70de6459d98d",
+      "filename": "downloads/e176acb1ea9c116d.pdf",
+      "bytes": 4617497
+    },
+    {
+      "sha256": "2b94772c51b808a22ba6d441a11d51ab4521b2a6d0aca4dba99c71dc39b8246e",
+      "filename": "downloads/2b94772c51b808a2.pdf",
+      "bytes": 100696
+    },
+    {
+      "sha256": "ad1de90100b8c7ab4fa89e67d99304f5a83f9e2ec117a92334ab2e74c3869cc7",
+      "filename": "downloads/ad1de90100b8c7ab.pdf",
+      "bytes": 711424
+    },
+    {
+      "sha256": "8dd57bbf7dd1b4f2315d3025ec5955966cdabfa5dd099d8bf9a12b9facbaabab",
+      "filename": "downloads/8dd57bbf7dd1b4f2.pdf",
+      "bytes": 841356
+    },
+    {
+      "sha256": "7478006f7fd5b43ce1024c90355f9899e6c5f05b0b557cfa7e1e4ec6efe4b4fa",
+      "filename": "downloads/7478006f7fd5b43c.pdf",
+      "bytes": 92450605
+    },
+    {
+      "sha256": "b978c4dede3e258073ac30aa3827052cb83c8c4be5dd3b076066a5704731d3da",
+      "filename": "downloads/b978c4dede3e2580.pdf",
+      "bytes": 11507615
+    },
+    {
+      "sha256": "fed55dbedb84bbb2ac8f60dd6af0e530c9d21d58b7f4a3fa6ceae4b0d5b03d3d",
+      "filename": "downloads/fed55dbedb84bbb2.pdf",
+      "bytes": 12164321
+    },
+    {
+      "sha256": "f5de9d7d5430372897a118bb75a68d5c72af64fd185dbbca27e57ba540069d8a",
+      "filename": "downloads/f5de9d7d54303728.pdf",
+      "bytes": 362089
+    },
+    {
+      "sha256": "e3e749761843bca76a797c2f1ba4f2a33f45d165663d81cc95ec17e7188a8748",
+      "filename": "downloads/e3e749761843bca7.pdf",
+      "bytes": 2286999
+    },
+    {
+      "sha256": "5df8adfeeeb0c624e9c5a95ad6c2bbb30a6fc9b1eba6ad31c5daf2425c00707f",
+      "filename": "downloads/5df8adfeeeb0c624.pdf",
+      "bytes": 5078414
+    },
+    {
+      "sha256": "3c3b0c6a2343fd50472581262aa76216936cbfd1756d6126a95c8e9a81261251",
+      "filename": "downloads/3c3b0c6a2343fd50.pdf",
+      "bytes": 803909
+    },
+    {
+      "sha256": "203b65e8ead1db1facc78f65143d433db86239cfbb46fe91aa89d9dc3f124453",
+      "filename": "downloads/203b65e8ead1db1f.pdf",
+      "bytes": 19255906
+    },
+    {
+      "sha256": "cb9bfd887c5db99463053dd605edcb876140a5b8a670403e9e576fb534b965ca",
+      "filename": "downloads/cb9bfd887c5db994.pdf",
+      "bytes": 4911781
+    },
+    {
+      "sha256": "e232da6c76983dbeb51cfa3249eb9a0d2c5212f5ba40886c38b5bde7ec81a034",
+      "filename": "downloads/e232da6c76983dbe.pdf",
+      "bytes": 6197943
+    },
+    {
+      "sha256": "afbf221856f21ac7b72ef1f487cf6f1b9502d830fd7b013f2e626f2602ed44f4",
+      "filename": "downloads/afbf221856f21ac7.pdf",
+      "bytes": 388471
+    },
+    {
+      "sha256": "4a265af143c73b68662deca15c49bdeff1f21111e881b0ed669ac7e582fcf19d",
+      "filename": "downloads/4a265af143c73b68.pdf",
+      "bytes": 838015
+    },
+    {
+      "sha256": "192a16af8f31ae0c4a41976578627641eddcb36eeb645d0e4d99f92f97690ceb",
+      "filename": "downloads/192a16af8f31ae0c.pdf",
+      "bytes": 9857890
+    },
+    {
+      "sha256": "13423239b61e7a7a658f32f1d859aa7c2f65f3ffe3826d1c2374d50cfb34ff6c",
+      "filename": "downloads/13423239b61e7a7a.pdf",
+      "bytes": 5786019
+    },
+    {
+      "sha256": "551795eefc9426308e681fbda5d957ae68a991245192df9d594c96daa530bf36",
+      "filename": "downloads/551795eefc942630.pdf",
+      "bytes": 112772
+    },
+    {
+      "sha256": "f7fba85b27d4db77ca9cddb00cac04802456f09bfcf8295905fd07607a55180f",
+      "filename": "downloads/f7fba85b27d4db77.pdf",
+      "bytes": 2870879
+    },
+    {
+      "sha256": "85ebe6d39ba9fd81e56e9207f03a4387392eb8fcd7006b6f35c8f7203931cf7d",
+      "filename": "downloads/85ebe6d39ba9fd81.pdf",
+      "bytes": 36545
+    },
+    {
+      "sha256": "059b72fb1702ce4450e5dcc3ca1a35baadd2d0cd51c37cc46a31b6df5635ff3c",
+      "filename": "downloads/059b72fb1702ce44.pdf",
+      "bytes": 384246
+    },
+    {
+      "sha256": "6ed382d77bb284b6d13c8450b0da3261af8e8ad4e08c8f4f82b73919af822c3b",
+      "filename": "downloads/6ed382d77bb284b6.pdf",
+      "bytes": 3571796
+    },
+    {
+      "sha256": "2dbeb034695510a44a66d2f6d58de3e3095cf2addd6b8beaf680a8d666e586b5",
+      "filename": "downloads/2dbeb034695510a4.pdf",
+      "bytes": 9244289
+    },
+    {
+      "sha256": "5ea4fbdfa0af25cf79474fec482f6a536f7e1296d9b9294cd551712d3bd182dd",
+      "filename": "downloads/5ea4fbdfa0af25cf.pdf",
+      "bytes": 1035745
+    },
+    {
+      "sha256": "f38f7fd7866e1976b48622f4b48db7749f3016ebde2e5a44a798abf85d68d0f1",
+      "filename": "downloads/f38f7fd7866e1976.pdf",
+      "bytes": 875879
+    },
+    {
+      "sha256": "1dc71da52a8911a63ed835621ae0706c4012c91b1643d8825dd3a2adeec2c454",
+      "filename": "downloads/1dc71da52a8911a6.pdf",
+      "bytes": 1449203
+    },
+    {
+      "sha256": "870a74de2949a3dcdde2e1b25d66000cf350dfabf92f60e482910bc03681474e",
+      "filename": "downloads/870a74de2949a3dc.pdf",
+      "bytes": 832395
+    },
+    {
+      "sha256": "5df97513cff80a9a89befdd96faceaaf1e299ea793df7fe1d690802c187c73a4",
+      "filename": "downloads/5df97513cff80a9a.pdf",
+      "bytes": 3079158
+    },
+    {
+      "sha256": "1ca5c02c2d5b92e170fda1476c6d2333985d5ef3a834f03dd6c49c1cf0773ef6",
+      "filename": "downloads/1ca5c02c2d5b92e1.pdf",
+      "bytes": 4432803
+    },
+    {
+      "sha256": "5352132fa1887baf9f9031ee55010ab9969b8cc78f580c5d1b3abf01bf20dc3b",
+      "filename": "downloads/5352132fa1887baf.pdf",
+      "bytes": 1984114
+    },
+    {
+      "sha256": "a3192f1b0abf4e4fbec5776b1da08b4bccbab517b92ce1ee77ad9abd6964ae87",
+      "filename": "downloads/a3192f1b0abf4e4f.pdf",
+      "bytes": 2277379
+    },
+    {
+      "sha256": "e3b0c815e132d7ab6cc87d01588d22ab9f18f2edd99bf437bfbfcc74638a6b66",
+      "filename": "downloads/e3b0c815e132d7ab.pdf",
+      "bytes": 20171859
+    },
+    {
+      "sha256": "6c88981edc5e97ab4e8eb50d977c4d3ffc8a6a716bd6b68ed29fff35f325c11f",
+      "filename": "downloads/6c88981edc5e97ab.pdf",
+      "bytes": 12517882
+    },
+    {
+      "sha256": "f6dd470ea806cf4b8afa66bc3fc8b5e28557bcdce81ecdd56cabd582702193df",
+      "filename": "downloads/f6dd470ea806cf4b.pdf",
+      "bytes": 1084259
+    },
+    {
+      "sha256": "dc06aa59aec826d4dca00bcf81a3dccaeb47dd7ef1b449a6a3562fde9544b1be",
+      "filename": "downloads/dc06aa59aec826d4.pdf",
+      "bytes": 864328
+    },
+    {
+      "sha256": "400e8c6b5df592d0b04c618791bf7662cd5bff0d5357264436fe9c44cc517347",
+      "filename": "downloads/400e8c6b5df592d0.pdf",
+      "bytes": 15605349
+    },
+    {
+      "sha256": "f04ed9de84c71ab7f4d65689872ab79df26fd0bc82b834de6ea0312d24fe6d91",
+      "filename": "downloads/f04ed9de84c71ab7.pdf",
+      "bytes": 5453231
+    },
+    {
+      "sha256": "ea2ab4ddeaa28333133a15c317a2014b4bc1d40873f67a2ad0d3a7ade4c729a6",
+      "filename": "downloads/ea2ab4ddeaa28333.pdf",
+      "bytes": 4695802
+    },
+    {
+      "sha256": "ba0640215cf14f936bb2a3be878a455a32d76320f02c124cee6ae0503ddea2ad",
+      "filename": "downloads/ba0640215cf14f93.pdf",
+      "bytes": 131512
+    },
+    {
+      "sha256": "d2ff31568db16007b5ab37ef68db29b74ec738dadc1d7d93d64febcee075f450",
+      "filename": "downloads/d2ff31568db16007.pdf",
+      "bytes": 798189
+    },
+    {
+      "sha256": "5beeabd88969dca660402c17acf8c3ae636157d7a8f622df0cdab0adc947ae8a",
+      "filename": "downloads/5beeabd88969dca6.pdf",
+      "bytes": 8805169
+    },
+    {
+      "sha256": "714bef588c904504c20131d5f38f261fbe4933ceb55a6eaa8316fb7510a1ccab",
+      "filename": "downloads/714bef588c904504.pdf",
+      "bytes": 7255474
+    },
+    {
+      "sha256": "ba852671af1425f381689567b7ea586e62060151ad0c23be2f0742fb8d5b8b67",
+      "filename": "downloads/ba852671af1425f3.pdf",
+      "bytes": 5449513
+    },
+    {
+      "sha256": "390a78e54d80424f04d956c45b8c4738bbff64bd3d53625e804d5737faeb45da",
+      "filename": "downloads/390a78e54d80424f.pdf",
+      "bytes": 1396809
+    },
+    {
+      "sha256": "d07dbed2618deb808a8fd5e21832a676dcdfb0e7354fc9ff84e378eef860e2ab",
+      "filename": "downloads/d07dbed2618deb80.pdf",
+      "bytes": 383080
+    },
+    {
+      "sha256": "3506f831094dd516db62e282078c96a3572a945a9704e70134c03c8dd2e0f5b3",
+      "filename": "downloads/3506f831094dd516.pdf",
+      "bytes": 20643209
+    },
+    {
+      "sha256": "964f1753a534dc7553c2ace7597eaad4bc4785f8eba6594f3eab49ea8b08492f",
+      "filename": "downloads/964f1753a534dc75.pdf",
+      "bytes": 3248769
+    },
+    {
+      "sha256": "194733de48af879786f2e5b5b9b0ddcf7dc9747920fdb12a7783c17084115ed4",
+      "filename": "downloads/194733de48af8797.pdf",
+      "bytes": 5509278
+    },
+    {
+      "sha256": "39464574afe1841b44ec8522ac14d307af5cd53cae682d9db92d4d387f96b3e4",
+      "filename": "downloads/39464574afe1841b.pdf",
+      "bytes": 1177732
+    },
+    {
+      "sha256": "0dabaf10e91593e96812565291fde696a51b21498428f8e33cabc4d919f39763",
+      "filename": "downloads/0dabaf10e91593e9.pdf",
+      "bytes": 45639298
+    },
+    {
+      "sha256": "46d8ea54dbd1c0d1cda2d4cda123ad713ba3f5fa9be2b1cc76a8eedfaf0a7d25",
+      "filename": "downloads/46d8ea54dbd1c0d1.pdf",
+      "bytes": 9971942
+    },
+    {
+      "sha256": "a00155cd049b0ca85fc9b404a22552a58f06a27cf36cab9b0908c9e6de7d6c5a",
+      "filename": "downloads/a00155cd049b0ca8.pdf",
+      "bytes": 1982373
+    },
+    {
+      "sha256": "1f3d7195503d4af54c36a184acdf1da99439e30afdff048adf488f8e22045f29",
+      "filename": "downloads/1f3d7195503d4af5.pdf",
+      "bytes": 1839525
+    },
+    {
+      "sha256": "a98bdba1743bc3d2d8950842ff46227b24d706a9c9715a2259c085d4b2a6c290",
+      "filename": "downloads/a98bdba1743bc3d2.pdf",
+      "bytes": 10592020
+    },
+    {
+      "sha256": "f20602733eeca7f687eaa8472edc7727c2e893afc6fe20fce0f696cd6f8d670b",
+      "filename": "downloads/f20602733eeca7f6.pdf",
+      "bytes": 3927769
+    },
+    {
+      "sha256": "8beba21f6d7cb405c714b148ef1566fdf9ba7af5b35c543c37edd6ddf3883c05",
+      "filename": "downloads/8beba21f6d7cb405.pdf",
+      "bytes": 549485
+    },
+    {
+      "sha256": "d65470c0999a712f372e63312c5a8424d756ff9da026659443b8d935cbc54612",
+      "filename": "downloads/d65470c0999a712f.pdf",
+      "bytes": 382511
+    },
+    {
+      "sha256": "3c75b7927ebbc8e3a036a39b58221322b89bd6582eebf8d16492b6d1e857e44f",
+      "filename": "downloads/3c75b7927ebbc8e3.pdf",
+      "bytes": 1837167
+    },
+    {
+      "sha256": "fbb984ddcf9f5e8e19c1b47b46c9d883bdf1a80767c5cfd7bac350407c7e6486",
+      "filename": "downloads/fbb984ddcf9f5e8e.pdf",
+      "bytes": 3313230
+    },
+    {
+      "sha256": "249f8761de1ab0a030567353d2e72816f090f9393e242043400b4f045f5ab553",
+      "filename": "downloads/249f8761de1ab0a0.pdf",
+      "bytes": 1856213
+    },
+    {
+      "sha256": "4f1e9995e401cd5d321462ef498bea3436bdb1aa5f57c2162ebe79e0242d25e2",
+      "filename": "downloads/4f1e9995e401cd5d.pdf",
+      "bytes": 860749
+    },
+    {
+      "sha256": "8a70af8566d61d90d897c3ac7b8eefc7c9b1cf48f1417bce00839ebe1462a74e",
+      "filename": "downloads/8a70af8566d61d90.pdf",
+      "bytes": 68652040
+    },
+    {
+      "sha256": "766c8d0ce484ef1fc23ec44549c101386cca1426c0e8088ba9ab2fb072d4eb46",
+      "filename": "downloads/766c8d0ce484ef1f.pdf",
+      "bytes": 8522453
+    },
+    {
+      "sha256": "141cdd05a1701a6ed8d3c43d125899c48c6c55de1e6e7c9617f4ad745eff7498",
+      "filename": "downloads/141cdd05a1701a6e.pdf",
+      "bytes": 2539026
+    },
+    {
+      "sha256": "ba31ee50485652cab95e69846a7dd25c5219267bc47fd5b764f324157de630ca",
+      "filename": "downloads/ba31ee50485652ca.pdf",
+      "bytes": 1506338
+    },
+    {
+      "sha256": "a04d9c7f966235918fe0375bd283eed8aa7119ae83722dd6d37e8892bd0cc61b",
+      "filename": "downloads/a04d9c7f96623591.pdf",
+      "bytes": 3044681
+    },
+    {
+      "sha256": "5c3ccc450be545f9c3ba52b07abc074e04b88055246118b032200b945d866d5d",
+      "filename": "downloads/5c3ccc450be545f9.pdf",
+      "bytes": 98506
+    },
+    {
+      "sha256": "80a841ef6227ace0fdb5ef522a1b5b68141ffbc67448a53b13569aab31e436cf",
+      "filename": "downloads/80a841ef6227ace0.pdf",
+      "bytes": 240541
+    },
+    {
+      "sha256": "6e64557495b3e21a89d881e234a5f4fdf3431bc37e270f44ca50f6033d01dfb5",
+      "filename": "downloads/6e64557495b3e21a.pdf",
+      "bytes": 1210593
+    },
+    {
+      "sha256": "3d04250aba6f8fe1e36049e94528719b20f03b4d86cf0f18b02813174f36f09f",
+      "filename": "downloads/3d04250aba6f8fe1.pdf",
+      "bytes": 796511
+    },
+    {
+      "sha256": "c0fb8bd2ff812a718230d95346014578f406116e122e119f8419fd0ace6bf640",
+      "filename": "downloads/c0fb8bd2ff812a71.pdf",
+      "bytes": 22122950
+    },
+    {
+      "sha256": "01fef74556b437d4b0b7891e804a661a690cb6f6d7c11b35f71f93d46054e5c3",
+      "filename": "downloads/01fef74556b437d4.pdf",
+      "bytes": 4695875
+    },
+    {
+      "sha256": "da32b874a70dc1acbff3f4b1decb35dfea9579fdd912f65836e7727cd289d339",
+      "filename": "downloads/da32b874a70dc1ac.pdf",
+      "bytes": 740858
+    },
+    {
+      "sha256": "75610b3aa870bd75db628a7a60c7a026b8f8a98c9c5e434d90b8ab994f78cb1f",
+      "filename": "downloads/75610b3aa870bd75.pdf",
+      "bytes": 78325
+    },
+    {
+      "sha256": "41fd5fc67dcaa81af920a3c97054e688737e4061afa02f1e7d213e2bde08b7be",
+      "filename": "downloads/41fd5fc67dcaa81a.pdf",
+      "bytes": 357473
+    },
+    {
+      "sha256": "3f3b7ca0c349e2a5c16afd5bb8adac6013b21ce6729c3d9165c0a5477a8efc18",
+      "filename": "downloads/3f3b7ca0c349e2a5.pdf",
+      "bytes": 994369
+    },
+    {
+      "sha256": "29d2809d8230708632476472e5c02b75eef7e72b6525e73c6cd6bb4d83f77858",
+      "filename": "downloads/29d2809d82307086.pdf",
+      "bytes": 6405333
+    },
+    {
+      "sha256": "cf0ffc4649de5043f097badf072ea5751dc67e02b15582ad229c82a345db28b4",
+      "filename": "downloads/cf0ffc4649de5043.pdf",
+      "bytes": 798432
+    },
+    {
+      "sha256": "f525c88e5bc8d41ab6d7c4595dd979d16fdef285fae31966d0fefbd1a37f53c7",
+      "filename": "downloads/f525c88e5bc8d41a.pdf",
+      "bytes": 296622
+    },
+    {
+      "sha256": "35e1e5a57a0a54ffd02611aef1c58c5373b116c613de6af9c780540478930d66",
+      "filename": "downloads/35e1e5a57a0a54ff.pdf",
+      "bytes": 2035090
+    },
+    {
+      "sha256": "5cd419534aad66dbbca21393612c6917f2b72d4d0d64815f9cd68d0ee6f95958",
+      "filename": "downloads/5cd419534aad66db.pdf",
+      "bytes": 6601194
+    },
+    {
+      "sha256": "bc55f1e145e98cca90dcea7e198ae77c16d3ca466e52820b2ce1b14e2d0397fc",
+      "filename": "downloads/bc55f1e145e98cca.pdf",
+      "bytes": 4879349
+    },
+    {
+      "sha256": "6d0c2a6d945fd0c0a2b3720ac50a2141d78fd693e512366db1685b7b6461742d",
+      "filename": "downloads/6d0c2a6d945fd0c0.pdf",
+      "bytes": 2319395
+    }
+  ]
 }

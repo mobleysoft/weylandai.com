@@ -26,7 +26,7 @@
      "h": 155,
      "v": 996
     },
-    "ms": 8249
+    "ms": 6609
    },
    {
     "page": 2,
@@ -38,19 +38,19 @@
      "h": 144,
      "v": 423
     },
-    "ms": 8253
+    "ms": 6764
    },
    {
     "page": 3,
     "dpi": 204,
-    "words": 640,
+    "words": 644,
     "rotation": 270,
     "skew_deg": 0.6,
     "rules": {
      "h": 904,
      "v": 395
     },
-    "ms": 19869
+    "ms": 17104
    },
    {
     "page": 4,
@@ -62,7 +62,7 @@
      "h": 0,
      "v": 3
     },
-    "ms": 5847
+    "ms": 4956
    },
    {
     "page": 5,
@@ -74,7 +74,7 @@
      "h": 0,
      "v": 0
     },
-    "ms": 6560
+    "ms": 5243
    },
    {
     "page": 6,
@@ -86,7 +86,7 @@
      "h": 0,
      "v": 0
     },
-    "ms": 5293
+    "ms": 4296
    }
   ]
  },
@@ -117,25 +117,25 @@
    "tables": 1
   }
  },
- "rows_agreed": 59,
- "rows_disputed": 39,
+ "rows_agreed": 57,
+ "rows_disputed": 41,
  "rows_total": 98,
- "agreement_rate": 0.602,
+ "agreement_rate": 0.5816,
  "agreement": {
   "doors": {
    "rows": 48,
-   "agreed": 9,
-   "disputed": 39,
+   "agreed": 7,
+   "disputed": 41,
    "only_a": 0,
    "only_b": 0,
    "fields": {
     "width_inches": {
-     "agree": 25,
-     "total": 45
+     "agree": 26,
+     "total": 48
     },
     "height_inches": {
-     "agree": 12,
-     "total": 46
+     "agree": 11,
+     "total": 48
     },
     "door_type": {
      "agree": 48,
@@ -158,7 +158,7 @@
      "total": 13
     }
    },
-   "agreement_rate": 0.1875
+   "agreement_rate": 0.1458
   },
   "items": {
    "rows": 50,
@@ -204,23 +204,20 @@
   },
   "sets_exist": {
    "applicable": true,
-   "total": 11,
+   "total": 10,
    "pass": 10,
-   "fail": 1,
-   "pass_rate": 0.9091,
-   "examples": [
-    "schedule set Q3 not in 08 71 00 (sets read: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)"
-   ]
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": []
   },
   "set_door_lists": {
    "applicable": true,
    "total": 10,
-   "pass": 8,
-   "fail": 2,
-   "pass_rate": 0.8,
+   "pass": 9,
+   "fail": 1,
+   "pass_rate": 0.9,
    "examples": [
-    "set 02: list names 5, schedule carries 6; on schedule but not listed: 311",
-    "set 03: list names 16, schedule carries 15; listed but not on schedule with this set: 302"
+    "set 02: list names 5, schedule carries 6; on schedule but not listed: 311"
    ]
   },
   "types_in_legend": {
@@ -230,17 +227,11 @@
   "sizes_and_marks": {
    "applicable": true,
    "total": 48,
-   "pass": 43,
-   "fail": 5,
-   "pass_rate": 0.8958,
-   "examples": [
-    "mark 205 p.3: size \"7-0\\\"\" -> null x 84",
-    "mark 208 p.3: size \"3-0\\\"\" -> 36 x null",
-    "mark 212 p.3: size \"3'-0\\\"\" -> 36 x null",
-    "mark 311 p.3: size \"31-0\\\" x 7-0\\\"\" -> null x 84",
-    "mark 312 p.3: size \"7'-0\\\"\" -> null x 84"
-   ],
-   "size_fail": 5,
+   "pass": 48,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "size_fail": 0,
    "mark_fail": 0
   }
  },
@@ -251,16 +242,16 @@
    "reader_a": {
     "expected_rows": 48,
     "rows_found": 48,
-    "rows_fully_right": 42,
-    "fields_right": 330,
+    "rows_fully_right": 48,
+    "fields_right": 336,
     "fields_total": 336,
     "per_field": {
      "width_inches": {
-      "right": 45,
+      "right": 48,
       "total": 48
      },
      "height_inches": {
-      "right": 46,
+      "right": 48,
       "total": 48
      },
      "door_type": {
@@ -276,7 +267,7 @@
       "total": 48
      },
      "hardware_group": {
-      "right": 47,
+      "right": 48,
       "total": 48
      },
      "location": {
@@ -285,64 +276,21 @@
      }
     },
     "extra_rows": 0,
-    "wrong": [
-     {
-      "key": "205",
-      "page": 3,
-      "field": "width_inches",
-      "expected": 36,
-      "read": null
-     },
-     {
-      "key": "208",
-      "page": 3,
-      "field": "height_inches",
-      "expected": 84,
-      "read": null
-     },
-     {
-      "key": "212",
-      "page": 3,
-      "field": "height_inches",
-      "expected": 84,
-      "read": null
-     },
-     {
-      "key": "302",
-      "page": 3,
-      "field": "hardware_group",
-      "expected": "03",
-      "read": "Q3"
-     },
-     {
-      "key": "311",
-      "page": 3,
-      "field": "width_inches",
-      "expected": 36,
-      "read": null
-     },
-     {
-      "key": "312",
-      "page": 3,
-      "field": "width_inches",
-      "expected": 36,
-      "read": null
-     }
-    ]
+    "wrong": []
    },
    "reader_b": {
     "expected_rows": 48,
     "rows_found": 48,
     "rows_fully_right": 7,
-    "fields_right": 276,
+    "fields_right": 277,
     "fields_total": 336,
     "per_field": {
      "width_inches": {
-      "right": 25,
+      "right": 26,
       "total": 48
      },
      "height_inches": {
-      "right": 12,
+      "right": 11,
       "total": 48
      },
      "door_type": {
@@ -358,7 +306,7 @@
       "total": 48
      },
      "hardware_group": {
-      "right": 47,
+      "right": 48,
       "total": 48
      },
      "location": {
@@ -547,38 +495,38 @@
    },
    "agreed": {
     "expected_rows": 48,
-    "rows_found": 9,
+    "rows_found": 7,
     "rows_fully_right": 7,
-    "fields_right": 61,
-    "fields_total": 63,
+    "fields_right": 49,
+    "fields_total": 49,
     "per_field": {
      "width_inches": {
-      "right": 8,
-      "total": 9
+      "right": 7,
+      "total": 7
      },
      "height_inches": {
-      "right": 8,
-      "total": 9
+      "right": 7,
+      "total": 7
      },
      "door_type": {
-      "right": 9,
-      "total": 9
+      "right": 7,
+      "total": 7
      },
      "material": {
-      "right": 9,
-      "total": 9
+      "right": 7,
+      "total": 7
      },
      "fire_rating": {
-      "right": 9,
-      "total": 9
+      "right": 7,
+      "total": 7
      },
      "hardware_group": {
-      "right": 9,
-      "total": 9
+      "right": 7,
+      "total": 7
      },
      "location": {
-      "right": 9,
-      "total": 9
+      "right": 7,
+      "total": 7
      }
     },
     "extra_rows": 0,
@@ -762,59 +710,16 @@
    },
    "fields": {
     "agreed": {
-     "right": 241,
-     "total": 247
+     "right": 242,
+     "total": 242
     },
     "disputed": {
-     "total": 54,
-     "a_right": 54,
+     "total": 59,
+     "a_right": 59,
      "b_right": 0,
      "neither": 0
     },
-    "agreed_wrong": [
-     {
-      "key": "205",
-      "page": 3,
-      "field": "width_inches",
-      "expected": 36,
-      "agreed": null
-     },
-     {
-      "key": "208",
-      "page": 3,
-      "field": "height_inches",
-      "expected": 84,
-      "agreed": null
-     },
-     {
-      "key": "212",
-      "page": 3,
-      "field": "height_inches",
-      "expected": 84,
-      "agreed": null
-     },
-     {
-      "key": "302",
-      "page": 3,
-      "field": "hardware_group",
-      "expected": "03",
-      "agreed": "Q3"
-     },
-     {
-      "key": "311",
-      "page": 3,
-      "field": "width_inches",
-      "expected": 36,
-      "agreed": null
-     },
-     {
-      "key": "312",
-      "page": 3,
-      "field": "width_inches",
-      "expected": 36,
-      "agreed": null
-     }
-    ]
+    "agreed_wrong": []
    }
   },
   {
@@ -1034,7 +939,7 @@
  ],
  "tier": "exact",
  "note": "no text layer: production OCR preprocessing, cell recognition and line reader; Poppler rendering (browser rendering is a separate check). Actual DPI is recorded per page; the same words are given to both readers",
- "disagreement_count": 54,
+ "disagreement_count": 59,
  "disagreements": [
   {
    "kind": "door",
@@ -1240,6 +1145,14 @@
    "kind": "door",
    "page": 3,
    "key": "205",
+   "field": "width_inches",
+   "a": 36,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 3,
+   "key": "205",
    "field": "height_inches",
    "a": 84,
    "b": null
@@ -1250,6 +1163,14 @@
    "key": "206",
    "field": "width_inches",
    "a": 36,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 3,
+   "key": "206",
+   "field": "height_inches",
+   "a": 84,
    "b": null
   },
   {
@@ -1274,6 +1195,14 @@
    "key": "208",
    "field": "width_inches",
    "a": 36,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 3,
+   "key": "208",
+   "field": "height_inches",
+   "a": 84,
    "b": null
   },
   {
@@ -1319,44 +1248,20 @@
   {
    "kind": "door",
    "page": 3,
+   "key": "212",
+   "field": "height_inches",
+   "a": 84,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 3,
    "key": "213",
    "field": "width_inches",
    "a": 36,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "213",
-   "field": "height_inches",
-   "a": 84,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "214",
-   "field": "width_inches",
-   "a": 36,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "214",
-   "field": "height_inches",
-   "a": 84,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "300",
-   "field": "height_inches",
-   "a": 84,
    "b": null
   }
  ],
- "ms": 54123,
- "generated_at": "2026-10-09T16:51:53.058Z"
+ "ms": 44995,
+ "generated_at": "2026-10-11T07:55:31.236Z"
 }

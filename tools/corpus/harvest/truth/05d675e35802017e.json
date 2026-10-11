@@ -29,7 +29,7 @@
  "readers": {
   "a": {
    "doors": 0,
-   "sets": 9,
+   "sets": 8,
    "items": 72,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
   },
@@ -86,7 +86,7 @@
    "agreement_rate": 0.9861
   },
   "sets": {
-   "sets": 9,
+   "sets": 8,
    "agreed": 8
   }
  },
@@ -115,7 +115,7 @@
   }
  },
  "tier": "agreed",
- "disagreement_count": 3,
+ "disagreement_count": 2,
  "disagreements": [
   {
    "kind": "item",
@@ -132,17 +132,8 @@
    "field": "finish",
    "a": "643E/7 16",
    "b": "643E/7"
-  },
-  {
-   "kind": "group",
-   "page": null,
-   "key": "S",
-   "field": "(set)",
-   "a": "4/10/2025",
-   "b": null,
-   "why": "only reader A read this set"
   }
  ],
- "ms": 526,
- "generated_at": "2026-10-09T09:16:07.490Z"
+ "ms": 332,
+ "generated_at": "2026-10-11T07:54:42.972Z"
 }

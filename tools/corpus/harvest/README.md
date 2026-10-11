@@ -8,7 +8,7 @@ From the repository root, run sequentially:
     node tools/corpus/harvest/triage.mjs
     node tools/corpus/harvest/report.mjs
 
-All writes stay in this directory. sources.json preserves the supplied seed list and adds the OA and UM PDC enumerators. Standards listed as not-bid sets are next-target references only. Low-priority public seeds are included. Index pages in the seed file are also checked for exposed PDFs. There is no naming-guess crawl, credential use, JavaScript execution or login/registration bypass.
+All harvest data reads and writes use `HARVEST_ROOT` when set, otherwise this directory (via common.mjs). sources.json preserves the supplied seed list and adds the OA and UM PDC enumerators. Standards listed as not-bid sets are next-target references only. Low-priority public seeds are included. Index pages in the seed file are also checked for exposed PDFs. There is no naming-guess crawl, credential use, JavaScript execution or login/registration bypass.
 
 The UA is WeylandAI-corpus/1.0 (+https://weylandai.com). Each host is paced at least two seconds between request starts, including robots, redirects and retries. Each request has a 60-second timeout and one retry for network failures or HTTP 429/5xx. Robots is fetched per origin; User-agent * Disallow rules are enforced, conservatively without Allow overrides. Missing robots (404/410) permits requests; inaccessible/redirected robots fails closed. Delaware /_Drawings is always prohibited. Redirect destinations receive their own robots check. The round is serial.
 
@@ -34,7 +34,7 @@ Verification after triage: run `node tools/corpus/harvest/check-row-shapes.mjs` 
 
 This section supersedes the round 2 triage and cap descriptions above. The original 459-set baseline and SHA256 keys are preserved in round3-baseline.json; round2.json preserves the prior cap state and remaining queue. Round 3 uses 1,000,000,000 additional transfer bytes and the same 150,000,000-byte per-file limit. Known downloaded URLs and final URLs are not fetched again. Use harvest.mjs --round3 only once; it refuses to reset a started round 3 budget.
 
-Run in order: triage.mjs, verify.mjs, report.mjs, sightx.mjs, harvest.mjs --round3, triage.mjs --new-only, sightx.mjs, verify.mjs, report.mjs. All commands are local Node scripts in this directory. The final report appends/replaces the Round 3 re-triage section while retaining the historical round 2 report. Nothing is committed or republished.
+Historical round-3 order: triage.mjs, verify.mjs, report.mjs, sightx.mjs, harvest.mjs --round3, triage.mjs --new-only, sightx.mjs, verify.mjs, report.mjs. All commands are Node scripts in this directory. Reporting now follows every preserved round; see the round-N reporting section below. Nothing is committed or republished.
 
 Plan classification now keeps floor_plan_architectural and plan_other separately on each examined page and each set. Architectural titles include FLOOR PLAN, LEVEL n PLAN and OVERALL PLAN; architectural title-block IDs include A1xx, A-1xx, A1.xx and AD1xx. An ID on a roof/MEP/ceiling sheet or an architectural drawing reference on a detail sheet does not establish architectural floor-plan content. Other plans include site, grading, roof, ceiling, phasing, MEP, joint, campground layout and civil/structural layouts. content_evidence retains qualifying titles, title-block text and sheet IDs. Complete requires architectural plan + schedule + hardware. Plan-only can contain either plan type.
 
@@ -70,3 +70,19 @@ Round 4, from the repository root:
     node tools/corpus/harvest/harvest.mjs --round 4 --cap-bytes 1000000000 --from-remaining
 
 Then run triage.mjs --new-only, sightx.mjs, verify.mjs and report.mjs as after round 3. The tests are `node --test tools/corpus/harvest/round-plan.test.mjs`, run over a fake queue and a local HTTP server. g069/ holds the round 4 dry run against round 3's state.
+
+## Round-N reporting and verification (g071)
+
+Keep the same `HARVEST_ROOT` for triage, SightX, verification and reporting. `report.mjs` discovers `round<N>.json` and the current `round.json`, sorts numerically and writes a section and `round<N>-summary.json` for each round. The historical unnumbered `round2.json` starts at manifest offset zero. Other rounds use `manifest_start_line`; a round ends at the next start offset, or at the manifest end for the current round. Duplicate current/archive states must agree, and missing intermediate states are errors.
+
+Round membership is the downloaded SHA256 keys in that manifest interval, joined to current `triage.json`. This works when triage runs after the harvest window or reclassifies older PDFs, and includes post-harvest audit bytes. Each summary contains recorded start/finish times, received/saved bytes and caps, download count, skipped-at-round-cap record count, remaining queue size, blockers, current class counts for the round's additions, missing triage keys, family totals and the added SHA256/filename/byte inventory. A skip is counted from its round-cap reason (or a stream-cap stop with that URL in the remaining queue); per-file-only rejections are excluded. Skips and the remaining queue need not have the same count.
+
+The report preserves the original round-2 text as history. A round-3 snapshot whose class-table total matches the corpus through round 3 is retained as a historical snapshot. An old cumulative rewrite under round 3 is replaced; its method notes and the state files' observations/audit remain, while the lost historical classification snapshot cannot be reconstructed from later triage. New round sections and the separate cumulative table are replaced on reruns, not duplicated. `report-round3.mjs` is a compatibility entry point to the same report.
+
+`verify.mjs` checks every round's caps, saved bytes and received bytes (non-robots manifest bytes plus any interruption reserve). Every round's PDFs, including earlier additions outside the historical baseline, must exist with the manifest's size and SHA256. `round3-baseline.json` still protects the original SHA256/filename pairs. Historical review regressions run when their records are present; a particular harvest round does not require named audit/review files. `verification.json` identifies the current round and includes each round's hash-check count. The report labels older verification results as outside the current scope.
+
+Missing previews produce one diagnostic per record/page and an exact, shell-quoted local command: `mkdir -p ... && pdftoppm -f N -l N -r 110 -png -singlefile PDF OUTPUT_PREFIX`. The prefix omits `.png`. Verification exits nonzero without rendering or changing records; run the listed commands with Poppler, then rerun verify and report. No network access is needed for either script.
+
+Local reporting/verification regression tests (no harvester, HTTP server or Poppler):
+
+    node --test tools/corpus/harvest/round-report.test.mjs
