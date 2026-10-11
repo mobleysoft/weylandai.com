@@ -17,7 +17,7 @@ const resolve = ps => resolveScheduleOpenings(doors(ps), doors(ps), ps);
 const scope = p => buildingScope(p, titleBlocks([p])[0], lines(p.items));
 const count = r => [r.doorsA.length, r.doorsB.length, summarize(alignDoors(r.doorsA, r.doorsB)).agreed];
 
-test('X2530 original text: two buildings retain 36 openings, agreements and plan identities', async () => {
+test('X2530 original text: two buildings retain 36 openings, agreements and plan identities', { todo: 'g079: weyland-shared/plan-read.js is back at its pre-g078c version because the scope-aware placement placed no tags on ordinary sets (T2421-01: 33 of 33 before, 0 after; the scope detector found false conflicts); g080 brings it back behind placement_run --check' }, async () => {
   const { pdf, pages, A, B } = await readFixture(['x2530-01-p18', 'x2530-01-p53']);
   assert.deepEqual([A.length, B.length, summarize(alignDoors(A, B)).agreed], [36, 36, 36]);
   const r = resolveScheduleOpenings(A, B, pages);
@@ -52,7 +52,7 @@ test('X2530 original text: two buildings retain 36 openings, agreements and plan
   }
 });
 
-test('R2405 original text: matching scope collapses 14 rows to 7, with one canonical card per mark on A-101', async () => {
+test('R2405 original text: matching scope collapses 14 rows to 7, with one canonical card per mark on A-101', { todo: 'g079: weyland-shared/plan-read.js is back at its pre-g078c version because the scope-aware placement placed no tags on ordinary sets (T2421-01: 33 of 33 before, 0 after; the scope detector found false conflicts); g080 brings it back behind placement_run --check' }, async () => {
   const { pdf, pages, A, B } = await readFixture(['r2405-01-p15', 'r2405-01-p16']);
   assert.deepEqual([A.length, B.length, summarize(alignDoors(A, B)).agreed], [14, 14, 14]);
   const r = resolveScheduleOpenings(A, B, pages);
@@ -111,7 +111,7 @@ test('split labels, stacked values, and prose references retain their proper evi
   assert.equal(compareBuildingScopes(s, scope(page(2))).agrees, false);
 });
 
-test('placement rejects a conflicting plan even when no compatible schedule candidate remains', () => {
+test('placement rejects a conflicting plan even when no compatible schedule candidate remains', { todo: 'g079: weyland-shared/plan-read.js is back at its pre-g078c version because the scope-aware placement placed no tags on ordinary sets (T2421-01: 33 of 33 before, 0 after; the scope detector found false conflicts); g080 brings it back behind placement_run --check' }, () => {
   const sch = page(1, ['LOOP 8']);
   const plan = page(2, ['LOOP 9']);
   plan.items.find(i => i.str === 'DOOR SCHEDULE').str = 'FLOOR PLAN';
@@ -120,7 +120,7 @@ test('placement rejects a conflicting plan even when no compatible schedule cand
   assert.deepEqual([r.summary.marks_total, r.summary.marks_placed], [2, 0]);
 });
 
-test('a plan tag sharing a schedule baseline stays eligible outside the mark column', () => {
+test('a plan tag sharing a schedule baseline stays eligible outside the mark column', { todo: 'g079: weyland-shared/plan-read.js is back at its pre-g078c version because the scope-aware placement placed no tags on ordinary sets (T2421-01: 33 of 33 before, 0 after; the scope detector found false conflicts); g080 brings it back behind placement_run --check' }, () => {
   const p = page(1);
   p.items.find(i => i.str === 'DOOR SCHEDULE').str = 'FLOOR PLAN';
   p.items.push(item('101', 100, 500), item('102', 100, 520), item('101', 600, 500), item('102', 800, 800));
