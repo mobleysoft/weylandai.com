@@ -42,7 +42,7 @@
   "pages": [
    {
     "page": 26,
-    "title": "DOOR - WINDOW & FINISH SCHEDULE",
+    "title": "DOOR - WINDOW &",
     "rank": 2,
     "scope": {
      "address": "2503 W. 16TH ST",
@@ -268,6 +268,6 @@
    "b": 35.5
   }
  ],
- "ms": 1990,
- "generated_at": "2026-10-11T09:23:07.457Z"
+ "ms": 2243,
+ "generated_at": "2026-10-11T10:05:24.572Z"
 }

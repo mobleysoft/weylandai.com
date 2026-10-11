@@ -186,11 +186,12 @@
    ],
    "plan_sheets": [
     "ASB101 p.3",
+    "A-103 p.7",
     "A-104 p.8"
    ],
    "plan_counts": {
-    "plan_sheets": 2,
-    "rooms": 14,
+    "plan_sheets": 3,
+    "rooms": 15,
     "corridors": 3,
     "tags": 0,
     "unmatched_tags": 0,
@@ -391,6 +392,6 @@
    "why": "only reader B read this row"
   }
  ],
- "ms": 848,
- "generated_at": "2026-10-11T09:21:36.514Z"
+ "ms": 706,
+ "generated_at": "2026-10-11T10:03:54.784Z"
 }

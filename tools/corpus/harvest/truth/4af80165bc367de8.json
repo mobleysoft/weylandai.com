@@ -42,7 +42,7 @@
   "pages": [
    {
     "page": 7,
-    "title": "FINISHES AND DOORS",
+    "title": "FINISHES AND",
     "rank": 2,
     "scope": {
      "asset_number": "9327005027",
@@ -181,6 +181,6 @@
  "tier": "agreed",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 1466,
- "generated_at": "2026-10-11T09:21:47.713Z"
+ "ms": 1422,
+ "generated_at": "2026-10-11T10:04:05.587Z"
 }

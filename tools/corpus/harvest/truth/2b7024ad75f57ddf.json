@@ -42,8 +42,8 @@
   "pages": [
    {
     "page": 16,
-    "title": "ROOM SCHEDULE, & PARTITION TYPES",
-    "rank": 2,
+    "title": "DOOR SCHEDULE,",
+    "rank": 3,
     "scope": {
      "address": "10625 LEWIS & CLARK BLVD",
      "building": "COLUMN",
@@ -253,6 +253,6 @@
    "why": "only reader A read this row"
   }
  ],
- "ms": 987,
- "generated_at": "2026-10-11T09:21:12.048Z"
+ "ms": 999,
+ "generated_at": "2026-10-11T10:03:34.008Z"
 }

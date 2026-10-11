@@ -44,7 +44,7 @@
   "pages": [
    {
     "page": 23,
-    "title": "GLAZING SCHEDULE",
+    "title": "DOOR AND WINDOW",
     "rank": 2,
     "scope": {
      "asset_number": "8136274080",
@@ -240,36 +240,25 @@
   "marks_on_plan": {
    "applicable": true,
    "total": 14,
-   "pass": 0,
-   "fail": 14,
-   "pass_rate": 0,
-   "examples": [
-    "mark 101 (schedule p.23) not tagged on any plan",
-    "mark 102 (schedule p.23) not tagged on any plan",
-    "mark 103A (schedule p.23) not tagged on any plan",
-    "mark 103B (schedule p.23) not tagged on any plan",
-    "mark 103C (schedule p.23) not tagged on any plan",
-    "mark 104 (schedule p.23) not tagged on any plan",
-    "mark 105A (schedule p.23) not tagged on any plan",
-    "mark 105B (schedule p.23) not tagged on any plan",
-    "mark 105C (schedule p.23) not tagged on any plan",
-    "mark 106A (schedule p.23) not tagged on any plan",
-    "mark 106B (schedule p.23) not tagged on any plan",
-    "mark 107A (schedule p.23) not tagged on any plan"
-   ],
+   "pass": 14,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
    "plan_sheets": [
+    "A-101 p.14",
     "A-401 p.18",
     "A-402 p.19",
-    "A-403 p.20"
+    "A-403 p.20",
+    "A-404 p.21"
    ],
    "plan_counts": {
-    "plan_sheets": 3,
-    "rooms": 24,
-    "corridors": 0,
-    "tags": 0,
+    "plan_sheets": 5,
+    "rooms": 57,
+    "corridors": 3,
+    "tags": 14,
     "unmatched_tags": 0,
     "schedule_marks": 14,
-    "marks_not_on_plan": 14,
+    "marks_not_on_plan": 0,
     "shared_marks": 0
    }
   },
@@ -668,6 +657,6 @@
    "why": "only reader A read this row"
   }
  ],
- "ms": 4555,
- "generated_at": "2026-10-11T09:22:41.730Z"
+ "ms": 4469,
+ "generated_at": "2026-10-11T10:04:58.283Z"
 }

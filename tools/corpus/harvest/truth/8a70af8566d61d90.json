@@ -42,7 +42,7 @@
   "pages": [
    {
     "page": 10,
-    "title": "OPEN",
+    "title": "SCHEDULES &",
     "rank": 2,
     "scope": {
      "facility_number": "9327007014",
@@ -138,11 +138,21 @@
  "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
-   "applicable": false,
-   "reason": "no floor plan sheet found in this PDF (title blocks)",
+   "applicable": true,
+   "total": 2,
+   "pass": 0,
+   "fail": 2,
+   "pass_rate": 0,
+   "examples": [
+    "mark 102 (schedule p.10) not tagged on any plan",
+    "mark 105 (schedule p.10) not tagged on any plan"
+   ],
+   "plan_sheets": [
+    "A-401 p.9"
+   ],
    "plan_counts": {
-    "plan_sheets": 0,
-    "rooms": 0,
+    "plan_sheets": 1,
+    "rooms": 1,
     "corridors": 0,
     "tags": 0,
     "unmatched_tags": 0,
@@ -177,6 +187,6 @@
  "tier": "agreed",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 1245,
- "generated_at": "2026-10-11T09:22:04.475Z"
+ "ms": 1248,
+ "generated_at": "2026-10-11T10:04:21.982Z"
 }

@@ -42,7 +42,7 @@
   "pages": [
    {
     "page": 20,
-    "title": "INTERIOR PARTITION #.01",
+    "title": "FLOOR PLAN",
     "rank": 2,
     "scope": {
      "asset_number": "7815116003",
@@ -170,34 +170,22 @@
   "marks_on_plan": {
    "applicable": true,
    "total": 18,
-   "pass": 4,
-   "fail": 14,
-   "pass_rate": 0.2222,
-   "examples": [
-    "mark 100-1 (schedule p.20) not tagged on any plan",
-    "mark 100-2 (schedule p.20) not tagged on any plan",
-    "mark 101-1 (schedule p.20) not tagged on any plan",
-    "mark 103-1 (schedule p.20) not tagged on any plan",
-    "mark 105-1 (schedule p.20) not tagged on any plan",
-    "mark 106-1 (schedule p.20) not tagged on any plan",
-    "mark 109-1 (schedule p.20) not tagged on any plan",
-    "mark 110-1 (schedule p.20) not tagged on any plan",
-    "mark 111-1 (schedule p.20) not tagged on any plan",
-    "mark 112-1 (schedule p.20) not tagged on any plan",
-    "mark 113-1 (schedule p.20) not tagged on any plan",
-    "mark 114-1 (schedule p.20) not tagged on any plan"
-   ],
+   "pass": 18,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
    "plan_sheets": [
+    "A-101 p.20",
     "A-401 p.24"
    ],
    "plan_counts": {
-    "plan_sheets": 1,
-    "rooms": 4,
+    "plan_sheets": 2,
+    "rooms": 23,
     "corridors": 0,
-    "tags": 4,
+    "tags": 18,
     "unmatched_tags": 0,
     "schedule_marks": 18,
-    "marks_not_on_plan": 14,
+    "marks_not_on_plan": 0,
     "shared_marks": 0
    }
   },
@@ -227,6 +215,6 @@
  "tier": "agreed",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 4471,
- "generated_at": "2026-10-11T09:23:04.988Z"
+ "ms": 4574,
+ "generated_at": "2026-10-11T10:05:23.029Z"
 }

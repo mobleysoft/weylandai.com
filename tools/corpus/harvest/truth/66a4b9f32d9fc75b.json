@@ -42,7 +42,7 @@
   "pages": [
    {
     "page": 3,
-    "title": "DOOR JAMB DETAIL",
+    "title": "DOORS",
     "rank": 2,
     "scope": {
      "address": "712 ANDERSON STREET",
@@ -192,6 +192,6 @@
  "tier": "agreed",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 295,
- "generated_at": "2026-10-11T09:21:45.234Z"
+ "ms": 289,
+ "generated_at": "2026-10-11T10:04:02.820Z"
 }

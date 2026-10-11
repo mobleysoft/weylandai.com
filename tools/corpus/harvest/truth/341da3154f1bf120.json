@@ -42,8 +42,8 @@
   "pages": [
    {
     "page": 15,
-    "title": "HEAD",
-    "rank": 2,
+    "title": "Interior Elevations & Door Schedule",
+    "rank": 3,
     "scope": {
      "address": "411 COLLEGE ST",
      "asset_number": "8136251003",
@@ -184,6 +184,6 @@
  "tier": "agreed",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 4160,
- "generated_at": "2026-10-11T09:21:38.046Z"
+ "ms": 3730,
+ "generated_at": "2026-10-11T10:03:56.596Z"
 }

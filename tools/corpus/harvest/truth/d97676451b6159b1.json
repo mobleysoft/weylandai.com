@@ -42,7 +42,7 @@
   "pages": [
    {
     "page": 22,
-    "title": "SCHEDULES & DETAILS",
+    "title": "SCHEDULES &",
     "rank": 2,
     "scope": {
      "asset_number": "7815107005; 7815107007",
@@ -300,6 +300,6 @@
    "b": "2"
   }
  ],
- "ms": 3006,
- "generated_at": "2026-10-11T09:22:56.741Z"
+ "ms": 3254,
+ "generated_at": "2026-10-11T10:05:14.126Z"
 }

@@ -43,7 +43,7 @@
   "pages": [
    {
     "page": 5,
-    "title": "SPECIFICATIONS / GENERAL NOTES",
+    "title": "H.M. H.M. H.M. H.M.",
     "rank": 0,
     "scope": {
      "address": "1155 SR 74 S",
@@ -2754,22 +2754,12 @@
   "marks_on_plan": {
    "applicable": true,
    "total": 27,
-   "pass": 0,
-   "fail": 27,
-   "pass_rate": 0,
+   "pass": 25,
+   "fail": 2,
+   "pass_rate": 0.9259,
    "examples": [
-    "mark 101A (schedule p.14) not tagged on any plan",
-    "mark 102A (schedule p.14) not tagged on any plan",
-    "mark 103A (schedule p.14) not tagged on any plan",
-    "mark 104A (schedule p.14) not tagged on any plan",
-    "mark 104B (schedule p.14) not tagged on any plan",
-    "mark 105A (schedule p.14) not tagged on any plan",
-    "mark 106A (schedule p.14) not tagged on any plan",
-    "mark 107A (schedule p.14) not tagged on any plan",
-    "mark 110A (schedule p.14) not tagged on any plan",
-    "mark 110B (schedule p.14) not tagged on any plan",
-    "mark 111A (schedule p.14) not tagged on any plan",
-    "mark 112A (schedule p.14) not tagged on any plan"
+    "mark 116A (schedule p.14) not tagged on any plan",
+    "mark 119D (schedule p.5) not tagged on any plan"
    ],
    "plan_sheets": [
     "A1.1 p.11"
@@ -2778,10 +2768,10 @@
     "plan_sheets": 1,
     "rooms": 1,
     "corridors": 0,
-    "tags": 0,
+    "tags": 25,
     "unmatched_tags": 0,
     "schedule_marks": 27,
-    "marks_not_on_plan": 27,
+    "marks_not_on_plan": 2,
     "shared_marks": 0
    }
   },
@@ -2830,6 +2820,6 @@
    "b": 84
   }
  ],
- "ms": 1749,
- "generated_at": "2026-10-11T09:19:47.296Z"
+ "ms": 1687,
+ "generated_at": "2026-10-11T10:02:17.672Z"
 }

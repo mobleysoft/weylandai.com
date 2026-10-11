@@ -901,16 +901,24 @@
  "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
-   "applicable": false,
-   "reason": "no floor plan sheet found in this PDF (title blocks)",
+   "applicable": true,
+   "total": 7,
+   "pass": 7,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "plan_sheets": [
+    "A-101 p.15",
+    "A-102 p.16"
+   ],
    "plan_counts": {
-    "plan_sheets": 0,
+    "plan_sheets": 2,
     "rooms": 0,
     "corridors": 0,
-    "tags": 0,
+    "tags": 7,
     "unmatched_tags": 0,
     "schedule_marks": 7,
-    "marks_not_on_plan": 7,
+    "marks_not_on_plan": 0,
     "shared_marks": 0
    }
   },
@@ -1192,6 +1200,6 @@
    "why": "only reader B read this row"
   }
  ],
- "ms": 3064,
- "generated_at": "2026-10-11T09:22:23.346Z"
+ "ms": 3080,
+ "generated_at": "2026-10-11T10:04:41.341Z"
 }

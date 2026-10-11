@@ -42,7 +42,7 @@
   "pages": [
    {
     "page": 19,
-    "title": "SCHEDULES AND DOOR DETAILS",
+    "title": "SCHEDULES AND",
     "rank": 2,
     "scope": {
      "address": "2413 EAST MCCARTY ST",
@@ -192,6 +192,6 @@
    "why": "only reader A read this row"
   }
  ],
- "ms": 629,
- "generated_at": "2026-10-11T09:26:17.995Z"
+ "ms": 665,
+ "generated_at": "2026-10-11T10:08:32.687Z"
 }

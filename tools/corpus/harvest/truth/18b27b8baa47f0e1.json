@@ -43,7 +43,7 @@
   "pages": [
    {
     "page": 18,
-    "title": "INTERIOR PARTITION #.01.",
+    "title": "FLOOR PLAN",
     "rank": 2,
     "scope": {
      "asset_number": "7815307019; 7815307024",
@@ -219,7 +219,7 @@
    },
    {
     "page": 53,
-    "title": null,
+    "title": "FLOOR PLAN",
     "rank": 2,
     "scope": {
      "asset_number": "7815307024",
@@ -228,8 +228,8 @@
      "site": "MONTAUK STATE PARK",
      "site_number": "5307"
     },
-    "sheet": null,
-    "sheet_family": null,
+    "sheet": "A-101.A",
+    "sheet_family": "A.A",
     "scope_evidence": [
      {
       "field": "facility_name",
@@ -373,6 +373,12 @@
         "a": "5302; 5307",
         "b": "5307",
         "kind": "conflict"
+       },
+       {
+        "field": "sheet_family",
+        "a": "A",
+        "b": "A.A",
+        "kind": "conflict"
        }
       ]
      },
@@ -418,6 +424,12 @@
         "field": "site_number",
         "a": "5302; 5307",
         "b": "5307",
+        "kind": "conflict"
+       },
+       {
+        "field": "sheet_family",
+        "a": "A",
+        "b": "A.A",
         "kind": "conflict"
        }
       ]
@@ -490,34 +502,24 @@
   "marks_on_plan": {
    "applicable": true,
    "total": 36,
-   "pass": 4,
-   "fail": 32,
-   "pass_rate": 0.1111,
-   "examples": [
-    "mark 100-1 (schedule p.18) not tagged on any plan",
-    "mark 100-2 (schedule p.18) not tagged on any plan",
-    "mark 101-1 (schedule p.18) not tagged on any plan",
-    "mark 103-1 (schedule p.18) not tagged on any plan",
-    "mark 105-1 (schedule p.18) not tagged on any plan",
-    "mark 106-1 (schedule p.18) not tagged on any plan",
-    "mark 109-1 (schedule p.18) not tagged on any plan",
-    "mark 110-1 (schedule p.18) not tagged on any plan",
-    "mark 111-1 (schedule p.18) not tagged on any plan",
-    "mark 112-1 (schedule p.18) not tagged on any plan",
-    "mark 113-1 (schedule p.18) not tagged on any plan",
-    "mark 114-1 (schedule p.18) not tagged on any plan"
-   ],
+   "pass": 36,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
    "plan_sheets": [
-    "A-401 p.22"
+    "A-101 p.18",
+    "A-401 p.22",
+    "A-101.A p.53",
+    "A-401.A p.57"
    ],
    "plan_counts": {
-    "plan_sheets": 1,
-    "rooms": 7,
+    "plan_sheets": 4,
+    "rooms": 56,
     "corridors": 0,
-    "tags": 4,
+    "tags": 36,
     "unmatched_tags": 0,
     "schedule_marks": 36,
-    "marks_not_on_plan": 32,
+    "marks_not_on_plan": 0,
     "shared_marks": 0
    }
   },
@@ -547,6 +549,6 @@
  "tier": "agreed",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 5424,
- "generated_at": "2026-10-11T09:21:15.426Z"
+ "ms": 4789,
+ "generated_at": "2026-10-11T10:03:36.911Z"
 }

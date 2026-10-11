@@ -42,7 +42,7 @@
   "pages": [
    {
     "page": 18,
-    "title": "FRAME TYPES",
+    "title": "DOOR & FINISH SCHEDULE",
     "rank": 2,
     "scope": {
      "address": "74 KEARNEY ST",
@@ -208,6 +208,6 @@
  "tier": "agreed",
  "disagreement_count": 0,
  "disagreements": [],
- "ms": 3692,
- "generated_at": "2026-10-11T09:22:47.975Z"
+ "ms": 3869,
+ "generated_at": "2026-10-11T10:05:03.532Z"
 }
