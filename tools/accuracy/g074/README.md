@@ -19,6 +19,11 @@ How the sheet is served:
 
 ## 2. Your own set: WALK IT IN SIGHTX
 
+**No page hop (review change, 2026-10-11 04:56Z).** WALK IT IN SIGHTX is a button, not a link, and it never replaces a document:
+- **Inside the weylandai.com shell's overlay frame:** SubX asks the parent `WeylandShell.open("app", {path})` to open `/sightx/?walk=<session>` in its overlay.
+- **As the top document:** SubX opens that path in its own same-origin frame over itself (`#walk-overlay`, `#walk-frame`). It has a CLOSE control. Escape also closes it. Focus moves into the frame, and returns to WALK IT on close. The address never changes.
+
+
 After a SubX upload, the schedule's actions include WALK IT IN SIGHTX. It links to /sightx/?walk=<session>. In the site shell, SightX opens over the workspace in the same document. It loads three things from the customer's own SubX session:
 - GET /doors: the door rows;
 - GET /plan: SubX runs readPlan from weyland-shared on the uploaded PDF for the door tags;
@@ -60,11 +65,11 @@ The local runs used the branch's /sightx, /subx-app and /api/sightx/* overlaid o
 | journey | pass 1 | pass 2 | pass 3 |
 |---|---|---|---|
 | sightx-sheets (the Building) | 13/13 | 13/13 | 13/13 |
-| sightx-own-set (upload, WALK IT, card, CSV, phone tap, delete) | 12/13 | 12/13 | 12/13 |
+| sightx-own-set (upload, WALK IT over SubX, card, CSV, CLOSE with the document kept, phone tap, inside the shell, delete) | 13/14 | 13/14 | 13/14 |
 | sightx-real-buildings (g028, unchanged) | 85/85 | | |
 | sightx-corridor | 9/14 | | |
 
-**sightx-own-set.** The one failure on every pass is "the CSV's pair column is the drawn schedule's": 100A, 111, 200 and 300 come back as "no" vs "yes". The uploads were read by production SubX, which does not have the reader fix above yet. Every other CSV field equals truth-doors.json on all 48 rows: mark, room, width, height, group, schedule page, and placed on A-101.
+**sightx-own-set.** It asserts the document is never replaced. A mark is set on the SubX document at load. It must survive the upload, WALK IT, using the sheet and CLOSE, with focus back on WALK IT and the address unchanged. It does the same on a phone with taps, and inside the homepage shell, where the homepage document stays. The one failure on every pass is "the CSV's pair column is the drawn schedule's": 100A, 111, 200 and 300 come back as "no" vs "yes". The uploads were read by production SubX, which does not have the reader fix above yet. Every other CSV field equals truth-doors.json on all 48 rows: mark, room, width, height, group, schedule page, and placed on A-101.
 
 **sightx-corridor.** Its five failures are the homepage 3D backdrop refusing software WebGL. Production main fails the same five here: sightx-corridor-production-main.txt, 9/15 with the D1 purge as the 15th check.
 
