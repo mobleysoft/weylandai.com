@@ -1,0 +1,4896 @@
+{
+  "rooms": [
+    {
+      "name": "PRIVATE ROOM",
+      "number": "104",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1515,
+      "y": 145
+    },
+    {
+      "name": "ELEC",
+      "number": "154",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 809,
+      "y": 152
+    },
+    {
+      "name": "TA-11",
+      "number": "U2",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1404,
+      "y": 207
+    },
+    {
+      "name": "DINING AREA",
+      "number": "163",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1105,
+      "y": 218
+    },
+    {
+      "name": "PURCHASING SUPPLY",
+      "number": "155",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1331,
+      "y": 262
+    },
+    {
+      "name": "NURSING SUPPLY",
+      "number": "156",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1290,
+      "y": 339
+    },
+    {
+      "name": "TLT B",
+      "number": "104.1",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1429,
+      "y": 339
+    },
+    {
+      "name": "LIFT ALCOVE",
+      "number": "131",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1345,
+      "y": 345
+    },
+    {
+      "name": "PRIVATE ROOM",
+      "number": "106",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1745,
+      "y": 482
+    },
+    {
+      "name": "LIFT ALCOVE",
+      "number": "132",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1342,
+      "y": 576
+    },
+    {
+      "name": "LIFT ALCOVE",
+      "number": "TA-02",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1362,
+      "y": 581
+    },
+    {
+      "name": "CLEAN LINEN",
+      "number": "157",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1290,
+      "y": 582
+    },
+    {
+      "name": "TA-02",
+      "number": "R2",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1355,
+      "y": 596
+    },
+    {
+      "name": "TLT B",
+      "number": "107.1",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1419,
+      "y": 596
+    },
+    {
+      "name": "REF RM",
+      "number": "104.1",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1420,
+      "y": 625
+    },
+    {
+      "name": "4'-9\" HOLD",
+      "number": "R2",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1680,
+      "y": 638
+    },
+    {
+      "name": "SOILED HOLDING",
+      "number": "158",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1318,
+      "y": 689
+    },
+    {
+      "name": "TA-11",
+      "number": "106.1",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1767,
+      "y": 689
+    },
+    {
+      "name": "DINING AREA",
+      "number": "164",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1144,
+      "y": 712
+    },
+    {
+      "name": "TLT A",
+      "number": "106.1",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1722,
+      "y": 735
+    },
+    {
+      "name": "TLT D",
+      "number": "112.1",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 478,
+      "y": 770
+    },
+    {
+      "name": "SITTING AREA",
+      "number": "165",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 735,
+      "y": 817
+    },
+    {
+      "name": "BARIATRIC ROOM",
+      "number": "112",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 325,
+      "y": 892
+    },
+    {
+      "name": "TLT B",
+      "number": "18",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 645,
+      "y": 1117
+    },
+    {
+      "name": "TLT B",
+      "number": "111.1",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 617,
+      "y": 1119
+    },
+    {
+      "name": "TLT B 18 REF RM",
+      "number": "108.1",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 988,
+      "y": 1123
+    },
+    {
+      "name": "REF RM",
+      "number": "104.1",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 617,
+      "y": 1141
+    },
+    {
+      "name": "PRIVATE ROOM",
+      "number": "111",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 470,
+      "y": 1192
+    },
+    {
+      "name": "PRIVATE ROOM",
+      "number": "108",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1127,
+      "y": 1196
+    },
+    {
+      "name": "TA-00",
+      "number": "TA-01",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1661,
+      "y": 1348
+    },
+    {
+      "name": "TLT A",
+      "number": "109.1",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1049,
+      "y": 1359
+    },
+    {
+      "name": "TA-00 TA-01",
+      "number": "TA-02",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1661,
+      "y": 1361
+    },
+    {
+      "name": "TA-01 TA-02",
+      "number": "TA-03",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1661,
+      "y": 1374
+    },
+    {
+      "name": "TA-03 TA-04ID",
+      "number": "TA-05",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1661,
+      "y": 1400
+    },
+    {
+      "name": "TA-04ID TA-05",
+      "number": "TA-06",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1661,
+      "y": 1413
+    },
+    {
+      "name": "TA-05 TA-06",
+      "number": "TA-07",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1661,
+      "y": 1425
+    },
+    {
+      "name": "TA-06 TA-07",
+      "number": "TA-08",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1661,
+      "y": 1438
+    },
+    {
+      "name": "PRIVATE ROOM",
+      "number": "109",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 674,
+      "y": 1442
+    },
+    {
+      "name": "TA-07 TA-08",
+      "number": "TA-09",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1661,
+      "y": 1451
+    },
+    {
+      "name": "TA-08 TA-09",
+      "number": "TA-10",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1661,
+      "y": 1464
+    },
+    {
+      "name": "TA-09 TA-10",
+      "number": "TA-11",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1661,
+      "y": 1477
+    },
+    {
+      "name": "TA-10 TA-11",
+      "number": "TA-12",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1661,
+      "y": 1490
+    },
+    {
+      "name": "TA-11 TA-12",
+      "number": "TA-13",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1661,
+      "y": 1503
+    },
+    {
+      "name": "TA-12 TA-13",
+      "number": "TA-14",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1661,
+      "y": 1516
+    },
+    {
+      "name": "TA-13 TA-14",
+      "number": "TA-15",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1661,
+      "y": 1529
+    },
+    {
+      "name": "TA-14 TA-15",
+      "number": "TA-16",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1661,
+      "y": 1542
+    },
+    {
+      "name": "TA-15 TA-16",
+      "number": "TA-17",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1661,
+      "y": 1555
+    },
+    {
+      "name": "CLEAN UTILITY",
+      "number": "237",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 822,
+      "y": 140
+    },
+    {
+      "name": "PRIVATE ROOM",
+      "number": "100",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 585,
+      "y": 295
+    },
+    {
+      "name": "SUPPLY STORAGE",
+      "number": "241",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 802,
+      "y": 311
+    },
+    {
+      "name": "TLT A",
+      "number": "101.1",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 322,
+      "y": 372
+    },
+    {
+      "name": "REF RM",
+      "number": "106.1",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 323,
+      "y": 397
+    },
+    {
+      "name": "TLT E",
+      "number": "100.1",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 590,
+      "y": 445
+    },
+    {
+      "name": "TA-00",
+      "number": "TA-01",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 1661,
+      "y": 470
+    },
+    {
+      "name": "TA-00 TA-01",
+      "number": "TA-02",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 1661,
+      "y": 483
+    },
+    {
+      "name": "EQUIPMENT STORAGE",
+      "number": "151",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 693,
+      "y": 490
+    },
+    {
+      "name": "TA-01 TA-02",
+      "number": "TA-03",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 1661,
+      "y": 496
+    },
+    {
+      "name": "TA-02 TA-03",
+      "number": "TA-04",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 1661,
+      "y": 509
+    },
+    {
+      "name": "TA-03 TA-04",
+      "number": "TA-05",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 1661,
+      "y": 522
+    },
+    {
+      "name": "PRIVATE ROOM",
+      "number": "101",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 264,
+      "y": 532
+    },
+    {
+      "name": "TA-04 TA-05",
+      "number": "TA-06",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 1661,
+      "y": 535
+    },
+    {
+      "name": "TA-05 TA-06",
+      "number": "TA-07",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 1661,
+      "y": 548
+    },
+    {
+      "name": "TA-06 TA-07",
+      "number": "TA-08",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 1661,
+      "y": 561
+    },
+    {
+      "name": "TA-07 TA-08",
+      "number": "TA-09",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 1661,
+      "y": 573
+    },
+    {
+      "name": "TA-08 TA-09",
+      "number": "TA-10",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 1661,
+      "y": 586
+    },
+    {
+      "name": "TA-09 TA-10",
+      "number": "TA-11",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 1661,
+      "y": 599
+    },
+    {
+      "name": "TA-10 TA-11",
+      "number": "TA-12",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 1661,
+      "y": 612
+    },
+    {
+      "name": "TA-11 TA-12",
+      "number": "TA-13",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 1661,
+      "y": 625
+    },
+    {
+      "name": "TA-12 TA-13",
+      "number": "TA-14",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 1661,
+      "y": 638
+    },
+    {
+      "name": "TA-13 TA-14",
+      "number": "TA-15",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 1661,
+      "y": 651
+    },
+    {
+      "name": "TA-14 TA-15",
+      "number": "TA-16",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 1661,
+      "y": 664
+    },
+    {
+      "name": "TA-15 TA-16",
+      "number": "TA-17",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 1661,
+      "y": 677
+    },
+    {
+      "name": "PRIVATE ROOM",
+      "number": "102",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 280,
+      "y": 762
+    },
+    {
+      "name": "TLT B",
+      "number": "103.1",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 584,
+      "y": 785
+    },
+    {
+      "name": "REF RM",
+      "number": "104.1",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 585,
+      "y": 811
+    },
+    {
+      "name": "TLT A",
+      "number": "102.1",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 322,
+      "y": 891
+    },
+    {
+      "name": "REF RM",
+      "number": "106.1",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 323,
+      "y": 915
+    },
+    {
+      "name": "SITTING AREA",
+      "number": "161",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 807,
+      "y": 933
+    },
+    {
+      "name": "PANTRY",
+      "number": "153",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 1283,
+      "y": 955
+    },
+    {
+      "name": "PRIVATE ROOM",
+      "number": "103",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 514,
+      "y": 960
+    },
+    {
+      "name": "MECHANICAL ROOM",
+      "number": "152",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 1192,
+      "y": 966
+    },
+    {
+      "name": "KITCHENETTE",
+      "number": "162",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 1369,
+      "y": 1093
+    },
+    {
+      "name": "PRIVATE ROOM",
+      "number": "104",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 1618,
+      "y": 1187
+    },
+    {
+      "name": "ELEC",
+      "number": "154",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 912,
+      "y": 1193
+    },
+    {
+      "name": "DINING AREA",
+      "number": "163",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 1209,
+      "y": 1260
+    },
+    {
+      "name": "19 PURCHASING SUPPLY",
+      "number": "155",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 1435,
+      "y": 1304
+    },
+    {
+      "name": "NURSING SUPPLY",
+      "number": "156",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 1393,
+      "y": 1381
+    },
+    {
+      "name": "TLT B",
+      "number": "104.1",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 1532,
+      "y": 1381
+    },
+    {
+      "name": "LIFT ALCOVE",
+      "number": "131",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 1449,
+      "y": 1386
+    },
+    {
+      "name": "PRIVATE ROOM",
+      "number": "106",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-104",
+      "x": 1848,
+      "y": 1524
+    },
+    {
+      "name": "TELECOM",
+      "number": "204",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 1327,
+      "y": 244
+    },
+    {
+      "name": "STORAGE",
+      "number": "201",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 724,
+      "y": 310
+    },
+    {
+      "name": "OFFICE",
+      "number": "203",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 925,
+      "y": 310
+    },
+    {
+      "name": "STORAGE",
+      "number": "202",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 1582,
+      "y": 338
+    },
+    {
+      "name": "STORAGE",
+      "number": "206",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 1331,
+      "y": 357
+    },
+    {
+      "name": "A-202 CLEAN UTILITY",
+      "number": "205",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 719,
+      "y": 487
+    },
+    {
+      "name": "FIRE RISER ROOM",
+      "number": "207",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 918,
+      "y": 487
+    },
+    {
+      "name": "JANITOR",
+      "number": "209",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 1072,
+      "y": 487
+    },
+    {
+      "name": "EQUIPMENT STORAGE",
+      "number": "208",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 1411,
+      "y": 487
+    },
+    {
+      "name": "SOILED UTILITY",
+      "number": "210",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 1658,
+      "y": 487
+    },
+    {
+      "name": "TA-12",
+      "number": "TA-06",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 1685,
+      "y": 518
+    },
+    {
+      "name": "CORRIDOR",
+      "number": "200",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 1194,
+      "y": 728
+    },
+    {
+      "name": "LIVING ROOM",
+      "number": "261",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 1415,
+      "y": 820
+    },
+    {
+      "name": "NURSE STATION",
+      "number": "271",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 1012,
+      "y": 872
+    },
+    {
+      "name": "MEDICATION",
+      "number": "221",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 996,
+      "y": 1026
+    },
+    {
+      "name": "TA-09",
+      "number": "TA-08",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 1347,
+      "y": 1045
+    },
+    {
+      "name": "ALCOVE",
+      "number": "281",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 1287,
+      "y": 1061
+    },
+    {
+      "name": "22 TA-07",
+      "number": "18",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 1447,
+      "y": 1061
+    },
+    {
+      "name": "TA-08",
+      "number": "R2",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 1344,
+      "y": 1065
+    },
+    {
+      "name": "TUB ROOM",
+      "number": "222",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 1365,
+      "y": 1120
+    },
+    {
+      "name": "DATA ROOM",
+      "number": "223",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 986,
+      "y": 1166
+    },
+    {
+      "name": "TA-00",
+      "number": "TA-01",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 1676,
+      "y": 1278
+    },
+    {
+      "name": "TA-00 TA-01",
+      "number": "TA-02",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 1676,
+      "y": 1291
+    },
+    {
+      "name": "TA-01 TA-02",
+      "number": "TA-03",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 1676,
+      "y": 1304
+    },
+    {
+      "name": "TA-02 TA-03",
+      "number": "TA-04",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 1676,
+      "y": 1317
+    },
+    {
+      "name": "TA-03 TA-04",
+      "number": "TA-05",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 1676,
+      "y": 1330
+    },
+    {
+      "name": "TUB ROOM",
+      "number": "224",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 1395,
+      "y": 1335
+    },
+    {
+      "name": "TA-04 TA-05",
+      "number": "TA-06",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 1676,
+      "y": 1343
+    },
+    {
+      "name": "TA-05 TA-06",
+      "number": "TA-07",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 1676,
+      "y": 1356
+    },
+    {
+      "name": "TA-06 TA-07",
+      "number": "TA-08",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 1676,
+      "y": 1369
+    },
+    {
+      "name": "TA-07 TA-08",
+      "number": "TA-09",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 1676,
+      "y": 1382
+    },
+    {
+      "name": "TA-08 TA-09",
+      "number": "TA-10",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 1676,
+      "y": 1395
+    },
+    {
+      "name": "TA-09 TA-10",
+      "number": "TA-11",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 1676,
+      "y": 1407
+    },
+    {
+      "name": "TA-10 TA-11",
+      "number": "TA-12",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 1676,
+      "y": 1420
+    },
+    {
+      "name": "TA-11 TA-12",
+      "number": "TA-13",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 1676,
+      "y": 1433
+    },
+    {
+      "name": "ELECTRICAL/ MECHANICAL",
+      "number": "225",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 958,
+      "y": 1442
+    },
+    {
+      "name": "TLT",
+      "number": "224.1",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 1308,
+      "y": 1446
+    },
+    {
+      "name": "TA-12 TA-13",
+      "number": "TA-14",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 1676,
+      "y": 1446
+    },
+    {
+      "name": "30 TLT",
+      "number": "227",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 1049,
+      "y": 1453
+    },
+    {
+      "name": "TA-13 TA-14",
+      "number": "TA-15",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 1676,
+      "y": 1459
+    },
+    {
+      "name": "TA-14 TA-15",
+      "number": "TA-16",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 1676,
+      "y": 1472
+    },
+    {
+      "name": "TA-15 TA-16",
+      "number": "TA-17",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 1676,
+      "y": 1485
+    },
+    {
+      "name": "HOSPITALITY ROOM",
+      "number": "230",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-105",
+      "x": 1406,
+      "y": 1603
+    },
+    {
+      "name": "TLT",
+      "number": "229",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-106",
+      "x": 645,
+      "y": 237
+    },
+    {
+      "name": "HOSPITALITY ROOM",
+      "number": "230",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-106",
+      "x": 986,
+      "y": 276
+    },
+    {
+      "name": "EXAM ROOM",
+      "number": "231",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-106",
+      "x": 596,
+      "y": 452
+    },
+    {
+      "name": "LIBRARY/GAME ROOM",
+      "number": "232",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-106",
+      "x": 986,
+      "y": 478
+    },
+    {
+      "name": "FACILITIES WORK RM",
+      "number": "234",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-106",
+      "x": 986,
+      "y": 661
+    },
+    {
+      "name": "STORAGE ROOM",
+      "number": "233",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-106",
+      "x": 590,
+      "y": 665
+    },
+    {
+      "name": "DEN",
+      "number": "236",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-106",
+      "x": 989,
+      "y": 820
+    },
+    {
+      "name": "WORK OFFICE",
+      "number": "235",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-106",
+      "x": 586,
+      "y": 825
+    },
+    {
+      "name": "TA-00",
+      "number": "TA-01",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-106",
+      "x": 1979,
+      "y": 875
+    },
+    {
+      "name": "TA-00 TA-01",
+      "number": "TA-02",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-106",
+      "x": 1979,
+      "y": 888
+    },
+    {
+      "name": "TA-01 TA-02",
+      "number": "TA-03",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-106",
+      "x": 1979,
+      "y": 901
+    },
+    {
+      "name": "TA-02 TA-03",
+      "number": "TA-04",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-106",
+      "x": 1979,
+      "y": 914
+    },
+    {
+      "name": "TA-03 TA-04",
+      "number": "TA-05",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-106",
+      "x": 1979,
+      "y": 927
+    },
+    {
+      "name": "TA-04 TA-05",
+      "number": "TA-06",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-106",
+      "x": 1979,
+      "y": 939
+    },
+    {
+      "name": "TA-05 TA-06",
+      "number": "TA-07",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-106",
+      "x": 1979,
+      "y": 952
+    },
+    {
+      "name": "TA-06 TA-07",
+      "number": "TA-08",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-106",
+      "x": 1979,
+      "y": 965
+    },
+    {
+      "name": "ALCOVE",
+      "number": "244",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-106",
+      "x": 652,
+      "y": 966
+    },
+    {
+      "name": "L3 SOILED UTILITY",
+      "number": "238",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-106",
+      "x": 1138,
+      "y": 977
+    },
+    {
+      "name": "TA-07 TA-08",
+      "number": "TA-09",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-106",
+      "x": 1979,
+      "y": 978
+    },
+    {
+      "name": "TA-08 TA-09",
+      "number": "TA-10",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-106",
+      "x": 1979,
+      "y": 991
+    },
+    {
+      "name": "CLEAN UTILITY",
+      "number": "237",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-106",
+      "x": 440,
+      "y": 1004
+    },
+    {
+      "name": "TA-09 TA-10",
+      "number": "TA-11",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-106",
+      "x": 1979,
+      "y": 1004
+    },
+    {
+      "name": "TA-10 TA-11",
+      "number": "TA-12",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-106",
+      "x": 1979,
+      "y": 1017
+    },
+    {
+      "name": "CORRIDOR",
+      "number": "249",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-106",
+      "x": 797,
+      "y": 1026
+    },
+    {
+      "name": "TA-11 TA-12",
+      "number": "TA-13",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-106",
+      "x": 1979,
+      "y": 1030
+    },
+    {
+      "name": "TA-12 TA-13",
+      "number": "TA-14",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-106",
+      "x": 1979,
+      "y": 1043
+    },
+    {
+      "name": "TA-06",
+      "number": "TA-12",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-106",
+      "x": 1059,
+      "y": 1055
+    },
+    {
+      "name": "TA-13 TA-14",
+      "number": "TA-15",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-106",
+      "x": 1979,
+      "y": 1056
+    },
+    {
+      "name": "TA-14 TA-15",
+      "number": "TA-16",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-106",
+      "x": 1979,
+      "y": 1069
+    },
+    {
+      "name": "TA-15 TA-16",
+      "number": "TA-17",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-106",
+      "x": 1979,
+      "y": 1082
+    },
+    {
+      "name": "STORAGE",
+      "number": "242",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-106",
+      "x": 1297,
+      "y": 1114
+    },
+    {
+      "name": "STORAGE",
+      "number": "239",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-106",
+      "x": 405,
+      "y": 1133
+    },
+    {
+      "name": "HSKP",
+      "number": "240",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-106",
+      "x": 1168,
+      "y": 1136
+    },
+    {
+      "name": "SUPPLY STORAGE",
+      "number": "241",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-106",
+      "x": 280,
+      "y": 1139
+    },
+    {
+      "name": "LIVING ROOM",
+      "number": "243",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-106",
+      "x": 789,
+      "y": 1317
+    },
+    {
+      "name": "NURSE STATION",
+      "number": "236",
+      "page": 16,
+      "points_per_foot": 18,
+      "sheet": "A-106",
+      "x": 1818,
+      "y": 1339
+    }
+  ],
+  "set": {
+    "label": null,
+    "page_count": 93,
+    "rows_total": 74,
+    "sha16": "7865c59ba07c90cc",
+    "source_url": null,
+    "tier": "agreed"
+  },
+  "sheets": [
+    {
+      "height": 1728,
+      "page": 11,
+      "points_per_foot": null,
+      "scales": [],
+      "sheet": "A-100",
+      "title": "FLOOR PLAN - OVERALL",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 13,
+      "points_per_foot": [
+        18
+      ],
+      "scales": [
+        "1/4\" = 1'-0\""
+      ],
+      "sheet": "A-103",
+      "title": "FLOOR PLAN - A HOME 1",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 14,
+      "points_per_foot": [
+        18
+      ],
+      "scales": [
+        "1/4\" = 1'-0\""
+      ],
+      "sheet": "A-104",
+      "title": "FLOOR PLAN - A HOME 2",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 15,
+      "points_per_foot": [
+        18
+      ],
+      "scales": [
+        "1/4\" = 1'-0\""
+      ],
+      "sheet": "A-105",
+      "title": "FLOOR PLAN - A NBHD CTR 1",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 16,
+      "points_per_foot": [
+        18
+      ],
+      "scales": [
+        "1/4\" = 1'-0\"",
+        "1/4\" = 1'-0\""
+      ],
+      "sheet": "A-106",
+      "title": "FLOOR PLAN - A NBHD CTR 2",
+      "width": 2592
+    }
+  ],
+  "summary": {
+    "marks_placed": 73,
+    "marks_total": 74,
+    "placed_rate": 0.9864864864864865,
+    "rooms_total": 169,
+    "sheets_total": 5,
+    "sheets_with_scale": 4,
+    "unplaced": [
+      {
+        "mark": "E204",
+        "page": 27,
+        "reason": "mark E204 (schedule p.27) not tagged on any plan"
+      }
+    ]
+  },
+  "tags": [
+    {
+      "also_on": [
+        "A-104"
+      ],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603716158511999,
+      "hardware_group": "5",
+      "height_inches": 80,
+      "location": null,
+      "mark": "154",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 13,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "154",
+      "room_by": "nearest_label",
+      "room_name": "ELEC",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "5",
+          "height_inches": 80,
+          "location": null,
+          "mark": "154",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 1441
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 879,
+      "y": 164
+    },
+    {
+      "also_on": [
+        "A-104"
+      ],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603716158511999,
+      "hardware_group": "7",
+      "height_inches": 80,
+      "location": null,
+      "mark": "155",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 13,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "155",
+      "room_by": "nearest_label",
+      "room_name": "PURCHASING SUPPLY",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "7",
+          "height_inches": 80,
+          "location": null,
+          "mark": "155",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 1455
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1306,
+      "y": 197
+    },
+    {
+      "also_on": [
+        "A-104"
+      ],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603716158511999,
+      "hardware_group": "3",
+      "height_inches": 80,
+      "location": null,
+      "mark": "104.1",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 13,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "104",
+      "room_by": "tag_number",
+      "room_name": "PRIVATE ROOM",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "3",
+          "height_inches": 80,
+          "location": null,
+          "mark": "104.1",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 6\" x 6' - 8\"",
+          "width_inches": 42,
+          "y": 1234
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 6\" x 6' - 8\"",
+      "width_inches": 42,
+      "x": 1420,
+      "y": 231
+    },
+    {
+      "also_on": [
+        "A-104"
+      ],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": "F",
+      "h": 9.603716158511999,
+      "hardware_group": "8",
+      "height_inches": 80,
+      "location": null,
+      "mark": "156",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 13,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "156",
+      "room_by": "nearest_label",
+      "room_name": "NURSING SUPPLY",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": "F",
+          "hardware_group": "8",
+          "height_inches": 80,
+          "location": null,
+          "mark": "156",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "5' - 0\" x 6' - 8\"",
+          "width_inches": 60,
+          "y": 1469
+        }
+      ],
+      "sheet": "A-103",
+      "size": "5' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 60,
+      "x": 1242,
+      "y": 299
+    },
+    {
+      "also_on": [
+        "A-104"
+      ],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603716158511999,
+      "hardware_group": "1",
+      "height_inches": 80,
+      "location": null,
+      "mark": "104",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 13,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "104.1",
+      "room_by": "nearest_label",
+      "room_name": "TLT B",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "1",
+          "height_inches": 80,
+          "location": null,
+          "mark": "104",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "4' - 0\" x 6' - 8\"",
+          "width_inches": 48,
+          "y": 1221
+        }
+      ],
+      "sheet": "A-103",
+      "size": "4' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 48,
+      "x": 1569,
+      "y": 343
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "HG",
+      "fire_rating": null,
+      "frame_type": "HM-12",
+      "h": 9.603716158511999,
+      "hardware_group": "5",
+      "height_inches": 84,
+      "location": null,
+      "mark": "E102",
+      "matched_by": "exact",
+      "material": "HM",
+      "page": 13,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "HG",
+          "fire_rating": null,
+          "frame_type": "HM-12",
+          "hardware_group": "5",
+          "height_inches": 84,
+          "location": null,
+          "mark": "E102",
+          "material": "HM",
+          "page": 27,
+          "pair": false,
+          "size": "4' - 0\" x 7' - 0\"",
+          "width_inches": 48,
+          "y": 957
+        }
+      ],
+      "sheet": "A-103",
+      "size": "4' - 0\" x 7' - 0\"",
+      "width_inches": 48,
+      "x": 873,
+      "y": 461
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603716158511999,
+      "hardware_group": "1",
+      "height_inches": 80,
+      "location": null,
+      "mark": "106",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 13,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "106",
+      "room_by": "nearest_label",
+      "room_name": "PRIVATE ROOM",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "1",
+          "height_inches": 80,
+          "location": null,
+          "mark": "106",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "4' - 0\" x 6' - 8\"",
+          "width_inches": 48,
+          "y": 1247
+        }
+      ],
+      "sheet": "A-103",
+      "size": "4' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 48,
+      "x": 1661,
+      "y": 510
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": "F",
+      "h": 9.603716158511999,
+      "hardware_group": "8",
+      "height_inches": 80,
+      "location": null,
+      "mark": "157",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 13,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "157",
+      "room_by": "nearest_label",
+      "room_name": "CLEAN LINEN",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": "F",
+          "hardware_group": "8",
+          "height_inches": 80,
+          "location": null,
+          "mark": "157",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "5' - 0\" x 6' - 8\"",
+          "width_inches": 60,
+          "y": 1480
+        }
+      ],
+      "sheet": "A-103",
+      "size": "5' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 60,
+      "x": 1243,
+      "y": 556
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603716158511999,
+      "hardware_group": "9",
+      "height_inches": 80,
+      "location": null,
+      "mark": "158",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 13,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "158",
+      "room_by": "nearest_label",
+      "room_name": "SOILED HOLDING",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "9",
+          "height_inches": 80,
+          "location": null,
+          "mark": "158",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 1493
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1240,
+      "y": 693
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603716158511999,
+      "hardware_group": "2",
+      "height_inches": 80,
+      "location": null,
+      "mark": "107.1",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 13,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "104.1",
+      "room_by": "nearest_label",
+      "room_name": "REF RM",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "2",
+          "height_inches": 80,
+          "location": null,
+          "mark": "107.1",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 6\" x 6' - 8\"",
+          "width_inches": 42,
+          "y": 1285
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 6\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 42,
+      "x": 1420,
+      "y": 696
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "HG",
+      "fire_rating": null,
+      "frame_type": "HM-12",
+      "h": 9.603716158511999,
+      "hardware_group": "5",
+      "height_inches": 84,
+      "location": null,
+      "mark": "E103",
+      "matched_by": "exact",
+      "material": "HM",
+      "page": 13,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "165",
+      "room_by": "nearest_label",
+      "room_name": "SITTING AREA",
+      "schedule_rows": [
+        {
+          "door_type": "HG",
+          "fire_rating": null,
+          "frame_type": "HM-12",
+          "hardware_group": "5",
+          "height_inches": 84,
+          "location": null,
+          "mark": "E103",
+          "material": "HM",
+          "page": 27,
+          "pair": false,
+          "size": "4' - 0\" x 7' - 0\"",
+          "width_inches": 48,
+          "y": 969
+        }
+      ],
+      "sheet": "A-103",
+      "size": "4' - 0\" x 7' - 0\"",
+      "unsure": true,
+      "width_inches": 48,
+      "x": 651,
+      "y": 702
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603716158511999,
+      "hardware_group": "3",
+      "height_inches": 80,
+      "location": null,
+      "mark": "112.1",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 13,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "112",
+      "room_by": "tag_number",
+      "room_name": "BARIATRIC ROOM",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "3",
+          "height_inches": 80,
+          "location": null,
+          "mark": "112.1",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 6\" x 6' - 8\"",
+          "width_inches": 42,
+          "y": 1387
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 6\" x 6' - 8\"",
+      "width_inches": 42,
+      "x": 383,
+      "y": 736
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603716158511999,
+      "hardware_group": "1",
+      "height_inches": 80,
+      "location": null,
+      "mark": "107",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 13,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "158",
+      "room_by": "nearest_label",
+      "room_name": "SOILED HOLDING",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "1",
+          "height_inches": 80,
+          "location": null,
+          "mark": "107",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "4' - 0\" x 6' - 8\"",
+          "width_inches": 48,
+          "y": 1272
+        }
+      ],
+      "sheet": "A-103",
+      "size": "4' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 48,
+      "x": 1457,
+      "y": 827
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": "HM-00",
+      "h": 9.603716158511999,
+      "hardware_group": "5",
+      "height_inches": 84,
+      "location": null,
+      "mark": "E104",
+      "matched_by": "exact",
+      "material": "HM",
+      "page": 13,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": "HM-00",
+          "hardware_group": "5",
+          "height_inches": 84,
+          "location": null,
+          "mark": "E104",
+          "material": "HM",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 8\" x 7' - 0\"",
+          "width_inches": 44,
+          "y": 980
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 8\" x 7' - 0\"",
+      "width_inches": 44,
+      "x": 1277,
+      "y": 994
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603716158511999,
+      "hardware_group": "1",
+      "height_inches": 80,
+      "location": null,
+      "mark": "112",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 13,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "111.1",
+      "room_by": "nearest_label",
+      "room_name": "TLT B",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "1",
+          "height_inches": 80,
+          "location": null,
+          "mark": "112",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "4' - 0\" x 6' - 8\"",
+          "width_inches": 48,
+          "y": 1375
+        }
+      ],
+      "sheet": "A-103",
+      "size": "4' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 48,
+      "x": 543,
+      "y": 1030
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603716158511999,
+      "hardware_group": "3",
+      "height_inches": 80,
+      "location": null,
+      "mark": "111.1",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 13,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "111",
+      "room_by": "tag_number",
+      "room_name": "PRIVATE ROOM",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "3",
+          "height_inches": 80,
+          "location": null,
+          "mark": "111.1",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 6\" x 6' - 8\"",
+          "width_inches": 42,
+          "y": 1363
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 6\" x 6' - 8\"",
+      "width_inches": 42,
+      "x": 544,
+      "y": 1077
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603716158511999,
+      "hardware_group": "3",
+      "height_inches": 80,
+      "location": null,
+      "mark": "108.1",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 13,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "108",
+      "room_by": "tag_number",
+      "room_name": "PRIVATE ROOM",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "3",
+          "height_inches": 80,
+          "location": null,
+          "mark": "108.1",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 6\" x 6' - 8\"",
+          "width_inches": 42,
+          "y": 1312
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 6\" x 6' - 8\"",
+      "width_inches": 42,
+      "x": 1045,
+      "y": 1078
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603716158511999,
+      "hardware_group": "1",
+      "height_inches": 80,
+      "location": null,
+      "mark": "111",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 13,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "104.1",
+      "room_by": "nearest_label",
+      "room_name": "REF RM",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "1",
+          "height_inches": 80,
+          "location": null,
+          "mark": "111",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "4' - 0\" x 6' - 8\"",
+          "width_inches": 48,
+          "y": 1350
+        }
+      ],
+      "sheet": "A-103",
+      "size": "4' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 48,
+      "x": 662,
+      "y": 1271
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603716158511999,
+      "hardware_group": "1",
+      "height_inches": 80,
+      "location": null,
+      "mark": "108",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 13,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "109.1",
+      "room_by": "nearest_label",
+      "room_name": "TLT A",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "1",
+          "height_inches": 80,
+          "location": null,
+          "mark": "108",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "4' - 0\" x 6' - 8\"",
+          "width_inches": 48,
+          "y": 1300
+        }
+      ],
+      "sheet": "A-103",
+      "size": "4' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 48,
+      "x": 946,
+      "y": 1271
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603716158511999,
+      "hardware_group": "1",
+      "height_inches": 80,
+      "location": null,
+      "mark": "109",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 13,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "109.1",
+      "room_by": "nearest_label",
+      "room_name": "TLT A",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "1",
+          "height_inches": 80,
+          "location": null,
+          "mark": "109",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "4' - 0\" x 6' - 8\"",
+          "width_inches": 48,
+          "y": 1327
+        }
+      ],
+      "sheet": "A-103",
+      "size": "4' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 48,
+      "x": 847,
+      "y": 1296
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.536756185296,
+      "hardware_group": "2",
+      "height_inches": 80,
+      "location": null,
+      "mark": "106.1",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 13,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "106",
+      "room_by": "tag_number",
+      "room_name": "PRIVATE ROOM",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "2",
+          "height_inches": 80,
+          "location": null,
+          "mark": "106.1",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 6\" x 6' - 8\"",
+          "width_inches": 42,
+          "y": 1262
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 6\" x 6' - 8\"",
+      "width_inches": 42,
+      "x": 1051,
+      "y": 1384
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603716158511999,
+      "hardware_group": "2",
+      "height_inches": 80,
+      "location": null,
+      "mark": "109.1",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 13,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "109",
+      "room_by": "tag_number",
+      "room_name": "PRIVATE ROOM",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "2",
+          "height_inches": 80,
+          "location": null,
+          "mark": "109.1",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 6\" x 6' - 8\"",
+          "width_inches": 42,
+          "y": 1338
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 6\" x 6' - 8\"",
+      "width_inches": 42,
+      "x": 1035,
+      "y": 1422
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603716158511999,
+      "hardware_group": "2",
+      "height_inches": 80,
+      "location": null,
+      "mark": "100.1",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 14,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "100",
+      "room_by": "tag_number",
+      "room_name": "PRIVATE ROOM",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "2",
+          "height_inches": 80,
+          "location": null,
+          "mark": "100.1",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 6\" x 6' - 8\"",
+          "width_inches": 42,
+          "y": 1131
+        }
+      ],
+      "sheet": "A-104",
+      "size": "3' - 6\" x 6' - 8\"",
+      "width_inches": 42,
+      "x": 597,
+      "y": 387
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603716158511999,
+      "hardware_group": "2",
+      "height_inches": 80,
+      "location": null,
+      "mark": "101.1",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 14,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "101",
+      "room_by": "tag_number",
+      "room_name": "PRIVATE ROOM",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "2",
+          "height_inches": 80,
+          "location": null,
+          "mark": "101.1",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 6\" x 6' - 8\"",
+          "width_inches": 42,
+          "y": 1157
+        }
+      ],
+      "sheet": "A-104",
+      "size": "3' - 6\" x 6' - 8\"",
+      "width_inches": 42,
+      "x": 266,
+      "y": 401
+    },
+    {
+      "also_on": [
+        "A-106"
+      ],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": "HM-00",
+      "h": 9.603716158511999,
+      "hardware_group": "11",
+      "height_inches": 80,
+      "location": null,
+      "mark": "241",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 14,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "241",
+      "room_by": "nearest_label",
+      "room_name": "SUPPLY STORAGE",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": "HM-00",
+          "hardware_group": "11",
+          "height_inches": 80,
+          "location": null,
+          "mark": "241",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 6\" x 6' - 8\"",
+          "width_inches": 42,
+          "y": 617
+        }
+      ],
+      "sheet": "A-104",
+      "size": "3' - 6\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 42,
+      "x": 795,
+      "y": 409
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603716158511999,
+      "hardware_group": "1",
+      "height_inches": 80,
+      "location": null,
+      "mark": "100",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 14,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "100.1",
+      "room_by": "nearest_label",
+      "room_name": "TLT E",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "1",
+          "height_inches": 80,
+          "location": null,
+          "mark": "100",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "4' - 0\" x 6' - 8\"",
+          "width_inches": 48,
+          "y": 1116
+        }
+      ],
+      "sheet": "A-104",
+      "size": "4' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 48,
+      "x": 444,
+      "y": 522
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603716158511999,
+      "hardware_group": "4",
+      "height_inches": 80,
+      "location": null,
+      "mark": "151",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 14,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "151",
+      "room_by": "nearest_label",
+      "room_name": "EQUIPMENT STORAGE",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "4",
+          "height_inches": 80,
+          "location": null,
+          "mark": "151",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 6\" x 6' - 8\"",
+          "width_inches": 42,
+          "y": 1402
+        }
+      ],
+      "sheet": "A-104",
+      "size": "3' - 6\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 42,
+      "x": 693,
+      "y": 564
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603716158511999,
+      "hardware_group": "1",
+      "height_inches": 80,
+      "location": null,
+      "mark": "101",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 14,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "101",
+      "room_by": "nearest_label",
+      "room_name": "PRIVATE ROOM",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "1",
+          "height_inches": 80,
+          "location": null,
+          "mark": "101",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "4' - 0\" x 6' - 8\"",
+          "width_inches": 48,
+          "y": 1144
+        }
+      ],
+      "sheet": "A-104",
+      "size": "4' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 48,
+      "x": 393,
+      "y": 599
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "HG",
+      "fire_rating": null,
+      "frame_type": "HM-12",
+      "h": 9.603716158511999,
+      "hardware_group": "5",
+      "height_inches": 84,
+      "location": null,
+      "mark": "E101",
+      "matched_by": "exact",
+      "material": "HM",
+      "page": 14,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "HG",
+          "fire_rating": null,
+          "frame_type": "HM-12",
+          "hardware_group": "5",
+          "height_inches": 84,
+          "location": null,
+          "mark": "E101",
+          "material": "HM",
+          "page": 27,
+          "pair": false,
+          "size": "4' - 0\" x 7' - 0\"",
+          "width_inches": 48,
+          "y": 944
+        }
+      ],
+      "sheet": "A-104",
+      "size": "4' - 0\" x 7' - 0\"",
+      "width_inches": 48,
+      "x": 1142,
+      "y": 637
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603716158511999,
+      "hardware_group": "1",
+      "height_inches": 80,
+      "location": null,
+      "mark": "102",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 14,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "102",
+      "room_by": "nearest_label",
+      "room_name": "PRIVATE ROOM",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "1",
+          "height_inches": 80,
+          "location": null,
+          "mark": "102",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "4' - 0\" x 6' - 8\"",
+          "width_inches": 48,
+          "y": 1170
+        }
+      ],
+      "sheet": "A-104",
+      "size": "4' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 48,
+      "x": 394,
+      "y": 691
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603716158511999,
+      "hardware_group": "1",
+      "height_inches": 80,
+      "location": null,
+      "mark": "103",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 14,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "103.1",
+      "room_by": "nearest_label",
+      "room_name": "TLT B",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "1",
+          "height_inches": 80,
+          "location": null,
+          "mark": "103",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "4' - 0\" x 6' - 8\"",
+          "width_inches": 48,
+          "y": 1197
+        }
+      ],
+      "sheet": "A-104",
+      "size": "4' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 48,
+      "x": 452,
+      "y": 757
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603716158511999,
+      "hardware_group": "2",
+      "height_inches": 80,
+      "location": null,
+      "mark": "102.1",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 14,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "102",
+      "room_by": "tag_number",
+      "room_name": "PRIVATE ROOM",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "2",
+          "height_inches": 80,
+          "location": null,
+          "mark": "102.1",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 6\" x 6' - 8\"",
+          "width_inches": 42,
+          "y": 1182
+        }
+      ],
+      "sheet": "A-104",
+      "size": "3' - 6\" x 6' - 8\"",
+      "width_inches": 42,
+      "x": 266,
+      "y": 871
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603716158511999,
+      "hardware_group": "3",
+      "height_inches": 80,
+      "location": null,
+      "mark": "103.1",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 14,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "103",
+      "room_by": "tag_number",
+      "room_name": "PRIVATE ROOM",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "3",
+          "height_inches": 80,
+          "location": null,
+          "mark": "103.1",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 6\" x 6' - 8\"",
+          "width_inches": 42,
+          "y": 1208
+        }
+      ],
+      "sheet": "A-104",
+      "size": "3' - 6\" x 6' - 8\"",
+      "width_inches": 42,
+      "x": 593,
+      "y": 871
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": "F",
+      "h": 9.603716158511999,
+      "hardware_group": "6",
+      "height_inches": 80,
+      "location": null,
+      "mark": "153",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 14,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "153",
+      "room_by": "nearest_label",
+      "room_name": "PANTRY",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": "F",
+          "hardware_group": "6",
+          "height_inches": 80,
+          "location": null,
+          "mark": "153",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "5' - 0\" x 6' - 8\"",
+          "width_inches": 60,
+          "y": 1427
+        }
+      ],
+      "sheet": "A-104",
+      "size": "5' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 60,
+      "x": 1315,
+      "y": 935
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": "F",
+      "h": 9.603716158511999,
+      "hardware_group": "5",
+      "height_inches": 80,
+      "location": null,
+      "mark": "152",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 14,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "152",
+      "room_by": "nearest_label",
+      "room_name": "MECHANICAL ROOM",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": "F",
+          "hardware_group": "5",
+          "height_inches": 80,
+          "location": null,
+          "mark": "152",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "5' - 0\" x 6' - 8\"",
+          "width_inches": 60,
+          "y": 1413
+        }
+      ],
+      "sheet": "A-104",
+      "size": "5' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 60,
+      "x": 1133,
+      "y": 946
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "NV",
+      "fire_rating": null,
+      "frame_type": "NV",
+      "h": 9.603716158511999,
+      "hardware_group": "23",
+      "height_inches": 80,
+      "location": null,
+      "mark": "E203",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 15,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "204",
+      "room_by": "nearest_label",
+      "room_name": "TELECOM",
+      "schedule_rows": [
+        {
+          "door_type": "NV",
+          "fire_rating": null,
+          "frame_type": "NV",
+          "hardware_group": "23",
+          "height_inches": 80,
+          "location": null,
+          "mark": "E203",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "7' - 4\" x 6' - 8\"",
+          "width_inches": 88,
+          "y": 791
+        }
+      ],
+      "sheet": "A-105",
+      "size": "7' - 4\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 88,
+      "x": 1213,
+      "y": 117
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "NV",
+      "fire_rating": null,
+      "frame_type": "HM-00",
+      "h": 9.603716158511999,
+      "hardware_group": "20",
+      "height_inches": 80,
+      "location": null,
+      "mark": "203",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 15,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "203",
+      "room_by": "nearest_label",
+      "room_name": "OFFICE",
+      "schedule_rows": [
+        {
+          "door_type": "NV",
+          "fire_rating": null,
+          "frame_type": "HM-00",
+          "hardware_group": "20",
+          "height_inches": 80,
+          "location": null,
+          "mark": "203",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 255
+        }
+      ],
+      "sheet": "A-105",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1025,
+      "y": 204
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": "HM-00",
+      "h": 9.603716158511999,
+      "hardware_group": "16",
+      "height_inches": 80,
+      "location": null,
+      "mark": "204",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 15,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "204",
+      "room_by": "nearest_label",
+      "room_name": "TELECOM",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": "HM-00",
+          "hardware_group": "16",
+          "height_inches": 80,
+          "location": null,
+          "mark": "204",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 267
+        }
+      ],
+      "sheet": "A-105",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1267,
+      "y": 222
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": "HM-00",
+      "h": 9.603716158511999,
+      "hardware_group": "18",
+      "height_inches": 80,
+      "location": null,
+      "mark": "206",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 15,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "206",
+      "room_by": "nearest_label",
+      "room_name": "STORAGE",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": "HM-00",
+          "hardware_group": "18",
+          "height_inches": 80,
+          "location": null,
+          "mark": "206",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 293
+        }
+      ],
+      "sheet": "A-105",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1267,
+      "y": 328
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": "HM-00",
+      "h": 9.603716158511999,
+      "hardware_group": "11",
+      "height_inches": 80,
+      "location": null,
+      "mark": "202",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 15,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "210",
+      "room_by": "nearest_label",
+      "room_name": "SOILED UTILITY",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": "HM-00",
+          "hardware_group": "11",
+          "height_inches": 80,
+          "location": null,
+          "mark": "202",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 243
+        }
+      ],
+      "sheet": "A-105",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1753,
+      "y": 379
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": "HM-00",
+      "h": 9.603716158511999,
+      "hardware_group": "11",
+      "height_inches": 80,
+      "location": null,
+      "mark": "201",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 15,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "201",
+      "room_by": "nearest_label",
+      "room_name": "STORAGE",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": "HM-00",
+          "hardware_group": "11",
+          "height_inches": 80,
+          "location": null,
+          "mark": "201",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 229
+        }
+      ],
+      "sheet": "A-105",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 629,
+      "y": 383
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": "HM-00",
+      "h": 9.603716158511999,
+      "hardware_group": "17",
+      "height_inches": 80,
+      "location": null,
+      "mark": "205",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 15,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "205",
+      "room_by": "nearest_label",
+      "room_name": "A-202 CLEAN UTILITY",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": "HM-00",
+          "hardware_group": "17",
+          "height_inches": 80,
+          "location": null,
+          "mark": "205",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 280
+        }
+      ],
+      "sheet": "A-105",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 786,
+      "y": 541
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": "HM-00",
+      "h": 9.603716158511999,
+      "hardware_group": "18",
+      "height_inches": 80,
+      "location": null,
+      "mark": "207",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 15,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "207",
+      "room_by": "nearest_label",
+      "room_name": "FIRE RISER ROOM",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": "HM-00",
+          "hardware_group": "18",
+          "height_inches": 80,
+          "location": null,
+          "mark": "207",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 308
+        }
+      ],
+      "sheet": "A-105",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 992,
+      "y": 541
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": "HM-00",
+      "h": 9.603716158511999,
+      "hardware_group": "18",
+      "height_inches": 80,
+      "location": null,
+      "mark": "209",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 15,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "209",
+      "room_by": "nearest_label",
+      "room_name": "JANITOR",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": "HM-00",
+          "hardware_group": "18",
+          "height_inches": 80,
+          "location": null,
+          "mark": "209",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 332
+        }
+      ],
+      "sheet": "A-105",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1065,
+      "y": 541
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": "HM-00",
+      "h": 9.603716158511999,
+      "hardware_group": "18",
+      "height_inches": 80,
+      "location": null,
+      "mark": "208",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 15,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "208",
+      "room_by": "nearest_label",
+      "room_name": "EQUIPMENT STORAGE",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": "HM-00",
+          "hardware_group": "18",
+          "height_inches": 80,
+          "location": null,
+          "mark": "208",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 320
+        }
+      ],
+      "sheet": "A-105",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1522,
+      "y": 541
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": "HM-00",
+      "h": 9.603716158511999,
+      "hardware_group": "12",
+      "height_inches": 80,
+      "location": null,
+      "mark": "210",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 15,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "210",
+      "room_by": "nearest_label",
+      "room_name": "SOILED UTILITY",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": "HM-00",
+          "hardware_group": "12",
+          "height_inches": 80,
+          "location": null,
+          "mark": "210",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 344
+        }
+      ],
+      "sheet": "A-105",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1599,
+      "y": 541
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "NV",
+      "fire_rating": null,
+      "frame_type": "HM-00-DE",
+      "h": 9.603716158511999,
+      "hardware_group": "23",
+      "height_inches": 80,
+      "location": null,
+      "mark": "200.2",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 15,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "200",
+      "room_by": "tag_number",
+      "room_name": "CORRIDOR",
+      "schedule_rows": [
+        {
+          "door_type": "NV",
+          "fire_rating": null,
+          "frame_type": "HM-00-DE",
+          "hardware_group": "23",
+          "height_inches": 80,
+          "location": null,
+          "mark": "200.2",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "7' - 0\" x 6' - 8\"",
+          "width_inches": 84,
+          "y": 190
+        }
+      ],
+      "sheet": "A-105",
+      "size": "7' - 0\" x 6' - 8\"",
+      "width_inches": 84,
+      "x": 1743,
+      "y": 670
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "NV",
+      "fire_rating": null,
+      "frame_type": "HM-00-DE",
+      "h": 9.603716158511999,
+      "hardware_group": "23",
+      "height_inches": 80,
+      "location": null,
+      "mark": "200.1",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 15,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "200",
+      "room_by": "tag_number",
+      "room_name": "CORRIDOR",
+      "schedule_rows": [
+        {
+          "door_type": "NV",
+          "fire_rating": null,
+          "frame_type": "HM-00-DE",
+          "hardware_group": "23",
+          "height_inches": 80,
+          "location": null,
+          "mark": "200.1",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "7' - 0\" x 6' - 8\"",
+          "width_inches": 84,
+          "y": 178
+        }
+      ],
+      "sheet": "A-105",
+      "size": "7' - 0\" x 6' - 8\"",
+      "width_inches": 84,
+      "x": 688,
+      "y": 671
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "HG",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603716158511999,
+      "hardware_group": "5",
+      "height_inches": 84,
+      "location": null,
+      "mark": "E201",
+      "matched_by": "exact",
+      "material": "HM",
+      "page": 15,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "HG",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "5",
+          "height_inches": 84,
+          "location": null,
+          "mark": "E201",
+          "material": "HM",
+          "page": 27,
+          "pair": false,
+          "size": "4' - 0\" x 7' - 0\"",
+          "width_inches": 48,
+          "y": 765
+        }
+      ],
+      "sheet": "A-105",
+      "size": "4' - 0\" x 7' - 0\"",
+      "width_inches": 48,
+      "x": 1664,
+      "y": 828
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": "HM-00",
+      "h": 9.603716158511999,
+      "hardware_group": "11",
+      "height_inches": 80,
+      "location": null,
+      "mark": "221",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 15,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "271",
+      "room_by": "nearest_label",
+      "room_name": "NURSE STATION",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": "HM-00",
+          "hardware_group": "11",
+          "height_inches": 80,
+          "location": null,
+          "mark": "221",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 358
+        }
+      ],
+      "sheet": "A-105",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1037,
+      "y": 944
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": "HM-00",
+      "h": 9.603716158511999,
+      "hardware_group": "5",
+      "height_inches": 80,
+      "location": null,
+      "mark": "223",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 15,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "223",
+      "room_by": "nearest_label",
+      "room_name": "DATA ROOM",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": "HM-00",
+          "hardware_group": "5",
+          "height_inches": 80,
+          "location": null,
+          "mark": "223",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 385
+        }
+      ],
+      "sheet": "A-105",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1107,
+      "y": 1147
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": "HM-00",
+      "h": 9.603716158511999,
+      "hardware_group": "17",
+      "height_inches": 80,
+      "location": null,
+      "mark": "222",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 15,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "222",
+      "room_by": "nearest_label",
+      "room_name": "TUB ROOM",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": "HM-00",
+          "hardware_group": "17",
+          "height_inches": 80,
+          "location": null,
+          "mark": "222",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 373
+        }
+      ],
+      "sheet": "A-105",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1267,
+      "y": 1174
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": "HM-00",
+      "h": 9.603716158511999,
+      "hardware_group": "20",
+      "height_inches": 80,
+      "location": null,
+      "mark": "224",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 15,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "224",
+      "room_by": "nearest_label",
+      "room_name": "TUB ROOM",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": "HM-00",
+          "hardware_group": "20",
+          "height_inches": 80,
+          "location": null,
+          "mark": "224",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 6\" x 6' - 8\"",
+          "width_inches": 42,
+          "y": 398
+        }
+      ],
+      "sheet": "A-105",
+      "size": "3' - 6\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 42,
+      "x": 1293,
+      "y": 1250
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": "HM-00",
+      "h": 9.603716158511999,
+      "hardware_group": "19",
+      "height_inches": 80,
+      "location": null,
+      "mark": "225.1",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 15,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "225",
+      "room_by": "tag_number",
+      "room_name": "ELECTRICAL/ MECHANICAL",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": "HM-00",
+          "hardware_group": "19",
+          "height_inches": 80,
+          "location": null,
+          "mark": "225.1",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 6\" x 6' - 8\"",
+          "width_inches": 42,
+          "y": 410
+        }
+      ],
+      "sheet": "A-105",
+      "size": "3' - 6\" x 6' - 8\"",
+      "width_inches": 42,
+      "x": 1116,
+      "y": 1298
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": "HM-00",
+      "h": 9.603716158511999,
+      "hardware_group": "24",
+      "height_inches": 80,
+      "location": null,
+      "mark": "227",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 15,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "227",
+      "room_by": "nearest_label",
+      "room_name": "30 TLT",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": "HM-00",
+          "hardware_group": "24",
+          "height_inches": 80,
+          "location": null,
+          "mark": "227",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 435
+        }
+      ],
+      "sheet": "A-105",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1116,
+      "y": 1462
+    },
+    {
+      "also_on": [
+        "A-106"
+      ],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": "HM-00",
+      "h": 9.603716158511999,
+      "hardware_group": "21",
+      "height_inches": 80,
+      "location": null,
+      "mark": "230.1",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 15,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "230",
+      "room_by": "tag_number",
+      "room_name": "HOSPITALITY ROOM",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": "HM-00",
+          "hardware_group": "21",
+          "height_inches": 80,
+          "location": null,
+          "mark": "230.1",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 487
+        }
+      ],
+      "sheet": "A-105",
+      "size": "3' - 0\" x 6' - 8\"",
+      "width_inches": 36,
+      "x": 1427,
+      "y": 1477
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": "HM-00",
+      "h": 9.603716158511999,
+      "hardware_group": "5",
+      "height_inches": 80,
+      "location": null,
+      "mark": "225.2",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 15,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "225",
+      "room_by": "tag_number",
+      "room_name": "ELECTRICAL/ MECHANICAL",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": "HM-00",
+          "hardware_group": "5",
+          "height_inches": 80,
+          "location": null,
+          "mark": "225.2",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 6\" x 6' - 8\"",
+          "width_inches": 42,
+          "y": 423
+        }
+      ],
+      "sheet": "A-105",
+      "size": "3' - 6\" x 6' - 8\"",
+      "width_inches": 42,
+      "x": 1002,
+      "y": 1539
+    },
+    {
+      "also_on": [
+        "A-106"
+      ],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": "HM-00",
+      "h": 9.603716158511999,
+      "hardware_group": "24",
+      "height_inches": 80,
+      "location": null,
+      "mark": "229",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 15,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "227",
+      "room_by": "nearest_label",
+      "room_name": "30 TLT",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": "HM-00",
+          "hardware_group": "24",
+          "height_inches": 80,
+          "location": null,
+          "mark": "229",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 461
+        }
+      ],
+      "sheet": "A-105",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1041,
+      "y": 1594
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": "HM-00",
+      "h": 9.603716158511999,
+      "hardware_group": "24",
+      "height_inches": 80,
+      "location": null,
+      "mark": "230",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 16,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "230",
+      "room_by": "nearest_label",
+      "room_name": "HOSPITALITY ROOM",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": "HM-00",
+          "hardware_group": "24",
+          "height_inches": 80,
+          "location": null,
+          "mark": "230",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 474
+        }
+      ],
+      "sheet": "A-106",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 891,
+      "y": 336
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": "HM-00",
+      "h": 9.603716158511999,
+      "hardware_group": "16",
+      "height_inches": 80,
+      "location": null,
+      "mark": "232",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 16,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "232",
+      "room_by": "nearest_label",
+      "room_name": "LIBRARY/GAME ROOM",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": "HM-00",
+          "hardware_group": "16",
+          "height_inches": 80,
+          "location": null,
+          "mark": "232",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 510
+        }
+      ],
+      "sheet": "A-106",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 866,
+      "y": 415
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": "HM-00",
+      "h": 9.603716158511999,
+      "hardware_group": "15",
+      "height_inches": 80,
+      "location": null,
+      "mark": "231",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 16,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "231",
+      "room_by": "nearest_label",
+      "room_name": "EXAM ROOM",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": "HM-00",
+          "hardware_group": "15",
+          "height_inches": 80,
+          "location": null,
+          "mark": "231",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "4' - 0\" x 6' - 8\"",
+          "width_inches": 48,
+          "y": 500
+        }
+      ],
+      "sheet": "A-106",
+      "size": "4' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 48,
+      "x": 715,
+      "y": 458
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "NV",
+      "fire_rating": null,
+      "frame_type": "HM-00-DE",
+      "h": 9.603716158511999,
+      "hardware_group": "23",
+      "height_inches": 80,
+      "location": null,
+      "mark": "228",
+      "matched_by": "exact",
+      "material": "HM",
+      "page": 16,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "234",
+      "room_by": "nearest_label",
+      "room_name": "FACILITIES WORK RM",
+      "schedule_rows": [
+        {
+          "door_type": "NV",
+          "fire_rating": null,
+          "frame_type": "HM-00-DE",
+          "hardware_group": "23",
+          "height_inches": 80,
+          "location": null,
+          "mark": "228",
+          "material": "HM",
+          "page": 27,
+          "pair": false,
+          "size": "7' - 0\" x 6' - 8\"",
+          "width_inches": 84,
+          "y": 447
+        }
+      ],
+      "sheet": "A-106",
+      "size": "7' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 84,
+      "x": 815,
+      "y": 576
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": "HM-00",
+      "h": 9.603716158511999,
+      "hardware_group": "20",
+      "height_inches": 80,
+      "location": null,
+      "mark": "233",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 16,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "233",
+      "room_by": "nearest_label",
+      "room_name": "STORAGE ROOM",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": "HM-00",
+          "hardware_group": "20",
+          "height_inches": 80,
+          "location": null,
+          "mark": "233",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 526
+        }
+      ],
+      "sheet": "A-106",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 715,
+      "y": 678
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": "HM-00",
+      "h": 9.603716158511999,
+      "hardware_group": "20",
+      "height_inches": 80,
+      "location": null,
+      "mark": "234",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 16,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "234",
+      "room_by": "nearest_label",
+      "room_name": "FACILITIES WORK RM",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": "HM-00",
+          "hardware_group": "20",
+          "height_inches": 80,
+          "location": null,
+          "mark": "234",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 539
+        }
+      ],
+      "sheet": "A-106",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 938,
+      "y": 716
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": "HM-00",
+      "h": 9.603716158511999,
+      "hardware_group": "20",
+      "height_inches": 80,
+      "location": null,
+      "mark": "235",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 16,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "235",
+      "room_by": "nearest_label",
+      "room_name": "WORK OFFICE",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": "HM-00",
+          "hardware_group": "20",
+          "height_inches": 80,
+          "location": null,
+          "mark": "235",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 552
+        }
+      ],
+      "sheet": "A-106",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 713,
+      "y": 757
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": "HM-00",
+      "h": 9.603716158511999,
+      "hardware_group": "17",
+      "height_inches": 80,
+      "location": null,
+      "mark": "237",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 16,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "239",
+      "room_by": "nearest_label",
+      "room_name": "STORAGE",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": "HM-00",
+          "hardware_group": "17",
+          "height_inches": 80,
+          "location": null,
+          "mark": "237",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 566
+        }
+      ],
+      "sheet": "A-106",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 529,
+      "y": 1108
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": "HM-00",
+      "h": 9.603716158511999,
+      "hardware_group": "12",
+      "height_inches": 80,
+      "location": null,
+      "mark": "238",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 16,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "TA-12",
+      "room_by": "nearest_label",
+      "room_name": "TA-06",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": "HM-00",
+          "hardware_group": "12",
+          "height_inches": 80,
+          "location": null,
+          "mark": "238",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 578
+        }
+      ],
+      "sheet": "A-106",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1054,
+      "y": 1108
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": "HM-00",
+      "h": 9.603716158511999,
+      "hardware_group": "18",
+      "height_inches": 80,
+      "location": null,
+      "mark": "240",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 16,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "240",
+      "room_by": "nearest_label",
+      "room_name": "HSKP",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": "HM-00",
+          "hardware_group": "18",
+          "height_inches": 80,
+          "location": null,
+          "mark": "240",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 602
+        }
+      ],
+      "sheet": "A-106",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1106,
+      "y": 1160
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": "HM-00",
+      "h": 9.603716158511999,
+      "hardware_group": "18",
+      "height_inches": 80,
+      "location": null,
+      "mark": "239",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 16,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "239",
+      "room_by": "nearest_label",
+      "room_name": "STORAGE",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": "HM-00",
+          "hardware_group": "18",
+          "height_inches": 80,
+          "location": null,
+          "mark": "239",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 590
+        }
+      ],
+      "sheet": "A-106",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 475,
+      "y": 1161
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": "HM-00",
+      "h": 9.603716158511999,
+      "hardware_group": "11",
+      "height_inches": 80,
+      "location": null,
+      "mark": "242",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 16,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "242",
+      "room_by": "nearest_label",
+      "room_name": "STORAGE",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": "HM-00",
+          "hardware_group": "11",
+          "height_inches": 80,
+          "location": null,
+          "mark": "242",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "3' - 6\" x 6' - 8\"",
+          "width_inches": 42,
+          "y": 631
+        }
+      ],
+      "sheet": "A-106",
+      "size": "3' - 6\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 42,
+      "x": 1377,
+      "y": 1168
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "NV",
+      "fire_rating": null,
+      "frame_type": "HM-00-DE",
+      "h": 9.603716158511999,
+      "hardware_group": "23",
+      "height_inches": 80,
+      "location": null,
+      "mark": "200.3",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 16,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "239",
+      "room_by": "nearest_label",
+      "room_name": "STORAGE",
+      "schedule_rows": [
+        {
+          "door_type": "NV",
+          "fire_rating": null,
+          "frame_type": "HM-00-DE",
+          "hardware_group": "23",
+          "height_inches": 80,
+          "location": null,
+          "mark": "200.3",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "7' - 0\" x 6' - 8\"",
+          "width_inches": 84,
+          "y": 202
+        }
+      ],
+      "sheet": "A-106",
+      "size": "7' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 84,
+      "x": 457,
+      "y": 1322
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "NV",
+      "fire_rating": null,
+      "frame_type": "HM-00-DE",
+      "h": 9.603716158511999,
+      "hardware_group": "23",
+      "height_inches": 80,
+      "location": null,
+      "mark": "200.4",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 16,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "240",
+      "room_by": "nearest_label",
+      "room_name": "HSKP",
+      "schedule_rows": [
+        {
+          "door_type": "NV",
+          "fire_rating": null,
+          "frame_type": "HM-00-DE",
+          "hardware_group": "23",
+          "height_inches": 80,
+          "location": null,
+          "mark": "200.4",
+          "material": "WD",
+          "page": 27,
+          "pair": false,
+          "size": "7' - 0\" x 6' - 8\"",
+          "width_inches": 84,
+          "y": 216
+        }
+      ],
+      "sheet": "A-106",
+      "size": "7' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 84,
+      "x": 1126,
+      "y": 1322
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        27
+      ],
+      "door_type": "HG",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603716158511999,
+      "hardware_group": "5",
+      "height_inches": 84,
+      "location": null,
+      "mark": "E202",
+      "matched_by": "exact",
+      "material": "HM",
+      "page": 16,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "243",
+      "room_by": "nearest_label",
+      "room_name": "LIVING ROOM",
+      "schedule_rows": [
+        {
+          "door_type": "HG",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "5",
+          "height_inches": 84,
+          "location": null,
+          "mark": "E202",
+          "material": "HM",
+          "page": 27,
+          "pair": false,
+          "size": "4' - 0\" x 7' - 0\"",
+          "width_inches": 48,
+          "y": 780
+        }
+      ],
+      "sheet": "A-106",
+      "size": "4' - 0\" x 7' - 0\"",
+      "unsure": true,
+      "width_inches": 48,
+      "x": 973,
+      "y": 1376
+    }
+  ]
+}

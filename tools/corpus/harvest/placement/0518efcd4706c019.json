@@ -1,0 +1,2405 @@
+{
+  "rooms": [
+    {
+      "name": "ISSUE DATE: 6/27/2025 BID DOCUMENTS",
+      "number": "A-101",
+      "page": 16,
+      "points_per_foot": 9,
+      "sheet": "A-101",
+      "x": 2471,
+      "y": 1374
+    },
+    {
+      "name": "ISSUE DATE: 6/27/2025 BID DOCUMENTS",
+      "number": "A-102",
+      "page": 17,
+      "points_per_foot": 9,
+      "sheet": "A-102",
+      "x": 2471,
+      "y": 1374
+    },
+    {
+      "name": "BED 2",
+      "number": "202",
+      "page": 18,
+      "points_per_foot": 9,
+      "sheet": "A-103",
+      "x": 1500,
+      "y": 218
+    },
+    {
+      "name": "BED 3",
+      "number": "205",
+      "page": 18,
+      "points_per_foot": 9,
+      "sheet": "A-103",
+      "x": 1614,
+      "y": 218
+    },
+    {
+      "name": "BED 4",
+      "number": "206",
+      "page": 18,
+      "points_per_foot": 9,
+      "sheet": "A-103",
+      "x": 1692,
+      "y": 218
+    },
+    {
+      "name": "BED 5",
+      "number": "207",
+      "page": 18,
+      "points_per_foot": 9,
+      "sheet": "A-103",
+      "x": 1760,
+      "y": 218
+    },
+    {
+      "name": "MECH.",
+      "number": "208",
+      "page": 18,
+      "points_per_foot": 9,
+      "sheet": "A-103",
+      "x": 1821,
+      "y": 218
+    },
+    {
+      "name": "BED 6",
+      "number": "209",
+      "page": 18,
+      "points_per_foot": 9,
+      "sheet": "A-103",
+      "x": 1883,
+      "y": 218
+    },
+    {
+      "name": "NORTH STAIR",
+      "number": "200",
+      "page": 18,
+      "points_per_foot": 9,
+      "sheet": "A-103",
+      "x": 1433,
+      "y": 274
+    },
+    {
+      "name": "CORR.",
+      "number": "204",
+      "page": 18,
+      "points_per_foot": 9,
+      "sheet": "A-103",
+      "x": 1864,
+      "y": 308
+    },
+    {
+      "name": "CORR.",
+      "number": "214",
+      "page": 18,
+      "points_per_foot": 9,
+      "sheet": "A-103",
+      "x": 1884,
+      "y": 313
+    },
+    {
+      "name": "STOR.",
+      "number": "219",
+      "page": 18,
+      "points_per_foot": 9,
+      "sheet": "A-103",
+      "x": 1431,
+      "y": 348
+    },
+    {
+      "name": "STOR.",
+      "number": "213",
+      "page": 18,
+      "points_per_foot": 9,
+      "sheet": "A-103",
+      "x": 1952,
+      "y": 353
+    },
+    {
+      "name": "BED 10",
+      "number": "217",
+      "page": 18,
+      "points_per_foot": 9,
+      "sheet": "A-103",
+      "x": 1504,
+      "y": 373
+    },
+    {
+      "name": "BED 9",
+      "number": "216",
+      "page": 18,
+      "points_per_foot": 9,
+      "sheet": "A-103",
+      "x": 1713,
+      "y": 377
+    },
+    {
+      "name": "BED 8",
+      "number": "215",
+      "page": 18,
+      "points_per_foot": 9,
+      "sheet": "A-103",
+      "x": 1793,
+      "y": 377
+    },
+    {
+      "name": "BED 7",
+      "number": "214",
+      "page": 18,
+      "points_per_foot": 9,
+      "sheet": "A-103",
+      "x": 1858,
+      "y": 377
+    },
+    {
+      "name": "SOUTH STAIR",
+      "number": "212",
+      "page": 18,
+      "points_per_foot": 9,
+      "sheet": "A-103",
+      "x": 2011,
+      "y": 407
+    },
+    {
+      "name": "ADA W.C. 1",
+      "number": "112",
+      "page": 18,
+      "points_per_foot": 9,
+      "sheet": "A-103",
+      "x": 1950,
+      "y": 779
+    },
+    {
+      "name": "MEETING",
+      "number": "107",
+      "page": 18,
+      "points_per_foot": 9,
+      "sheet": "A-103",
+      "x": 1534,
+      "y": 881
+    },
+    {
+      "name": "OFFICE 1",
+      "number": "108",
+      "page": 18,
+      "points_per_foot": 9,
+      "sheet": "A-103",
+      "x": 1656,
+      "y": 881
+    },
+    {
+      "name": "MECH / OFFICE 2 SPRINKLERBED 1 ADA",
+      "number": "109",
+      "page": 18,
+      "points_per_foot": 9,
+      "sheet": "A-103",
+      "x": 1736,
+      "y": 881
+    },
+    {
+      "name": "MECH / OFFICE 2 SPRINKLERBED 1 ADA",
+      "number": "110",
+      "page": 18,
+      "points_per_foot": 9,
+      "sheet": "A-103",
+      "x": 1808,
+      "y": 881
+    },
+    {
+      "name": "MECH / OFFICE 2 SPRINKLERBED 1 ADA",
+      "number": "111",
+      "page": 18,
+      "points_per_foot": 9,
+      "sheet": "A-103",
+      "x": 1874,
+      "y": 881
+    },
+    {
+      "name": "NORTH STAIR",
+      "number": "105",
+      "page": 18,
+      "points_per_foot": 9,
+      "sheet": "A-103",
+      "x": 1433,
+      "y": 928
+    },
+    {
+      "name": "CORR",
+      "number": "106",
+      "page": 18,
+      "points_per_foot": 9,
+      "sheet": "A-103",
+      "x": 1722,
+      "y": 954
+    },
+    {
+      "name": "CORR",
+      "number": "117B",
+      "page": 18,
+      "points_per_foot": 9,
+      "sheet": "A-103",
+      "x": 1699,
+      "y": 961
+    },
+    {
+      "name": "STOR.",
+      "number": "120",
+      "page": 18,
+      "points_per_foot": 9,
+      "sheet": "A-103",
+      "x": 1422,
+      "y": 995
+    },
+    {
+      "name": "CL.",
+      "number": "115",
+      "page": 18,
+      "points_per_foot": 9,
+      "sheet": "A-103",
+      "x": 1937,
+      "y": 1001
+    },
+    {
+      "name": "KITCH.",
+      "number": "118",
+      "page": 18,
+      "points_per_foot": 9,
+      "sheet": "A-103",
+      "x": 1478,
+      "y": 1018
+    },
+    {
+      "name": "STOR.",
+      "number": "116",
+      "page": 18,
+      "points_per_foot": 9,
+      "sheet": "A-103",
+      "x": 1851,
+      "y": 1034
+    },
+    {
+      "name": "SOUTH STAIR",
+      "number": "114",
+      "page": 18,
+      "points_per_foot": 9,
+      "sheet": "A-103",
+      "x": 2010,
+      "y": 1049
+    },
+    {
+      "name": "PLATFORM",
+      "number": "119",
+      "page": 18,
+      "points_per_foot": 9,
+      "sheet": "A-103",
+      "x": 1409,
+      "y": 1070
+    },
+    {
+      "name": "OPEN",
+      "number": "117",
+      "page": 18,
+      "points_per_foot": 9,
+      "sheet": "A-103",
+      "x": 1674,
+      "y": 1070
+    },
+    {
+      "name": "PLATFORM",
+      "number": "11",
+      "page": 18,
+      "points_per_foot": 9,
+      "sheet": "A-103",
+      "x": 1441,
+      "y": 1072
+    },
+    {
+      "name": "EXHIBITION HALL",
+      "number": "100",
+      "page": 18,
+      "points_per_foot": 9,
+      "sheet": "A-103",
+      "x": 1321,
+      "y": 1216
+    },
+    {
+      "name": "ISSUE DATE: 6/27/2025 BID DOCUMENTS",
+      "number": "A-103",
+      "page": 18,
+      "points_per_foot": 9,
+      "sheet": "A-103",
+      "x": 2471,
+      "y": 1374
+    },
+    {
+      "name": "ADA W.C. 1",
+      "number": "112",
+      "page": 22,
+      "points_per_foot": 18,
+      "sheet": "A-401",
+      "x": 1626,
+      "y": 1015
+    },
+    {
+      "name": "MEETING",
+      "number": "107",
+      "page": 22,
+      "points_per_foot": 18,
+      "sheet": "A-401",
+      "x": 831,
+      "y": 1058
+    },
+    {
+      "name": "OFFICE 1",
+      "number": "108",
+      "page": 22,
+      "points_per_foot": 18,
+      "sheet": "A-401",
+      "x": 1074,
+      "y": 1058
+    },
+    {
+      "name": "OFFICE 2",
+      "number": "109",
+      "page": 22,
+      "points_per_foot": 18,
+      "sheet": "A-401",
+      "x": 1234,
+      "y": 1058
+    },
+    {
+      "name": "MECH / SPRINKLER",
+      "number": "110",
+      "page": 22,
+      "points_per_foot": 18,
+      "sheet": "A-401",
+      "x": 1379,
+      "y": 1058
+    },
+    {
+      "name": "BED 1 ADA",
+      "number": "111",
+      "page": 22,
+      "points_per_foot": 18,
+      "sheet": "A-401",
+      "x": 1511,
+      "y": 1058
+    },
+    {
+      "name": "NORTH STAIR",
+      "number": "105",
+      "page": 22,
+      "points_per_foot": 18,
+      "sheet": "A-401",
+      "x": 629,
+      "y": 1174
+    },
+    {
+      "name": "CORR",
+      "number": "106",
+      "page": 22,
+      "points_per_foot": 18,
+      "sheet": "A-401",
+      "x": 1207,
+      "y": 1204
+    },
+    {
+      "name": "CL.",
+      "number": "115",
+      "page": 22,
+      "points_per_foot": 18,
+      "sheet": "A-401",
+      "x": 1636,
+      "y": 1298
+    },
+    {
+      "name": "KITCH.",
+      "number": "118",
+      "page": 22,
+      "points_per_foot": 18,
+      "sheet": "A-401",
+      "x": 754,
+      "y": 1344
+    },
+    {
+      "name": "OPEN",
+      "number": "117",
+      "page": 22,
+      "points_per_foot": 18,
+      "sheet": "A-401",
+      "x": 1094,
+      "y": 1363
+    },
+    {
+      "name": "STOR.",
+      "number": "116",
+      "page": 22,
+      "points_per_foot": 18,
+      "sheet": "A-401",
+      "x": 1465,
+      "y": 1363
+    },
+    {
+      "name": "ISSUE DATE: 6/27/2025 BID DOCUMENTS",
+      "number": "A-401",
+      "page": 22,
+      "points_per_foot": 18,
+      "sheet": "A-401",
+      "x": 2471,
+      "y": 1374
+    },
+    {
+      "name": "SOUTH STAIR",
+      "number": "114",
+      "page": 22,
+      "points_per_foot": 18,
+      "sheet": "A-401",
+      "x": 1783,
+      "y": 1395
+    },
+    {
+      "name": "PLATFORM",
+      "number": "119",
+      "page": 22,
+      "points_per_foot": 18,
+      "sheet": "A-401",
+      "x": 581,
+      "y": 1437
+    }
+  ],
+  "set": {
+    "label": null,
+    "page_count": 48,
+    "rows_total": 40,
+    "sha16": "0518efcd4706c019",
+    "source_url": null,
+    "tier": "agreed"
+  },
+  "sheets": [
+    {
+      "height": 1728,
+      "page": 16,
+      "points_per_foot": [
+        9
+      ],
+      "scales": [
+        "1/8\" = 1'-0\"",
+        "1/8\" = 1'-0\""
+      ],
+      "sheet": "A-101",
+      "title": "FLOOR PLANS",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 17,
+      "points_per_foot": [
+        9
+      ],
+      "scales": [
+        "1/8\" = 1'-0\"",
+        "1/8\" = 1'-0\""
+      ],
+      "sheet": "A-102",
+      "title": "DIMENSION PLANS",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 18,
+      "points_per_foot": [
+        9
+      ],
+      "scales": [
+        "1/8\" = 1'-0\"",
+        "1/8\" = 1'-0\""
+      ],
+      "sheet": "A-103",
+      "title": "REFERENCE PLANS",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 22,
+      "points_per_foot": [
+        18
+      ],
+      "scales": [
+        "1/4\" = 1'-0\"",
+        "1/4\" = 1'-0\""
+      ],
+      "sheet": "A-401",
+      "title": "ENLARGED PLANS",
+      "width": 2592
+    }
+  ],
+  "summary": {
+    "marks_placed": 40,
+    "marks_total": 40,
+    "placed_rate": 1,
+    "rooms_total": 52,
+    "sheets_total": 4,
+    "sheets_with_scale": 4,
+    "unplaced": []
+  },
+  "tags": [
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        28
+      ],
+      "door_type": "B",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 12.5123,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "203",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "202",
+      "room_by": "nearest_label",
+      "room_name": "BED 2",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "203",
+          "material": "SCW",
+          "page": 28,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 389
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1557,
+      "y": 135
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        28
+      ],
+      "door_type": "B",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 12.5123,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "210",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "209",
+      "room_by": "nearest_label",
+      "room_name": "BED 6",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "210",
+          "material": "SCW",
+          "page": 28,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 453
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1966,
+      "y": 136
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        28
+      ],
+      "door_type": "B",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 12.5123,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "211",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "209",
+      "room_by": "nearest_label",
+      "room_name": "BED 6",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "211",
+          "material": "SCW",
+          "page": 28,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 464
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 2017,
+      "y": 137
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        28
+      ],
+      "door_type": "B",
+      "fire_rating": "20",
+      "frame_type": "AA",
+      "h": 8.0079,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "202",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "202",
+      "room_by": "nearest_label",
+      "room_name": "BED 2",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "20",
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "202",
+          "material": "SCW",
+          "page": 28,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 378
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1516,
+      "y": 282
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        28
+      ],
+      "door_type": "B",
+      "fire_rating": "20",
+      "frame_type": "AA",
+      "h": 8.0079,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "205",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "205",
+      "room_by": "nearest_label",
+      "room_name": "BED 3",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "20",
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "205",
+          "material": "SCW",
+          "page": 28,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 399
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1636,
+      "y": 282
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        28
+      ],
+      "door_type": "B",
+      "fire_rating": "20",
+      "frame_type": "AA",
+      "h": 8.0079,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "207",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "207",
+      "room_by": "nearest_label",
+      "room_name": "BED 5",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "20",
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "207",
+          "material": "SCW",
+          "page": 28,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 421
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1777,
+      "y": 282
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        28
+      ],
+      "door_type": "B",
+      "fire_rating": "60",
+      "frame_type": "AA",
+      "h": 8.0079,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "208",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "204",
+      "room_by": "nearest_label",
+      "room_name": "CORR.",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "60",
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "208",
+          "material": "SCW",
+          "page": 28,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 432
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1823,
+      "y": 282
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        28
+      ],
+      "door_type": "B",
+      "fire_rating": "20",
+      "frame_type": "AA",
+      "h": 8.0079,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "206",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "206",
+      "room_by": "nearest_label",
+      "room_name": "BED 4",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "20",
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "206",
+          "material": "SCW",
+          "page": 28,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 410
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1672,
+      "y": 283
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        28
+      ],
+      "door_type": "B",
+      "fire_rating": "20",
+      "frame_type": "AA",
+      "h": 8.0079,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "209",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "204",
+      "room_by": "nearest_label",
+      "room_name": "CORR.",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "20",
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "209",
+          "material": "SCW",
+          "page": 28,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 443
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1868,
+      "y": 283
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        28
+      ],
+      "door_type": "B",
+      "fire_rating": "45",
+      "frame_type": "AA",
+      "h": 8.0079,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "200",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "200",
+      "room_by": "nearest_label",
+      "room_name": "NORTH STAIR",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "45",
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "200",
+          "material": "SCW",
+          "page": 28,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 367
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1468,
+      "y": 304
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        28
+      ],
+      "door_type": "B",
+      "fire_rating": "20",
+      "frame_type": "AA",
+      "h": 8.0079,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "217",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "217",
+      "room_by": "nearest_label",
+      "room_name": "BED 10",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "20",
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "217",
+          "material": "SCW",
+          "page": 28,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 529
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1558,
+      "y": 322
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        28
+      ],
+      "door_type": "B",
+      "fire_rating": "20",
+      "frame_type": "AA",
+      "h": 8.0079,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "216",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "216",
+      "room_by": "nearest_label",
+      "room_name": "BED 9",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "20",
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "216",
+          "material": "SCW",
+          "page": 28,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 518
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1735,
+      "y": 322
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        28
+      ],
+      "door_type": "B",
+      "fire_rating": "20",
+      "frame_type": "AA",
+      "h": 8.0079,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "215",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "215",
+      "room_by": "nearest_label",
+      "room_name": "BED 8",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "20",
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "215",
+          "material": "SCW",
+          "page": 28,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 507
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1771,
+      "y": 322
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        28
+      ],
+      "door_type": "A",
+      "fire_rating": "60",
+      "frame_type": "AA",
+      "h": 8.0079,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "213",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "213",
+      "room_by": "nearest_label",
+      "room_name": "STOR.",
+      "schedule_rows": [
+        {
+          "door_type": "A",
+          "fire_rating": "60",
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "213",
+          "material": "SCW",
+          "page": 28,
+          "pair": false,
+          "size": "6' - 0\" x 6' - 8\"",
+          "width_inches": 72,
+          "y": 486
+        }
+      ],
+      "sheet": "A-103",
+      "size": "6' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 72,
+      "x": 1944,
+      "y": 322
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        28
+      ],
+      "door_type": "B",
+      "fire_rating": "45",
+      "frame_type": "AA",
+      "h": 8.0079,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "212",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "213",
+      "room_by": "nearest_label",
+      "room_name": "STOR.",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "45",
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "212",
+          "material": "SCW",
+          "page": 28,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 475
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 2023,
+      "y": 322
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        28
+      ],
+      "door_type": "B",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 8.0079,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "219",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "219",
+      "room_by": "nearest_label",
+      "room_name": "STOR.",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "219",
+          "material": "SCW",
+          "page": 28,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 551
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1467,
+      "y": 340
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        28
+      ],
+      "door_type": "B",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 12.5123,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "218",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "217",
+      "room_by": "nearest_label",
+      "room_name": "BED 10",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "218",
+          "material": "SCW",
+          "page": 28,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 540
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1599,
+      "y": 471
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        28
+      ],
+      "door_type": "A",
+      "fire_rating": null,
+      "frame_type": "CC",
+      "h": 8.0079,
+      "hardware_group": null,
+      "height_inches": 96,
+      "location": null,
+      "mark": "101",
+      "matched_by": "exact",
+      "material": "HM",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "105",
+      "room_by": "nearest_label",
+      "room_name": "NORTH STAIR",
+      "schedule_rows": [
+        {
+          "door_type": "A",
+          "fire_rating": null,
+          "frame_type": "CC",
+          "hardware_group": null,
+          "height_inches": 96,
+          "location": null,
+          "mark": "101",
+          "material": "HM",
+          "page": 28,
+          "pair": false,
+          "size": "7' - 4\" x 8' - 0\"",
+          "width_inches": 88,
+          "y": 140
+        }
+      ],
+      "sheet": "A-103",
+      "size": "7' - 4\" x 8' - 0\"",
+      "unsure": true,
+      "width_inches": 88,
+      "x": 1335,
+      "y": 811
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        28
+      ],
+      "door_type": "ETR",
+      "fire_rating": "NA",
+      "frame_type": "ETR",
+      "h": 8.0079,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "104",
+      "matched_by": "exact",
+      "material": "ETR",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "ETR",
+          "fire_rating": "NA",
+          "frame_type": "ETR",
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "104",
+          "material": "ETR",
+          "page": 28,
+          "pair": false,
+          "size": "2' - 6\" x 6' - 8\"",
+          "width_inches": 30,
+          "y": 173
+        }
+      ],
+      "sheet": "A-103",
+      "size": "2' - 6\" x 6' - 8\"",
+      "width_inches": 30,
+      "x": 696,
+      "y": 906
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        28
+      ],
+      "door_type": "B",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 8.0079,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "107",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "108",
+      "room_by": "nearest_label",
+      "room_name": "OFFICE 1",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "107",
+          "material": "SCW",
+          "page": 28,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 204
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1599,
+      "y": 931
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        28
+      ],
+      "door_type": "B",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 8.0079,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "108",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "117B",
+      "room_by": "nearest_label",
+      "room_name": "CORR",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "108",
+          "material": "SCW",
+          "page": 28,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 216
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1679,
+      "y": 931
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        28
+      ],
+      "door_type": "B",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 8.0079,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "109",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "106",
+      "room_by": "nearest_label",
+      "room_name": "CORR",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "109",
+          "material": "SCW",
+          "page": 28,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 227
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1760,
+      "y": 931
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        28
+      ],
+      "door_type": "B",
+      "fire_rating": "60",
+      "frame_type": "AA",
+      "h": 8.0079,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "110",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "110",
+      "room_by": "nearest_label",
+      "room_name": "MECH / OFFICE 2 SPRINKLERBED 1 ADA",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "60",
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "110",
+          "material": "SCW",
+          "page": 28,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 238
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1822,
+      "y": 931
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        28
+      ],
+      "door_type": "B",
+      "fire_rating": "20",
+      "frame_type": "AA",
+      "h": 8.0079,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "111",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "111",
+      "room_by": "nearest_label",
+      "room_name": "MECH / OFFICE 2 SPRINKLERBED 1 ADA",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "20",
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "111",
+          "material": "SCW",
+          "page": 28,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 249
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1896,
+      "y": 931
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        28
+      ],
+      "door_type": "B",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 8.0079,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "112",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "115",
+      "room_by": "nearest_label",
+      "room_name": "CL.",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "112",
+          "material": "SCW",
+          "page": 28,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 259
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1932,
+      "y": 931
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        28
+      ],
+      "door_type": "B",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 8.0079,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "113",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "115",
+      "room_by": "nearest_label",
+      "room_name": "CL.",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "113",
+          "material": "SCW",
+          "page": 28,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 270
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 2024,
+      "y": 931
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        28
+      ],
+      "door_type": "B",
+      "fire_rating": "90 MIN.",
+      "frame_type": "AA",
+      "h": 8.0079,
+      "hardware_group": null,
+      "height_inches": 84,
+      "location": null,
+      "mark": "105",
+      "matched_by": "exact",
+      "material": "HMI",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "105",
+      "room_by": "nearest_label",
+      "room_name": "NORTH STAIR",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "90 MIN.",
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 84,
+          "location": null,
+          "mark": "105",
+          "material": "HMI",
+          "page": 28,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 184
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 7' - 0\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1400,
+      "y": 953
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        28
+      ],
+      "door_type": "B",
+      "fire_rating": "45",
+      "frame_type": "AA",
+      "h": 8.0079,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "106",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "105",
+      "room_by": "nearest_label",
+      "room_name": "NORTH STAIR",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "45",
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "106",
+          "material": "SCW",
+          "page": 28,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 194
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1468,
+      "y": 954
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        28
+      ],
+      "door_type": "B",
+      "fire_rating": "60",
+      "frame_type": "AA",
+      "h": 8.0079,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "116A",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "116",
+      "room_by": "tag_number",
+      "room_name": "STOR.",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "60",
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "116A",
+          "material": "SCW",
+          "page": 28,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 313
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "width_inches": 36,
+      "x": 1883,
+      "y": 971
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        28
+      ],
+      "door_type": "B",
+      "fire_rating": "45",
+      "frame_type": "AA",
+      "h": 8.0079,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "114A",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "114",
+      "room_by": "tag_number",
+      "room_name": "SOUTH STAIR",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "45",
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "114A",
+          "material": "SCW",
+          "page": 28,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 282
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "width_inches": 36,
+      "x": 2022,
+      "y": 971
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        28
+      ],
+      "door_type": "A",
+      "fire_rating": "60",
+      "frame_type": "AA",
+      "h": 8.0079,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "115",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "115",
+      "room_by": "nearest_label",
+      "room_name": "CL.",
+      "schedule_rows": [
+        {
+          "door_type": "A",
+          "fire_rating": "60",
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "115",
+          "material": "SCW",
+          "page": 28,
+          "pair": false,
+          "size": "6' - 0\" x 6' - 8\"",
+          "width_inches": 72,
+          "y": 302
+        }
+      ],
+      "sheet": "A-103",
+      "size": "6' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 72,
+      "x": 1944,
+      "y": 972
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        28
+      ],
+      "door_type": "B",
+      "fire_rating": "45",
+      "frame_type": "AA",
+      "h": 8.0079,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "120",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "120",
+      "room_by": "nearest_label",
+      "room_name": "STOR.",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "45",
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "120",
+          "material": "SCW",
+          "page": 28,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 356
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1449,
+      "y": 1007
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        28
+      ],
+      "door_type": "B",
+      "fire_rating": "90 MIN.",
+      "frame_type": "AA",
+      "h": 8.0079,
+      "hardware_group": null,
+      "height_inches": 84,
+      "location": null,
+      "mark": "117A",
+      "matched_by": "exact",
+      "material": "HMI",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "117",
+      "room_by": "tag_number",
+      "room_name": "OPEN",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "90 MIN.",
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 84,
+          "location": null,
+          "mark": "117A",
+          "material": "HMI",
+          "page": 28,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 335
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 7' - 0\"",
+      "width_inches": 36,
+      "x": 1576,
+      "y": 1089
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        28
+      ],
+      "door_type": "A",
+      "fire_rating": "90",
+      "frame_type": "AA",
+      "h": 8.0079,
+      "hardware_group": null,
+      "height_inches": 84,
+      "location": null,
+      "mark": "116B",
+      "matched_by": "exact",
+      "material": "HMI",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "116",
+      "room_by": "tag_number",
+      "room_name": "STOR.",
+      "schedule_rows": [
+        {
+          "door_type": "A",
+          "fire_rating": "90",
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 84,
+          "location": null,
+          "mark": "116B",
+          "material": "HMI",
+          "page": 28,
+          "pair": false,
+          "size": "6' - 0\" x 7' - 0\"",
+          "width_inches": 72,
+          "y": 325
+        }
+      ],
+      "sheet": "A-103",
+      "size": "6' - 0\" x 7' - 0\"",
+      "width_inches": 72,
+      "x": 1819,
+      "y": 1089
+    },
+    {
+      "also_on": [
+        "A-401"
+      ],
+      "door_pages": [
+        28
+      ],
+      "door_type": "B",
+      "fire_rating": "90 MIN.",
+      "frame_type": "AA",
+      "h": 8.0079,
+      "hardware_group": null,
+      "height_inches": 84,
+      "location": null,
+      "mark": "114B",
+      "matched_by": "exact",
+      "material": "HMI",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "114",
+      "room_by": "tag_number",
+      "room_name": "SOUTH STAIR",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "90 MIN.",
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 84,
+          "location": null,
+          "mark": "114B",
+          "material": "HMI",
+          "page": 28,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 292
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 7' - 0\"",
+      "width_inches": 36,
+      "x": 2021,
+      "y": 1089
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        28
+      ],
+      "door_type": "A",
+      "fire_rating": null,
+      "frame_type": "BB",
+      "h": 8.0079,
+      "hardware_group": null,
+      "height_inches": 84,
+      "location": null,
+      "mark": "100",
+      "matched_by": "exact",
+      "material": "HM",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "A",
+          "fire_rating": null,
+          "frame_type": "BB",
+          "hardware_group": null,
+          "height_inches": 84,
+          "location": null,
+          "mark": "100",
+          "material": "HM",
+          "page": 28,
+          "pair": false,
+          "size": "7' - 4\" x 7' - 0\"",
+          "width_inches": 88,
+          "y": 129
+        }
+      ],
+      "sheet": "A-103",
+      "size": "7' - 4\" x 7' - 0\"",
+      "width_inches": 88,
+      "x": 638,
+      "y": 1162
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        28
+      ],
+      "door_type": "A",
+      "fire_rating": null,
+      "frame_type": "BB",
+      "h": 8.0079,
+      "hardware_group": null,
+      "height_inches": 84,
+      "location": null,
+      "mark": "102",
+      "matched_by": "exact",
+      "material": "HM",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": "114",
+      "room_by": "nearest_label",
+      "room_name": "SOUTH STAIR",
+      "schedule_rows": [
+        {
+          "door_type": "A",
+          "fire_rating": null,
+          "frame_type": "BB",
+          "hardware_group": null,
+          "height_inches": 84,
+          "location": null,
+          "mark": "102",
+          "material": "HM",
+          "page": 28,
+          "pair": false,
+          "size": "7' - 4\" x 7' - 0\"",
+          "width_inches": 88,
+          "y": 151
+        }
+      ],
+      "sheet": "A-103",
+      "size": "7' - 4\" x 7' - 0\"",
+      "unsure": true,
+      "width_inches": 88,
+      "x": 2045,
+      "y": 1162
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        28
+      ],
+      "door_type": "A",
+      "fire_rating": null,
+      "frame_type": "BB",
+      "h": 8.0079,
+      "hardware_group": null,
+      "height_inches": 84,
+      "location": null,
+      "mark": "103",
+      "matched_by": "exact",
+      "material": "HM",
+      "page": 18,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "A",
+          "fire_rating": null,
+          "frame_type": "BB",
+          "hardware_group": null,
+          "height_inches": 84,
+          "location": null,
+          "mark": "103",
+          "material": "HM",
+          "page": 28,
+          "pair": false,
+          "size": "7' - 4\" x 7' - 0\"",
+          "width_inches": 88,
+          "y": 162
+        }
+      ],
+      "sheet": "A-103",
+      "size": "7' - 4\" x 7' - 0\"",
+      "width_inches": 88,
+      "x": 1335,
+      "y": 1512
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        28
+      ],
+      "door_type": "B",
+      "fire_rating": "20",
+      "frame_type": "AA",
+      "h": 8.0079,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "214",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 22,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "20",
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "214",
+          "material": "SCW",
+          "page": 28,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 497
+        }
+      ],
+      "sheet": "A-401",
+      "size": "3' - 0\" x 6' - 8\"",
+      "width_inches": 36,
+      "x": 1530,
+      "y": 462
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        28
+      ],
+      "door_type": "B",
+      "fire_rating": "45",
+      "frame_type": "AA",
+      "h": 8.0079,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "117B",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 22,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "117",
+      "room_by": "tag_number",
+      "room_name": "OPEN",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": "45",
+          "frame_type": "AA",
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "117B",
+          "material": "SCW",
+          "page": 28,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 345
+        }
+      ],
+      "sheet": "A-401",
+      "size": "3' - 0\" x 6' - 8\"",
+      "width_inches": 36,
+      "x": 1159,
+      "y": 1244
+    }
+  ]
+}

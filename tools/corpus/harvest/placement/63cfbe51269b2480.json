@@ -1,0 +1,188 @@
+{
+  "rooms": [
+    {
+      "name": "GRAPHICS STUDIO",
+      "number": "121",
+      "page": 3,
+      "points_per_foot": 9,
+      "sheet": "ASB101",
+      "x": 404,
+      "y": 806
+    },
+    {
+      "name": "SHIPG. & RECVG.",
+      "number": "119",
+      "page": 3,
+      "points_per_foot": 9,
+      "sheet": "ASB101",
+      "x": 975,
+      "y": 830
+    },
+    {
+      "name": "STOR.",
+      "number": "119B",
+      "page": 3,
+      "points_per_foot": 9,
+      "sheet": "ASB101",
+      "x": 1072,
+      "y": 831
+    },
+    {
+      "name": "CORR.",
+      "number": "120",
+      "page": 3,
+      "points_per_foot": 9,
+      "sheet": "ASB101",
+      "x": 672,
+      "y": 834
+    },
+    {
+      "name": "MAP STORAGE",
+      "number": "119C",
+      "page": 3,
+      "points_per_foot": 9,
+      "sheet": "ASB101",
+      "x": 809,
+      "y": 859
+    },
+    {
+      "name": "PUBLICATIONS",
+      "number": "119A",
+      "page": 3,
+      "points_per_foot": 9,
+      "sheet": "ASB101",
+      "x": 1086,
+      "y": 910
+    },
+    {
+      "name": "STORAGE",
+      "number": "121A",
+      "page": 3,
+      "points_per_foot": 9,
+      "sheet": "ASB101",
+      "x": 334,
+      "y": 943
+    },
+    {
+      "name": "OFFICE",
+      "number": "103",
+      "page": 3,
+      "points_per_foot": 9,
+      "sheet": "ASB101",
+      "x": 1763,
+      "y": 1104
+    },
+    {
+      "name": "PROJECT # W2303-01",
+      "number": "5001",
+      "page": 3,
+      "points_per_foot": 9,
+      "sheet": "ASB101",
+      "x": 2448,
+      "y": 1170
+    },
+    {
+      "name": "GALLERY",
+      "number": "101B",
+      "page": 3,
+      "points_per_foot": 9,
+      "sheet": "ASB101",
+      "x": 1959,
+      "y": 1212
+    },
+    {
+      "name": "LOBBY",
+      "number": "101",
+      "page": 3,
+      "points_per_foot": 9,
+      "sheet": "ASB101",
+      "x": 1607,
+      "y": 1264
+    },
+    {
+      "name": "GALLERY",
+      "number": "101A",
+      "page": 3,
+      "points_per_foot": 9,
+      "sheet": "ASB101",
+      "x": 1776,
+      "y": 1309
+    },
+    {
+      "name": "VESTIBULE",
+      "number": "100",
+      "page": 3,
+      "points_per_foot": 9,
+      "sheet": "ASB101",
+      "x": 1599,
+      "y": 1331
+    },
+    {
+      "name": "PROJECT # W2303-01",
+      "number": "5001",
+      "page": 8,
+      "points_per_foot": null,
+      "sheet": "A-104",
+      "x": 2452,
+      "y": 1159
+    }
+  ],
+  "set": {
+    "label": null,
+    "page_count": 18,
+    "rows_total": 13,
+    "sha16": "63cfbe51269b2480",
+    "source_url": null,
+    "tier": "agreed"
+  },
+  "sheets": [
+    {
+      "height": 1728,
+      "page": 3,
+      "points_per_foot": [
+        9
+      ],
+      "scales": [
+        "SCALE: 1/8\" = 1'-0\""
+      ],
+      "sheet": "ASB101",
+      "title": "ASBESTOS ABATEMENT PLAN",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 8,
+      "points_per_foot": null,
+      "scales": [],
+      "sheet": "A-104",
+      "title": "RENOVATION PLAN - FRONT ENTRANCE & GALLERIES",
+      "width": 2592
+    }
+  ],
+  "summary": {
+    "marks_placed": 0,
+    "marks_total": 3,
+    "placed_rate": 0,
+    "rooms_total": 14,
+    "sheets_total": 2,
+    "sheets_with_scale": 1,
+    "unplaced": [
+      {
+        "mark": "D1",
+        "page": 14,
+        "reason": "mark D1 (schedule p.14) not tagged on any plan"
+      },
+      {
+        "mark": "D2",
+        "page": 14,
+        "reason": "mark D2 (schedule p.14) not tagged on any plan"
+      },
+      {
+        "mark": "D3",
+        "page": 14,
+        "reason": "mark D3 (schedule p.14) not tagged on any plan"
+      }
+    ]
+  },
+  "tags": []
+}

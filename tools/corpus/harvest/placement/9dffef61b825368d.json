@@ -35,8 +35,8 @@
   ],
   "summary": {
     "marks_placed": 25,
-    "marks_total": 27,
-    "placed_rate": 0.9259259259259259,
+    "marks_total": 53,
+    "placed_rate": 0.4716981132075472,
     "rooms_total": 1,
     "sheets_total": 1,
     "sheets_with_scale": 1,
@@ -50,6 +50,136 @@
         "mark": "119D",
         "page": 5,
         "reason": "mark 119D (schedule p.5) not tagged on any plan"
+      },
+      {
+        "mark": "101A",
+        "page": 14,
+        "reason": "mark 101A (schedule p.14) not tagged on any plan"
+      },
+      {
+        "mark": "102A",
+        "page": 14,
+        "reason": "mark 102A (schedule p.14) not tagged on any plan"
+      },
+      {
+        "mark": "103A",
+        "page": 14,
+        "reason": "mark 103A (schedule p.14) not tagged on any plan"
+      },
+      {
+        "mark": "104A",
+        "page": 14,
+        "reason": "mark 104A (schedule p.14) not tagged on any plan"
+      },
+      {
+        "mark": "104B",
+        "page": 14,
+        "reason": "mark 104B (schedule p.14) not tagged on any plan"
+      },
+      {
+        "mark": "105A",
+        "page": 14,
+        "reason": "mark 105A (schedule p.14) not tagged on any plan"
+      },
+      {
+        "mark": "106A",
+        "page": 14,
+        "reason": "mark 106A (schedule p.14) not tagged on any plan"
+      },
+      {
+        "mark": "107A",
+        "page": 14,
+        "reason": "mark 107A (schedule p.14) not tagged on any plan"
+      },
+      {
+        "mark": "110A",
+        "page": 14,
+        "reason": "mark 110A (schedule p.14) not tagged on any plan"
+      },
+      {
+        "mark": "110B",
+        "page": 14,
+        "reason": "mark 110B (schedule p.14) not tagged on any plan"
+      },
+      {
+        "mark": "111A",
+        "page": 14,
+        "reason": "mark 111A (schedule p.14) not tagged on any plan"
+      },
+      {
+        "mark": "112A",
+        "page": 14,
+        "reason": "mark 112A (schedule p.14) not tagged on any plan"
+      },
+      {
+        "mark": "113A",
+        "page": 14,
+        "reason": "mark 113A (schedule p.14) not tagged on any plan"
+      },
+      {
+        "mark": "114A",
+        "page": 14,
+        "reason": "mark 114A (schedule p.14) not tagged on any plan"
+      },
+      {
+        "mark": "114B",
+        "page": 14,
+        "reason": "mark 114B (schedule p.14) not tagged on any plan"
+      },
+      {
+        "mark": "115A",
+        "page": 14,
+        "reason": "mark 115A (schedule p.14) not tagged on any plan"
+      },
+      {
+        "mark": "116A",
+        "page": 14,
+        "reason": "mark 116A (schedule p.14) not tagged on any plan"
+      },
+      {
+        "mark": "117A",
+        "page": 14,
+        "reason": "mark 117A (schedule p.14) not tagged on any plan"
+      },
+      {
+        "mark": "118A",
+        "page": 14,
+        "reason": "mark 118A (schedule p.14) not tagged on any plan"
+      },
+      {
+        "mark": "118B",
+        "page": 14,
+        "reason": "mark 118B (schedule p.14) not tagged on any plan"
+      },
+      {
+        "mark": "119A",
+        "page": 14,
+        "reason": "mark 119A (schedule p.14) not tagged on any plan"
+      },
+      {
+        "mark": "119B",
+        "page": 14,
+        "reason": "mark 119B (schedule p.14) not tagged on any plan"
+      },
+      {
+        "mark": "119C",
+        "page": 14,
+        "reason": "mark 119C (schedule p.14) not tagged on any plan"
+      },
+      {
+        "mark": "120A",
+        "page": 14,
+        "reason": "mark 120A (schedule p.14) not tagged on any plan"
+      },
+      {
+        "mark": "121A",
+        "page": 14,
+        "reason": "mark 121A (schedule p.14) not tagged on any plan"
+      },
+      {
+        "mark": "122A",
+        "page": 14,
+        "reason": "mark 122A (schedule p.14) not tagged on any plan"
       }
     ]
   },

@@ -1,0 +1,353 @@
+{
+  "rooms": [
+    {
+      "name": "STORAGE",
+      "number": "115",
+      "page": 8,
+      "points_per_foot": 6.75,
+      "sheet": "A-100",
+      "x": 1305,
+      "y": 456
+    },
+    {
+      "name": "MENS LOCKER ROOM",
+      "number": "126",
+      "page": 8,
+      "points_per_foot": 6.75,
+      "sheet": "A-100",
+      "x": 903,
+      "y": 479
+    },
+    {
+      "name": "MECH",
+      "number": "113",
+      "page": 8,
+      "points_per_foot": 6.75,
+      "sheet": "A-100",
+      "x": 1122,
+      "y": 568
+    },
+    {
+      "name": "CORRIDOR",
+      "number": "112",
+      "page": 8,
+      "points_per_foot": 6.75,
+      "sheet": "A-100",
+      "x": 1177,
+      "y": 568
+    },
+    {
+      "name": "STORAGE",
+      "number": "114",
+      "page": 8,
+      "points_per_foot": 6.75,
+      "sheet": "A-100",
+      "x": 1275,
+      "y": 568
+    },
+    {
+      "name": "VAULT",
+      "number": "117",
+      "page": 8,
+      "points_per_foot": 6.75,
+      "sheet": "A-100",
+      "x": 1433,
+      "y": 568
+    },
+    {
+      "name": "STORAGE",
+      "number": "116",
+      "page": 8,
+      "points_per_foot": 6.75,
+      "sheet": "A-100",
+      "x": 1590,
+      "y": 604
+    },
+    {
+      "name": "MEN RESTROOM",
+      "number": "109",
+      "page": 8,
+      "points_per_foot": 6.75,
+      "sheet": "A-100",
+      "x": 934,
+      "y": 634
+    },
+    {
+      "name": "MENS SHOWER ROOM",
+      "number": "110",
+      "page": 8,
+      "points_per_foot": 6.75,
+      "sheet": "A-100",
+      "x": 838,
+      "y": 678
+    },
+    {
+      "name": "OFFICE",
+      "number": "118",
+      "page": 8,
+      "points_per_foot": 6.75,
+      "sheet": "A-100",
+      "x": 1568,
+      "y": 718
+    },
+    {
+      "name": "STORAGE",
+      "number": "119",
+      "page": 8,
+      "points_per_foot": 6.75,
+      "sheet": "A-100",
+      "x": 1582,
+      "y": 774
+    },
+    {
+      "name": "WOMANS RESTROOM",
+      "number": "107",
+      "page": 8,
+      "points_per_foot": 6.75,
+      "sheet": "A-100",
+      "x": 971,
+      "y": 796
+    },
+    {
+      "name": "WOMANS SHOWER ROOM",
+      "number": "108",
+      "page": 8,
+      "points_per_foot": 6.75,
+      "sheet": "A-100",
+      "x": 840,
+      "y": 799
+    },
+    {
+      "name": "OFFICE",
+      "number": "103",
+      "page": 8,
+      "points_per_foot": 6.75,
+      "sheet": "A-100",
+      "x": 839,
+      "y": 851
+    },
+    {
+      "name": "OFFICE",
+      "number": "104",
+      "page": 8,
+      "points_per_foot": 6.75,
+      "sheet": "A-100",
+      "x": 914,
+      "y": 852
+    },
+    {
+      "name": "MECH",
+      "number": "106",
+      "page": 8,
+      "points_per_foot": 6.75,
+      "sheet": "A-100",
+      "x": 1008,
+      "y": 865
+    },
+    {
+      "name": "KITCHEN",
+      "number": "120",
+      "page": 8,
+      "points_per_foot": 6.75,
+      "sheet": "A-100",
+      "x": 1582,
+      "y": 882
+    },
+    {
+      "name": "ASSEMBLY HALL",
+      "number": "104",
+      "page": 8,
+      "points_per_foot": 6.75,
+      "sheet": "A-100",
+      "x": 1289,
+      "y": 912
+    },
+    {
+      "name": "LIBRARY",
+      "number": "105",
+      "page": 8,
+      "points_per_foot": 6.75,
+      "sheet": "A-100",
+      "x": 1008,
+      "y": 937
+    },
+    {
+      "name": "SCHLLERY",
+      "number": "121",
+      "page": 8,
+      "points_per_foot": 6.75,
+      "sheet": "A-100",
+      "x": 1581,
+      "y": 950
+    },
+    {
+      "name": "ADMINISTRATION",
+      "number": "102",
+      "page": 8,
+      "points_per_foot": 6.75,
+      "sheet": "A-100",
+      "x": 881,
+      "y": 982
+    },
+    {
+      "name": "FOYER",
+      "number": "100",
+      "page": 8,
+      "points_per_foot": 6.75,
+      "sheet": "A-100",
+      "x": 1008,
+      "y": 1036
+    },
+    {
+      "name": "OFFICE",
+      "number": "124",
+      "page": 8,
+      "points_per_foot": 6.75,
+      "sheet": "A-100",
+      "x": 1252,
+      "y": 1246
+    },
+    {
+      "name": "OFFICE",
+      "number": "125",
+      "page": 8,
+      "points_per_foot": 6.75,
+      "sheet": "A-100",
+      "x": 1160,
+      "y": 1278
+    },
+    {
+      "name": "OFFICE",
+      "number": "123",
+      "page": 8,
+      "points_per_foot": 6.75,
+      "sheet": "A-100",
+      "x": 1263,
+      "y": 1331
+    },
+    {
+      "name": "CLASSROOM",
+      "number": "122",
+      "page": 8,
+      "points_per_foot": 6.75,
+      "sheet": "A-100",
+      "x": 1442,
+      "y": 1331
+    },
+    {
+      "name": "FLOOR PLAN",
+      "number": "1",
+      "page": 8,
+      "points_per_foot": 6.75,
+      "sheet": "A-100",
+      "x": 2004,
+      "y": 1658
+    },
+    {
+      "name": "MEN RESTROOM",
+      "number": "109",
+      "page": 12,
+      "points_per_foot": 27,
+      "sheet": "A-401",
+      "x": 1375,
+      "y": 798
+    },
+    {
+      "name": "MENS SHOWER ROOM",
+      "number": "110",
+      "page": 12,
+      "points_per_foot": 27,
+      "sheet": "A-401",
+      "x": 894,
+      "y": 842
+    },
+    {
+      "name": "WOMANS RESTROOM",
+      "number": "107",
+      "page": 12,
+      "points_per_foot": 27,
+      "sheet": "A-401",
+      "x": 1444,
+      "y": 1434
+    },
+    {
+      "name": "WOMANS SHOWER ROOM",
+      "number": "108",
+      "page": 12,
+      "points_per_foot": 27,
+      "sheet": "A-401",
+      "x": 852,
+      "y": 1447
+    },
+    {
+      "name": "MENS LOCKER ROOM",
+      "number": "126",
+      "page": 13,
+      "points_per_foot": null,
+      "sheet": "A-402",
+      "x": 1044,
+      "y": 960
+    }
+  ],
+  "set": {
+    "label": null,
+    "page_count": 30,
+    "rows_total": 31,
+    "sha16": "989c1b82126a5912",
+    "source_url": null,
+    "tier": "agreed"
+  },
+  "sheets": [
+    {
+      "height": 1728,
+      "page": 8,
+      "points_per_foot": [
+        6.75
+      ],
+      "scales": [
+        "3/32\" = 1'-0\""
+      ],
+      "sheet": "A-100",
+      "title": "FLOOR PLAN",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 12,
+      "points_per_foot": [
+        27
+      ],
+      "scales": [
+        "3/8\" = 1'-0\""
+      ],
+      "sheet": "A-401",
+      "title": "ENLARGED PLANS",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 13,
+      "points_per_foot": null,
+      "scales": [],
+      "sheet": "A-402",
+      "title": "ENLARGED PLANS",
+      "width": 2592
+    }
+  ],
+  "summary": {
+    "marks_placed": 0,
+    "marks_total": 1,
+    "placed_rate": 0,
+    "rooms_total": 32,
+    "sheets_total": 3,
+    "sheets_with_scale": 2,
+    "unplaced": [
+      {
+        "mark": "126A",
+        "page": 18,
+        "reason": "mark 126A (schedule p.18) not tagged on any plan"
+      }
+    ]
+  },
+  "tags": []
+}

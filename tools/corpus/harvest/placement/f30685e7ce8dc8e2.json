@@ -1,0 +1,1554 @@
+{
+  "rooms": [
+    {
+      "name": "BEDROOM",
+      "number": "1",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 1873,
+      "y": 643
+    },
+    {
+      "name": "CORRIDOR",
+      "number": "1",
+      "page": 15,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 952,
+      "y": 656
+    },
+    {
+      "name": "MASTER BATH",
+      "number": "112",
+      "page": 17,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 460,
+      "y": 370
+    },
+    {
+      "name": "BACK PORCH",
+      "number": "125",
+      "page": 17,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1487,
+      "y": 426
+    },
+    {
+      "name": "MASTER BEDROOM",
+      "number": "111",
+      "page": 17,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 765,
+      "y": 433
+    },
+    {
+      "name": "TOILET",
+      "number": "113",
+      "page": 17,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 302,
+      "y": 522
+    },
+    {
+      "name": "MASTER CLOSET",
+      "number": "114",
+      "page": 17,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 569,
+      "y": 626
+    },
+    {
+      "name": "UTE.",
+      "number": "110",
+      "page": 17,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 881,
+      "y": 626
+    },
+    {
+      "name": "BEDROOM",
+      "number": "1",
+      "page": 17,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1878,
+      "y": 688
+    },
+    {
+      "name": "BEDROOM",
+      "number": "116",
+      "page": 17,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1878,
+      "y": 695
+    },
+    {
+      "name": "CORRIDOR",
+      "number": "1",
+      "page": 17,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 957,
+      "y": 701
+    },
+    {
+      "name": "CORRIDOR",
+      "number": "105",
+      "page": 17,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 957,
+      "y": 707
+    },
+    {
+      "name": "KITCHEN",
+      "number": "103",
+      "page": 17,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1103,
+      "y": 762
+    },
+    {
+      "name": "CLOSET 1",
+      "number": "117",
+      "page": 17,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 2044,
+      "y": 764
+    },
+    {
+      "name": "LIVING",
+      "number": "102",
+      "page": 17,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1490,
+      "y": 771
+    },
+    {
+      "name": "LAUNDRY / OFFICE",
+      "number": "108",
+      "page": 17,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 568,
+      "y": 828
+    },
+    {
+      "name": "HVAC",
+      "number": "122",
+      "page": 17,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1886,
+      "y": 840
+    },
+    {
+      "name": "TOILET 2.",
+      "number": "119",
+      "page": 17,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 2037,
+      "y": 854
+    },
+    {
+      "name": "BATHROOM",
+      "number": "118",
+      "page": 17,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1952,
+      "y": 870
+    },
+    {
+      "name": "CORR. 2",
+      "number": "115",
+      "page": 17,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1808,
+      "y": 900
+    },
+    {
+      "name": "PANTRY",
+      "number": "104",
+      "page": 17,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1102,
+      "y": 1022
+    },
+    {
+      "name": "CLOSET 2",
+      "number": "120",
+      "page": 17,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 2038,
+      "y": 1052
+    },
+    {
+      "name": "BEDROOM",
+      "number": "2",
+      "page": 17,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1887,
+      "y": 1081
+    },
+    {
+      "name": "BEDROOM",
+      "number": "121",
+      "page": 17,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1886,
+      "y": 1087
+    },
+    {
+      "name": "COAT",
+      "number": "123",
+      "page": 17,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1736,
+      "y": 1088
+    },
+    {
+      "name": "COAT",
+      "number": "127",
+      "page": 17,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1715,
+      "y": 1091
+    },
+    {
+      "name": "DINING",
+      "number": "101",
+      "page": 17,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1393,
+      "y": 1118
+    },
+    {
+      "name": "ENTRY",
+      "number": "100",
+      "page": 17,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1661,
+      "y": 1118
+    },
+    {
+      "name": "GARAGE",
+      "number": "106",
+      "page": 17,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 653,
+      "y": 1135
+    },
+    {
+      "name": "FRONT PORCH",
+      "number": "124",
+      "page": 17,
+      "points_per_foot": 18,
+      "sheet": "A-103",
+      "x": 1658,
+      "y": 1300
+    }
+  ],
+  "set": {
+    "label": null,
+    "page_count": 36,
+    "rows_total": 29,
+    "sha16": "f30685e7ce8dc8e2",
+    "source_url": null,
+    "tier": "agreed"
+  },
+  "sheets": [
+    {
+      "height": 1728,
+      "page": 15,
+      "points_per_foot": [
+        18
+      ],
+      "scales": [
+        "1/4\" = 1'-0\""
+      ],
+      "sheet": "A-101",
+      "title": "FLOOR PLANS",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 16,
+      "points_per_foot": [
+        18
+      ],
+      "scales": [
+        "1/4\" = 1'-0\""
+      ],
+      "sheet": "A-102",
+      "title": "DIMENSION PLANS",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 17,
+      "points_per_foot": [
+        18
+      ],
+      "scales": [
+        "1/4\" = 1'-0\""
+      ],
+      "sheet": "A-103",
+      "title": "REFERENCE PLANS",
+      "width": 2592
+    }
+  ],
+  "summary": {
+    "marks_placed": 27,
+    "marks_total": 29,
+    "placed_rate": 0.9310344827586207,
+    "rooms_total": 30,
+    "sheets_total": 3,
+    "sheets_with_scale": 3,
+    "unplaced": [
+      {
+        "mark": "127",
+        "page": 26,
+        "reason": "mark 127 (schedule p.26) not tagged on any plan"
+      },
+      {
+        "mark": "128",
+        "page": 26,
+        "reason": "mark 128 (schedule p.26) not tagged on any plan"
+      }
+    ]
+  },
+  "tags": [
+    {
+      "also_on": [],
+      "door_pages": [
+        26
+      ],
+      "door_type": "D",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 9.5093,
+      "hardware_group": "RESIDENTAIL ENTRY W/ DEADBOLT 1 PANEL W/ PUSH BOLT, TOP AND BOTTOM",
+      "height_inches": 80,
+      "location": null,
+      "mark": "115",
+      "matched_by": "exact",
+      "material": "CLAD WOOD",
+      "page": 17,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "D",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": "RESIDENTAIL ENTRY W/ DEADBOLT 1 PANEL W/ PUSH BOLT, TOP AND BOTTOM",
+          "height_inches": 80,
+          "location": null,
+          "mark": "115",
+          "material": "CLAD WOOD",
+          "page": 26,
+          "pair": false,
+          "size": "6' - 0\" x 6' - 8\"",
+          "width_inches": 72,
+          "y": 305
+        }
+      ],
+      "sheet": "A-103",
+      "size": "6' - 0\" x 6' - 8\"",
+      "width_inches": 72,
+      "x": 1006,
+      "y": 414
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        26
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 9.5093,
+      "hardware_group": "BARN STYLE SLIDING",
+      "height_inches": 80,
+      "location": null,
+      "mark": "112",
+      "matched_by": "exact",
+      "material": "SCI",
+      "page": 17,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "112",
+      "room_by": "nearest_label",
+      "room_name": "MASTER BATH",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": "BARN STYLE SLIDING",
+          "height_inches": 80,
+          "location": null,
+          "mark": "112",
+          "material": "SCI",
+          "page": 26,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 273
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 551,
+      "y": 417
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        26
+      ],
+      "door_type": "C",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 9.5093,
+      "hardware_group": "PRIVACY",
+      "height_inches": 80,
+      "location": null,
+      "mark": "113",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 17,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "113",
+      "room_by": "nearest_label",
+      "room_name": "TOILET",
+      "schedule_rows": [
+        {
+          "door_type": "C",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": "PRIVACY",
+          "height_inches": 80,
+          "location": null,
+          "mark": "113",
+          "material": "SCW",
+          "page": 26,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 282
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 416,
+      "y": 523
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        26
+      ],
+      "door_type": "C",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 9.5093,
+      "hardware_group": "PRIVACY",
+      "height_inches": 80,
+      "location": null,
+      "mark": "111",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 17,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "110",
+      "room_by": "nearest_label",
+      "room_name": "UTE.",
+      "schedule_rows": [
+        {
+          "door_type": "C",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": "PRIVACY",
+          "height_inches": 80,
+          "location": null,
+          "mark": "111",
+          "material": "SCW",
+          "page": 26,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 262
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 968,
+      "y": 553
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        26
+      ],
+      "door_type": "B",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 9.5093,
+      "hardware_group": "NA",
+      "height_inches": 80,
+      "location": null,
+      "mark": "114",
+      "matched_by": "exact",
+      "material": "NA",
+      "page": 17,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "114",
+      "room_by": "nearest_label",
+      "room_name": "MASTER CLOSET",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": "NA",
+          "height_inches": 80,
+          "location": null,
+          "mark": "114",
+          "material": "NA",
+          "page": 26,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 294
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 452,
+      "y": 560
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        26
+      ],
+      "door_type": "D",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 9.5093,
+      "hardware_group": "RESIDENTAIL ENTRY W/ DEADBOLT 1 PANEL W/ PUSH BOLT, TOP AND BOTTOM",
+      "height_inches": 80,
+      "location": null,
+      "mark": "116",
+      "matched_by": "exact",
+      "material": "CLAD WOOD",
+      "page": 17,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "D",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": "RESIDENTAIL ENTRY W/ DEADBOLT 1 PANEL W/ PUSH BOLT, TOP AND BOTTOM",
+          "height_inches": 80,
+          "location": null,
+          "mark": "116",
+          "material": "CLAD WOOD",
+          "page": 26,
+          "pair": false,
+          "size": "6' - 0\" x 6' - 8\"",
+          "width_inches": 72,
+          "y": 316
+        }
+      ],
+      "sheet": "A-103",
+      "size": "6' - 0\" x 6' - 8\"",
+      "width_inches": 72,
+      "x": 1312,
+      "y": 594
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        26
+      ],
+      "door_type": "D",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 9.5093,
+      "hardware_group": "RESIDENTAIL ENTRY W/ DEADBOLT 1 PANEL W/ PUSH BOLT, TOP AND BOTTOM",
+      "height_inches": 80,
+      "location": null,
+      "mark": "117",
+      "matched_by": "exact",
+      "material": "CLAD WOOD",
+      "page": 17,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "D",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": "RESIDENTAIL ENTRY W/ DEADBOLT 1 PANEL W/ PUSH BOLT, TOP AND BOTTOM",
+          "height_inches": 80,
+          "location": null,
+          "mark": "117",
+          "material": "CLAD WOOD",
+          "page": 26,
+          "pair": false,
+          "size": "6' - 0\" x 6' - 8\"",
+          "width_inches": 72,
+          "y": 327
+        }
+      ],
+      "sheet": "A-103",
+      "size": "6' - 0\" x 6' - 8\"",
+      "width_inches": 72,
+      "x": 1658,
+      "y": 594
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        26
+      ],
+      "door_type": "C",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 9.5093,
+      "hardware_group": "PASSAGE",
+      "height_inches": 80,
+      "location": null,
+      "mark": "110",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 17,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "110",
+      "room_by": "nearest_label",
+      "room_name": "UTE.",
+      "schedule_rows": [
+        {
+          "door_type": "C",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": "PASSAGE",
+          "height_inches": 80,
+          "location": null,
+          "mark": "110",
+          "material": "SCW",
+          "page": 26,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 251
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 918,
+      "y": 627
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        26
+      ],
+      "door_type": "B",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 9.5093,
+      "hardware_group": "NA",
+      "height_inches": 80,
+      "location": null,
+      "mark": "102",
+      "matched_by": "exact",
+      "material": "NA",
+      "page": 17,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "1",
+      "room_by": "nearest_label",
+      "room_name": "CORRIDOR",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": "NA",
+          "height_inches": 80,
+          "location": null,
+          "mark": "102",
+          "material": "NA",
+          "page": 26,
+          "pair": false,
+          "size": "4' - 0\" x 6' - 8\"",
+          "width_inches": 48,
+          "y": 165
+        }
+      ],
+      "sheet": "A-103",
+      "size": "4' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 48,
+      "x": 1006,
+      "y": 681
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        26
+      ],
+      "door_type": "C",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 9.5093,
+      "hardware_group": "PRIVACY",
+      "height_inches": 80,
+      "location": null,
+      "mark": "109",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 17,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "105",
+      "room_by": "nearest_label",
+      "room_name": "CORRIDOR",
+      "schedule_rows": [
+        {
+          "door_type": "C",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": "PRIVACY",
+          "height_inches": 80,
+          "location": null,
+          "mark": "109",
+          "material": "SCW",
+          "page": 26,
+          "pair": false,
+          "size": "2' - 10\" x 6' - 8\"",
+          "width_inches": 34,
+          "y": 240
+        }
+      ],
+      "sheet": "A-103",
+      "size": "2' - 10\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 34,
+      "x": 919,
+      "y": 761
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        26
+      ],
+      "door_type": "C",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 9.5093,
+      "hardware_group": "PASSAGE",
+      "height_inches": 80,
+      "location": null,
+      "mark": "120",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 17,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "117",
+      "room_by": "nearest_label",
+      "room_name": "CLOSET 1",
+      "schedule_rows": [
+        {
+          "door_type": "C",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": "PASSAGE",
+          "height_inches": 80,
+          "location": null,
+          "mark": "120",
+          "material": "SCW",
+          "page": 26,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 359
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1992,
+      "y": 782
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        26
+      ],
+      "door_type": "C",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 9.5093,
+      "hardware_group": "PASSAGE",
+      "height_inches": 80,
+      "location": null,
+      "mark": "121",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 17,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "118",
+      "room_by": "nearest_label",
+      "room_name": "BATHROOM",
+      "schedule_rows": [
+        {
+          "door_type": "C",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": "PASSAGE",
+          "height_inches": 80,
+          "location": null,
+          "mark": "121",
+          "material": "SCW",
+          "page": 26,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 370
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1955,
+      "y": 818
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        26
+      ],
+      "door_type": "C",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 9.5093,
+      "hardware_group": "PRIVACY",
+      "height_inches": 80,
+      "location": null,
+      "mark": "119",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 17,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "115",
+      "room_by": "nearest_label",
+      "room_name": "CORR. 2",
+      "schedule_rows": [
+        {
+          "door_type": "C",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": "PRIVACY",
+          "height_inches": 80,
+          "location": null,
+          "mark": "119",
+          "material": "SCW",
+          "page": 26,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 348
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1793,
+      "y": 819
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        26
+      ],
+      "door_type": "C",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 9.5093,
+      "hardware_group": "PASSAGE",
+      "height_inches": 80,
+      "location": null,
+      "mark": "126",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 17,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "122",
+      "room_by": "nearest_label",
+      "room_name": "HVAC",
+      "schedule_rows": [
+        {
+          "door_type": "C",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": "PASSAGE",
+          "height_inches": 80,
+          "location": null,
+          "mark": "126",
+          "material": "SCW",
+          "page": 26,
+          "pair": false,
+          "size": "2' - 6\" x 6' - 8\"",
+          "width_inches": 30,
+          "y": 424
+        }
+      ],
+      "sheet": "A-103",
+      "size": "2' - 6\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 30,
+      "x": 1854,
+      "y": 850
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        26
+      ],
+      "door_type": "B",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 9.5093,
+      "hardware_group": "NA",
+      "height_inches": 80,
+      "location": null,
+      "mark": "107",
+      "matched_by": "exact",
+      "material": "NA",
+      "page": 17,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "105",
+      "room_by": "nearest_label",
+      "room_name": "CORRIDOR",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": "NA",
+          "height_inches": 80,
+          "location": null,
+          "mark": "107",
+          "material": "NA",
+          "page": 26,
+          "pair": false,
+          "size": "4' - 0\" x 6' - 8\"",
+          "width_inches": 48,
+          "y": 219
+        }
+      ],
+      "sheet": "A-103",
+      "size": "4' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 48,
+      "x": 920,
+      "y": 861
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        26
+      ],
+      "door_type": "C",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 9.5093,
+      "hardware_group": "PASSAGE",
+      "height_inches": 80,
+      "location": null,
+      "mark": "108",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 17,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "108",
+      "room_by": "nearest_label",
+      "room_name": "LAUNDRY / OFFICE",
+      "schedule_rows": [
+        {
+          "door_type": "C",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": "PASSAGE",
+          "height_inches": 80,
+          "location": null,
+          "mark": "108",
+          "material": "SCW",
+          "page": 26,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 230
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 772,
+      "y": 868
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        26
+      ],
+      "door_type": "C",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 9.5093,
+      "hardware_group": "RESIDENTIAL ENTRY",
+      "height_inches": 80,
+      "location": null,
+      "mark": "103",
+      "matched_by": "exact",
+      "material": "CLAD WOOD",
+      "page": 17,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "104",
+      "room_by": "nearest_label",
+      "room_name": "PANTRY",
+      "schedule_rows": [
+        {
+          "door_type": "C",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": "RESIDENTIAL ENTRY",
+          "height_inches": 80,
+          "location": null,
+          "mark": "103",
+          "material": "CLAD WOOD",
+          "page": 26,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 176
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 968,
+      "y": 905
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        26
+      ],
+      "door_type": "C",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 9.5093,
+      "hardware_group": "PRIVACY",
+      "height_inches": 80,
+      "location": null,
+      "mark": "122",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 17,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "118",
+      "room_by": "nearest_label",
+      "room_name": "BATHROOM",
+      "schedule_rows": [
+        {
+          "door_type": "C",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": "PRIVACY",
+          "height_inches": 80,
+          "location": null,
+          "mark": "122",
+          "material": "SCW",
+          "page": 26,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 381
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1985,
+      "y": 906
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        26
+      ],
+      "door_type": "B",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 9.5093,
+      "hardware_group": "NA",
+      "height_inches": 80,
+      "location": null,
+      "mark": "118",
+      "matched_by": "exact",
+      "material": "NA",
+      "page": 17,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "115",
+      "room_by": "nearest_label",
+      "room_name": "CORR. 2",
+      "schedule_rows": [
+        {
+          "door_type": "B",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": "NA",
+          "height_inches": 80,
+          "location": null,
+          "mark": "118",
+          "material": "NA",
+          "page": 26,
+          "pair": false,
+          "size": "4' - 0\" x 6' - 8\"",
+          "width_inches": 48,
+          "y": 338
+        }
+      ],
+      "sheet": "A-103",
+      "size": "4' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 48,
+      "x": 1757,
+      "y": 912
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        26
+      ],
+      "door_type": "C",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 9.5093,
+      "hardware_group": "RESIDENTAIL ENTRY W/ DEADBOLT",
+      "height_inches": 80,
+      "location": null,
+      "mark": "106",
+      "matched_by": "exact",
+      "material": "CLAD WOOD",
+      "page": 17,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "C",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": "RESIDENTAIL ENTRY W/ DEADBOLT",
+          "height_inches": 80,
+          "location": null,
+          "mark": "106",
+          "material": "CLAD WOOD",
+          "page": 26,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 208
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "width_inches": 36,
+      "x": 335,
+      "y": 953
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        26
+      ],
+      "door_type": "E",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 9.5093,
+      "hardware_group": "POCKET DOOR",
+      "height_inches": 80,
+      "location": null,
+      "mark": "101",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 17,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "104",
+      "room_by": "nearest_label",
+      "room_name": "PANTRY",
+      "schedule_rows": [
+        {
+          "door_type": "E",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": "POCKET DOOR",
+          "height_inches": 80,
+          "location": null,
+          "mark": "101",
+          "material": "SCW",
+          "page": 26,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 154
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1096,
+      "y": 981
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        26
+      ],
+      "door_type": "C",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 9.5093,
+      "hardware_group": "PASSAGE",
+      "height_inches": 80,
+      "location": null,
+      "mark": "123",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 17,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "120",
+      "room_by": "nearest_label",
+      "room_name": "CLOSET 2",
+      "schedule_rows": [
+        {
+          "door_type": "C",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": "PASSAGE",
+          "height_inches": 80,
+          "location": null,
+          "mark": "123",
+          "material": "SCW",
+          "page": 26,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 392
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1955,
+      "y": 998
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        26
+      ],
+      "door_type": "C",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 9.5093,
+      "hardware_group": "PRIVACY",
+      "height_inches": 80,
+      "location": null,
+      "mark": "125",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 17,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "115",
+      "room_by": "nearest_label",
+      "room_name": "CORR. 2",
+      "schedule_rows": [
+        {
+          "door_type": "C",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": "PRIVACY",
+          "height_inches": 80,
+          "location": null,
+          "mark": "125",
+          "material": "SCW",
+          "page": 26,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 413
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1793,
+      "y": 999
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        26
+      ],
+      "door_type": "C",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 9.5093,
+      "hardware_group": "PASSAGE",
+      "height_inches": 80,
+      "location": null,
+      "mark": "124",
+      "matched_by": "exact",
+      "material": "SCW",
+      "page": 17,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "120",
+      "room_by": "nearest_label",
+      "room_name": "CLOSET 2",
+      "schedule_rows": [
+        {
+          "door_type": "C",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": "PASSAGE",
+          "height_inches": 80,
+          "location": null,
+          "mark": "124",
+          "material": "SCW",
+          "page": 26,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 402
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1985,
+      "y": 1035
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        26
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 9.5093,
+      "hardware_group": "OVERHEAD",
+      "height_inches": 108,
+      "location": null,
+      "mark": "105",
+      "matched_by": "exact",
+      "material": "HMI",
+      "page": 17,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": "OVERHEAD",
+          "height_inches": 108,
+          "location": null,
+          "mark": "105",
+          "material": "HMI",
+          "page": 26,
+          "pair": false,
+          "size": "9' - 0\" x 9' - 0\"",
+          "width_inches": 108,
+          "y": 197
+        }
+      ],
+      "sheet": "A-103",
+      "size": "9' - 0\" x 9' - 0\"",
+      "width_inches": 108,
+      "x": 335,
+      "y": 1083
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        26
+      ],
+      "door_type": "A",
+      "fire_rating": null,
+      "frame_type": "BB",
+      "h": 9.5093,
+      "hardware_group": "RESIDENTAIL ENTRY W/ DEADBOLT",
+      "height_inches": 80,
+      "location": null,
+      "mark": "100",
+      "matched_by": "exact",
+      "material": "CLAD WOOD",
+      "page": 17,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "100",
+      "room_by": "nearest_label",
+      "room_name": "ENTRY",
+      "schedule_rows": [
+        {
+          "door_type": "A",
+          "fire_rating": null,
+          "frame_type": "BB",
+          "hardware_group": "RESIDENTAIL ENTRY W/ DEADBOLT",
+          "height_inches": 80,
+          "location": null,
+          "mark": "100",
+          "material": "CLAD WOOD",
+          "page": 26,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 143
+        }
+      ],
+      "sheet": "A-103",
+      "size": "3' - 0\" x 6' - 8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1648,
+      "y": 1156
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        26
+      ],
+      "door_type": "F",
+      "fire_rating": null,
+      "frame_type": "AA",
+      "h": 9.5093,
+      "hardware_group": "OVERHEAD",
+      "height_inches": 108,
+      "location": null,
+      "mark": "104",
+      "matched_by": "exact",
+      "material": "HMI",
+      "page": 17,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": null,
+          "frame_type": "AA",
+          "hardware_group": "OVERHEAD",
+          "height_inches": 108,
+          "location": null,
+          "mark": "104",
+          "material": "HMI",
+          "page": 26,
+          "pair": false,
+          "size": "9' - 0\" x 9' - 0\"",
+          "width_inches": 108,
+          "y": 186
+        }
+      ],
+      "sheet": "A-103",
+      "size": "9' - 0\" x 9' - 0\"",
+      "width_inches": 108,
+      "x": 335,
+      "y": 1282
+    }
+  ]
+}

@@ -1,0 +1,212 @@
+{
+  "rooms": [
+    {
+      "name": "STORAGE",
+      "number": "101",
+      "page": 9,
+      "points_per_foot": 108,
+      "sheet": "A-100",
+      "x": 1476,
+      "y": 600
+    },
+    {
+      "name": "PAVILION",
+      "number": "103",
+      "page": 9,
+      "points_per_foot": 18,
+      "sheet": "A-100",
+      "x": 1554,
+      "y": 1086
+    }
+  ],
+  "set": {
+    "label": null,
+    "page_count": 18,
+    "rows_total": 5,
+    "sha16": "e8c24a88225b8309",
+    "source_url": null,
+    "tier": "oracle-checked"
+  },
+  "sheets": [
+    {
+      "height": 1728.24,
+      "page": 9,
+      "points_per_foot": [
+        18,
+        27,
+        72,
+        108,
+        216
+      ],
+      "scales": [
+        "SCALE: 1 1/2\" = 1'-0\"",
+        "SCALE: 3/8\" = 1'-0\"",
+        "SCALE: 3/8\" = 1'-0\"",
+        "SCALE: 3\" = 1'-0\"",
+        "SCALE: 1 1/2\" = 1'-0\"",
+        "SCALE: 1\" = 1'-0\"",
+        "SCALE: 3/8\" = 1'-0\"",
+        "SCALE: 1/4\" = 1'-0\"",
+        "SCALE: 1 1/2\" = 1'-0\""
+      ],
+      "sheet": "A-100",
+      "title": "FLOOR PLAN",
+      "width": 2587.679
+    }
+  ],
+  "summary": {
+    "marks_placed": 3,
+    "marks_total": 5,
+    "placed_rate": 0.6,
+    "rooms_total": 2,
+    "sheets_total": 1,
+    "sheets_with_scale": 1,
+    "unplaced": [
+      {
+        "mark": "2X",
+        "page": 12,
+        "reason": "mark 2X (schedule p.12) not tagged on any plan"
+      },
+      {
+        "mark": "2X2",
+        "page": 12,
+        "reason": "mark 2X2 (schedule p.12) not tagged on any plan"
+      }
+    ]
+  },
+  "tags": [
+    {
+      "also_on": [],
+      "door_pages": [
+        12
+      ],
+      "door_type": "CONSTRUCTION. CONTACT ARCHITECT FOR RESOLUTION OF ANY WALL TYPES NOT LISTED PLANS WHETHER DESCRIBED BY THE WALL SECTIONS HEREIN SHALL BE PART OF THE",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 7.508446006752,
+      "hardware_group": null,
+      "height_inches": null,
+      "location": null,
+      "mark": "101",
+      "matched_by": "exact",
+      "material": null,
+      "page": 9,
+      "pair": false,
+      "points_per_foot": 27,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "CONSTRUCTION. CONTACT ARCHITECT FOR RESOLUTION OF ANY WALL TYPES NOT LISTED PLANS WHETHER DESCRIBED BY THE WALL SECTIONS HEREIN SHALL BE PART OF THE",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": null,
+          "height_inches": null,
+          "location": null,
+          "mark": "101",
+          "material": null,
+          "page": 12,
+          "pair": false,
+          "size": null,
+          "width_inches": null,
+          "y": 194
+        }
+      ],
+      "sheet": "A-100",
+      "size": null,
+      "width_inches": null,
+      "x": 2083,
+      "y": 126
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        12
+      ],
+      "door_type": "PRIOR TO BIDDING. THESE WALL SECTIONS INDICATE PRIMARY WALL TYPE. OVERLAID VENEERS, WAINSCOT, PILASTERS, PAINT, WALLCOVERINGS AND OTHER VARIANTS AND SPECIAL CONDITIONS ARE",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 7.508446006752,
+      "hardware_group": null,
+      "height_inches": null,
+      "location": null,
+      "mark": "102",
+      "matched_by": "exact",
+      "material": null,
+      "page": 9,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "101",
+      "room_by": "nearest_label",
+      "room_name": "STORAGE",
+      "schedule_rows": [
+        {
+          "door_type": "PRIOR TO BIDDING. THESE WALL SECTIONS INDICATE PRIMARY WALL TYPE. OVERLAID VENEERS, WAINSCOT, PILASTERS, PAINT, WALLCOVERINGS AND OTHER VARIANTS AND SPECIAL CONDITIONS ARE",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": null,
+          "height_inches": null,
+          "location": null,
+          "mark": "102",
+          "material": null,
+          "page": 12,
+          "pair": false,
+          "size": null,
+          "width_inches": null,
+          "y": 205
+        }
+      ],
+      "sheet": "A-100",
+      "size": null,
+      "unsure": true,
+      "width_inches": null,
+      "x": 1601,
+      "y": 583
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        12
+      ],
+      "door_type": "STOP BRICK AT BOTT OF SOFFIT (TYP)",
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 8.008996407192,
+      "hardware_group": null,
+      "height_inches": null,
+      "location": null,
+      "mark": "6",
+      "matched_by": "exact",
+      "material": null,
+      "page": 9,
+      "pair": false,
+      "points_per_foot": 72,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "STOP BRICK AT BOTT OF SOFFIT (TYP)",
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": null,
+          "height_inches": null,
+          "location": null,
+          "mark": "6",
+          "material": null,
+          "page": 12,
+          "pair": false,
+          "size": null,
+          "width_inches": null,
+          "y": 1225
+        }
+      ],
+      "sheet": "A-100",
+      "size": null,
+      "width_inches": null,
+      "x": 1125,
+      "y": 1007
+    }
+  ]
+}

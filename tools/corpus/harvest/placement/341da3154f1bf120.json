@@ -1,0 +1,126 @@
+{
+  "rooms": [],
+  "set": {
+    "label": null,
+    "page_count": 27,
+    "rows_total": 2,
+    "sha16": "341da3154f1bf120",
+    "source_url": null,
+    "tier": "agreed"
+  },
+  "sheets": [
+    {
+      "height": 1728,
+      "page": 11,
+      "points_per_foot": [
+        13.5
+      ],
+      "scales": [
+        "SCALE: 3/16\" = 1'-0\"",
+        "SCALE: 3/16\" = 1'-0\""
+      ],
+      "sheet": "A-100",
+      "title": "GENERAL PLAN NOTES",
+      "width": 2592
+    }
+  ],
+  "summary": {
+    "marks_placed": 2,
+    "marks_total": 2,
+    "placed_rate": 1,
+    "rooms_total": 0,
+    "sheets_total": 1,
+    "sheets_with_scale": 1,
+    "unplaced": []
+  },
+  "tags": [
+    {
+      "also_on": [],
+      "door_pages": [
+        15
+      ],
+      "door_type": "HM-1",
+      "fire_rating": null,
+      "frame_type": "HMF-1",
+      "h": 6.6,
+      "hardware_group": null,
+      "height_inches": 84,
+      "location": null,
+      "mark": "100",
+      "matched_by": "exact",
+      "material": null,
+      "page": 11,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "HM-1",
+          "fire_rating": null,
+          "frame_type": "HMF-1",
+          "hardware_group": null,
+          "height_inches": 84,
+          "location": null,
+          "mark": "100",
+          "material": null,
+          "page": 15,
+          "pair": false,
+          "size": "7' - 0\"",
+          "width_inches": null,
+          "y": 614
+        }
+      ],
+      "sheet": "A-100",
+      "size": "7' - 0\"",
+      "width_inches": null,
+      "x": 1758,
+      "y": 377
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        15
+      ],
+      "door_type": "HM-1",
+      "fire_rating": null,
+      "frame_type": "HMF-1",
+      "h": 6.6,
+      "hardware_group": null,
+      "height_inches": 84,
+      "location": null,
+      "mark": "101",
+      "matched_by": "exact",
+      "material": null,
+      "page": 11,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "HM-1",
+          "fire_rating": null,
+          "frame_type": "HMF-1",
+          "hardware_group": null,
+          "height_inches": 84,
+          "location": null,
+          "mark": "101",
+          "material": null,
+          "page": 15,
+          "pair": false,
+          "size": "7' - 0\"",
+          "width_inches": null,
+          "y": 627
+        }
+      ],
+      "sheet": "A-100",
+      "size": "7' - 0\"",
+      "width_inches": null,
+      "x": 1663,
+      "y": 1524
+    }
+  ]
+}
