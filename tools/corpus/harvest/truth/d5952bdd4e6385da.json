@@ -1,0 +1,231 @@
+{
+ "sha16": "d5952bdd4e6385da",
+ "sha256": "d5952bdd4e6385da8fc7935242bb76b289f48f78c2a5c54b316437286764f424",
+ "file": "d5952bdd4e6385da.pdf",
+ "bytes": 16090671,
+ "family": "harvest",
+ "source": "harvest",
+ "label": null,
+ "source_url": null,
+ "page_count": 29,
+ "text_layer": {
+  "pages_with_text": 29,
+  "pages": 29
+ },
+ "pages": {
+  "door_candidates": 4,
+  "hardware_candidates": 0,
+  "door_schedule_pages": [
+   7
+  ],
+  "hardware_pages": []
+ },
+ "readers": {
+  "a": {
+   "doors": 7,
+   "sets": 0,
+   "items": 0,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 4,
+   "sets": 0,
+   "items": 0,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 1
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 11,
+ "rows_total": 11,
+ "agreement_rate": 0,
+ "agreement": {
+  "doors": {
+   "rows": 11,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 7,
+   "only_b": 4,
+   "fields": {},
+   "agreement_rate": 0
+  },
+  "items": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "sets": {
+   "sets": 0,
+   "agreed": 0
+  }
+ },
+ "triage_class": "schedule-only",
+ "triage_from": "inferred (S=true H=false plan sheets=2)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": true,
+   "total": 7,
+   "pass": 7,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "plan_sheets": [
+    "A100 p.8",
+    "A500 p.10"
+   ],
+   "plan_counts": {
+    "plan_sheets": 2,
+    "rooms": 37,
+    "corridors": 0,
+    "tags": 7,
+    "unmatched_tags": 0,
+    "schedule_marks": 7,
+    "marks_not_on_plan": 0,
+    "shared_marks": 0
+   }
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "types_in_legend": {
+   "applicable": true,
+   "total": 1,
+   "pass": 1,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "legend_titles": [
+    "Frame Types p.7",
+    "Frame Types p.7"
+   ],
+   "skipped": [
+    "no DOOR TYPES legend title"
+   ],
+   "note": "weak for numeric types: a detail number near the legend can pass a numeric frame type"
+  },
+  "sizes_and_marks": {
+   "applicable": true,
+   "total": 7,
+   "pass": 7,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "size_fail": 0,
+   "mark_fail": 0
+  }
+ },
+ "tier": "oracle-checked",
+ "disagreement_count": 11,
+ "disagreements": [
+  {
+   "kind": "door",
+   "page": 7,
+   "key": "100/1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 7,
+   "key": "101/1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 7,
+   "key": "102/1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 7,
+   "key": "110/1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 7,
+   "key": "110A/1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 7,
+   "key": "111/1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 7,
+   "key": "111A/1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 7,
+   "key": "SA-870717",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 7,
+   "key": "SA-870717",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 7,
+   "key": "SA-870717",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 7,
+   "key": "SA-870717",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  }
+ ],
+ "ms": 2038,
+ "generated_at": "2026-10-10T13:31:37.951Z"
+}

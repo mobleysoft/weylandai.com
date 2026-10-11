@@ -1,0 +1,115 @@
+{
+ "sha16": "25b32f2284bb53a2",
+ "sha256": "25b32f2284bb53a221584d725404a6084b08b79f646402e46e4506b2d7f1f902",
+ "file": "25b32f2284bb53a2.pdf",
+ "bytes": 13272123,
+ "family": "harvest",
+ "source": "harvest",
+ "label": null,
+ "source_url": null,
+ "page_count": 496,
+ "text_layer": {
+  "pages_with_text": 468,
+  "pages": 496
+ },
+ "pages": {
+  "door_candidates": 3,
+  "hardware_candidates": 3,
+  "door_schedule_pages": [],
+  "hardware_pages": [
+   228
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 1,
+   "items": 1,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 0,
+   "items": 0,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 1,
+ "rows_total": 1,
+ "agreement_rate": 0,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 1,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 1,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": 0
+  },
+  "sets": {
+   "sets": 1,
+   "agreed": 0
+  }
+ },
+ "triage_class": "spec-only",
+ "triage_from": "inferred (S=false H=true plan sheets=0)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  }
+ },
+ "tier": "unread",
+ "unread_reason": "no rows agreed and no oracle applies",
+ "disagreement_count": 2,
+ "disagreements": [
+  {
+   "kind": "item",
+   "page": 228,
+   "key": "(CONTINUED) / than 90 inches.",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "group",
+   "page": null,
+   "key": "(CONTINUED)",
+   "field": "(set)",
+   "a": "",
+   "b": null,
+   "why": "only reader A read this set"
+  }
+ ],
+ "ms": 1566,
+ "generated_at": "2026-10-10T13:24:04.712Z"
+}

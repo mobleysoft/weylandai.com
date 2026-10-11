@@ -1,0 +1,452 @@
+{
+ "sha16": "c5096121de49d27c",
+ "sha256": "c5096121de49d27c76c9b6d5fdfc0f2cae2501c4aa2ed9238c924e6ba40821cc",
+ "file": "c5096121de49d27c.pdf",
+ "bytes": 14476461,
+ "family": "harvest",
+ "source": "harvest",
+ "label": null,
+ "source_url": null,
+ "page_count": 964,
+ "text_layer": {
+  "pages_with_text": 945,
+  "pages": 964
+ },
+ "pages": {
+  "door_candidates": 13,
+  "hardware_candidates": 16,
+  "door_schedule_pages": [],
+  "hardware_pages": [
+   417,
+   418,
+   419,
+   420,
+   421,
+   422,
+   423,
+   424,
+   425,
+   426,
+   427,
+   428,
+   429,
+   430,
+   431,
+   432
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 30,
+   "items": 218,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 30,
+   "items": 216,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 3,
+ "rows_disputed": 227,
+ "rows_total": 230,
+ "agreement_rate": 0.013,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 230,
+   "agreed": 3,
+   "disputed": 201,
+   "only_a": 14,
+   "only_b": 12,
+   "fields": {
+    "qty": {
+     "agree": 204,
+     "total": 204
+    },
+    "description": {
+     "agree": 199,
+     "total": 204
+    },
+    "catalog": {
+     "agree": 3,
+     "total": 204
+    },
+    "finish": {
+     "agree": 0,
+     "total": 145
+    },
+    "manufacturer": {
+     "agree": 0,
+     "total": 193
+    }
+   },
+   "agreement_rate": 0.013
+  },
+  "sets": {
+   "sets": 30,
+   "agreed": 30
+  }
+ },
+ "triage_class": "spec-only",
+ "triage_from": "inferred (S=false H=true plan sheets=0)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  }
+ },
+ "tier": "agreed",
+ "disagreement_count": 570,
+ "disagreements": [
+  {
+   "kind": "item",
+   "page": 417,
+   "key": "1.0 / T4A3386-USA (NRP and Size as Required)",
+   "field": "catalog",
+   "a": "T4A3386-USA (NRP and Size as Required)",
+   "b": "T4A3386-USA (NRP and Size as Required) US32D MK 087100"
+  },
+  {
+   "kind": "item",
+   "page": 417,
+   "key": "1.0 / T4A3386-USA (NRP and Size as Required)",
+   "field": "finish",
+   "a": "US32D",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 417,
+   "key": "1.0 / T4A3386-USA (NRP and Size as Required)",
+   "field": "manufacturer",
+   "a": "MK",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 417,
+   "key": "1.0 / M680EBDX",
+   "field": "catalog",
+   "a": "M680EBDX",
+   "b": "M680EBDX 630 SU 087100"
+  },
+  {
+   "kind": "item",
+   "page": 417,
+   "key": "1.0 / M680EBDX",
+   "field": "finish",
+   "a": "630",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 417,
+   "key": "1.0 / M680EBDX",
+   "field": "manufacturer",
+   "a": "SU",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 417,
+   "key": "1.0 / 16 43 8804 Less Pull",
+   "field": "catalog",
+   "a": "16 43 8804 Less Pull",
+   "b": "16 43 8804 Less Pull US32D SA 087100"
+  },
+  {
+   "kind": "item",
+   "page": 417,
+   "key": "1.0 / 16 43 8804 Less Pull",
+   "field": "finish",
+   "a": "US32D",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 417,
+   "key": "1.0 / 16 43 8804 Less Pull",
+   "field": "manufacturer",
+   "a": "SA",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 417,
+   "key": "1.0 / Keyed per Owner's Direction",
+   "field": "catalog",
+   "a": "Keyed per Owner's Direction",
+   "b": "Keyed per Owner's Direction US15 SA 087100"
+  },
+  {
+   "kind": "item",
+   "page": 417,
+   "key": "1.0 / Keyed per Owner's Direction",
+   "field": "finish",
+   "a": "US15",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 417,
+   "key": "1.0 / Keyed per Owner's Direction",
+   "field": "manufacturer",
+   "a": "SA",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 417,
+   "key": "1.0 / type as required",
+   "field": "catalog",
+   "a": "type as required",
+   "b": "type as required US32D SA 087100"
+  },
+  {
+   "kind": "item",
+   "page": 417,
+   "key": "1.0 / type as required",
+   "field": "finish",
+   "a": "US32D",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 417,
+   "key": "1.0 / type as required",
+   "field": "manufacturer",
+   "a": "SA",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 417,
+   "key": "1.0 / TBF157",
+   "field": "catalog",
+   "a": "TBF157",
+   "b": "TBF157 US32D RO 087100"
+  },
+  {
+   "kind": "item",
+   "page": 417,
+   "key": "1.0 / TBF157",
+   "field": "finish",
+   "a": "US32D",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 417,
+   "key": "1.0 / TBF157",
+   "field": "manufacturer",
+   "a": "RO",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 417,
+   "key": "1.0 / 6211 / 6231 (As Required)",
+   "field": "catalog",
+   "a": "6211 / 6231 (As Required)",
+   "b": "6211 / 6231 (As Required) 689 NO 087113"
+  },
+  {
+   "kind": "item",
+   "page": 417,
+   "key": "1.0 / 6211 / 6231 (As Required)",
+   "field": "finish",
+   "a": "689",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 417,
+   "key": "1.0 / 6211 / 6231 (As Required)",
+   "field": "manufacturer",
+   "a": "NO",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 417,
+   "key": "1.0 / 3452CNB x Length Required 273x3AFG",
+   "field": "catalog",
+   "a": "3452CNB x Length Required 273x3AFG",
+   "b": "3452CNB x Length Required 273x3AFG PE 087100"
+  },
+  {
+   "kind": "item",
+   "page": 417,
+   "key": "1.0 / 3452CNB x Length Required 273x3AFG",
+   "field": "manufacturer",
+   "a": "PE",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 417,
+   "key": "1.0 / MSES25SS x Length Required MKA",
+   "field": "catalog",
+   "a": "MSES25SS x Length Required MKA",
+   "b": "MSES25SS x Length Required MKA PE 087100"
+  },
+  {
+   "kind": "item",
+   "page": 417,
+   "key": "1.0 / MSES25SS x Length Required MKA",
+   "field": "manufacturer",
+   "a": "PE",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 417,
+   "key": "1.0 / 505",
+   "field": "catalog",
+   "a": "505",
+   "b": "505 SU 087100"
+  },
+  {
+   "kind": "item",
+   "page": 417,
+   "key": "1.0 / 505",
+   "field": "manufacturer",
+   "a": "SU",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 417,
+   "key": "1.0 / AQD (Size and Options as required)",
+   "field": "catalog",
+   "a": "AQD (Size and Options as required)",
+   "b": "AQD (Size and Options as required) NO 087100"
+  },
+  {
+   "kind": "item",
+   "page": 417,
+   "key": "1.0 / AQD (Size and Options as required)",
+   "field": "manufacturer",
+   "a": "NO",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 417,
+   "key": "1.0 / Elevation and Point to Point as Specified",
+   "field": "catalog",
+   "a": "Elevation and Point to Point as Specified",
+   "b": "Elevation and Point to Point as Specified SU 087100"
+  },
+  {
+   "kind": "item",
+   "page": 417,
+   "key": "1.0 / Elevation and Point to Point as Specified",
+   "field": "manufacturer",
+   "a": "SU",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 417,
+   "key": "1.0 / Wiring Diagram",
+   "field": "catalog",
+   "a": null,
+   "b": "OT"
+  },
+  {
+   "kind": "item",
+   "page": 417,
+   "key": "1.0 / Wiring Diagram",
+   "field": "manufacturer",
+   "a": "OT",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 417,
+   "key": "2.0 / T4A3386-USA (NRP and Size as Required)",
+   "field": "catalog",
+   "a": "T4A3386-USA (NRP and Size as Required)",
+   "b": "T4A3386-USA (NRP and Size as Required) US32D MK 087100"
+  },
+  {
+   "kind": "item",
+   "page": 417,
+   "key": "2.0 / T4A3386-USA (NRP and Size as Required)",
+   "field": "finish",
+   "a": "US32D",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 417,
+   "key": "2.0 / T4A3386-USA (NRP and Size as Required)",
+   "field": "manufacturer",
+   "a": "MK",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 417,
+   "key": "2.0 / M680EBDX",
+   "field": "catalog",
+   "a": "M680EBDX",
+   "b": "M680EBDX 630 SU 087100"
+  },
+  {
+   "kind": "item",
+   "page": 417,
+   "key": "2.0 / M680EBDX",
+   "field": "finish",
+   "a": "630",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 417,
+   "key": "2.0 / M680EBDX",
+   "field": "manufacturer",
+   "a": "SU",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 417,
+   "key": "2.0 / 16 43 8804 Less Pull",
+   "field": "catalog",
+   "a": "16 43 8804 Less Pull",
+   "b": "16 43 8804 Less Pull US32D SA 087100"
+  }
+ ],
+ "ms": 1742,
+ "generated_at": "2026-10-10T13:30:16.775Z"
+}

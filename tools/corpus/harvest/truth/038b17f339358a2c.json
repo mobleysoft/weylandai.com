@@ -1,0 +1,470 @@
+{
+ "sha16": "038b17f339358a2c",
+ "sha256": "038b17f339358a2c1dec23e7e348a60de6c05f89ec2a53a5b2b39141a87e3764",
+ "file": "038b17f339358a2c.pdf",
+ "bytes": 20829503,
+ "family": "harvest",
+ "source": "harvest",
+ "label": null,
+ "source_url": null,
+ "page_count": 47,
+ "text_layer": {
+  "pages_with_text": 17,
+  "pages": 47
+ },
+ "pages": {
+  "door_candidates": 3,
+  "hardware_candidates": 1,
+  "door_schedule_pages": [
+   35
+  ],
+  "hardware_pages": []
+ },
+ "readers": {
+  "a": {
+   "doors": 25,
+   "sets": 0,
+   "items": 0,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 23,
+   "sets": 0,
+   "items": 0,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 1
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 25,
+ "rows_total": 25,
+ "agreement_rate": 0,
+ "agreement": {
+  "doors": {
+   "rows": 25,
+   "agreed": 0,
+   "disputed": 23,
+   "only_a": 2,
+   "only_b": 0,
+   "fields": {
+    "width_inches": {
+     "agree": 0,
+     "total": 21
+    },
+    "height_inches": {
+     "agree": 0,
+     "total": 23
+    },
+    "material": {
+     "agree": 0,
+     "total": 22
+    },
+    "fire_rating": {
+     "agree": 9,
+     "total": 14
+    },
+    "hardware_group": {
+     "agree": 21,
+     "total": 21
+    }
+   },
+   "agreement_rate": 0
+  },
+  "items": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "sets": {
+   "sets": 0,
+   "agreed": 0
+  }
+ },
+ "triage_class": "schedule-only",
+ "triage_from": "inferred (S=true H=false plan sheets=2)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": true,
+   "total": 25,
+   "pass": 23,
+   "fail": 2,
+   "pass_rate": 0.92,
+   "examples": [
+    "mark 106 (schedule p.35) not tagged on any plan",
+    "mark 110B (schedule p.35) not tagged on any plan"
+   ],
+   "plan_sheets": [
+    "A100 p.32",
+    "A141 p.33"
+   ],
+   "plan_counts": {
+    "plan_sheets": 2,
+    "rooms": 22,
+    "corridors": 2,
+    "tags": 23,
+    "unmatched_tags": 0,
+    "schedule_marks": 25,
+    "marks_not_on_plan": 2,
+    "shared_marks": 0
+   }
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "schedule types present, but no legend title for them",
+   "skipped": []
+  },
+  "sizes_and_marks": {
+   "applicable": true,
+   "total": 25,
+   "pass": 23,
+   "fail": 2,
+   "pass_rate": 0.92,
+   "examples": [
+    "mark 106 p.35: size \"7'-0\\\"\" -> null x 84",
+    "mark 110B p.35: size \"14'-0\\\"\" -> null x 168"
+   ],
+   "size_fail": 2,
+   "mark_fail": 0
+  }
+ },
+ "tier": "oracle-checked",
+ "disagreement_count": 73,
+ "disagreements": [
+  {
+   "kind": "door",
+   "page": 35,
+   "key": "100A",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 35,
+   "key": "100B",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 35,
+   "key": "101",
+   "field": "width_inches",
+   "a": 36,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 35,
+   "key": "101",
+   "field": "height_inches",
+   "a": 84,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 35,
+   "key": "101",
+   "field": "material",
+   "a": "WD",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 35,
+   "key": "102A",
+   "field": "width_inches",
+   "a": 36,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 35,
+   "key": "102A",
+   "field": "height_inches",
+   "a": 84,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 35,
+   "key": "102A",
+   "field": "material",
+   "a": "WD",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 35,
+   "key": "102B",
+   "field": "width_inches",
+   "a": 36,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 35,
+   "key": "102B",
+   "field": "height_inches",
+   "a": 84,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 35,
+   "key": "102B",
+   "field": "material",
+   "a": "WD",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 35,
+   "key": "106",
+   "field": "height_inches",
+   "a": 84,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 35,
+   "key": "106",
+   "field": "fire_rating",
+   "a": "2 EXIST VAULT DOOR TO REMAIN",
+   "b": "2"
+  },
+  {
+   "kind": "door",
+   "page": 35,
+   "key": "110B",
+   "field": "height_inches",
+   "a": 168,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 35,
+   "key": "110B",
+   "field": "material",
+   "a": "STEEL",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 35,
+   "key": "110B",
+   "field": "fire_rating",
+   "a": "- EXIST SECTIONAL DOOR TO REMAIN",
+   "b": "-"
+  },
+  {
+   "kind": "door",
+   "page": 35,
+   "key": "111A",
+   "field": "width_inches",
+   "a": 36,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 35,
+   "key": "111A",
+   "field": "height_inches",
+   "a": 84,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 35,
+   "key": "111A",
+   "field": "material",
+   "a": "WD",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 35,
+   "key": "111B",
+   "field": "width_inches",
+   "a": 36,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 35,
+   "key": "111B",
+   "field": "height_inches",
+   "a": 84,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 35,
+   "key": "111B",
+   "field": "material",
+   "a": "HM",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 35,
+   "key": "112A",
+   "field": "width_inches",
+   "a": 36,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 35,
+   "key": "112A",
+   "field": "height_inches",
+   "a": 84,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 35,
+   "key": "112A",
+   "field": "material",
+   "a": "WD",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 35,
+   "key": "112B",
+   "field": "width_inches",
+   "a": 36,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 35,
+   "key": "112B",
+   "field": "height_inches",
+   "a": 84,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 35,
+   "key": "112B",
+   "field": "material",
+   "a": "WD",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 35,
+   "key": "112B",
+   "field": "fire_rating",
+   "a": "- 1",
+   "b": "-"
+  },
+  {
+   "kind": "door",
+   "page": 35,
+   "key": "113B",
+   "field": "width_inches",
+   "a": 30,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 35,
+   "key": "113B",
+   "field": "height_inches",
+   "a": 84,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 35,
+   "key": "113B",
+   "field": "material",
+   "a": "HM",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 35,
+   "key": "114",
+   "field": "width_inches",
+   "a": 36,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 35,
+   "key": "114",
+   "field": "height_inches",
+   "a": 84,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 35,
+   "key": "114",
+   "field": "material",
+   "a": "WD",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 35,
+   "key": "115",
+   "field": "width_inches",
+   "a": 32,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 35,
+   "key": "115",
+   "field": "height_inches",
+   "a": 84,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 35,
+   "key": "115",
+   "field": "material",
+   "a": "WD",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 35,
+   "key": "116A",
+   "field": "width_inches",
+   "a": 36,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 35,
+   "key": "116A",
+   "field": "height_inches",
+   "a": 84,
+   "b": null
+  }
+ ],
+ "ms": 1507,
+ "generated_at": "2026-10-10T13:22:53.502Z"
+}

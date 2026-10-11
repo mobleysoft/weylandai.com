@@ -1,0 +1,256 @@
+{
+ "sha16": "8acaefc2a1de949b",
+ "sha256": "8acaefc2a1de949bcffe3aaad2e9574a15e1ffefc7a3eedd5e2f8833939394de",
+ "file": "8acaefc2a1de949b.pdf",
+ "bytes": 24519338,
+ "family": "harvest",
+ "source": "harvest",
+ "label": null,
+ "source_url": null,
+ "page_count": 64,
+ "text_layer": {
+  "pages_with_text": 64,
+  "pages": 64
+ },
+ "pages": {
+  "door_candidates": 2,
+  "hardware_candidates": 0,
+  "door_schedule_pages": [
+   23
+  ],
+  "hardware_pages": []
+ },
+ "readers": {
+  "a": {
+   "doors": 12,
+   "sets": 0,
+   "items": 0,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 12,
+   "sets": 0,
+   "items": 0,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 1
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 12,
+ "rows_total": 12,
+ "agreement_rate": 0,
+ "agreement": {
+  "doors": {
+   "rows": 12,
+   "agreed": 0,
+   "disputed": 12,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {
+    "width_inches": {
+     "agree": 0,
+     "total": 12
+    },
+    "height_inches": {
+     "agree": 12,
+     "total": 12
+    },
+    "door_type": {
+     "agree": 12,
+     "total": 12
+    },
+    "material": {
+     "agree": 12,
+     "total": 12
+    },
+    "hardware_group": {
+     "agree": 12,
+     "total": 12
+    },
+    "fire_rating": {
+     "agree": 4,
+     "total": 4
+    }
+   },
+   "agreement_rate": 0
+  },
+  "items": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "sets": {
+   "sets": 0,
+   "agreed": 0
+  }
+ },
+ "triage_class": "schedule-only",
+ "triage_from": "inferred (S=true H=false plan sheets=0)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "no floor plan sheet found in this PDF (title blocks)",
+   "plan_counts": {
+    "plan_sheets": 0,
+    "rooms": 0,
+    "corridors": 0,
+    "tags": 0,
+    "unmatched_tags": 0,
+    "schedule_marks": 12,
+    "marks_not_on_plan": 12,
+    "shared_marks": 0
+   }
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "types_in_legend": {
+   "applicable": true,
+   "total": 2,
+   "pass": 2,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "legend_titles": [
+    "DOOR TYPES p.23",
+    "FRAME TYPES p.23"
+   ],
+   "skipped": [],
+   "note": "weak for numeric types: a detail number near the legend can pass a numeric frame type"
+  },
+  "sizes_and_marks": {
+   "applicable": true,
+   "total": 12,
+   "pass": 0,
+   "fail": 12,
+   "pass_rate": 0,
+   "examples": [
+    "mark 100A p.23: size \"2 6' - 0\\\" 4' - 7\\\" FIXED SIDE-BY-SIDE x 6' - 8\\\"\" -> null x 80",
+    "mark 106 p.23: size \"6' - 8\\\"\" -> null x 80",
+    "mark 107 p.23: size \"WINDOW TYPES x 6' - 8\\\"\" -> null x 80",
+    "mark 108 p.23: size \"6' - 8\\\"\" -> null x 80",
+    "mark 109 p.23: size \"PER SCHED x 6' - 8\\\"\" -> null x 80",
+    "mark 110 p.23: size \"6' - 8\\\"\" -> null x 80",
+    "mark 111 p.23: size \"6' - 8\\\"\" -> null x 80",
+    "mark 112 p.23: size \"6' - 8\\\"\" -> null x 80",
+    "mark 113 p.23: size \"6' - 8\\\"\" -> null x 80",
+    "mark 115 p.23: size \"6' - 8\\\"\" -> null x 80",
+    "mark 116 p.23: size \"6' - 8\\\"\" -> null x 80",
+    "mark 122 p.23: size \"6' - 8\\\"\" -> null x 80"
+   ],
+   "size_fail": 12,
+   "mark_fail": 0
+  }
+ },
+ "tier": "oracle-checked",
+ "disagreement_count": 12,
+ "disagreements": [
+  {
+   "kind": "door",
+   "page": 23,
+   "key": "100A",
+   "field": "width_inches",
+   "a": null,
+   "b": 36
+  },
+  {
+   "kind": "door",
+   "page": 23,
+   "key": "106",
+   "field": "width_inches",
+   "a": null,
+   "b": 36
+  },
+  {
+   "kind": "door",
+   "page": 23,
+   "key": "107",
+   "field": "width_inches",
+   "a": null,
+   "b": 36
+  },
+  {
+   "kind": "door",
+   "page": 23,
+   "key": "108",
+   "field": "width_inches",
+   "a": null,
+   "b": 36
+  },
+  {
+   "kind": "door",
+   "page": 23,
+   "key": "109",
+   "field": "width_inches",
+   "a": null,
+   "b": 36
+  },
+  {
+   "kind": "door",
+   "page": 23,
+   "key": "110",
+   "field": "width_inches",
+   "a": null,
+   "b": 36
+  },
+  {
+   "kind": "door",
+   "page": 23,
+   "key": "111",
+   "field": "width_inches",
+   "a": null,
+   "b": 36
+  },
+  {
+   "kind": "door",
+   "page": 23,
+   "key": "112",
+   "field": "width_inches",
+   "a": null,
+   "b": 36
+  },
+  {
+   "kind": "door",
+   "page": 23,
+   "key": "113",
+   "field": "width_inches",
+   "a": null,
+   "b": 36
+  },
+  {
+   "kind": "door",
+   "page": 23,
+   "key": "115",
+   "field": "width_inches",
+   "a": null,
+   "b": 30
+  },
+  {
+   "kind": "door",
+   "page": 23,
+   "key": "116",
+   "field": "width_inches",
+   "a": null,
+   "b": 30
+  },
+  {
+   "kind": "door",
+   "page": 23,
+   "key": "122",
+   "field": "width_inches",
+   "a": null,
+   "b": 36
+  }
+ ],
+ "ms": 5627,
+ "generated_at": "2026-10-10T13:28:51.227Z"
+}

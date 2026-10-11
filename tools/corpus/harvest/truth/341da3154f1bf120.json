@@ -1,0 +1,130 @@
+{
+ "sha16": "341da3154f1bf120",
+ "sha256": "341da3154f1bf1208ef33f15e4efc51ea169b90fe11f6318d36ad46549ec1001",
+ "file": "341da3154f1bf120.pdf",
+ "bytes": 20090949,
+ "family": "harvest",
+ "source": "harvest",
+ "label": null,
+ "source_url": null,
+ "page_count": 27,
+ "text_layer": {
+  "pages_with_text": 27,
+  "pages": 27
+ },
+ "pages": {
+  "door_candidates": 2,
+  "hardware_candidates": 0,
+  "door_schedule_pages": [
+   15
+  ],
+  "hardware_pages": []
+ },
+ "readers": {
+  "a": {
+   "doors": 2,
+   "sets": 0,
+   "items": 0,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 2,
+   "sets": 0,
+   "items": 0,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 1
+  }
+ },
+ "rows_agreed": 2,
+ "rows_disputed": 0,
+ "rows_total": 2,
+ "agreement_rate": 1,
+ "agreement": {
+  "doors": {
+   "rows": 2,
+   "agreed": 2,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {
+    "height_inches": {
+     "agree": 2,
+     "total": 2
+    },
+    "door_type": {
+     "agree": 2,
+     "total": 2
+    }
+   },
+   "agreement_rate": 1
+  },
+  "items": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "sets": {
+   "sets": 0,
+   "agreed": 0
+  }
+ },
+ "triage_class": "schedule-only",
+ "triage_from": "inferred (S=true H=false plan sheets=1)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": true,
+   "total": 2,
+   "pass": 2,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "plan_sheets": [
+    "A-100 p.11"
+   ],
+   "plan_counts": {
+    "plan_sheets": 1,
+    "rooms": 0,
+    "corridors": 0,
+    "tags": 2,
+    "unmatched_tags": 0,
+    "schedule_marks": 2,
+    "marks_not_on_plan": 0,
+    "shared_marks": 0
+   }
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "no DOOR TYPES / FRAME TYPES legend title in this PDF"
+  },
+  "sizes_and_marks": {
+   "applicable": true,
+   "total": 2,
+   "pass": 0,
+   "fail": 2,
+   "pass_rate": 0,
+   "examples": [
+    "mark 100 p.15: size \"7' - 0\\\"\" -> null x 84",
+    "mark 101 p.15: size \"7' - 0\\\"\" -> null x 84"
+   ],
+   "size_fail": 2,
+   "mark_fail": 0
+  }
+ },
+ "tier": "agreed",
+ "disagreement_count": 0,
+ "disagreements": [],
+ "ms": 2795,
+ "generated_at": "2026-10-10T13:24:29.144Z"
+}

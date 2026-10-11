@@ -1,124 +1,106 @@
 // tools/user-simulation/journeys/sightx-sheets.mjs
 //
-// g068: SightX's sheet view over the g066 placement records (tools/corpus/harvest/placement/<sha16>.json,
-// served by /api/sightx/sheets/<sha16>). For T2507, R2502 and T2421, /sightx/?set=<sha16> must open on
-// the set's plan sheets, and the journey checks from the visitor's side:
-//   - the HUD shows placed-of-total, the record's numbers ("49 OF 49 PLACED");
-//   - one sheet button per sheet in the record; each sheet's image loads and has every tag the record
-//     places on that page, drawn at the record's PDF-point coordinates, nothing more; all sheets
-//     together draw marks_placed tags;
-//   - a real click on a tag ring opens that door's card: its mark, its room and its schedule page;
-//   - a table row opens the same card and brings its sheet up;
-//   - marks the record could not place are listed as NOT PLACED, one row each;
-//   - 2D only: the HUD says PLAN SHEETS, and a 3D CORRIDOR button appears only for a set that has a
-//     3D model (/api/sightx/sets/<sha16> answers);
-//   - one shell: the same document throughout, never leaving the site.
-// A phone context taps a T2507 tag with a touch tap.
+// g068, reworked by g074: SightX's public sheet view shows the WeylandAI Building, WeylandAI's own sample bid
+// set (tools/bidset, set 4847b09e633103f7), from its placement record (/api/sightx/sheets/<sha16>). The sheets
+// are drawn in the browser from the set's PDF by the self-hosted pdf.js. No harvested set is shown on sheets.
+// From the visitor's side:
+//   - /sightx/?set=4847b09e633103f7 opens on its plan sheet A-101, drawn;
+//   - the HUD shows placed-of-total from the record (48 OF 48 PLACED);
+//   - the sheet draws every placed tag at the record's coordinates, nothing more;
+//   - a table row opens its card and brings up its sheet; a real click on a tag ring opens its door card
+//     (mark, room, size, hardware group, schedule page) matching the drawn schedule (tools/bidset/out);
+//   - one card per opening: the table lists all 48;
+//   - a harvested set is not served on sheets (its record answers 404);
+//   - one shell: the same document throughout, never leaving the site;
+//   - a phone touch tap on a tag opens its card.
 // Usage: node tools/user-simulation/journeys/sightx-sheets.mjs   (exit 0 = all passed)
+import { readFileSync } from "node:fs";
 import { Journey, BASE, sleep, setMark, placeState } from "../lib/journey-kit.mjs";
 
-const SETS = { "192a16af8f31ae0c": "131B", "7478006f7fd5b43c": "101A", "15b85ca679307cc1": null };
-const J = new Journey("sightx-sheets", "SightX plan sheets with placed door tags");
+const SET = "4847b09e633103f7";
+const TRUTH = JSON.parse(readFileSync(new URL("../../bidset/out/truth-doors.json", import.meta.url), "utf8"));
+const PICK = "104";
+const J = new Journey("sightx-sheets", "SightX plan sheets of the WeylandAI Building with its door tags");
 
 const state = (page) => page.evaluate(() => (window.SightXSheets ? window.SightXSheets.state() : null));
-const waitImage = (page, sheet) => page.waitForFunction((s) => { const x = window.SightXSheets && window.SightXSheets.state(); return !!x && x.sheet === s && x.image_loaded; }, sheet, { timeout: 30000 }).then(() => true, () => false);
 const card = async (page) => (await page.textContent("#info").catch(() => "")).replace(/\s+/g, " ");
+const drawnOn = (page) => page.evaluate(() => [...document.querySelectorAll("#sheet-svg g.tag")].map((g) => { const m = /translate\(([-\d.]+) ([-\d.]+)\)/.exec(g.getAttribute("transform")); return { mark: g.dataset.mark, i: +g.dataset.o, x: +m[1], y: +m[2] }; }));
 // The tag ring's centre on screen, once the page has stopped scrolling (a row click scrolls the viewer into view).
-async function ringCentre(page, ti) {
+async function ringCentre(page, i) {
   let last = null;
   for (let n = 0; n < 20; n++) {
-    const b = await page.locator('#sheet-svg g.tag[data-t="' + ti + '"] .ring').boundingBox();
+    const b = await page.locator('#sheet-svg g.tag[data-o="' + i + '"] .ring').boundingBox();
     if (b && last && Math.abs(b.x - last.x) < 0.5 && Math.abs(b.y - last.y) < 0.5) return { x: b.x + b.width / 2, y: b.y + b.height / 2 };
     last = b; await sleep(150);
   }
   return last && { x: last.x + last.width / 2, y: last.y + last.height / 2 };
 }
-const drawnOn = (page) => page.evaluate(() => [...document.querySelectorAll("#sheet-svg g.tag")].map((g) => { const m = /translate\(([-\d.]+) ([-\d.]+)\)/.exec(g.getAttribute("transform")); return { mark: g.dataset.mark, i: +g.dataset.t, x: +m[1], y: +m[2] }; }));
-
-async function openSet(ctx, set) {
+async function openSet(ctx) {
   const page = await J.page(ctx);
-  await page.goto(BASE + "/sightx/?set=" + set + "&journey=" + J.id + "-" + J.suffix, { waitUntil: "load", timeout: 60000 });
+  await page.goto(BASE + "/sightx/?set=" + SET + "&journey=" + J.id + "-" + J.suffix, { waitUntil: "load", timeout: 60000 });
   const mark = await setMark(page);
   const opened = await page.waitForFunction(() => { const x = window.SightXSheets && window.SightXSheets.state(); return !!x && x.image_loaded; }, null, { timeout: 60000 }).then(() => true, () => false);
   return { page, mark, opened };
 }
-
 await J.run(async () => {
   await J.launch();
   const ctx = await J.context("desktop");
-  for (const [set, pickMark] of Object.entries(SETS)) {
-    const { page, mark, opened } = await openSet(ctx, set);
-    J.check(set + ": the set opens on its plan sheets and the first sheet's image loads", opened, await page.textContent("#sx-status").catch(() => ""));
-    if (!opened) { await page.close(); continue; }
-    const rec = await J.api(page, "/api/sightx/sheets/" + set, set + ": the placement record answers", {
-      require: ["sheets", "tags", "summary.marks_placed", "summary.marks_total"],
+  const { page, mark, opened } = await openSet(ctx);
+  J.check("the WeylandAI Building opens on its plan sheet and the sheet is drawn from its PDF", opened, await page.textContent("#sx-status").catch(() => ""));
+  if (opened) {
+    const rec = await J.api(page, "/api/sightx/sheets/" + SET, "the Building's placement record answers", {
+      require: ["sheets", "openings", "summary.placed", "summary.total"],
       validate(d) {
         if (!Array.isArray(d.sheets) || !d.sheets.length) return "sheets must be a nonempty array";
-        if (!Array.isArray(d.tags) || d.tags.length !== d.summary.marks_placed) return "tags must hold marks_placed entries";
-        for (const t of d.tags) if (typeof t.mark !== "string" || !Number.isFinite(t.x) || !Number.isFinite(t.y) || !d.sheets.some((s) => s.page === t.page)) return "each tag needs a mark, finite x/y and a listed sheet";
+        if (!Array.isArray(d.openings) || d.openings.length !== d.summary.total) return "one opening per schedule row";
+        for (const o of d.openings) if (typeof o.mark !== "string" || (o.tag && (!Number.isFinite(o.tag.x) || !Number.isFinite(o.tag.y)))) return "each opening needs a mark and finite tag coordinates";
         return true;
       },
     });
-    if (!rec) { await page.close(); continue; }
-    const s = rec.summary;
-    const hud = await page.textContent("#hud-count").catch(() => "");
-    J.check(set + ": the HUD shows placed-of-total (" + s.marks_placed + " OF " + s.marks_total + " PLACED)", hud.trim() === s.marks_placed + " OF " + s.marks_total + " PLACED", { hud });
-    const buttons = await page.evaluate(() => [...document.querySelectorAll("#sheet-bar .btn[data-k]")].map((b) => b.textContent));
-    J.check(set + ": one sheet button per plan sheet in the record", JSON.stringify(buttons.map((b) => b.split(" · ")[0])) === JSON.stringify(rec.sheets.map((x) => x.sheet)), { buttons });
-    let total = 0;
-    for (let k = 0; k < rec.sheets.length; k++) {
-      const sh = rec.sheets[k];
-      await page.locator('#sheet-bar .btn[data-k="' + k + '"]').click();
-      const loaded = await waitImage(page, sh.sheet);
+    if (rec) {
+      const hud = await page.textContent("#hud-count").catch(() => "");
+      J.check("the HUD shows placed-of-total from the record (" + rec.summary.placed + " OF " + rec.summary.total + " PLACED, 48 of 48 drawn on the schedule)", hud.trim() === rec.summary.placed + " OF " + rec.summary.total + " PLACED" && rec.summary.total === TRUTH.door_count, { hud });
+      const buttons = await page.evaluate(() => [...document.querySelectorAll("#sheet-bar .btn[data-k]")].map((b) => b.textContent));
+      J.check("one sheet button per plan sheet in the record (A-101)", JSON.stringify(buttons.map((b) => b.split(" · ")[0])) === JSON.stringify(rec.sheets.map((x) => x.sheet)), { buttons });
       const drawn = await drawnOn(page);
-      const want = rec.tags.map((t, i) => ({ ...t, i })).filter((t) => t.page === sh.page);
-      const exact = drawn.length === want.length && want.every((t) => drawn.some((g) => g.i === t.i && g.mark === t.mark && Math.abs(g.x - t.x) < 0.01 && Math.abs(g.y - t.y) < 0.01));
-      total += drawn.length;
-      J.check(set + ": " + sh.sheet + " (p." + sh.page + ") loads and draws its " + want.length + " placed tags at the record's coordinates", loaded && exact, { loaded, drawn: drawn.length, record: want.length });
+      const want = rec.openings.map((o, i) => ({ ...o, i })).filter((o) => o.tag && o.tag.page === rec.sheets[0].page);
+      J.check("A-101 draws its " + want.length + " placed tags at the record's coordinates, nothing more", drawn.length === want.length && want.every((o) => drawn.some((g) => g.i === o.i && g.mark === o.mark && Math.abs(g.x - o.tag.x) < 0.01 && Math.abs(g.y - o.tag.y) < 0.01)), { drawn: drawn.length, record: want.length });
+      const rows = await page.locator("#rows tr.tagrow").count();
+      J.check("one card per opening: the table lists all " + rec.summary.total, rows === rec.summary.total, { rows });
+      const i = rec.openings.findIndex((o) => o.mark === PICK), t = TRUTH.doors.find((d) => d.mark === PICK);
+      await page.locator('#rows tr.tagrow[data-o="' + i + '"] td:nth-child(2)').click(); await sleep(500);
+      const st1 = await state(page);
+      J.check("the table row " + PICK + " opens its card and brings up its sheet", (await card(page)).startsWith(PICK) && st1 && st1.sheet === "A-101" && st1.selected === PICK, { sheet: st1 && st1.sheet, selected: st1 && st1.selected });
+      await page.evaluate(() => { document.getElementById("info").innerHTML = ""; });
+      const at = await ringCentre(page, i);
+      await page.mouse.click(at.x, at.y); await sleep(300);
+      const c = await card(page);
+      J.check("clicking tag " + PICK + " opens its door card: " + t.room + ", " + t.width + " x " + t.height + ", group " + t.hardware_group + ", schedule page 3, tag on A-101",
+        c.startsWith(PICK) && c.includes(t.room) && c.includes(t.width + " x " + t.height) && c.includes("HW GROUP" + t.hardware_group) && c.includes("page 3") && c.includes("tag on A-101 p.2"), { card: c.slice(0, 320) });
+      if (process.env.SHOTS_DIR) { await page.evaluate(() => window.scrollTo(0, 0)); await page.locator("#sheet-fit").click(); await sleep(300); await page.screenshot({ path: process.env.SHOTS_DIR + "/building-a101-" + PICK + ".png" }).catch(() => {}); }
+      const layout = await page.textContent("#hud-layout").catch(() => "");
+      J.check("2D sheet truth: the HUD says PLAN SHEETS and no 3D corridor is offered for the Building", /^PLAN SHEETS A-101/.test(layout) && (await page.locator("#sheet-3d").count()) === 0, { layout });
     }
-    J.check(set + ": all sheets together draw the " + s.marks_placed + " placed tags", total === s.marks_placed, { total, placed: s.marks_placed });
-    // Click-through: a real click on a tag ring (zoomed to it first by its table row so neighbours don't cover it).
-    const ti = pickMark ? rec.tags.findIndex((t) => t.mark === pickMark) : 0;
-    const t = rec.tags[ti];
-    await page.locator('#rows tr.tagrow[data-t="' + ti + '"] td:nth-child(2)').click();
-    await sleep(400);
-    const viaRow = await card(page);
-    const st1 = await state(page);
-    J.check(set + ": the table row " + t.mark + " opens its card and brings up " + t.sheet, viaRow.includes(t.mark) && st1 && st1.sheet === t.sheet && st1.selected === t.mark, { sheet: st1 && st1.sheet, selected: st1 && st1.selected });
-    await page.locator("#sheet-fit").click();
-    await page.locator("#sheet-in").click(); await page.locator("#sheet-in").click(); await sleep(200);
-    await page.locator('#rows tr.tagrow[data-t="' + ti + '"] td:nth-child(2)').click(); await sleep(300);
-    await page.evaluate(() => { document.getElementById("info").innerHTML = ""; });
-    const at = await ringCentre(page, ti);
-    await page.mouse.click(at.x, at.y);
-    await sleep(300);
-    const c = await card(page);
-    const row0 = (t.schedule_rows || [])[0];
-    J.check(set + ": clicking tag " + t.mark + " on " + t.sheet + " opens its door card (room " + (t.room_name || "-") + ", schedule p." + (row0 ? row0.page : "-") + ")",
-      c.startsWith(t.mark) && (!t.room_name || c.includes(t.room_name)) && c.includes("tag on " + t.sheet + " p." + t.page) && (!row0 || c.includes("schedule p." + row0.page)), { card: c.slice(0, 300) });
-    const un = await page.evaluate(() => [...document.querySelectorAll("#rows tr.unplaced")].map((tr) => tr.textContent.replace(/\s+/g, " ").trim()));
-    J.check(set + ": the " + s.unplaced.length + " marks the record could not place are listed NOT PLACED", un.length === s.unplaced.length && s.unplaced.every((u) => un.some((x) => x.startsWith(u.mark) && x.includes("NOT PLACED"))), { listed: un });
-    const layout = await page.textContent("#hud-layout").catch(() => "");
-    const has3d = await page.evaluate(async (p) => (await fetch(p)).ok, "/api/sightx/sets/" + set);
-    const btn3d = await page.locator("#sheet-3d").count();
-    J.check(set + ": 2D sheet truth: HUD says PLAN SHEETS; a 3D CORRIDOR button only where a 3D model exists (" + has3d + ")", /^PLAN SHEETS /.test(layout) && (btn3d === 1) === has3d, { layout, has3d, btn3d });
+    const harvested = await page.evaluate(async () => (await fetch("/api/sightx/sheets/7478006f7fd5b43c")).status);
+    J.check("a harvested set's sheets are not served (R2502: 404)", harvested === 404, { status: harvested });
     const place = await placeState(page, mark);
-    J.check(set + ": one shell: the same document throughout, on the site", place.sameDocument && place.onSite, place);
-    await page.close();
+    J.check("one shell: the same document throughout, on the site", place.sameDocument && place.onSite, place);
   }
+  await page.close();
   await ctx.close();
 
   const phone = await J.context("phone");
-  const { page, opened } = await openSet(phone, "192a16af8f31ae0c");
-  if (opened) {
-    const rec = JSON.parse(await page.evaluate(async () => (await fetch("/api/sightx/sheets/192a16af8f31ae0c")).text()));
-    const ti = rec.tags.findIndex((t) => t.mark === "131B");
-    await page.locator('#rows tr.tagrow[data-t="' + ti + '"] td:nth-child(2)').tap(); await sleep(300);
-    await page.evaluate(() => { document.getElementById("info").innerHTML = ""; });
-    const at = await ringCentre(page, ti);
-    await page.touchscreen.tap(at.x, at.y); await sleep(300);
-    const c = await card(page);
-    J.check("phone: tapping tag 131B on T2507 A-100 opens its card (131 EXCERCISE ROOM)", c.startsWith("131B") && c.includes("EXCERCISE ROOM"), { card: c.slice(0, 200) });
-  } else J.check("phone: T2507 opens on its sheets", false, "did not open");
+  const p2 = await openSet(phone);
+  if (p2.opened) {
+    const rec = JSON.parse(await p2.page.evaluate(async (s) => (await fetch("/api/sightx/sheets/" + s)).text(), SET));
+    const i = rec.openings.findIndex((o) => o.mark === PICK);
+    await p2.page.locator('#rows tr.tagrow[data-o="' + i + '"] td:nth-child(2)').tap(); await sleep(400);
+    await p2.page.evaluate(() => { document.getElementById("info").innerHTML = ""; });
+    const at = await ringCentre(p2.page, i);
+    await p2.page.touchscreen.tap(at.x, at.y); await sleep(300);
+    const c = await card(p2.page);
+    if (process.env.SHOTS_DIR) await p2.page.screenshot({ path: process.env.SHOTS_DIR + "/building-phone-" + PICK + ".png" }).catch(() => {});
+    J.check("phone: a tap on tag " + PICK + " opens its card", c.startsWith(PICK) && c.includes("tag on A-101"), { card: c.slice(0, 200) });
+  } else J.check("phone: the Building opens on its sheet", false, "did not open");
   await phone.close();
 });

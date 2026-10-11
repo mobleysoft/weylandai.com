@@ -24,6 +24,9 @@
 //                                                     come from <dir>/manifest.json when present
 //   --files a.pdf,b.pdf     just these files
 //   --only <sha16,...>      just these (from whatever set was chosen)
+//   --non-harvest           regenerate all recorded PDFs outside harvest downloads (OCC needs OCC_PDF)
+//   --key-sets <file>       named JSON list of SHA16s, resolving both harvest and repo PDFs;
+//                          --dir overrides the harvest location only in this mode
 //   --out <dir>             write the records and queue to <dir> (default tools/corpus/harvest/truth)
 //   --max-pages <n>         skip PDFs with more pages (default 1200)
 //   --ocr-max-pages <n>     OCR a PDF with no text layer when it has at most n pages (default 6); --ocr-dpi (600)
@@ -37,6 +40,7 @@ import { openPdf } from "./truth/pdf.mjs";
 import { loadPages, readSchedules } from "./truth/load_set.mjs";
 import { alignDoors, alignGroups, mergeGroups, summarize, disagreements, scoreDoorsVs, scoreGroupsVs, calibrateFields, N } from "./truth/agree.mjs";
 import { oracleMarksOnPlan, oracleSetsExist, oracleSetDoorLists, oracleTypesInLegend, oracleSizesAndMarks, ORACLES_FOR } from "./truth/oracles.mjs";
+import { readKeySets, recordedInputs } from "./truth/inputs.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const REPO = resolve(here, "../..");
@@ -47,7 +51,12 @@ const OUT = opt("out") ? resolve(opt("out")) : join(REPO, "tools/corpus/harvest/
 const MAX_PAGES = +opt("max-pages", 1200);
 // A PDF with no text layer is OCR'd (truth/ocr.mjs) when it has at most this many pages (a page takes about a minute).
 const OCR_MAX = +opt("ocr-max-pages", 6), OCR_DPI = +opt("ocr-dpi", 600);
-const ONLY = opt("only") ? opt("only").split(",") : null;
+const keySets = opt("key-sets") ? readKeySets(resolve(opt("key-sets"))) : null;
+const onlyArg = opt("only") ? opt("only").split(",") : null;
+const ONLY = keySets ? keySets.filter(sha => !onlyArg || onlyArg.includes(sha)) : onlyArg;
+if (ONLY && !ONLY.length) throw new Error("No SHA16s selected");
+const NON_HARVEST = argv.includes("--non-harvest");
+if (opt("files") && (keySets || NON_HARVEST)) throw new Error("--files cannot be combined with --key-sets or --non-harvest");
 mkdirSync(OUT, { recursive: true });
 
 // ---------------------------------------------------------------- which PDFs, and what we know of each
@@ -69,7 +78,16 @@ const familyOf = (label) => {
 };
 let files = [];
 const meta = new Map(); // abs path -> { family, source, label }
-if (opt("dir")) {
+const expectedSha = new Map();
+if (keySets || NON_HARVEST) {
+  const selected = recordedInputs({ repo: REPO, harvestDir: opt("dir") ? resolve(opt("dir")) : null,
+    shas: ONLY, nonHarvest: NON_HARVEST, occPdf: process.env.OCC_PDF });
+  for (const { file, record } of selected) {
+    files.push(file);
+    expectedSha.set(file, record.sha16);
+    meta.set(file, { family: record.family, label: record.label, url: record.source_url, source: record.source });
+  }
+} else if (opt("dir")) {
   const dir = resolve(opt("dir"));
   const mm = manifestMeta(dir);
   for (const f of readdirSync(dir).filter((x) => x.toLowerCase().endsWith(".pdf")).sort()) {
@@ -125,6 +143,7 @@ async function analyze(file) {
   const bytes = readFileSync(file);
   const sha = createHash("sha256").update(bytes).digest("hex");
   const sha16 = sha.slice(0, 16);
+  if (expectedSha.has(file) && expectedSha.get(file) !== sha16) throw new Error(`PDF hash changed: expected ${expectedSha.get(file)}, found ${sha16} at ${file}`);
   if (ONLY && !ONLY.includes(sha16)) return null;
   const t0 = Date.now();
   const m = meta.get(file) || { family: "unknown", source: "files" };
@@ -219,11 +238,12 @@ async function analyze(file) {
 const queueFile = join(OUT, "queue.jsonl");
 const done = new Set();
 const queueNew = [];
+let errors = 0;
 for (const f of files) {
-  if (!existsSync(f)) { console.log("missing", f); continue; }
+  if (!existsSync(f)) { console.log("missing", f); errors++; continue; }
   process.stdout.write(rel(f) + " ... ");
   let r;
-  try { r = await analyze(f); } catch (e) { console.log("error", e.stack); continue; }
+  try { r = await analyze(f); } catch (e) { console.log("error", e.stack); errors++; continue; }
   if (!r) { console.log("skipped"); continue; }
   const rec = r.rec || r;
   writeFileSync(join(OUT, rec.sha16 + ".json"), JSON.stringify(rec, null, 1) + "\n");
@@ -235,3 +255,6 @@ for (const f of files) {
 const kept = existsSync(queueFile) ? readFileSync(queueFile, "utf8").split("\n").filter(Boolean).filter((l) => { try { return !done.has(JSON.parse(l).sha16); } catch (_) { return false; } }) : [];
 writeFileSync(queueFile, kept.concat(queueNew.map((q) => JSON.stringify(q))).join("\n") + "\n");
 console.log("truth records:", done.size, "queue lines:", kept.length + queueNew.length, "(" + queueNew.length + " from this run)");
+const missing = (ONLY || [...expectedSha.values()]).filter(sha => !done.has(sha));
+if (missing.length) console.error("Requested records not regenerated:", missing.join(", "));
+if (errors || missing.length) process.exitCode = 1;

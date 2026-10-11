@@ -1,0 +1,439 @@
+{
+ "sha16": "1212c21eb25983da",
+ "sha256": "1212c21eb25983dad5bf89b7029afeb82c67dd2c9363732cf782776c33ca6c2d",
+ "file": "1212c21eb25983da.pdf",
+ "bytes": 12851666,
+ "family": "harvest",
+ "source": "harvest",
+ "label": null,
+ "source_url": null,
+ "page_count": 510,
+ "text_layer": {
+  "pages_with_text": 494,
+  "pages": 510
+ },
+ "pages": {
+  "door_candidates": 1,
+  "hardware_candidates": 2,
+  "door_schedule_pages": [],
+  "hardware_pages": [
+   166,
+   167
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 3,
+   "items": 18,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 3,
+   "items": 18,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 18,
+ "rows_total": 18,
+ "agreement_rate": 0,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 18,
+   "agreed": 0,
+   "disputed": 18,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {
+    "qty": {
+     "agree": 18,
+     "total": 18
+    },
+    "description": {
+     "agree": 18,
+     "total": 18
+    },
+    "catalog": {
+     "agree": 0,
+     "total": 18
+    },
+    "finish": {
+     "agree": 0,
+     "total": 15
+    },
+    "manufacturer": {
+     "agree": 0,
+     "total": 18
+    }
+   },
+   "agreement_rate": 0
+  },
+  "sets": {
+   "sets": 3,
+   "agreed": 3
+  }
+ },
+ "triage_class": "spec-only",
+ "triage_from": "inferred (S=false H=true plan sheets=0)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  }
+ },
+ "tier": "unread",
+ "unread_reason": "no rows agreed and no oracle applies",
+ "disagreement_count": 51,
+ "disagreements": [
+  {
+   "kind": "item",
+   "page": 166,
+   "key": "1.0 / TA2714 (size per spec)",
+   "field": "catalog",
+   "a": "TA2714 (size per spec)",
+   "b": "TA2714 (size per spec) US26D MK"
+  },
+  {
+   "kind": "item",
+   "page": 166,
+   "key": "1.0 / TA2714 (size per spec)",
+   "field": "finish",
+   "a": "US26D",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 166,
+   "key": "1.0 / TA2714 (size per spec)",
+   "field": "manufacturer",
+   "a": "MK",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 166,
+   "key": "1.0 / DG163 10XG04 LL",
+   "field": "catalog",
+   "a": "DG163 10XG04 LL",
+   "b": "DG163 10XG04 LL US26D SA"
+  },
+  {
+   "kind": "item",
+   "page": 166,
+   "key": "1.0 / DG163 10XG04 LL",
+   "field": "finish",
+   "a": "US26D",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 166,
+   "key": "1.0 / DG163 10XG04 LL",
+   "field": "manufacturer",
+   "a": "SA",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 166,
+   "key": "1.0 / 400 series as req'd",
+   "field": "catalog",
+   "a": "400 series as req'd",
+   "b": "400 series as req'd US32D RO"
+  },
+  {
+   "kind": "item",
+   "page": 166,
+   "key": "1.0 / 400 series as req'd",
+   "field": "finish",
+   "a": "US32D",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 166,
+   "key": "1.0 / 400 series as req'd",
+   "field": "manufacturer",
+   "a": "RO",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 166,
+   "key": "1.0 / 608 / 609 as req'd",
+   "field": "catalog",
+   "a": "608 / 609 as req'd",
+   "b": "608 / 609 as req'd RO"
+  },
+  {
+   "kind": "item",
+   "page": 166,
+   "key": "1.0 / 608 / 609 as req'd",
+   "field": "manufacturer",
+   "a": "RO",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 166,
+   "key": "2.0 / TA2314 (size per spec)",
+   "field": "catalog",
+   "a": "TA2314 (size per spec)",
+   "b": "TA2314 (size per spec) US26D MK"
+  },
+  {
+   "kind": "item",
+   "page": 166,
+   "key": "2.0 / TA2314 (size per spec)",
+   "field": "finish",
+   "a": "US26D",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 166,
+   "key": "2.0 / TA2314 (size per spec)",
+   "field": "manufacturer",
+   "a": "MK",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 166,
+   "key": "2.0 / FP1230",
+   "field": "catalog",
+   "a": "FP1230",
+   "b": "FP1230 US32D RO"
+  },
+  {
+   "kind": "item",
+   "page": 166,
+   "key": "2.0 / FP1230",
+   "field": "finish",
+   "a": "US32D",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 166,
+   "key": "2.0 / FP1230",
+   "field": "manufacturer",
+   "a": "RO",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 166,
+   "key": "2.0 / BF 126x70C",
+   "field": "catalog",
+   "a": "BF 126x70C",
+   "b": "BF 126x70C US32D RO"
+  },
+  {
+   "kind": "item",
+   "page": 166,
+   "key": "2.0 / BF 126x70C",
+   "field": "finish",
+   "a": "US32D",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 166,
+   "key": "2.0 / BF 126x70C",
+   "field": "manufacturer",
+   "a": "RO",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 166,
+   "key": "2.0 / 70E",
+   "field": "catalog",
+   "a": "70E",
+   "b": "70E US32D RO"
+  },
+  {
+   "kind": "item",
+   "page": 166,
+   "key": "2.0 / 70E",
+   "field": "finish",
+   "a": "US32D",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 166,
+   "key": "2.0 / 70E",
+   "field": "manufacturer",
+   "a": "RO",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 166,
+   "key": "2.0 / 351 O",
+   "field": "catalog",
+   "a": "351 O",
+   "b": "351 O EN SA"
+  },
+  {
+   "kind": "item",
+   "page": 166,
+   "key": "2.0 / 351 O",
+   "field": "finish",
+   "a": "EN",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 166,
+   "key": "2.0 / 351 O",
+   "field": "manufacturer",
+   "a": "SA",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 166,
+   "key": "2.0 / K1050 8\" HGT x CSK x BEV",
+   "field": "catalog",
+   "a": "K1050 8\" HGT x CSK x BEV",
+   "b": "K1050 8\" HGT x CSK x BEV US32D RO"
+  },
+  {
+   "kind": "item",
+   "page": 166,
+   "key": "2.0 / K1050 8\" HGT x CSK x BEV",
+   "field": "finish",
+   "a": "US32D",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 166,
+   "key": "2.0 / K1050 8\" HGT x CSK x BEV",
+   "field": "manufacturer",
+   "a": "RO",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 166,
+   "key": "2.0 / 400 series as req'd",
+   "field": "catalog",
+   "a": "400 series as req'd",
+   "b": "400 series as req'd US32D RO"
+  },
+  {
+   "kind": "item",
+   "page": 166,
+   "key": "2.0 / 400 series as req'd",
+   "field": "finish",
+   "a": "US32D",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 166,
+   "key": "2.0 / 400 series as req'd",
+   "field": "manufacturer",
+   "a": "RO",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 166,
+   "key": "2.0 / S88BL",
+   "field": "catalog",
+   "a": "S88BL",
+   "b": "S88BL PE"
+  },
+  {
+   "kind": "item",
+   "page": 166,
+   "key": "2.0 / S88BL",
+   "field": "manufacturer",
+   "a": "PE",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 167,
+   "key": "3.0 / TA2714 (size per spec)",
+   "field": "catalog",
+   "a": "TA2714 (size per spec)",
+   "b": "TA2714 (size per spec) US26D MK"
+  },
+  {
+   "kind": "item",
+   "page": 167,
+   "key": "3.0 / TA2714 (size per spec)",
+   "field": "finish",
+   "a": "US26D",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 167,
+   "key": "3.0 / TA2714 (size per spec)",
+   "field": "manufacturer",
+   "a": "MK",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 167,
+   "key": "3.0 / DG163 10XG05 LL",
+   "field": "catalog",
+   "a": "DG163 10XG05 LL",
+   "b": "DG163 10XG05 LL US26D SA"
+  },
+  {
+   "kind": "item",
+   "page": 167,
+   "key": "3.0 / DG163 10XG05 LL",
+   "field": "finish",
+   "a": "US26D",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 167,
+   "key": "3.0 / DG163 10XG05 LL",
+   "field": "manufacturer",
+   "a": "SA",
+   "b": null
+  }
+ ],
+ "ms": 1586,
+ "generated_at": "2026-10-10T13:23:23.739Z"
+}

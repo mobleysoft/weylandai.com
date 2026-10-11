@@ -2265,6 +2265,13 @@ global.SovereignPdfRender = {
           });
         });
         box.appendChild(b);
+        // g074: WALK IT opens this upload's plan sheets in SightX (/sightx/?walk=<session>): the sheets drawn in
+        // the browser from this PDF, each door tag where the plan prints it, a card per opening, the openings CSV.
+        var w = document.createElement("a");
+        w.className = "button"; w.id = "walk-it";
+        w.href = "/sightx/?walk=" + encodeURIComponent(state.current);
+        w.textContent = "WALK IT IN SIGHTX";
+        box.appendChild(w);
       }
       function renderPackageStatus() {
         var p = state.detail.package, out = $("package-result");

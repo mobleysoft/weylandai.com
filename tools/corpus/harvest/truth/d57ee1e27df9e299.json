@@ -1,0 +1,336 @@
+{
+ "sha16": "d57ee1e27df9e299",
+ "sha256": "d57ee1e27df9e29977515619fbcd2781bcfeb700d2524ffca2884faf95807b76",
+ "file": "d57ee1e27df9e299.pdf",
+ "bytes": 6822915,
+ "family": "harvest",
+ "source": "harvest",
+ "label": null,
+ "source_url": null,
+ "page_count": 31,
+ "text_layer": {
+  "pages_with_text": 31,
+  "pages": 31
+ },
+ "pages": {
+  "door_candidates": 2,
+  "hardware_candidates": 0,
+  "door_schedule_pages": [
+   8
+  ],
+  "hardware_pages": []
+ },
+ "readers": {
+  "a": {
+   "doors": 18,
+   "sets": 0,
+   "items": 0,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 6,
+   "sets": 0,
+   "items": 0,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 1
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 18,
+ "rows_total": 18,
+ "agreement_rate": 0,
+ "agreement": {
+  "doors": {
+   "rows": 18,
+   "agreed": 0,
+   "disputed": 6,
+   "only_a": 12,
+   "only_b": 0,
+   "fields": {
+    "width_inches": {
+     "agree": 6,
+     "total": 6
+    },
+    "height_inches": {
+     "agree": 6,
+     "total": 6
+    },
+    "door_type": {
+     "agree": 6,
+     "total": 6
+    },
+    "material": {
+     "agree": 6,
+     "total": 6
+    },
+    "fire_rating": {
+     "agree": 0,
+     "total": 6
+    },
+    "hardware_group": {
+     "agree": 6,
+     "total": 6
+    }
+   },
+   "agreement_rate": 0
+  },
+  "items": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "sets": {
+   "sets": 0,
+   "agreed": 0
+  }
+ },
+ "triage_class": "schedule-only",
+ "triage_from": "inferred (S=true H=false plan sheets=2)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": true,
+   "total": 18,
+   "pass": 10,
+   "fail": 8,
+   "pass_rate": 0.5556,
+   "examples": [
+    "mark ACT-1 (schedule p.8) not tagged on any plan",
+    "mark RFT-1 (schedule p.8) not tagged on any plan",
+    "mark VCT-1 (schedule p.8) not tagged on any plan",
+    "mark UP-1 (schedule p.8) not tagged on any plan",
+    "mark PT-2 (schedule p.8) not tagged on any plan",
+    "mark PT-3 (schedule p.8) not tagged on any plan",
+    "mark PT-4 (schedule p.8) not tagged on any plan",
+    "mark RB-1 (schedule p.8) not tagged on any plan"
+   ],
+   "plan_sheets": [
+    "A101 p.5",
+    "A402 p.7"
+   ],
+   "plan_counts": {
+    "plan_sheets": 2,
+    "rooms": 55,
+    "corridors": 9,
+    "tags": 10,
+    "unmatched_tags": 29,
+    "schedule_marks": 18,
+    "marks_not_on_plan": 8,
+    "shared_marks": 0
+   }
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "types_in_legend": {
+   "applicable": true,
+   "total": 2,
+   "pass": 1,
+   "fail": 1,
+   "pass_rate": 0.5,
+   "examples": [
+    "door type CEILING (1 rows) not found near the door types legend"
+   ],
+   "legend_titles": [
+    "DOOR TYPES p.8"
+   ],
+   "skipped": [
+    "no FRAME TYPES legend title"
+   ],
+   "note": "weak for numeric types: a detail number near the legend can pass a numeric frame type"
+  },
+  "sizes_and_marks": {
+   "applicable": true,
+   "total": 18,
+   "pass": 6,
+   "fail": 12,
+   "pass_rate": 0.3333,
+   "examples": [
+    "mark ACT-1 p.8: size \"24\\\" x 24\\\"\" -> 24 x null",
+    "mark RFT-1 p.8: size \"12\\\" x 12\\\"\" -> 12 x null",
+    "mark SC-1 p.8: size \"12\\\" x 12\\\"\" -> 12 x null",
+    "mark VCT-1 p.8: size \"12\\\" x 12\\\"\" -> 12 x null",
+    "mark TP-1 p.8: size \"12\\\" x 12\\\"\" -> 12 x null",
+    "mark UP-1 p.8: size \"12\\\" x 12\\\"\" -> 12 x null",
+    "mark PT-1 p.8: size \"12\\\" x 12\\\"\" -> 12 x null",
+    "mark PT-2 p.8: size null -> null x null",
+    "mark PT-3 p.8: size null -> null x null",
+    "mark PT-4 p.8: size null -> null x null",
+    "mark RB-1 p.8: size null -> null x null",
+    "mark RFB-1 p.8: size null -> null x null"
+   ],
+   "size_fail": 12,
+   "mark_fail": 0
+  }
+ },
+ "tier": "oracle-checked",
+ "disagreement_count": 18,
+ "disagreements": [
+  {
+   "kind": "door",
+   "page": 8,
+   "key": "ACT-1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 8,
+   "key": "RFT-1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 8,
+   "key": "SC-1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 8,
+   "key": "VCT-1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 8,
+   "key": "TP-1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 8,
+   "key": "UP-1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 8,
+   "key": "PT-1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 8,
+   "key": "PT-2",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 8,
+   "key": "PT-3",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 8,
+   "key": "PT-4",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 8,
+   "key": "RB-1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 8,
+   "key": "RFB-1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 8,
+   "key": "104",
+   "field": "fire_rating",
+   "a": "J1",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 8,
+   "key": "105",
+   "field": "fire_rating",
+   "a": "J1",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 8,
+   "key": "106",
+   "field": "fire_rating",
+   "a": "J1",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 8,
+   "key": "107",
+   "field": "fire_rating",
+   "a": "J1",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 8,
+   "key": "108",
+   "field": "fire_rating",
+   "a": "J1",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 8,
+   "key": "110",
+   "field": "fire_rating",
+   "a": "J1",
+   "b": null
+  }
+ ],
+ "ms": 662,
+ "generated_at": "2026-10-10T13:31:35.899Z"
+}

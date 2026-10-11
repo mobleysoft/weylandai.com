@@ -1,0 +1,153 @@
+{
+ "sha16": "0b82705d20de280a",
+ "sha256": "0b82705d20de280a201e3ba4c30813ed337e2b34f817829d17f05c6b8d91397f",
+ "file": "0b82705d20de280a.pdf",
+ "bytes": 18122396,
+ "family": "harvest",
+ "source": "harvest",
+ "label": null,
+ "source_url": null,
+ "page_count": 617,
+ "text_layer": {
+  "pages_with_text": 573,
+  "pages": 617
+ },
+ "pages": {
+  "door_candidates": 1,
+  "hardware_candidates": 1,
+  "door_schedule_pages": [],
+  "hardware_pages": [
+   211
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 4,
+   "items": 22,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 4,
+   "items": 22,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 22,
+ "rows_disputed": 0,
+ "rows_total": 22,
+ "agreement_rate": 1,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 22,
+   "agreed": 22,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {
+    "qty": {
+     "agree": 22,
+     "total": 22
+    },
+    "description": {
+     "agree": 22,
+     "total": 22
+    },
+    "catalog": {
+     "agree": 22,
+     "total": 22
+    },
+    "finish": {
+     "agree": 22,
+     "total": 22
+    },
+    "manufacturer": {
+     "agree": 22,
+     "total": 22
+    }
+   },
+   "agreement_rate": 1
+  },
+  "sets": {
+   "sets": 4,
+   "agreed": 0
+  }
+ },
+ "triage_class": "spec-only",
+ "triage_from": "inferred (S=false H=true plan sheets=0)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  }
+ },
+ "tier": "agreed",
+ "disagreement_count": 4,
+ "disagreements": [
+  {
+   "kind": "group",
+   "page": null,
+   "key": "1",
+   "field": "doors",
+   "a": "100/1, 110A/1, 111A/1",
+   "b": "",
+   "why": "the set's door lists differ"
+  },
+  {
+   "kind": "group",
+   "page": null,
+   "key": "2",
+   "field": "doors",
+   "a": "101/1, 102/1",
+   "b": "",
+   "why": "the set's door lists differ"
+  },
+  {
+   "kind": "group",
+   "page": null,
+   "key": "3",
+   "field": "doors",
+   "a": "111/1",
+   "b": "",
+   "why": "the set's door lists differ"
+  },
+  {
+   "kind": "group",
+   "page": null,
+   "key": "4",
+   "field": "doors",
+   "a": "110/1",
+   "b": "",
+   "why": "the set's door lists differ"
+  }
+ ],
+ "ms": 1700,
+ "generated_at": "2026-10-10T13:23:07.257Z"
+}

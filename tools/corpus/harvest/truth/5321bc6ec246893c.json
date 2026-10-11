@@ -1,0 +1,494 @@
+{
+ "sha16": "5321bc6ec246893c",
+ "sha256": "5321bc6ec246893cafb487782596393c199cdb09d07c889af24434643deed72c",
+ "file": "5321bc6ec246893c.pdf",
+ "bytes": 27176994,
+ "family": "harvest",
+ "source": "harvest",
+ "label": null,
+ "source_url": null,
+ "page_count": 112,
+ "text_layer": {
+  "pages_with_text": 103,
+  "pages": 112
+ },
+ "pages": {
+  "door_candidates": 6,
+  "hardware_candidates": 4,
+  "door_schedule_pages": [
+   108
+  ],
+  "hardware_pages": [
+   82,
+   108
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 1,
+   "sets": 1,
+   "items": 33,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 1,
+   "sets": 1,
+   "items": 27,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 1
+  }
+ },
+ "rows_agreed": 1,
+ "rows_disputed": 34,
+ "rows_total": 35,
+ "agreement_rate": 0.0286,
+ "agreement": {
+  "doors": {
+   "rows": 1,
+   "agreed": 1,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {
+    "width_inches": {
+     "agree": 1,
+     "total": 1
+    },
+    "height_inches": {
+     "agree": 1,
+     "total": 1
+    },
+    "door_type": {
+     "agree": 1,
+     "total": 1
+    },
+    "hardware_group": {
+     "agree": 1,
+     "total": 1
+    }
+   },
+   "agreement_rate": 1
+  },
+  "items": {
+   "rows": 34,
+   "agreed": 0,
+   "disputed": 26,
+   "only_a": 7,
+   "only_b": 1,
+   "fields": {
+    "qty": {
+     "agree": 23,
+     "total": 26
+    },
+    "description": {
+     "agree": 26,
+     "total": 26
+    },
+    "catalog": {
+     "agree": 0,
+     "total": 26
+    },
+    "finish": {
+     "agree": 0,
+     "total": 26
+    },
+    "manufacturer": {
+     "agree": 0,
+     "total": 17
+    }
+   },
+   "agreement_rate": 0
+  },
+  "sets": {
+   "sets": 1,
+   "agreed": 1
+  }
+ },
+ "triage_class": "complete",
+ "triage_from": "inferred (S=true H=true plan sheets=2)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": true,
+   "total": 1,
+   "pass": 0,
+   "fail": 1,
+   "pass_rate": 0,
+   "examples": [
+    "mark 126A (schedule p.108) not tagged on any plan"
+   ],
+   "plan_sheets": [
+    "A-401 p.105",
+    "A-402 p.106"
+   ],
+   "plan_counts": {
+    "plan_sheets": 2,
+    "rooms": 5,
+    "corridors": 0,
+    "tags": 0,
+    "unmatched_tags": 0,
+    "schedule_marks": 1,
+    "marks_not_on_plan": 1,
+    "shared_marks": 0
+   }
+  },
+  "sets_exist": {
+   "applicable": true,
+   "total": 1,
+   "pass": 0,
+   "fail": 1,
+   "pass_rate": 0,
+   "examples": [
+    "schedule set 1 not in 08 71 00 (sets read: (CONTINUED))"
+   ]
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "no hardware set prints its own door list"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "no DOOR TYPES / FRAME TYPES legend title in this PDF"
+  },
+  "sizes_and_marks": {
+   "applicable": true,
+   "total": 1,
+   "pass": 1,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "size_fail": 0,
+   "mark_fail": 0
+  }
+ },
+ "tier": "agreed",
+ "disagreement_count": 80,
+ "disagreements": [
+  {
+   "kind": "item",
+   "page": 82,
+   "key": "(CONTINUED) / skilled employees of door",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 82,
+   "key": "(CONTINUED) / 5BB1HW4.5x4.5",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 82,
+   "key": "(CONTINUED) / L9050R06N Entry",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 82,
+   "key": "(CONTINUED) / 4040XP 3049eda",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 82,
+   "key": "(CONTINUED) / 8400 – Kick uncombined core and blank",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 82,
+   "key": "(CONTINUED) / EPXY-1",
+   "field": "catalog",
+   "a": "EPXY-1",
+   "b": "EPXY-1 EPXY-1 EPXY-2/PNT-1 EPXY-2/PNT-1 EPXY-2/PNT-1 EPXY-2/PNT-1 PNT-1 SET"
+  },
+  {
+   "kind": "item",
+   "page": 82,
+   "key": "(CONTINUED) / EPXY-1",
+   "field": "finish",
+   "a": "EPXY-1 EPXY-2/PNT-1 EPXY-2/PNT-1 EPXY-2/PNT-1 EPXY-2/PNT-1 PNT-1",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 82,
+   "key": "(CONTINUED) / EPXY-1",
+   "field": "manufacturer",
+   "a": "SET",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 82,
+   "key": "(CONTINUED) / ETR",
+   "field": "catalog",
+   "a": "ETR",
+   "b": "ETR ETR 126A 3'-0\" X 7'-0\" P00HM PAINT F00M 8 3/4\" W/ 4\" HEAD HM GALV PAINT 1"
+  },
+  {
+   "kind": "item",
+   "page": 82,
+   "key": "(CONTINUED) / ETR",
+   "field": "finish",
+   "a": "ETR",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 82,
+   "key": "(CONTINUED) / ETR",
+   "field": "manufacturer",
+   "a": "126A 3'-0\" X 7'-0\" P00HM PAINT F00M 8 3/4\" W/ 4\" HEAD HM GALV PAINT 1",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 82,
+   "key": "(CONTINUED) / ETR",
+   "field": "catalog",
+   "a": "ETR",
+   "b": "ETR ETR"
+  },
+  {
+   "kind": "item",
+   "page": 82,
+   "key": "(CONTINUED) / ETR",
+   "field": "finish",
+   "a": "ETR",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 82,
+   "key": "(CONTINUED) / ETR",
+   "field": "catalog",
+   "a": "ETR",
+   "b": "ETR ETR"
+  },
+  {
+   "kind": "item",
+   "page": 82,
+   "key": "(CONTINUED) / ETR",
+   "field": "finish",
+   "a": "ETR",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 82,
+   "key": "(CONTINUED) / ETR",
+   "field": "catalog",
+   "a": "ETR",
+   "b": "ETR ETR"
+  },
+  {
+   "kind": "item",
+   "page": 82,
+   "key": "(CONTINUED) / ETR",
+   "field": "finish",
+   "a": "ETR",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 82,
+   "key": "(CONTINUED) / ETR",
+   "field": "catalog",
+   "a": "ETR",
+   "b": "ETR ETR"
+  },
+  {
+   "kind": "item",
+   "page": 82,
+   "key": "(CONTINUED) / ETR",
+   "field": "finish",
+   "a": "ETR",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 82,
+   "key": "(CONTINUED) / ETR",
+   "field": "catalog",
+   "a": "ETR",
+   "b": "ETR ETR"
+  },
+  {
+   "kind": "item",
+   "page": 82,
+   "key": "(CONTINUED) / ETR",
+   "field": "finish",
+   "a": "ETR",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 82,
+   "key": "(CONTINUED) / ETR",
+   "field": "catalog",
+   "a": "ETR",
+   "b": "ETR ETR"
+  },
+  {
+   "kind": "item",
+   "page": 82,
+   "key": "(CONTINUED) / ETR",
+   "field": "finish",
+   "a": "ETR",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 82,
+   "key": "(CONTINUED) / ETR",
+   "field": "catalog",
+   "a": "ETR",
+   "b": "ETR ETR 14"
+  },
+  {
+   "kind": "item",
+   "page": 82,
+   "key": "(CONTINUED) / ETR",
+   "field": "finish",
+   "a": "ETR",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 82,
+   "key": "(CONTINUED) / ETR",
+   "field": "catalog",
+   "a": "ETR",
+   "b": "ETR ETR 1"
+  },
+  {
+   "kind": "item",
+   "page": 82,
+   "key": "(CONTINUED) / ETR",
+   "field": "finish",
+   "a": "ETR",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 82,
+   "key": "(CONTINUED) / ETR",
+   "field": "catalog",
+   "a": "ETR",
+   "b": "ETR ETR 6 of 25 July 9, 2025"
+  },
+  {
+   "kind": "item",
+   "page": 82,
+   "key": "(CONTINUED) / ETR",
+   "field": "finish",
+   "a": "ETR",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 82,
+   "key": "(CONTINUED) / ETR",
+   "field": "manufacturer",
+   "a": "6 OF 25",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 82,
+   "key": "(CONTINUED) / ETR",
+   "field": "catalog",
+   "a": "ETR",
+   "b": "ETR ETR 8 of 25"
+  },
+  {
+   "kind": "item",
+   "page": 82,
+   "key": "(CONTINUED) / ETR",
+   "field": "finish",
+   "a": "ETR",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 82,
+   "key": "(CONTINUED) / ETR",
+   "field": "manufacturer",
+   "a": "JULY 9, 2025 8 OF 25 1 JASON SCOTT BARKER - MO #A2005001198",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 82,
+   "key": "(CONTINUED) / ETR",
+   "field": "catalog",
+   "a": "ETR",
+   "b": "ETR ETR Certificate of Authority - MO #000767"
+  },
+  {
+   "kind": "item",
+   "page": 82,
+   "key": "(CONTINUED) / ETR",
+   "field": "finish",
+   "a": "ETR",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 82,
+   "key": "(CONTINUED) / ETR",
+   "field": "manufacturer",
+   "a": "CERTIFICATE OF AUTHORITY - MO #000767",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 82,
+   "key": "(CONTINUED) / ETR",
+   "field": "catalog",
+   "a": "ETR",
+   "b": "ETR ETR 4 of 25"
+  },
+  {
+   "kind": "item",
+   "page": 82,
+   "key": "(CONTINUED) / ETR",
+   "field": "finish",
+   "a": "ETR",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 82,
+   "key": "(CONTINUED) / ETR",
+   "field": "manufacturer",
+   "a": "4 OF 25",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 82,
+   "key": "(CONTINUED) / ETR",
+   "field": "catalog",
+   "a": "ETR",
+   "b": "ETR ETR PROFESSIONAL SEAL"
+  }
+ ],
+ "ms": 519,
+ "generated_at": "2026-10-10T13:25:06.981Z"
+}

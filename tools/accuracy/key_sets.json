@@ -1,0 +1,171 @@
+{
+  "name": "land-reader-regressions",
+  "description": "29 harvest guards (g042 spot checks, g058, g059 and g061), plus Fayette, Rockford, Berryessa and the vector WeylandAI Building. Names are metadata; SHA16 is the selector.",
+  "sets": [
+    {
+      "sha16": "3506f831094dd516",
+      "name": "C2410 C3",
+      "group": "g042 spot checks"
+    },
+    {
+      "sha16": "194733de48af8797",
+      "name": "C2410 addendum C3",
+      "group": "g042 spot checks"
+    },
+    {
+      "sha16": "eefa018e007e581f",
+      "name": "X2207",
+      "group": "g042 spot checks"
+    },
+    {
+      "sha16": "7239a04e6cc8b502",
+      "name": "C2512",
+      "group": "g042 spot checks"
+    },
+    {
+      "sha16": "21d60f1b54e0e3df",
+      "name": "SOC-250003",
+      "group": "g042 spot checks"
+    },
+    {
+      "sha16": "e3d0cc1bc22fd824",
+      "name": "T2504",
+      "group": "g042 spot checks"
+    },
+    {
+      "sha16": "89236ffa156fbaf5",
+      "name": "T2147",
+      "group": "g042 spot checks"
+    },
+    {
+      "sha16": "44111d93bd635936",
+      "name": "U2607",
+      "group": "g042 spot checks"
+    },
+    {
+      "sha16": "7478006f7fd5b43c",
+      "name": "R2502",
+      "group": "g042 spot checks"
+    },
+    {
+      "sha16": "18b27b8baa47f0e1",
+      "name": "X2530",
+      "group": "g042 spot checks"
+    },
+    {
+      "sha16": "192a16af8f31ae0c",
+      "name": "T2507",
+      "group": "g058 additional guards"
+    },
+    {
+      "sha16": "66a4b9f32d9fc75b",
+      "name": "T2421",
+      "group": "g058 additional guards"
+    },
+    {
+      "sha16": "4af80165bc367de8",
+      "name": "C2419",
+      "group": "g058 additional guards"
+    },
+    {
+      "sha16": "6742faed77cfde33",
+      "name": "W2501",
+      "group": "g058 additional guards"
+    },
+    {
+      "sha16": "e75d52a7a714c978",
+      "name": "T2612",
+      "group": "g058 additional guards"
+    },
+    {
+      "sha16": "6e7e2d2bf65c383b",
+      "name": "X2404 rebid",
+      "group": "g058 additional guards"
+    },
+    {
+      "sha16": "70ab5446590e40cc",
+      "name": "X2404",
+      "group": "g058 additional guards"
+    },
+    {
+      "sha16": "72bedaaba4d51d4f",
+      "name": "O2544 Scruggs",
+      "group": "g059 rotated and clouded"
+    },
+    {
+      "sha16": "0da96f79112b83dc",
+      "name": "Mary Jane Thurston cabins",
+      "group": "g059 rotated and clouded"
+    },
+    {
+      "sha16": "5ca1073ee12bc860",
+      "name": "Averill Elementary",
+      "group": "g059 rotated and clouded"
+    },
+    {
+      "sha16": "8900a915fe932a31",
+      "name": "F2402",
+      "group": "g061 C8"
+    },
+    {
+      "sha16": "43a1f0db3f7ff345",
+      "name": "O2604",
+      "group": "g061 C8"
+    },
+    {
+      "sha16": "3b0cb226a793d955",
+      "name": "E2332",
+      "group": "g061 C8"
+    },
+    {
+      "sha16": "e8a888bdd7523b77",
+      "name": "E2332 copy",
+      "group": "g061 C8"
+    },
+    {
+      "sha16": "ff9c494916a7d8b5",
+      "name": "R2508",
+      "group": "g061 C8"
+    },
+    {
+      "sha16": "32b631d235082c7c",
+      "name": "X2319 (4+4)",
+      "group": "g061 C8"
+    },
+    {
+      "sha16": "400e8c6b5df592d0",
+      "name": "X2319 (5+7)",
+      "group": "g061 C8"
+    },
+    {
+      "sha16": "08222a6152c7525b",
+      "name": "T2332",
+      "group": "g061 C8"
+    },
+    {
+      "sha16": "8c336c43fa7f9668",
+      "name": "R2402",
+      "group": "g061 C8"
+    },
+    {
+      "sha16": "9dffef61b825368d",
+      "name": "Fayette",
+      "group": "g070 non-harvest"
+    },
+    {
+      "sha16": "f0e863d88ea688ff",
+      "name": "Rockford",
+      "group": "g070 non-harvest"
+    },
+    {
+      "sha16": "dd339f57b51538ed",
+      "name": "Berryessa",
+      "group": "g070 non-harvest"
+    },
+    {
+      "sha16": "4847b09e633103f7",
+      "name": "WeylandAI Building (vector)",
+      "group": "g070 non-harvest"
+    }
+  ]
+}
