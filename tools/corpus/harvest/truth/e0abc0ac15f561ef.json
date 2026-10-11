@@ -26,7 +26,7 @@
      "h": 155,
      "v": 996
     },
-    "ms": 6613
+    "ms": 6638
    },
    {
     "page": 2,
@@ -38,7 +38,7 @@
      "h": 144,
      "v": 423
     },
-    "ms": 6641
+    "ms": 7007
    },
    {
     "page": 3,
@@ -50,7 +50,7 @@
      "h": 904,
      "v": 395
     },
-    "ms": 16928
+    "ms": 17011
    },
    {
     "page": 4,
@@ -62,7 +62,7 @@
      "h": 0,
      "v": 3
     },
-    "ms": 4947
+    "ms": 4986
    },
    {
     "page": 5,
@@ -74,7 +74,7 @@
      "h": 0,
      "v": 0
     },
-    "ms": 5364
+    "ms": 5575
    },
    {
     "page": 6,
@@ -86,7 +86,7 @@
      "h": 0,
      "v": 0
     },
-    "ms": 4262
+    "ms": 4204
    }
   ]
  },
@@ -147,24 +147,24 @@
    "repeated": []
   }
  },
- "rows_agreed": 57,
- "rows_disputed": 41,
+ "rows_agreed": 98,
+ "rows_disputed": 0,
  "rows_total": 98,
- "agreement_rate": 0.5816,
+ "agreement_rate": 1,
  "agreement": {
   "doors": {
    "rows": 48,
-   "agreed": 7,
-   "disputed": 41,
+   "agreed": 48,
+   "disputed": 0,
    "only_a": 0,
    "only_b": 0,
    "fields": {
     "width_inches": {
-     "agree": 26,
+     "agree": 48,
      "total": 48
     },
     "height_inches": {
-     "agree": 11,
+     "agree": 48,
      "total": 48
     },
     "door_type": {
@@ -188,7 +188,7 @@
      "total": 13
     }
    },
-   "agreement_rate": 0.1458
+   "agreement_rate": 1
   },
   "items": {
    "rows": 50,
@@ -311,16 +311,16 @@
    "reader_b": {
     "expected_rows": 48,
     "rows_found": 48,
-    "rows_fully_right": 7,
-    "fields_right": 277,
+    "rows_fully_right": 48,
+    "fields_right": 336,
     "fields_total": 336,
     "per_field": {
      "width_inches": {
-      "right": 26,
+      "right": 48,
       "total": 48
      },
      "height_inches": {
-      "right": 11,
+      "right": 48,
       "total": 48
      },
      "door_type": {
@@ -345,407 +345,55 @@
      }
     },
     "extra_rows": 0,
-    "wrong": [
-     {
-      "key": "100A",
-      "page": 3,
-      "field": "height_inches",
-      "expected": 84,
-      "read": null
-     },
-     {
-      "key": "100B",
-      "page": 3,
-      "field": "height_inches",
-      "expected": 84,
-      "read": null
-     },
-     {
-      "key": "102",
-      "page": 3,
-      "field": "height_inches",
-      "expected": 84,
-      "read": null
-     },
-     {
-      "key": "103",
-      "page": 3,
-      "field": "width_inches",
-      "expected": 36,
-      "read": null
-     },
-     {
-      "key": "103",
-      "page": 3,
-      "field": "height_inches",
-      "expected": 84,
-      "read": null
-     },
-     {
-      "key": "104",
-      "page": 3,
-      "field": "height_inches",
-      "expected": 84,
-      "read": null
-     },
-     {
-      "key": "106",
-      "page": 3,
-      "field": "height_inches",
-      "expected": 84,
-      "read": null
-     },
-     {
-      "key": "107",
-      "page": 3,
-      "field": "width_inches",
-      "expected": 36,
-      "read": null
-     },
-     {
-      "key": "107",
-      "page": 3,
-      "field": "height_inches",
-      "expected": 84,
-      "read": null
-     },
-     {
-      "key": "108",
-      "page": 3,
-      "field": "height_inches",
-      "expected": 84,
-      "read": null
-     },
-     {
-      "key": "109",
-      "page": 3,
-      "field": "height_inches",
-      "expected": 84,
-      "read": null
-     },
-     {
-      "key": "110",
-      "page": 3,
-      "field": "height_inches",
-      "expected": 84,
-      "read": null
-     },
-     {
-      "key": "111",
-      "page": 3,
-      "field": "width_inches",
-      "expected": 72,
-      "read": null
-     },
-     {
-      "key": "111",
-      "page": 3,
-      "field": "height_inches",
-      "expected": 84,
-      "read": null
-     },
-     {
-      "key": "112",
-      "page": 3,
-      "field": "width_inches",
-      "expected": 36,
-      "read": null
-     },
-     {
-      "key": "112",
-      "page": 3,
-      "field": "height_inches",
-      "expected": 84,
-      "read": null
-     },
-     {
-      "key": "113",
-      "page": 3,
-      "field": "height_inches",
-      "expected": 84,
-      "read": null
-     },
-     {
-      "key": "200",
-      "page": 3,
-      "field": "width_inches",
-      "expected": 72,
-      "read": null
-     },
-     {
-      "key": "200",
-      "page": 3,
-      "field": "height_inches",
-      "expected": 84,
-      "read": null
-     },
-     {
-      "key": "201",
-      "page": 3,
-      "field": "height_inches",
-      "expected": 84,
-      "read": null
-     },
-     {
-      "key": "202",
-      "page": 3,
-      "field": "height_inches",
-      "expected": 84,
-      "read": null
-     },
-     {
-      "key": "203",
-      "page": 3,
-      "field": "width_inches",
-      "expected": 36,
-      "read": null
-     },
-     {
-      "key": "203",
-      "page": 3,
-      "field": "height_inches",
-      "expected": 84,
-      "read": null
-     },
-     {
-      "key": "204",
-      "page": 3,
-      "field": "width_inches",
-      "expected": 36,
-      "read": null
-     },
-     {
-      "key": "204",
-      "page": 3,
-      "field": "height_inches",
-      "expected": 84,
-      "read": null
-     }
-    ]
+    "wrong": []
    },
    "agreed": {
     "expected_rows": 48,
-    "rows_found": 7,
-    "rows_fully_right": 7,
-    "fields_right": 49,
-    "fields_total": 49,
+    "rows_found": 48,
+    "rows_fully_right": 48,
+    "fields_right": 336,
+    "fields_total": 336,
     "per_field": {
      "width_inches": {
-      "right": 7,
-      "total": 7
+      "right": 48,
+      "total": 48
      },
      "height_inches": {
-      "right": 7,
-      "total": 7
+      "right": 48,
+      "total": 48
      },
      "door_type": {
-      "right": 7,
-      "total": 7
+      "right": 48,
+      "total": 48
      },
      "material": {
-      "right": 7,
-      "total": 7
+      "right": 48,
+      "total": 48
      },
      "fire_rating": {
-      "right": 7,
-      "total": 7
+      "right": 48,
+      "total": 48
      },
      "hardware_group": {
-      "right": 7,
-      "total": 7
+      "right": 48,
+      "total": 48
      },
      "location": {
-      "right": 7,
-      "total": 7
+      "right": 48,
+      "total": 48
      }
     },
     "extra_rows": 0,
-    "wrong": [
-     {
-      "key": "100A",
-      "page": 3,
-      "field": "(row)",
-      "expected": "row",
-      "read": null
-     },
-     {
-      "key": "100B",
-      "page": 3,
-      "field": "(row)",
-      "expected": "row",
-      "read": null
-     },
-     {
-      "key": "102",
-      "page": 3,
-      "field": "(row)",
-      "expected": "row",
-      "read": null
-     },
-     {
-      "key": "103",
-      "page": 3,
-      "field": "(row)",
-      "expected": "row",
-      "read": null
-     },
-     {
-      "key": "104",
-      "page": 3,
-      "field": "(row)",
-      "expected": "row",
-      "read": null
-     },
-     {
-      "key": "106",
-      "page": 3,
-      "field": "(row)",
-      "expected": "row",
-      "read": null
-     },
-     {
-      "key": "107",
-      "page": 3,
-      "field": "(row)",
-      "expected": "row",
-      "read": null
-     },
-     {
-      "key": "108",
-      "page": 3,
-      "field": "(row)",
-      "expected": "row",
-      "read": null
-     },
-     {
-      "key": "109",
-      "page": 3,
-      "field": "(row)",
-      "expected": "row",
-      "read": null
-     },
-     {
-      "key": "110",
-      "page": 3,
-      "field": "(row)",
-      "expected": "row",
-      "read": null
-     },
-     {
-      "key": "111",
-      "page": 3,
-      "field": "(row)",
-      "expected": "row",
-      "read": null
-     },
-     {
-      "key": "112",
-      "page": 3,
-      "field": "(row)",
-      "expected": "row",
-      "read": null
-     },
-     {
-      "key": "113",
-      "page": 3,
-      "field": "(row)",
-      "expected": "row",
-      "read": null
-     },
-     {
-      "key": "200",
-      "page": 3,
-      "field": "(row)",
-      "expected": "row",
-      "read": null
-     },
-     {
-      "key": "201",
-      "page": 3,
-      "field": "(row)",
-      "expected": "row",
-      "read": null
-     },
-     {
-      "key": "202",
-      "page": 3,
-      "field": "(row)",
-      "expected": "row",
-      "read": null
-     },
-     {
-      "key": "203",
-      "page": 3,
-      "field": "(row)",
-      "expected": "row",
-      "read": null
-     },
-     {
-      "key": "204",
-      "page": 3,
-      "field": "(row)",
-      "expected": "row",
-      "read": null
-     },
-     {
-      "key": "205",
-      "page": 3,
-      "field": "(row)",
-      "expected": "row",
-      "read": null
-     },
-     {
-      "key": "206",
-      "page": 3,
-      "field": "(row)",
-      "expected": "row",
-      "read": null
-     },
-     {
-      "key": "207",
-      "page": 3,
-      "field": "(row)",
-      "expected": "row",
-      "read": null
-     },
-     {
-      "key": "208",
-      "page": 3,
-      "field": "(row)",
-      "expected": "row",
-      "read": null
-     },
-     {
-      "key": "209",
-      "page": 3,
-      "field": "(row)",
-      "expected": "row",
-      "read": null
-     },
-     {
-      "key": "210",
-      "page": 3,
-      "field": "(row)",
-      "expected": "row",
-      "read": null
-     },
-     {
-      "key": "211",
-      "page": 3,
-      "field": "(row)",
-      "expected": "row",
-      "read": null
-     }
-    ]
+    "wrong": []
    },
    "fields": {
     "agreed": {
-     "right": 242,
-     "total": 242
+     "right": 301,
+     "total": 301
     },
     "disputed": {
-     "total": 59,
-     "a_right": 59,
+     "total": 0,
+     "a_right": 0,
      "b_right": 0,
      "neither": 0
     },
@@ -969,329 +617,8 @@
  ],
  "tier": "exact",
  "note": "no text layer: production OCR preprocessing, cell recognition and line reader; Poppler rendering (browser rendering is a separate check). Actual DPI is recorded per page; the same words are given to both readers",
- "disagreement_count": 59,
- "disagreements": [
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "100A",
-   "field": "height_inches",
-   "a": 84,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "100B",
-   "field": "height_inches",
-   "a": 84,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "102",
-   "field": "height_inches",
-   "a": 84,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "103",
-   "field": "width_inches",
-   "a": 36,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "103",
-   "field": "height_inches",
-   "a": 84,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "104",
-   "field": "height_inches",
-   "a": 84,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "106",
-   "field": "height_inches",
-   "a": 84,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "107",
-   "field": "width_inches",
-   "a": 36,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "107",
-   "field": "height_inches",
-   "a": 84,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "108",
-   "field": "height_inches",
-   "a": 84,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "109",
-   "field": "height_inches",
-   "a": 84,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "110",
-   "field": "height_inches",
-   "a": 84,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "111",
-   "field": "width_inches",
-   "a": 72,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "111",
-   "field": "height_inches",
-   "a": 84,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "112",
-   "field": "width_inches",
-   "a": 36,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "112",
-   "field": "height_inches",
-   "a": 84,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "113",
-   "field": "height_inches",
-   "a": 84,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "200",
-   "field": "width_inches",
-   "a": 72,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "200",
-   "field": "height_inches",
-   "a": 84,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "201",
-   "field": "height_inches",
-   "a": 84,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "202",
-   "field": "height_inches",
-   "a": 84,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "203",
-   "field": "width_inches",
-   "a": 36,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "203",
-   "field": "height_inches",
-   "a": 84,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "204",
-   "field": "width_inches",
-   "a": 36,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "204",
-   "field": "height_inches",
-   "a": 84,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "205",
-   "field": "width_inches",
-   "a": 36,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "205",
-   "field": "height_inches",
-   "a": 84,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "206",
-   "field": "width_inches",
-   "a": 36,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "206",
-   "field": "height_inches",
-   "a": 84,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "207",
-   "field": "width_inches",
-   "a": 36,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "207",
-   "field": "height_inches",
-   "a": 84,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "208",
-   "field": "width_inches",
-   "a": 36,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "208",
-   "field": "height_inches",
-   "a": 84,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "209",
-   "field": "width_inches",
-   "a": 36,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "209",
-   "field": "height_inches",
-   "a": 84,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "210",
-   "field": "width_inches",
-   "a": 36,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "210",
-   "field": "height_inches",
-   "a": 84,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "211",
-   "field": "width_inches",
-   "a": 36,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "212",
-   "field": "height_inches",
-   "a": 84,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 3,
-   "key": "213",
-   "field": "width_inches",
-   "a": 36,
-   "b": null
-  }
- ],
- "ms": 44779,
- "generated_at": "2026-10-11T08:12:14.676Z"
+ "disagreement_count": 0,
+ "disagreements": [],
+ "ms": 45443,
+ "generated_at": "2026-10-11T08:54:36.333Z"
 }
