@@ -780,7 +780,7 @@ export class Journey {
   }
 
   async launch() {
-    this.browser = await chromium.launch({ args: LAUNCH_ARGS });
+    this.browser = await chromium.launch({ args: LAUNCH_ARGS, ...(process.env.WEYLAND_CHROMIUM_EXECUTABLE ? { executablePath: process.env.WEYLAND_CHROMIUM_EXECUTABLE } : {}) });
     const r = await gpuRenderer(this.browser);
     this.renderer = r;
     const renderer = (r && r.renderer) || "";
