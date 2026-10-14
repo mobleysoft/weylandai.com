@@ -2926,18 +2926,19 @@ html.folder-lowered .envelope-frame { outline:1px solid #ffd400; outline-offset:
       a.append(frame,fill);chapterBlade.appendChild(a);
     });
     var currentChapter = null, pendingAnchor = null, anchorGeneration = 0;
+    function chapterLayoutTop(el){var y=0;while(el&&el!==scrollRoot){y+=el.offsetTop;el=el.offsetParent;}return y;}
     function settleAnchor(generation) {
       if (!pendingAnchor || generation !== anchorGeneration) return;
       var el=document.getElementById(pendingAnchor); pendingAnchor=null;
       if(!el)return;
-      var delta=el.getBoundingClientRect().top-document.getElementById("top-nav").getBoundingClientRect().bottom-16;
+      var delta=chapterLayoutTop(el)-scrollRoot.scrollTop-document.getElementById("top-nav").offsetHeight-16;
       if(Math.abs(delta)>1)scrollRoot.scrollTo({top:scrollRoot.scrollTop+delta,behavior:"instant"});
       syncChapterNav();
     }
     function scrollToChapter(id) {
       var el=document.getElementById(id);if(!el)return;
       pendingAnchor=id;var generation=++anchorGeneration;
-      var delta=el.getBoundingClientRect().top-document.getElementById("top-nav").getBoundingClientRect().bottom-16;
+      var delta=chapterLayoutTop(el)-scrollRoot.scrollTop-document.getElementById("top-nav").offsetHeight-16;
       var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
       scrollRoot.scrollTo({top:scrollRoot.scrollTop+delta,behavior:reduce?"instant":"smooth"});
       setTimeout(function(){settleAnchor(generation);},1000);
@@ -2946,10 +2947,9 @@ html.folder-lowered .envelope-frame { outline:1px solid #ffd400; outline-offset:
     ["wheel","touchstart","pointerdown"].forEach(function(type){scrollRoot.addEventListener(type,function(){pendingAnchor=null;++anchorGeneration;},{passive:true});});
 
     function syncChapterNav() {
-      var rootTop=scrollRoot.getBoundingClientRect().top;
-      var line=rootTop+document.getElementById("top-nav").offsetHeight+24;
+      var line=scrollRoot.scrollTop+document.getElementById("top-nav").offsetHeight+24;
       var id=chapters[0].id;
-      chapters.forEach(function(c){var el=document.getElementById(c.id);if(el&&el.getBoundingClientRect().top<=line)id=c.id;});
+      chapters.forEach(function(c){var el=document.getElementById(c.id);if(el&&chapterLayoutTop(el)<=line)id=c.id;});
       if(id!==currentChapter)updateActiveNav(id);
     }
     window.addEventListener("resize",syncChapterNav);
@@ -4305,7 +4305,7 @@ html.folder-lowered .envelope-frame { outline:1px solid #ffd400; outline-offset:
       return "matrix3d(" + [h[0], h[3], 0, h[6], h[1], h[4], 0, h[7], 0, 0, 1, 0, h[2], h[5], 0, 1].map(function (v) { return v.toFixed(6); }).join(",") + ")";
     }
     function applyGeometry(g) {
-      if(g&&g.camera)window.dispatchEvent(new CustomEvent("weyland:world-camera",{detail:{camera:g.camera,viewport:g.viewport}}));
+      if(g&&g.camera)window.dispatchEvent(new CustomEvent("weyland:world-camera",{detail:{camera:g.camera,viewport:g.viewport,pose:g.pose,depth:g.depth,scene:g.scene}}));
       if(g && typeof g.poseAtEye==='boolean')modernPose=true;
       if (!isLowered() && (!modernPose || !g || g.intro)) return;
       if (!isLowered() && g.poseAtEye) {frame.style.transform="";frame.style.visibility="";lastMatrix="";if(tap)tap.classList.remove("is-on");return;}
@@ -4392,6 +4392,7 @@ html.folder-lowered .envelope-frame { outline:1px solid #ffd400; outline-offset:
       active: function () { return !root.classList.contains("product-reading") && isLowered() && !root.classList.contains('wa-overlay-open') && !root.classList.contains('wco-open') && !document.querySelector('#upgrade-modal.is-open'); },
       stick:'auto',stickSide:'left',stickSize:104,stickInset:10,dualSticks:true,deadZone:.14,lookSpeed:360,allowRoll:false,aimReticle:true,aimPoint:function(){return dossierAimPoint;},onControlsLayout:sendState,
       onTap: function (x, y) {
+        if(window.WeylandProductSpace&&window.WeylandProductSpace.tap(x,y))return;
         var bd = document.querySelector('#stage-backdrop iframe'); if (!bd) return;
         var r = bd.getBoundingClientRect();
         bd.contentWindow.postMessage({ type: 'weyland:world-tap', x:(x-r.x)*bd.clientWidth/r.width,y:(y-r.y)*bd.clientHeight/r.height }, location.origin);
@@ -4478,7 +4479,7 @@ html.folder-lowered .envelope-frame { outline:1px solid #ffd400; outline-offset:
     });
   })();
   </script>
-<link rel="stylesheet" href="/assets/weyland-product-space-81c39516e7b5ca92.css">
-<script src="/assets/weyland-product-space-d37a4abeda67a48a.js"></script>
+<link rel="stylesheet" href="/assets/weyland-product-space-d3182fa20d286ee4.css">
+<script src="/assets/weyland-product-space-4aeb6733af445aae.js"></script>
 </body>
 </html>
