@@ -1939,7 +1939,12 @@
       .hero-kicker { margin-bottom: 12px; }
     }
   </style>
-  <script src="/assets/weyland-input.js?v=20261009-s0b"></script>
+  <script src="/assets/weyland-input.dual-b5ddf75597e9ee9b.js"></script>
+<style id="folder-face-full-cover">
+.envelope-frame { clip-path:none; border-radius:0; background-color:#ffd400; background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(#17254c,#0b0d13); background-size:30px 30px,30px 30px,auto; border:2px solid #ffd400; box-sizing:border-box; }
+html.folder-lowered .envelope-frame { outline:1px solid #ffd400; outline-offset:0; }
+.envelope-frame header.site-header { border-radius:0; }
+</style>
 </head>
 <body>
   <script>
@@ -4230,9 +4235,15 @@
     function sendState() {
       var bd = document.querySelector("#stage-backdrop iframe");
       if (!bd || !bd.contentWindow) return;
-      try { bd.contentWindow.postMessage({ type: "weyland:dossier-state", raised: !isLowered() }, location.origin); } catch (e) {}
+      try { var r=bd.getBoundingClientRect(),sx=r.width/(bd.clientWidth||r.width),sy=r.height/(bd.clientHeight||r.height);
+        var L=frame.offsetLeft-window.scrollX,T=frame.offsetTop-window.scrollY;
+        var raisedRect=[(L-r.left)/sx,(T-r.top)/sy,frame.offsetWidth/sx,frame.offsetHeight/sy];
+        bd.contentWindow.postMessage({ type: "weyland:dossier-state", raised: !isLowered(), raisedRect:raisedRect,controlsRects:Array.from(document.querySelectorAll(".weyland-stick,.weyland-look-stick")).filter(function(el){return getComputedStyle(el).display!=="none";}).map(function(el){var b=el.getBoundingClientRect();return[(b.x-r.left)/sx,(b.y-r.top)/sy,b.width/sx,b.height/sy];}) }, location.origin); } catch (e) {}
     }
     window.__weylandSendDossierState = sendState;
+    window.addEventListener('resize',sendState);
+    if(window.visualViewport)window.visualViewport.addEventListener('resize',sendState);
+    if(window.ResizeObserver)new ResizeObserver(sendState).observe(frame);
     function apply(lowered, focusTarget) {
       var bd = document.querySelector("#stage-backdrop iframe");
       if (lowered) {
@@ -4257,7 +4268,9 @@
     // transition carries the folder from the hand up to the eye as one
     // continuous object.
     var tap = document.getElementById("dossier-tap");
-    var live = false;          // true: follow geometry frames without transition
+    var dossierAimPoint=null;
+    var modernPose = false;
+    var live = false;          // old renderer protocol fallback only
     var lastMatrix = "";
     function solve8(A, b) {
       var n = 8, i, j, k;
@@ -4292,9 +4305,12 @@
       return "matrix3d(" + [h[0], h[3], 0, h[6], h[1], h[4], 0, h[7], 0, 0, 1, 0, h[2], h[5], 0, 1].map(function (v) { return v.toFixed(6); }).join(",") + ")";
     }
     function applyGeometry(g) {
-      if (!isLowered()) return;
+      if(g&&g.camera)window.dispatchEvent(new CustomEvent("weyland:world-camera",{detail:{camera:g.camera,viewport:g.viewport}}));
+      if(g && typeof g.poseAtEye==='boolean')modernPose=true;
+      if (!isLowered() && (!modernPose || !g || g.intro)) return;
+      if (!isLowered() && g.poseAtEye) {frame.style.transform="";frame.style.visibility="";lastMatrix="";if(tap)tap.classList.remove("is-on");return;}
       if (!g || !g.inView || !g.corners) {
-        if (live) frame.style.transform = "";
+        if(modernPose)frame.style.visibility="hidden";else if(live)frame.style.transform="";
         if (tap) tap.classList.remove("is-on");
         return;
       }
@@ -4306,12 +4322,15 @@
       var bdEl = document.querySelector("#stage-backdrop iframe");
       var bdRect = bdEl ? bdEl.getBoundingClientRect() : { left: 0, top: 0 };
       var L = frame.offsetLeft - window.scrollX, T = frame.offsetTop - window.scrollY, W = frame.offsetWidth, H = frame.offsetHeight;
-      var corners = g.corners.map(function (c) { return [c[0] + bdRect.left, c[1] + bdRect.top]; });
+      var scaleX=bdEl?bdRect.width/(g.viewport?g.viewport[0]:bdEl.clientWidth):1;
+      var scaleY=bdEl?bdRect.height/(g.viewport?g.viewport[1]:bdEl.clientHeight):1;
+      var corners = g.corners.map(function (c) { return [c[0]*scaleX + bdRect.left, c[1]*scaleY + bdRect.top]; });
+      if(g.aim)dossierAimPoint=[g.aim[0]*scaleX+bdRect.left,g.aim[1]*scaleY+bdRect.top];
       var dst = corners.map(function (c) { return [c[0] - L, c[1] - T]; });
       var m = homography([[0, 0], [W, 0], [W, H], [0, H]], dst);
       if (!m) return;
       lastMatrix = m;
-      if (live) frame.style.transform = m;
+      if(modernPose){frame.style.transition="none";frame.style.visibility="";frame.style.transform=m;}else if(live)frame.style.transform=m;
       if (tap) {
         var xs = corners.map(function (c) { return c[0]; }), ys = corners.map(function (c) { return c[1]; });
         var x0 = Math.max(0, Math.min.apply(null, xs)), x1 = Math.min(window.innerWidth, Math.max.apply(null, xs));
@@ -4334,22 +4353,21 @@
         return false;
       }
       try { window.scrollTo(0, 0); } catch (e) {}
-      live = false;
-      frame.style.transition = "";                 // CSS 0.75s transform transition
-      apply(true, true);
-      frame.style.transform = lastMatrix;          // animate from the eye down into the hand
-      setTimeout(function () { live = true; frame.style.transition = "none"; }, 800);
+      live = modernPose;
+      frame.style.transition=modernPose?"none":"";
+      if(modernPose && !frame.style.transform)frame.style.transform="matrix3d(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1)";
+      apply(true,true);
+      if(!modernPose){frame.style.transform=lastMatrix;setTimeout(function(){live=true;frame.style.transition="none";},800);}
       return true;
     }
     function raise() {
       try { releaseAll(); } catch (e) {}
-      live = false;
-      if (tap) tap.classList.remove("is-on");
-      frame.style.transition = "";
-      // force a style flush so the transition starts from the current matrix
-      void frame.offsetWidth;
-      apply(false, true);
-      frame.style.transform = "";                  // back to identity: the page at the eye
+      live=modernPose;
+      if(tap)tap.classList.remove("is-on");
+      frame.style.transition=modernPose?"none":"";
+      apply(false,true);
+      if(!modernPose){frame.style.visibility="";frame.style.transform="";}
+
     }
     // Boot: the <head>-time class already lowered the folder visually;
     // bring the rest of the state (inert, handle, iframe aria) in line,
@@ -4371,12 +4389,12 @@
     var worldInput = window.WeylandInput ? window.WeylandInput.create({
       lookTarget: document.getElementById('weyland-look'),
       forward: function () { var bd = document.querySelector('#stage-backdrop iframe'); return bd && bd.contentWindow; },
-      active: function () { return isLowered() && !root.classList.contains('wa-overlay-open') && !root.classList.contains('wco-open') && !document.querySelector('#upgrade-modal.is-open'); },
-      stick: 'auto', stickSide: 'right', stickSize: 104, stickInset: 10,
+      active: function () { return !root.classList.contains("product-reading") && isLowered() && !root.classList.contains('wa-overlay-open') && !root.classList.contains('wco-open') && !document.querySelector('#upgrade-modal.is-open'); },
+      stick:'auto',stickSide:'left',stickSize:104,stickInset:10,dualSticks:true,deadZone:.14,lookSpeed:360,allowRoll:false,aimReticle:true,aimPoint:function(){return dossierAimPoint;},onControlsLayout:sendState,
       onTap: function (x, y) {
         var bd = document.querySelector('#stage-backdrop iframe'); if (!bd) return;
         var r = bd.getBoundingClientRect();
-        bd.contentWindow.postMessage({ type: 'weyland:world-tap', x: x - r.x, y: y - r.y }, location.origin);
+        bd.contentWindow.postMessage({ type: 'weyland:world-tap', x:(x-r.x)*bd.clientWidth/r.width,y:(y-r.y)*bd.clientHeight/r.height }, location.origin);
       }
     }) : null;
     window.__weylandWorldInput = worldInput;
@@ -4460,5 +4478,7 @@
     });
   })();
   </script>
+<link rel="stylesheet" href="/assets/weyland-product-space-81c39516e7b5ca92.css">
+<script src="/assets/weyland-product-space-d37a4abeda67a48a.js"></script>
 </body>
 </html>

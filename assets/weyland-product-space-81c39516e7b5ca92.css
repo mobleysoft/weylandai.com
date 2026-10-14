@@ -1,0 +1,25 @@
+/* Local DOM planes projected into the existing SightX camera. */
+#product-space{position:fixed;inset:0;z-index:550;pointer-events:none;overflow:hidden;isolation:isolate}
+.envelope-frame{z-index:600}
+.product-plane{position:absolute;left:0;top:0;width:360px;height:470px;transform-origin:0 0;box-sizing:border-box;overflow:auto;overscroll-behavior:contain;touch-action:pan-y;background:#ffd400;color:#111;border:3px solid #ffd400;box-shadow:0 8px 32px #0008;pointer-events:none;scroll-padding-top:66px;backface-visibility:hidden}
+.product-plane nav{position:sticky;top:0;z-index:3;display:flex;gap:3px;flex-wrap:wrap;background:#ffd400;padding:8px;border-bottom:2px solid #111}
+.product-plane button,.product-plane a{font:700 12px/1.25 system-ui;color:#111;background:#ffd400;border:1px solid #111;padding:9px;cursor:pointer}
+.product-plane [aria-current="page"]{background:#111;color:#ffd400}
+.product-logo{flex:1 0 100%;text-align:left;font-size:17px!important}
+.product-logo small{font-size:12px}
+.product-plane section{min-height:calc(100% - 66px);padding:24px 18px;box-sizing:border-box;border-bottom:1px solid #1114}
+.product-plane h2{font-size:28px;line-height:1.05;margin:12px 0}
+.product-plane p{font:16px/1.6 system-ui;color:#111}
+.product-plane .chapter-number{font:800 12px/1.2 monospace;letter-spacing:.1em}
+.product-return{width:100%;margin-top:18px}
+html.folder-lowered:not(.product-reading) .product-plane{pointer-events:none}
+html.product-reading .envelope-frame,html.product-reading .wn-persistent-footer,html.product-reading #envelope-raise{visibility:hidden!important;pointer-events:none!important}
+html.product-reading #product-space{z-index:610;background:#090a0d44}
+html.product-reading .product-plane:not(.is-reading){visibility:hidden}
+html.product-reading .product-plane.is-reading{position:fixed;left:max(12px,env(safe-area-inset-left));top:max(72px,env(safe-area-inset-top));width:calc(100% - max(24px,env(safe-area-inset-left) + env(safe-area-inset-right)));max-width:1100px;height:calc(100dvh - max(84px,env(safe-area-inset-top) + env(safe-area-inset-bottom)));transform:none!important;margin:0 auto;right:max(12px,env(safe-area-inset-right));pointer-events:auto}
+.product-entry{margin:12px 0}
+@media(prefers-reduced-motion:reduce){.product-plane{scroll-behavior:auto}}
+
+#product-world-menu{display:none;position:fixed;right:max(12px,env(safe-area-inset-right));top:max(84px,env(safe-area-inset-top));z-index:650;background:#ffd400;color:#111;padding:8px;font:700 12px/1.3 system-ui;max-width:170px}#product-world-menu select{width:100%;margin-top:4px;background:#111;color:#ffd400;font:700 12px system-ui}html.folder-lowered:not(.product-reading) #product-world-menu{display:block}
+/* Reading owns the gesture surface; the held-folder raise hit polygon must not cover it. */
+html.product-reading #dossier-tap,html.product-reading #weyland-look{display:none!important;pointer-events:none!important}
