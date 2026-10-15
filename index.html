@@ -1949,6 +1949,7 @@
 html.folder-lowered .envelope-frame { outline:1px solid #ffd400; outline-offset:0; }
 .envelope-frame header.site-header { border-radius:0; }
 </style>
+<script src="/assets/weyland-room-spec-165feaf1a688cb78.js"></script><link rel="stylesheet" href="/assets/weyland-project-room-28817090c597b461.css">
 </head>
 <body>
   <script>
@@ -4393,9 +4394,10 @@ html.folder-lowered .envelope-frame { outline:1px solid #ffd400; outline-offset:
     var worldInput = window.WeylandInput ? window.WeylandInput.create({
       lookTarget: document.getElementById('weyland-look'),
       forward: function () { var bd = document.querySelector('#stage-backdrop iframe'); return bd && bd.contentWindow; },
-      active: function () { return !root.classList.contains("product-reading") && isLowered() && !root.classList.contains('wa-overlay-open') && !root.classList.contains('wco-open') && !document.querySelector('#upgrade-modal.is-open'); },
+      active: function () { return !root.classList.contains("district-guide-open") && !root.classList.contains("product-reading") && isLowered() && !root.classList.contains('wa-overlay-open') && !root.classList.contains('wco-open') && !document.querySelector('#upgrade-modal.is-open'); },
       stick:'auto',stickSide:'left',stickSize:104,stickInset:10,dualSticks:true,deadZone:.14,lookSpeed:360,allowRoll:false,aimReticle:true,aimPoint:function(){return dossierAimPoint;},onControlsLayout:sendState,
       onTap: function (x, y) {
+        if(window.WeylandProjectRoom?.tap(x,y))return;
         if(window.WeylandProductSpace&&window.WeylandProductSpace.tap(x,y))return;
         var bd = document.querySelector('#stage-backdrop iframe'); if (!bd) return;
         var r = bd.getBoundingClientRect();
@@ -4484,6 +4486,7 @@ html.folder-lowered .envelope-frame { outline:1px solid #ffd400; outline-offset:
   })();
   </script>
 <link rel="stylesheet" href="/assets/weyland-product-space-d3182fa20d286ee4.css">
-<script src="/assets/weyland-product-space-4aeb6733af445aae.js"></script>
+<script src="/assets/weyland-product-space-71593d8fdef9d993.js"></script>
+<script src="/assets/weyland-project-room-4c2c07a7652f62f3.js"></script>
 </body>
 </html>
