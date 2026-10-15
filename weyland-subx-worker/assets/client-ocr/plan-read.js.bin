@@ -478,15 +478,30 @@ function scaleAt(scales, x, y) {
 //   "schedule_location": the schedule's location names a room on this sheet (by number, else by name);
 //   "tag_number":        the mark is numbered after a room on this sheet (131.1 -> room 131);
 //   "nearest_label":     only the nearest room label (unsure).
+// An explicit schedule room number without a matching label stays unresolved; lower-authority
+// names, tag prefixes and proximity must not silently assign a different room.
 function roomFor(tag, rs, door, ls, p) {
   const near = (list) => list.slice().sort((a, b) => Math.hypot(a.x - tag.x, a.y - tag.y) - Math.hypot(b.x - tag.x, b.y - tag.y))[0];
-  const loc = String(door.location || "").toUpperCase();
+  const loc = String(door.location || "").toUpperCase().replace(/[–—]/g, "-");
   if (loc) {
     const toks = new Set(loc.split(/[^A-Z0-9.]+/).filter(Boolean).map(norm));
-    const byNo = rs.filter((r) => toks.has(norm(r.number)));
+    // Keep an identifier's prefix and decimal intact (R-101 is not room 101), while a
+    // hyphen between a number and a word still separates locations: CELL A101-CELL D102.
+    const numbers = s => (s.toUpperCase().replace(/[–—]/g, "-").match(/(?:[A-Z]{1,2}-)?[A-Z0-9]+(?:\.[A-Z0-9]+)*/g) || []).filter(x => ROOM_NO_RE.test(x));
+    const roomNos = new Set(numbers(loc));
+    const byNo = rs.filter((r) => roomNos.has(norm(r.number)));
     if (byNo.length) return set(tag, near(byNo), "schedule_location");
-    // "A-POD / CORRIDOR": each part of the location is a room name or an area label on the sheet.
     const parts = loc.split(/\s*[\/,;]\s*|\s+TO\s+/).map((x) => norm(x)).filter((x) => x.length >= 3);
+    if (roomNos.size) {
+      // Complete printed names can themselves contain numerals, e.g. RESIDENT ROOM 1.
+      // Partial name matches are insufficient: STORAGE 336B must not mean STORAGE 334B.
+      const exactNames = rs.filter(r => parts.includes(norm(r.name)));
+      const namedNumbers = new Set(exactNames.flatMap(r => numbers(r.name)));
+      if (exactNames.length && [...roomNos].every(n => namedNumbers.has(n))) return set(tag, near(exactNames), "schedule_location");
+      tag.room = null; tag.room_name = null; tag.room_by = null;
+      return;
+    }
+    // "A-POD / CORRIDOR": each part of the location is a room name or an area label on the sheet.
     const named = [];
     for (const r of rs) if (parts.includes(norm(r.name)) || parts.some((x) => norm(r.name).endsWith(x) && x.length >= 4)) named.push(r);
     for (const l of ls || []) {

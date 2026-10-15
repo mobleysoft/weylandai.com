@@ -75,6 +75,86 @@ test("a location naming an area on the plan: A-POD / CORRIDOR", () => {
   assert.equal(t3.room_by, "schedule_location");
 });
 
+// Synthetic text-layer reproduction of PR #146's R2502-01 rebid discrepancy;
+// this is not extracted from, or a replacement for testing, the local-harvest PDF.
+const storagePlan = (...labels) => page(25, [
+  ...titleBlock("A-107", "THIRD FLOOR PLAN"),
+  it("336B", 1300, 1000),
+  ...labels.flatMap(([number, name, x = 1320]) => [it(name, x, 1020), it(number, x + 10, 1038)]),
+]);
+const storageTag = (sheet, location = "STORAGE 336B") => {
+  const r = readPlan([sheet], [{ mark: "336B", location, page: 44 }]);
+  assert.equal(r.tags.length, 1, "the door tag stays placed even when its room is unresolved");
+  assert.deepEqual(r.marks_not_on_plan, []);
+  return r.tags[0];
+};
+
+test("R2502-01: STORAGE 336B cannot use STORAGE room 334B when 336B's label is missing", () => {
+  const tag = storageTag(storagePlan(["334B", "STORAGE"]));
+  assert.equal(tag.sheet, "A-107");
+  assert.deepEqual([tag.room, tag.room_name, tag.room_by], [null, null, null]);
+});
+
+test("an explicit unmatched schedule room cannot fall back to a door-mark prefix or proximity", () => {
+  for (const number of ["336", "334B"]) {
+    const tag = storageTag(storagePlan([number, "OFFICE"]));
+    assert.deepEqual([tag.room, tag.room_name, tag.room_by], [null, null, null], number);
+  }
+});
+
+test("a schedule room number wins over a nearer room with the same name", () => {
+  const tag = storageTag(storagePlan(["334B", "STORAGE"], ["336B", "STORAGE", 1900]));
+  assert.deepEqual([tag.room, tag.room_name, tag.room_by], ["336B", "STORAGE", "schedule_location"]);
+});
+
+test("schedule room identifiers keep their hyphens, decimals and letter prefixes", () => {
+  for (const [number, location, conflict] of [
+    ["R-336B", "STORAGE R-336B", "336B"],
+    ["R-336B", "STORAGE R–336B", "336B"],
+    ["128.1", "STORAGE 128.1", "128"],
+    ["A1", "STORAGE A1", "A2"],
+    ["336B", "STORAGE 336B.", "334B"],
+    ["336B", "STORAGE 336B-336C", "334B"],
+  ]) {
+    const missing = storageTag(storagePlan([conflict, "STORAGE"]), location);
+    assert.deepEqual([missing.room, missing.room_name, missing.room_by], [null, null, null], location);
+    const found = storageTag(storagePlan([conflict, "STORAGE"], [number, "STORAGE", 1900]), location);
+    assert.deepEqual([found.room, found.room_by], [number, "schedule_location"], location);
+  }
+});
+
+test("name-only locations still match exact names, name suffixes and room-name words", () => {
+  for (const [name, location] of [["STORAGE", "STORAGE"], ["EAST STORAGE", "STORAGE"], ["STORAGE ROOM", "ROOM STORAGE"]]) {
+    const tag = storageTag(storagePlan(["334B", name]), location);
+    assert.deepEqual([tag.room, tag.room_name, tag.room_by], ["334B", name, "schedule_location"], location);
+  }
+});
+
+test("a complete printed room name can contain a numeral without naming that room number", () => {
+  for (const name of ["RESIDENT ROOM 1", "STORAGE 2"]) {
+    for (const location of [name, name + " / CORRIDOR"]) {
+      const tag = storageTag(storagePlan(["334B", name]), location);
+      assert.deepEqual([tag.room, tag.room_name, tag.room_by], ["334B", name, "schedule_location"]);
+    }
+  }
+  const missing = storageTag(storagePlan(["334B", "RESIDENT ROOM 1"]), "RESIDENT ROOM 1 / STORAGE 336B");
+  assert.deepEqual([missing.room, missing.room_name, missing.room_by], [null, null, null]);
+});
+
+test("locations listing multiple room identifiers can use a detected listed room", () => {
+  for (const [location, number] of [["STORAGE 336B / STORAGE 334B", "334B"], ["CELL A101-CELL D102", "A101"]]) {
+    const tag = storageTag(storagePlan([number, "STORAGE"]), location);
+    assert.deepEqual([tag.room, tag.room_by], [number, "schedule_location"], location);
+  }
+});
+
+test("without a numbered schedule location, tag-number and unsure nearest-label matching still work", () => {
+  const prefix = storageTag(storagePlan(["336", "STORAGE"]), null);
+  assert.deepEqual([prefix.room, prefix.room_by], ["336", "tag_number"]);
+  const nearest = storageTag(storagePlan(["334B", "STORAGE"]), null);
+  assert.deepEqual([nearest.room, nearest.room_by, nearest.unsure], ["334B", "nearest_label", true]);
+});
+
 test("lines: a scale split over two text sizes and a point of baseline jitter joins", () => {
   const ls = lines([it("SCALE:", 1330, 1934, 9.5), it('3/32"', 1373, 1933.4), it("1'-0\"", 1411, 1933.4), it("1", 1301, 1930.7, 21)], 4, 1.6);
   assert.ok(ls.some((l) => /SCALE: 3\/32" 1'-0"/.test(l.str)), ls.map((l) => l.str).join(" | "));
