@@ -302,6 +302,10 @@
       @media (max-width: 640px) { .envelope-frame { height: calc(100dvh - 12px); } }
     }
     html.folder-lowered, html.folder-lowered body { overflow: hidden; overscroll-behavior: none; }
+    /* The projected folder can extend below the body's in-flow content.
+       Keep its clipping ancestor at least as tall as the visible viewport;
+       the root still locks scrolling and clips at the viewport boundary. */
+    html.folder-lowered body { min-height: var(--home-viewport); }
     html.folder-lowered #stage-backdrop { touch-action: none; }
     /* Mobile-first sizing (2026-10-04, measured on an iPhone 13 viewport):
        107 badges at 9px, tab labels at 9.5px, footer links 15px tall, and
