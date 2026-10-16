@@ -1,0 +1,176 @@
+{
+  "result": {
+    "deployments": [
+      {
+        "id": "6c44caea-45ab-4c28-b454-4691c60690a1",
+        "source": "wrangler",
+        "strategy": "percentage",
+        "author_email": "johnmobley99@gmail.com",
+        "annotations": {
+          "workers/triggered_by": "deployment"
+        },
+        "versions": [
+          {
+            "version_id": "8bffe15e-cd09-4ed1-b3f4-4e29631ff01f",
+            "percentage": 100
+          }
+        ],
+        "created_on": "2026-10-15T06:26:18.885156Z"
+      },
+      {
+        "id": "95557ee6-0b86-4453-98ed-90ff2a445bde",
+        "source": "wrangler",
+        "strategy": "percentage",
+        "author_email": "johnmobley99@gmail.com",
+        "annotations": {
+          "workers/triggered_by": "deployment"
+        },
+        "versions": [
+          {
+            "version_id": "57b67349-f5e2-49cc-8d2a-6255a6272f6d",
+            "percentage": 100
+          }
+        ],
+        "created_on": "2026-10-14T17:16:39.023023Z"
+      },
+      {
+        "id": "5a4d80e2-85b1-4357-9caf-6e1126a8a12a",
+        "source": "wrangler",
+        "strategy": "percentage",
+        "author_email": "johnmobley99@gmail.com",
+        "annotations": {
+          "workers/triggered_by": "deployment"
+        },
+        "versions": [
+          {
+            "version_id": "134303b9-f9a2-4942-8592-09d266ec2592",
+            "percentage": 100
+          }
+        ],
+        "created_on": "2026-10-14T03:07:35.246817Z"
+      },
+      {
+        "id": "8daf07a3-388c-48f3-9d8d-3d60a96b4b0c",
+        "source": "wrangler",
+        "strategy": "percentage",
+        "author_email": "johnmobley99@gmail.com",
+        "annotations": {
+          "workers/triggered_by": "deployment"
+        },
+        "versions": [
+          {
+            "version_id": "02e359ec-71d5-43a3-a103-ea49559991f3",
+            "percentage": 100
+          }
+        ],
+        "created_on": "2026-10-13T17:56:48.335967Z"
+      },
+      {
+        "id": "95f310da-1c76-4884-a819-9985876fa745",
+        "source": "wrangler",
+        "strategy": "percentage",
+        "author_email": "johnmobley99@gmail.com",
+        "annotations": {
+          "workers/triggered_by": "deployment"
+        },
+        "versions": [
+          {
+            "version_id": "43d45ded-ac7d-440d-b44e-d6a64f1673d2",
+            "percentage": 100
+          }
+        ],
+        "created_on": "2026-10-11T14:37:13.530651Z"
+      },
+      {
+        "id": "a8f816ec-d786-4ab6-b628-edb85b21da22",
+        "source": "wrangler",
+        "strategy": "percentage",
+        "author_email": "johnmobley99@gmail.com",
+        "annotations": {
+          "workers/triggered_by": "deployment"
+        },
+        "versions": [
+          {
+            "version_id": "238c2260-46ef-4f63-8ecc-3a354ab58df3",
+            "percentage": 100
+          }
+        ],
+        "created_on": "2026-10-11T13:56:26.972766Z"
+      },
+      {
+        "id": "511dbc5d-b141-4fba-b52e-239fae3eca41",
+        "source": "wrangler",
+        "strategy": "percentage",
+        "author_email": "johnmobley99@gmail.com",
+        "annotations": {
+          "workers/triggered_by": "deployment"
+        },
+        "versions": [
+          {
+            "version_id": "7d817c95-116f-467d-be52-8964cb01abb6",
+            "percentage": 100
+          }
+        ],
+        "created_on": "2026-10-11T13:08:49.689544Z"
+      },
+      {
+        "id": "eafd1fcd-fd2a-4a93-a7ce-ab5f07ce1499",
+        "source": "wrangler",
+        "strategy": "percentage",
+        "author_email": "johnmobley99@gmail.com",
+        "annotations": {
+          "workers/triggered_by": "deployment"
+        },
+        "versions": [
+          {
+            "version_id": "b2415aef-ea1f-430c-a13c-8c2c9d8257a8",
+            "percentage": 100
+          }
+        ],
+        "created_on": "2026-10-11T12:19:39.639204Z"
+      },
+      {
+        "id": "111afb8a-1fc1-4c44-b855-c49979eebe04",
+        "source": "wrangler",
+        "strategy": "percentage",
+        "author_email": "johnmobley99@gmail.com",
+        "annotations": {
+          "workers/triggered_by": "deployment"
+        },
+        "versions": [
+          {
+            "version_id": "2b44b82f-9312-409c-bcf8-268d1dc292e0",
+            "percentage": 100
+          }
+        ],
+        "created_on": "2026-10-11T10:31:20.96902Z"
+      },
+      {
+        "id": "42989b3f-7c89-4d34-b1b1-28d5a238f942",
+        "source": "wrangler",
+        "strategy": "percentage",
+        "author_email": "johnmobley99@gmail.com",
+        "annotations": {
+          "workers/triggered_by": "deployment"
+        },
+        "versions": [
+          {
+            "version_id": "4561c005-02b0-488b-8c52-56192a40648e",
+            "percentage": 100
+          }
+        ],
+        "created_on": "2026-10-11T09:49:11.930107Z"
+      }
+    ]
+  },
+  "success": true,
+  "errors": [],
+  "messages": [],
+  "result_info": {
+    "page": 1,
+    "per_page": 10,
+    "count": 10,
+    "total_count": 58,
+    "total_pages": 6
+  }
+}

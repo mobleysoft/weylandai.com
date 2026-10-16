@@ -1,0 +1,36 @@
+name = "weyland-sightx-worker"
+main = "index.js"
+account_id = "f07be5f84583d0d100b05aeeae56870b"
+compatibility_date = "2025-10-31"
+no_bundle = true
+workers_dev = true
+preview_urls = true
+[[d1_databases]]
+binding = "DB"
+database_name = "weyland_db"
+database_id = "5729f77e-d7e3-4577-ab43-3c064fa90ca5"
+[[services]]
+binding = "FILMLINE_VIDEO"
+service = "filmline-video-worker"
+environment = "production"
+[[rules]]
+type = "Text"
+globs = ["**/*.html"]
+fallthrough = true
+
+[[rules]]
+type = "Data"
+globs = ["**/*.bin"]
+fallthrough = true
+
+[[routes]]
+pattern = "weylandai.com/api/sightx/*"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/sightx"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/sightx/*"
+zone_name = "weylandai.com"

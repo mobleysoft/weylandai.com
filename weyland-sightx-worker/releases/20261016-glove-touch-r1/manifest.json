@@ -1,0 +1,36 @@
+{
+  "scope": "Glove material anchoring and same-origin homepage parent touch bridge; existing renderer, standalone and backend unchanged",
+  "baseVersion": "8bffe15e-cd09-4ed1-b3f4-4e29631ff01f",
+  "files": [
+    {
+      "path": "796828aed6cd9ec5af1b821435b2e7a71024666f-e127f506ababc4689bbdaac5978172b51f86ffb3-sightx.html",
+      "sha256": "e887a193926b71c3284cd0fc86cedbfc528ff361880c1ee09783f064f3a740cc"
+    },
+    {
+      "path": "c25a3b9bf90652058ec8e2abd0664a4c4d2c9c4d-c25a3b9bf90652058ec8e2abd0664a4c4d2c9c4d-4847b09e633103f7.pdf.bin",
+      "sha256": "4847b09e633103f72cd4807063cfd2c206fddefc0242af4a7102092f8c859dfe"
+    },
+    {
+      "path": "f55809877dff65cd38e3eebca74cbf2abb272d73-f55809877dff65cd38e3eebca74cbf2abb272d73-sightx-app.html",
+      "sha256": "d98d07954f8d72dbf8ec5ed2c6300366842689e79af1d584ec56889403f235df"
+    },
+    {
+      "path": "index.js",
+      "sha256": "9a4400c7283acebce0d7f48f0a6ae814e5d54db0459f086653f89348518d0ce1"
+    }
+  ],
+  "canonicalLocalPackage": "/Users/johnmobley/Documents/Codex/2026-10-05/task-2/sightx-hotfix-r2/canonical/weyland-sightx-worker/releases/20261016-glove-touch-r1",
+  "githubPath": "weyland-sightx-worker/releases/20261016-glove-touch-r1",
+  "tests": [
+    "Actual live parent input module + child consumer multitouch10controls",
+    "Native unchanged backend route/headers standalone/embed controls",
+    "Actual material diagnostic translation baseline58RGB drift vs fixed0"
+  ],
+  "limits": [
+    "No physicaliPhone claim",
+    "No usable target performance measurement",
+    "No fullFour migration",
+    "No globalBabylon parity",
+    "No wizard/tab/HuntX UI changes"
+  ]
+}

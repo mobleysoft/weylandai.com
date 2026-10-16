@@ -1,0 +1,31 @@
+{
+  "result": {
+    "placement": {},
+    "compatibility_date": "2025-10-31",
+    "compatibility_flags": [],
+    "usage_model": "standard",
+    "tags": [],
+    "tail_consumers": [],
+    "logpush": false,
+    "annotations": {
+      "workers/triggered_by": "version_upload"
+    },
+    "bindings": [
+      {
+        "database_id": "5729f77e-d7e3-4577-ab43-3c064fa90ca5",
+        "id": "5729f77e-d7e3-4577-ab43-3c064fa90ca5",
+        "name": "DB",
+        "type": "d1"
+      },
+      {
+        "environment": "production",
+        "name": "FILMLINE_VIDEO",
+        "service": "filmline-video-worker",
+        "type": "service"
+      }
+    ]
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}

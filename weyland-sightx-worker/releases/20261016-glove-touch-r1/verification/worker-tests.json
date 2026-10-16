@@ -1,0 +1,21 @@
+[
+  {
+    "path": "/sightx/",
+    "sha256": "d98d07954f8d72dbf8ec5ed2c6300366842689e79af1d584ec56889403f235df",
+    "exact": true
+  },
+  {
+    "path": "/sightx",
+    "sha256": "d98d07954f8d72dbf8ec5ed2c6300366842689e79af1d584ec56889403f235df",
+    "exact": true
+  },
+  {
+    "path": "/sightx/?embed=bg",
+    "sha256": "e887a193926b71c3284cd0fc86cedbfc528ff361880c1ee09783f064f3a740cc",
+    "exact": true
+  },
+  {
+    "path": "/health",
+    "status": 200
+  }
+]

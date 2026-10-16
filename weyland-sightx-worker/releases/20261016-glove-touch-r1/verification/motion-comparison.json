@@ -1,0 +1,36 @@
+[
+  {
+    "variant": "baseline",
+    "translatedCamera": [
+      0.13,
+      0,
+      0
+    ],
+    "diagnostic": "Actual scene geometry; material30 albedo/emissive only, lighting bypassed in test only",
+    "crop": [
+      96,
+      523,
+      190,
+      640
+    ],
+    "identical": false,
+    "maxRGB": 58
+  },
+  {
+    "variant": "fixed",
+    "translatedCamera": [
+      0.13,
+      0,
+      0
+    ],
+    "diagnostic": "Actual scene geometry; material30 albedo/emissive only, lighting bypassed in test only",
+    "crop": [
+      96,
+      523,
+      190,
+      640
+    ],
+    "identical": true,
+    "maxRGB": 0
+  }
+]

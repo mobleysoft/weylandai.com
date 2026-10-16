@@ -1,0 +1,19 @@
+{
+  "checks": [
+    "actual parent pointerdown far from fixed widget produces zero look",
+    "right drag retains positive horizontal axis",
+    "up drag retains negative vertical input",
+    "release resets actual consumed look",
+    "new touch establishes fresh distant neutral",
+    "cancel resets pointer/capture state",
+    "simultaneous real left move and right aim reach actual child input consumer",
+    "right release preserves independent held left movement",
+    "button exclusion preserves click and neutral aim",
+    "dossier raised/inactive resets input"
+  ],
+  "errors": [],
+  "actualParentModuleSha256": "b5ddf75597e9ee9beb9444dc4a46e9ff00193882cdc6a6e3df3889062ff7774b",
+  "actualChildConsumer": true,
+  "transport": "Trusted synthetic CDP touch in isolated Chromium; real iPhone untested",
+  "limits": "Fixture mounts actual parent factory with same production options and exact child page; not a complete product-content/auth acceptance test"
+}

@@ -1,0 +1,600 @@
+{
+  "zoneId": "76edfe037c89d811e7d7ae942cee23ce",
+  "accountId": "f07be5f84583d0d100b05aeeae56870b",
+  "routes": [
+    {
+      "id": "024838d5af2f40839b309d8e56ec0649",
+      "pattern": "weylandai.com/api/proposals/*",
+      "script": "weyland-propx-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "7d9ec42e38614de282fa4917496088c0",
+      "pattern": "weylandai.com/propx-app*",
+      "script": "weyland-propx-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "19beb1939db6464d9da3b4bc9af99a51",
+      "pattern": "weylandai.com/api/user/cutsheets*",
+      "script": "weyland-cutsheetx-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "b2c072cee5744c46894f6300087a2d5a",
+      "pattern": "weylandai.com/api/cut-sheets/*",
+      "script": "weyland-cutsheetx-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "04d6c713232247c7b71a23402d551b9b",
+      "pattern": "weylandai.com/api/catalogue/*",
+      "script": "weyland-cutsheetx-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "aa9a3652aa2b4a958dfabd1b2612e2c9",
+      "pattern": "weylandai.com/api/cps/*",
+      "script": "weyland-cutsheetx-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "aa69f649ad9f4449aed97e542c472552",
+      "pattern": "weylandai.com/cutsheetx*",
+      "script": "weyland-cutsheetx-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "977a42da44574b06a3156896f05d03c0",
+      "pattern": "weylandai.com/privacy*",
+      "script": "weyland-cutsheetx-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "4520fbb660074605ac707755e85155a4",
+      "pattern": "weylandai.com/terms*",
+      "script": "weyland-cutsheetx-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "f201fcdf363a4a2c8c7ba4e0ef946638",
+      "pattern": "weylandai.com/find*",
+      "script": "weyland-cutsheetx-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "0d8106a7d4074c4594e60873e936f5c4",
+      "pattern": "argo.weylandai.com/assets/meetingx-session.js",
+      "script": "weyland-meetingx-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "85e6f708761344d580f254cdbf65352b",
+      "pattern": "argo.weylandai.com/api/sight/room/*",
+      "script": "weyland-meetingx-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "a7df88c24bab41fe85a96e7f35445739",
+      "pattern": "argo.weylandai.com/meetingx*",
+      "script": "weyland-meetingx-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "31ccf77af30343bd9c3632eea7ec5428",
+      "pattern": "weylandai.com/api/sight/room/*",
+      "script": "weyland-meetingx-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "af4f5888b183406faa12bb64926ebb43",
+      "pattern": "weylandai.com/meetingx*",
+      "script": "weyland-meetingx-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "298ff5bdaade49e7bbeb44104054eef2",
+      "pattern": "weylandai.com/meetx*",
+      "script": "weyland-meetingx-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "bc82a5a09330498b9cc38bf0af84df08",
+      "pattern": "www.weylandai.com/*",
+      "script": "weyland-platform-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "f9e5c16dd2124619beac7659062ef40d",
+      "pattern": "weylandai.com/propx/",
+      "script": "weyland-platform-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "3b705fda02ea47c4954ccd4a29ea4b31",
+      "pattern": "weylandai.com/api/webhooks/subscription*",
+      "script": "weyland-platform-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "09a683ba678f484f888cdb58d3d237dd",
+      "pattern": "weylandai.com/api/subscription/*",
+      "script": "weyland-platform-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "0faf89fa3675433ca6b04c22620d4939",
+      "pattern": "weylandai.com/api/billing/*",
+      "script": "weyland-platform-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "fecc456dd9ff4e39aa119ed5337d2c5a",
+      "pattern": "weylandai.com/api/auth/*",
+      "script": "weyland-platform-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "c7dfa33c667c4663a9a9327e571d46b4",
+      "pattern": "weylandai.com/api/wire/*",
+      "script": "weyland-platform-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "29cba8d0f9f840559c5a645c84510a57",
+      "pattern": "weylandai.com/subscribe",
+      "script": "weyland-platform-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "a1c1680042e143b188170f67d06bcd73",
+      "pattern": "weylandai.com/pricing",
+      "script": "weyland-platform-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "131e137c7e5440c896dcbbf98d013e07",
+      "pattern": "weylandai.com/login",
+      "script": "weyland-platform-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "fcdb1f264bc64537a7eed14ddc1c00cb",
+      "pattern": "weylandai.com/propx",
+      "script": "weyland-platform-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "aeb42aa2b1974788a5affbfa0af43f94",
+      "pattern": "weylandai.com/wire",
+      "script": "weyland-platform-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "604d3d402300446aa7f4ed9e230cf0b9",
+      "pattern": "weylandai.com/",
+      "script": "weyland-platform-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "cac7eae8cfb0414380f996fe5ac46ee9",
+      "pattern": "weylandai.com/whyweyland*",
+      "script": "weyland-platform-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "0eb2553d1e394f00964cc9b2395031b2",
+      "pattern": "weylandai.com/robots.txt*",
+      "script": "weyland-platform-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "801587aed39743488e41c7149697e546",
+      "pattern": "weylandai.com/subscribe*",
+      "script": "weyland-platform-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "0d59cf2c4b494d6bb0482246b8991162",
+      "pattern": "weylandai.com/investors*",
+      "script": "weyland-platform-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "173cec2a6c134e00a8f16d7dc6d57d17",
+      "pattern": "weylandai.com/sitemap*",
+      "script": "weyland-platform-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "a70ac5f22863412ea54503fd7f63e7d1",
+      "pattern": "weylandai.com/pricing*",
+      "script": "weyland-platform-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "05b1ebc09550439698e1e4155162715a",
+      "pattern": "weylandai.com/login*",
+      "script": "weyland-platform-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "11d49e23531e49e9974f59b382a91cea",
+      "pattern": "weylandai.com/leadx*",
+      "script": "weyland-platform-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "7daaaf76bf0a457380e6fb78b3c392e3",
+      "pattern": "weylandai.com/wire*",
+      "script": "weyland-platform-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "17912d07362b48e0ac2114bfbd09fd21",
+      "pattern": "weylandai.com/news*",
+      "script": "weyland-platform-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "16eb6910330a4c839a96d9ec8cfef54e",
+      "pattern": "future.weylandai.com/*",
+      "script": "weyland-future-roadmap",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "4fb2529a06d641809eb551ea2149ed30",
+      "pattern": "weylandai.com/api/forecastx/*",
+      "script": "weyland-market-intelligence-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "d227e6dc82e5400eb31eeb02da997a5f",
+      "pattern": "weylandai.com/api/weatherx/*",
+      "script": "weyland-market-intelligence-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "09b161889e1c47448b458e063b6a881b",
+      "pattern": "weylandai.com/api/marketx/*",
+      "script": "weyland-market-intelligence-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "e46a211632174193b9e6c8efb964cdf2",
+      "pattern": "weylandai.com/api/compx/*",
+      "script": "weyland-market-intelligence-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "e05adc964c014a32b340b4dff2bb57e7",
+      "pattern": "weylandai.com/api/geox/*",
+      "script": "weyland-market-intelligence-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "415dc9d0f88b4c908fae95bac19107db",
+      "pattern": "weylandai.com/forecastx*",
+      "script": "weyland-market-intelligence-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "219db6e601bd4cf084a1d55b51583fb4",
+      "pattern": "weylandai.com/weatherx*",
+      "script": "weyland-market-intelligence-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "9b6feee6905a40268b5556df6bd4af72",
+      "pattern": "weylandai.com/marketx*",
+      "script": "weyland-market-intelligence-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "0c22f6dd05bd4be4a4010a05e22daee0",
+      "pattern": "weylandai.com/compx*",
+      "script": "weyland-market-intelligence-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "269d2b2a55e146eca2efae8226ba882e",
+      "pattern": "weylandai.com/geox*",
+      "script": "weyland-market-intelligence-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "134e658370b44760b06c639027ba2064",
+      "pattern": "meeting.weylandai.com/*",
+      "script": "weyland-meeting-resources",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "b7e3e054e64447a1a74544e63cd5e5de",
+      "pattern": "weylandai.com/api/hunt/*",
+      "script": "weyland-huntx-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "8372c4746d04434ca58f4aa596cb72f2",
+      "pattern": "weylandai.com/huntx*",
+      "script": "weyland-huntx-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "0b71646555e54944ade40d25b3afa073",
+      "pattern": "integration.weylandai.com/*",
+      "script": "weyland-integration-report",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "3b7b7b3f228e4743b06a2f89e89f427b",
+      "pattern": "weylandai.com/api/demo/weyland-building/session*",
+      "script": "weyland-subx-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "eadeae7507de47af9ba842086eca6cdd",
+      "pattern": "weylandai.com/api/hardware-schedule",
+      "script": "weyland-subx-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "e4dce7783c5749e989a10ce57677b3d2",
+      "pattern": "weylandai.com/api/submittals",
+      "script": "weyland-subx-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "11935281508842848ee6c16af675a962",
+      "pattern": "weylandai.com/api/takeoff",
+      "script": "weyland-subx-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "5c6174dc71574366aa931fbe0e49ba3a",
+      "pattern": "weylandai.com/api/hardware-schedule/*",
+      "script": "weyland-subx-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "0eabebd50b7f48c389c071205de4d69a",
+      "pattern": "weylandai.com/api/submittals/*",
+      "script": "weyland-subx-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "31fd37accd3e49cba4d484cf20139c6a",
+      "pattern": "weylandai.com/api/takeoff/*",
+      "script": "weyland-subx-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "455ea7243a6440bc894b95a48082d739",
+      "pattern": "weylandai.com/subx-app*",
+      "script": "weyland-subx-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "3d8d0eff674d454297c8914e69d02098",
+      "pattern": "weylandai.com/takeoffx*",
+      "script": "weyland-subx-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "0ae5385ea0584cd09456a04fef0b9022",
+      "pattern": "weylandai.com/subx*",
+      "script": "weyland-subx-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "9c41e5a057704367b10465ac99730213",
+      "pattern": "weylandai.com/api/sightx/*",
+      "script": "weyland-sightx-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "7f4fae711f264e019d662051968c9f9a",
+      "pattern": "weylandai.com/sightx",
+      "script": "weyland-sightx-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "2c5b87d7195b49c4b4739e872f5e634a",
+      "pattern": "weylandai.com/sightx/*",
+      "script": "weyland-sightx-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "d4bab10d0ac6439bb866dce6ef8255b5",
+      "pattern": "cutsheetx.weylandai.com/*",
+      "script": "weylandai-com-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "ccc91911b3804b7e96d40005a9dc9138",
+      "pattern": "takeoffx.weylandai.com/*",
+      "script": "weylandai-com-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "b682e17e50534855a797ee690a5e6643",
+      "pattern": "sightx.weylandai.com/*",
+      "script": "weylandai-com-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "b33b002526914b3481508698fc0d9f64",
+      "pattern": "propx.weylandai.com/*",
+      "script": "weylandai-com-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "91ad39e70f2643549be0dec0a041132f",
+      "pattern": "huntx.weylandai.com/*",
+      "script": "weylandai-com-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "ad86152170db493fbe6bd9b24c5518ff",
+      "pattern": "subx.weylandai.com/*",
+      "script": "weylandai-com-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "2674ee097ea149c28f1195b3de3288ff",
+      "pattern": "weylandai.com/*",
+      "script": "weylandai-com-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "db2944a79e1b47d18de08ff93322ad51",
+      "pattern": "www.weylandai.com/venture.json",
+      "script": "getventures",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "29e119fc4b5142dd8cb3aee52f011930",
+      "pattern": "weylandai.com/venture.json",
+      "script": "getventures",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "41366bd605b24ead942721dc63ef2a97",
+      "pattern": "weylandai.com/api/survey-reports/*",
+      "script": "weyland-docs-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "bd0713cca3764dd2b0529c3258bebce1",
+      "pattern": "weylandai.com/api/safety-reports/*",
+      "script": "weyland-docs-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "e3265a65a9c24233bc021c454294a6a5",
+      "pattern": "weylandai.com/api/asbuilt-diffs/*",
+      "script": "weyland-docs-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "3f72714f3fa54eda92a54600f7cb78a7",
+      "pattern": "weylandai.com/api/drawing-index/*",
+      "script": "weyland-docs-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "8e6cd57cee8e443f8553343a885b903a",
+      "pattern": "weylandai.com/api/spec-sections/*",
+      "script": "weyland-docs-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "a13c6d9d40df42928c8cb5e0ef2ead8d",
+      "pattern": "weylandai.com/api/inspections/*",
+      "script": "weyland-docs-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "27124e919c004a8c878ea3138967a845",
+      "pattern": "weylandai.com/asbuiltx*",
+      "script": "weyland-docs-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "67c72a2360934d52ae092b42ff3a313a",
+      "pattern": "weylandai.com/inspecx*",
+      "script": "weyland-docs-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "7ff03f73fa9a44de8cfd966d677da398",
+      "pattern": "weylandai.com/safetyx*",
+      "script": "weyland-docs-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "19e0526967b94bfca9ca5d2a9a5613fb",
+      "pattern": "weylandai.com/drawx*",
+      "script": "weyland-docs-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "eaf4f638fd4c40a8bc70f0faf4e8f9e2",
+      "pattern": "weylandai.com/survx*",
+      "script": "weyland-docs-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "abce757ae9b247f69bf6165aae80e321",
+      "pattern": "weylandai.com/specx*",
+      "script": "weyland-docs-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "cb478e8ac0964d7a8099478fe9af263a",
+      "pattern": "weylandai.com/api/forms/*",
+      "script": "weyland-forms-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "57ce10fef95047f891e5bf0fc9525940",
+      "pattern": "weylandai.com/coa",
+      "script": "weyland-forms-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "d2c0f1f2864348e9bf3b006a1d610682",
+      "pattern": "weylandai.com/coa/*",
+      "script": "weyland-forms-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "2e26138545c7478c8b8cd8a1c73ed5b2",
+      "pattern": "weylandai.com/changeordx*",
+      "script": "weyland-forms-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "8891a5cc5fb648cc97b24429d16c52c5",
+      "pattern": "weylandai.com/permitx*",
+      "script": "weyland-forms-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "123a4a954aa247bdbdd8e57f678c34fa",
+      "pattern": "weylandai.com/pricex*",
+      "script": "weyland-forms-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "d4eb6aedc86d47a99ba349458051c07f",
+      "pattern": "weylandai.com/notesx*",
+      "script": "weyland-forms-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "0b770dcc6ec045e2bb346c79368bebe5",
+      "pattern": "weylandai.com/closex*",
+      "script": "weyland-forms-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "5a9a294e56d84546999f067e3f7f95ee",
+      "pattern": "weylandai.com/lienx*",
+      "script": "weyland-forms-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "a9ffd75f2a9f415fbdc73097b72358e4",
+      "pattern": "weylandai.com/bidx*",
+      "script": "weyland-forms-worker",
+      "request_limit_fail_open": false
+    },
+    {
+      "id": "04cbc3e713e84853b0b93beb688cd227",
+      "pattern": "weylandai.com/rfax*",
+      "script": "weyland-forms-worker",
+      "request_limit_fail_open": false
+    }
+  ]
+}
