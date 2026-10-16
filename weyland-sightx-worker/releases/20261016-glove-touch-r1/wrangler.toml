@@ -15,13 +15,13 @@ service = "filmline-video-worker"
 environment = "production"
 [[rules]]
 type = "Text"
-globs = ["**/*.html"]
-fallthrough = true
+globs = ["796828aed6cd9ec5af1b821435b2e7a71024666f-e127f506ababc4689bbdaac5978172b51f86ffb3-sightx.html", "f55809877dff65cd38e3eebca74cbf2abb272d73-f55809877dff65cd38e3eebca74cbf2abb272d73-sightx-app.html"]
+fallthrough = false
 
 [[rules]]
 type = "Data"
-globs = ["**/*.bin"]
-fallthrough = true
+globs = ["c25a3b9bf90652058ec8e2abd0664a4c4d2c9c4d-c25a3b9bf90652058ec8e2abd0664a4c4d2c9c4d-4847b09e633103f7.pdf.bin"]
+fallthrough = false
 
 [[routes]]
 pattern = "weylandai.com/api/sightx/*"
