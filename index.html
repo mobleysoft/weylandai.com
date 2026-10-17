@@ -1950,7 +1950,13 @@ html.folder-lowered .envelope-frame { outline:1px solid #ffd400; outline-offset:
 .envelope-frame header.site-header { border-radius:0; }
 </style>
 <script src="/assets/weyland-room-spec-165feaf1a688cb78.js"></script><link rel="stylesheet" href="/assets/weyland-project-room-28817090c597b461.css">
-</head>
+<style id="phase4-tab-fill">/* Candidate only: fill the existing44px touch targets instead of exposing10px black frame. */
+@media (max-width:768px){
+ header.site-header .wn-flag-fill{height:44px;min-height:44px;box-sizing:border-box;}
+ header.site-header .wn-flag{min-height:44px;}
+ header.site-header .wn-close{height:44px;}
+}
+</style></head>
 <body>
   <script>
     // The site is an artifact in SightX's world: a manila folder in the
