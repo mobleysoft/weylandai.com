@@ -4401,8 +4401,9 @@ html.folder-lowered .envelope-frame { outline:1px solid #ffd400; outline-offset:
       lookTarget: document.getElementById('weyland-look'),
       forward: function () { var bd = document.querySelector('#stage-backdrop iframe'); return bd && bd.contentWindow; },
       active: function () { return !root.classList.contains("district-guide-open") && !root.classList.contains("product-reading") && isLowered() && !root.classList.contains('wa-overlay-open') && !root.classList.contains('wco-open') && !document.querySelector('#upgrade-modal.is-open'); },
-      stick:'auto',stickSide:'left',stickSize:104,stickInset:10,dualSticks:true,deadZone:.14,lookSpeed:360,allowRoll:false,aimReticle:true,aimPoint:function(){return dossierAimPoint;},onControlsLayout:sendState,
+      stick:'auto',stickSide:'left',stickSize:104,stickInset:10,dualSticks:true,deadZone:.14,lookSpeed:360,allowRoll:false,aimReticle:true,aimPoint:function(){return window.__sxGameplayActive?[innerWidth*.5,innerHeight*.55]:dossierAimPoint;},onControlsLayout:sendState,
       onTap: function (x, y) {
+        if(window.__sxGameplayActive)return;
         if(window.WeylandProjectRoom?.tap(x,y))return;
         if(window.WeylandProductSpace&&window.WeylandProductSpace.tap(x,y))return;
         var bd = document.querySelector('#stage-backdrop iframe'); if (!bd) return;
@@ -4494,5 +4495,5 @@ html.folder-lowered .envelope-frame { outline:1px solid #ffd400; outline-offset:
 <link rel="stylesheet" href="/assets/weyland-product-space-d3182fa20d286ee4.css">
 <script src="/assets/weyland-product-space-71593d8fdef9d993.js"></script>
 <script src="/assets/weyland-project-room-4c2c07a7652f62f3.js"></script>
-</body>
+<script src="/sightx/game-core-7d32937d654e438b7fd2fa14b1eb5d2febebd9c4c5629dca3ce06b82bcae92b2.js"></script><script src="/sightx/game-host-fe2c48c1bc74d3da2f3ee484bb54d1920dc8ba2c5204aa94ceff6a13c3c6bf31.js"></script></body>
 </html>
