@@ -1,0 +1,36 @@
+name = "weyland-sightx-worker"
+main = "index.js"
+account_id = "f07be5f84583d0d100b05aeeae56870b"
+compatibility_date = "2025-10-31"
+no_bundle = true
+workers_dev = true
+preview_urls = true
+[[d1_databases]]
+binding = "DB"
+database_name = "weyland_db"
+database_id = "5729f77e-d7e3-4577-ab43-3c064fa90ca5"
+[[services]]
+binding = "FILMLINE_VIDEO"
+service = "filmline-video-worker"
+environment = "production"
+[[rules]]
+type = "Text"
+globs = ["796828aed6cd9ec5af1b821435b2e7a71024666f-e127f506ababc4689bbdaac5978172b51f86ffb3-sightx.html", "f55809877dff65cd38e3eebca74cbf2abb272d73-f55809877dff65cd38e3eebca74cbf2abb272d73-sightx-app.html", "four-core.txt", "game-controller-0175d856a366b277663675162679377ece10f30359ac2509f1416437dd822db5.txt", "game-core-7d32937d654e438b7fd2fa14b1eb5d2febebd9c4c5629dca3ce06b82bcae92b2.txt", "game-frame-b4ac6db62ba5ec689aad6913c38c0320a0f8c34f87933db6fea526a92b755e20.txt", "game-host-fe2c48c1bc74d3da2f3ee484bb54d1920dc8ba2c5204aa94ceff6a13c3c6bf31.txt"]
+fallthrough = false
+
+[[rules]]
+type = "Data"
+globs = ["c25a3b9bf90652058ec8e2abd0664a4c4d2c9c4d-c25a3b9bf90652058ec8e2abd0664a4c4d2c9c4d-4847b09e633103f7.pdf.bin"]
+fallthrough = false
+
+[[routes]]
+pattern = "weylandai.com/api/sightx/*"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/sightx"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/sightx/*"
+zone_name = "weylandai.com"
